@@ -245,8 +245,8 @@ body{background:#E7E2DC;overflow:hidden}
 .ile{display:none}
 .ecran .h1x{height:100vh;height:100dvh;min-height:640px;max-height:940px}
 .toast{top:20px}
-.resa-f{position:fixed;inset:0;z-index:200;background:rgba(20,18,17,.45);display:flex;align-items:flex-end;justify-content:center;opacity:0;transition:opacity .25s}
-.resa-f.on{opacity:1}
+.resa-f{position:fixed;inset:0;z-index:200;background:rgba(20,18,17,.45);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.resa-f.on{opacity:1;pointer-events:auto}
 .resa-b{position:relative;width:100%;max-width:480px;background:var(--creme);border-radius:28px 28px 0 0;padding:30px 26px calc(26px + env(safe-area-inset-bottom));transform:translateY(30px);transition:transform .25s}
 .resa-f.on .resa-b{transform:none}
 .resa-b h3{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:34px;line-height:1.05;margin:8px 0 10px}
