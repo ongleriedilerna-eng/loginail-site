@@ -528,9 +528,9 @@ body{background:var(--creme)}
 /* 2 — à votre image (1re version) : les 3 styles côte à côte, les couleurs, clair ou foncé — avec MON vrai site */
 .p-styles{padding-left:0;padding-right:0}
 .p-styles>.k,.p-styles>.t2,.p-styles>.dots,.p-styles>.seg,.p-styles>.note-l{margin-left:24px;margin-right:24px}
-.styles{display:flex;gap:12px;overflow-x:auto;padding:4px 24px 10px;scroll-padding:0 24px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.styles{display:flex;gap:12px;overflow-x:auto;padding:4px calc(50% - var(--hc) * .29) 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
 .styles::-webkit-scrollbar{display:none}
-.st-c{flex:none;width:calc(var(--hc) * .58);scroll-snap-align:start}
+.st-c{flex:none;width:calc(var(--hc) * .58);scroll-snap-align:center;transition:transform .4s,opacity .4s}
 .p-styles{--hc:clamp(230px,calc(100svh - 440px),430px)}
 .st-n{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gris);margin-bottom:7px}
 .st-c .carte{position:relative;height:var(--hc);border-radius:22px;overflow:hidden;background:#EAE5DF;box-shadow:0 16px 34px -20px rgba(0,0,0,.4)}
@@ -692,6 +692,20 @@ body{background:var(--creme)}
 .p-questions{min-height:0!important;padding-top:44px!important;padding-bottom:40px!important}
 .pan:not(.p-haut):not(.p-fin){min-height:0}
 .p-styles,.p-choisit,.p-etapes,.p-appli,.p-inclus{padding-top:52px!important;padding-bottom:44px!important}
+/* les titres : capitales espacées, en gras (comme « À votre image », en grand) */
+.t2,.p-haut h1,.case h3,.st-intro{font-family:Jost,sans-serif!important;font-weight:600!important;text-transform:uppercase;letter-spacing:.05em;line-height:1.2!important;text-wrap:balance}
+.t2{font-size:21px!important;margin:8px 0 14px!important}
+.p-haut h1{font-size:26px!important;margin:12px 0 10px!important}
+.st-intro{font-size:18px!important;margin:10px 24px 14px!important}
+.case h3{font-size:17px!important;margin:8px 0 14px!important}
+.fin-haut .t2{font-size:24px!important}
+.temoin .it{font-family:Jost,sans-serif!important;font-weight:300!important;font-size:18px!important;line-height:1.55!important}
+.zero b,.prix-carte b,.faits b,.pas b{font-family:Jost,sans-serif!important;font-weight:200!important}
+.c-nom b{font-family:Jost,sans-serif!important;font-weight:600;font-size:11px!important;letter-spacing:.24em;text-transform:uppercase}
+.sous-prix{display:block;margin-top:6px;font-size:12.5px;opacity:.8}
+.note-l.touchez{color:var(--noir);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px}
+/* comment ça marche : les deux cases de la même taille */
+.p-etapes .case{display:flex;flex-direction:column}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -714,15 +728,14 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 <section class="pan p-haut" id="haut">
   <div class="k haut-k">Fait par une prothésiste, pour les prothésistes</div>
   <div><h1>Les grands salons ont de beaux sites. Pourquoi pas vous&nbsp;?</h1>
-    <div class="sous"><b>Votre site + votre appli</b> · 79,99 € / mois · 1 mois offert</div>
+    <div class="sous">Loginail crée <b>le site de votre onglerie</b>, avec la réservation en ligne, et <b>l’appli</b> pour gérer vos rendez-vous.<span class="sous-prix">79,99 € / mois · 1 mois offert</span></div>
     <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div>
     <a class="descend" href="#styles"><span>Découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a></div>
 </section>
 
 <section class="pan p-styles" id="styles">
-  <p class="st-pre">Votre site doit vous ressembler. Choisissez son style, puis sa couleur.</p>
   <div class="k">À votre image · 3 styles, 12 couleurs</div>
-  <p class="st-intro">Le même salon, en trois styles.<br><em>Touchez-en un pour voir le site en entier.</em></p>
+  <p class="st-intro">Trois styles.<br>Un seul vous ressemble.</p>
   <div class="styles" id="cartes">
     <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Signature</b></div><iframe title="Le site Dilerna, style Signature" data-n="1"></iframe></div></div>
     <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Prestige</b></div><iframe title="Le site Dilerna, style Prestige" data-n="2"></iframe></div></div>
@@ -730,7 +743,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
   </div>
   <div class="dots" id="dots"></div>
   <div class="seg" id="seg"><button class="on" data-mode="jour">Clair</button><button data-mode="nuit">Foncé</button></div>
-  <p class="note-l">En exemple : mon salon, Dilerna</p>
+  <p class="note-l touchez">Touchez un site pour l’ouvrir en entier</p><p class="note-l">En exemple : mon salon, Dilerna</p>
 </section>
 
 <section class="pan p-choisit" id="choisit">
@@ -742,7 +755,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 <div class="grand-site" id="grandSite" hidden><iframe title="Le site en grand"></iframe><div class="gs-bas"><span id="gsNom"></span><button id="gsFerme">Fermer</button></div></div>
 
 <section class="pan p-etapes" id="etapes">
-  <div class="k">Comment ça marche</div><h2 class="t2 une-ligne">Simple, du début à la fin.</h2>
+  <div class="k">Comment ça marche</div><h2 class="t2">Prête en quelques minutes.</h2>
   <div class="case"><span class="kick">Votre site</span><h3>En 3 étapes.</h3>
     <ol class="pas"><li><b>1</b><div><strong>Collez votre lien Google Maps</strong>On récupère votre nom, vos horaires, vos avis et vos photos.</div></li>
         <li><b>2</b><div><strong>Complétez ce qui manque</strong>Quelques questions, juste ce qu’on n’a pas trouvé.</div></li>
@@ -857,7 +870,10 @@ function montre(){document.querySelectorAll(".st-c iframe").forEach(f=>{const a=
 $("dots").onclick=e=>{const b=e.target.closest("button");if(!b)return;ci=+b.dataset.c;$("dots").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));peint();montre()};
 $("seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;modeS=b.dataset.mode;$("seg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));peint();montre()};
 /* en arrivant sur les styles, la rangée glisse un peu pour montrer qu'il y en a 3 */
-new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){o.disconnect();const r=$("cartes");setTimeout(()=>r.scrollTo({left:170,behavior:"smooth"}),600);setTimeout(()=>r.scrollTo({left:0,behavior:"smooth"}),1700)}}),{threshold:.6}).observe($("cartes"));
+/* le site du milieu est devant ; on voit les deux autres de chaque côté ; on fait défiler de l'un à l'autre */
+{const r=$("cartes"),milieu=()=>{const c=r.children[1];r.scrollLeft=c.offsetLeft-(r.clientWidth-c.offsetWidth)/2};milieu();addEventListener("load",milieu);
+ const net=()=>{const m=r.scrollLeft+r.clientWidth/2;[...r.children].forEach(c=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-m);c.style.transform=`scale(${d<20?1:.92})`;c.style.opacity=d<20?1:.75})};
+ r.addEventListener("scroll",net,{passive:true});setTimeout(net,50)}
 
 /* ---- l'appli ---- */
 const APPLI={accueil:["demo/loginail-pro.html",1,"Votre journée en un coup d’œil : rendez-vous du jour, ce qu’il reste à faire, vos chiffres."],
@@ -881,6 +897,7 @@ $("ongletsApp").onclick=e=>{const b=e.target.closest("button");if(!b)return;appl
 
 /* ---- les questions : la réponse s'ouvre sous la question ---- */
 const FAQ=[["Combien de temps pour avoir mon site ?", "Trois étapes : vous collez le lien de votre fiche Google, on complète ensemble ce qui manque, vous choisissez votre style. Votre site apparaît en moins d’une minute."], ["Est-ce que je suis engagée ?", "Non, sans engagement. Vous arrêtez en un clic, quand vous voulez."], ["Combien je vais payer ?", "79,99 € par mois, votre site et votre appli compris. Le premier mois est offert."], ["Il y a des frais en plus ?", "Non. Aucune commission sur vos réservations, aucun frais caché. Sur les acomptes, seuls les frais de carte bancaire sont pris par le service de paiement."], ["Je peux essayer avant de payer ?", "Oui. Créer votre site est gratuit, pour le voir. Et quand vous l’activez, le premier mois est offert."], ["Je peux modifier mon site moi-même ?", "Oui, depuis votre appli, quand vous voulez : photos, prix, textes, horaires."], ["Je peux changer de style après ?", "Oui, en quelques clics : le style, la couleur, clair ou foncé."], ["Je peux mettre mes photos ?", "Oui, directement depuis votre téléphone."], ["Mes horaires et mon adresse sont affichés ?", "Oui, avec le plan et l’itinéraire pour venir au salon."], ["Je récupère mes rendez-vous actuels ?", "Oui. Prenez votre agenda en photo : vos rendez-vous sont ajoutés. Vous pourrez aussi les reprendre depuis Google Agenda."], ["Les SMS sont limités ?", "Non. Confirmation et rappel la veille, automatiques et sans limite."], ["Le nom de domaine est à moi ?", "Oui : votre-onglerie.fr, à votre nom, compris dans l’abonnement."], ["Mes clientes doivent créer un compte ?", "Non : ni compte, ni appli. Elles réservent en 30 secondes sur votre propre site."], ["Mes clientes doivent payer un acompte ?", "C’est vous qui choisissez : sans acompte, avec un acompte, ou le paiement complet en ligne."], ["Une cliente annule : je perds la place ?", "Non. Le créneau se libère tout de suite sur votre site et une autre cliente peut le réserver. Vous choisissez le délai d’annulation, et vous pouvez le proposer à vos clientes en liste d’attente."], ["Je peux bloquer mes vacances ?", "Oui, en un geste dans votre agenda : personne ne peut réserver ces jours-là."], ["J’ai une fiche pour chaque cliente ?", "Oui : ses rendez-vous, vos notes, ses préférences et son anniversaire."], ["Je vais oublier l’anniversaire de mes clientes ?", "Jamais : l’appli vous le rappelle le jour J, et vous lui envoyez un petit mot en un geste."], ["Je vois mon agenda partout ?", "Oui, même en déplacement : il est dans votre téléphone."], ["Faut-il être douée en informatique ?", "Non. Si vous savez copier un lien, vous savez créer votre site."], ["Pourquoi pas juste Planity ?", "Sur une plateforme, vous êtes une fiche parmi tant d’autres. Avec Loginail, votre nom s’affiche en grand sur votre propre site, et vous gérez tout votre agenda depuis votre appli."], ["Qui a créé Loginail ?", "Une prothésiste à son compte. J’ai créé l’outil que j’ai toujours voulu avoir."]],THEMES=[["Démarrer", [0, 4, 19, 9, 20, 21]], ["Le prix", [1, 2, 3, 10, 11]], ["Votre site", [5, 6, 7, 8]], ["Vos clientes", [12, 13, 14, 15, 16, 17, 18]]];
+FAQ.push(["Je n’ai pas de fiche Google, je peux quand même ?","Oui. Vous remplissez vos infos vous-même : votre nom, vos horaires, vos prestations et vos photos."],["Mon site marche sur téléphone et sur ordinateur ?","Oui. Il s’adapte tout seul : il est beau sur un téléphone comme sur un ordinateur."],["Qui m’aide si je bloque ?","Moi. Écrivez-moi sur Instagram (@loginail_website) ou à contact@loginail.fr, je vous réponds personnellement."]);THEMES[0][1].push(FAQ.length-3,FAQ.length-2,FAQ.length-1);
 let themeI=0;
 function faq(){$("faqCats").innerHTML=THEMES.map((t,i)=>`<button class="${i===themeI?"on":""}" data-t="${i}">${t[0]}</button>`).join("");
   $("faq").innerHTML=THEMES[themeI][1].map((n,k)=>`<div class="qt ${k?"":"ouv"}"><button>${FAQ[n][0]}</button><div class="rep"><p>${FAQ[n][1]}</p></div></div>`).join("")}
@@ -891,6 +908,9 @@ $("faq").onclick=e=>{const b=e.target.closest(".qt>button");if(!b)return;const q
 {let avant=scrollY;const b=$("suit"),fin=document.querySelector(".p-fin");
  addEventListener("scroll",()=>{const y=scrollY,f=fin.getBoundingClientRect().top;b.classList.toggle("vu",y>innerHeight*.8&&f>innerHeight*.4);avant=y},{passive:true});
  b.onclick=e=>{e.preventDefault();scrollTo({top:0,behavior:"smooth"});setTimeout(()=>document.querySelector(".p-haut input").focus({preventScroll:true}),600)}}
+/* les deux cases de « Comment ça marche » ont la même hauteur */
+const memeTaille=()=>{const cs=[...document.querySelectorAll(".p-etapes .case")];cs.forEach(c=>c.style.minHeight="");const m=Math.max(...cs.map(c=>c.offsetHeight));cs.forEach(c=>c.style.minHeight=m+"px")};
+memeTaille();document.fonts&&document.fonts.ready.then(memeTaille);addEventListener("resize",memeTaille);
 /* un titre qui doit tenir sur une ligne rapetisse un peu s'il le faut */
 const uneLigne=()=>document.querySelectorAll(".une-ligne").forEach(t=>{t.style.fontSize="";let f=parseFloat(getComputedStyle(t).fontSize);while(t.scrollWidth>t.clientWidth&&f>18){f-=.5;t.style.fontSize=f+"px"}});
 uneLigne();addEventListener("resize",uneLigne);document.fonts&&document.fonts.ready.then(uneLigne);
