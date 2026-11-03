@@ -493,10 +493,10 @@ section{padding:110px 0}
 .pied a{margin-left:24px}
 
 /* ================= TÉLÉPHONE (le mélange) : une partie = un écran ================= */
-html{scroll-snap-type:y proximity;scrollbar-width:none}html::-webkit-scrollbar{display:none}
+html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
 html,body{overflow-x:clip}
 body{background:var(--creme)}
-.pan{min-height:100svh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:70px 24px 26px;position:relative;box-sizing:border-box}
+.pan{min-height:100vh;min-height:100lvh;display:flex;flex-direction:column;justify-content:center;padding:70px 24px 26px;position:relative;box-sizing:border-box}
 .k{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gris)}
 .t2{font-family:Italiana,serif;font-weight:400;font-size:34px;line-height:1.08;margin:10px 0 16px}
 .une-ligne{white-space:nowrap}
@@ -509,11 +509,11 @@ body{background:var(--creme)}
 .logo .lc{display:block}.logo .lf{display:none}
 .barre.fond .logo{color:var(--noir)}.barre.fond .logo .lc{display:none}.barre.fond .logo .lf{display:block}
 /* 1 — l'arrivée (1re version) : le texte en haut, le lien en bas, la photo derrière */
-.p-haut{justify-content:space-between;color:var(--creme);background:#1E1C1B center/cover url('exemple-dilerna/haut.jpg');padding-top:96px;padding-bottom:30px}
-.p-haut::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,17,.6) 0,rgba(20,18,17,.12) 38%,rgba(20,18,17,.78) 100%)}
+.p-haut{justify-content:space-between;padding-bottom:calc(26px + 100lvh - 100svh);color:var(--creme);background:#1E1C1B center/cover url('exemple-dilerna/haut.jpg');padding-top:96px;padding-bottom:30px}
+.p-haut::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,17,.62) 0,rgba(20,18,17,.25) 26%,rgba(20,18,17,.62) 48%,rgba(20,18,17,.9) 100%)}
 .p-haut>*{position:relative;z-index:1}
 .p-haut .k{color:rgba(246,243,239,.85);line-height:1.6}
-.p-haut h1{font-family:Italiana,serif;font-weight:400;font-size:40px;line-height:1.06;margin:12px 0 10px}
+.p-haut h1{font-family:Italiana,serif;font-weight:400;font-size:40px;line-height:1.06;margin:12px 0 10px;text-shadow:0 2px 18px rgba(0,0,0,.45)}
 .p-haut .sous{font-size:14px;opacity:.9;line-height:1.5;margin-bottom:20px}.p-haut .sous b{font-weight:500}
 .lien{display:flex;align-items:center;gap:10px;height:54px;border-radius:28px;background:rgba(255,255,255,.96);color:var(--noir);padding:0 20px;margin-bottom:10px}
 .lien svg{width:18px;height:18px;stroke:#8a8076;fill:none;stroke-width:1.5;flex:none}
@@ -529,14 +529,16 @@ body{background:var(--creme)}
 .p-styles>.k,.p-styles>.t2,.p-styles>.dots,.p-styles>.seg,.p-styles>.note-l{margin-left:24px;margin-right:24px}
 .styles{display:flex;gap:12px;overflow-x:auto;padding:4px 24px 10px;scroll-padding:0 24px;scroll-snap-type:x mandatory;scrollbar-width:none}
 .styles::-webkit-scrollbar{display:none}
-.st-c{flex:none;width:232px;scroll-snap-align:start}
+.st-c{flex:none;width:calc(var(--hc) * .58);scroll-snap-align:start}
+.p-styles{--hc:clamp(230px,calc(100svh - 440px),430px)}
 .st-n{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gris);margin-bottom:7px}
-.st-c .carte{position:relative;height:clamp(280px,calc(100svh - 470px),400px);border-radius:22px;overflow:hidden;background:#EAE5DF;box-shadow:0 16px 34px -20px rgba(0,0,0,.4)}
-.st-c iframe{position:absolute;left:0;top:0;width:232px;height:2000px;border:0;opacity:0;transition:opacity .4s}
+.st-c .carte{position:relative;height:var(--hc);border-radius:22px;overflow:hidden;background:#EAE5DF;box-shadow:0 16px 34px -20px rgba(0,0,0,.4)}
+.st-c iframe{position:absolute;left:0;top:0;width:100%;height:2000px;border:0;opacity:0;transition:opacity .4s;pointer-events:none}
 .st-c iframe.pret{opacity:1}
-.dots{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;justify-items:center;margin:14px 0 4px}
-.dots button{width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
-.dots button.on{box-shadow:0 0 0 2px var(--creme),0 0 0 3.5px var(--noir)}
+.dots{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;margin:12px 0 2px}
+.dots button{width:44px;height:40px;border:0;cursor:pointer;background:none!important;display:grid;place-items:center;padding:0;-webkit-tap-highlight-color:transparent}
+.dots button i{display:block;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:box-shadow .2s}
+.dots button.on i{box-shadow:0 0 0 2px var(--creme),0 0 0 3.5px var(--noir)}
 .seg{display:flex;gap:4px;background:#EAE5DF;border-radius:20px;padding:3px;margin-top:10px}
 .seg button{flex:1;border:0;background:none;border-radius:17px;height:32px;font-size:12px;color:#8a8076;cursor:pointer}
 .seg button.on{background:var(--noir);color:var(--creme)}
@@ -554,10 +556,13 @@ body{background:var(--creme)}
 .p-appli .onglets-app{display:flex;width:100%;justify-content:space-between;padding:5px;margin:0}
 .p-appli .onglets-app button{flex:1;padding:7px 2px;font-size:9.5px}
 .p-appli .onglet-txt{font-size:12.5px;line-height:1.45;color:var(--muted);margin:10px 0;min-height:36px}
-.ecran-appli{position:relative;align-self:center;height:clamp(290px,calc(100svh - 415px),460px);aspect-ratio:390/844;border-radius:26px;overflow:hidden;background:var(--creme);box-shadow:0 24px 50px -26px rgba(30,28,27,.5),0 0 0 1px rgba(30,28,27,.06)}
+.ecran-appli{position:relative;align-self:center;height:clamp(280px,calc(100svh - 400px),470px);aspect-ratio:390/844;border-radius:26px;overflow:hidden;background:var(--creme);box-shadow:0 24px 50px -26px rgba(30,28,27,.5),0 0 0 1px rgba(30,28,27,.06)}
 .ecran-appli .vraie-appli{position:absolute;inset:0;width:auto;height:auto;border-radius:0}
 .ecran-appli .vraie-appli::after{display:none}
-.p-appli .stores{justify-content:center;margin-top:14px;gap:8px}.p-appli .qr{display:none}.p-appli .store{transform:scale(.88)}
+.ap-tete>div:nth-child(2){flex:1}
+.p-appli .stores{flex-direction:column;align-items:flex-end;gap:5px;margin:0}.p-appli .qr{display:none}
+.p-appli .store{height:30px;padding:0 9px;border-radius:8px;gap:5px}.p-appli .store svg{width:14px;height:14px}.p-appli .store span{font-size:11.5px;line-height:1.05}.p-appli .store span small{display:block;font-size:7px;font-weight:400}
+.p-appli .onglet-txt{text-align:center;margin:12px 0 10px}
 /* 5 — tout est compris (1re version) */
 .inc{padding:0;margin:0}
 .inc li{list-style:none;display:flex;align-items:center;gap:12px;font-size:14.5px;padding:10px 0;border-bottom:1px solid var(--ligne)}
@@ -570,12 +575,12 @@ body{background:var(--creme)}
 .p-prix .prix-carte .btn{background:var(--creme);color:var(--noir)}
 /* 7 — qui suis-je */
 .p-moi{background:var(--sable)}
-.moi-haut{display:grid;grid-template-columns:42% 1fr;gap:16px;align-items:end;margin-bottom:18px}
+.moi-haut{display:grid;grid-template-columns:36% 1fr;gap:16px;align-items:end;margin-bottom:14px}
 .moi-haut>div{min-width:0}
 .moi-haut .ph{aspect-ratio:3/4;border-radius:20px;background:50% 22%/cover url('marie-portrait.webp')}
 .moi-haut .t2{font-size:26px;margin:8px 0 0}
-.p-moi .moi-texte{font-size:13.5px;line-height:1.6;margin-bottom:10px}
-.p-moi .faits{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin:14px 0 0;padding-top:14px}
+.p-moi .moi-texte{font-size:13px;line-height:1.55;margin-bottom:8px}
+.p-moi .faits{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:10px 0 0;padding-top:10px}
 .p-moi .faits b{font-family:Italiana,serif;font-weight:400;font-size:24px}
 .p-moi .signature{margin-top:14px;font-size:10px}
 /* 8 — les questions : les 4 thèmes sur une ligne, l'écriture de la 1re version */
@@ -601,11 +606,11 @@ body{background:var(--creme)}
 .temoin small{display:block;margin-top:22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.65;line-height:1.6}
 /* les 9 carrés */
 .p-choisit{background:var(--sable)}
-.choisit{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.choisit div{background:#fff;border-radius:16px;padding:11px 13px 12px}
-.choisit div:last-child{grid-column:1/-1}
-.choisit i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--noir);color:var(--creme);font-style:normal;font-size:11px;margin-bottom:8px}
-.choisit b{display:block;font-weight:400;font-size:15px}.choisit span{font-size:12px;color:var(--gris);line-height:1.4}
+.choisit{display:block;border-top:1px solid var(--ligne)}
+.choisit div{display:grid;grid-template-columns:30px 1fr;column-gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ligne)}
+.choisit i{grid-row:1/3}
+.choisit i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--noir);color:var(--creme);font-style:normal;font-size:11px}
+.choisit b{display:block;font-weight:400;font-size:15px;line-height:1.25}.choisit span{font-size:12px;color:var(--gris);line-height:1.35}
 /* tout est compris + le prix, dans un écran */
 .p-inclus .inc li{padding:8px 0;font-size:14px}
 .p-inclus .prix-carte{margin-top:16px;padding:18px 22px 16px;border-radius:24px}
@@ -624,11 +629,38 @@ body{background:var(--creme)}
 .p-zero{background:var(--noir);color:var(--creme)}
 .p-zero .k{color:rgba(246,243,239,.6)}
 .p-zero .t2{font-size:38px;margin-bottom:22px}
-.zero div{display:flex;align-items:baseline;gap:18px;padding:18px 0;border-top:1px solid rgba(246,243,239,.16)}
+.zero div{display:flex;align-items:baseline;gap:18px;padding:15px 0;border-top:1px solid rgba(246,243,239,.16)}
 .zero div:last-child{border-bottom:1px solid rgba(246,243,239,.16)}
 .zero b{font-family:Italiana,serif;font-weight:400;font-size:44px;line-height:1;min-width:104px}
 .zero span{font-size:14.5px;line-height:1.4;opacity:.85}
 .zero-note{font-size:11.5px;line-height:1.5;opacity:.5;margin:18px 0 0}
+/* le bouton qui suit */
+.suit{position:fixed;right:18px;top:11px;z-index:60;transform:translateY(-70px);display:flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 20px;border-radius:999px;background:var(--noir);color:var(--creme);font-size:10px;letter-spacing:.2em;text-transform:uppercase;box-shadow:0 14px 30px -12px rgba(0,0,0,.55),0 0 0 1px rgba(246,243,239,.12);transition:transform .45s cubic-bezier(.2,.7,.2,1),height .35s,padding .35s,font-size .35s;white-space:nowrap}
+.suit.vu{transform:none}
+.suit.petit{height:32px;padding:0 13px;font-size:8.5px;letter-spacing:.14em}
+
+@media (max-height:760px){
+  .pan{padding-top:64px;padding-bottom:18px}
+  .t2{font-size:28px;margin:6px 0 12px}
+  .p-styles .t2{font-size:26px}
+  .dots{margin:8px 0 0}.dots button{height:34px}.dots button i{width:26px;height:26px}
+  .seg{margin-top:6px}.seg button{height:30px}
+  .note-l{margin-top:6px}
+  .choisit div{padding:7px 0}.choisit i{width:26px;height:26px}.choisit b{font-size:14px}.choisit span{font-size:11.5px}
+  .p-etapes .case{padding:14px 16px 16px}.p-etapes .case h3{font-size:24px;margin:4px 0 10px}
+  .p-etapes .pas{gap:8px}.p-etapes .pas li{font-size:12px}.p-etapes .pas strong{font-size:13.5px}.p-etapes .pas b{font-size:24px}
+  .p-etapes .case.sombre p{font-size:12.5px}.p-etapes .case-bas{padding-top:10px}
+  .p-appli .t2{font-size:26px;margin:8px 0 10px}
+  .ecran-appli{height:calc(100svh - 360px)}
+  .p-appli .onglet-txt{margin:8px 0 8px;min-height:0;font-size:12px}
+  .p-inclus .inc li{padding:6px 0;font-size:13px}
+  .p-inclus .prix-carte{margin-top:12px;padding:14px 18px 12px}.p-inclus .prix-carte b{font-size:38px;margin:4px 0 0}
+  .p-inclus .prix-carte ul{margin:8px 0 10px;padding-top:8px}.p-inclus .prix-carte .btn{height:42px}
+  .p-zero .t2{font-size:30px;margin-bottom:12px}.zero div{padding:10px 0}.zero b{font-size:34px;min-width:84px}.zero span{font-size:13.5px}.zero-note{margin-top:10px}
+  .p-moi .moi-texte{font-size:12.5px;line-height:1.5}.moi-haut .t2{font-size:22px}.p-moi .faits b{font-size:21px}
+  .p-questions{padding-top:66px}.p-questions .t2{font-size:32px}.qt{padding:12px 0}.qt button{font-size:15.5px}.qt .rep p{font-size:13.5px}
+  .fin-haut{padding-top:76px}
+}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -663,7 +695,7 @@ body{background:var(--creme)}
   </div>
   <div class="dots" id="dots"></div>
   <div class="seg" id="seg"><button class="on" data-mode="jour">Clair</button><button data-mode="nuit">Foncé</button></div>
-  <p class="note-l">Mon site, Dilerna, en exemple · faites glisser les styles · touchez une couleur</p>
+  <p class="note-l">Mon site Dilerna en exemple · touchez une couleur</p>
 </section>
 
 <section class="pan p-choisit" id="choisit">
@@ -684,21 +716,20 @@ body{background:var(--creme)}
 </section>
 
 <section class="pan p-appli" id="lappli">
-  <div class="ap-tete"><img src="icone-appli.svg" alt="Icône de l’appli Loginail"><div><span class="k">L’appli Loginail</span><small>Comprise dans votre abonnement</small></div></div>
+  <div class="ap-tete"><img src="icone-appli.svg" alt="Icône de l’appli Loginail"><div><span class="k">L’appli Loginail</span><small>Comprise dans votre abonnement</small></div><div class="stores">
+      <a class="store" href="#" aria-label="Télécharger dans l’App Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 1.4c0 1.1-.5 2.3-1.2 3.1-.7.9-2 1.6-3 1.6-.1 0-.2 0-.3 0 0-.1 0-.2 0-.4 0-1.1.6-2.3 1.2-3 .8-.9 2.1-1.6 3.2-1.7 0 .1.1.3.1.4zm4.5 15.7c0 .1-.5 1.6-1.5 3.1-.9 1.3-1.9 2.7-3.4 2.7s-1.9-.9-3.6-.9-2.3.9-3.7.9-2.3-1.3-3.4-2.8c-1.3-1.8-2.3-4.6-2.3-7.3 0-4.3 2.8-6.5 5.6-6.5 1.4 0 2.7 1 3.6 1 .9 0 2.2-1 3.9-1 .6 0 2.9.1 4.4 2.2-.1.1-2.4 1.4-2.4 4.2 0 3.3 2.9 4.4 2.8 4.4z"/></svg><span><small>Télécharger dans</small>l’App Store</span></a>
+      <a class="store" href="#" aria-label="Disponible sur Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6 13.6 12 4 21.4c-.4-.2-.6-.6-.6-1.1V3.7c0-.5.2-.9.6-1.1z" fill="#00D7FE"/><path d="M16.8 8.8 13.6 12 4 2.6c.3-.2.8-.2 1.2 0z" fill="#00F076"/><path d="M16.8 15.2 5.2 21.4c-.4.2-.9.2-1.2 0l9.6-9.4z" fill="#FF3A44"/><path d="m16.8 8.8 3.4 1.9c.9.5.9 2 0 2.5l-3.4 2L13.6 12z" fill="#FFD400"/></svg><span><small>Disponible sur</small>Google Play</span></a>
+      <div class="qr"><svg viewBox="-2 -2 29 29" aria-hidden="true"><rect x="-2" y="-2" width="29" height="29" rx="3" fill="#fff"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM15 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM11 2h1v1h-1zM15 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM24 8h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM23 9h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM12 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM12 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM1 13h1v1h-1zM5 13h1v1h-1zM6 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM1 15h1v1h-1zM2 15h1v1h-1zM5 15h1v1h-1zM6 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM13 15h1v1h-1zM17 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM12 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM15 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1z" fill="#1E1C1B"/></svg><span>Scannez pour<br>télécharger</span></div>
+    </div></div>
   <h2 class="t2">Tout votre univers, dans votre poche.</h2>
-  <div class="onglets-app" id="ongletsApp">
+  <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
+  <p class="onglet-txt" id="ongletTxt"></p><div class="onglets-app" id="ongletsApp">
       <button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Accueil</button>
       <button data-o="agenda"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Agenda</button>
       <button data-o="clientes"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Clientes</button>
       <button data-o="caisse"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>Caisse</button>
       <button data-o="site"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2.5"/><path d="M10 18h4"/></svg>Mon site</button></div>
-    <p class="onglet-txt" id="ongletTxt"></p>
-  <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
-  <div class="stores">
-      <a class="store" href="#" aria-label="Télécharger dans l’App Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 1.4c0 1.1-.5 2.3-1.2 3.1-.7.9-2 1.6-3 1.6-.1 0-.2 0-.3 0 0-.1 0-.2 0-.4 0-1.1.6-2.3 1.2-3 .8-.9 2.1-1.6 3.2-1.7 0 .1.1.3.1.4zm4.5 15.7c0 .1-.5 1.6-1.5 3.1-.9 1.3-1.9 2.7-3.4 2.7s-1.9-.9-3.6-.9-2.3.9-3.7.9-2.3-1.3-3.4-2.8c-1.3-1.8-2.3-4.6-2.3-7.3 0-4.3 2.8-6.5 5.6-6.5 1.4 0 2.7 1 3.6 1 .9 0 2.2-1 3.9-1 .6 0 2.9.1 4.4 2.2-.1.1-2.4 1.4-2.4 4.2 0 3.3 2.9 4.4 2.8 4.4z"/></svg><span><small>Télécharger dans</small>l’App Store</span></a>
-      <a class="store" href="#" aria-label="Disponible sur Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6 13.6 12 4 21.4c-.4-.2-.6-.6-.6-1.1V3.7c0-.5.2-.9.6-1.1z" fill="#00D7FE"/><path d="M16.8 8.8 13.6 12 4 2.6c.3-.2.8-.2 1.2 0z" fill="#00F076"/><path d="M16.8 15.2 5.2 21.4c-.4.2-.9.2-1.2 0l9.6-9.4z" fill="#FF3A44"/><path d="m16.8 8.8 3.4 1.9c.9.5.9 2 0 2.5l-3.4 2L13.6 12z" fill="#FFD400"/></svg><span><small>Disponible sur</small>Google Play</span></a>
-      <div class="qr"><svg viewBox="-2 -2 29 29" aria-hidden="true"><rect x="-2" y="-2" width="29" height="29" rx="3" fill="#fff"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM15 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM11 2h1v1h-1zM15 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM24 8h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM23 9h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM12 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM12 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM1 13h1v1h-1zM5 13h1v1h-1zM6 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM1 15h1v1h-1zM2 15h1v1h-1zM5 15h1v1h-1zM6 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM13 15h1v1h-1zM17 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM12 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM15 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1z" fill="#1E1C1B"/></svg><span>Scannez pour<br>télécharger</span></div>
-    </div>
+    
 </section>
 
 <section class="pan p-inclus" id="compris">
@@ -712,6 +743,7 @@ body{background:var(--creme)}
 <section class="pan p-zero" id="zero">
   <div class="k">Sans surprise</div><h2 class="t2">Ce que vous ne paierez jamais.</h2>
   <div class="zero"><div><b>0 %</b><span>de commission sur vos réservations</span></div>
+    <div><b>0 €</b><span>pour créer votre site et le voir</span></div>
     <div><b>0 €</b><span>de frais cachés</span></div>
     <div><b>0</b><span>engagement : vous arrêtez en 1 clic</span></div>
     <div><b>1 mois</b><span>offert pour commencer</span></div></div>
@@ -737,6 +769,7 @@ body{background:var(--creme)}
   <div id="faq"></div>
 </section>
 
+<a class="suit" id="suit" href="#haut">Créer mon site</a>
 <section class="pan p-fin"><div class="fin-haut">
   <div class="k" style="color:rgba(246,243,239,.6)">À vous de jouer</div>
   <h2 class="t2">Votre site est à un copier-coller.</h2>
@@ -757,11 +790,11 @@ addEventListener("scroll",()=>$("barre").classList.toggle("fond",scrollY>innerHe
 /* ---- à votre image : mon vrai site dans les 3 styles, qui défile doucement ; les couleurs et clair/foncé changent les 3 à la fois ---- */
 const COUL=[["noir","#1E1C1B"],["choco","#4A3226"],["marine","#24344F"],["taupe","#5E5149"],["greige","#5F574F"],["sable","#80633F"],["peche","#7A5444"],["sauge","#4F5A45"],["lin","#6E6253"],["nude","#8A6656"],["rose","#9A5D6B"],["bleup","#4F6F93"]];
 const UNE={1:"photo0.jpg",2:"classique.webp",3:"magazine.webp"};let ci=0,modeS="jour";
-$("dots").innerHTML=COUL.map((c,i)=>`<button class="${i?"":"on"}" data-c="${i}" style="background:${c[1]}" aria-label="Couleur ${i+1}"></button>`).join("");
+$("dots").innerHTML=COUL.map((c,i)=>`<button class="${i?"":"on"}" data-c="${i}" aria-label="Couleur ${i+1}"><i style="background:${c[1]}"></i></button>`).join("");
 document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dataset.c="noir";f.dataset.m="jour";
   f.onload=()=>{try{const d=f.contentDocument,e=d.querySelector(".ecran");e.remove();d.body.innerHTML="";d.body.append(e);d.body.style.cssText="margin:0;overflow:hidden;pointer-events:none";
-    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.parentElement.clientHeight/(232/390))+"px!important}.defiler,.pret{display:none!important}";d.head.append(st);
-    e.style.zoom=232/390;f.classList.add("pret");
+    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.parentElement.clientHeight/(f.clientWidth/390))+"px!important}.defiler,.pret,.langues{display:none!important}";d.head.append(st);
+    e.style.zoom=f.clientWidth/390;f.classList.add("pret");
     const def=e.querySelector(".defile");if(def){const a={def,y:0,sens:1,pause:performance.now()+1200+n*400};f._a=a;
       const pas=t=>{const max=def.scrollHeight-def.clientHeight;if(max>0&&t>a.pause){a.y+=a.sens*.7;if(a.y>max){a.y=max;a.sens=-1}if(a.y<0){a.y=0;a.sens=1}def.scrollTop=a.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
   f.src=`demo/site.html?public&exemple=dilerna&style=${n}&couleur=noir&mode=jour&une=${UNE[n]}`});
@@ -805,6 +838,10 @@ function faq(){$("faqCats").innerHTML=THEMES.map((t,i)=>`<button class="${i===th
 faq();
 $("faqCats").onclick=e=>{const b=e.target.closest("button");if(!b)return;themeI=+b.dataset.t;faq()};
 $("faq").onclick=e=>{const b=e.target.closest(".qt>button");if(!b)return;const q=b.parentElement,o=!q.classList.contains("ouv");$("faq").querySelectorAll(".qt").forEach(x=>x.classList.remove("ouv"));if(o)q.classList.add("ouv")};
+/* le bouton qui suit : caché sur l'arrivée et la fin (elles ont déjà le leur), petit quand on descend, grand quand on remonte */
+{let avant=scrollY;const b=$("suit"),fin=document.querySelector(".p-fin");
+ addEventListener("scroll",()=>{const y=scrollY,f=fin.getBoundingClientRect().top;b.classList.toggle("vu",y>innerHeight*.8&&f>innerHeight*.4);b.classList.toggle("petit",y>avant+2);if(y<avant-2)b.classList.remove("petit");avant=y},{passive:true});
+ b.onclick=e=>{e.preventDefault();scrollTo({top:0,behavior:"smooth"});setTimeout(()=>document.querySelector(".p-haut input").focus({preventScroll:true}),600)}}
 /* un titre qui doit tenir sur une ligne rapetisse un peu s'il le faut */
 const uneLigne=()=>document.querySelectorAll(".une-ligne").forEach(t=>{t.style.fontSize="";let f=parseFloat(getComputedStyle(t).fontSize);while(t.scrollWidth>t.clientWidth&&f>18){f-=.5;t.style.fontSize=f+"px"}});
 uneLigne();addEventListener("resize",uneLigne);document.fonts&&document.fonts.ready.then(uneLigne);
