@@ -707,7 +707,8 @@ body{background:var(--creme)}
 /* comment ça marche : les deux cases de la même taille */
 .p-etapes .case{display:flex;flex-direction:column}
 /* ce qui brille : « 1 mois offert », « sans engagement » */
-.brille{font-style:normal;font-weight:500;background:linear-gradient(110deg,#D9C3A5 20%,#fff 40%,#F1E3CF 50%,#D9C3A5 70%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brille 3s linear infinite}
+.brille{font-style:normal;font-weight:600;background:linear-gradient(110deg,#fff 0%,#fff 38%,#E9CFA6 48%,#fff 58%,#fff 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brille 2.6s linear infinite,lueur 2.6s ease-in-out infinite}
+@keyframes lueur{0%,100%{filter:drop-shadow(0 0 0 rgba(255,255,255,0))}50%{filter:drop-shadow(0 0 7px rgba(255,255,255,.75))}}
 @keyframes brille{from{background-position:120% 0}to{background-position:-120% 0}}
 .prix-carte>span.brille{opacity:1;letter-spacing:.32em}
 .ap-sous{font-size:13px;line-height:1.5;color:var(--muted);margin:-4px 0 10px;text-align:center}
@@ -718,6 +719,10 @@ body{background:var(--creme)}
 .p-histoire .t2{margin-bottom:18px!important}
 .temoin{border-top:0!important;padding-top:0!important;max-width:320px}
 .temoin .it{font-style:italic;font-size:19px!important}
+.citation{max-width:300px;margin:0 auto 34px;padding-bottom:26px;border-bottom:1px solid rgba(246,243,239,.14)}
+.citation p{margin:0;font-style:italic;font-weight:300;font-size:17px;line-height:1.55;color:var(--creme)}
+.citation small{display:block;margin-top:12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.55;white-space:nowrap}
+.fin-haut{padding-top:84px!important}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -753,9 +758,10 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
     <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Prestige</b></div><iframe title="Le site Dilerna, style Prestige" data-n="2"></iframe></div></div>
     <div class="st-c" data-n="3"><div class="carte"><div class="c-nom"><b>Élégant</b></div><iframe title="Le site Dilerna, style Élégant" data-n="3"></iframe></div></div>
   </div>
+  <p class="note-l touchez">Touchez un site pour l’ouvrir en entier</p>
   <div class="dots" id="dots"></div>
   <div class="seg" id="seg"><button class="on" data-mode="jour">Clair</button><button data-mode="nuit">Foncé</button></div>
-  <p class="note-l touchez">Touchez un site pour l’ouvrir en entier</p><p class="note-l">En exemple : mon salon, Dilerna</p>
+  <p class="note-l">En exemple : mon salon, Dilerna</p>
 </section>
 
 <section class="pan p-choisit" id="choisit">
@@ -803,7 +809,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
   <div class="zero"><div><b>0 %</b><span>de commission sur vos réservations</span></div>
     <div><b>0 €</b><span>pour créer votre site et le voir</span></div>
     <div><b>0 €</b><span>de frais cachés</span></div>
-    <div><b>0</b><span>engagement : vous arrêtez en 1 clic</span></div>
+    <div><b>0 mois</b><span>d’engagement : vous arrêtez en 1 clic</span></div>
     <div><b>0 €</b><span>de plus pour les SMS de rappel, sans limite</span></div></div>
   <p class="zero-note">Sur les acomptes en ligne, seuls les frais de carte bancaire du service de paiement s’appliquent.</p>
 </section>
@@ -816,11 +822,6 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
     <p class="signature">Marie Leandri · fondatrice de Loginail</p>
 </section>
 
-<section class="pan p-histoire" id="histoire">
-  <div class="k">L’histoire</div><h2 class="t2">Le site que j’aurais voulu avoir.</h2>
-  <div class="temoin"><div class="it">“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</div><small>Marie, prothésiste ongulaire, créatrice de Loginail</small></div>
-</section>
-
 <section class="pan p-questions" id="questions">
   <div class="k">Questions</div><h2 class="t2">Bon à savoir</h2>
   <div class="faq-cats" id="faqCats"></div>
@@ -829,6 +830,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 
 <a class="suit" id="suit" href="#haut">Créer mon site</a>
 <section class="pan p-fin"><div class="fin-haut">
+  <div class="citation"><p>“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</p><small>Marie · prothésiste ongulaire, créatrice de Loginail</small></div>
   <div class="k" style="color:rgba(246,243,239,.6)">À vous de jouer</div>
   <h2 class="t2">Votre site est à un copier-coller.</h2>
   <p>Collez votre lien : votre site se crée devant vous. C’est gratuit.</p>
