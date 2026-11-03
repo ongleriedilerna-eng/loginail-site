@@ -520,10 +520,11 @@ body{background:var(--creme)}
 .lien input{border:0;outline:0;background:none;flex:1;font-size:14px;min-width:0;color:var(--noir)}
 .p-haut .btn{background:var(--creme);color:var(--noir)}
 .note-l{font-size:12px;text-align:center;margin-top:10px;color:var(--gris)}
-.p-haut .note-l{color:rgba(246,243,239,.8)}
+.p-haut .note-l{color:rgba(246,243,239,.8);margin-bottom:0}
 .descend{display:block;text-align:center;margin-top:18px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(246,243,239,.8)}
-.descend::after{content:"";display:block;width:1px;height:22px;background:currentColor;margin:8px auto 0;transform-origin:top;animation:trait-d 2s ease-in-out infinite}
-@keyframes trait-d{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+.descend{align-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0}
+.descend svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.2;animation:glisse-d 2.2s ease-in-out infinite}
+@keyframes glisse-d{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(5px);opacity:1}}
 /* 2 — à votre image (1re version) : les 3 styles côte à côte, les couleurs, clair ou foncé — avec MON vrai site */
 .p-styles{padding-left:0;padding-right:0}
 .p-styles>.k,.p-styles>.t2,.p-styles>.dots,.p-styles>.seg,.p-styles>.note-l{margin-left:24px;margin-right:24px}
@@ -556,6 +557,7 @@ body{background:var(--creme)}
 .st-intro{text-align:center;margin:10px 24px 14px;font-family:Italiana,serif;font-size:24px;line-height:1.2}
 .st-intro em{display:block;margin-top:6px;font-family:Jost,sans-serif;font-style:normal;font-size:12.5px;color:var(--gris);letter-spacing:.02em}
 .p-styles>.k{text-align:center}
+.st-pre{text-align:center;margin:0 30px 10px;font-size:13px;line-height:1.5;color:var(--muted)}
 /* 3 — comment ça marche (nouvelle version) */
 .p-etapes{background:#fff}
 .p-etapes .case{padding:20px 20px 22px;border-radius:24px}
@@ -570,7 +572,7 @@ body{background:var(--creme)}
 .p-appli .onglets-app{display:flex;width:100%;justify-content:space-between;padding:5px;margin:0}
 .p-appli .onglets-app button{flex:1;padding:7px 2px;font-size:9.5px}
 .p-appli .onglet-txt{font-size:12.5px;line-height:1.45;color:var(--muted);margin:10px 0;min-height:36px}
-.ecran-appli{position:relative;align-self:center;height:clamp(240px,calc(100svh - 440px),440px);aspect-ratio:390/844;border-radius:26px;overflow:hidden;background:var(--creme);box-shadow:0 24px 50px -26px rgba(30,28,27,.5),0 0 0 1px rgba(30,28,27,.06)}
+.ecran-appli{position:relative;align-self:stretch;width:100%;height:clamp(280px,calc(100svh - 380px),560px);border-radius:26px;overflow:hidden;background:var(--creme);box-shadow:0 24px 50px -26px rgba(30,28,27,.5),0 0 0 1px rgba(30,28,27,.06)}
 .ecran-appli .vraie-appli{position:absolute;inset:0;width:auto;height:auto;border-radius:0}
 .ecran-appli .vraie-appli::after{display:none}
 .ap-tete>div:nth-child(2){flex:1}
@@ -581,6 +583,8 @@ body{background:var(--creme)}
 .ong-app button{flex:1;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:27px;color:rgba(246,243,239,.5);font-family:Jost,sans-serif;font-size:9.5px;letter-spacing:.08em;transition:background .3s,color .3s;-webkit-tap-highlight-color:transparent}
 .ong-app button.on{background:rgba(246,243,239,.12);color:var(--creme)}
 .ong-app svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.4}
+.ap-titre{font-size:clamp(24px,7vw,30px)!important}
+.ecran-appli iframe{pointer-events:auto}
 /* 5 — tout est compris (1re version) */
 .inc{padding:0;margin:0}
 .inc li{list-style:none;display:flex;align-items:center;gap:12px;font-size:14.5px;padding:10px 0;border-bottom:1px solid var(--ligne)}
@@ -601,8 +605,9 @@ body{background:var(--creme)}
 .p-moi .faits{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:10px 0 0;padding-top:10px}
 .p-moi .faits b{font-family:Italiana,serif;font-weight:400;font-size:24px}
 .p-moi .signature{margin-top:14px;font-size:10px}
-.mon-site{align-self:flex-start;display:inline-flex;gap:6px;align-items:center;border:1px solid var(--noir);border-radius:999px;padding:8px 14px;font-size:12px;margin-bottom:16px}
-.mon-site b{font-weight:500}
+.mon-site{display:block;margin-bottom:14px;font-family:Italiana,serif;font-size:19px;line-height:1.1;color:var(--noir)}
+.mon-site span{display:block;font-family:Jost,sans-serif;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gris);margin-bottom:3px}
+.mon-site i{font-style:normal;font-size:13px;margin-left:6px;display:inline-block;border-bottom:1px solid currentColor;line-height:1}
 /* 8 — les questions : les 4 thèmes sur une ligne, l'écriture de la 1re version */
 .p-questions{justify-content:flex-start;padding-top:86px}
 .faq-cats{display:flex;justify-content:space-between;gap:6px;margin:0 0 8px}
@@ -671,7 +676,7 @@ body{background:var(--creme)}
   .p-etapes .pas{gap:8px}.p-etapes .pas li{font-size:12px}.p-etapes .pas strong{font-size:13.5px}.p-etapes .pas b{font-size:24px}
   .p-etapes .case.sombre p{font-size:12.5px}.p-etapes .case-bas{padding-top:10px}
   .p-appli .t2{font-size:26px;margin:8px 0 10px}
-  .ecran-appli{height:calc(100svh - 400px)}
+  .ecran-appli{height:calc(100svh - 372px)}
   .p-appli .onglet-txt{margin:8px 0 8px;min-height:0;font-size:12px}
   .p-inclus .inc li{padding:6px 0;font-size:13px}
   .p-inclus .prix-carte{margin-top:12px;padding:14px 18px 12px}.p-inclus .prix-carte b{font-size:38px;margin:4px 0 0}
@@ -705,13 +710,14 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 
 <section class="pan p-haut" id="haut">
   <div class="k haut-k">Fait par une prothésiste, pour les prothésistes</div>
+  <a class="descend" href="#styles"><span>Découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a>
   <div><h1>Les grands salons ont de beaux sites. Pourquoi pas vous&nbsp;?</h1>
     <div class="sous"><b>Votre site + votre appli</b> · 79,99 € / mois · 1 mois offert</div>
-    <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div>
-    <a class="descend" href="#styles">Découvrir</a></div>
+    <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div></div>
 </section>
 
 <section class="pan p-styles" id="styles">
+  <p class="st-pre">Votre site doit vous ressembler. Choisissez son style, puis sa couleur.</p>
   <div class="k">À votre image · 3 styles, 12 couleurs</div>
   <p class="st-intro">Le même salon, en trois styles.<br><em>Touchez-en un pour voir le site en entier.</em></p>
   <div class="styles" id="cartes">
@@ -745,7 +751,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 
 <section class="pan p-appli" id="lappli">
   <div class="ap-tete"><img src="icone-appli.svg" alt="Icône de l’appli Loginail"><div><span class="k">L’appli Loginail</span><small>Comprise dans votre abonnement</small></div></div>
-  <h2 class="t2">Tout votre univers, dans votre poche.</h2>
+  <h2 class="t2 ap-titre">Tout votre univers,<br>dans votre poche.</h2>
   <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
   <p class="onglet-txt" id="ongletTxt"></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
   <div class="stores">
@@ -779,8 +785,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </section>
 
 <section class="pan p-moi" id="moi">
-  <a class="mon-site" href="https://dilerna.fr/" target="_blank" rel="noopener">Voir mon site <b>dilerna.fr</b> ↗</a>
-  <div class="moi-haut"><div class="ph" role="img" aria-label="Marie, créatrice de Loginail"></div><div><span class="k">Qui suis-je</span><h2 class="t2">Pensé par une prothésiste, pour les prothésistes.</h2></div></div>
+  <div class="moi-haut"><div class="ph" role="img" aria-label="Marie, créatrice de Loginail"></div><div><a class="mon-site" href="https://dilerna.fr/" target="_blank" rel="noopener"><span>Mon salon</span>dilerna.fr<i>↗</i></a><span class="k">Qui suis-je</span><h2 class="t2">Pensé par une prothésiste, pour les prothésistes.</h2></div></div>
   <p class="moi-texte">Avoir un beau site est devenu un luxe : des devis hors de prix, des abonnements qui s’additionnent, des outils pensés pour les grands instituts. Pour une prothésiste indépendante, c’est souvent <b>trop cher et trop compliqué</b>.</p>
     <p class="moi-texte">J’ai créé Loginail pour changer ça : <b>un site élégant à votre nom</b>, la réservation en ligne et une appli pour gérer votre salon, réunis dans <b>un seul abonnement</b> et <b>prêts en quelques minutes</b>.</p>
     <div class="faits"><div><b>2023</b>prothésiste ongulaire</div><div><b>4 000+</b>poses réalisées</div><div><b>5,0 ★</b>67 avis Google</div><div><b>Porto-Vecchio</b>salon Dilerna</div></div>
@@ -827,6 +832,7 @@ document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dat
   f.onload=()=>{try{const d=f.contentDocument,e=d.querySelector(".ecran");e.remove();d.body.innerHTML="";d.body.append(e);d.body.style.cssText="margin:0;overflow:hidden;pointer-events:none";
     const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.parentElement.clientHeight/(f.clientWidth/390))+"px!important}.defiler,.pret,.langues{display:none!important}";d.head.append(st);
     e.style.zoom=f.clientWidth/390;f.classList.add("pret");
+    [...e.querySelectorAll("a,button")].filter(x=>/laisser mon avis/i.test(x.textContent)).forEach(x=>x.style.display="none");
     const def=e.querySelector(".defile");if(def){const a={def,y:0,sens:1,pause:performance.now()+1200+n*400};f._a=a;
       const pas=t=>{const max=def.scrollHeight-def.clientHeight;if(max>0&&t>a.pause){a.y+=a.sens*.7;if(a.y>max){a.y=max;a.sens=-1}if(a.y<0){a.y=0;a.sens=1}def.scrollTop=a.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
   f.src=`demo/site.html?public&exemple=dilerna&style=${n}&couleur=noir&mode=jour&une=${UNE[n]}`});
@@ -858,8 +864,8 @@ const APPLI={accueil:["demo/loginail-pro.html",1,"Votre journée en un coup d’
   caisse:["demo/loginail-caisse.html",2,"Ce que vous avez encaissé, jour après jour, sans calcul."],
   site:["demo/loginail-monsite2.html",1,"Votre site : photos, prix, textes, style et couleur. Vous changez tout quand vous voulez."]};
 function isole(ifr,n){try{const d=ifr.contentDocument,t=d.querySelectorAll(".ecran")[n];if(!t)return;t.remove();d.body.innerHTML="";d.body.append(t);
-  d.body.style.cssText="margin:0;background:transparent;overflow:hidden";const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:844px!important}.ong,.ag-tab{display:none!important}";d.head.append(st);
-  const ajuste=()=>{t.style.zoom="1";const k=Math.min(ifr.clientWidth/t.offsetWidth,ifr.clientHeight/t.offsetHeight);t.style.zoom=k;t.style.left=Math.max(0,(ifr.clientWidth/k-t.offsetWidth)/2)+"px"};ajuste();new ResizeObserver(ajuste).observe(ifr);ifr.classList.add("pret")}catch(e){console.warn(e)}}
+  d.body.style.cssText="margin:0;background:transparent;overflow-x:hidden;overflow-y:auto";const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:844px!important}.ong,.ag-tab{display:none!important}";d.head.append(st);
+  const ajuste=()=>{t.style.zoom="1";const k=ifr.clientWidth/t.offsetWidth;t.style.zoom=k;t.style.left=Math.max(0,(ifr.clientWidth/k-t.offsetWidth)/2)+"px"};ajuste();new ResizeObserver(ajuste).observe(ifr);ifr.classList.add("pret")}catch(e){console.warn(e)}}
 const va=$("vraieAppli");let ongletI="accueil",appliAuto=true,appliT;
 Object.entries(APPLI).forEach(([k,v])=>{const f=document.createElement("iframe");f.dataset.o=k;f.title="Appli Loginail : "+k;f.loading="lazy";f.src=v[0];f.onload=()=>{isole(f,v[1]);if(k===ongletI)f.classList.add("on")};va.prepend(f)});
 function ouvreOnglet(k){ongletI=k;va.querySelectorAll("iframe").forEach(f=>f.classList.toggle("on",f.dataset.o===k&&f.classList.contains("pret")));
