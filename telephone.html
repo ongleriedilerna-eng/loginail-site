@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <script id="vers-ordi">if(!(matchMedia("(max-width: 899px)").matches||screen.width<900))location.replace("./"+location.hash)</script>
 <title>Loginail · Le site des prothésistes ongulaires</title>
 <meta name="description" content="Loginail : votre site d’onglerie en 3 étapes, avec réservation en ligne, rappels SMS, agenda et fichier clientes. Fait par une prothésiste, pour les prothésistes. Ouverture bientôt en Corse.">
@@ -509,7 +509,7 @@ body{background:var(--creme)}
 .logo .lc{display:block}.logo .lf{display:none}
 .barre.fond .logo{color:var(--noir)}.barre.fond .logo .lc{display:none}.barre.fond .logo .lf{display:block}
 /* 1 — l'arrivée (1re version) : le texte en haut, le lien en bas, la photo derrière */
-.pan.p-haut{min-height:calc(max(100lvh,calc(var(--h0,100lvh) + 2px)) + 44px);justify-content:space-between;padding-bottom:calc(70px + 100lvh - 100svh);color:var(--creme);background:#1E1C1B center/cover url('exemple-dilerna/haut.jpg');padding-top:84px}
+.pan.p-haut{min-height:calc(max(100lvh,calc(var(--h0,100lvh) + 2px)) + 130px + env(safe-area-inset-bottom));justify-content:space-between;padding-bottom:calc(150px + 100lvh - 100svh + env(safe-area-inset-bottom));color:var(--creme);background:#1E1C1B center/cover url('exemple-dilerna/haut.jpg');padding-top:84px}
 .p-haut::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,17,.62) 0,rgba(20,18,17,.25) 26%,rgba(20,18,17,.62) 48%,rgba(20,18,17,.9) 100%)}
 .p-haut>*{position:relative;z-index:1}
 .p-haut .k{color:rgba(246,243,239,.85);line-height:1.6}
@@ -522,7 +522,7 @@ body{background:var(--creme)}
 .note-l{font-size:12px;text-align:center;margin-top:10px;color:var(--gris)}
 .p-haut .note-l{color:rgba(246,243,239,.8);margin-bottom:0}
 .descend{display:block;text-align:center;margin-top:18px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(246,243,239,.8)}
-.descend{align-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0}
+.descend{display:flex;flex-direction:column;align-items:center;gap:4px;margin:14px 0 0}
 .descend svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.2;animation:glisse-d 2.2s ease-in-out infinite}
 @keyframes glisse-d{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(5px);opacity:1}}
 /* 2 — à votre image (1re version) : les 3 styles côte à côte, les couleurs, clair ou foncé — avec MON vrai site */
@@ -690,6 +690,8 @@ body{background:var(--creme)}
 .p-zero,.p-histoire,.p-moi{min-height:0!important;padding-top:64px!important;padding-bottom:56px!important}
 
 .p-questions{min-height:0!important;padding-top:44px!important;padding-bottom:40px!important}
+.pan:not(.p-haut):not(.p-fin){min-height:0}
+.p-styles,.p-choisit,.p-etapes,.p-appli,.p-inclus{padding-top:52px!important;padding-bottom:44px!important}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -711,10 +713,10 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 
 <section class="pan p-haut" id="haut">
   <div class="k haut-k">Fait par une prothésiste, pour les prothésistes</div>
-  <a class="descend" href="#styles"><span>Découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a>
   <div><h1>Les grands salons ont de beaux sites. Pourquoi pas vous&nbsp;?</h1>
     <div class="sous"><b>Votre site + votre appli</b> · 79,99 € / mois · 1 mois offert</div>
-    <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div></div>
+    <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div>
+    <a class="descend" href="#styles"><span>Découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a></div>
 </section>
 
 <section class="pan p-styles" id="styles">
@@ -770,7 +772,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </section>
 
 <section class="pan p-zero" id="zero">
-  <div class="k">Sans surprise</div><h2 class="t2">Ce que vous ne paierez jamais.</h2>
+  <div class="k">Sans surprise</div><h2 class="t2">Ce que vous<br>ne paierez jamais.</h2>
   <div class="zero"><div><b>0 %</b><span>de commission sur vos réservations</span></div>
     <div><b>0 €</b><span>pour créer votre site et le voir</span></div>
     <div><b>0 €</b><span>de frais cachés</span></div>
