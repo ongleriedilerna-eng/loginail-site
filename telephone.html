@@ -719,8 +719,9 @@ body{background:var(--creme)}
 .p-histoire .t2{margin-bottom:18px!important}
 .temoin{border-top:0!important;padding-top:0!important;max-width:320px}
 .temoin .it{font-style:italic;font-size:19px!important}
-.citation{max-width:300px;margin:0 auto 34px;padding-bottom:26px;border-bottom:1px solid rgba(246,243,239,.14)}
-.citation p{margin:0;font-style:italic;font-weight:300;font-size:17px;line-height:1.55;color:var(--creme)}
+.citation{max-width:310px;margin:0 auto;text-align:center}
+.citation p{margin:0;font-style:italic;font-weight:300;font-size:19px;line-height:1.55;color:var(--noir)}
+.p-histoire{background:#fff;padding-top:46px!important;padding-bottom:46px!important}
 .citation small{display:block;margin-top:12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.55;white-space:nowrap}
 .fin-haut{padding-top:84px!important}
 /* 9 — la fin */
@@ -771,6 +772,8 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </section>
 
 <div class="grand-site" id="grandSite" hidden><iframe title="Le site en grand"></iframe><div class="gs-bas"><span id="gsNom"></span><button id="gsFerme">Fermer</button></div></div>
+
+<section class="pan p-histoire" id="histoire"><div class="citation"><p>“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</p><small>Marie · prothésiste ongulaire, créatrice de Loginail</small></div></section>
 
 <section class="pan p-etapes" id="etapes">
   <div class="k">Comment ça marche</div><h2 class="t2">Prête en quelques minutes.</h2>
@@ -830,7 +833,6 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 
 <a class="suit" id="suit" href="#haut">Créer mon site</a>
 <section class="pan p-fin"><div class="fin-haut">
-  <div class="citation"><p>“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</p><small>Marie · prothésiste ongulaire, créatrice de Loginail</small></div>
   <div class="k" style="color:rgba(246,243,239,.6)">À vous de jouer</div>
   <h2 class="t2">Votre site est à un copier-coller.</h2>
   <p>Collez votre lien : votre site se crée devant vous. C’est gratuit.</p>
@@ -857,15 +859,16 @@ addEventListener("scroll",()=>$("barre").classList.toggle("fond",scrollY>innerHe
 
 /* ---- à votre image : mon vrai site dans les 3 styles, qui défile doucement ; les couleurs et clair/foncé changent les 3 à la fois ---- */
 const COUL=[["noir","#1E1C1B"],["choco","#4A3226"],["marine","#24344F"],["taupe","#5E5149"],["greige","#5F574F"],["sable","#80633F"],["peche","#7A5444"],["sauge","#4F5A45"],["lin","#6E6253"],["nude","#8A6656"],["rose","#9A5D6B"],["bleup","#4F6F93"]];
-const UNE={1:"photo0.jpg",2:"classique.webp",3:"magazine.webp"};let ci=0,modeS="jour";
+const UNE={1:"photo0.jpg",2:"classique.webp",3:"magazine.webp"};
+const PLANCSS="html body .ecran .plan.plan{position:relative;background-color:#EEEAE4!important;background-image:url("+new URL("exemple-dilerna/plan.jpg",location.href).href+")!important;background-size:cover!important;background-position:center!important}.plan .sans,.plan .lmap{display:none!important}.plan::after{content:'© OpenStreetMap';position:absolute;right:8px;bottom:6px;font-size:9px;color:#6f665e;opacity:.85}";let ci=0,modeS="jour";
 $("dots").innerHTML=COUL.map((c,i)=>`<button class="${i?"":"on"}" data-c="${i}" aria-label="Couleur ${i+1}"><i style="background:${c[1]}"></i></button>`).join("");
 document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dataset.c="noir";f.dataset.m="jour";
   f.onload=()=>{try{const d=f.contentDocument,e=d.querySelector(".ecran");e.remove();d.body.innerHTML="";d.body.append(e);d.body.style.cssText="margin:0;overflow:hidden;pointer-events:none";
-    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.parentElement.clientHeight/(f.clientWidth/390))+"px!important}.defiler,.pret,.langues{display:none!important}";d.head.append(st);
+    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.parentElement.clientHeight/(f.clientWidth/390))+"px!important}.defiler,.pret,.langues{display:none!important}"+PLANCSS;d.head.append(st);
     e.style.zoom=f.clientWidth/390;f.classList.add("pret");
     [...e.querySelectorAll("a,button")].filter(x=>/laisser mon avis/i.test(x.textContent)).forEach(x=>x.style.display="none");
     const def=e.querySelector(".defile");if(def){const a={def,y:0,sens:1,pause:performance.now()+1200+n*400};f._a=a;
-      const pas=t=>{const max=def.scrollHeight-def.clientHeight;if(max>0&&t>a.pause){a.y+=a.sens*.7;if(a.y>max){a.y=max;a.sens=-1}if(a.y<0){a.y=0;a.sens=1}def.scrollTop=a.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
+      const pas=t=>{const max=def.scrollHeight-def.clientHeight;if(max>0&&t>a.pause){a.y+=a.sens*1.1;if(a.y>max){a.y=max;a.sens=-1}if(a.y<0){a.y=0;a.sens=1}def.scrollTop=a.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
   f.src=`demo/site.html?public&exemple=dilerna&style=${n}&couleur=noir&mode=jour&une=${UNE[n]}`});
 function peint(){document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n,c=COUL[ci][0];try{const w=f.contentWindow,e=f.contentDocument.querySelector(".ecran");
   const av=w.eval(`cl(${n},"${f.dataset.c}","${f.dataset.m}")`).split(" "),ap=w.eval(`cl(${n},"${c}","${modeS}")`).split(" ");
@@ -876,13 +879,18 @@ const NOMS={1:"Signature",2:"Prestige",3:"Élégant"};
 $("cartes").addEventListener("click",e=>{const c=e.target.closest(".st-c");if(!c)return;const n=+c.dataset.n,g=$("grandSite"),f=g.querySelector("iframe");
   $("gsNom").textContent=NOMS[n]+" · "+(modeS==="nuit"?"foncé":"clair");
   f.onload=()=>{try{const d=f.contentDocument,el=d.querySelector(".ecran");el.remove();d.body.innerHTML="";d.body.append(el);d.body.style.cssText="margin:0;overflow:hidden";
-    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.clientHeight/(f.clientWidth/390))+"px!important}.pret,.langues{display:none!important}";d.head.append(st);el.style.zoom=f.clientWidth/390}catch(x){console.warn(x)}};
+    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.clientHeight/(f.clientWidth/390))+"px!important}.pret,.langues{display:none!important}"+PLANCSS;d.head.append(st);el.style.zoom=f.clientWidth/390}catch(x){console.warn(x)}};
   f.src=`demo/site.html?public&exemple=dilerna&style=${n}&couleur=${COUL[ci][0]}&mode=${modeS}&une=${UNE[n]}`;
   g.hidden=false;requestAnimationFrame(()=>g.classList.add("on"));document.body.style.overflow="hidden"});
 $("gsFerme").onclick=()=>{const g=$("grandSite");g.classList.remove("on");document.body.style.overflow="";setTimeout(()=>{g.hidden=true;g.querySelector("iframe").src="about:blank"},300)};
 /* après une couleur : chaque site descend jusqu'aux avis (là où la couleur se voit le mieux), s'y arrête 3 s, puis repart */
-function montre(){document.querySelectorAll(".st-c iframe").forEach(f=>{const a=f._a;if(!a)return;try{const e=f.contentDocument.querySelector(".ecran"),b=[...e.querySelectorAll("a,button")].find(x=>/laisser mon avis/i.test(x.textContent)),c=b&&(b.closest(".sec")||b.parentElement);
-  if(!c)return;let y=0,n=c;while(n&&n!==a.def){y+=n.offsetTop;n=n.offsetParent}a.y=Math.max(0,y-10);a.sens=1;a.pause=performance.now()+3200;a.def.scrollTo({top:a.y,behavior:"smooth"})}catch(x){}})}
+function cible(e,n){const avis=()=>{const b=[...e.querySelectorAll("a,button")].find(x=>/laisser mon avis/i.test(x.textContent));return b&&(b.closest(".sec")||b.parentElement)};
+  if(n===1){const pl=e.querySelector(".planfond,.plan");if(pl)return pl.closest(".sec")||pl}
+  if(n===3){const pr=e.querySelector('[data-s="presta"]');if(pr)return pr.closest(".sec")||pr}
+  return avis()}
+function vaA(def,y){const y0=def.scrollTop,t0=performance.now(),D=520;const pas=t=>{const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3);def.scrollTop=y0+(y-y0)*e;if(k<1)requestAnimationFrame(pas)};requestAnimationFrame(pas)}
+function montre(){document.querySelectorAll(".st-c iframe").forEach(f=>{const a=f._a;if(!a)return;try{const e=f.contentDocument.querySelector(".ecran"),c=cible(e,+f.dataset.n);
+  if(!c)return;let y=0,n=c;while(n&&n!==a.def){y+=n.offsetTop;n=n.offsetParent}a.y=Math.max(0,y-10);a.sens=1;a.pause=performance.now()+3600;vaA(a.def,a.y)}catch(x){}})}
 $("dots").onclick=e=>{const b=e.target.closest("button");if(!b)return;ci=+b.dataset.c;$("dots").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));peint();montre()};
 $("seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;modeS=b.dataset.mode;$("seg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));peint();montre()};
 /* en arrivant sur les styles, la rangée glisse un peu pour montrer qu'il y en a 3 */
