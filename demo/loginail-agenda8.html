@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loginail · Agenda</title>
+<style>
+:root{--noir:#1E1C1B;--creme:#F6F3EF;--gris:#8a8076;--ligne:rgba(30,28,27,.08);--vert:#6E9A66}
+*{box-sizing:border-box}
+body{margin:0;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.bandeau{text-align:center;padding:16px 16px 4px;font-size:12px;letter-spacing:.06em;color:#6f665e}
+.bandeau b{font-weight:500;color:var(--noir);letter-spacing:.18em;text-transform:uppercase;font-size:11px;display:block;margin-bottom:4px}
+.rangee{display:flex;justify-content:safe center;align-items:flex-start;gap:28px;padding:12px 16px 28px}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.code{white-space:nowrap;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#5d554e}
+.code b{color:var(--noir);font-weight:500;margin-right:6px}
+.tel{zoom:var(--z,1);width:412px;height:866px;border-radius:64px;background:#0d0d0d;padding:11px;position:relative;box-shadow:0 0 0 2px #2a2a2a inset,0 30px 60px -20px rgba(30,28,27,.45)}
+.ecran{width:390px;height:844px;border-radius:53px;overflow:hidden;position:relative;background:var(--creme);isolation:isolate}
+.ile{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:20px;z-index:60}
+.reglages{display:none;justify-content:center;gap:12px;padding:10px 12px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase}
+.reglages div{display:flex;gap:6px}
+.reglages button{border:1px solid rgba(30,28,27,.25);background:none;border-radius:16px;padding:6px 11px;letter-spacing:.14em;cursor:pointer}
+.reglages button.on{background:var(--noir);color:var(--creme);border-color:var(--noir)}
+@media (max-width:699px){
+  body{background:var(--creme)}.bandeau{display:none}
+  .reglages{display:flex;height:46px;align-items:center;border-bottom:1px solid var(--ligne)}
+  .rangee{padding:0;display:block}.col{display:none}.col.vis{display:block}.code{display:none}
+  .tel{zoom:1!important;width:100vw;height:calc(100dvh - 46px);padding:0;border-radius:0;box-shadow:none;background:none}
+  .ecran{width:100%;height:100%;border-radius:0}.ile{display:none}
+}
+
+/* pages */
+.vue{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding:62px 22px 120px;display:none}
+.vue::-webkit-scrollbar{display:none}
+.vue.on{display:block;animation:entre .35s both}
+@keyframes entre{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tete{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.tete small{display:block;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gris)}
+.tete h1{font-weight:300;font-size:30px;margin:4px 0 0;letter-spacing:.01em}
+.rond{width:42px;height:42px;border-radius:50%;background:#E4DDD5;display:grid;place-items:center;font-size:13px;letter-spacing:.04em;border:0;cursor:pointer}
+.k{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gris);margin:24px 0 10px;display:flex;justify-content:space-between;align-items:center}
+.k a{letter-spacing:.06em;text-transform:none;font-size:12px;color:var(--noir);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.carte{background:#fff;border-radius:22px;padding:4px 18px}
+.rdv{display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--ligne);cursor:pointer}
+.rdv:last-child{border:0}
+.rdv .h{width:46px;font-size:14px}
+.rdv .t{flex:1;min-width:0}
+.rdv .t b{display:block;font-weight:400;font-size:14.5px}
+.rdv .t span{font-size:12px;color:var(--gris)}
+.rdv .ac{font-size:11px;color:#5E7A58;display:flex;align-items:center;gap:5px}
+.rdv .ac i{width:6px;height:6px;border-radius:50%;background:var(--vert)}
+.rdv.libre .t b{color:var(--gris);font-style:italic}
+.pil{border:1px solid rgba(30,28,27,.2);background:none;border-radius:18px;padding:7px 12px;font-size:11.5px;cursor:pointer;white-space:nowrap}
+.duo{display:flex;gap:8px}
+.duo button{flex:1}
+.btn{height:46px;border-radius:26px;border:0;background:var(--noir);color:var(--creme);font-size:11px;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.clair{background:#fff;color:var(--noir)}
+.btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5}
+.noire{background:var(--noir);color:var(--creme);border-radius:26px;padding:20px 22px}
+.noire small{font-size:10px;letter-spacing:.28em;text-transform:uppercase;opacity:.65}
+.prochain .l1{display:flex;align-items:baseline;gap:12px;margin:10px 0 2px}
+.prochain .l1 b{font-weight:300;font-size:38px}
+.prochain .l1 span{font-size:13px;opacity:.75}
+.prochain .nom{font-size:18px;font-weight:300}
+.prochain .pr{font-size:13px;opacity:.7;margin-top:2px}
+.noire .bts{display:flex;gap:8px;margin-top:16px}
+.noire .bts button{flex:1;height:42px;border-radius:22px;border:1px solid rgba(246,243,239,.3);background:none;color:var(--creme);font-size:12.5px;cursor:pointer}
+.noire .bts button.plein{background:var(--creme);color:var(--noir);border-color:var(--creme)}
+.siteb .adr{font-weight:300;font-size:23px;margin:8px 0 4px}
+.enl{font-size:12px;display:flex;align-items:center;gap:6px}
+.enl i{width:7px;height:7px;border-radius:50%;background:#8FC283}
+.noire .enl{opacity:.85}
+.blanche{background:#fff;border-radius:24px;padding:18px 20px}
+.monsite{display:flex;align-items:center;gap:14px}
+.monsite .ic{width:44px;height:44px;border-radius:14px;background:var(--creme);display:grid;place-items:center}
+.monsite .ic svg{width:22px;height:22px;stroke:var(--noir);fill:none;stroke-width:1.3}
+.monsite .t{flex:1}
+.monsite b{display:block;font-weight:400;font-size:15.5px}
+.monsite .enl{color:#5E7A58}
+.prochainb{display:flex;gap:16px;align-items:center}
+.prochainb .hh{font-weight:300;font-size:34px;line-height:1}
+.prochainb .t{flex:1}
+.prochainb small{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gris)}
+.prochainb b{display:block;font-weight:400;font-size:16px;margin-top:4px}
+.prochainb span{font-size:12.5px;color:var(--gris)}
+.visites{margin-top:14px;padding-top:12px;border-top:1px solid var(--ligne);font-size:13px;color:var(--gris)}
+.visites b{font-weight:400;font-size:17px;color:var(--noir);margin-right:4px}
+.vide b{display:block;font-weight:400;font-size:15px;margin-bottom:4px}
+.vide span{font-size:12.5px;color:var(--gris);line-height:1.45}
+.cpt{letter-spacing:.1em;color:var(--noir)}
+.coche{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--ligne);cursor:pointer}
+.coche:last-child{border:0}
+.coche>i{width:24px;height:24px;border-radius:50%;border:1.5px solid #CFC6BC;flex:none;position:relative;transition:background .25s,border-color .25s}
+.coche.ok>i{background:var(--noir);border-color:var(--noir)}
+.coche.ok>i:after{content:"";position:absolute;left:7.5px;top:4px;width:5px;height:10px;border:solid var(--creme);border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}
+.coche.ok b{text-decoration:line-through;color:var(--gris)}
+.coche .t{flex:1}.coche b{display:block;font-weight:400;font-size:14.5px}.coche span{font-size:12px;color:var(--gris)}
+.coche .fl{color:#b5aba1;font-size:18px}
+.barre3{display:flex;gap:5px;margin-bottom:12px}.barre3 i{flex:1;height:3px;border-radius:2px;background:#E4DDD5}.barre3 i.on{background:var(--noir)}
+.en{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gris)}
+.et-t{font-weight:300;font-size:21px;margin:8px 0 4px;line-height:1.2}
+.et-s{font-size:13px;color:var(--gris)}
+.plustard{display:block;margin:10px auto 0;border:0;background:none;font-size:12.5px;color:var(--gris);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.carte-et .ic{width:44px;height:44px;border-radius:14px;background:var(--creme);display:grid;place-items:center;margin:12px 0 4px}
+.carte-et .ic svg{width:22px;height:22px;stroke:var(--noir);fill:none;stroke-width:1.3}
+.paie{display:flex;align-items:center;gap:12px;background:#EFE8DF;border-radius:20px;padding:13px 16px;margin-bottom:10px}
+.paie .t,.manque .t{flex:1}.paie b,.manque b{display:block;font-weight:400;font-size:14px}.paie span,.manque span{font-size:12px;color:#6f665e}
+.nouv{display:flex;align-items:center;gap:10px;background:#fff;border-radius:20px;padding:13px 16px;margin-bottom:10px;font-size:13px;cursor:pointer}
+.nouv>i{width:8px;height:8px;border-radius:50%;background:var(--vert);flex:none}
+.nouv b{font-weight:500}.nouv span:nth-child(2){flex:1}.nouv .fl{color:#b5aba1;font-size:18px}
+.manque{display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:13px 16px;margin-top:10px;border:1px dashed #CFC6BC}
+.imprevu{display:block;width:100%;margin-top:10px;height:44px;border-radius:24px;border:1px solid rgba(30,28,27,.18);background:none;font-size:12.5px;color:#5d554e;cursor:pointer}
+.avis .et5{letter-spacing:3px;font-size:13px}
+.av-t{font-weight:300;font-size:16px;margin:6px 0 4px;line-height:1.35}
+.av-s{font-size:12px;color:var(--gris)}
+.dem{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--ligne);font-size:12.5px;color:#5d554e}
+.dem span{flex:1}
+.bravo .adr{font-size:25px}
+.conseil-t{font-size:13px;line-height:1.5;color:#5d554e;margin-top:14px}
+.notif{display:flex;align-items:center;gap:10px;background:#fff;border-radius:20px;padding:10px 12px;margin-top:10px}
+.notif .cloche{width:34px;height:34px;border-radius:11px;background:var(--creme);display:grid;place-items:center;flex:none}
+.notif .cloche svg{width:18px;height:18px;stroke:var(--noir);fill:none;stroke-width:1.4}
+.notif .t{flex:1;min-width:0}
+.notif b{display:block;font-weight:400;font-size:13px;line-height:1.3}
+.notif .pil{padding:7px 11px;font-size:11.5px}
+.pil.noir{background:var(--noir);color:var(--creme);border-color:var(--noir)}
+.vide2{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.vide2 .t{flex:1}.vide2 b{display:block;font-weight:400;font-size:14.5px}.vide2 span{font-size:12px;color:var(--gris)}
+.photo-ex{height:120px;border-radius:18px;background:#fff;margin:4px 0 6px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between}
+.photo-ex div{height:8px;border-radius:4px;background:#ECE6DF}.photo-ex div:nth-child(2n){width:70%}
+.charge{height:4px;border-radius:2px;background:#E4DDD5;overflow:hidden;margin:20px 10px 10px}
+.charge i{display:block;height:100%;width:40%;background:var(--noir);border-radius:2px;animation:charge 1.2s ease-in-out infinite}
+@keyframes charge{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+.pg{display:grid;grid-template-columns:30px repeat(6,1fr);gap:4px;align-items:center}
+.pg span{font-size:10px;color:var(--gris);text-align:center;letter-spacing:.06em}
+.pc{height:24px;border-radius:7px;border:0;background:#fff;cursor:pointer;padding:0}
+.pc.on{background:var(--noir)}
+.pc.ferme{background:repeating-linear-gradient(45deg,#ECE6DF 0 4px,#F6F3EF 4px 8px);cursor:default}
+.pnav{display:flex;justify-content:space-between;margin-top:12px}
+.vign{display:flex;gap:8px;flex-wrap:wrap;min-height:84px;background:#fff;border-radius:18px;padding:10px;margin:4px 0 6px;align-items:center}
+.vide-ph{flex:1;text-align:center;font-size:12.5px;color:var(--gris)}
+.ph{width:52px;height:64px;border-radius:10px;background:#EFE9E2;padding:8px 7px;display:flex;flex-direction:column;gap:6px;position:relative;animation:entre .3s both}
+.ph div{height:4px;border-radius:2px;background:#D9D0C6}.ph div:nth-child(2){width:70%}
+.ph b{position:absolute;right:-5px;top:-5px;width:18px;height:18px;border-radius:50%;background:var(--noir);color:var(--creme);font-size:10px;font-weight:400;display:grid;place-items:center}
+.btn:disabled{opacity:.35;cursor:default}
+.verif{background:#EFE8DF;border-radius:18px;padding:13px 16px;font-size:12.5px;line-height:1.5;color:#5d554e}
+.verif b{display:block;font-weight:500;color:var(--noir);font-size:13.5px;margin-bottom:3px}
+.manque-rdv{display:block;margin:12px auto 0;border:0;background:none;font-size:12.5px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.jai{display:flex;gap:10px;align-items:center;font-size:13px;margin:16px 2px 0;cursor:pointer}
+.jai input{appearance:none;-webkit-appearance:none;flex:none;width:20px;height:20px;border:1.5px solid var(--noir);border-radius:6px;margin:0;position:relative;cursor:pointer}
+.jai input:checked{background:var(--noir)}
+.jai input:checked:after{content:"";position:absolute;left:5.5px;top:2px;width:4px;height:9px;border:solid var(--creme);border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}
+/* grille horaire */
+.grille{position:relative;height:660px;margin-top:4px}
+.gh{position:absolute;left:0;right:0;border-top:1px solid var(--ligne);height:0}
+.gh span{position:absolute;left:0;top:-8px;font-size:10.5px;color:var(--gris);background:var(--creme);padding-right:6px}
+.gbloc,.glibre{position:absolute;left:46px;right:0;border-radius:14px;padding:7px 12px;overflow:hidden;cursor:pointer}
+.gbloc{background:#fff;box-shadow:0 1px 0 rgba(30,28,27,.05);border-left:3px solid var(--noir)}
+.gbloc.ac{border-left-color:var(--vert)}
+.gbloc b{display:block;font-weight:400;font-size:13.5px}
+.gbloc span{font-size:11px;color:var(--gris);white-space:nowrap}
+.glibre{border:1px dashed #D3CAC0;display:flex;align-items:center;justify-content:center}
+.glibre span{font-size:11px;color:#a59b91}
+.gmaint{position:absolute;left:40px;right:0;height:0;border-top:1.5px solid var(--noir);z-index:2}
+.gmaint i{position:absolute;left:-4px;top:-4.5px;width:8px;height:8px;border-radius:50%;background:var(--noir)}
+.gferme{position:absolute;left:46px;right:0;top:30px;text-align:center;color:var(--gris);font-style:italic}
+/* mois */
+.mois{background:#fff;border-radius:22px;padding:12px 10px 8px}
+.mj,.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.mj span{text-align:center;font-size:10px;letter-spacing:.14em;color:var(--gris);padding:2px 0 6px}
+.mg button{height:44px;border:0;background:none;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer}
+.mg button b{font-weight:400;font-size:14px}
+.mg button span{font-size:9px;letter-spacing:1px;color:var(--gris);height:10px;line-height:10px}
+.mg button.ferme b{color:#c3b9af}
+.mg button.on{background:var(--noir);color:var(--creme)}
+.mg button.on span{color:rgba(246,243,239,.7)}
+/* B1 page lignée */
+.pap{position:relative;background:#FBF9F6;border-radius:18px;margin-top:4px;padding-left:52px;box-shadow:0 1px 0 rgba(30,28,27,.05);overflow:hidden}
+.pap:before{content:"";position:absolute;left:46px;top:0;bottom:0;width:1px;background:#E6D9CB}
+.pl{height:30px;border-bottom:1px solid #EFE8E0;position:relative;cursor:pointer}
+.pl.plein{border-bottom-color:#EFE8E0}
+.pl span{position:absolute;left:-44px;top:4px;width:34px;text-align:right;font-size:12px;color:#9b9188}
+.pap .pr{position:absolute;left:58px;right:10px;padding:4px 12px;background:#F1ECE6;border-radius:12px;cursor:pointer;overflow:hidden}
+.pap .pr b{display:block;font-weight:400;font-size:14.5px;line-height:1.3}
+.pap .pr span{font-size:11.5px;color:#7d746b}
+.pferme{position:absolute;left:52px;right:0;top:40px;text-align:center;color:var(--gris);font-style:italic}
+/* B2 une ligne par heure */
+.heures{padding:0 16px}
+.hl{display:flex;align-items:center;gap:12px;min-height:50px;border-bottom:1px solid var(--ligne);cursor:pointer}
+.hl:last-child{border:0}
+.hl .hh{width:38px;font-weight:300;font-size:19px;color:var(--noir)}
+.hl .t{flex:1}
+.hl .t b{display:block;font-weight:400;font-size:14.5px}
+.hl .t span{font-size:12px;color:var(--gris)}
+.hl.suite .hh,.hl.libre .hh{color:#bdb3a9}
+.hl.suite .t span{font-style:italic;color:#b0a69c}
+.hl.libre .t span{color:#b0a69c}
+.hl em{font-style:normal;font-size:12px;color:var(--noir);text-decoration:underline;text-underline-offset:3px}
+.hl .ac{font-size:11px;color:#5E7A58;display:flex;align-items:center;gap:5px}.hl .ac i{width:6px;height:6px;border-radius:50%;background:var(--vert)}
+/* B3 la journée qui se lit */
+.tl{position:relative;margin-top:6px}
+.tr,.tli{display:flex;gap:12px;cursor:pointer}
+.tr{margin-bottom:8px}
+.th{width:48px;flex:none;text-align:right;padding-top:10px}
+.th b{display:block;font-weight:400;font-size:15px}
+.th span{display:block;font-size:11px;color:var(--gris);margin-top:2px}
+.tb{flex:1;background:#fff;border-radius:18px;padding:11px 15px;display:flex;flex-direction:column;justify-content:center}
+.tb b{font-weight:400;font-size:15.5px}
+.tb span{font-size:12.5px;color:#6f665e;margin-top:1px}
+.tb em{font-style:normal;font-size:11px;color:var(--gris);margin-top:5px}
+.tb.ac em{color:#5E7A58}
+.tli{margin-bottom:8px}
+.tli .th{padding-top:6px}
+.tlb{flex:1;border:1px dashed #D3CAC0;border-radius:14px;padding:8px 14px;font-size:12px;color:#9b9188}
+.tlb u{color:var(--noir);text-underline-offset:3px}
+.tfe{text-align:center;color:var(--gris);font-style:italic;padding:30px 0}
+.chiffres{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chiffres div{background:#fff;border-radius:20px;padding:14px 12px}
+.chiffres b{display:block;font-weight:300;font-size:26px}
+.chiffres span{font-size:11.5px;color:var(--gris);line-height:1.3;display:block}
+/* cartes qui glissent (V3) */
+.glis{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -22px;padding:0 22px;scrollbar-width:none}
+.glis::-webkit-scrollbar{display:none}
+.glis>div{flex:none;width:calc(100% - 26px);scroll-snap-align:center}
+.pts{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.pts i{width:6px;height:6px;border-radius:3px;background:#D5CDC4;transition:width .3s,background .3s}
+.pts i.on{width:18px;background:var(--noir)}
+/* agenda */
+.semaine{display:flex;justify-content:space-between;margin:4px 0 6px}
+.semaine button{width:44px;height:62px;border-radius:22px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
+.semaine button small{font-size:10px;letter-spacing:.14em;color:var(--gris);text-transform:uppercase}
+.semaine button b{font-weight:400;font-size:17px}
+.semaine button i{width:4px;height:4px;border-radius:50%;background:transparent}
+.semaine button.plein i{background:var(--gris)}
+.semaine button.on{background:var(--noir);color:var(--creme)}
+.semaine button.on small{color:rgba(246,243,239,.6)}
+.semaine button.on i{background:var(--creme)}
+/* clientes */
+.cherche{height:46px;border-radius:24px;background:#fff;display:flex;align-items:center;gap:10px;padding:0 18px;color:var(--gris);font-size:14px}
+.cherche svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.5}
+.cli{display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid var(--ligne);cursor:pointer}
+.cli:last-child{border:0}
+.av{width:40px;height:40px;border-radius:50%;background:#EDE7E0;display:grid;place-items:center;font-size:14px;flex:none}
+.cli .t{flex:1}
+.cli b{display:block;font-weight:400;font-size:14.5px}
+.cli span{font-size:12px;color:var(--gris)}
+.cli em{font-style:normal;font-size:12px;color:var(--gris)}
+/* listes de réglages */
+.liste{background:#fff;border-radius:22px;padding:2px 18px}
+.ligne{display:flex;align-items:center;gap:12px;min-height:54px;border-bottom:1px solid var(--ligne);cursor:pointer;font-size:14.5px}
+.ligne:last-child{border:0}
+.ligne .t{flex:1;padding:10px 0}
+.ligne .t span{display:block;font-size:12px;color:var(--gris);margin-top:2px}
+.ligne em{font-style:normal;font-size:13px;color:var(--gris)}
+.ligne .fl{color:#b5aba1;font-size:18px}
+.sw{width:46px;height:28px;border-radius:14px;background:#DDD6CE;position:relative;flex:none;border:0;cursor:pointer;transition:background .25s}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .25s}
+.sw.on{background:var(--noir)}
+.sw.on:after{left:21px}
+.seg{display:flex;gap:4px;background:#EAE5DF;border-radius:20px;padding:3px}
+.seg button{border:0;background:none;border-radius:17px;height:30px;padding:0 11px;font-size:12px;color:#8a8076;cursor:pointer}
+.seg button.on{background:var(--noir);color:var(--creme)}
+.aide{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;color:var(--gris);margin-top:22px;cursor:pointer}
+.aide u{color:var(--noir)}
+
+/* feuille + message */
+.voile{position:absolute;inset:0;background:rgba(20,18,17,.4);opacity:0;pointer-events:none;transition:opacity .3s;z-index:80}
+.feuille{position:absolute;left:0;right:0;bottom:0;background:var(--creme);border-radius:30px 30px 0 0;padding:12px 24px 34px;transform:translateY(105%);transition:transform .45s cubic-bezier(.2,.7,.2,1);z-index:81;max-height:82%;overflow:auto;scrollbar-width:none;touch-action:pan-y}
+.ecran.fe .voile{opacity:1;pointer-events:auto}
+.ecran.fe .feuille{transform:none}
+.poig{width:40px;height:4px;border-radius:2px;background:rgba(30,28,27,.2);margin:0 auto 14px}
+.feuille h3{font-weight:300;font-size:24px;text-align:center;margin:4px 0 4px}
+.feuille .sous{text-align:center;font-size:13px;color:var(--gris);margin-bottom:16px}
+.qr{width:200px;height:200px;margin:6px auto 10px;background:#fff;border-radius:22px;padding:16px;display:grid;grid-template-columns:repeat(21,1fr)}
+.qr i{background:transparent}.qr i.n{background:var(--noir)}
+.feuille .btn{width:100%;margin-top:9px}
+.toast{position:absolute;left:50%;top:60px;transform:translate(-50%,-20px);background:var(--noir);color:var(--creme);font-size:12.5px;padding:11px 18px;border-radius:22px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:90;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 3 styles d'onglets ===== */
+.ong{position:absolute;z-index:70;display:flex}
+.ong button{border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.ong svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.4}
+/* 1 : capsule noire flottante */
+.ong.o1{left:16px;right:16px;bottom:22px;height:66px;border-radius:33px;background:rgba(30,28,27,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:6px;box-shadow:0 16px 34px -14px rgba(0,0,0,.55)}
+.ong.o1 button{flex:1;border-radius:27px;color:rgba(246,243,239,.5);font-size:9.5px;letter-spacing:.08em;transition:background .3s,color .3s}
+.ong.o1 button.on{background:rgba(246,243,239,.12);color:var(--creme)}
+/* 2 : capsule claire, le bouton choisi s'élargit avec son nom */
+.ong.o2{left:16px;right:16px;bottom:22px;height:64px;border-radius:32px;background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:7px;box-shadow:0 14px 34px -16px rgba(30,28,27,.4);justify-content:space-between}
+.ong.o2 button{flex-direction:row;gap:8px;height:50px;min-width:50px;padding:0 13px;border-radius:25px;color:#8f857b;font-size:12.5px;transition:background .35s,color .35s,padding .35s}
+.ong.o2 button span{display:none}
+.ong.o2 button.on{background:var(--noir);color:var(--creme);padding:0 18px}
+.ong.o2 button.on span{display:inline}
+/* 3 : barre fine pleine largeur, petit trait sous le choisi */
+.ong.o3{left:0;right:0;bottom:0;height:86px;background:rgba(246,243,239,.97);border-top:1px solid var(--ligne);padding:10px 6px 24px}
+.ong.o3 button{flex:1;color:#a59b91;font-size:10px;letter-spacing:.1em;position:relative}
+.ong.o3 button:before{content:"";position:absolute;top:-10px;left:50%;width:0;height:2px;background:var(--noir);transform:translateX(-50%);transition:width .3s}
+.ong.o3 button.on{color:var(--noir)}
+.ong.o3 button.on:before{width:26px}
+/* l'espace pro prend la couleur de son site */
+.code i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+.semaine button.on,.btn:not(.clair),.pil.noir,.mg button.on,.noire{background:var(--acc,var(--noir))}
+.ong.o1{background:var(--acc,rgba(30,28,27,.94))}
+.pap .pr{touch-action:none;user-select:none;-webkit-user-select:none;transition:box-shadow .2s,transform .2s}
+.pap .pr.tient{z-index:5;transform:scale(1.03);box-shadow:0 12px 26px -10px rgba(0,0,0,.35);background:#fff}
+.bulle{position:absolute;right:8px;top:6px;font-style:normal;font-size:11px;background:var(--acc,var(--noir));color:var(--creme);border-radius:10px;padding:2px 8px}
+/* heures en gras */
+.pap .pr b strong{font-weight:500;font-size:12.5px;margin-right:8px;color:var(--noir)}
+.pl span{color:#5d554e!important}
+/* avec tout */
+.pap .pr.prq{overflow:visible}
+.pbuf{position:absolute;left:0;right:0;top:100%;height:15px;font-style:normal;font-size:9.5px;letter-spacing:.06em;color:#a59b91;padding-left:12px;line-height:15px;background:repeating-linear-gradient(45deg,#EFE9E2 0 4px,transparent 4px 8px);border-radius:0 0 8px 8px}
+.ppause{position:absolute;left:58px;right:10px;border-radius:12px;background:repeating-linear-gradient(45deg,#EDE7E0 0 5px,#F7F4F0 5px 10px);display:flex;align-items:center;padding-left:12px}
+.ppause span{font-size:11.5px;color:#8a8076}
+.sync{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#6f665e;margin:-2px 0 10px}
+.sync i{width:7px;height:7px;border-radius:50%;background:var(--vert)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid rgba(30,28,27,.18);background:#fff;border-radius:16px;padding:8px 12px;font-size:12.5px;cursor:pointer;display:flex;gap:6px;align-items:baseline}
+.chip span{font-size:11px;color:var(--gris)}
+.chip.on{background:var(--acc,var(--noir));color:var(--creme);border-color:transparent}.chip.on span{color:rgba(246,243,239,.7)}
+.fin{font-size:12.5px;color:#6f665e;margin:12px 2px 0;line-height:1.5}
+.fin b{font-weight:500;color:var(--noir)}
+.fiche-t{display:flex;align-items:center;gap:12px}.fiche-t>div:first-child{flex:1}
+.ronds{display:flex;gap:8px}.ronds button{width:44px;height:44px;border-radius:50%;border:0;background:#fff;display:grid;place-items:center;cursor:pointer}
+.ronds svg{width:19px;height:19px;stroke:var(--noir);fill:none;stroke-width:1.5}
+.petits{display:flex;justify-content:center;gap:22px;margin-top:14px}
+.petits button{border:0;background:none;font-size:13px;color:#5d554e;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.astuce-dep{text-align:center;font-size:11.5px;color:var(--gris);margin-top:14px}
+.ppause{pointer-events:none}
+.lien-cli{cursor:pointer}.lien-cli em{font-style:normal;color:var(--gris);font-size:18px}
+.form{display:flex;flex-direction:column;gap:8px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gris)}
+.form input{height:46px;border-radius:14px;border:1px solid rgba(30,28,27,.12);background:#fff;padding:0 14px;font:inherit;font-size:15px;letter-spacing:0;text-transform:none;color:var(--noir)}
+.rap{float:right;font-style:normal;font-weight:400;font-size:10.5px;color:var(--noir);margin-top:2px}
+.rap.soir,.rap.plus{color:#8a8076}
+.rap.sans{color:var(--noir);border:1px solid rgba(30,28,27,.35);border-radius:8px;padding:0 6px}
+.rap-f{font-size:12px;color:var(--noir);margin-top:6px}
+.pap .pr span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+<link href="../polices.css" rel="stylesheet">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<div class="bandeau"><b>Loginail · l’agenda · le rappel par SMS</b>À gauche, aujourd’hui : les rappels sont partis (✓), sauf pour Camille qui n’a pas de numéro · à droite, demain : les rappels partiront ce soir · touche un rendez-vous pour voir le détail · rendez-vous d’exemple</div>
+<div class="reglages"><div><button data-c="auj" class="on">Aujourd’hui</button><button data-c="dem">Demain</button></div></div>
+<div class="rangee">
+  <div class="col vis" data-col="auj"><div class="code"><b>Aujourd’hui</b>Rappels partis</div><div class="tel"><div class="ecran" data-v="q" data-start="ag" style="--acc:#1E1C1B"></div></div></div>
+  <div class="col" data-col="dem"><div class="code"><b>Demain</b>Rappels pas encore partis</div><div class="tel"><div class="ecran" data-v="q" data-start="ag" data-day="1" style="--acc:#1E1C1B"></div></div></div>
+</div>
+<script>
+const I={
+ acc:'<svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg>',
+ ag:'<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+ cl:'<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg>',
+ si:'<svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg>',
+ re:'<svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>',
+ qr:'<svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/></svg>',
+ pa:'<svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg>',
+ lo:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>'};
+const RDV=[["10:00","Léa","Pose américaine · 1 h 30",1],["12:00","Camille","Remplissage gel · 1 h",0],["libre","13:30","Libre jusqu’à 15:00"],["15:00","Inès","Semi-permanent mains · 45 min",1],["16:30","Sarah","Nail art · 1 h",0]];
+const rdvs=(skip)=>'<div class="carte">'+RDV.filter((r,i)=>!(skip&&i===0)).map(r=>r[0]==="libre"
+  ?`<div class="rdv libre" data-a="attente"><div class="h">${r[1]}</div><div class="t"><b>${r[2]}</b><span>2 clientes en liste d’attente</span></div><button class="pil" data-a="propose">Proposer</button></div>`
+  :`<div class="rdv" data-rdv="${r[1]}"><div class="h">${r[0]}</div><div class="t"><b>${r[1]}</b><span>${r[2]}</span></div>${r[3]?'<div class="ac"><i></i>acompte</div>':""}</div>`).join("")+'</div>';
+const tete=(t,s)=>`<div class="tete"><div><small>${s||"Lundi 2 novembre"}</small><h1>${t}</h1></div><button class="rond" data-go="re">VO</button></div>`;
+const prochainNoir=`<div class="noire prochain" data-rdv="Léa"><small>Prochain rendez-vous</small><div class="l1"><b>10:00</b><span>dans 25 min</span></div><div class="nom">Léa</div><div class="pr">Pose américaine · 1 h 30 · acompte payé</div><div class="bts"><button data-a="appel">Appeler</button><button data-a="msg">Message</button></div></div>`;
+const siteNoir=`<div class="noire siteb"><small>Mon site</small><div class="adr">votre-onglerie.fr</div><div class="enl"><i></i>En ligne · réservations ouvertes</div><div class="bts"><button class="plein" data-a="partage">Partager</button><button data-a="qr">QR code</button><button data-a="voir">Voir</button></div></div>`;
+const HOME={
+ 1:()=>tete("Bonjour")+prochainNoir+'<div class="k">Aujourd’hui · 4 rendez-vous <a data-go="ag">Agenda</a></div>'+rdvs(true)
+   +`<div class="k">Mon site</div><div class="blanche"><div class="monsite"><div class="ic">${I.si}</div><div class="t"><b>votre-onglerie.fr</b><div class="enl"><i></i>En ligne</div></div><button class="pil" data-a="voir">Voir</button></div><div class="visites"><b>86</b> visites de mon site cette semaine</div>
+   <div class="duo" style="margin-top:14px"><button class="btn" data-a="partage">${I.pa}Partager</button><button class="btn clair" data-a="qr" style="background:var(--creme)">${I.qr}QR code</button></div></div>`,
+ 2:()=>tete("Bonjour")+siteNoir+'<div class="k">Prochain rendez-vous</div>'
+   +`<div class="blanche prochainb" data-rdv="Léa"><div class="hh">10:00</div><div class="t"><b>Léa · dans 25 min</b><span>Pose américaine · 1 h 30 · acompte payé</span></div><button class="pil" data-a="appel">Appeler</button></div>`
+   +'<div class="k">Cette semaine</div><div class="chiffres"><div><b>12</b><span>réservations</span></div><div><b>86</b><span>visites de mon site</span></div><div><b>3</b><span>en liste d’attente</span></div></div>'
+   +'<div class="k">Aujourd’hui · 4 rendez-vous <a data-go="ag">Agenda</a></div>'+rdvs(true),
+ 3:()=>tete("Bonjour")+`<div class="glis"><div>${prochainNoir}</div><div>${siteNoir}</div></div><div class="pts"><i class="on"></i><i></i></div>`
+   +'<div class="k">Aujourd’hui · 4 rendez-vous <a data-go="ag">Agenda</a></div>'+rdvs(true)
+   +'<div class="k">Cette semaine</div><div class="chiffres"><div><b>12</b><span>réservations</span></div><div><b>86</b><span>visites de mon site</span></div><div><b>3</b><span>en liste d’attente</span></div></div>'};
+
+const ETAPES=[["Mettre le lien dans ma bio Instagram","Vos abonnées réservent en un clic","bio"],["Imprimer mon QR code","Pour le salon et les cartes de visite","qr"],["Vérifier mes horaires et mes prix","Pour que tout soit juste","bientot"]];
+const siteEnLigne=`<div class="noire siteb"><small>Bienvenue</small><div class="adr">Votre site est en ligne</div><div class="enl"><i></i>votre-onglerie.fr</div><div class="bts"><button class="plein" data-a="voir">Voir mon site</button><button data-a="partage">Partager</button></div></div>`;
+const videJour=`<div class="k">Aujourd’hui</div><div class="blanche vide"><b>Pas encore de rendez-vous</b><span>Dès qu’une cliente réserve, elle apparaît ici et vous recevez un message.</span></div>`;
+const monSiteCarte=`<div class="k">Mon site</div><div class="blanche"><div class="monsite"><div class="ic">${I.si}</div><div class="t"><b>votre-onglerie.fr</b><div class="enl"><i></i>En ligne</div></div><button class="pil" data-a="voir">Voir</button></div><div class="visites"><b>86</b> visites de mon site cette semaine</div>
+   <div class="duo" style="margin-top:14px"><button class="btn" data-a="partage">${I.pa}Partager</button><button class="btn clair" data-a="qr" style="background:var(--creme)">${I.qr}QR code</button></div></div>`;
+Object.assign(HOME,{
+ j1:()=>tete("Bonjour")
+   +`<div class="noire bravo"><small>Félicitations</small><div class="adr">Votre site est en ligne</div><div class="bts"><button class="plein" data-a="voir">Voir mon site</button></div></div>`
+   +`<div class="notif"><div class="cloche"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0"/></svg></div><div class="t"><b>Être prévenue à chaque réservation ?</b></div><button class="pil noir" data-a="notif">Oui</button><button class="pil" data-a="notif-non">Plus tard</button></div>`
+   +`<div class="k">Mon site</div><div class="blanche"><div class="monsite"><div class="ic">${I.si}</div><div class="t"><b>votre-onglerie.fr</b><div class="enl"><i></i>En ligne</div></div></div>
+     <div class="conseil-t">Partagez votre lien : bio Instagram, WhatsApp, SMS…</div>
+     <div class="duo" style="margin-top:14px"><button class="btn" data-a="partage">${I.pa}Partager</button><button class="btn clair" data-a="qr" style="background:var(--creme)">${I.qr}QR code</button></div>
+</div>`
+   +`<div class="k">Aujourd’hui</div><div class="blanche vide2"><div class="t"><b>Pas encore de rendez-vous</b><span>Vous en avez déjà ? Ajoutez-les ici.</span></div><button class="pil noir" data-a="ajoutrdv">Ajouter</button></div>`,
+ j2:()=>tete("Bonjour")+siteEnLigne
+   +`<div class="k">Pour vos premières réservations</div><div class="blanche etape" data-n="0"><div class="barre3"><i class="on"></i><i></i><i></i></div><small class="en">Étape 1 sur 3</small><div class="et-t">${ETAPES[0][0]}</div><div class="et-s">${ETAPES[0][1]}</div><button class="btn" data-a="etape" style="width:100%;margin-top:16px">C’est parti</button><button class="plustard" data-a="etape-skip">Plus tard</button></div>`+videJour,
+ j3:()=>tete("Bonjour")+siteEnLigne
+   +'<div class="k">Pour vos premières réservations</div><div class="glis">'
+   +ETAPES.map((e,i)=>`<div><div class="blanche carte-et"><small class="en">${i+1} / 3</small><div class="ic">${[I.cl,I.qr,I.re][i]}</div><div class="et-t">${e[0]}</div><div class="et-s">${e[1]}</div><button class="btn" data-a="${e[2]}" style="width:100%;margin-top:14px">${["Copier mon lien","Voir mon QR code","Vérifier"][i]}</button></div></div>`).join("")
+   +'</div><div class="pts"><i class="on"></i><i></i><i></i></div>'+videJour,
+ tout:()=>tete("Bonjour")
+   +`<div class="paie"><div class="t"><b>Votre carte a expiré</b><span>Mettez-la à jour pour garder votre site en ligne.</span></div><button class="pil" data-a="bientot">Mettre à jour</button></div>`
+   +`<div class="nouv" data-go="ag"><i></i><span><b>Depuis hier :</b> 2 nouvelles réservations · 1 annulation</span><span class="fl">›</span></div>`
+   +prochainNoir
+   +`<div class="manque"><div class="t"><b>Il manque 2 infos</b><span>Votre SIRET · le prix de « Nail art »</span></div><button class="pil" data-a="bientot">Compléter</button></div>`
+   +'<div class="k">Aujourd’hui · 4 rendez-vous <a data-go="ag">Agenda</a></div>'+rdvs(true)
+   +`<button class="imprevu" data-a="imprevu">Un imprévu ? Fermer ma journée</button>`
+   +`<div class="k">Avis</div><div class="blanche avis"><div class="et5">★★★★★</div><div class="av-t">« Très soigneuse, mes ongles ont tenu un mois. »</div><div class="av-s">Nouvel avis Google · Julie</div>
+     <div class="dem"><span>Le rendez-vous de Camille est fini</span><button class="pil" data-a="avis">Demander un avis</button></div></div>`
+   +monSiteCarte});
+const JOURS=[["Lun",2,1],["Mar",3,1],["Mer",4,0],["Jeu",5,1],["Ven",6,1],["Sam",7,1],["Dim",8,0]];
+const AGENDA=()=>tete("Agenda","Novembre 2026")+'<div class="semaine">'+JOURS.map((j,i)=>`<button class="${j[2]?"plein":""}${i===0?" on":""}" data-jour="${i}"><small>${j[0]}</small><b>${j[1]}</b><i></i></button>`).join("")+'</div>'
+  +'<div class="k" data-titre-jour>Lundi 2 · 4 rendez-vous</div><div data-liste-jour>'+rdvs(false)+'</div>'
+  +`<button class="btn" data-a="nouveau" style="width:100%;margin-top:16px">Nouveau rendez-vous</button><button class="btn clair" data-a="bloque" style="width:100%;margin-top:9px">Bloquer un créneau</button>`;
+const CLI=[["Léa","Pose américaine · aujourd’hui"],["Camille","Remplissage gel · aujourd’hui"],["Inès","Semi-permanent · aujourd’hui"],["Sarah","Nail art · aujourd’hui"],["Julie","Pose américaine · il y a 3 semaines"],["Manon","Remplissage gel · il y a 1 mois"]];
+const CLIENTES=()=>tete("Clientes","24 clientes")+`<div class="cherche">${I.lo}Chercher une cliente</div><button class="btn" data-a="ajoutcli" style="width:100%;margin-top:10px">Ajouter une cliente</button>`
+  +'<div class="k">Liste d’attente · 3</div><div class="carte">'
+  +[["Clara","Veut un créneau lundi après-midi"],["Emma","N’importe quel jour avant 12 h"],["Lina","Samedi matin"]].map(c=>`<div class="cli" data-cli="${c[0]}"><div class="av">${c[0][0]}</div><div class="t"><b>${c[0]}</b><span>${c[1]}</span></div><button class="pil" data-a="propose">Proposer</button></div>`).join("")+'</div>'
+  +'<div class="k">Toutes mes clientes</div><div class="carte">'+CLI.map(c=>`<div class="cli" data-cli="${c[0]}"><div class="av">${c[0][0]}</div><div class="t"><b>${c[0]}</b><span>${c[1]}</span></div><em>›</em></div>`).join("")+'</div>';
+const MONSITE=()=>tete("Mon site","En ligne")+siteNoir
+  +'<div class="k">Modifier mon site</div><div class="liste">'
+  +[["Style et couleur","Site 1 · Noir · jour"],["Photos","6 photos"],["Prestations et prix","12 prestations"],["Horaires",""],["À propos de moi",""],["Langues","Français, anglais, italien, allemand, russe"]].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
+  +'<div class="k">Faire connaître mon site</div><div class="liste">'
+  +[["QR code à imprimer","Pour le salon, les cartes de visite","qr"],["Lien pour ma bio Instagram","","bio"],["Aperçu quand je partage le lien","Ce que voient les gens sur WhatsApp","apercu"]].map(l=>`<div class="ligne" data-a="${l[2]}"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>';
+const sw=(on)=>`<button class="sw${on?" on":""}" data-sw></button>`;
+const REGLAGES=()=>tete("Réglages","Mon compte")
+  +'<div class="k">Mon site</div><div class="liste">'
+  +`<div class="ligne"><div class="t">Apparence</div><div class="seg" data-seg><button class="on">Jour</button><button>Nuit</button><button>Auto</button></div></div>`
+  +`<div class="ligne"><div class="t">Réservation en ligne<span>Sinon, les clientes vous appellent ou vous écrivent</span></div>${sw(1)}</div></div>`
+  +'<div class="k">Notifications</div><div class="liste">'
+  +`<div class="ligne"><div class="t">Me prévenir à chaque réservation<span>Et à chaque annulation</span></div><button class="sw" data-sw data-sw-notif></button></div></div>`
+  +'<div class="k">Mes réservations</div><div class="liste">'
+  +`<div class="ligne"><div class="t">Acompte à la réservation<span>Contre les rendez-vous oubliés</span></div>${sw(1)}</div>`
+  +`<div class="ligne"><div class="t">SMS de confirmation et de rappel<span>Compris, sans limite</span></div>${sw(1)}</div>`
+  +`<div class="ligne"><div class="t">Liste d’attente<span>Proposer les créneaux libérés</span></div>${sw(1)}</div>`
+  +`<div class="ligne" data-a="bientot"><div class="t">Annulation<span>Jusqu’à quand une cliente peut annuler</span></div><em>24 h avant</em><span class="fl">›</span></div></div>`
+  +'<div class="k">Mon salon</div><div class="liste">'
+  +[["Horaires",""],["Congés et fermetures","Un bandeau s’affiche sur mon site"],["Adresse et comment me trouver",""]].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
+  +'<div class="k">Mon abonnement</div><div class="liste">'
+  +[["Loginail","79,99 € / mois · sans engagement"],["Mes factures",""],["Mon nom de domaine","votre-onglerie.fr · il vous appartient"]].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
+  +'<div class="k">Légal</div><div class="liste">'
+  +["Mentions légales","Conditions générales","Confidentialité"].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l}</div><span class="fl">›</span></div>`).join("")+'</div>'
+  +'<div class="aide" data-a="aide">Besoin d’aide ? <u>Poser une question</u></div>';
+const ONG=[["acc","Accueil"],["ag","Agenda"],["cl","Clientes"],["si","Mon site"],["re","Réglages"]];
+const PAGES={acc:null,ag:AGENDA,cl:CLIENTES,si:MONSITE,re:REGLAGES};
+
+/* ===== agenda : 3 versions ===== */
+const SEM=[ // par jour de la semaine (0 = lundi) : début en minutes, durée, prénom, prestation, acompte
+ [[600,90,"Léa","Pose américaine",1],[720,60,"Camille","Remplissage gel",0],[900,45,"Inès","Semi-permanent mains",1],[990,60,"Sarah","Nail art",0]],
+ [[570,90,"Julie","Pose américaine",1],[690,60,"Manon","Remplissage gel",0],[840,120,"Chloé","Pose américaine + nail art",1]],
+ null,
+ [[600,60,"Emma","Semi-permanent pieds",0],[780,90,"Lina","Pose américaine",1],[960,60,"Clara","Remplissage gel",0]],
+ [[540,90,"Jade","Pose américaine",1],[660,60,"Lou","Remplissage gel",0],[840,60,"Nina","Semi-permanent mains",0],[930,90,"Eva","Pose américaine",1],[1050,60,"Zoé","Nail art",0]],
+ [[540,120,"Rose","Pose américaine + nail art",1],[690,90,"Alice","Pose américaine",0]],
+ null];
+const NOMJ=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"],COURT=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+const hm=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const duree=d=>d>=60?Math.floor(d/60)+" h"+(d%60?" "+d%60:""):d+" min";
+const OUV=540,FERM=1140; // 9:00 – 19:00 (exemple)
+const libres=L=>{const out=[];let t=OUV;L.forEach(r=>{if(r[0]-t>=45)out.push([t,r[0]]);t=Math.max(t,r[0]+r[1])});if(FERM-t>=45)out.push([t,FERM]);return out};
+const wd=n=>(n+5)%7; // jour du mois → jour de la semaine (novembre 2026)
+const ligneRdv=r=>`<div class="rdv" data-rdv="${r[2]}" data-info="${hm(r[0])} · ${r[3]} · ${duree(r[1])}"><div class="h">${hm(r[0])}</div><div class="t"><b>${r[2]}</b><span>${r[3]} · ${duree(r[1])}</span></div>${r[4]?'<div class="ac"><i></i>acompte</div>':""}</div>`;
+const ligneLibre=g=>`<div class="rdv libre" data-a="slot" data-h="${hm(g[0])}"><div class="h">${hm(g[0])}</div><div class="t"><b>Libre jusqu’à ${hm(g[1])}</b><span>${g[1]-g[0]>=90?"2 clientes en liste d’attente":"Toucher pour ajouter"}</span></div>${g[1]-g[0]>=90?'<button class="pil" data-a="propose">Proposer</button>':""}</div>`;
+const listeJour=L=>{if(!L)return '<div class="carte"><div class="rdv libre"><div class="t"><b>Fermé</b><span>Jour de fermeture</span></div></div></div>';
+  const all=[...L.map(r=>["r",r[0],r]),...libres(L).map(g=>["l",g[0],g])].sort((a,b)=>a[1]-b[1]);
+  return '<div class="carte">'+all.map(x=>x[0]==="r"?ligneRdv(x[2]):ligneLibre(x[2])).join("")+'</div>'};
+const semaine=d=>'<div class="semaine">'+COURT.map((c,i)=>`<button class="${SEM[i]?"plein":""}${i===d?" on":""}" data-jour="${i}"><small>${c}</small><b>${i+2}</b><i></i></button>`).join("")+'</div>';
+const basAgenda=`<button class="btn" data-a="nouveau" style="width:100%;margin-top:16px">Nouveau rendez-vous</button><button class="btn clair" data-a="bloque" style="width:100%;margin-top:9px">Bloquer un créneau</button>`;
+const titreJour=(d,n)=>{const L=SEM[d];return `<div class="k">${NOMJ[d]} ${n} novembre · ${L?L.length+" rendez-vous":"fermé"}</div>`};
+const AG={
+ a:(d=0)=>tete("Agenda","Novembre 2026")+semaine(d)+titreJour(d,d+2)+listeJour(SEM[d])+basAgenda,
+ b:(d=0)=>{const L=SEM[d],H=60;let g='<div class="grille">';
+   for(let h=9;h<=19;h++)g+=`<div class="gh" style="top:${(h*60-OUV)/60*H}px"><span>${String(h).padStart(2,"0")}:00</span></div>`;
+   if(L){libres(L).forEach(x=>{g+=`<div class="glibre" data-a="slot" data-h="${hm(x[0])}" style="top:${(x[0]-OUV)/60*H+2}px;height:${(x[1]-x[0])/60*H-4}px"><span>Libre · toucher pour ajouter</span></div>`});
+     L.forEach(r=>{g+=`<div class="gbloc${r[4]?" ac":""}" data-rdv="${r[2]}" data-info="${hm(r[0])} · ${r[3]} · ${duree(r[1])}" style="top:${(r[0]-OUV)/60*H+2}px;height:${r[1]/60*H-4}px"><b>${r[2]}</b><span>${hm(r[0])} · ${r[3]}</span></div>`});
+     if(d===0)g+=`<div class="gmaint" style="top:${(635-OUV)/60*H}px"><i></i></div>`}
+   else g+='<div class="gferme">Fermé</div>';
+   return tete("Agenda","Novembre 2026")+semaine(d)+titreJour(d,d+2)+g+'</div>'+basAgenda},
+ c:(n=2)=>{let m='<div class="mois"><div class="mj">'+["L","M","M","J","V","S","D"].map(x=>`<span>${x}</span>`).join("")+'</div><div class="mg">';
+   for(let k=0;k<6;k++)m+='<i></i>';
+   for(let x=1;x<=30;x++){const L=SEM[wd(x)];m+=`<button class="${x===n?"on":""}${L?"":" ferme"}" data-mjour="${x}"><b>${x}</b><span>${L?"•".repeat(Math.min(L.length,4)):""}</span></button>`}
+   m+='</div></div>';
+   return tete("Agenda","Novembre 2026")+m+titreJour(wd(n),n)+listeJour(SEM[wd(n)])+basAgenda}};
+
+/* ===== B façon papier ===== */
+Object.assign(AG,{
+ p:(d=0)=>{const L=SEM[d],R=30;let g='<div class="pap">';
+   for(let m=OUV;m<FERM;m+=30)g+=`<div class="pl${m%60?"":" plein"}" data-a="slot" data-h="${hm(m)}">${m%60?"":`<span>${m/60}h</span>`}</div>`;
+   if(L)L.forEach(r=>{g+=`<div class="pr" data-rdv="${r[2]}" data-info="${hm(r[0])} · ${r[3]} · ${duree(r[1])}" style="top:${(r[0]-OUV)/30*R}px;height:${r[1]/30*R}px"><b><strong>${hm(r[0])} – ${hm(r[0]+r[1])}</strong>${r[2]}</b><span>${r[3]}${r[4]?" · acompte payé":""}</span></div>`});
+   else g+='<div class="pferme">Fermé</div>';
+   return tete("Agenda","Novembre 2026")+semaine(d)+titreJour(d,d+2)+g+'</div>'+basAgenda},
+ h:(d=0)=>{const L=SEM[d];let g='<div class="carte heures">';
+   if(!L)g+='<div class="hl"><div class="hh">—</div><div class="t"><b>Fermé</b></div></div>';
+   else for(let h=9;h<19;h++){const st=h*60,deb=L.find(r=>r[0]>=st&&r[0]<st+60),cours=L.find(r=>r[0]<st&&r[0]+r[1]>st);
+     if(deb)g+=`<div class="hl" data-rdv="${deb[2]}" data-info="${hm(deb[0])} · ${deb[3]} · ${duree(deb[1])}"><div class="hh">${h}h</div><div class="t"><b>${deb[0]%60?hm(deb[0])+" · ":""}${deb[2]}</b><span>${deb[3]} · jusqu’à ${hm(deb[0]+deb[1])}</span></div>${deb[4]?'<div class="ac"><i></i>acompte</div>':""}</div>`;
+     else if(cours)g+=`<div class="hl suite"><div class="hh">${h}h</div><div class="t"><span>${cours[2]} (suite)</span></div></div>`;
+     else g+=`<div class="hl libre" data-a="slot" data-h="${hm(st)}"><div class="hh">${h}h</div><div class="t"><span>Libre</span></div><em>Ajouter</em></div>`}
+   return tete("Agenda","Novembre 2026")+semaine(d)+titreJour(d,d+2)+g+'</div>'+basAgenda},
+ t:(d=0)=>{const L=SEM[d];let g='<div class="tl">';
+   if(!L)g+='<div class="tfe">Fermé</div>';
+   else{const all=[...L.map(r=>["r",r[0],r]),...libres(L).map(x=>["l",x[0],x])].sort((a,b)=>a[1]-b[1]);
+     all.forEach(x=>{if(x[0]==="r"){const r=x[2];g+=`<div class="tr" data-rdv="${r[2]}" data-info="${hm(r[0])} · ${r[3]} · ${duree(r[1])}"><div class="th"><b>${hm(r[0])}</b><span>${hm(r[0]+r[1])}</span></div><div class="tb${r[4]?" ac":""}" style="min-height:${Math.max(56,r[1]*.9)}px"><b>${r[2]}</b><span>${r[3]}</span><em>${duree(r[1])}${r[4]?" · acompte payé":""}</em></div></div>`}
+       else{const l=x[2];g+=`<div class="tli" data-a="slot" data-h="${hm(l[0])}"><div class="th"><span>${hm(l[0])}</span></div><div class="tlb">Libre ${duree(l[1]-l[0])} · <u>ajouter</u></div></div>`}})}
+   return tete("Agenda","Novembre 2026")+semaine(d)+titreJour(d,d+2)+g+'</div>'+basAgenda}});
+
+/* ===== agenda « avec tout » ===== */
+const PRESTA=[["Pose américaine",90],["Remplissage gel",60],["Semi-permanent mains",45],["Nail art",60]];
+const RAP=(d,r)=>r[2]==="Camille"?["sans","Pas de rappel"]:d===0?["ok","✓ rappel"]:d===1?["soir","Rappel ce soir"]:["plus","Rappel la veille"];
+const RAPF=(k,n)=>({ok:'<div class="rap-f">✓ SMS de rappel envoyé hier à 18:00</div>',
+  sans:`<div class="rap-f sans">Pas de rappel : ${n} n’a pas de numéro de téléphone.</div><button class="btn clair" data-a="modcli" data-n="${n}" style="width:100%;margin-top:10px">Ajouter son numéro</button>`,
+  soir:'<div class="rap-f">Le SMS de rappel partira ce soir à 18:00</div>',
+  plus:'<div class="rap-f">Le SMS de rappel partira la veille à 18:00</div>'})[k]||"";
+AG.q=(d=0)=>{const L=SEM[d],R=30;let g='<div class="pap">';
+  for(let m=OUV;m<FERM;m+=30)g+=`<div class="pl${m%60?"":" plein"}" data-a="slot" data-h="${hm(m)}">${m%60?"":`<span>${m/60}h</span>`}</div>`;
+  if(L){const libreA=(a,b)=>!L.some(r=>a<r[0]+r[1]+15&&b>r[0]);
+    [[780,900,"Pause · selon vos horaires"],[1080,FERM,"Fermé"]].filter(z=>!L.some(r=>r[0]<z[1]&&r[0]+r[1]>z[0])).forEach(z=>{g+=`<div class="ppause" style="top:${(z[0]-OUV)/30*R}px;height:${(z[1]-z[0])/30*R}px"><span>${z[2]}</span></div>`});
+    L.forEach((r,k)=>{const nx=L[k+1],buf=!nx||nx[0]>=r[0]+r[1]+15;
+      g+=`<div class="pr prq" data-rap="${RAP(d,r)[0]}" data-rdv="${r[2]}" data-info="${hm(r[0])} · ${r[3]} · ${duree(r[1])}" style="top:${(r[0]-OUV)/30*R}px;height:${r[1]/30*R}px"><b><strong>${hm(r[0])} – ${hm(r[0]+r[1])}</strong>${r[2]}<i class="rap ${RAP(d,r)[0]}">${RAP(d,r)[1]}</i></b><span>${r[3]}${r[4]?" · acompte payé":""}</span></div>`})}
+  else g+='<div class="pferme">Fermé</div>';
+  return tete("Agenda","Novembre 2026")+semaine(d)+titreJour(d,d+2)+`<div class="sync"><i></i>Synchronisé avec l’agenda de votre téléphone</div>`+g+'</div>'+basAgenda};
+const NOUVQ=h=>`<h3>Nouveau rendez-vous</h3><div class="sous">Lundi 2 novembre · ${h}</div><div class="liste"><div class="ligne"><div class="t">Cliente</div><em>Choisir</em><span class="fl">›</span></div></div>
+  <div class="k">Prestation</div><div class="chips">${PRESTA.map(p=>`<button class="chip" data-a="presta" data-d="${p[1]}" data-h="${h}">${p[0]}<span>${duree(p[1])}</span></button>`).join("")}</div>
+  <div class="fin">Choisissez une prestation : la fin se calcule toute seule</div><button class="btn" data-a="ok-rdv">Enregistrer</button>`;
+PAGES.ag=(v,d)=>AG[v]?AG[v](d):AGENDA();
+// QR décoratif
+const qr=()=>{let h="";const f=(x,y)=>(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);const c=(x,y)=>{const a=x%7,b=y%7,X=x>13?x-14:x,Y=y>13?y-14:y;return(X===0||X===6||Y===0||Y===6)||(X>=2&&X<=4&&Y>=2&&Y<=4)};
+  for(let y=0;y<21;y++)for(let x=0;x<21;x++){let n=f(x,y)?c(x,y):((x*7+y*13+x*y)%5<2);h+=`<i class="${n?"n":""}"></i>`}return h};
+document.querySelectorAll(".ecran").forEach(e=>{
+  const v=e.dataset.v;
+  e.innerHTML='<i class="ile"></i>'+Object.keys(PAGES).map(k=>`<div class="vue${k==="acc"?" on":""}" data-p="${k}">${k==="acc"?(HOME[v]||HOME.tout)():PAGES[k](v)}</div>`).join("")
+   +`<nav class="ong o1">`+ONG.map((o,i)=>`<button class="${i?"":"on"}" data-go="${o[0]}">${I[o[0]]}<span>${o[1]}</span></button>`).join("")+'</nav>'
+   +'<div class="voile"></div><div class="feuille"><div class="poig"></div><div class="fc"></div></div><div class="toast"></div>';
+  const fe=e.querySelector(".feuille"),fc=e.querySelector(".fc"),toast=e.querySelector(".toast");
+  const dit=t=>{toast.textContent=t;toast.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("on"),1900)};
+  const ouvre=h=>{fc.innerHTML=h;e.classList.add("fe")};const ferme=()=>e.classList.remove("fe");
+  const va=p=>{e.querySelectorAll(".vue").forEach(x=>x.classList.toggle("on",x.dataset.p===p));e.querySelectorAll(".ong button").forEach(b=>b.classList.toggle("on",b.dataset.go===p));const vu=e.querySelector(`.vue[data-p="${p}"]`);vu.scrollTop=0};
+  e.querySelector(".voile").onclick=()=>{if(e._dep){e._dep.p.style.top=e._dep.top0+"px";e._dep=null}ferme()};
+  if(e.dataset.start)va(e.dataset.start);
+  /* glisser la feuille vers le bas pour la fermer */
+  let y0=null;fe.addEventListener("pointerdown",ev=>{if(ev.target.closest("button"))return;y0=ev.clientY});
+  addEventListener("pointermove",ev=>{if(y0===null)return;const z=parseFloat(getComputedStyle(e.closest(".tel")).zoom)||1,dy=Math.max(0,(ev.clientY-y0)/z);fe.style.transition="none";fe.style.transform=`translateY(${dy}px)`});
+  addEventListener("pointerup",ev=>{if(y0===null)return;const z=parseFloat(getComputedStyle(e.closest(".tel")).zoom)||1,dy=(ev.clientY-y0)/z;y0=null;fe.style.transition="";fe.style.transform="";if(dy>80)ferme()});
+  /* points des cartes qui glissent */
+  e.querySelectorAll(".glis").forEach(g=>g.addEventListener("scroll",()=>{const n=g.children.length-1,k=Math.round(g.scrollLeft/(g.scrollWidth-g.clientWidth||1)*n);g.nextElementSibling.querySelectorAll("i").forEach((p,i)=>p.classList.toggle("on",i===k))},{passive:true}));
+  e.addEventListener("change",ev=>{const c=ev.target.closest("[data-verif]");if(c){const b=fc.querySelector("[data-ok]");if(b)b.disabled=!c.checked}});
+  e.addEventListener("click",ev=>{
+    const t=ev.target;
+    const sw_=t.closest("[data-sw]");if(sw_){sw_.classList.toggle("on");dit(sw_.classList.contains("on")?"Activé":"Désactivé");return}
+    const sg=t.closest("[data-seg] button");if(sg){sg.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===sg));dit("Votre site passe en "+sg.textContent.toLowerCase());return}
+    const go=t.closest("[data-go]");if(go){va(go.dataset.go);return}
+    const mj=t.closest("[data-mjour]");if(mj&&AG[v]){const vu=e.querySelector('.vue[data-p="ag"]');vu.innerHTML=AG[v](+mj.dataset.mjour);return}
+    const j=t.closest("[data-jour]");if(j&&AG[v]){const vu=e.querySelector('.vue[data-p="ag"]'),y=vu.scrollTop;vu.innerHTML=AG[v](+j.dataset.jour);vu.scrollTop=y;return}
+    if(j){const i=+j.dataset.jour,J=JOURS[i];e.querySelectorAll("[data-jour]").forEach(b=>b.classList.toggle("on",b===j));
+      const nom=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"][i];
+      e.querySelector("[data-titre-jour]").textContent=nom+" "+J[1]+(J[2]?" · 4 rendez-vous":" · fermé");
+      e.querySelector("[data-liste-jour]").innerHTML=J[2]?rdvs(false):'<div class="carte"><div class="rdv libre"><div class="t"><b>Pas de rendez-vous</b><span>Jour de fermeture</span></div></div></div>';return}
+    const a=t.closest("[data-a]");
+    if(a){const k=a.dataset.a;ev.stopPropagation();
+      if(k==="qr")ouvre(`<h3>Mon QR code</h3><div class="sous">À imprimer pour le salon ou les cartes de visite</div><div class="qr">${qr()}</div><div class="sous" style="margin:0 0 6px">votre-onglerie.fr</div><button class="btn" data-a="ok-pdf">Télécharger pour imprimer</button><button class="btn clair" data-a="ok-img">Enregistrer l’image</button>`);
+      else if(k==="partage")ouvre(`<h3>Partager mon site</h3><div class="sous">votre-onglerie.fr</div><button class="btn" data-a="ok-copie">Copier le lien</button><button class="btn clair" data-a="ok-wa">WhatsApp</button><button class="btn clair" data-a="bio">Mettre dans ma bio Instagram</button><button class="btn clair" data-a="ok-sms">Par SMS</button>`);
+      else if(k==="bio")ouvre(`<h3>Lien pour ma bio</h3><div class="sous">Copiez ce lien et collez-le dans votre profil Instagram, à « Site web »</div><div class="blanche" style="text-align:center;font-size:17px">votre-onglerie.fr</div><button class="btn" data-a="ok-copie">Copier le lien</button>`);
+      else if(k==="apercu")ouvre(`<h3>Aperçu du lien</h3><div class="sous">Ce que voient les gens quand vous envoyez votre lien</div><div class="blanche" style="padding:0;overflow:hidden"><div style="height:120px;background:linear-gradient(135deg,#3a2c26,#7a5c50)"></div><div style="padding:12px 16px"><b style="font-weight:400">Votre onglerie · Votre ville</b><div style="font-size:12px;color:var(--gris)">Prothésiste ongulaire · réservez en ligne</div></div></div>`);
+      else if(k==="appel")dit("Ouvre l’appel vers la cliente");
+      else if(k==="msg")dit("Ouvre un message vers la cliente");
+      else if(k==="voir")dit("Ouvre votre site");
+      else if(k==="propose"){dit("Créneau proposé par SMS à la liste d’attente");a.textContent="Proposé ✓";a.disabled=true}
+      else if(k==="nouveau"&&v==="q")ouvre(NOUVQ("13:30"));
+      else if(k==="nouveau")ouvre(`<h3>Nouveau rendez-vous</h3><div class="sous">Lundi 2 novembre</div><div class="liste"><div class="ligne"><div class="t">Cliente</div><em>Choisir</em><span class="fl">›</span></div><div class="ligne"><div class="t">Prestation</div><em>Choisir</em><span class="fl">›</span></div><div class="ligne"><div class="t">Heure</div><em>13:30</em><span class="fl">›</span></div></div><button class="btn" data-a="ok-rdv">Enregistrer</button>`);
+      else if(k==="coche"){a.classList.toggle("ok");const n=e.querySelectorAll(".coche.ok").length;e.querySelector(".cpt").textContent=n+" / 4";if(a.classList.contains("ok"))dit(n===4?"Bravo, tout est prêt !":"C’est fait ✓")}
+      else if(k==="etape"||k==="etape-skip"){const b=a.closest(".etape"),n=+b.dataset.n+1;if(n>2){b.innerHTML='<div class="et-t" style="text-align:center">Tout est prêt ✓</div><div class="et-s" style="text-align:center">Vos clientes peuvent réserver.</div>';dit("Bravo, tout est prêt !");return}
+        b.dataset.n=n;b.querySelectorAll(".barre3 i").forEach((p,i)=>p.classList.toggle("on",i<=n));b.querySelector(".en").textContent="Étape "+(n+1)+" sur 3";b.querySelector(".et-t").textContent=ETAPES[n][0];b.querySelector(".et-s").textContent=ETAPES[n][1];if(k==="etape")dit("C’est fait ✓")}
+      else if(k==="imprevu")ouvre(`<h3>Fermer aujourd’hui ?</h3><div class="sous">Vos 4 clientes du jour reçoivent un SMS pour choisir un autre créneau. Votre site affiche « Fermé aujourd’hui ».</div><button class="btn" data-a="ok-ferme">Fermer ma journée</button><button class="btn clair" data-a="ok-rien">Annuler</button>`);
+      else if(k==="avis")dit("SMS envoyé à Camille pour laisser un avis");
+      else if(k==="notif"||k==="notif-non"){const c=a.closest(".notif"),oui=k==="notif";c.innerHTML=c.querySelector(".cloche").outerHTML+'<div class="t"><b>'+(oui?"Notifications activées ✓":"Vous pourrez les activer dans Réglages")+'</b></div>';
+        const n=e.querySelector("[data-sw-notif]");if(n)n.classList.toggle("on",oui);dit(oui?"Vous serez prévenue à chaque réservation":"D’accord, plus tard")}
+      else if(k==="ajoutrdv")ouvre(`<h3>Ajouter mes rendez-vous</h3><div class="sous">Ceux que vous avez déjà, sans tout retaper</div><div class="liste">
+        <div class="ligne" data-a="photo"><div class="t">Prendre mon agenda en photo<span>Agenda papier ou capture d’écran de votre ancien logiciel</span></div><span class="fl">›</span></div>
+        <div class="ligne" data-a="pris"><div class="t">Marquer mes créneaux déjà pris<span>Sans recopier les détails, en 30 secondes</span></div><span class="fl">›</span></div>
+        <div class="ligne" data-a="ok-tel"><div class="t">Depuis l’agenda de mon téléphone<span>iPhone ou Google Agenda</span></div><span class="fl">›</span></div>
+        <div class="ligne" data-a="nouveau"><div class="t">Un par un<span>Prénom, prestation, heure</span></div><span class="fl">›</span></div></div>`);
+      else if(k==="photo"){e._nph=0;ouvre(`<h3>Mon agenda en photo</h3><div class="sous">Mettez-en autant qu’il faut : une par jour, par semaine ou par page</div><div class="vign"><span class="vide-ph">Aucune photo pour l’instant</span></div><button class="btn" data-a="ajphoto" data-n="1">Prendre une photo</button><button class="btn clair" data-a="ajphoto" data-n="3">Choisir des captures d’écran</button><button class="btn lire" data-a="lecture" disabled>Lire mes photos</button><div class="sous" style="margin:12px 0 0;font-size:11.5px">Les photos sont effacées dès qu’elles sont lues.</div>`)}
+      else if(k==="ajphoto"){const v=fc.querySelector(".vign");if(!e._nph)v.innerHTML="";const n=+a.dataset.n;for(let x=0;x<n;x++){e._nph++;v.insertAdjacentHTML("beforeend",`<div class="ph"><div></div><div></div><div></div><b>${e._nph}</b></div>`)}
+        const l=fc.querySelector(".lire");l.disabled=false;l.textContent="Lire mes "+e._nph+" photo"+(e._nph>1?"s":"");dit(n>1?n+" captures ajoutées":"Photo ajoutée")}
+      else if(k==="lecture"){const N=e._nph||1;ouvre(`<h3>Lecture en cours…</h3><div class="sous">${N} photo${N>1?"s":""} · quelques secondes</div><div class="charge"><i></i></div>`);
+        const R=[["Mar 3","09:30","Julie","Pose américaine"],["Mar 3","11:30","Manon","Remplissage gel"],["Jeu 5","10:00","Emma","Semi-permanent pieds"],["Jeu 5","13:00","Lina","Pose américaine"],["Ven 6","09:00","Jade","Pose américaine"],["Sam 7","09:00","Rose","Nail art"]];
+        const parPh=Array.from({length:N},(_,x)=>R.slice(Math.round(x*R.length/N),Math.round((x+1)*R.length/N)));
+        setTimeout(()=>{if(!e.classList.contains("fe"))return;fc.innerHTML=`<h3>${R.length} rendez-vous trouvés</h3><div class="sous">sur vos ${N} photo${N>1?"s":""}</div>
+          <div class="verif"><b>Prenez le temps de bien tout vérifier</b>Dates, heures, prénoms et prestations : comparez avec vos photos. Si quelque chose est faux, touchez « Modifier ». S’il en manque un, ajoutez-le.</div>`
+          +parPh.map((L,x)=>`<div class="k">Photo ${x+1} · ${L.length} rendez-vous</div><div class="carte">`+L.map(r=>`<div class="rdv"><div class="h" style="width:58px"><b style="font-weight:400;font-size:12px;display:block;color:var(--gris)">${r[0]}</b>${r[1]}</div><div class="t"><b>${r[2]}</b><span>${r[3]}</span></div><button class="pil" data-a="bientot">Modifier</button></div>`).join("")+`</div>`).join("")
+          +`<button class="manque-rdv" data-a="nouveau">Il en manque un ? L’ajouter</button>
+          <label class="jai"><input type="checkbox" data-verif><span>J’ai bien tout vérifié, tout est juste</span></label>
+          <button class="btn" data-a="ok-import" data-ok disabled>C’est bon, ajouter</button>`},1400)}
+      else if(k==="pris"){let g='<div class="pg"><span></span>'+["Lun","Mar","Mer","Jeu","Ven","Sam"].map(d=>`<span>${d}</span>`).join("");for(let h=9;h<19;h++){g+=`<span>${h}h</span>`;for(let d=0;d<6;d++)g+=`<button class="pc${d===2?" ferme":""}" data-a="case"></button>`}g+='</div>';
+        ouvre(`<h3>Mes créneaux déjà pris</h3><div class="sous">Touchez les heures déjà occupées · semaine du 2 novembre</div>${g}<div class="pnav"><button class="pil" data-a="bientot">‹ Semaine d’avant</button><button class="pil" data-a="bientot">Semaine d’après ›</button></div><button class="btn" data-a="ok-pris">Enregistrer</button>`)}
+      else if(k==="case"){if(!a.classList.contains("ferme"))a.classList.toggle("on")}
+      else if(k==="dep-ok"||k==="dep-non"){const D=e._dep;ferme();if(!D)return;
+        if(k==="dep-ok"){const st=D.p.querySelector("strong");if(st)st.textContent=hm(D.deb)+" – "+hm(D.deb+D.dur);D.p.dataset.info=hm(D.deb)+" · "+D.p.dataset.info.split(" · ").slice(1).join(" · ");dit(D.nom+" est prévenue par SMS")}
+        else{D.p.style.top=D.top0+"px";dit("Le rendez-vous n’a pas bougé")}e._dep=null}
+      else if(k==="modcli")ouvre(`<h3>Modifier la fiche</h3><div class="sous">${a.dataset.n}</div><div class="form">
+        <label>Prénom<input value="${a.dataset.n}"></label><label>Téléphone<input value="06 00 00 00 00" inputmode="tel"></label><label>Note<input value="Aime les formes amande · couleurs nude"></label></div><button class="btn" data-a="ok-fiche" style="width:100%;margin-top:14px">Enregistrer</button>`);
+      else if(k==="presta"){fc.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===a));const[hh,mm]=a.dataset.h.split(":").map(Number),f=hh*60+mm+ +a.dataset.d;fc.querySelector(".fin").innerHTML=`Fin à <b>${hm(f)}</b> · durée automatique`}
+      else if(k==="reprendre")ouvre(`<h3>Prochain rendez-vous</h3><div class="sous">Dans 3 semaines, à la même heure</div><div class="blanche" style="text-align:center"><b style="font-weight:300;font-size:22px">Lundi 23 novembre</b><div style="font-size:13px;color:var(--gris);margin-top:4px">10:00 · Remplissage gel · 1 h</div></div><button class="btn" data-a="ok-repris">Réserver et prévenir par SMS</button><button class="btn clair" data-a="bientot">Choisir une autre date</button>`);
+      else if(k==="absente"){ferme();dit("Marquée absente · l’acompte est gardé")}
+      else if(k==="ajoutcli")ouvre(`<h3>Ajouter une cliente</h3><div class="sous">Juste l’essentiel</div><div class="liste"><div class="ligne"><div class="t">Prénom</div><em>Écrire</em></div><div class="ligne"><div class="t">Téléphone</div><em>Pour les SMS de rappel</em></div><div class="ligne"><div class="t">Note</div><em>Facultatif</em></div></div><button class="btn" data-a="ok-cli">Enregistrer</button>`);
+      else if(k==="bloque")ouvre(`<h3>Bloquer un créneau</h3><div class="sous">Les clientes ne pourront pas réserver ce moment</div><div class="liste"><div class="ligne" data-a="ok-pause"><div class="t">Une pause<span>Déjeuner, rendez-vous perso…</span></div><span class="fl">›</span></div><div class="ligne" data-a="ok-conges"><div class="t">Des congés<span>Plusieurs jours, un bandeau s’affiche sur mon site</span></div><span class="fl">›</span></div><div class="ligne" data-a="imprevu"><div class="t">Un imprévu aujourd’hui<span>Les clientes du jour reçoivent un SMS</span></div><span class="fl">›</span></div></div>`);
+      else if(k==="slot"&&v==="q")ouvre(`<h3>${a.dataset.h}</h3><div class="sous">Lundi 2 novembre</div><button class="btn" data-a="slot-cli" data-h="${a.dataset.h}">Une cliente</button><button class="btn clair" data-a="slot-pause" data-h="${a.dataset.h}">Une pause</button>`);
+      else if(k==="slot-cli")ouvre(NOUVQ(a.dataset.h));
+      else if(k==="slot-pause")ouvre(`<h3>Une pause à ${a.dataset.h}</h3><div class="sous">Combien de temps ?</div><div class="chips" style="justify-content:center">${[15,30,45,60,90].map(d=>`<button class="chip" data-a="pausedur" data-d="${d}" data-h="${a.dataset.h}">${duree(d)}</button>`).join("")}</div>`);
+      else if(k==="pausedur"){const[hh,mm]=a.dataset.h.split(":").map(Number),deb=hh*60+mm,d=+a.dataset.d,pap=e.querySelector('.vue[data-p="ag"] .pap');
+        if(pap)pap.insertAdjacentHTML("beforeend",`<div class="ppause" style="top:${deb-OUV}px;height:${d}px"><span>Pause · ${hm(deb)} – ${hm(deb+d)}</span></div>`);ferme();dit("Pause ajoutée : vos clientes ne pourront pas réserver")}
+      else if(k==="slot")ouvre(`<h3>Nouveau rendez-vous</h3><div class="sous">À ${a.dataset.h}</div><div class="liste"><div class="ligne"><div class="t">Cliente</div><em>Choisir</em><span class="fl">›</span></div><div class="ligne"><div class="t">Prestation</div><em>Choisir</em><span class="fl">›</span></div><div class="ligne"><div class="t">Heure</div><em>${a.dataset.h}</em><span class="fl">›</span></div></div><button class="btn" data-a="ok-rdv">Enregistrer</button>`);
+      else if(k==="aide")ouvre(`<h3>Besoin d’aide ?</h3><div class="sous">Posez votre question, la réponse arrive tout de suite</div><div class="blanche" style="font-size:13.5px;color:var(--gris)">Exemple : « Comment changer mes horaires ? »</div><button class="btn" data-a="ok-q">Envoyer</button>`);
+      else if(k.startsWith("ok-")){ferme();dit({"ok-copie":"Lien copié","ok-wa":"Ouvre WhatsApp","ok-sms":"Ouvre vos messages","ok-pdf":"QR code prêt à imprimer","ok-img":"Image enregistrée","ok-rdv":"Rendez-vous enregistré","ok-q":"Question envoyée","ok-cli":"Cliente ajoutée","ok-ferme":"Journée fermée · SMS envoyés","ok-rien":"Rien n’a changé","ok-repris":"Rendez-vous réservé · SMS envoyé","ok-fiche":"Fiche mise à jour","ok-pause":"Choisissez l’heure de la pause","ok-conges":"Choisissez vos dates de congés","ok-tel":"Vos rendez-vous du téléphone sont ajoutés","ok-import":"6 rendez-vous ajoutés","ok-pris":"Créneaux bloqués : vos clientes ne pourront pas réserver dessus","ok-fichier":"Choisissez votre fichier"}[k])}
+      else dit("Cette page viendra ensuite");
+      return}
+    const r=t.closest("[data-rdv]");if(r){const n=r.dataset.rdv,R=r.dataset.info?[r.dataset.info.split(" · ")[0],0,r.dataset.info.split(" · ").slice(1).join(" · ")]:RDV.find(x=>x[1]===n);
+      ouvre(`<div class="fiche-t"><div><h3 style="text-align:left;margin:0"><span class="lien-cli" data-cli="${n}">${n} <em>›</em></span></h3><div class="sous" style="text-align:left;margin:2px 0 0">${R?R[0]+" · "+R[2]:""}</div>${v==="q"?RAPF(r.dataset.rap,n):""}</div><div class="ronds"><button data-a="appel" aria-label="Appeler"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button><button data-a="msg" aria-label="Message"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg></button></div></div>
+        ${v==="q"?'<button class="btn" data-a="reprendre" style="width:100%;margin-top:16px">Reprendre dans 3 semaines</button>':""}
+        <div class="petits">${v==="q"?'<button data-a="absente">Pas venue</button>':""}<button data-a="bientot">Annuler le rendez-vous</button></div>
+        <div class="astuce-dep">Pour changer l’heure : restez appuyée sur le rendez-vous, puis glissez-le.</div>`);return}
+    const c=t.closest("[data-cli]");if(c){const n=c.dataset.cli;ouvre(`<div style="display:flex;justify-content:center"><div class="av" style="width:64px;height:64px;font-size:22px">${n[0]}</div></div><h3>${n}</h3><div class="sous">Cliente depuis 2025 · 8 visites</div><div class="duo"><button class="btn" data-a="appel">Appeler</button><button class="btn clair" data-a="msg">Message</button></div><div class="k">Notes</div><div class="blanche" style="font-size:13.5px;color:var(--gris)">Aime les formes amande · couleurs nude</div><button class="btn clair" data-a="modcli" data-n="${n}" style="width:100%;margin-top:12px">Modifier la fiche</button>`);return}
+  });
+});
+
+/* glisser un rendez-vous avec le pouce (appui long puis glisser) */
+document.querySelectorAll(".ecran").forEach(e=>{
+  let g=null;
+  e.addEventListener("pointerdown",ev=>{const p=ev.target.closest(".pap .pr");if(!p)return;const z=parseFloat(getComputedStyle(e.closest(".tel")).zoom)||1;
+    g={p,y0:ev.clientY,top0:parseFloat(p.style.top),h:parseFloat(p.style.height),z,on:false};
+    g.t=setTimeout(()=>{if(!g)return;g.on=true;p.classList.add("tient");e.querySelector('.vue[data-p="ag"]').style.overflow="hidden";if(navigator.vibrate)navigator.vibrate(12)},350)});
+  addEventListener("pointermove",ev=>{if(!g)return;const dy=(ev.clientY-g.y0)/g.z;
+    if(!g.on){if(Math.abs(dy)>8){clearTimeout(g.t);g=null}return}
+    ev.preventDefault();let top=Math.round((g.top0+dy)/15)*15;top=Math.max(0,Math.min(top,FERM-OUV-g.h));g.p.style.top=top+"px";
+    let b=g.p.querySelector(".bulle");if(!b){b=document.createElement("i");b.className="bulle";g.p.appendChild(b)}b.textContent=hm(OUV+top)},{passive:false});
+  addEventListener("pointerup",()=>{if(!g)return;clearTimeout(g.t);const G=g;g=null;if(!G.on)return;
+    G.p.classList.remove("tient");const b=G.p.querySelector(".bulle");if(b)b.remove();e.querySelector('.vue[data-p="ag"]').style.overflow="";e._sansClic=Date.now();
+    const top=parseFloat(G.p.style.top);if(top===G.top0)return;
+    const deb=OUV+top,dur=G.h,nom=G.p.dataset.rdv;
+    const autres=[...G.p.parentNode.querySelectorAll(".pap .pr")].filter(x=>x!==G.p).some(x=>{const t=parseFloat(x.style.top),h=parseFloat(x.style.height);return top<t+h&&top+dur>t});
+    if(autres){G.p.style.top=G.top0+"px";e.querySelector(".toast").textContent="Ce créneau est déjà pris";e.querySelector(".toast").classList.add("on");setTimeout(()=>e.querySelector(".toast").classList.remove("on"),1800);return}
+    e._dep={p:G.p,top0:G.top0,deb,dur,nom};
+    e.querySelector(".fc").innerHTML=`<h3>Déplacer ${nom} ?</h3><div class="sous">À ${hm(deb)}, jusqu’à ${hm(deb+dur)}<br>${nom} reçoit un SMS avec la nouvelle heure.</div><button class="btn" data-a="dep-ok">Déplacer</button><button class="btn clair" data-a="dep-non">Annuler</button>`;
+    e.classList.add("fe")});
+  /* pas d'ouverture de fiche juste après un glissé */
+  e.addEventListener("click",ev=>{if(e._sansClic&&Date.now()-e._sansClic<400&&ev.target.closest(".pap .pr"))ev.stopImmediatePropagation()},true);
+});
+document.querySelectorAll(".ecran[data-day]").forEach(e=>{const vu=e.querySelector('.vue[data-p="ag"]');vu.innerHTML=AG[e.dataset.v](+e.dataset.day)});
+document.querySelectorAll(".reglages button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".reglages button").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll(".col").forEach(c=>c.classList.toggle("vis",c.dataset.col===b.dataset.c))});
+function ajuste(){const z=Math.min(1,(innerHeight-130)/866,(innerWidth-120)/(2*412));document.documentElement.style.setProperty("--z",z.toFixed(3))}
+addEventListener("resize",ajuste);ajuste();
+</script>
+</body>
+</html>
