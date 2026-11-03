@@ -509,7 +509,7 @@ body{background:var(--creme)}
 .logo .lc{display:block}.logo .lf{display:none}
 .barre.fond .logo{color:var(--noir)}.barre.fond .logo .lc{display:none}.barre.fond .logo .lf{display:block}
 /* 1 — l'arrivée (1re version) : le texte en haut, le lien en bas, la photo derrière */
-.p-haut{justify-content:space-between;padding-bottom:calc(26px + 100lvh - 100svh);color:var(--creme);background:#1E1C1B center/cover url('exemple-dilerna/haut.jpg');padding-top:96px;padding-bottom:30px}
+.p-haut{min-height:max(100lvh,calc(var(--h0,100lvh) + 2px));justify-content:space-between;padding-bottom:calc(26px + 100lvh - 100svh);color:var(--creme);background:#1E1C1B center/cover url('exemple-dilerna/haut.jpg');padding-top:96px;padding-bottom:30px}
 .p-haut::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,17,.62) 0,rgba(20,18,17,.25) 26%,rgba(20,18,17,.62) 48%,rgba(20,18,17,.9) 100%)}
 .p-haut>*{position:relative;z-index:1}
 .p-haut .k{color:rgba(246,243,239,.85);line-height:1.6}
@@ -543,13 +543,19 @@ body{background:var(--creme)}
 .seg button{flex:1;border:0;background:none;border-radius:17px;height:32px;font-size:12px;color:#8a8076;cursor:pointer}
 .seg button.on{background:var(--noir);color:var(--creme)}
 .st-c{cursor:pointer;-webkit-tap-highlight-color:transparent}
-.st-n{display:flex;justify-content:space-between;align-items:center}
-.st-n em{font-style:normal;letter-spacing:.14em;color:var(--noir);border-bottom:1px solid var(--noir);padding-bottom:1px}
+.c-nom{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;justify-content:center;align-items:flex-end;padding:40px 12px 12px;background:linear-gradient(180deg,transparent,rgba(20,18,17,.72));color:#fff;pointer-events:none}
+.c-nom b{font-family:Italiana,serif;font-weight:400;font-size:20px;letter-spacing:.02em}
+.c-nom i{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);position:relative;flex:none}
+.c-nom i::before,.c-nom i::after{content:"";position:absolute;border:solid #fff;width:6px;height:6px}
+.c-nom i::before{top:8px;right:8px;border-width:1.3px 1.3px 0 0}.c-nom i::after{bottom:8px;left:8px;border-width:0 0 1.3px 1.3px}
 .grand-site{position:fixed;inset:0;z-index:95;background:var(--creme);opacity:0;transition:opacity .3s}
 .grand-site.on{opacity:1}.grand-site[hidden]{display:none}
 .grand-site iframe{position:absolute;inset:0 0 66px 0;width:100%;height:calc(100% - 66px);border:0}
 .gs-bas{position:absolute;left:0;right:0;bottom:0;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 18px calc(env(safe-area-inset-bottom));background:var(--noir);color:var(--creme);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
 .gs-bas button{border:0;background:var(--creme);color:var(--noir);border-radius:999px;height:40px;padding:0 22px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.st-intro{text-align:center;margin:10px 24px 14px;font-family:Italiana,serif;font-size:24px;line-height:1.2}
+.st-intro em{display:block;margin-top:6px;font-family:Jost,sans-serif;font-style:normal;font-size:12.5px;color:var(--gris);letter-spacing:.02em}
+.p-styles>.k{text-align:center}
 /* 3 — comment ça marche (nouvelle version) */
 .p-etapes{background:#fff}
 .p-etapes .case{padding:20px 20px 22px;border-radius:24px}
@@ -571,6 +577,10 @@ body{background:var(--creme)}
 .p-appli .stores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}.p-appli .qr{display:none}
 .p-appli .store{height:44px;padding:0 10px;border-radius:12px;gap:8px;justify-content:center}.p-appli .store svg{width:20px;height:20px}.p-appli .store span{font-size:14px;line-height:1.05}.p-appli .store span small{display:block;font-size:8.5px;font-weight:400}
 .p-appli .onglet-txt{text-align:center;margin:12px 0 10px}
+.ong-app{display:flex;height:66px;border-radius:33px;background:rgba(30,28,27,.94);padding:6px;box-shadow:0 16px 34px -14px rgba(0,0,0,.55)}
+.ong-app button{flex:1;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:27px;color:rgba(246,243,239,.5);font-family:Jost,sans-serif;font-size:9.5px;letter-spacing:.08em;transition:background .3s,color .3s;-webkit-tap-highlight-color:transparent}
+.ong-app button.on{background:rgba(246,243,239,.12);color:var(--creme)}
+.ong-app svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.4}
 /* 5 — tout est compris (1re version) */
 .inc{padding:0;margin:0}
 .inc li{list-style:none;display:flex;align-items:center;gap:12px;font-size:14.5px;padding:10px 0;border-bottom:1px solid var(--ligne)}
@@ -591,6 +601,8 @@ body{background:var(--creme)}
 .p-moi .faits{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:10px 0 0;padding-top:10px}
 .p-moi .faits b{font-family:Italiana,serif;font-weight:400;font-size:24px}
 .p-moi .signature{margin-top:14px;font-size:10px}
+.mon-site{align-self:flex-start;display:inline-flex;gap:6px;align-items:center;border:1px solid var(--noir);border-radius:999px;padding:8px 14px;font-size:12px;margin-bottom:16px}
+.mon-site b{font-weight:500}
 /* 8 — les questions : les 4 thèmes sur une ligne, l'écriture de la 1re version */
 .p-questions{justify-content:flex-start;padding-top:86px}
 .faq-cats{display:flex;justify-content:space-between;gap:6px;margin:0 0 8px}
@@ -606,10 +618,10 @@ body{background:var(--creme)}
 .qt.ouv .rep p{padding-top:10px}
 
 /* l'histoire */
-.p-histoire{background:var(--noir);color:var(--creme)}
-.p-histoire .k{color:rgba(246,243,239,.6)}
+.p-histoire{background:#fff;color:var(--noir)}
+.p-histoire .k{color:var(--gris)}
 .p-histoire .t2{font-size:40px;margin-bottom:34px}
-.temoin{border-top:1px solid rgba(246,243,239,.2);padding-top:30px}
+.temoin{border-top:1px solid var(--ligne);padding-top:26px}
 .temoin .it{font-family:Italiana,serif;font-size:30px;line-height:1.3}
 .temoin small{display:block;margin-top:22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.65;line-height:1.6}
 /* les 9 carrés */
@@ -670,7 +682,8 @@ body{background:var(--creme)}
   .fin-haut{padding-top:76px}
 }
 .p-zero,.p-histoire,.p-moi{min-height:0!important;padding-top:64px!important;padding-bottom:56px!important}
-.p-zero{padding-bottom:30px!important}.p-zero+.p-histoire{padding-top:30px!important}
+
+.p-questions{min-height:0!important;padding-top:44px!important;padding-bottom:40px!important}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -699,15 +712,16 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </section>
 
 <section class="pan p-styles" id="styles">
-  <div class="k">À votre image</div><h2 class="t2">3 styles. 12 couleurs. Clair ou foncé.</h2>
+  <div class="k">À votre image · 3 styles, 12 couleurs</div>
+  <p class="st-intro">Le même salon, en trois styles.<br><em>Touchez-en un pour voir le site en entier.</em></p>
   <div class="styles" id="cartes">
-    <div class="st-c" data-n="1"><div class="st-n">Signature <em>Voir</em></div><div class="carte"><iframe title="Le site Dilerna, style Signature" data-n="1"></iframe></div></div>
-    <div class="st-c" data-n="2"><div class="st-n">Prestige <em>Voir</em></div><div class="carte"><iframe title="Le site Dilerna, style Prestige" data-n="2"></iframe></div></div>
-    <div class="st-c" data-n="3"><div class="st-n">Élégant <em>Voir</em></div><div class="carte"><iframe title="Le site Dilerna, style Élégant" data-n="3"></iframe></div></div>
+    <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Signature</b></div><iframe title="Le site Dilerna, style Signature" data-n="1"></iframe></div></div>
+    <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Prestige</b></div><iframe title="Le site Dilerna, style Prestige" data-n="2"></iframe></div></div>
+    <div class="st-c" data-n="3"><div class="carte"><div class="c-nom"><b>Élégant</b></div><iframe title="Le site Dilerna, style Élégant" data-n="3"></iframe></div></div>
   </div>
   <div class="dots" id="dots"></div>
   <div class="seg" id="seg"><button class="on" data-mode="jour">Clair</button><button data-mode="nuit">Foncé</button></div>
-  <p class="note-l">Mon site Dilerna en exemple · touchez un style pour le voir en grand</p>
+  <p class="note-l">En exemple : mon salon, Dilerna</p>
 </section>
 
 <section class="pan p-choisit" id="choisit">
@@ -733,13 +747,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
   <div class="ap-tete"><img src="icone-appli.svg" alt="Icône de l’appli Loginail"><div><span class="k">L’appli Loginail</span><small>Comprise dans votre abonnement</small></div></div>
   <h2 class="t2">Tout votre univers, dans votre poche.</h2>
   <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
-  <p class="onglet-txt" id="ongletTxt"></p><div class="onglets-app" id="ongletsApp">
-      <button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Accueil</button>
-      <button data-o="agenda"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Agenda</button>
-      <button data-o="clientes"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Clientes</button>
-      <button data-o="caisse"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>Caisse</button>
-      <button data-o="site"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2.5"/><path d="M10 18h4"/></svg>Mon site</button></div>
-    
+  <p class="onglet-txt" id="ongletTxt"></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
   <div class="stores">
       <a class="store" href="#" aria-label="Télécharger dans l’App Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 1.4c0 1.1-.5 2.3-1.2 3.1-.7.9-2 1.6-3 1.6-.1 0-.2 0-.3 0 0-.1 0-.2 0-.4 0-1.1.6-2.3 1.2-3 .8-.9 2.1-1.6 3.2-1.7 0 .1.1.3.1.4zm4.5 15.7c0 .1-.5 1.6-1.5 3.1-.9 1.3-1.9 2.7-3.4 2.7s-1.9-.9-3.6-.9-2.3.9-3.7.9-2.3-1.3-3.4-2.8c-1.3-1.8-2.3-4.6-2.3-7.3 0-4.3 2.8-6.5 5.6-6.5 1.4 0 2.7 1 3.6 1 .9 0 2.2-1 3.9-1 .6 0 2.9.1 4.4 2.2-.1.1-2.4 1.4-2.4 4.2 0 3.3 2.9 4.4 2.8 4.4z"/></svg><span><small>Télécharger dans</small>l’App Store</span></a>
       <a class="store" href="#" aria-label="Disponible sur Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6 13.6 12 4 21.4c-.4-.2-.6-.6-.6-1.1V3.7c0-.5.2-.9.6-1.1z" fill="#00D7FE"/><path d="M16.8 8.8 13.6 12 4 2.6c.3-.2.8-.2 1.2 0z" fill="#00F076"/><path d="M16.8 15.2 5.2 21.4c-.4.2-.9.2-1.2 0l9.6-9.4z" fill="#FF3A44"/><path d="m16.8 8.8 3.4 1.9c.9.5.9 2 0 2.5l-3.4 2L13.6 12z" fill="#FFD400"/></svg><span><small>Disponible sur</small>Google Play</span></a>
@@ -771,6 +779,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </section>
 
 <section class="pan p-moi" id="moi">
+  <a class="mon-site" href="https://dilerna.fr/" target="_blank" rel="noopener">Voir mon site <b>dilerna.fr</b> ↗</a>
   <div class="moi-haut"><div class="ph" role="img" aria-label="Marie, créatrice de Loginail"></div><div><span class="k">Qui suis-je</span><h2 class="t2">Pensé par une prothésiste, pour les prothésistes.</h2></div></div>
   <p class="moi-texte">Avoir un beau site est devenu un luxe : des devis hors de prix, des abonnements qui s’additionnent, des outils pensés pour les grands instituts. Pour une prothésiste indépendante, c’est souvent <b>trop cher et trop compliqué</b>.</p>
     <p class="moi-texte">J’ai créé Loginail pour changer ça : <b>un site élégant à votre nom</b>, la réservation en ligne et une appli pour gérer votre salon, réunis dans <b>un seul abonnement</b> et <b>prêts en quelques minutes</b>.</p>
@@ -802,6 +811,8 @@ let dernierToucher=0;document.addEventListener("touchend",e=>{const t=Date.now()
 if("scrollRestoration" in history)history.scrollRestoration="manual";
 if(location.hash)history.replaceState(null,"",location.pathname+location.search);
 scrollTo(0,0);addEventListener("pageshow",()=>scrollTo(0,0));
+/* la hauteur réelle de l'écran au chargement (certains navigateurs se trompent) */
+const h0=()=>document.documentElement.style.setProperty("--h0",innerHeight+"px");h0();addEventListener("orientationchange",()=>setTimeout(h0,300));
 /* « Créer mon site » : on ouvre directement la création (la vraie, faite pour le téléphone), avec le lien collé */
 document.querySelectorAll("[data-lien]").forEach(f=>f.onsubmit=e=>{e.preventDefault();const i=f.querySelector("input"),v0=i.value.trim(),v=(v0.match(/https?:\/\/\S+/)||[""])[0];
   ouvreResa(v)});
@@ -847,7 +858,7 @@ const APPLI={accueil:["demo/loginail-pro.html",1,"Votre journée en un coup d’
   caisse:["demo/loginail-caisse.html",2,"Ce que vous avez encaissé, jour après jour, sans calcul."],
   site:["demo/loginail-monsite2.html",1,"Votre site : photos, prix, textes, style et couleur. Vous changez tout quand vous voulez."]};
 function isole(ifr,n){try{const d=ifr.contentDocument,t=d.querySelectorAll(".ecran")[n];if(!t)return;t.remove();d.body.innerHTML="";d.body.append(t);
-  d.body.style.cssText="margin:0;background:transparent;overflow:hidden";const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:844px!important}";d.head.append(st);
+  d.body.style.cssText="margin:0;background:transparent;overflow:hidden";const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:844px!important}.ong,.ag-tab{display:none!important}";d.head.append(st);
   const ajuste=()=>{t.style.zoom="1";const k=Math.min(ifr.clientWidth/t.offsetWidth,ifr.clientHeight/t.offsetHeight);t.style.zoom=k;t.style.left=Math.max(0,(ifr.clientWidth/k-t.offsetWidth)/2)+"px"};ajuste();new ResizeObserver(ajuste).observe(ifr);ifr.classList.add("pret")}catch(e){console.warn(e)}}
 const va=$("vraieAppli");let ongletI="accueil",appliAuto=true,appliT;
 Object.entries(APPLI).forEach(([k,v])=>{const f=document.createElement("iframe");f.dataset.o=k;f.title="Appli Loginail : "+k;f.loading="lazy";f.src=v[0];f.onload=()=>{isole(f,v[1]);if(k===ongletI)f.classList.add("on")};va.prepend(f)});
