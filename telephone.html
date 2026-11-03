@@ -677,7 +677,7 @@ body{background:var(--creme)}
   .p-etapes .pas{gap:8px}.p-etapes .pas li{font-size:12px}.p-etapes .pas strong{font-size:13.5px}.p-etapes .pas b{font-size:24px}
   .p-etapes .case.sombre p{font-size:12.5px}.p-etapes .case-bas{padding-top:10px}
   .p-appli .t2{font-size:26px;margin:8px 0 10px}
-  .ecran-appli{height:calc(100svh - 262px)}
+  .ecran-appli{height:calc(100svh - 312px)}
   .p-appli .onglet-txt{margin:8px 0 8px;min-height:0;font-size:12px}
   .p-inclus .inc li{padding:6px 0;font-size:13px}
   .p-inclus .prix-carte{margin-top:12px;padding:14px 18px 12px}.p-inclus .prix-carte b{font-size:38px;margin:4px 0 0}
@@ -706,6 +706,18 @@ body{background:var(--creme)}
 .note-l.touchez{color:var(--noir);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px}
 /* comment ça marche : les deux cases de la même taille */
 .p-etapes .case{display:flex;flex-direction:column}
+/* ce qui brille : « 1 mois offert », « sans engagement » */
+.brille{font-style:normal;font-weight:500;background:linear-gradient(110deg,#D9C3A5 20%,#fff 40%,#F1E3CF 50%,#D9C3A5 70%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brille 3s linear infinite}
+@keyframes brille{from{background-position:120% 0}to{background-position:-120% 0}}
+.prix-carte>span.brille{opacity:1;letter-spacing:.32em}
+.ap-sous{font-size:13px;line-height:1.5;color:var(--muted);margin:-4px 0 10px;text-align:center}
+.ap-liste{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:13px}
+.ap-liste li::before{content:"✓";margin-right:8px;opacity:.7}
+/* l'histoire : une citation, au milieu */
+.p-histoire{text-align:center;align-items:center}
+.p-histoire .t2{margin-bottom:18px!important}
+.temoin{border-top:0!important;padding-top:0!important;max-width:320px}
+.temoin .it{font-style:italic;font-size:19px!important}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -726,9 +738,9 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </div></header>
 
 <section class="pan p-haut" id="haut">
-  <div class="k haut-k">Fait par une prothésiste, pour les prothésistes</div>
+  <div class="k haut-k">Fait par une prothésiste,<br>pour les prothésistes.</div>
   <div><h1>Les grands salons ont de beaux sites. Pourquoi pas vous&nbsp;?</h1>
-    <div class="sous">Loginail crée <b>le site de votre onglerie</b>, avec la réservation en ligne, et <b>l’appli</b> pour gérer vos rendez-vous.<span class="sous-prix">79,99 € / mois · 1 mois offert</span></div>
+    <div class="sous">Loginail crée <b>le site de votre onglerie</b>, avec la réservation en ligne, et <b>l’appli</b> pour gérer vos rendez-vous.<span class="sous-prix">79,99 € / mois · <em class="brille">1 mois offert</em> · <em class="brille">sans engagement</em></span></div>
     <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div>
     <a class="descend" href="#styles"><span>Découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a></div>
 </section>
@@ -762,6 +774,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
         <li><b>3</b><div><strong>Choisissez votre style</strong>3 styles, 12 couleurs, clair ou foncé. C’est prêt, et vous le changez quand vous voulez.</div></li></ol></div>
   <div class="case sombre"><span class="kick">Votre appli</span><h3>En 1 clic.</h3>
     <p>Téléchargez l’appli Loginail et connectez-vous : votre site, vos rendez-vous et vos clientes y sont déjà.</p>
+    <ul class="ap-liste"><li>Votre agenda</li><li>Vos clientes</li><li>Votre caisse</li><li>Votre site</li></ul>
     <div class="stores">
       <a class="store" href="#" aria-label="Télécharger dans l’App Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 1.4c0 1.1-.5 2.3-1.2 3.1-.7.9-2 1.6-3 1.6-.1 0-.2 0-.3 0 0-.1 0-.2 0-.4 0-1.1.6-2.3 1.2-3 .8-.9 2.1-1.6 3.2-1.7 0 .1.1.3.1.4zm4.5 15.7c0 .1-.5 1.6-1.5 3.1-.9 1.3-1.9 2.7-3.4 2.7s-1.9-.9-3.6-.9-2.3.9-3.7.9-2.3-1.3-3.4-2.8c-1.3-1.8-2.3-4.6-2.3-7.3 0-4.3 2.8-6.5 5.6-6.5 1.4 0 2.7 1 3.6 1 .9 0 2.2-1 3.9-1 .6 0 2.9.1 4.4 2.2-.1.1-2.4 1.4-2.4 4.2 0 3.3 2.9 4.4 2.8 4.4z"/></svg><span><small>Télécharger dans</small>l’App Store</span></a>
       <a class="store" href="#" aria-label="Disponible sur Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6 13.6 12 4 21.4c-.4-.2-.6-.6-.6-1.1V3.7c0-.5.2-.9.6-1.1z" fill="#00D7FE"/><path d="M16.8 8.8 13.6 12 4 2.6c.3-.2.8-.2 1.2 0z" fill="#00F076"/><path d="M16.8 15.2 5.2 21.4c-.4.2-.9.2-1.2 0l9.6-9.4z" fill="#FF3A44"/><path d="m16.8 8.8 3.4 1.9c.9.5.9 2 0 2.5l-3.4 2L13.6 12z" fill="#FFD400"/></svg><span><small>Disponible sur</small>Google Play</span></a>
@@ -770,8 +783,9 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </section>
 
 <section class="pan p-appli" id="lappli">
-  <div class="k">L’appli Loginail · comprise</div>
+  <div class="k">L’appli Loginail · sur votre téléphone</div>
   <h2 class="t2 ap-titre">Tout votre univers,<br>dans votre poche.</h2>
+  <p class="ap-sous">L’appli à télécharger sur votre iPhone ou votre Android, comprise dans l’abonnement.</p>
   <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
   <p class="onglet-txt" id="ongletTxt" hidden></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
 </section>
@@ -779,8 +793,8 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 <section class="pan p-inclus" id="compris">
   <div class="k">Tout est compris</div><h2 class="t2">Un seul abonnement.</h2>
   <ul class="inc"><li><i></i>Votre site en ligne tout de suite</li><li><i></i>Réservation en ligne, jour et nuit</li><li><i></i>SMS de confirmation et de rappel, sans limite</li><li><i></i>Aucun frais sur vos réservations</li><li><i></i>Votre nom de domaine, qui vous appartient</li><li><i></i>Votre site en 5 langues</li><li><i></i>Votre agenda et vos clientes sur votre téléphone</li><li><i></i>Aide 24 h / 24</li></ul>
-  <div class="prix-carte" style="--d:.15s"><span>1 mois offert</span><b>79,99 €</b><small>par mois, après votre mois offert</small>
-      <ul><li>Sans engagement · arrêt en 1 clic</li><li>Aucune commission</li></ul>
+  <div class="prix-carte" style="--d:.15s"><span class="brille">1 mois offert</span><b>79,99 €</b><small>par mois, après votre mois offert</small>
+      <ul><li><em class="brille">Sans engagement</em> · arrêt en 1 clic</li><li>Aucune commission</li></ul>
       <a class="btn clair" href="#haut" data-creer>Créer mon site</a><p>TVA non applicable, art. 293 B du CGI</p></div>
 </section>
 
@@ -790,13 +804,8 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
     <div><b>0 €</b><span>pour créer votre site et le voir</span></div>
     <div><b>0 €</b><span>de frais cachés</span></div>
     <div><b>0</b><span>engagement : vous arrêtez en 1 clic</span></div>
-    <div><b>1 mois</b><span>offert pour commencer</span></div></div>
+    <div><b>0 €</b><span>de plus pour les SMS de rappel, sans limite</span></div></div>
   <p class="zero-note">Sur les acomptes en ligne, seuls les frais de carte bancaire du service de paiement s’appliquent.</p>
-</section>
-
-<section class="pan p-histoire" id="histoire">
-  <div class="k">L’histoire</div><h2 class="t2">Le site que j’aurais voulu avoir.</h2>
-  <div class="temoin"><div class="it">“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</div><small>Marie, prothésiste ongulaire, créatrice de Loginail</small></div>
 </section>
 
 <section class="pan p-moi" id="moi">
@@ -805,6 +814,11 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
     <p class="moi-texte">J’ai créé Loginail pour changer ça : <b>un site élégant à votre nom</b>, la réservation en ligne et une appli pour gérer votre salon, réunis dans <b>un seul abonnement</b> et <b>prêts en quelques minutes</b>.</p>
     <div class="faits"><div><b>2023</b>prothésiste ongulaire</div><div><b>4 000+</b>poses réalisées</div><div><b>5,0 ★</b>67 avis Google</div><div><b>Porto-Vecchio</b>salon Dilerna</div></div>
     <p class="signature">Marie Leandri · fondatrice de Loginail</p>
+</section>
+
+<section class="pan p-histoire" id="histoire">
+  <div class="k">L’histoire</div><h2 class="t2">Le site que j’aurais voulu avoir.</h2>
+  <div class="temoin"><div class="it">“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</div><small>Marie, prothésiste ongulaire, créatrice de Loginail</small></div>
 </section>
 
 <section class="pan p-questions" id="questions">
