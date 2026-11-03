@@ -724,6 +724,16 @@ body{background:var(--creme)}
 .p-histoire{background:#fff;padding-top:46px!important;padding-bottom:46px!important}
 .citation small{display:block;margin-top:12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.55;white-space:nowrap}
 .fin-haut{padding-top:84px!important}
+/* la citation : fond noir, au milieu, la phrase s'écrit comme à la main, le petit trait reste à la fin */
+.pan.p-histoire{background:#151413!important;color:var(--creme)!important;text-align:center;align-items:center;padding-top:56px!important;padding-bottom:56px!important}
+.p-histoire .gui{font-family:Georgia,serif;font-size:84px;line-height:.5;color:#D9C3A5;opacity:0;transform:scale(1.6);height:34px}
+.p-histoire.go .gui{animation:gui .7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes gui{to{opacity:.85;transform:none}}
+.p-histoire .cit{max-width:310px;min-height:6em;margin:14px auto 0;font-weight:300;font-style:italic;font-size:20px;line-height:1.5}
+.p-histoire .curseur{display:inline-block;width:1.5px;height:1.05em;background:var(--creme);vertical-align:-3px;margin-left:2px;animation:clig .9s steps(1) infinite}
+@keyframes clig{50%{opacity:0}}
+.p-histoire .sig{display:block;margin-top:16px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .9s}
+.p-histoire .sig.vu{opacity:.55}
 /* 9 — la fin */
 .p-fin{background:var(--noir);color:var(--creme);justify-content:space-between;padding:0}
 .fin-haut{padding:96px 24px 26px;text-align:center}
@@ -773,7 +783,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 
 <div class="grand-site" id="grandSite" hidden><iframe title="Le site en grand"></iframe><div class="gs-bas"><span id="gsNom"></span><button id="gsFerme">Fermer</button></div></div>
 
-<section class="pan p-histoire" id="histoire"><div class="citation"><p>“Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé.”</p><small>Marie · prothésiste ongulaire, créatrice de Loginail</small></div></section>
+<section class="pan p-histoire" id="histoire"><div class="gui" aria-hidden="true">“</div><p class="cit" id="citTxt" aria-label="Je voulais un site beau, simple, et pensé pour notre métier. Alors je l’ai créé."><span class="curseur"></span></p><small class="sig" id="citSig">Marie · prothésiste ongulaire, créatrice de Loginail</small></section>
 
 <section class="pan p-etapes" id="etapes">
   <div class="k">Comment ça marche</div><h2 class="t2">Prête en quelques minutes.</h2>
@@ -935,6 +945,12 @@ $("faq").onclick=e=>{const b=e.target.closest(".qt>button");if(!b)return;const q
 /* les deux cases de « Comment ça marche » ont la même hauteur */
 const memeTaille=()=>{const cs=[...document.querySelectorAll(".p-etapes .case")];cs.forEach(c=>c.style.minHeight="");const m=Math.max(...cs.map(c=>c.offsetHeight));cs.forEach(c=>c.style.minHeight=m+"px")};
 memeTaille();document.fonts&&document.fonts.ready.then(memeTaille);addEventListener("resize",memeTaille);
+/* la citation s'écrit quand on arrive dessus : vite, avec de petites pauses comme une vraie main ; le trait clignote encore à la fin */
+{const sec=$("histoire"),c=$("citTxt"),T=c.getAttribute("aria-label");
+ new IntersectionObserver((es,o)=>es.forEach(e=>{if(!e.isIntersecting)return;o.disconnect();sec.classList.add("go");let k=0;
+   const pas=()=>{k++;c.innerHTML=T.slice(0,k)+'<span class="curseur"></span>';if(k>=T.length){setTimeout(()=>$("citSig").classList.add("vu"),300);return}
+     const ch=T[k-1];setTimeout(pas,ch==="."?320:ch===","?170:ch===" "?40:18+Math.random()*30)};
+   setTimeout(pas,650)}),{threshold:.5}).observe(sec)}
 /* un titre qui doit tenir sur une ligne rapetisse un peu s'il le faut */
 const uneLigne=()=>document.querySelectorAll(".une-ligne").forEach(t=>{t.style.fontSize="";let f=parseFloat(getComputedStyle(t).fontSize);while(t.scrollWidth>t.clientWidth&&f>18){f-=.5;t.style.fontSize=f+"px"}});
 uneLigne();addEventListener("resize",uneLigne);document.fonts&&document.fonts.ready.then(uneLigne);
