@@ -897,6 +897,7 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
 <section class="pan p-styles" id="styles">
   <div class="k">À votre image</div>
   <p class="st-intro">3 templates.<em>+ de 6 000 variantes</em></p>
+  <p class="st-phrase">Vous travaillez seule&nbsp;? Votre site, lui, a l’air d’un grand salon.</p>
   <div class="styles" id="cartes">
     <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Photo en grand</b></div><iframe title="Le site Dilerna, forme Photo en grand" data-n="1"></iframe></div></div>
     <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Tout simple</b></div><iframe title="Le site Dilerna, forme Tout simple" data-n="2"></iframe></div></div>
@@ -912,9 +913,37 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
   <div class="k">L’appli Loginail · sur votre téléphone</div>
   <h2 class="t2 ap-titre">Avant, vous ouvriez vos DM.<br>Maintenant, vous ouvrez votre appli.</h2>
   <p class="ap-sous">Vous changez votre site dans l’appli&nbsp;? Il change sur votre site. Fin.<br>L’appli est comprise dans l’abonnement, sur iPhone et Android.</p>
-  <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
+  <div class="ap-scene" id="apScene"><div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div><div class="nt nt-d" style="top:30%"><img src="icone-appli.svg" alt=""><div><b>Rappel SMS envoyé</b><span>Sarah a reçu son rappel pour demain, 14 h</span></div></div><div class="nt nt-g" style="top:50%"><img src="icone-appli.svg" alt=""><div><b>Anniversaire 🎂</b><span>C’est l’anniversaire de Julie aujourd’hui.</span><span class="nt-bt">Lui souhaiter</span></div></div><div class="nt nt-d" style="top:70%"><img src="icone-appli.svg" alt=""><div><b>Caisse</b><span>Vous l’utilisez seulement si vous voulez.</span><span class="nt-sw"><i></i></span></div></div><div class="nt nt-g" style="top:12%"><img src="icone-appli.svg" alt=""><div><b>Mon site</b><span>Vos nouveaux prix sont en ligne.</span></div></div><div class="nt nt-d" style="top:88%"><img src="icone-appli.svg" alt=""><div><b>Nouvelle cliente</b><span>Emma a réservé sa première pose.</span></div></div></div>
   <p class="onglet-txt" id="ongletTxt" hidden></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
+  <p class="ap-phrase" id="apPhrase">Changez vos prix en 2 secondes.</p>
 </section>
+<style>
+.ap-scene{position:relative;align-self:stretch;display:flex;justify-content:center}
+.nt{position:absolute;z-index:5;width:172px;display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 14px 30px -14px rgba(30,28,27,.35),0 0 0 1px rgba(30,28,27,.05);
+  opacity:0;transform:translateY(10px) scale(.96);transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.nt.on{opacity:1;transform:none}
+.nt img{width:24px;height:24px;border-radius:7px;flex:none;margin-top:1px}
+.nt b{display:block;font-size:11.5px;font-weight:600;line-height:1.25}
+.nt span{display:block;font-size:11px;line-height:1.35;color:var(--muted);margin-top:2px}
+.nt-g{left:-16px}.nt-d{right:-16px}
+.nt .nt-bt{display:inline-block;margin-top:7px;background:var(--noir);color:var(--creme);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:99px}
+.nt .nt-sw{display:inline-block;margin-top:7px;width:34px;height:20px;border-radius:99px;background:#D8D2CB;position:relative;transition:background .4s .6s}
+.nt .nt-sw i{position:absolute;left:3px;top:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .4s .6s}
+.nt.on .nt-sw{background:var(--noir)}.nt.on .nt-sw i{left:17px}
+.ap-phrase{text-align:center;font-size:14px;font-weight:500;margin:14px 0 0;min-height:22px;transition:opacity .45s,transform .45s}
+.ap-phrase.out{opacity:0;transform:translateY(6px)}
+.st-phrase{margin:-2px 0 12px;font-size:14px;line-height:1.5;text-align:center;color:var(--muted)}
+.p-petit{min-height:0!important;padding-top:70px!important;padding-bottom:70px!important;text-align:center;align-items:center}
+.p-petit .t2{margin:0 0 14px}.p-petit p{margin:0;font-size:15px;line-height:1.5}
+</style>
+<script>(function(){var sc=document.getElementById("apScene");if(!sc)return;var n=[].slice.call(sc.querySelectorAll(".nt")),k=0,on=[];
+  function pas(){var b=n[k%n.length];b.classList.add("on");on.push(b);if(on.length>2)on.shift().classList.remove("on");k++}
+  var ph=document.getElementById("apPhrase"),L=["Changez vos prix en 2 secondes.", "Toute votre semaine, d’un coup d’œil.", "Les rappels SMS partent tout seuls.", "Chaque cliente a sa fiche : ses poses, vos notes.", "La caisse ? Seulement si vous la voulez.", "Fini les DM à 23 h pour un rendez-vous."],j=0;
+  function phrase(){ph.classList.add("out");setTimeout(function(){j=(j+1)%L.length;ph.textContent=L[j];ph.classList.remove("out")},450)}
+  var t1,t2;function go(){if(t1)return;pas();t1=setInterval(pas,2600);t2=setInterval(phrase,3200)}
+  function stop(){clearInterval(t1);clearInterval(t2);t1=t2=null}
+  if(!("IntersectionObserver" in window))return go();
+  new IntersectionObserver(function(e){e[0].isIntersecting?go():stop()},{threshold:.2}).observe(sc)})();</script>
 
 <section class="pan p-etapes" id="etapes">
   <div class="k">Comment ça marche</div><h2 class="t2">Prête en quelques minutes.</h2>
@@ -968,6 +997,11 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
     <p class="moi-texte">J’ai créé Loginail pour changer ça : <b>un site élégant à votre nom</b>, la réservation en ligne et une appli pour gérer votre salon, réunis dans <b>un seul abonnement</b> et <b>prêts en quelques minutes</b>.</p>
     <div class="faits"><div><b>2023</b>prothésiste ongulaire</div><div><b>4 000+</b>poses réalisées</div><div><b>5,0 ★</b>67 avis Google</div><div><b>Porto-Vecchio</b>salon Dilerna</div></div>
     <p class="signature">Marie Leandri · fondatrice de Loginail</p>
+</section>
+
+<section class="pan p-petit" id="petit">
+  <h2 class="t2">Petit salon.<br>Grand site.</h2>
+  <p>Pas d’enseigne sur la porte&nbsp;? Un site à votre nom, oui.</p>
 </section>
 
 <section class="pan p-questions" id="questions">
