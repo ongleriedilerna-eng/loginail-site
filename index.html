@@ -221,6 +221,18 @@ section{padding:110px 0}
 .grandprix b{display:block;font-family:"Cormorant Garamond",serif;font-weight:500;font-size:64px;line-height:1;margin:10px 0 12px}
 .grandprix small{font-size:14px;opacity:.75}
 /* votre site + votre appli : un seul écran */
+#fonds{padding:90px 0 60px;background:var(--creme);overflow:hidden}
+#fonds .f-haut{text-align:center;max-width:760px;margin:0 auto}
+#fonds .titre{margin:14px 0 14px}
+#fonds .chapeau{margin:0 auto 26px;max-width:640px}
+#fonds .chapeau b{color:var(--noir);font-weight:500}
+#fonds .anneau{margin:0 auto}
+#fonds .f-bas{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:14px;color:var(--muted)}
+#fonds .f-coul{display:flex;gap:6px}
+#fonds .f-coul i{width:18px;height:18px;border-radius:50%;box-shadow:0 0 0 2px #fff,0 2px 6px rgba(0,0,0,.18)}
+#fonds .f-glisse{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gris);margin-top:14px;text-align:center}
+#fonds .f-pastille{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:10px 18px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font-size:12.5px;letter-spacing:.04em}
+#fonds .f-pastille i{width:7px;height:7px;border-radius:50%;background:#C9A97E}
 .un-ecran{min-height:100vh;display:flex;align-items:center;padding:90px 0 40px}
 .un-ecran>.wrap{width:100%}
 .compris2{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
@@ -541,7 +553,7 @@ section{padding:110px 0}
     </div>
     <p class="rassure r" style="--d:.35s">Gratuit · sans carte bancaire · sans engagement</p>
     <div class="offre r" style="--d:.5s">
-      <div class="carte"><em>Votre site + votre appli</em><b>79,99 € / mois</b><small>1 mois offert pour commencer</small></div>
+      <div class="carte"><em>Votre site + votre appli</em><b>49,99 € / mois</b><small>1 mois offert pour commencer</small></div>
       <ul><li>Vous changez votre site quand vous voulez, dans l’appli</li><li>Aucune commission sur vos réservations</li></ul>
     </div>
   </div>
@@ -564,6 +576,22 @@ section{padding:110px 0}
     <div class="reg r"><b>Clair ou foncé</b><div class="cf" id="cf"><button class="on" data-m="clair">Clair</button><button data-m="fonce">Foncé</button></div></div>
   </div>
 </div></section>
+
+<section id="fonds">
+  <div class="wrap f-haut">
+    <span class="kick r">Encore plus à votre image</span><h2 class="titre r" style="white-space:nowrap">Plus de 100 fonds et couleurs.</h2>
+    <p class="chapeau r">Des fleurs, des strass, du léopard, des couleurs douces, des fonds qui bougent… <b>Avec l’abonnement, vous changez tout votre site quand vous voulez, gratuitement, depuis votre application.</b></p>
+  </div>
+  <div class="anneau r" data-anneau aria-label="Des exemples de fonds pour votre site, qui défilent"></div>
+  <p class="f-glisse r">← Faites-les tourner →</p>
+  <div class="wrap f-bas r"><div class="f-coul"><i style="background:#1E1C1B"></i><i style="background:#4A3226"></i><i style="background:#24344F"></i><i style="background:#5E5149"></i><i style="background:#5F574F"></i><i style="background:#80633F"></i><i style="background:#7A5444"></i><i style="background:#4F5A45"></i><i style="background:#6E6253"></i><i style="background:#8A6656"></i><i style="background:#9A5D6B"></i><i style="background:#4F6F93"></i></div><span>Et les 12 couleurs de votre site, en clair ou en foncé.</span></div>
+  <div class="wrap" style="text-align:center"><span class="f-pastille r"><i></i>Compris dans l’abonnement · rien à payer en plus</span></div>
+</section>
+<script>
+/* la roue des fonds : son fichier (fonds-100.js) ne se charge que quand on approche de la partie */
+(function(){var el=document.querySelector("[data-anneau]"),fait=0;function go(){if(fait)return;fait=1;var s=document.createElement("script");s.src="fonds-100.js";document.body.appendChild(s)}
+if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserver(function(e){if(e.some(function(x){return x.isIntersecting})){io.disconnect();go()}},{rootMargin:"1400px 0px"});io.observe(el)})();
+</script>
 
 <section id="etapes" style="background:#fff"><div class="wrap">
   <span class="kick r">Comment ça marche</span><h2 class="titre r">Simple, du début à la fin.</h2>
@@ -606,7 +634,7 @@ section{padding:110px 0}
   <div class="prix-bloc">
     <div class="r"><span class="kick">Tout est compris</span><h2 class="titre">Votre site + votre appli.<br><em>Un seul abonnement.</em></h2>
       <ul class="tout"><li><b>Votre site en ligne tout de suite</b></li><li>Réservation en ligne, jour et nuit</li><li>Votre appli : agenda, clientes, caisse</li><li>SMS de confirmation et de rappel, sans limite</li><li>Votre nom de domaine, qui vous appartient</li><li><b>Votre site en 5 langues</b></li><li><b>Aucun frais sur vos réservations</b></li><li>Vous changez votre site quand vous voulez, dans l’appli</li></ul></div>
-    <div class="prix-carte r" style="--d:.15s"><span>1 mois offert</span><b>79,99 €</b><small>par mois, après votre mois offert</small>
+    <div class="prix-carte r" style="--d:.15s"><span>1 mois offert</span><b>49,99 €</b><small>par mois, après votre mois offert</small>
       <ul><li>Sans engagement · arrêt en 1 clic</li><li>Aucune commission</li></ul>
       <a class="btn clair" href="#haut" data-creer>Créer mon site</a><p>TVA non applicable, art. 293 B du CGI</p></div>
   </div>
@@ -749,7 +777,7 @@ new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){appliT=setT
 $("ongletsApp").onclick=e=>{const b=e.target.closest("button");if(!b)return;appliAuto=false;clearTimeout(appliT);ouvreOnglet(b.dataset.o)};
 
 /* les questions (réponses du site actuel) */
-const FAQ=[["Combien de temps pour avoir mon site ?", "Trois étapes : vous collez le lien de votre fiche Google, on complète ensemble ce qui manque, vous choisissez votre style. Votre site apparaît en moins d’une minute."], ["Est-ce que je suis engagée ?", "Non, sans engagement. Vous arrêtez en un clic, quand vous voulez."], ["Combien je vais payer ?", "79,99 € par mois, votre site et votre appli compris. Le premier mois est offert."], ["Il y a des frais en plus ?", "Non. Aucune commission sur vos réservations, aucun frais caché. Sur les acomptes, seuls les frais de carte bancaire sont pris par le service de paiement."], ["Je peux essayer avant de payer ?", "Oui. Créer votre site est gratuit, pour le voir. Et quand vous l’activez, le premier mois est offert."], ["Je peux modifier mon site moi-même ?", "Oui, depuis votre appli, quand vous voulez : photos, prix, textes, horaires."], ["Je peux changer de style après ?", "Oui, en quelques clics : le style, la couleur, clair ou foncé."], ["Je peux mettre mes photos ?", "Oui, directement depuis votre téléphone."], ["Mes horaires et mon adresse sont affichés ?", "Oui, avec le plan et l’itinéraire pour venir au salon."], ["Je récupère mes rendez-vous actuels ?", "Oui. Prenez votre agenda en photo : vos rendez-vous sont ajoutés. Vous pourrez aussi les reprendre depuis Google Agenda."], ["Les SMS sont limités ?", "Non. Confirmation et rappel la veille, automatiques et sans limite."], ["Le nom de domaine est à moi ?", "Oui : votre-onglerie.fr, à votre nom, compris dans l’abonnement."], ["Mes clientes doivent créer un compte ?", "Non : ni compte, ni appli. Elles réservent en 30 secondes sur votre propre site."], ["Mes clientes doivent payer un acompte ?", "C’est vous qui choisissez : sans acompte, avec un acompte, ou le paiement complet en ligne."], ["Une cliente annule : je perds la place ?", "Non. Le créneau se libère tout de suite sur votre site et une autre cliente peut le réserver. Vous choisissez le délai d’annulation, et vous pouvez le proposer à vos clientes en liste d’attente."], ["Je peux bloquer mes vacances ?", "Oui, en un geste dans votre agenda : personne ne peut réserver ces jours-là."], ["J’ai une fiche pour chaque cliente ?", "Oui : ses rendez-vous, vos notes, ses préférences et son anniversaire."], ["Je vais oublier l’anniversaire de mes clientes ?", "Jamais : l’appli vous le rappelle le jour J, et vous lui envoyez un petit mot en un geste."], ["Je vois mon agenda partout ?", "Oui, même en déplacement : il est dans votre téléphone."], ["Faut-il être douée en informatique ?", "Non. Si vous savez copier un lien, vous savez créer votre site."], ["Pourquoi pas juste Planity ?", "Sur une plateforme, vous êtes une fiche parmi tant d’autres. Avec Loginail, votre nom s’affiche en grand sur votre propre site, et vous gérez tout votre agenda depuis votre appli."], ["Qui a créé Loginail ?", "Une prothésiste à son compte. J’ai créé l’outil que j’ai toujours voulu avoir."]],THEMES=[["Démarrer", [0, 4, 19, 9, 20, 21]], ["Le prix", [1, 2, 3, 10, 11]], ["Votre site", [5, 6, 7, 8]], ["Vos clientes", [12, 13, 14, 15, 16, 17, 18]]];
+const FAQ=[["Combien de temps pour avoir mon site ?", "Trois étapes : vous collez le lien de votre fiche Google, on complète ensemble ce qui manque, vous choisissez votre style. Votre site apparaît en moins d’une minute."], ["Est-ce que je suis engagée ?", "Non, sans engagement. Vous arrêtez en un clic, quand vous voulez."], ["Combien je vais payer ?", "49,99 € par mois, votre site et votre appli compris. Le premier mois est offert."], ["Il y a des frais en plus ?", "Non. Aucune commission sur vos réservations, aucun frais caché. Sur les acomptes, seuls les frais de carte bancaire sont pris par le service de paiement."], ["Je peux essayer avant de payer ?", "Oui. Créer votre site est gratuit, pour le voir. Et quand vous l’activez, le premier mois est offert."], ["Je peux modifier mon site moi-même ?", "Oui, depuis votre appli, quand vous voulez : photos, prix, textes, horaires."], ["Je peux changer de style après ?", "Oui, en quelques clics : le style, la couleur, clair ou foncé."], ["Je peux mettre mes photos ?", "Oui, directement depuis votre téléphone."], ["Mes horaires et mon adresse sont affichés ?", "Oui, avec le plan et l’itinéraire pour venir au salon."], ["Je récupère mes rendez-vous actuels ?", "Oui. Prenez votre agenda en photo : vos rendez-vous sont ajoutés. Vous pourrez aussi les reprendre depuis Google Agenda."], ["Les SMS sont limités ?", "Non. Confirmation et rappel la veille, automatiques et sans limite."], ["Le nom de domaine est à moi ?", "Oui : votre-onglerie.fr, à votre nom, compris dans l’abonnement."], ["Mes clientes doivent créer un compte ?", "Non : ni compte, ni appli. Elles réservent en 30 secondes sur votre propre site."], ["Mes clientes doivent payer un acompte ?", "C’est vous qui choisissez : sans acompte, avec un acompte, ou le paiement complet en ligne."], ["Une cliente annule : je perds la place ?", "Non. Le créneau se libère tout de suite sur votre site et une autre cliente peut le réserver. Vous choisissez le délai d’annulation, et vous pouvez le proposer à vos clientes en liste d’attente."], ["Je peux bloquer mes vacances ?", "Oui, en un geste dans votre agenda : personne ne peut réserver ces jours-là."], ["J’ai une fiche pour chaque cliente ?", "Oui : ses rendez-vous, vos notes, ses préférences et son anniversaire."], ["Je vais oublier l’anniversaire de mes clientes ?", "Jamais : l’appli vous le rappelle le jour J, et vous lui envoyez un petit mot en un geste."], ["Je vois mon agenda partout ?", "Oui, même en déplacement : il est dans votre téléphone."], ["Faut-il être douée en informatique ?", "Non. Si vous savez copier un lien, vous savez créer votre site."], ["Pourquoi pas juste Planity ?", "Sur une plateforme, vous êtes une fiche parmi tant d’autres. Avec Loginail, votre nom s’affiche en grand sur votre propre site, et vous gérez tout votre agenda depuis votre appli."], ["Qui a créé Loginail ?", "Une prothésiste à son compte. J’ai créé l’outil que j’ai toujours voulu avoir."]],THEMES=[["Démarrer", [0, 4, 19, 9, 20, 21]], ["Le prix", [1, 2, 3, 10, 11]], ["Votre site", [5, 6, 7, 8]], ["Vos clientes", [12, 13, 14, 15, 16, 17, 18]]];
 let themeI=0,gT=null,gAuto=true,gTape=null,gVu=false;
 /* on choisit une question : la cliente la pose, « Marie écrit… », puis ma réponse arrive.
    Tant qu'on ne touche à rien, les questions passent toutes seules (le trait sous la question montre le temps) */

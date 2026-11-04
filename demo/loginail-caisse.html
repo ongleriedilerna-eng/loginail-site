@@ -544,7 +544,7 @@ const REGLAGES=()=>tete("Réglages","Mon compte")
   +'<div class="k">Mon salon</div><div class="liste">'
   +[["Horaires",""],["Congés et fermetures","Un bandeau s’affiche sur mon site"],["Adresse et comment me trouver",""]].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
   +'<div class="k">Mon abonnement</div><div class="liste">'
-  +[["Loginail","79,99 € / mois · sans engagement"],["Mes factures",""],["Mon nom de domaine","votre-onglerie.fr · il vous appartient"]].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
+  +[["Loginail","49,99 € / mois · sans engagement"],["Mes factures",""],["Mon nom de domaine","votre-onglerie.fr · il vous appartient"]].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
   +'<div class="k">Légal</div><div class="liste">'
   +["Mentions légales","Conditions générales","Confidentialité"].map(l=>`<div class="ligne" data-a="bientot"><div class="t">${l}</div><span class="fl">›</span></div>`).join("")+'</div>'
   +'<div class="aide" data-a="aide">Besoin d’aide ? <u>Poser une question</u></div>';
@@ -718,10 +718,10 @@ const RGF={
    <div class="lab" style="margin-top:12px">Réserver au plus tard</div>${puces(["1 h avant","2 h avant","la veille"],"2 h avant")}
    <div class="lab" style="margin-top:12px">Réserver jusqu’à</div>${puces(["1 mois","2 mois","3 mois"],"2 mois")}<button class="btn" data-a="ok-rg" style="width:100%;margin-top:14px">Enregistrer</button>`,
  "rg-compte":()=>croix+`<h3>Mon compte</h3><div class="form" style="margin-top:12px"><label>Prénom et nom<input value="Prénom Nom"></label><label>E-mail<input value="votre@email.fr"></label><label>Téléphone<input value="06 00 00 00 00"></label></div><div class="liste" style="margin-top:10px">${SWL("Ouvrir avec Face ID","",1)}</div><button class="btn" data-a="ok-rg" style="width:100%;margin-top:14px">Enregistrer</button>`,
- "rg-abo":()=>croix+`<h3>Mon abonnement</h3><div class="blanche" style="text-align:center"><b style="font-weight:300;font-size:30px">79,99 € / mois</b><div style="font-size:12.5px;color:var(--gris);margin-top:4px">Sans engagement · prochain paiement le 2 décembre</div></div>
+ "rg-abo":()=>croix+`<h3>Mon abonnement</h3><div class="blanche" style="text-align:center"><b style="font-weight:300;font-size:30px">49,99 € / mois</b><div style="font-size:12.5px;color:var(--gris);margin-top:4px">Sans engagement · prochain paiement le 2 décembre</div></div>
    <div class="liste" style="margin-top:10px">${L1("Moyen de paiement","Carte •••• 0000 (exemple)","bientot")}${L1("Mes factures","","rg-fact")}${L1("Mon nom de domaine","votre-onglerie.fr · il vous appartient","bientot")}</div>
    <button class="btn clair" data-a="rg-stop" style="width:100%;margin-top:12px">Arrêter mon abonnement</button>`,
- "rg-fact":()=>croix+`<h3>Mes factures</h3><div class="liste">${["Novembre 2026","Octobre 2026","Septembre 2026"].map(m=>`<div class="ligne" data-a="ok-pdf2"><div class="t">${m}<span>79,99 € · payée</span></div><em>PDF</em></div>`).join("")}</div>`,
+ "rg-fact":()=>croix+`<h3>Mes factures</h3><div class="liste">${["Novembre 2026","Octobre 2026","Septembre 2026"].map(m=>`<div class="ligne" data-a="ok-pdf2"><div class="t">${m}<span>49,99 € · payée</span></div><em>PDF</em></div>`).join("")}</div>`,
  "rg-stop":()=>croix+`<h3>Arrêter mon abonnement ?</h3><div class="sous">Votre site reste en ligne jusqu’au 2 décembre, puis il est mis en pause. Vos données sont gardées 30 jours si vous changez d’avis.</div><button class="btn" data-a="ok-stop" style="width:100%">Oui, arrêter</button><button class="btn clair" data-a="fermer" style="width:100%;margin-top:9px">Non, je garde Loginail</button>`,
  "rg-export":()=>croix+`<h3>Récupérer mes données</h3><div class="sous">Un fichier avec vos clientes et vos rendez-vous, à garder ou à emporter</div><button class="btn" data-a="ok-export" style="width:100%">Télécharger le fichier</button>`,
  "rg-suppr":()=>croix+`<h3>Supprimer mon compte ?</h3><div class="sous">Votre site, vos clientes et vos rendez-vous seront effacés pour toujours. Pensez à récupérer vos données avant.</div><button class="btn" data-a="ok-suppr" style="width:100%">Supprimer définitivement</button><button class="btn clair" data-a="fermer" style="width:100%;margin-top:9px">Annuler</button>`,
@@ -732,13 +732,13 @@ const RG={
    +'<div class="k">Notifications</div><div class="liste">'+NOTIF()+'</div>'
    +'<div class="k">SMS à mes clientes</div><div class="liste">'+L1("SMS de confirmation","Dès qu’elle réserve","rg-confirm")+L1("SMS de rappel","La veille à 18:00","rg-rappel")+'</div>'
    +'<div class="k">Réservations</div><div class="liste">'+L1("Réservations","En ligne · liste d’attente · délais","rg-resa")+'</div>'
-   +'<div class="k">Mon compte</div><div class="liste">'+L1("Mes infos","Prénom, e-mail, téléphone, Face ID","rg-compte")+L1("Mon abonnement","79,99 € / mois · sans engagement","rg-abo")+'</div>'
+   +'<div class="k">Mon compte</div><div class="liste">'+L1("Mes infos","Prénom, e-mail, téléphone, Face ID","rg-compte")+L1("Mon abonnement","49,99 € / mois · sans engagement","rg-abo")+'</div>'
    +'<div class="k">Mes données</div><div class="liste">'+L1("Récupérer mes données","","rg-export")+L1("Supprimer mon compte","","rg-suppr")+'</div>'
    +'<div class="k">Aide</div><div class="liste">'+L1("Besoin d’aide ?","Une réponse tout de suite","aide")+L1("Mentions légales","","bientot")+L1("Conditions générales","","bientot")+L1("Confidentialité","","bientot")+'</div>'
    +'<button class="deco" data-a="rg-deco">Se déconnecter</button>',
  rgb:()=>tete("Réglages","Mon compte")
    +`<div class="profil" data-a="rg-compte"><div class="pp"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.6"/><path d="M4.5 21c1.3-4 4.3-5.6 7.5-5.6s6.2 1.6 7.5 5.6"/></svg></div><div class="t"><b>Prénom Nom</b><span>Votre onglerie · votre-onglerie.fr</span></div><span class="fl">›</span></div>
-     <div class="abo" data-a="rg-abo"><div class="t"><small>Mon abonnement</small><b>79,99 € / mois</b><span>Sans engagement · prochain paiement le 2 décembre</span></div><span class="fl">›</span></div>`
+     <div class="abo" data-a="rg-abo"><div class="t"><small>Mon abonnement</small><b>49,99 € / mois</b><span>Sans engagement · prochain paiement le 2 décembre</span></div><span class="fl">›</span></div>`
    +'<div class="liste" style="margin-top:14px">'+[["cl","Notifications","Réservations et annulations","rg-notif"],["sms","SMS à mes clientes","Confirmation et rappel la veille","rg-rappel"],["ag","Réservations","En ligne · liste d’attente · délais","rg-resa"],["do","Mes données","Récupérer · supprimer","rg-export"],["ai","Aide et infos légales","","aide"]].map(x=>`<div class="ligne ic-l" data-a="${x[3]}"><i class="ic">${ic[x[0]]}</i><div class="t">${x[1]}${x[2]?`<span>${x[2]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
    +'<button class="deco" data-a="rg-deco">Se déconnecter</button><button class="deco petit" data-a="rg-suppr">Supprimer mon compte</button>',
  rgc:(th)=>{const T=[["notifs","Notifications et SMS"],["resa","Réservations"],["compte","Compte et abonnement"],["aide","Aide et données"]];
@@ -746,7 +746,7 @@ const RG={
    const back=`<button class="retour" data-a="rgth" data-t="">‹ Réglages</button>`;
    const c={notifs:'<div class="liste">'+NOTIF()+'</div><div class="k">SMS à mes clientes</div><div class="liste">'+L1("SMS de confirmation","Dès qu’elle réserve","rg-confirm")+L1("SMS de rappel","La veille à 18:00","rg-rappel")+'</div>',
      resa:'<div class="liste">'+SWL("Réservation en ligne","",1)+SWL("Liste d’attente","",1)+L1("Délais","Au plus tard 2 h avant · jusqu’à 2 mois","rg-resa")+'</div>',
-     compte:'<div class="liste">'+L1("Mes infos","Prénom, e-mail, téléphone, Face ID","rg-compte")+L1("Mon abonnement","79,99 € / mois","rg-abo")+L1("Mes factures","","rg-fact")+'</div>',
+     compte:'<div class="liste">'+L1("Mes infos","Prénom, e-mail, téléphone, Face ID","rg-compte")+L1("Mon abonnement","49,99 € / mois","rg-abo")+L1("Mes factures","","rg-fact")+'</div>',
      aide:'<div class="liste">'+L1("Besoin d’aide ?","","aide")+L1("Récupérer mes données","","rg-export")+L1("Supprimer mon compte","","rg-suppr")+L1("Mentions légales","","bientot")+L1("Conditions générales","","bientot")+L1("Confidentialité","","bientot")+'</div>'}[th];
    return `<div class="tete">${back}</div><h1 class="th-t">${T.find(x=>x[0]===th)[1]}</h1>`+c}};
 
@@ -768,7 +768,7 @@ RG.rga2=()=>tete("Réglages","Mon compte")
    +'<div class="k">SMS à mes clientes</div><div class="liste">'+LI("sms","SMS de confirmation","Dès qu’elle réserve","rg-confirm")+LI("sms","SMS de rappel","La veille à 18:00","rg-rappel")+'</div>'
    +'<div class="k">Réservations</div><div class="liste">'+LI("ag","Réservations","En ligne · liste d’attente · délais","rg-resa")+LI("eu","Mes paiements","Recevoir les acomptes sur mon compte","rg-paie")+'</div>'
    +'<div class="k">Mon compte</div><div class="liste">'+LI("co","Mes infos","Prénom, e-mail, téléphone, Face ID","rg-compte")+LI("ca","Inviter une prothésiste","1 mois offert pour vous","rg-parrain")+'</div>'
-   +'<div class="k">Mon abonnement</div><div class="liste">'+LI("cb","Mon abonnement","79,99 € / mois · sans engagement","rg-abo")+'</div>'
+   +'<div class="k">Mon abonnement</div><div class="liste">'+LI("cb","Mon abonnement","49,99 € / mois · sans engagement","rg-abo")+'</div>'
    +'<div class="k">Mes données</div><div class="liste">'+LI("do","Récupérer mes données","","rg-export")+LI("me","Supprimer mon compte","","rg-suppr")+'</div>'
    +'<div class="k">Aide</div><div class="liste">'+LI("ai","Besoin d’aide ?","Une réponse tout de suite","aide")+LI("so2","Mentions légales","","bientot")+LI("so2","Conditions générales","","bientot")+LI("so2","Confidentialité","","bientot")+'</div>'
    +'<button class="deco" data-a="rg-deco">Se déconnecter</button>';
