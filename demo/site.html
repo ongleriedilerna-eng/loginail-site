@@ -1408,6 +1408,56 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .act .oeil{position:absolute;right:8px;top:50%;transform:translateY(-50%);margin-top:10px;border:0;background:none;font:300 12.5px Jost;color:#6B625C;cursor:pointer;padding:8px}
 .act .appli{margin-top:16px;display:flex;gap:12px;align-items:center;background:#FBF9F6;border-radius:18px;padding:14px 16px;font:300 13.5px/1.45 Jost}
 .act .appli svg{flex:none;width:30px;height:30px}
+
+/* 07/11 · parties choisies dans l'atelier */
+.al-tete{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}.al-tete b{font-size:24px;font-weight:500}
+.al-nb{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);margin-bottom:16px}
+.al-i{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(128,120,112,.2)}
+.al-i:first-child{border-top:1px solid rgba(128,120,112,.2)}
+.al-r{flex:none;width:38px;height:38px;border-radius:50%;background:var(--carte);border:1px solid rgba(128,120,112,.25);display:grid;place-items:center;font-size:14px;font-weight:500;color:var(--noir)}
+.al-i b{font-weight:500;font-size:13px;margin-right:8px}
+.al-i .et{font-size:9px}
+.al-i p{margin:6px 0 0;font-weight:300;font-size:14.5px;line-height:1.55}
+.pk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.pk-c{background:var(--carte);border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 10px 24px -18px rgba(0,0,0,.35)}
+.pk-c img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.pk-t{padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px}
+.pk-t b{font-weight:500;font-size:13.5px;line-height:1.3}
+.pk-t small{font-size:11px;color:var(--gris)}
+.pk-t .pp{font-size:14px;font-weight:500;margin-top:4px}
+.hp{text-align:center}
+.hp .statut{margin-bottom:6px}
+.hp .statut.o i{background:#C9A97E;box-shadow:0 0 0 4px rgba(201,169,126,.25)}
+.hp-h{font-family:"Cormorant Garamond",serif;font-size:46px;line-height:1.05;margin-bottom:16px}
+.hp-j{display:flex;justify-content:center;gap:7px;margin-bottom:16px}
+.hp-j span{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:500;border:1px solid rgba(128,120,112,.3);color:var(--gris)}
+.hp-j span.ouv{background:var(--noir);color:var(--creme);border-color:var(--noir)}
+.hp-j span.auj{box-shadow:0 0 0 3px var(--creme),0 0 0 4px var(--noir)}
+.hp-r{font-weight:300;font-size:13.5px;max-width:270px;margin:0 auto;text-align:left}
+.hp-r div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(128,120,112,.16)}
+.ecran .hp-plan{position:relative;height:210px;margin:20px -26px 0}
+.ecran .hmag{min-height:100%;padding:76px 24px 30px;display:flex;flex-direction:column;background:var(--creme);color:var(--noir);box-sizing:border-box}
+.hmg-l{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gris)}
+.ecran .hmg-n{font-family:Jost,sans-serif;font-weight:700;text-transform:uppercase;line-height:.88;letter-spacing:-.02em;margin:22px 0 18px;color:var(--noir)}
+.hmg-ph{margin-left:22%;flex:1;min-height:260px;border-radius:4px;overflow:hidden}
+.hmg-ph img{width:100%;height:100%;object-fit:cover;display:block;animation:kb 12s ease-in-out infinite alternate}
+.hmg-b{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.hmg-btn{align-self:flex-start;padding:14px 22px;border-radius:30px;background:var(--noir);color:var(--creme);border:0;font:inherit;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer}
+.rmos{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:130px;gap:6px;grid-auto-flow:dense}
+.rmos img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;cursor:zoom-in}
+.rmos img:nth-child(5n+1){grid-row:span 2}
+.rmos img:nth-child(5n+4){grid-column:span 2}
+.ecran .hmos{background:#fff;gap:3px}.ecran .hmos .hm-d{gap:3px}.hm-d>div{overflow:hidden;min-height:0}
+
+.ecran .pf-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;border:0;margin:0 -26px 18px;padding:2px 26px}
+.pf-tabs::-webkit-scrollbar{display:none}
+.ecran .pf-tabs button{flex:none;padding:10px 16px;border-radius:999px;border:1px solid rgba(128,120,112,.3);font-size:10.5px;letter-spacing:.18em;color:var(--gris);background:none}
+.ecran .pf-tabs button.on{background:var(--noir);color:var(--creme);border-color:var(--noir)}
+.pf-tabs .souligne{display:none}
+.pf-l{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--carte);border-radius:16px;padding:16px 18px;margin-bottom:10px;cursor:pointer}
+.pf-l b{display:block;font-weight:400;font-size:15px;line-height:1.35}
+.pf-l small{font-size:11.5px;color:var(--gris)}
+.pf-l .pp{font-weight:500;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1627,6 +1677,21 @@ function creneau(t){const H=D.horaires,n=new Date(),h=n.getHours()+(n.getMinutes
   if(hj&&h<hj[1]-1)return `${t.auj2} · ${t.hh(Math.max(h,hj[0]))}`;
   for(let k=1;k<=7;k++){const j=(auj+k)%7;if(H[j])return `${k===1?t.demain:t.jours[j].toLowerCase()} · ${t.hh(H[j][0])}`}return ""}
 
+/* 07/11 · parties choisies par Marie dans l'atelier (servent aux 3 sites) */
+const prestaItem=presta;
+function avisListe(t,TI){if(!D.avis.length)return "";return `<div class="sec">${TI(t.avis)}<div class="al-tete r">${D.note?`<b>${D.note}</b>`:""}<span class="et">${etoiles}</span></div>${D.nb?`<div class="al-nb r">${D.nb} ${t.avisG}</div>`:""}<div class="al">${D.avis.map(a=>`<div class="al-i r"><span class="al-r">${((a.n||"").trim()[0]||"★").toUpperCase()}</span><div><b>${a.n}</b><span class="et">${etoiles}</span><p>« ${a.t} »</p></div></div>`).join("")}</div>${t.langav?`<div class="langav vide">${t.langav}</div>`:""}<a class="bouton r" href="${D.fiche}" target="_blank" rel="noopener">★ &nbsp;${t.laisser}</a></div>`}
+function prestaCartes(t){const N=D.nails;let k=0;return D.presta.map(p=>`${D.presta.length>1?`<div class="pc">${t[p.cat]}</div>`:""}<div class="pk">${p.items.map(it=>{const im=N.length?`<img src="${P(N[k%N.length])}" alt="">`:"";k++;return `<div class="pk-c r" data-res>${im}<div class="pk-t"><b>${t[it.k]}</b>${it.d?`<small>${it.d}</small>`:""}${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div></div>`}).join("")}</div>`).join("")}
+function horairesPastilles(t){const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
+  let proch="";for(let k=1;k<=7;k++){const j=(auj+k)%7;if(H7[j]){proch=`${t.ouvre} ${t.jours[j].toLowerCase()} ${t.hh(H7[j][0])}`;break}}
+  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
+  const ref=hj||H7.find(Boolean),grp=[];
+  H7.forEach((h,i)=>{const k=h?t.h(h[0],h[1]):null,g=grp[grp.length-1];if(g&&g.k===k)g.f=i;else grp.push({k,d:i,f:i})});
+  const resume=grp.filter(g=>g.k).map(g=>`<div><span>${t.jours[g.d].slice(0,3)}.${g.f>g.d?` – ${t.jours[g.f].slice(0,3)}.`:""}</span><span>${g.k}</span></div>`).join("");
+  return `<div class="hp r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="hp-h">${ref?t.h(ref[0],ref[1]):t.ferme}</div><div class="hp-j">${H7.map((h,i)=>`<span class="${h?"ouv":""}${i===auj?" auj":""}">${t.jours[i][0]}</span>`).join("")}</div><div class="hp-r">${resume}</div></div><div class="plan hp-plan r"><span class="pin"></span><em class="sans">${t.planSans}</em></div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div>`}
+function heroMag(t){const note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";const mots=D.nom.split(/\s+/).filter(Boolean),lg=Math.max(...mots.map(w=>w.length)),fs=Math.max(34,Math.min(96,Math.floor(340/(lg*.64))));
+  return `<div class="hmag" data-s="accueil"><div class="hmg-l"><span>N° 01</span><span>${D.ville}</span></div><h1 class="hmg-n" style="font-size:${fs}px">${mots.join("<br>")}.</h1><div class="hmg-ph"><img src="${P(D.hero)}" alt=""></div><div class="hmg-b"><div class="kick">${t.type} · ${D.ville}</div>${note}<button class="hmg-btn" data-res>${t.creneau}</button></div></div>`}
+function realMosaique(){return `<div class="rmos">${D.nails.map((n,i)=>`<img class="r" src="${P(n)}" data-i="${i}" alt="">`).join("")}</div>`}
+
 function site3(t,v,lang){
   const X=VAR.slice(-1),N=D.nails;let k=0;
   const T=(s,id)=>`<div class="ti3 r"${id?` data-s="${id}"`:""}><small>§</small>${s}</div>`;
@@ -1634,26 +1699,26 @@ function site3(t,v,lang){
   const note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";
   const kick=`<div class="kick">${t.type} · ${D.ville}</div>`;
   /* accueil sans animation : A nom à la verticale, B carte de visite, C texte à gauche / photo à droite */
-  const hero=X==="zz"?`<div class="hvert" data-s="accueil"><div class="hv-nom">${D.nom}</div><div class="hv-ph"><img src="${P(D.hero3||D.hero)}" alt=""></div><div class="hv-bas">${kick}${note}</div></div>`
+  const hero=VAR==="s3c"?heroMag(t):X==="zz"?`<div class="hvert" data-s="accueil"><div class="hv-nom">${D.nom}</div><div class="hv-ph"><img src="${P(D.hero3||D.hero)}" alt=""></div><div class="hv-bas">${kick}${note}</div></div>`
     :X==="zz"?`<div class="hcarte" data-s="accueil">${kick}<h1>${D.nom}</h1><span class="hk-trait"></span>${note}<div class="hk-ph">${N.slice(0,3).map(n=>`<img src="${P(n)}" alt="">`).join("")}</div></div>`
     :`<div class="hcouv" data-s="accueil"><img src="${P(D.hero)}" alt=""><div class="hc-voile"></div><div class="hc-titre"><h1>${D.nom}</h1>${kick}${note}</div><div class="hc-bas"><button class="hc-resa" data-res>${t.creneau}</button></div></div>`;
   /* prestations : A tiroirs + fiche, B pastilles + encadré, C grandes lignes + fiche */
   const rowf=(it,img,c)=>`<div class="rowf ${c||""}" data-n="${t[it.k]}" data-p="${it.p||""}" data-d="${it.d||""}" data-img="${img}"><span>${t[it.k]}</span>${prix(it)}</div>`;
   const ligne3=(it,c,av)=>`<div class="rowf ${c}" data-n="${t[it.k]}" data-p="${it.p||""}" data-d="${it.d||""}" data-img="">${av||""}<span>${t[it.k]}${it.d?`<em>${it.d}</em>`:""}</span>${prix(it)}</div>`;
   let num=0;
-  const presta=X==="zz"?`<div class="pcard">${D.presta.length>1?`<div class="pc-cat">${D.presta.map((p,ci)=>`<button class="${ci?"":"on"}" data-c="${ci}">${t[p.cat]}</button>`).join("")}</div>`:""}<div class="pc-piste">${D.presta.map((p,ci)=>p.items.map(it=>`<div class="pcd" data-c="${ci}"><small>${t[p.cat]}</small><b>${t[it.k]}</b>${it.d?`<span class="dur">${it.d}</span>`:""}<div class="pcd-p">${prix(it)}</div><button data-res>${t.reserverP}</button></div>`).join("")).join("")}</div><div class="pts2 ptsp">${D.presta.map(p=>p.items.map(()=>"<i></i>").join("")).join("")}</div></div>`
+  const presta=VAR==="s3c"?`<div class="guide g2">${t.guide}</div>`+prestaCartes(t):X==="zz"?`<div class="pcard">${D.presta.length>1?`<div class="pc-cat">${D.presta.map((p,ci)=>`<button class="${ci?"":"on"}" data-c="${ci}">${t[p.cat]}</button>`).join("")}</div>`:""}<div class="pc-piste">${D.presta.map((p,ci)=>p.items.map(it=>`<div class="pcd" data-c="${ci}"><small>${t[p.cat]}</small><b>${t[it.k]}</b>${it.d?`<span class="dur">${it.d}</span>`:""}<div class="pcd-p">${prix(it)}</div><button data-res>${t.reserverP}</button></div>`).join("")).join("")}</div><div class="pts2 ptsp">${D.presta.map(p=>p.items.map(()=>"<i></i>").join("")).join("")}</div></div>`
     :X==="zz"?`${D.presta.length>1?`<div class="seg n${D.presta.length}">${D.presta.map((p,ci)=>`<button class="${ci?"":"on"}" data-c="${ci}">${t[p.cat]}</button>`).join("")}<span class="seg-i"></span></div>`:""}<div class="guide g2">${t.touche2}</div>${D.presta.map((p,ci)=>`<div class="seg-l${ci?"":" on"}" data-c="${ci}">${p.items.map(it=>ligne3(it,"seg2")).join("")}</div>`).join("")}`
     :`<div class="guide g2">${t.touche2}</div>`+D.presta.map(p=>`<div class="pc">${t[p.cat]}</div>${p.items.map(it=>ligne3(it,"nb3",`<small>${String(++num).padStart(2,"0")}</small>`)).join("")}`).join("");
   /* réalisations : A une grande + vignettes, B une grande + deux + voir toutes, C façon stories */
   let real="";
   if(N.length){
-    real=X==="zz"?`<div class="flc"><div class="flc-p">${N.map(n=>`<img src="${P(n)}" alt="">`).join("")}</div><button class="flc-g" aria-label="Précédente">‹</button><button class="flc-d" aria-label="Suivante">›</button><div class="flc-n"><b>1</b> / ${N.length}</div></div>`
+    real=VAR==="s3c"?realMosaique():X==="zz"?`<div class="flc"><div class="flc-p">${N.map(n=>`<img src="${P(n)}" alt="">`).join("")}</div><button class="flc-g" aria-label="Précédente">‹</button><button class="flc-d" aria-label="Suivante">›</button><div class="flc-n"><b>1</b> / ${N.length}</div></div>`
       :X==="zz"?`<div class="vth"><div class="vth-c">${N.map((n,i)=>`<img class="${i?"":"on"}" src="${P(n)}" alt="">`).join("")}</div><img class="vth-g" src="${P(N[0])}" alt=""></div>`
       :`<div class="cen"><div class="cen-p">${N.map((n,i)=>`<img class="${i?"":"on"}" src="${P(n)}" alt="">`).join("")}</div><div class="pts2 ptsc2">${N.map((n,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div></div>`;
     real=`<div class="sec">${T(t.real)}${real}</div>`;
   }
   /* avis : un à la fois avec la barre (gardé pour le n°3) */
-  const avis=D.avis.length?`<div class="sec">${T(t.avis)}<div class="gros r"><b>${D.note}</b><div><span class="et">${etoiles}</span><br>${D.nb} ${t.avisG}</div></div>
+  const avis=VAR==="s3c"?avisListe(t,T):D.avis.length?`<div class="sec">${T(t.avis)}<div class="gros r"><b>${D.note}</b><div><span class="et">${etoiles}</span><br>${D.nb} ${t.avisG}</div></div>
     <div class="ava un-carte"><div class="glis">${D.avis.map((a,i)=>`<div class="un ${i?"":"on"}"><span class="et">${etoiles}</span><p>« ${a.t} »</p><small>${a.n} · Google</small></div>`).join("")}</div><div class="barre"><i></i></div></div>
     ${t.langav?`<div class="langav vide">${t.langav}</div>`:""}<a class="bouton r" href="${D.fiche}" target="_blank" rel="noopener">★ &nbsp;${t.laisser}</a></div>`:"";
   /* à propos : A texte sur photo, B machine à écrire, C texte + signature */
@@ -1677,7 +1742,7 @@ function site3(t,v,lang){
   const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
   let proch="";for(let j=1;j<=7;j++){const q=(auj+j)%7;if(H7[q]){proch=`${t.ouvre} ${t.jours[q].toLowerCase()} ${t.hh(H7[q][0])}`;break}}
   const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
-  const horaires=`<div class="planfond"><div class="plan"><span class="pin"></span></div><div class="flottante r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(h[0],h[1]):t.ferme}</span></div>`).join("")}</div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div></div></div>`;
+  const horaires=VAR==="s3c"?horairesPastilles(t):`<div class="planfond"><div class="plan"><span class="pin"></span></div><div class="flottante r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(h[0],h[1]):t.ferme}</span></div>`).join("")}</div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div></div></div>`;
   /* instagram : A bande, B une grande + deux, C quatre carrés + Suivre au milieu */
   let insta="";
   if(D.insta){const lien=`<a href="https://instagram.com/${D.insta.slice(1)}" target="_blank" rel="noopener">${t.suivre}</a>`;
@@ -1707,7 +1772,7 @@ function site2(t,v,lang){
   let presta;
   const ligne=(it,img,extra)=>`<div class="mini2" data-n="${t[it.k]}" data-p="${it.p||""}" data-d="${it.d||""}" data-img="${img}"><div class="mi-t"><span>${t[it.k]}</span>${it.d?`<small>${it.d}</small>`:""}</div><div class="mi-d">${prix(it)}${extra}</div></div>`;
   const liste=(guide,extra)=>`<div class="guide g2">${guide}</div>`+D.presta.map((p,ci)=>`<div class="pc">${t[p.cat]}</div>${p.items.map((it,k)=>ligne(it,P(N[(ci*5+k)%N.length]),extra)).join("")}`).join("");
-  if(VAR==="sa") presta=liste(t.choisis2,`<i class="mi-ok"></i>`);
+  if(VAR==="sa") presta=`<div class="guide g2">${t.guide}</div>${D.presta.length>1?`<div class="onglets pf-tabs r">${D.presta.map((p,i)=>`<button class="${i?"":"on"}">${t[p.cat]}</button>`).join("")}<span class="souligne"></span></div>`:""}`+D.presta.map((p,i)=>`<div class="liste ${i?"":"on"}">`+p.items.map(it=>`<div class="pf-l" data-res><div><b>${t[it.k]}</b>${it.d?`<small>${it.d}</small>`:""}</div>${prix(it)}</div>`).join("")+`</div>`).join("");
   else if(VAR==="sb") presta=liste(t.touche2,`<i class="mi-ch"></i>`);
   else if(VAR==="sc") presta=liste(t.choisis2,`<i class="mi-ok"></i>`);
   else if(X==="pa") presta=`<div class="guide g2">${t.guide}</div>`+D.presta.map((p,ci)=>`<div class="pc">${t[p.cat]}</div>${p.items.map((it,k)=>`<div class="tl mini"><div class="tl1"><img src="${P(N[(ci*5+k)%N.length])}" alt=""><div class="mi-t"><span>${t[it.k]}</span>${it.d?`<small>${it.d}</small>`:""}</div>${prix(it)}</div><div class="tl2"><button data-res>${t.reserverP}</button></div></div>`).join("")}`).join("");
@@ -1741,7 +1806,7 @@ function site2(t,v,lang){
   /* avis : ceux qui montent (V3) */
   const avis=D.avis.length?`<div class="sec">${ti(t.avis)}
     <div class="gros r"><b>${D.note}</b><div><span class="et">${etoiles}</span><br>${D.nb} ${t.avisG}</div></div>
-    <div class="fen"><div class="col2">${D.avis.map(a=>`<div class="av"><span class="et">${etoiles}</span><p>« ${a.t} »</p><small>${a.n} · Google</small></div>`).join("").repeat(2)}</div></div>
+    <div class="ava un-carte"><div class="glis">${D.avis.map((a,i)=>`<div class="un ${i?"":"on"}"><span class="et">${etoiles}</span><p>« ${a.t} »</p><small>${a.n} · Google</small></div>`).join("")}</div><div class="barre"><i></i></div></div>
     ${t.langav?`<div class="langav vide">${t.langav}</div>`:""}
     <a class="bouton r" href="${D.fiche}" target="_blank" rel="noopener">★ &nbsp;${t.laisser}</a></div>`:"";
   /* à propos : choix A */
@@ -1784,8 +1849,8 @@ function site2(t,v,lang){
     else faq=`<div class="qtabs">${D.faq.map((f,k)=>`<button class="${k?"":"on"}" data-r="${f.r}">${f.q}</button>`).join("")}</div><div class="qrep">${D.faq[0].r}</div>`;
     faq=`<div class="sec">${ti(t.faq)}${faq}<div class="rem vide">${t.exPlus}</div></div>`;
   }
-  /* horaires : choix A */
-  X="a";
+  /* horaires : pastilles (07/11) */
+  X="p";
   const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
   let proch="";for(let k=1;k<=7;k++){const j=(auj+k)%7;if(H7[j]){proch=`${t.ouvre} ${t.jours[j].toLowerCase()} ${t.hh(H7[j][0])}`;break}}
   const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
@@ -1793,7 +1858,8 @@ function site2(t,v,lang){
   const plan=c=>`<div class="plan ${c}"><span class="pin"></span><em class="sans">${t.planSans}</em></div>`;
   const deuxcol=`<div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(h[0],h[1]):t.ferme}</span></div>`).join("")}</div>`;
   let horaires;
-  if(X==="a"){const ok=H7.filter(Boolean),mn=Math.min(...ok.map(h=>h[0]))-1,mx=Math.max(...ok.map(h=>h[1]))+1;
+  if(X==="p") horaires=horairesPastilles(t);
+  else if(X==="a"){const ok=H7.filter(Boolean),mn=Math.min(...ok.map(h=>h[0]))-1,mx=Math.max(...ok.map(h=>h[1]))+1;
     horaires=`<div class="statut ${ouv?"o":""} r"><i></i>${statut}</div><div class="barres r">${H7.map((h,i)=>`<div class="j ${i===auj?"auj":""}"><span>${t.jours[i]}</span>${h?`<div class="tr"><i style="left:${(h[0]-mn)/(mx-mn)*100}%;width:${(h[1]-h[0])/(mx-mn)*100}%"></i></div><span class="hr">${t.h(h[0],h[1])}</span>`:`<span class="fe">${t.ferme}</span>`}</div>`).join("")}</div>${adr}${plan("planlarge r")}`}
   else if(X==="b") horaires=`<p class="grand-statut r">${statut}</p><div class="r">${deuxcol}</div>${adr}${plan("planrond r")}`;
   else horaires=`<div class="planfond">${plan("")}<div class="flottante r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div>${deuxcol}${adr}</div></div>`;
@@ -1822,6 +1888,7 @@ function site2(t,v,lang){
 /* haut de page du site n°2 : V1 photo plein écran, V2 arche, V3 grand nom + photo */
 function haut(t,lettres){
   const note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";
+  if(VAR==="sa"){const n=D.nails.length?D.nails:[D.hero];return `<div class="hmos" data-s="accueil"><div class="hm-g"><img src="${P(n[0])}" alt=""></div><div class="hm-d"><div><img src="${P(n[1%n.length])}" alt=""></div><div><img style="animation-delay:-8s" src="${typeof BR!=="undefined"&&BR&&BR.mosaiqueBas?BR.mosaiqueBas:P(n[2%n.length])}" alt=""></div></div><div class="hm-txt"><div class="kick">${t.type} · ${D.ville}</div><h1>${lettres}</h1>${note}</div></div>`}
   if(/^s[abc]$/.test(VAR)) return `<div class="hlet" data-s="accueil"><img src="${P(D.hero_sb||D.hero)}" alt="">
       <div class="hl-nom">${D.nom.split(" ").map((w,i)=>`<span data-t="${w}" style="--d:${.6+i*.45}s">${w}</span>`).join("")}</div>
       <div class="hl-bas"><div class="kick">${t.type} · ${D.ville}</div>${note}</div></div>`;
@@ -1867,11 +1934,11 @@ function site(t,v,lang){
   return `
   ${haut(t,lettres)}
   <div class="sec">${ti(t.presta,"presta")}
-    <div class="guide">${t.guide}</div>${VAR==="n1"?`${D.presta.length>1?`<div class="onglets r">${onglets}<span class="souligne"></span></div>`:""}${listes}`:(()=>{let k=0;return D.presta.map(p=>`<div class="pc">${t[p.cat]}</div>`+p.items.map(it=>{k++;return `<div class="pl"><div class="pl1"><small>${String(k).padStart(2,"0")}</small><b>${t[it.k]}</b>${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div><div class="plus"><span class="dur">${it.d||""}</span><button data-res>${t.reserverP}</button></div></div>`}).join("")).join("")})()}
+    <div class="guide">${t.guide}</div>${VAR==="n1"?prestaCartes(t):(()=>{let k=0;return D.presta.map(p=>`<div class="pc">${t[p.cat]}</div>`+p.items.map(it=>{k++;return `<div class="pl"><div class="pl1"><small>${String(k).padStart(2,"0")}</small><b>${t[it.k]}</b>${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div><div class="plus"><span class="dur">${it.d||""}</span><button data-res>${t.reserverP}</button></div></div>`}).join("")).join("")})()}
     <div class="rem vide">${t.remP}</div>${D.tva?`<div class="tva">${t.tva}</div>`:""}</div>
   ${D.nails.length>=3?`<div class="sec">${ti(t.real)}
     <div class="car">${car}</div><div class="points">${pts}</div><div class="astuce">${t.toucher}</div></div>`:D.nails.length?`<div class="sec">${ti(t.real)}<div class="duo2">${car}</div><div class="astuce">${t.toucher}</div></div>`:""}
-  ${D.avis.length?`<div class="sec">${ti(t.avis)}
+  ${VAR==="n1"?avisListe(t,ti):D.avis.length?`<div class="sec">${ti(t.avis)}
     <div class="gros r"><b>${D.note}</b><div><span class="et">${etoiles}</span><br>${D.nb} ${t.avisG}</div></div>
     ${VAR==="n1"?`<div class="bande"><div class="marq">${cartes}${cartes}</div></div>`:VAR==="v2"?`<div class="ava un-carte"><div class="glis">${D.avis.map((a,i)=>`<div class="un ${i?"":"on"}"><span class="et">${etoiles}</span><p>« ${a.t} »</p><small>${a.n} · Google</small></div>`).join("")}</div><div class="barre"><i></i></div></div>`
       :VAR==="v4"?`<div class="ava un-carte ava4"><div class="fen"><div class="col2">${D.avis.map(a=>`<div class="av"><span class="et">${etoiles}</span><p>« ${a.t} »</p><small>${a.n} · Google</small></div>`).join("").repeat(2)}</div></div></div>`
@@ -2247,7 +2314,7 @@ monte=function(ecran,lang){_monte(ecran,lang);try{apres(ecran)}catch(e){console.
 /* Tiroirs : « POSES · 6 · dès 40 € », fermés ; on ouvre celui qu'on veut. On déplace les lignes du site
    (elles gardent leurs clics), on ne les refait pas. */
 function tiroirs(ecran){
-  const ti=ecran.querySelector('[data-s="presta"]');if(!ti||D.presta.length<2)return;
+  const ti=ecran.querySelector('[data-s="presta"]');if(!ti||D.presta.length<2||VAR==="sa"||VAR==="s3c")return;
   const sec=ti.parentElement;if(sec.querySelector(".tir"))return;
   const og=sec.querySelector(":scope>.onglets"),groupes=[];
   if(og){const noms=[...og.querySelectorAll("button")].map(b=>b.textContent);og.remove();
