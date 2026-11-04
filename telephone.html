@@ -52,7 +52,8 @@ img{display:block}
 .signe{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(30,28,27,.18);border-radius:999px;padding:10px 18px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase}
 .signe i{width:24px;height:24px;border-radius:50%;background:var(--noir);color:var(--creme);display:grid;place-items:center;font-style:normal;font-size:11px;letter-spacing:0}
 .hero h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:clamp(48px,min(6.4vw,9.6vh),104px);line-height:1;letter-spacing:-.015em;margin:2.4vh 0 1.8vh}
-.hero h1 em{font-style:italic;font-weight:400}
+.hero h1 em{font-style:normal;font-weight:600}
+.hero h1{font-family:Jost,sans-serif!important;font-weight:600!important;text-transform:uppercase;letter-spacing:.01em;font-size:clamp(40px,min(4.6vw,7.4vh),74px)!important;line-height:1.02!important}
 /* la phrase qui accroche : courte, avec « C'est gratuit » surligné */
 .punch{font-size:clamp(18px,2.6vh,23px);line-height:1.35;margin:0 0 2.6vh;white-space:nowrap}
 .punch mark{background:linear-gradient(transparent 58%,#E9D7C6 58%) no-repeat 0 0/0% 100%;color:inherit;font-weight:500;padding:0 2px;animation:surligne 1s 1.2s cubic-bezier(.2,.7,.2,1) forwards}
@@ -356,6 +357,13 @@ section{padding:110px 0}
 .choix3 button.on .vign{box-shadow:0 0 0 3px #fff,0 0 0 4.5px var(--noir)}
 .choix3 button.on{border-color:var(--noir);box-shadow:0 10px 22px -14px rgba(30,28,27,.45)}
 .st-reglages .couleurs{flex-wrap:wrap}
+.ronds{display:flex;flex-wrap:wrap;gap:8px;padding:4px 2px;max-width:540px}
+.ronds button{flex:none;width:34px;height:34px;overflow:hidden;border-radius:50%;border:0;padding:0;cursor:pointer;background:#fff;box-shadow:0 0 0 1px rgba(30,28,27,.12);transition:transform .25s,box-shadow .25s;position:relative}
+.ronds button:hover{transform:scale(1.1)}
+.ronds button.on{box-shadow:0 0 0 2px var(--sable),0 0 0 3.5px var(--noir);transform:scale(1.1)}
+.ronds .sans{background:linear-gradient(135deg,#fff 46%,#CFC6BC 47%,#CFC6BC 53%,#fff 54%)}
+.ronds .plus{background:var(--noir);color:var(--creme);font-size:11px;letter-spacing:.02em;width:auto;padding:0 14px;border-radius:999px}
+.ronds-att{font-size:13px;color:var(--muted);padding:10px 0}
 .st-reglages .cf{display:inline-flex}
 .ps-h{transition:opacity .5s}
 .ps .ps-h.change{opacity:0}
@@ -549,10 +557,14 @@ body{background:var(--creme)}
 .c-nom i{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);position:relative;flex:none}
 .c-nom i::before,.c-nom i::after{content:"";position:absolute;border:solid #fff;width:6px;height:6px}
 .c-nom i::before{top:8px;right:8px;border-width:1.3px 1.3px 0 0}.c-nom i::after{bottom:8px;left:8px;border-width:0 0 1.3px 1.3px}
-.grand-site{position:fixed;inset:0;z-index:95;background:var(--creme);opacity:0;transition:opacity .3s}
+.grand-site{position:fixed;inset:0;z-index:95;background:rgba(246,243,239,.32);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1);opacity:0;transition:opacity .35s}
 .grand-site.on{opacity:1}.grand-site[hidden]{display:none}
-.grand-site iframe{position:absolute;inset:0 0 66px 0;width:100%;height:calc(100% - 66px);border:0}
-.gs-bas{position:absolute;left:0;right:0;bottom:0;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 18px calc(env(safe-area-inset-bottom));background:var(--noir);color:var(--creme);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.gs-boite{position:absolute;left:7%;right:7%;top:calc(9% + env(safe-area-inset-top));bottom:7%;border-radius:30px;overflow:hidden;background:var(--creme);box-shadow:0 40px 80px -30px rgba(30,28,27,.55),0 0 0 1px rgba(255,255,255,.5);transform:translateY(40px) scale(.96);transition:transform .5s cubic-bezier(.2,.75,.2,1)}
+.grand-site.on .gs-boite{transform:none}
+.gs-titre{position:absolute;left:0;right:0;top:calc(9% - 34px + env(safe-area-inset-top));text-align:center;font-size:12px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--noir)}
+.grand-site iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.gs-x{position:absolute;z-index:3;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(30,28,27,.85);color:var(--creme);font-size:24px;line-height:40px;padding:0;box-shadow:0 8px 20px -8px rgba(0,0,0,.6)}
+.gs-bas{display:none;position:absolute;left:0;right:0;bottom:0;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 18px calc(env(safe-area-inset-bottom));background:var(--noir);color:var(--creme);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
 .gs-bas button{border:0;background:var(--creme);color:var(--noir);border-radius:999px;height:40px;padding:0 22px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
 .st-intro{text-align:center;margin:10px 24px 14px;font-family:Italiana,serif;font-size:24px;line-height:1.2}
 .st-intro em{display:block;margin-top:6px;font-family:Jost,sans-serif;font-style:normal;font-size:12.5px;color:var(--gris);letter-spacing:.02em}
@@ -632,6 +644,7 @@ body{background:var(--creme)}
 .temoin small{display:block;margin-top:22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.65;line-height:1.6}
 /* les 9 carrés */
 .p-choisit{background:var(--sable)}
+.pose-paie{margin:-4px 0 14px;font-size:15px;font-weight:500;line-height:1.45}
 .choisit{display:block;border-top:1px solid var(--ligne)}
 .choisit div{display:grid;grid-template-columns:30px 1fr;column-gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ligne)}
 .choisit i{grid-row:1/3}
@@ -696,6 +709,30 @@ body{background:var(--creme)}
 .t2,.p-haut h1,.case h3,.st-intro{font-family:Jost,sans-serif!important;font-weight:600!important;text-transform:uppercase;letter-spacing:.05em;line-height:1.2!important;text-wrap:balance}
 .t2{font-size:21px!important;margin:8px 0 14px!important}
 .p-haut h1{font-size:26px!important;margin:12px 0 10px!important}
+.p-haut h1.h1-pinceau{font-size:40px!important;line-height:1!important;margin:8px 0 6px!important;letter-spacing:.01em!important}
+.p-haut h1.h1-pinceau span{display:block}
+.p-haut h1.h1-pinceau.un{font-size:31px!important;line-height:1.08!important}
+.p-haut .h1-tout{font-size:22px;font-weight:500;margin:2px 0 16px;letter-spacing:.01em;line-height:1.2}
+.p-haut .sous-court{margin-bottom:12px}
+.p-haut .trois{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 0}
+.p-haut .trois span{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:10px 4px;border-radius:16px;background:rgba(246,243,239,.1);border:1px solid rgba(246,243,239,.22);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.p-haut .trois b{font-size:17px;font-weight:600;letter-spacing:.02em}
+.p-haut .prix-sous{margin-top:10px;text-align:center;font-size:12.5px;letter-spacing:.06em;opacity:.85}
+.p-haut h1.h1-pinceau.cinq{font-size:36px!important}
+.p-haut .h1-tout.cinq{font-size:20px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border-top:1px solid rgba(246,243,239,.35);padding-top:10px;margin-top:8px}
+.p-haut .h1-avant{font-size:17px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin:0 0 6px}
+.p-haut .mots5{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0 0 14px;opacity:.85;line-height:1.7}
+.p-haut .mots5 i{font-style:normal;opacity:.5;margin:0 .4em}
+.p-haut .mots5.pills{display:flex;flex-wrap:wrap;gap:6px}.p-haut .mots5.pills span{border:1px solid rgba(246,243,239,.35);border-radius:999px;padding:5px 10px;letter-spacing:.08em}
+.p-haut .mots5.haut{margin:0 0 8px}.p-haut .mots5.bas{margin:12px 0 0;text-align:center}
+.p-haut::before{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(246,243,239,0),rgba(246,243,239,.18) 55%,rgba(246,243,239,.45))}
+.descend{position:relative;z-index:2}
+.descend span{font-size:11px!important;letter-spacing:.26em!important}
+.descend svg{width:30px!important;height:30px!important;stroke-width:1.6!important;animation:rebond 1.4s ease-in-out infinite!important}
+@keyframes rebond{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.p-haut h1.h1-liste{font-size:34px!important;line-height:1.02!important;margin:10px 0 12px!important;letter-spacing:.02em!important}
+.p-haut h1.h1-liste span{display:block}
+.p-haut .h1-phrase{font-size:15px;font-style:italic;margin:0 0 12px;opacity:.92}
 .st-intro{font-size:18px!important;margin:10px 24px 14px!important}
 .case h3{font-size:17px!important;margin:8px 0 14px!important}
 .fin-haut .t2{font-size:24px!important}
@@ -754,20 +791,55 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </div></header>
 
 <section class="pan p-haut" id="haut">
-  <div class="k haut-k">Fait par une prothésiste,<br>pour les prothésistes.</div>
-  <div><h1>Les grands salons ont de beaux sites. Pourquoi pas vous&nbsp;?</h1>
-    <div class="sous">Loginail crée <b>le site de votre onglerie</b>, avec la réservation en ligne, et <b>l’appli</b> pour gérer vos rendez-vous.<span class="sous-prix">49,99 € / mois · <em class="brille">1 mois offert</em> · <em class="brille">sans engagement</em></span></div>
-    <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="note-l">Gratuit · sans carte bancaire · sans engagement</div>
-    <a class="descend" href="#styles"><span>Découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a></div>
+  <div class="k haut-k"></div>
+  <div><div id="hautTxt"><p class="mots5 haut">Site internet<i>·</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p><h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p></div>
+    <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="trois"><span><b>1 mois</b>offert</span><span><b>Sans</b>engagement</span><span><b>+ 6 000</b>variantes</span></div>
+    <div class="prix-sous">Puis 49,99 € / mois · site + appli</div>
+    <a class="descend" href="#styles"><span>Glissez pour découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a></div>
 </section>
+<script>
+/* les variantes du haut, pour que Marie compare (accueil-tel.html?var=2…) */
+(function(){var v=(location.search.match(/var=(\d)/)||[])[1]||"5",h=document.getElementById("hautTxt");if(!h)return;document.documentElement.classList.add("var-"+v);
+  var M='<p class="mots5">Site internet<i>·</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p>',P='<p class="mots5 pills"><span>Site internet</span><span>Agenda</span><span>Fiches clientes</span><span>Rappels SMS</span><span>Caisse</span></p>';
+  if(v==="2")h.innerHTML='<h1 class="h1-pinceau un">Un site, une appli, un pinceau&nbsp;:</h1><p class="h1-tout">c’est tout ce qu’il vous faut.</p>'+P;
+  if(v==="1")h.innerHTML='<h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p>'+M;
+  if(v==="4")h.innerHTML='<h1 class="h1-pinceau un">Un site, une appli, un pinceau.</h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p>';
+  if(v==="5")h.innerHTML='<h1 class="h1-pinceau cinq"><span>Un site,</span><span>une appli,</span><span>un pinceau.</span></h1><p class="h1-tout cinq">C’est tout ce qu’il vous faut.</p>';
+  if(v==="6")h.innerHTML='<p class="h1-avant">Tout ce qu’il vous faut&nbsp;:</p><h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1>';
+  var bt=document.querySelector(".p-haut .creer .btn");if(bt)bt.textContent="Créer mon site + mon appli";
+  if(v==="4"){var n=document.querySelector(".p-haut .note-l");if(n)n.insertAdjacentHTML("afterend",M.replace('mots5','mots5 bas'))}})();
+</script>
+
+<section class="pan p-mots" id="mots">
+  <div class="k">Dans Loginail</div>
+  <ul class="mots-col"><li style="--i:0">Site internet<small>en 5 langues · vos photos, vos prix, vos avis Google, votre adresse</small></li><li style="--i:1">Agenda<small>la réservation en ligne arrive toute seule, jour et nuit</small></li><li style="--i:2">Fiches clientes<small>leurs rendez-vous, vos notes, leur anniversaire</small></li><li style="--i:3">Rappels SMS<small>partis tout seuls, la veille du rendez-vous</small></li><li style="--i:4">Caisse<small>ce que vous encaissez, jour après jour · si vous la voulez</small></li></ul>
+  <p class="mots-txt">Votre site pour vos clientes, et votre appli pour tout gérer.</p>
+</section>
+<style>
+.p-mots{background:#151111;color:var(--creme);min-height:0!important;padding-top:64px!important;padding-bottom:64px!important}
+.p-mots .k{color:rgba(246,243,239,.55)}
+.mots-col{list-style:none;margin:18px 0 0;padding:0}
+.mots-col li{font-weight:600;text-transform:uppercase;font-size:34px;line-height:1.12;letter-spacing:.01em;padding:6px 0;border-bottom:1px solid rgba(246,243,239,.12);opacity:0;transform:translateY(18px);transition:opacity .6s,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i)*.18s)}
+.p-mots.vu .mots-col li{opacity:1;transform:none}
+.mots-col li small{display:block;font-size:11.5px;font-weight:400;text-transform:none;letter-spacing:.02em;color:rgba(246,243,239,.62);margin-top:3px;line-height:1.4}
+.mots-gros{margin:0 0 26px;font-weight:600;text-transform:uppercase;font-size:27px;line-height:1.15;letter-spacing:.01em}
+.mots-gros span{display:block;opacity:0;transform:translateY(22px);transition:opacity .7s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.mots-gros .l2{transition-delay:.45s}
+.p-mots.vu .mots-gros span{opacity:1;transform:none}
+.mots-gros u{text-decoration:none;background:linear-gradient(#F6F3EF,#F6F3EF) no-repeat 0 92%/0% 3px;transition:background-size .9s cubic-bezier(.2,.7,.2,1) .9s}
+.p-mots.vu .mots-gros u{background-size:100% 3px}
+.p-mots.vu .mots-gros .l2 u{transition-delay:1.4s}
+.mots-txt{margin:20px 0 0;font-size:14px;line-height:1.55;color:rgba(246,243,239,.75)}
+</style>
+<script>(function(){var s=document.getElementById("mots");if(!("IntersectionObserver" in window)){s.classList.add("vu");return}new IntersectionObserver(function(e,o){if(e[0].isIntersecting){s.classList.add("vu");o.disconnect()}},{threshold:.25}).observe(s)})();</script>
 
 <section class="pan p-styles" id="styles">
-  <div class="k">À votre image · 3 styles, 12 couleurs</div>
-  <p class="st-intro">Trois styles.<br>Un seul vous ressemble.</p>
+  <div class="k">À votre image</div>
+  <p class="st-intro">3 templates.<em>+ de 6 000 variantes</em></p>
   <div class="styles" id="cartes">
-    <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Signature</b></div><iframe title="Le site Dilerna, style Signature" data-n="1"></iframe></div></div>
-    <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Prestige</b></div><iframe title="Le site Dilerna, style Prestige" data-n="2"></iframe></div></div>
-    <div class="st-c" data-n="3"><div class="carte"><div class="c-nom"><b>Élégant</b></div><iframe title="Le site Dilerna, style Élégant" data-n="3"></iframe></div></div>
+    <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Photo en grand</b></div><iframe title="Le site Dilerna, forme Photo en grand" data-n="1"></iframe></div></div>
+    <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Tout simple</b></div><iframe title="Le site Dilerna, forme Tout simple" data-n="2"></iframe></div></div>
+    <div class="st-c" data-n="3"><div class="carte"><div class="c-nom"><b>En cartes</b></div><iframe title="Le site Dilerna, forme En cartes" data-n="3"></iframe></div></div>
   </div>
   <p class="note-l touchez">Touchez un site pour l’ouvrir en entier</p>
   <div class="dots" id="dots"></div>
@@ -775,19 +847,10 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
   <p class="note-l">En exemple : mon salon, Dilerna</p>
 </section>
 
-<section class="pan p-choisit" id="choisit">
-  <div class="k">À votre image</div><h2 class="t2">Tout se choisit, tout se change.</h2>
-  <div class="choisit"><div><i>▦</i><b>3 styles de site</b><span>le vôtre en un geste</span></div><div><i>●</i><b>12 couleurs</b><span>et la version foncée</span></div><div><i>Aa</i><b>5 langues</b><span>français, anglais, italien, allemand, russe</span></div><div><i>◰</i><b>Vos photos</b><span>vos plus belles poses</span></div><div><i>€</i><b>Vos prestations</b><span>et vos prix</span></div><div><i>★</i><b>Vos avis Google</b><span>affichés tout seuls</span></div><div><i>⌖</i><b>Votre adresse</b><span>avec le plan et l’itinéraire</span></div><div><i>◎</i><b>Votre Instagram</b><span>vos dernières publications</span></div><div><i>✓</i><b>La réservation</b><span>en ligne, ou par téléphone</span></div></div>
-  <p class="note-l">Et vous changez tout quand vous voulez, depuis votre téléphone.</p>
-</section>
-
 <section class="pan p-fonds" id="fonds">
-  <div class="k">Encore plus à votre image</div><h2 class="t2">Plus de 100 fonds et couleurs.</h2>
+  <div class="k">+ de 6 000 variantes</div><h2 class="t2">Vous avez un nuancier.<br>Votre site aussi.</h2>
   <p class="f-txt">Des fleurs, des strass, du léopard, des fonds qui bougent… <b>Avec l’abonnement, vous changez tout votre site quand vous voulez, gratuitement, depuis votre appli.</b></p>
   <div class="anneau" data-anneau aria-label="Des exemples de fonds pour votre site, qui défilent"></div>
-  <p class="note-l">← Glissez pour les faire tourner →</p>
-  <div class="f-coul"><i style="background:#1E1C1B"></i><i style="background:#4A3226"></i><i style="background:#24344F"></i><i style="background:#5E5149"></i><i style="background:#5F574F"></i><i style="background:#80633F"></i><i style="background:#7A5444"></i><i style="background:#4F5A45"></i><i style="background:#6E6253"></i><i style="background:#8A6656"></i><i style="background:#9A5D6B"></i><i style="background:#4F6F93"></i></div>
-  <p class="note-l">Et les 12 couleurs de votre site, en clair ou en foncé.</p>
 </section>
 <style>
 .p-fonds{background:var(--creme);text-align:center;align-items:center;overflow:hidden}
@@ -797,23 +860,58 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 .p-fonds .f-coul{display:flex;gap:5px;justify-content:center;margin:14px 0 0}
 .p-fonds .f-coul i{width:16px;height:16px;border-radius:50%;box-shadow:0 0 0 2px #fff,0 2px 5px rgba(0,0,0,.18)}
 .p-fonds .note-l{margin:6px 0 0}
+.p-fonds .an-cats{display:grid!important;grid-template-columns:repeat(6,1fr);gap:12px 4px;overflow:visible!important;padding:0 2px!important;margin:4px 0 12px!important}
+.p-fonds .an-cats button{display:flex!important;flex-direction:column;align-items:center;gap:5px;background:none!important;box-shadow:none!important;padding:0!important;font-size:9.5px!important;letter-spacing:.02em;line-height:1.15;color:var(--muted)!important;white-space:normal!important;text-align:center}
+.p-fonds .an-cats button.on{color:var(--noir)!important;font-weight:600}
+.p-fonds .cat-ap{width:42px!important;height:42px!important;box-shadow:0 0 0 1px var(--ligne)!important}
+.p-fonds .an-cats button.on .cat-ap{box-shadow:0 0 0 2px var(--creme),0 0 0 3.5px var(--noir)!important}
+.p-fonds .cat-ap .rond-f{width:42px!important;height:42px!important}.p-fonds .cat-ap .rond-f .f100{transform:scale(.247)!important;top:-24px!important}
+.p-fonds .an-cats:not(.tout) button[data-c]:nth-child(n+6){display:none!important}
+.p-fonds .an-cats .plus-cats{order:99}
+#styles #dots,#styles #seg{display:none!important}
+.p-fonds .an-cats button[data-c="Couleur simple"] .cat-ap{background:#A9B59C!important;animation:cs-change 12s ease-in-out infinite}
+.p-fonds .an-cats button[data-c="Couleur simple"] .cat-ap .rond-f{display:none}
+@keyframes cs-change{0%,100%{background:#A9B59C}25%{background:#A3B5CA}50%{background:#DDB5BE}75%{background:#D9C8AE}}
+html.ronds-2 .p-fonds .an-cats{display:flex!important;overflow-x:auto!important;scroll-snap-type:x mandatory;scrollbar-width:none;gap:14px!important;padding:8px calc(50% - 21px) 6px!important;margin:0 -24px 10px!important}
+html.ronds-2 .p-fonds .an-cats::-webkit-scrollbar{display:none}
+html.ronds-2 .p-fonds .an-cats button[data-c]{display:flex!important;scroll-snap-align:center;flex:none;width:42px;transition:transform .3s}
+html.ronds-2 .p-fonds .an-cats button.centre{transform:scale(1.35)}
+html.ronds-2 .p-fonds .an-cats button:not(.centre){opacity:.6}
+html.ronds-2 .p-fonds .plus-cats{display:none!important}
+.p-fonds .plus-cats i{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--noir);color:var(--creme);font-style:normal;font-size:22px;line-height:1}
 </style>
 <script>
 /* la roue des fonds : son fichier (fonds-100.js) ne se charge que quand on approche de la partie */
+(function(){function fait(){setTimeout(function(){var c=document.querySelector(".p-fonds .an-cats");if(!c||c.querySelector(".plus-cats"))return;
+  var n=c.querySelectorAll("button[data-c]").length-5,b=document.createElement("button");b.className="plus-cats";b.type="button";b.innerHTML="<i>+</i>"+n+" autres";
+  b.onclick=function(){var t=c.classList.toggle("tout");b.innerHTML=t?"<i>−</i>Moins":"<i>+</i>"+n+" autres"};c.appendChild(b)},50)}
+  if(window.F100)fait();else addEventListener("f100",fait,{once:true})})();
+if(/ronds=2/.test(location.search)){document.documentElement.classList.add("ronds-2");
+  (function(){function go(){setTimeout(function(){var c=document.querySelector(".p-fonds .an-cats");if(!c)return;var t;
+    function centre(){var r=c.getBoundingClientRect(),m=r.left+r.width/2,best=null,bd=1e9;c.querySelectorAll("button[data-c]").forEach(function(b){var q=b.getBoundingClientRect(),d=Math.abs(q.left+q.width/2-m);if(d<bd){bd=d;best=b}});
+      c.querySelectorAll("button[data-c]").forEach(function(b){b.classList.toggle("centre",b===best)});if(best&&!best.classList.contains("on"))best.click()}
+    c.addEventListener("scroll",function(){clearTimeout(t);t=setTimeout(centre,140)});centre()},120)}
+    if(window.F100)go();else addEventListener("f100",go,{once:true})})()}
 (function(){var el=document.querySelector("[data-anneau]"),fait=0;function go(){if(fait)return;fait=1;var s=document.createElement("script");s.src="fonds-100.js";document.body.appendChild(s)}
 if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserver(function(e){if(e.some(function(x){return x.isIntersecting})){io.disconnect();go()}},{rootMargin:"1400px 0px"});io.observe(el)})();
 </script>
 
-<div class="grand-site" id="grandSite" hidden><iframe title="Le site en grand"></iframe><div class="gs-bas"><span id="gsNom"></span><button id="gsFerme">Fermer</button></div></div>
 
-<section class="pan p-histoire" id="histoire"><div class="gui" aria-hidden="true">“</div><p class="cit" id="citTxt" aria-label="Je voulais un site beau, simple, et pensé pour notre métier. Alors, je l’ai créé."><span class="curseur"></span></p><small class="sig" id="citSig">Marie · prothésiste ongulaire, créatrice de Loginail</small></section>
+
+<section class="pan p-appli" id="lappli">
+  <div class="k">L’appli Loginail · sur votre téléphone</div>
+  <h2 class="t2 ap-titre">Avant, vous ouvriez vos DM.<br>Maintenant, vous ouvrez votre appli.</h2>
+  <p class="ap-sous">Vous changez votre site dans l’appli&nbsp;? Il change sur votre site. Fin.<br>L’appli est comprise dans l’abonnement, sur iPhone et Android.</p>
+  <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
+  <p class="onglet-txt" id="ongletTxt" hidden></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
+</section>
 
 <section class="pan p-etapes" id="etapes">
   <div class="k">Comment ça marche</div><h2 class="t2">Prête en quelques minutes.</h2>
   <div class="case"><span class="kick">Votre site</span><h3>En 3 étapes.</h3>
     <ol class="pas"><li><b>1</b><div><strong>Collez votre lien Google Maps</strong>On récupère votre nom, vos horaires, vos avis et vos photos.</div></li>
         <li><b>2</b><div><strong>Complétez ce qui manque</strong>Quelques questions, juste ce qu’on n’a pas trouvé.</div></li>
-        <li><b>3</b><div><strong>Choisissez votre style</strong>3 styles, 12 couleurs, clair ou foncé. C’est prêt, et vous le changez quand vous voulez.</div></li></ol></div>
+        <li><b>3</b><div><strong>Choisissez votre style</strong>3 styles, plus de 100 fonds et couleurs, clair ou foncé. C’est prêt, et vous le changez quand vous voulez.</div></li></ol></div>
   <div class="case sombre"><span class="kick">Votre appli</span><h3>En 1 clic.</h3>
     <p>Téléchargez l’appli Loginail et connectez-vous : votre site, vos rendez-vous et vos clientes y sont déjà.</p>
     <ul class="ap-liste"><li>Votre agenda</li><li>Vos clientes</li><li>Votre caisse</li><li>Votre site</li></ul>
@@ -824,16 +922,18 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
     </div></div>
 </section>
 
-<section class="pan p-appli" id="lappli">
-  <div class="k">L’appli Loginail · sur votre téléphone</div>
-  <h2 class="t2 ap-titre">Tout votre univers,<br>dans votre poche.</h2>
-  <p class="ap-sous">L’appli à télécharger sur votre iPhone ou votre Android, comprise dans l’abonnement.</p>
-  <div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div>
-  <p class="onglet-txt" id="ongletTxt" hidden></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
-</section>
+
+
+
+
+<div class="grand-site" id="grandSite" hidden><div class="gs-titre" id="gsTitre"></div><div class="gs-boite"><iframe title="Le site en grand"></iframe><button class="gs-x" id="gsFerme" aria-label="Fermer">×</button></div><span id="gsNom" hidden></span></div>
+
+
+
 
 <section class="pan p-inclus" id="compris">
   <div class="k">Tout est compris</div><h2 class="t2">Un seul abonnement.</h2>
+  <p class="pose-paie">Une seule pose par mois paie votre abonnement.</p>
   <ul class="inc"><li><i></i>Votre site en ligne tout de suite</li><li><i></i>Réservation en ligne, jour et nuit</li><li><i></i>SMS de confirmation et de rappel, sans limite</li><li><i></i>Aucun frais sur vos réservations</li><li><i></i>Votre nom de domaine, qui vous appartient</li><li><i></i>Votre site en 5 langues</li><li><i></i>Votre agenda et vos clientes sur votre téléphone</li><li><i></i>Aide 24 h / 24</li></ul>
   <div class="prix-carte" style="--d:.15s"><span class="brille">1 mois offert</span><b>49,99 €</b><small>par mois, après votre mois offert</small>
       <ul><li><em class="brille">Sans engagement</em> · arrêt en 1 clic</li><li>Aucune commission</li></ul>
@@ -849,6 +949,8 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
     <div><b>0 €</b><span>de plus pour les SMS de rappel, sans limite</span></div></div>
   <p class="zero-note">Sur les acomptes en ligne, seuls les frais de carte bancaire du service de paiement s’appliquent.</p>
 </section>
+
+<section class="pan p-histoire" id="histoire"><div class="gui" aria-hidden="true">“</div><p class="cit" id="citTxt" aria-label="Je voulais un site beau, simple, et pensé pour notre métier. Alors, je l’ai créé."><span class="curseur"></span></p><small class="sig" id="citSig">Marie · prothésiste ongulaire, créatrice de Loginail</small></section>
 
 <section class="pan p-moi" id="moi">
   <div class="moi-haut"><div class="ph" role="img" aria-label="Marie, créatrice de Loginail"></div><div><a class="mon-site" href="https://dilerna.fr/" target="_blank" rel="noopener">dilerna.fr</a><span class="k">Qui suis-je</span><h2 class="t2">Pensé par une prothésiste, pour les prothésistes.</h2></div></div>
@@ -902,20 +1004,22 @@ document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dat
     [...e.querySelectorAll("a,button")].filter(x=>/laisser mon avis/i.test(x.textContent)).forEach(x=>x.style.display="none");
     const def=e.querySelector(".defile");if(def){const a={def,y:0,sens:1,pause:performance.now()+1200+n*400};f._a=a;
       const pas=t=>{const max=def.scrollHeight-def.clientHeight;if(max>0&&t>a.pause){a.y+=a.sens*1.1;if(a.y>max){a.y=max;a.sens=-1}if(a.y<0){a.y=0;a.sens=1}def.scrollTop=a.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
-  f.src=`demo/site.html?public&exemple=dilerna&style=${n}&couleur=noir&mode=jour&une=${UNE[n]}`});
+  f.src=`forme.html?f=${n}&couleur=noir&mode=jour`});
 function peint(){document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n,c=COUL[ci][0];try{const w=f.contentWindow,e=f.contentDocument.querySelector(".ecran");
   const av=w.eval(`cl(${n},"${f.dataset.c}","${f.dataset.m}")`).split(" "),ap=w.eval(`cl(${n},"${c}","${modeS}")`).split(" ");
   av.filter(x=>x&&!ap.includes(x)).forEach(x=>e.classList.remove(x));ap.filter(Boolean).forEach(x=>e.classList.add(x));
   const ink=w.eval("typeof INKJ!=='undefined'?INKJ:null");if(ink&&ink[c])e.style.setProperty("--encre",ink[c]);f.dataset.c=c;f.dataset.m=modeS}catch(x){console.warn(x)}})}
 /* toucher un style : le site s'ouvre en grand, avec la couleur et le mode choisis */
-const NOMS={1:"Signature",2:"Prestige",3:"Élégant"};
+const NOMS={1:"Photo en grand",2:"Tout simple",3:"En cartes"};
 $("cartes").addEventListener("click",e=>{const c=e.target.closest(".st-c");if(!c)return;const n=+c.dataset.n,g=$("grandSite"),f=g.querySelector("iframe");
-  $("gsNom").textContent=NOMS[n]+" · "+(modeS==="nuit"?"foncé":"clair");
+  $("gsNom").textContent=NOMS[n];$("gsTitre").textContent=NOMS[n];
+  window.__yGrand=scrollY;
   f.onload=()=>{try{const d=f.contentDocument,el=d.querySelector(".ecran");el.remove();d.body.innerHTML="";d.body.append(el);d.body.style.cssText="margin:0;overflow:hidden";
     const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.clientHeight/(f.clientWidth/390))+"px!important}.pret,.langues{display:none!important}"+PLANCSS;d.head.append(st);el.style.zoom=f.clientWidth/390}catch(x){console.warn(x)}};
-  f.src=`demo/site.html?public&exemple=dilerna&style=${n}&couleur=${COUL[ci][0]}&mode=${modeS}&une=${UNE[n]}`;
+  f.src=`forme.html?f=${n}&couleur=${COUL[ci][0]}&mode=${modeS}`;
   g.hidden=false;requestAnimationFrame(()=>g.classList.add("on"));document.body.style.overflow="hidden"});
-$("gsFerme").onclick=()=>{const g=$("grandSite");g.classList.remove("on");document.body.style.overflow="";setTimeout(()=>{g.hidden=true;g.querySelector("iframe").src="about:blank"},300)};
+$("gsFerme").onclick=()=>{const g=$("grandSite"),y=window.__yGrand;g.classList.remove("on");document.body.style.overflow="";if(y!=null)scrollTo({top:y,behavior:"instant"});setTimeout(()=>{g.hidden=true;g.querySelector("iframe").src="about:blank";if(y!=null)scrollTo({top:y,behavior:"instant"})},350)};
+$("grandSite").addEventListener("click",e=>{if(e.target.id==="grandSite")$("gsFerme").click()});
 /* après une couleur : chaque site descend jusqu'aux avis (là où la couleur se voit le mieux), s'y arrête 3 s, puis repart */
 function cible(e,n){const avis=()=>{const b=[...e.querySelectorAll("a,button")].find(x=>/laisser mon avis/i.test(x.textContent));return b&&(b.closest(".sec")||b.parentElement)};
   if(n===1){const pl=e.querySelector(".planfond,.plan");if(pl)return pl.closest(".sec")||pl}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Les 3 formes · Loginail</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="polices.css">
+<style>
+/* 05/11 : les 3 nouvelles formes de site (Marie). Même fond pour les 3 ; seule la façon de ranger change.
+   forme.html?f=1 (photo en grand) · f=2 (tout simple) · f=3 (en cartes) · &couleur=noir… · &mode=jour|nuit
+   Les infos viennent du vrai salon Dilerna (exemple-dilerna/donnees.json), rien d'inventé. */
+*{box-sizing:border-box}
+html,body{margin:0;background:#E9E3DC}
+.ecran{--fond:#EFE8DF;--carte:#FFFFFF;--txt:#1E1C1B;--doux:#6B625C;--trait:rgba(30,28,27,.12);--encre:#1E1C1B;--sur:#F6F3EF;
+  width:390px;max-width:100%;height:100vh;margin:0 auto;background:var(--fond);color:var(--txt);font-family:Jost,sans-serif;position:relative;overflow:hidden}
+.ecran.nuit{--fond:#1E1C1B;--carte:#2A2725;--txt:#F6F3EF;--doux:rgba(246,243,239,.62);--trait:rgba(246,243,239,.14);--sur:#1E1C1B}
+.ecran.nuit .bt{background:var(--txt)!important;color:#1E1C1B!important}
+.defile{height:100%;overflow-y:auto;scrollbar-width:none}.defile::-webkit-scrollbar{display:none}
+img{display:block}
+.k{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--doux)}
+h1{margin:0;font-weight:600;text-transform:uppercase;letter-spacing:.16em;line-height:1}
+h2{margin:4px 0 14px;font-size:19px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.bt{display:inline-block;background:var(--encre);color:var(--sur);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border-radius:99px;text-decoration:none}
+.sec{padding:34px 24px}
+.pr-g{margin:0 0 14px}.pr-g b{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.pr{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:7px 0;border-bottom:1px solid var(--trait)}
+.pr span:last-child{font-weight:600;white-space:nowrap}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:6px}.photos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px}
+.note{font-size:30px;font-weight:600}.note small{font-size:13px;font-weight:400;color:var(--doux);margin-left:6px}
+.etoiles{letter-spacing:.14em;font-size:13px}
+.avis{margin:14px 0 0;font-size:13.5px;line-height:1.55}.avis i{display:block;font-style:normal;font-size:11.5px;color:var(--doux);margin-top:4px}
+.av-rail{position:relative;min-height:118px}.av-rail .avis{position:absolute;inset:0 0 auto;opacity:0;transform:translateX(24px);transition:opacity .6s,transform .7s}
+.av-rail .avis.on{opacity:1;transform:none}
+.av-pts{display:flex;gap:6px;margin-top:6px}.f2 .av-pts{justify-content:center}.av-pts i{width:6px;height:6px;border-radius:50%;background:var(--trait)}.av-pts i.on{background:var(--txt)}
+.txt{font-size:14px;line-height:1.6;margin:0}
+.hor{font-size:14px}.hor div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--trait)}
+.adr{font-size:14px;line-height:1.6;margin:0 0 14px}
+.pied{padding:26px 24px 40px;font-size:11px;color:var(--doux);letter-spacing:.06em;text-align:center}
+
+/* ---------- 1 · photo en grand ---------- */
+.f1 .une{height:430px;position:relative}.f1 .une img{width:100%;height:100%;object-fit:cover}
+.f1 .tete{padding:28px 24px 8px}.f1 h1{font-size:40px;margin:8px 0 18px}
+.f1 .sec+.sec{border-top:1px solid var(--trait)}
+
+/* ---------- 2 · tout simple ---------- */
+.f2{text-align:center}
+.f2 .tete{min-height:72%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px}
+.f2 h1{font-size:46px;letter-spacing:.2em;margin:14px 0 6px}
+.f2 .fil{width:40px;height:1px;background:var(--txt);margin:20px auto 26px;opacity:.5}
+.f2 .sec{padding:44px 30px}
+.f2 .pr-g b{text-align:center}.f2 .pr{justify-content:center;border:0;padding:3px 0}.f2 .pr span:first-child::after{content:" ·"}
+.f2 .photos{display:flex;gap:8px;overflow-x:auto;margin:0 -30px;padding:0 30px;scrollbar-width:none}.f2 .photos img{flex:none;width:62%;aspect-ratio:4/5;border-radius:2px}
+.f2 .hor div{justify-content:center;gap:10px;border:0;padding:3px 0}
+.f2 .sec+.sec::before{content:"";display:block;width:40px;height:1px;background:var(--txt);opacity:.35;margin:-44px auto 44px}
+
+/* ---------- 3 · en cartes ---------- */
+.f3 .tete{display:flex;align-items:center;justify-content:space-between;padding:22px 18px 8px}
+.f3 h1{font-size:22px}.f3 .tete .bt{padding:10px 14px;font-size:9.5px}
+.f3 .sec{margin:12px 14px;padding:22px 18px;background:var(--carte);border-radius:18px}
+.f3 .une{margin:8px 14px 0;border-radius:18px;overflow:hidden;height:230px}.f3 .une img{width:100%;height:100%;object-fit:cover}
+.f3 .photos{grid-template-columns:1fr 1fr 1fr}.f3 .photos img{border-radius:10px}
+.f3 .bloc-r{text-align:center}.f3 .bloc-r p{margin:6px 0 14px;font-size:14px;color:var(--doux)}
+</style>
+</head>
+<body>
+<div class="ecran f1" id="e"><div class="defile" id="d"></div></div>
+<script>
+const COUL={noir:"#1E1C1B",choco:"#4A3226",marine:"#24344F",taupe:"#5E5149",greige:"#5F574F",sable:"#80633F",peche:"#7A5444",sauge:"#4F5A45",lin:"#6E6253",nude:"#8A6656",rose:"#9A5D6B",bleup:"#4F6F93"};
+const INKJ=COUL;
+/* la même forme d'appel que les vrais sites, pour que la page d'accueil puisse changer couleur et mode */
+function cl(f,c,m){return "ecran f"+f+(m==="nuit"?" nuit":" jour")+" c-"+c}
+(function(){const st=document.createElement("style");st.textContent=Object.entries(COUL).map(([k,v])=>`.ecran.c-${k}{--encre:${v}}`).join("");document.head.appendChild(st)})();
+
+/* le vrai salon (exemple-dilerna/donnees.json) */
+const S={nom:"DILERNA",metier:"Prothésiste ongulaire",ville:"Porto-Vecchio",note:5,nb:67,
+ adresse:"Rte de Pezza Carda Cardo<br>20137 Porto-Vecchio",insta:"@ongleriedilerna",
+ apropos:"Moi, c'est Marie ! J'ai 28 ans, je suis nail artist indépendante à Porto-Vecchio, et un peu baddie sur les bords. Mon truc, c'est le nail art, les strass et les petits détails qui font toute la différence.",
+ presta:[["Pose américaine",[["Première pose",60],["Dépose sans repose",20]]],["Gainage",[["Première pose",60],["Remplissage",50],["Dépose sans repose",20]]],["Semi renforcé",[["Première pose",40],["Dépose sans repose",15]]],["Carte blanche",[["Carte blanche",120]]]],
+ avis:[["Marie est géniale ! De son accueil à sa prestation tout est parfait.","paola graziani"],["Marie fait un travail soignée elle est aux petits soins, première fois chez elle et elle a vraiment beaucoup de talent.","Catherine LNC"],
+  ["Son travail est d’une qualité remarquable, Marie est très minutieuse dans son travail et perfectionniste.","Mélinda NOU"],["À l’écoute, professionnelle et méticuleuse, elle a su me ravir pour mes tout premier faux ongles.","Dorlane Caussieu Mani"],
+  ["Bientôt 1 an que je fais mes ongles avec Marie je lui fais totalement confiance.","Elodie Boichu"]],
+ photos:["beige-coffin","bordeaux-court","french-amande","cerise-amande","chocolat-coffin","stiletto-nude"].map(n=>"exemple-dilerna/"+n+".webp"),
+ une:"exemple-dilerna/beige-coffin.webp"};
+const ev=()=>'<span class="etoiles">★★★★★</span>';
+const presta=()=>S.presta.map(([g,l])=>'<div class="pr-g">'+(l.length>1||l[0][0]!==g?'<b>'+g+'</b>':'')+l.map(([n,p])=>'<div class="pr"><span>'+n+'</span><span>'+p+' €</span></div>').join("")+'</div>').join("");
+const photos=n=>'<div class="photos">'+S.photos.slice(0,n).map(p=>'<img src="'+p+'" alt="" loading="lazy">').join("")+'</div>';
+const avis=()=>'<div class="note">'+S.note+',0<small>'+S.nb+' avis Google</small></div>'+ev()+'<div class="av-rail">'+S.avis.map(([t,a],i)=>'<p class="avis'+(i?'':' on')+'">« '+t+' »<i>'+a+'</i></p>').join("")+'</div><div class="av-pts">'+S.avis.map((x,i)=>'<i'+(i?'':' class="on"')+'></i>').join("")+'</div>';
+const hor='<div class="hor"><div><span>Lundi – vendredi</span><span>9 h – 17 h</span></div><div><span>Samedi, dimanche</span><span>Fermé</span></div></div>';
+const sec=(k,t,c)=>'<section class="sec"'+(k==="Prestations"?' data-s="presta"':'')+'><div class="k">'+k+'</div>'+(t?'<h2>'+t+'</h2>':'')+c+'</section>';
+const bt='<a class="bt" href="#">Réserver un créneau</a>';
+const pied='<div class="pied">'+S.insta+' · Site fait avec Loginail</div>';
+const FORMES={
+ 1:()=>'<div class="une"><img src="'+S.une+'" alt=""></div><div class="tete"><div class="k">'+S.metier+' · '+S.ville+'</div><h1>'+S.nom+'</h1>'+bt+'</div>'+
+   sec("Prestations","Mes tarifs",presta())+sec("En photos","Mes poses",photos(6))+sec("Avis Google","Elles en parlent",avis())+sec("À propos","Qui suis-je",'<p class="txt">'+S.apropos+'</p>')+
+   sec("Horaires","Quand venir",hor)+sec("Adresse","Où me trouver",'<p class="adr">'+S.adresse+'</p>'+bt)+pied,
+ 2:()=>'<div class="tete"><div class="k">'+S.metier+'</div><h1>'+S.nom+'</h1><div class="k">'+S.ville+'</div><div class="fil"></div>'+bt+'</div>'+
+   sec("Prestations","",presta())+sec("En photos","",photos(6))+sec("Avis Google","",avis())+sec("À propos","",'<p class="txt">'+S.apropos+'</p>')+
+   sec("Horaires","",hor)+sec("Adresse","",'<p class="adr">'+S.adresse+'</p>'+bt)+pied,
+ 3:()=>'<div class="tete"><h1>'+S.nom+'</h1><a class="bt" href="#">Réserver</a></div><div class="une"><img src="'+S.une+'" alt=""></div>'+
+   '<section class="sec bloc-r"><div class="k">'+S.metier+' · '+S.ville+'</div><p>Réservez en ligne, jour et nuit.</p>'+bt+'</section>'+
+   sec("Prestations","Mes tarifs",presta())+sec("En photos","Mes poses",photos(6))+sec("Avis Google","",avis())+sec("À propos","Qui suis-je",'<p class="txt">'+S.apropos+'</p>')+
+   sec("Horaires","",hor)+sec("Adresse","",'<p class="adr">'+S.adresse+'</p>'+bt)+pied};
+const q=new URLSearchParams(location.search),f=+q.get("f")||1,c=COUL[q.get("couleur")]?q.get("couleur"):"noir",m=q.get("mode")==="nuit"?"nuit":"jour";
+const e=document.getElementById("e");e.className=cl(f,c,m);document.getElementById("d").innerHTML=FORMES[f]?FORMES[f]():FORMES[1]();
+setInterval(()=>{const r=document.querySelectorAll(".av-rail .avis"),p=document.querySelectorAll(".av-pts i");if(!r.length)return;let k=[...r].findIndex(x=>x.classList.contains("on"));r[k].classList.remove("on");p[k].classList.remove("on");k=(k+1)%r.length;r[k].classList.add("on");p[k].classList.add("on")},3800);
+document.querySelectorAll("a[href='#']").forEach(a=>a.addEventListener("click",x=>x.preventDefault()));
+</script>
+</body>
+</html>
