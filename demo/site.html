@@ -1601,7 +1601,7 @@ else{
   const hEn=x=>{const h=Math.floor(x),m=Math.round((x-h)*60);return `${h}:${String(m).padStart(2,"0")}`};
   const duree=m=>m<60?`${m} min`:`${Math.floor(m/60)} h${m%60?" "+String(m%60).padStart(2,"0"):""}`;
   const euros=p=>p==null||p===""?"Sur devis":`${String(p).replace(".",",")} €`;
-  const items=BR.prestations.map((p,i)=>{["fr","en","it"].forEach(l=>L[l]["p"+i]=p.nom);return {k:"p"+i,p:euros(p.prix),d:p.duree?duree(p.duree):""}});
+  const items=BR.prestations.map((p,i)=>{["fr","en","it"].forEach(l=>L[l]["p"+i]=p.nom);return {k:"p"+i,p:euros(p.prix),d:p.duree?duree(p.duree):"",ph:p.photo||""}});
   const FAMILLES=[["f_pose","Poses","Nail sets","Ricostruzioni"],["f_semi","Semi-permanent","Gel polish","Semipermanente"],["f_remp","Remplissages","Infills","Refill"],["f_depo","Déposes","Removals","Rimozioni"],["f_manu","Manucure & pédicure","Manicure & pedicure","Manicure e pedicure"],["f_art","Nail art","Nail art","Nail art"],["f_autre","Et aussi","Also","Inoltre"]];
   FAMILLES.forEach(([k,fr,en,it])=>{L.fr[k]=fr;L.en[k]=en;L.it[k]=it});
   const famille=n=>{n=n.toLowerCase();
@@ -1642,7 +1642,7 @@ else{
     rue:BR.rue,cp:`${BR.cp} ${BR.ville}`.trim(),tel:BR.telephone||"",insta:BR.insta||(APERCU?"@votre.instagram":null),instaEx:!BR.insta&&APERCU,
     gps:BR.position?`${BR.position.latitude},${BR.position.longitude}`:"",
     fiche:BR.placeId?`https://search.google.com/local/writereview?placeid=${BR.placeId}`:(BR.lienGoogle||"#"),
-    nails:[...Array(Math.min(n,6))].map((_,i)=>"g"+i),salon:PH.salonv?"salonv":null,
+    nails:[...Array(Math.min(n,BR.source==="exemple"?11:6))].map((_,i)=>"g"+i),salon:PH.salonv?"salonv":null,
     hero:g(0),hero2:g(1),hero3:g(2),hero4:g(3),hero_sb:g(0),hero_sc:g(1),grille:!BR.insta&&APERCU?["rose","nude","prune","vanille","chocolat","cacao"]:[0,1,2,3,4,5].map(g),
     offres:[],faq:[],savoirPlus:[],tva:false});
   if(!DPLEIN.avis.length)DPLEIN.nb=0;
@@ -1689,7 +1689,7 @@ const prestaItem=presta;
 const etoilesPop=()=>`<span class="et et-pop">${[0,1,2,3,4].map(k=>`<i style="--k:${k}">★</i>`).join("")}</span>`;
 const dispoP=t=>{const c=creneau(t);return c?`<div class="dispo-p" data-res><i></i>${t.dispo} : ${c} <span>›</span></div>`:""};
 function avisListe(t,TI){if(!D.avis.length)return "";return `<div class="sec">${TI(t.avis)}<div class="al-tete r">${D.note?`<b>${D.note}</b>`:""}<span class="et">${etoiles}</span></div>${D.nb?`<div class="al-nb r">${D.nb} ${t.avisG}</div>`:""}<div class="al">${D.avis.map(a=>`<div class="al-i r"><span class="al-r">${((a.n||"").trim()[0]||"★").toUpperCase()}</span><div><b>${a.n}</b><span class="et">${etoiles}</span><p>« ${a.t} »</p></div></div>`).join("")}</div>${t.langav?`<div class="langav vide">${t.langav}</div>`:""}<a class="bouton r" href="${D.fiche}" target="_blank" rel="noopener">★ &nbsp;${t.laisser}</a></div>`}
-function prestaCartes(t){const N=D.nails;let k=0;return D.presta.map(p=>`${D.presta.length>1?`<div class="pc">${t[p.cat]}</div>`:""}<div class="pk">${p.items.map(it=>{const im=N.length?`<img src="${P(N[k%N.length])}" alt="">`:"";k++;return `<div class="pk-c r" data-res>${im}<div class="pk-t"><b>${t[it.k]}</b>${it.d?`<small>${it.d}</small>`:""}${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div></div>`}).join("")}</div>`).join("")}
+function prestaCartes(t){const N=D.nails;let k=0;return D.presta.map(p=>`${D.presta.length>1?`<div class="pc">${t[p.cat]}</div>`:""}<div class="pk">${p.items.map(it=>{const im=it.ph?`<img src="${it.ph}" alt="">`:N.length?`<img src="${P(N[k%N.length])}" alt="">`:"";k++;return `<div class="pk-c r" data-res>${im}<div class="pk-t"><b>${t[it.k]}</b>${it.d?`<small>${it.d}</small>`:""}${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div></div>`}).join("")}</div>`).join("")}
 function horairesPastilles(t){const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
   let proch="";for(let k=1;k<=7;k++){const j=(auj+k)%7;if(H7[j]){proch=`${t.ouvre} ${t.jours[j].toLowerCase()} ${t.hh(H7[j][0])}`;break}}
   const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
