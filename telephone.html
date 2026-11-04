@@ -869,7 +869,7 @@ addEventListener("scroll",()=>$("barre").classList.toggle("fond",scrollY>innerHe
 
 /* ---- à votre image : mon vrai site dans les 3 styles, qui défile doucement ; les couleurs et clair/foncé changent les 3 à la fois ---- */
 const COUL=[["noir","#1E1C1B"],["choco","#4A3226"],["marine","#24344F"],["taupe","#5E5149"],["greige","#5F574F"],["sable","#80633F"],["peche","#7A5444"],["sauge","#4F5A45"],["lin","#6E6253"],["nude","#8A6656"],["rose","#9A5D6B"],["bleup","#4F6F93"]];
-const UNE={1:"photo0.jpg",2:"classique.webp",3:"magazine.webp"};
+const UNE={1:"photo0.jpg",2:"haut.jpg",3:"magazine.webp"};
 const PLANCSS="html body .ecran .plan.plan{position:relative;background-color:#EEEAE4!important;background-image:url("+new URL("exemple-dilerna/plan.jpg",location.href).href+")!important;background-size:cover!important;background-position:center!important}.plan .sans,.plan .lmap{display:none!important}.plan::after{content:'© OpenStreetMap';position:absolute;right:8px;bottom:6px;font-size:9px;color:#6f665e;opacity:.85}";let ci=0,modeS="jour";
 $("dots").innerHTML=COUL.map((c,i)=>`<button class="${i?"":"on"}" data-c="${i}" aria-label="Couleur ${i+1}"><i style="background:${c[1]}"></i></button>`).join("");
 document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dataset.c="noir";f.dataset.m="jour";

@@ -1451,7 +1451,12 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .dispo-p{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;padding:9px 15px;border-radius:999px;font-size:12.5px;cursor:pointer;margin-bottom:14px;background:rgba(246,243,239,.16);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .dispo-p i{width:7px;height:7px;border-radius:50%;background:#C9A97E;box-shadow:0 0 0 3px rgba(201,169,126,.3)}
 .hmag .dispo-p{background:var(--carte);border:1px solid rgba(128,120,112,.22);margin-bottom:2px}
-.et-pop i{display:inline-block;font-style:normal;opacity:0;transform:scale(.2) rotate(-40deg)}
+.et-pop{white-space:nowrap}.hmos .note{white-space:nowrap}
+.hmg-btn{white-space:nowrap}
+.dispo-t{display:flex;align-items:center;gap:8px;margin-top:24px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--noir);cursor:pointer;white-space:nowrap}
+.dispo-t i{flex:none;width:6px;height:6px;border-radius:50%;background:#C9A97E;box-shadow:0 0 0 3px rgba(201,169,126,.25)}
+.ecran .dispo-t+.hmg-n{margin-top:10px}
+.et-pop i{font-size:.8em;display:inline-block;font-style:normal;opacity:0;transform:scale(.2) rotate(-40deg)}
 .hmos .et-pop i{animation:etpop .6s cubic-bezier(.3,1.7,.5,1) forwards;animation-delay:calc(1.3s + var(--k)*.25s)}
 .gros.vu .et-pop i{animation:etpop .6s cubic-bezier(.3,1.7,.5,1) forwards;animation-delay:calc(.25s + var(--k)*.25s)}
 @keyframes etpop{60%{opacity:1;transform:scale(1.35) rotate(8deg);text-shadow:0 0 10px rgba(233,207,166,.9)}to{opacity:1;transform:none}}
@@ -1687,6 +1692,7 @@ function creneau(t){const H=D.horaires,n=new Date(),h=n.getHours()+(n.getMinutes
 /* 07/11 · parties choisies par Marie dans l'atelier (servent aux 3 sites) */
 const prestaItem=presta;
 const etoilesPop=()=>`<span class="et et-pop">${[0,1,2,3,4].map(k=>`<i style="--k:${k}">★</i>`).join("")}</span>`;
+const dispoT=t=>{const c=creneau(t);return c?`<div class="dispo-t" data-res><i></i>${t.dispo} : ${c}</div>`:""};
 const dispoP=t=>{const c=creneau(t);return c?`<div class="dispo-p" data-res><i></i>${t.dispo} : ${c} <span>›</span></div>`:""};
 function avisListe(t,TI){if(!D.avis.length)return "";return `<div class="sec">${TI(t.avis)}<div class="al-tete r">${D.note?`<b>${D.note}</b>`:""}<span class="et">${etoiles}</span></div>${D.nb?`<div class="al-nb r">${D.nb} ${t.avisG}</div>`:""}<div class="al">${D.avis.map(a=>`<div class="al-i r"><span class="al-r">${((a.n||"").trim()[0]||"★").toUpperCase()}</span><div><b>${a.n}</b><span class="et">${etoiles}</span><p>« ${a.t} »</p></div></div>`).join("")}</div>${t.langav?`<div class="langav vide">${t.langav}</div>`:""}<a class="bouton r" href="${D.fiche}" target="_blank" rel="noopener">★ &nbsp;${t.laisser}</a></div>`}
 function prestaCartes(t){const N=D.nails;let k=0;return D.presta.map(p=>`${D.presta.length>1?`<div class="pc">${t[p.cat]}</div>`:""}<div class="pk">${p.items.map(it=>{const im=it.ph?`<img src="${it.ph}" alt="">`:N.length?`<img src="${P(N[k%N.length])}" alt="">`:"";k++;return `<div class="pk-c r" data-res>${im}<div class="pk-t"><b>${t[it.k]}</b>${it.d?`<small>${it.d}</small>`:""}${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div></div>`}).join("")}</div>`).join("")}
@@ -1698,7 +1704,7 @@ function horairesPastilles(t){const H7=D.horaires,hj=H7[auj],now=new Date(),hn=n
   const resume=grp.filter(g=>g.k).map(g=>`<div><span>${t.jours[g.d].slice(0,3)}.${g.f>g.d?` – ${t.jours[g.f].slice(0,3)}.`:""}</span><span>${g.k}</span></div>`).join("");
   return `<div class="hp r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="hp-h">${ref?t.h(ref[0],ref[1]):t.ferme}</div><div class="hp-j">${H7.map((h,i)=>`<span class="${h?"ouv":""}${i===auj?" auj":""}">${t.jours[i][0]}</span>`).join("")}</div><div class="hp-r">${resume}</div></div><div class="plan hp-plan r"><span class="pin"></span><em class="sans">${t.planSans}</em></div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div>`}
 function heroMag(t){const note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";const mots=D.nom.split(/\s+/).filter(Boolean),lg=Math.max(...mots.map(w=>w.length)),fs=Math.max(34,Math.min(96,Math.floor(340/(lg*.64))));
-  return `<div class="hmag" data-s="accueil"><div class="hmg-l"><span>N° 01</span><span>${D.ville}</span></div><h1 class="hmg-n" style="font-size:${fs}px">${mots.join("<br>")}.</h1><div class="hmg-ph"><img src="${P(D.hero)}" alt=""></div><div class="hmg-b">${dispoP(t)}<div class="kick">${t.type} · ${D.ville}</div>${note}<button class="hmg-btn" data-res>${t.creneau}</button></div></div>`}
+  return `<div class="hmag" data-s="accueil"><div class="hmg-l"><span>N° 01</span><span>${D.ville}</span></div>${dispoT(t)}<h1 class="hmg-n" style="font-size:${fs}px">${mots.join("<br>")}.</h1><div class="hmg-ph"><img src="${P(D.hero)}" alt=""></div><div class="hmg-b"><div class="kick">${t.type} · ${D.ville}</div>${note}<button class="hmg-btn" data-res>${t.creneau}</button></div></div>`}
 function realMosaique(){return `<div class="rmos">${D.nails.map((n,i)=>`<img class="r" src="${P(n)}" data-i="${i}" alt="">`).join("")}</div>`}
 
 function site3(t,v,lang){
