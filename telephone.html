@@ -821,6 +821,15 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 .mots-col{list-style:none;margin:18px 0 0;padding:0}
 .mots-col li{font-weight:600;text-transform:uppercase;font-size:34px;line-height:1.12;letter-spacing:.01em;padding:6px 0;border-bottom:1px solid rgba(246,243,239,.12);opacity:0;transform:translateY(18px);transition:opacity .6s,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i)*.18s)}
 .p-mots.vu .mots-col li{opacity:1;transform:none}
+/* 05/11 (v39) : Agenda, Fiches clientes, Rappels SMS, Caisse reliés par un trait au logo de l’appli */
+.mots-col li{font-size:30px!important}
+.mots-col li:nth-child(n+2){position:relative;padding-left:46px;background:linear-gradient(rgba(246,243,239,.42),rgba(246,243,239,.42)) no-repeat 16px 50%/18px 1.5px}
+.mots-col li:nth-child(n+2)::before{content:"";position:absolute;left:16px;top:-1px;bottom:-1px;width:1.5px;background:rgba(246,243,239,.42)}
+.mots-col li:nth-child(2)::before{top:50%}
+.mots-col li:last-child::before{bottom:50%}
+.mots-col li:nth-child(2){background:none}
+.mots-col li:nth-child(2)::after{content:"";position:absolute;left:0;top:calc(50% - 17px);width:34px;height:34px;border-radius:9px;background:url(icone-appli.svg) center/cover;box-shadow:0 0 0 1px rgba(246,243,239,.4)}
+
 .mots-col li small{display:block;font-size:11.5px;font-weight:400;text-transform:none;letter-spacing:.02em;color:rgba(246,243,239,.62);margin-top:3px;line-height:1.4}
 .mots-gros{margin:0 0 26px;font-weight:600;text-transform:uppercase;font-size:27px;line-height:1.15;letter-spacing:.01em}
 .mots-gros span{display:block;opacity:0;transform:translateY(22px);transition:opacity .7s,transform .8s cubic-bezier(.2,.7,.2,1)}
