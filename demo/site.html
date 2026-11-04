@@ -1888,7 +1888,7 @@ function site2(t,v,lang){
 /* haut de page du site n°2 : V1 photo plein écran, V2 arche, V3 grand nom + photo */
 function haut(t,lettres){
   const note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";
-  if(VAR==="sa"){const n=D.nails.length?D.nails:[D.hero];return `<div class="hmos" data-s="accueil"><div class="hm-g"><img src="${P(n[0])}" alt=""></div><div class="hm-d"><div><img src="${P(n[1%n.length])}" alt=""></div><div><img style="animation-delay:-8s" src="${typeof BR!=="undefined"&&BR&&BR.mosaiqueBas?BR.mosaiqueBas:P(n[2%n.length])}" alt=""></div></div><div class="hm-txt"><div class="kick">${t.type} · ${D.ville}</div><h1>${lettres}</h1>${note}</div></div>`}
+  if(VAR==="sa"){const n=D.nails.length?D.nails:[D.hero];return `<div class="hmos" data-s="accueil"><div class="hm-g"><img src="${P(n[0])}" alt=""></div><div class="hm-d"><div><img src="${P(n[(typeof BR!=="undefined"&&BR&&BR.mosaiqueBas?2:1)%n.length])}" alt=""></div><div><img style="animation-delay:-8s" src="${typeof BR!=="undefined"&&BR&&BR.mosaiqueBas?BR.mosaiqueBas:P(n[2%n.length])}" alt=""></div></div><div class="hm-txt"><div class="kick">${t.type} · ${D.ville}</div><h1>${lettres}</h1>${note}</div></div>`}
   if(/^s[abc]$/.test(VAR)) return `<div class="hlet" data-s="accueil"><img src="${P(D.hero_sb||D.hero)}" alt="">
       <div class="hl-nom">${D.nom.split(" ").map((w,i)=>`<span data-t="${w}" style="--d:${.6+i*.45}s">${w}</span>`).join("")}</div>
       <div class="hl-bas"><div class="kick">${t.type} · ${D.ville}</div>${note}</div></div>`;
