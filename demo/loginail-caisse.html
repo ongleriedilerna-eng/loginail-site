@@ -427,7 +427,7 @@ button{font:inherit;color:inherit}
 <meta name="robots" content="noindex">
 </head>
 <body>
-<div class="bandeau"><b>Loginail · la caisse · comme Planity</b>1 · le bouton « Encaisser » dans le rendez-vous · 2 · l’écran pour encaisser et envoyer le ticket · 3 · la page « Ma caisse » (tickets, total du mois, livre des recettes) · tout se touche · clientes et montants : exemples</div>
+<div class="bandeau"><b>Loginail · la caisse</b>1 · le bouton « Encaisser » dans le rendez-vous · 2 · l’écran pour encaisser et envoyer le ticket · 3 · la page « Ma caisse » (tickets, total du mois, livre des recettes) · tout se touche · clientes et montants : exemples</div>
 <div class="reglages"><div><button data-c="1" class="on">Rendez-vous</button><button data-c="2">Encaisser</button><button data-c="3">Ma caisse</button></div></div>
 <div class="rangee">
   <div class="col vis" data-col="1"><div class="code"><b>1</b>Le rendez-vous</div><div class="tel"><div class="ecran" data-v="rgk" data-start="ag" data-ouvre="ks-rdv" style="--acc:#1E1C1B"></div></div></div>
@@ -840,7 +840,7 @@ document.querySelectorAll(".ecran").forEach(e=>{
   const ouvre=h=>{fc.innerHTML=h;e.classList.add("fe")};const ferme=()=>e.classList.remove("fe");
   const va=p=>{e.querySelectorAll(".vue").forEach(x=>x.classList.toggle("on",x.dataset.p===p));e.querySelectorAll(".ong button").forEach(b=>b.classList.toggle("on",b.dataset.go===p));const vu=e.querySelector(`.vue[data-p="${p}"]`);vu.scrollTop=0};
   e.querySelector(".voile").onclick=()=>{if(e._dep){e._dep.p.style.top=e._dep.top0+"px";e._dep=null}ferme()};
-  if(e.dataset.start)va(/[?&]demo/.test(location.search)?"si":e.dataset.start);
+  if(e.dataset.start)va(/[?&]demo/.test(location.search)?(/[?&]ag(&|$)/.test(location.search)?"ag":"si"):e.dataset.start);
   if(e.dataset.ouvre&&!/[?&]demo/.test(location.search))setTimeout(()=>ouvre(RGF[e.dataset.ouvre]()),500);
   /* glisser la feuille vers le bas pour la fermer */
   let y0=null;fe.addEventListener("pointerdown",ev=>{if(ev.target.closest("button"))return;y0=ev.clientY});

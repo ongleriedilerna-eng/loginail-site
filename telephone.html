@@ -794,6 +794,47 @@ body{background:var(--creme)}
 .suit.pulse{animation:pulseS 1s ease 3}@keyframes pulseS{50%{transform:scale(1.08);box-shadow:0 0 0 8px rgba(30,28,27,.12)}}
 /* « 5 templates… » : la phrase qui change */
 #stIntro{transition:opacity .45s,transform .45s}
+/* 06/11 : la phrase principale, en grand, qui brille */
+.p-mots .mots-txt{font-size:clamp(23px,6.6vw,32px)!important;font-weight:500;line-height:1.22!important;margin:30px 0 0!important;background:linear-gradient(105deg,#F6F3EF 40%,#E9C46A 50%,#F6F3EF 60%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:0;transform:translateY(16px);transition:opacity 1s 1.1s,transform 1s 1.1s;animation:prixBrille 4.5s ease-in-out infinite}
+.p-mots.vu .mots-txt{opacity:1;transform:none}
+/* le « + » entre Site internet et l'appli */
+.mots-col li:first-child::after{content:"+";display:block;font-size:44px;font-weight:300;line-height:1;margin:12px 0 4px;color:#E9C46A}
+.mots5 i{font-style:normal}
+/* machine à écrire */
+#petitSalon .tw{visibility:hidden}#petitSalon .tw.on{visibility:visible}
+#petitSalon .tw-c{display:inline-block;width:2px;height:.9em;background:currentColor;margin-left:2px;vertical-align:-.08em;animation:twC .8s steps(1) infinite}
+@keyframes twC{50%{opacity:0}}
+/* le nuancier : l'aperçu dans une carte en verre dépoli */
+.nu-f{position:fixed;inset:0;z-index:95;display:grid;place-items:center;opacity:0;transition:opacity .35s;overflow:hidden}
+.nu-f.on{opacity:1}.nu-f[hidden]{display:none}
+.nu-bg{position:absolute!important;inset:-60px;width:auto!important;height:auto!important;filter:blur(26px) saturate(1.15);transform:scale(1.1)}
+.nu-bg .tuile{width:100%!important;height:100%!important;border-radius:0!important}
+.nu-f::before{content:"";position:absolute;inset:0;background:rgba(30,28,27,.18);z-index:1}
+.nu-c{position:relative;z-index:2;width:min(88vw,360px);border-radius:32px;padding:14px 14px 16px;background:rgba(255,255,255,.26);border:1px solid rgba(255,255,255,.6);box-shadow:0 30px 60px -20px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.7);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);transform:translateY(24px) scale(.97);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.nu-f.on .nu-c{transform:none}
+.nu-t{display:flex;align-items:center;justify-content:space-between;margin:2px 4px 10px;color:#1E1C1B}
+.nu-t b{font:500 11px Jost,sans-serif;letter-spacing:.22em;text-transform:uppercase}
+.nu-x{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.7);font-size:20px;line-height:34px;padding:0;cursor:pointer;color:#1E1C1B}
+.nu-ap{position:relative;height:min(58vh,470px);border-radius:22px;overflow:hidden;background:#F6F3EF;box-shadow:0 10px 26px -14px rgba(0,0,0,.4)}
+.nu-ap iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;pointer-events:none}
+.nu-b{display:flex;align-items:center;gap:8px;margin-top:12px}
+.nu-fl{width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.75);font-size:20px;line-height:40px;padding:0;cursor:pointer;color:#1E1C1B;flex:none}
+.nu-seg{flex:1;display:flex;background:rgba(255,255,255,.45);border-radius:22px;padding:4px}
+.nu-seg button{flex:1;height:34px;border:0;border-radius:18px;background:none;font:500 10.5px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#1E1C1B;cursor:pointer}
+.nu-seg button.on{background:#1E1C1B;color:#F6F3EF}
+.nu-aide{text-align:center;font-size:11.5px;color:#1E1C1B;opacity:.75;margin:10px 0 0}
+.p-fonds .an-face,.p-fonds .tp-c{cursor:pointer}
+.nu-touche{font-size:12px;color:var(--muted);margin:8px 0 0;text-align:center}
+/* Votre appli à votre image */
+.p-appcoul{text-align:center;align-items:center}
+.ac-txt{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 16px;max-width:330px}
+.ac-tel{position:relative;width:min(64vw,250px);aspect-ratio:390/760;border-radius:36px;overflow:hidden;background:#F6F3EF;box-shadow:0 0 0 7px #1E1C1B,0 30px 50px -24px rgba(0,0,0,.5);margin:6px auto 22px}
+.ac-tel iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.ac-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:300px}
+.ac-dots button{width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;box-shadow:0 0 0 1px rgba(0,0,0,.08);transition:transform .2s}
+.ac-dots button.on{box-shadow:0 0 0 3px var(--creme),0 0 0 5px var(--noir);transform:scale(1.08)}
+.ac-nom{margin:12px 0 0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+#faq b{font-weight:600;color:var(--noir)}
 /* 06/11 : « Vous collez des charms… Votre site aussi. » */
 .p-charms{position:relative;overflow:hidden;text-align:center;padding-top:150px!important;padding-bottom:150px!important;background:radial-gradient(120% 70% at 50% 50%,#fff 0%,var(--creme) 70%)}
 .ch-pluie{position:absolute;inset:0;pointer-events:none}
@@ -848,7 +889,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 <section class="pan p-haut" id="haut">
   <div class="haut-stores" aria-label="Bientôt sur les stores"><span>Bientôt sur<b>iPhone</b></span><span>Bientôt sur<b>Android</b></span></div>
   <div class="k haut-k"></div>
-  <div><div id="hautTxt"><p class="mots5 haut">Site internet<i>·</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p><h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p></div>
+  <div><div id="hautTxt"><p class="mots5 haut">Site internet<i>+</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p><h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p></div>
     <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="trois"><span><b>1 mois</b>offert</span><span><b>Sans</b>engagement</span><span><b>+ 6 000</b>variantes</span></div>
     <div class="prix-sous">Puis 49,99 € / mois · site + appli</div>
     <a class="descend" href="#styles"><span>Glissez pour découvrir</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></a></div>
@@ -856,7 +897,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 <script>
 /* les variantes du haut, pour que Marie compare (accueil-tel.html?var=2…) */
 (function(){var v=(location.search.match(/var=(\d)/)||[])[1]||"5",h=document.getElementById("hautTxt");if(!h)return;document.documentElement.classList.add("var-"+v);
-  var M='<p class="mots5">Site internet<i>·</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p>',P='<p class="mots5 pills"><span>Site internet</span><span>Agenda</span><span>Fiches clientes</span><span>Rappels SMS</span><span>Caisse</span></p>';
+  var M='<p class="mots5">Site internet<i>+</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p>',P='<p class="mots5 pills"><span>Site internet</span><span>Agenda</span><span>Fiches clientes</span><span>Rappels SMS</span><span>Caisse</span></p>';
   if(v==="2")h.innerHTML='<h1 class="h1-pinceau un">Un site, une appli, un pinceau&nbsp;:</h1><p class="h1-tout">c’est tout ce qu’il vous faut.</p>'+P;
   if(v==="1")h.innerHTML='<h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p>'+M;
   if(v==="4")h.innerHTML='<h1 class="h1-pinceau un">Un site, une appli, un pinceau.</h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p>';
@@ -868,9 +909,9 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </script>
 
 <section class="pan p-mots" id="mots">
-  <div class="k">Dans Loginail</div>
+  <div class="k">Loginail, c’est quoi&nbsp;?</div>
   <ul class="mots-col"><li style="--i:0">Site internet<small>en 5 langues · vos photos, vos prix, vos avis Google, votre adresse</small></li><li style="--i:1">Agenda<small>la réservation en ligne arrive toute seule, jour et nuit</small></li><li style="--i:2">Fiches clientes<small>leurs rendez-vous, vos notes, leur anniversaire</small></li><li style="--i:3">Rappels SMS<small>partis tout seuls, la veille du rendez-vous</small></li><li style="--i:4">Caisse<small>ce que vous encaissez, jour après jour · si vous la voulez</small></li></ul>
-  <p class="mots-txt">Votre site pour vos clientes, et votre appli pour tout gérer.</p>
+  <p class="mots-txt">Votre site pour vos clientes,<br>votre appli pour gérer votre salon.</p>
 </section>
 <style>
 .p-mots{background:#151111;color:var(--creme);min-height:0!important;padding-top:64px!important;padding-bottom:64px!important}
@@ -994,6 +1035,15 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
   <p class="touche-ong"><span class="main">👆</span> Touchez les onglets, ou glissez le doigt</p>
   <p class="ap-phrase" id="apPhrase">Changez vos prix en 2 secondes.</p>
 </section>
+
+<section class="pan p-appcoul" id="appcoul">
+  <div class="k">Votre appli à votre image</div>
+  <h2 class="t2">Votre appli,<br>à vos couleurs.</h2>
+  <p class="ac-txt">Touchez une couleur&nbsp;: vos boutons et vos rendez-vous la prennent. Comme votre site.</p>
+  <div class="ac-tel"><iframe title="L’appli Loginail à vos couleurs" tabindex="-1" data-src="demo/loginail-caisse.html?demo&amp;ag"></iframe></div>
+  <div class="ac-dots" id="acDots"></div>
+  <p class="ac-nom" id="acNom">Noir</p>
+</section>
 <style>
 .ap-scene{position:relative;align-self:stretch;display:flex;justify-content:center}
 .nt{position:absolute;z-index:5;width:172px;display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 14px 30px -14px rgba(30,28,27,.35),0 0 0 1px rgba(30,28,27,.05);
@@ -1077,7 +1127,7 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
 </section>
 
 <section class="pan p-petit" id="petit">
-  <h2 class="t2">Petit salon.<br>Grand site.</h2>
+  <h2 class="t2" id="petitSalon">Petit salon.<br>Grand site.</h2>
   <p>Pas d’enseigne sur la porte&nbsp;? Un site à votre nom, oui.</p>
 </section>
 
@@ -1123,6 +1173,41 @@ addEventListener("scroll",()=>$("barre").classList.toggle("fond",scrollY>innerHe
   const POS=[[6,8],[78,5],[40,3],[88,30],[2,36],[16,64],[84,62],[60,86],[8,86],[34,90],[90,88],[66,14]];
   im.forEach((m,i)=>{const p=POS[i%POS.length];m.style.left=p[0]+"%";m.style.top=p[1]+"%";m.style.transitionDelay=(i*.09)+"s";m.style.animationDelay=(i*.33)+"s";if(i%3===1){m.style.width=m.style.height="48px"}});
   if(!("IntersectionObserver" in window))return sec.classList.add("on");new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){sec.classList.add("on");o.disconnect()}},{threshold:.3}).observe(sec)})();
+/* ---- 06/11 : « Petit salon. Grand site. » s'écrit lettre par lettre ---- */
+(function(){const h=document.getElementById("petitSalon");if(!h)return;const L=["Petit salon.","Grand site."];
+  h.innerHTML=L.map(l=>[...l].map(c=>'<span class="tw">'+(c===" "?"&nbsp;":c)+'</span>').join("")).join("<br>");const sp=[...h.querySelectorAll(".tw")],car=document.createElement("span");car.className="tw-c";
+  let fait=0;const go=()=>{if(fait)return;fait=1;let k=0;sp[0].before(car);const t=setInterval(()=>{if(k>=sp.length){clearInterval(t);setTimeout(()=>car.remove(),1600);return}sp[k].classList.add("on");sp[k].after(car);k++},95)};
+  if(!("IntersectionObserver" in window))return go();new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){go();o.disconnect()}},{threshold:.6}).observe(h)})();
+/* ---- 06/11 : le nuancier : touchez un fond, votre site apparaît avec, dans une carte en verre ---- */
+(function(){const sec=document.getElementById("fonds");if(!sec)return;
+  const an=sec.querySelector("[data-anneau]");if(an)an.insertAdjacentHTML("afterend",'<p class="nu-touche">👆 Touchez un fond pour voir votre site avec</p>');
+  document.body.insertAdjacentHTML("beforeend",'<div class="nu-f" id="nuF" hidden><div class="f100 nu-bg" id="nuBg"></div><div class="nu-c" role="dialog" aria-modal="true" aria-label="Votre site avec ce fond"><div class="nu-t"><b id="nuNom"></b><button class="nu-x" aria-label="Fermer">×</button></div><div class="nu-ap"><iframe title="Votre site avec ce fond" tabindex="-1"></iframe></div><div class="nu-b"><button class="nu-fl" data-nu="-1" aria-label="Fond d’avant">‹</button><div class="nu-seg"><button data-m="jour" class="on">Clair</button><button data-m="nuit">Foncé</button></div><button class="nu-fl" data-nu="1" aria-label="Fond suivant">›</button></div><p class="nu-aide">En exemple : mon salon, Dilerna</p></div></div>');
+  const F=document.getElementById("nuF"),ifr=F.querySelector("iframe");let L=[],k=0,mode="jour",pret=0;
+  const css=()=>{if(!document.getElementById("mcCss")&&window.FONDS100){const c=document.createElement("style");c.id="mcCss";c.textContent=FONDS100.css;document.head.appendChild(c)}};
+  const pose=()=>{const i=L[k];document.getElementById("nuNom").textContent=FONDS100.f[i][0];document.getElementById("nuBg").innerHTML=F100.tuile(i);
+    if(pret)try{F100.poseFond(ifr.contentDocument,i,mode==="nuit")}catch(_){}};
+  const charge=()=>{pret=0;ifr.onload=()=>{try{const d=ifr.contentDocument,el=d.querySelector(".ecran");el.remove();d.body.innerHTML="";d.body.append(el);d.body.style.cssText="margin:0;overflow:hidden";
+      const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(ifr.clientHeight/(ifr.clientWidth/390))+"px!important}.pret,.langues,.bandeau{display:none!important}";d.head.append(st);el.style.zoom=ifr.clientWidth/390;pret=1;pose()}catch(x){console.warn(x)}};
+    ifr.src="loginail-creer/pret.html?public&exemple=dilerna&style=1&couleur=noir&mode="+mode+"&une=photo0.jpg"};
+  const ouvre=i=>{css();const cat=(sec.querySelector(".an-cats button.on")||{}).dataset||{};L=F100.liste(cat.c||"Tous");k=L.indexOf(i);if(k<0){L=[i].concat(L);k=0}
+    F.hidden=false;requestAnimationFrame(()=>F.classList.add("on"));document.body.style.overflow="hidden";pose();if(ifr.dataset.m!==mode){ifr.dataset.m=mode;charge()}};
+  const ferme=()=>{F.classList.remove("on");document.body.style.overflow="";setTimeout(()=>F.hidden=true,350)};
+  F.addEventListener("click",e=>{if(e.target===F||e.target.closest(".nu-x"))return ferme();const n=e.target.closest("[data-nu]");if(n){k=(k+ +n.dataset.nu+L.length)%L.length;pose();return}
+    const m=e.target.closest("[data-m]");if(m&&m.dataset.m!==mode){mode=m.dataset.m;F.querySelectorAll("[data-m]").forEach(b=>b.classList.toggle("on",b===m));ifr.dataset.m=mode;charge()}});
+  let x0=0,y0=0,t0=0;sec.addEventListener("pointerdown",e=>{x0=e.clientX;y0=e.clientY;t0=Date.now()},true);
+  sec.addEventListener("pointerup",e=>{if(Math.hypot(e.clientX-x0,e.clientY-y0)>10||Date.now()-t0>500)return;const f=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest(".an-face,.tp-c")).find(Boolean);if(!f||f.dataset.i==null||!window.F100)return;ouvre(+f.dataset.i)},true)})();
+/* ---- 06/11 : « Votre appli à votre image » : la couleur de l'appli change pour de vrai ---- */
+(function(){const sec=document.getElementById("appcoul");if(!sec)return;const f=sec.querySelector("iframe"),dots=document.getElementById("acDots");
+  const C=[["Noir","#1E1C1B"],["Rose","#9A5D6B"],["Lilas","#7B62A8"],["Sauge","#4F5A45"],["Bleu","#4F6F93"],["Chocolat","#4A3226"],["Abricot","#B05E3A"]];
+  dots.innerHTML=C.map((c,i)=>`<button data-i="${i}" style="background:${c[1]}" aria-label="${c[0]}"${i?"":' class="on"'}></button>`).join("");
+  let E=null,ci=0,auto=1,tA;
+  const pose=i=>{ci=i;dots.querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i));document.getElementById("acNom").textContent=C[i][0];if(E){E.classList.add("mc");E.style.setProperty("--acc",C[i][1])}};
+  f.onload=()=>{try{const d=f.contentDocument,t=d.querySelectorAll(".ecran")[0];t.remove();d.body.innerHTML="";d.body.append(t);d.body.style.cssText="margin:0;overflow:hidden;background:transparent";
+    const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:760px!important}";d.head.append(st);
+    const z=()=>{t.style.zoom=f.clientWidth/390};z();new ResizeObserver(z).observe(f);E=t;pose(ci)}catch(x){console.warn(x)}};
+  dots.onclick=e=>{const b=e.target.closest("button");if(!b)return;auto=0;clearTimeout(tA);pose(+b.dataset.i)};
+  const tourne=()=>{if(!auto)return;pose((ci+1)%C.length);tA=setTimeout(tourne,1800)};
+  new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){if(!f.src)f.src=f.dataset.src;tA=setTimeout(tourne,2600);o.disconnect()}},{rootMargin:"300px 0px"}).observe(sec)})();
 /* ---- 06/11 : « 5 templates… » : la phrase qui change toute seule ---- */
 (function(){const el=document.getElementById("stIntro");if(!el)return;const L=["5 templates.<em>Amande, Stiletto, Carré, Ovale, Coffin</em>","+ de 100 fonds.<em>Des fleurs, des strass, du léopard…</em>","17 couleurs.<em>En clair ou en foncé</em>","16 écritures.<em>Des paillettes, des charms…</em>","+ de 6 000 variantes.<em>Et une seule appli pour tout gérer.</em>","Si c’est pas beau, la vie&nbsp;?<em>Votre site, votre agenda, vos clientes</em>"];let i=0;
   setInterval(()=>{if(document.hidden)return;el.classList.add("out");setTimeout(()=>{i=(i+1)%L.length;el.innerHTML=L[i];el.classList.remove("out")},450)},3200)})();
@@ -1234,11 +1319,13 @@ $("ongletsApp").onclick=e=>{const b=e.target.closest("button");if(!b)return;appl
 
 
 /* ---- les questions : la réponse s'ouvre sous la question ---- */
-const FAQ=[["Combien de temps pour avoir mon site ?", "Trois étapes : vous collez le lien de votre fiche Google, on complète ensemble ce qui manque, vous choisissez votre style. Votre site apparaît en moins d’une minute."], ["Est-ce que je suis engagée ?", "Non, sans engagement. Vous arrêtez en un clic, quand vous voulez."], ["Combien je vais payer ?", "49,99 € par mois, votre site et votre appli compris. Le premier mois est offert."], ["Il y a des frais en plus ?", "Non. Aucune commission sur vos réservations, aucun frais caché. Sur les acomptes, seuls les frais de carte bancaire sont pris par le service de paiement."], ["Je peux essayer avant de payer ?", "Oui. Créer votre site est gratuit, pour le voir. Et quand vous l’activez, le premier mois est offert."], ["Je peux modifier mon site moi-même ?", "Oui, depuis votre appli, quand vous voulez : photos, prix, textes, horaires."], ["Je peux changer de style après ?", "Oui, en quelques clics : le style, la couleur, clair ou foncé."], ["Je peux mettre mes photos ?", "Oui, directement depuis votre téléphone."], ["Mes horaires et mon adresse sont affichés ?", "Oui, avec le plan et l’itinéraire pour venir au salon."], ["Je récupère mes rendez-vous actuels ?", "Oui. Prenez votre agenda en photo : vos rendez-vous sont ajoutés. Vous pourrez aussi les reprendre depuis Google Agenda."], ["Les SMS sont limités ?", "Non. Confirmation et rappel la veille, automatiques et sans limite."], ["Le nom de domaine est à moi ?", "Oui : votre-onglerie.fr, à votre nom, compris dans l’abonnement."], ["Mes clientes doivent créer un compte ?", "Non : ni compte, ni appli. Elles réservent en 30 secondes sur votre propre site."], ["Mes clientes doivent payer un acompte ?", "C’est vous qui choisissez : sans acompte, avec un acompte, ou le paiement complet en ligne."], ["Une cliente annule : je perds la place ?", "Non. Le créneau se libère tout de suite sur votre site et une autre cliente peut le réserver. Vous choisissez le délai d’annulation, et vous pouvez le proposer à vos clientes en liste d’attente."], ["Je peux bloquer mes vacances ?", "Oui, en un geste dans votre agenda : personne ne peut réserver ces jours-là."], ["J’ai une fiche pour chaque cliente ?", "Oui : ses rendez-vous, vos notes, ses préférences et son anniversaire."], ["Je vais oublier l’anniversaire de mes clientes ?", "Jamais : l’appli vous le rappelle le jour J, et vous lui envoyez un petit mot en un geste."], ["Je vois mon agenda partout ?", "Oui, même en déplacement : il est dans votre téléphone."], ["Faut-il être douée en informatique ?", "Non. Si vous savez copier un lien, vous savez créer votre site."], ["Pourquoi pas juste Planity ?", "Sur une plateforme, vous êtes une fiche parmi tant d’autres. Avec Loginail, votre nom s’affiche en grand sur votre propre site, et vous gérez tout votre agenda depuis votre appli."], ["Qui a créé Loginail ?", "Une prothésiste à son compte. J’ai créé l’outil que j’ai toujours voulu avoir."]],THEMES=[["Démarrer", [0, 4, 19, 9, 20, 21]], ["Le prix", [1, 2, 3, 10, 11]], ["Votre site", [5, 6, 7, 8]], ["Vos clientes", [12, 13, 14, 15, 16, 17, 18]]];
+const FAQ=[["Combien de temps pour avoir mon site ?", "Trois étapes : vous collez le lien de votre fiche Google, on complète ensemble ce qui manque, vous choisissez votre style. Votre site apparaît en moins d’une minute."], ["Est-ce que je suis engagée ?", "Non, sans engagement. Vous arrêtez en un clic, quand vous voulez."], ["Combien je vais payer ?", "49,99 € par mois, votre site et votre appli compris. Le premier mois est offert."], ["Il y a des frais en plus ?", "Non. Aucune commission sur vos réservations, aucun frais caché. Sur les acomptes, seuls les frais de carte bancaire sont pris par le service de paiement."], ["Je peux essayer avant de payer ?", "Oui. Créer votre site est gratuit, pour le voir. Et quand vous l’activez, le premier mois est offert."], ["Je peux modifier mon site moi-même ?", "Oui, depuis votre appli, quand vous voulez : photos, prix, textes, horaires."], ["Je peux changer de style après ?", "Oui, en quelques clics : le style, la couleur, clair ou foncé."], ["Je peux mettre mes photos ?", "Oui, directement depuis votre téléphone."], ["Mes horaires et mon adresse sont affichés ?", "Oui, avec le plan et l’itinéraire pour venir au salon."], ["Je récupère mes rendez-vous actuels ?", "Oui. Prenez votre agenda en photo : vos rendez-vous sont ajoutés. Vous pourrez aussi les reprendre depuis Google Agenda."], ["Les SMS sont limités ?", "Non. Confirmation et rappel la veille, automatiques et sans limite."], ["Le nom de domaine est à moi ?", "Oui : votre-onglerie.fr, à votre nom, compris dans l’abonnement."], ["Mes clientes doivent créer un compte ?", "Non : ni compte, ni appli. Elles réservent en 30 secondes sur votre propre site."], ["Mes clientes doivent payer un acompte ?", "C’est vous qui choisissez : sans acompte, avec un acompte, ou le paiement complet en ligne."], ["Une cliente annule : je perds la place ?", "Non. Le créneau se libère tout de suite sur votre site et une autre cliente peut le réserver. Vous choisissez le délai d’annulation, et vous pouvez le proposer à vos clientes en liste d’attente."], ["Je peux bloquer mes vacances ?", "Oui, en un geste dans votre agenda : personne ne peut réserver ces jours-là."], ["J’ai une fiche pour chaque cliente ?", "Oui : ses rendez-vous, vos notes, ses préférences et son anniversaire."], ["Je vais oublier l’anniversaire de mes clientes ?", "Jamais : l’appli vous le rappelle le jour J, et vous lui envoyez un petit mot en un geste."], ["Je vois mon agenda partout ?", "Oui, même en déplacement : il est dans votre téléphone."], ["Faut-il être douée en informatique ?", "Non. Si vous savez copier un lien, vous savez créer votre site."], ["Pourquoi pas juste une plateforme de réservation ?", "Sur une plateforme, vous êtes une fiche parmi tant d’autres. Avec Loginail, votre nom s’affiche en grand sur votre propre site, et vous gérez tout votre agenda depuis votre appli."], ["Qui a créé Loginail ?", "Une prothésiste à son compte. J’ai créé l’outil que j’ai toujours voulu avoir."]],THEMES=[["Démarrer", [0, 4, 19, 9, 20, 21]], ["Le prix", [1, 2, 3, 10, 11]], ["Votre site", [5, 6, 7, 8]], ["Vos clientes", [12, 13, 14, 15, 16, 17, 18]]];
 FAQ.push(["Je n’ai pas de fiche Google, je peux quand même ?","Oui. Vous remplissez vos infos vous-même : votre nom, vos horaires, vos prestations et vos photos."],["Mon site marche sur téléphone et sur ordinateur ?","Oui. Il s’adapte tout seul : il est beau sur un téléphone comme sur un ordinateur."],["Qui m’aide si je bloque ?","Moi. Écrivez-moi sur Instagram (@loginail_website) ou à contact@loginail.fr, je vous réponds personnellement."]);THEMES[0][1].push(FAQ.length-3,FAQ.length-2,FAQ.length-1);
 let themeI=0;
+/* 06/11 (Marie) : les mots importants en gras dans les questions et les réponses */
+const GRAS=t=>String(t).split(/(<[^>]+>)/).map(p=>p[0]==="<"?p:p.replace(/(^Oui(?=[ .,])|^Non(?=[ .,])|sans engagement|nom de domaine|premier mois est offert|1 mois offert|rappels? SMS|réservation en ligne|commissions?|engagée|engagement|frais|agenda|prix|49,99 €|gratuitement|gratuite?|acomptes?|5 langues|trois étapes|moins d’une minute|fiche Google|en un clic|vous-même|personnellement)/gi,"<b>$1</b>")).join("");
 function faq(){$("faqCats").innerHTML=THEMES.map((t,i)=>`<button class="${i===themeI?"on":""}" data-t="${i}">${t[0]}</button>`).join("");
-  $("faq").innerHTML=THEMES[themeI][1].map((n,k)=>`<div class="qt ${k?"":"ouv"}"><button>${FAQ[n][0]}</button><div class="rep"><p>${FAQ[n][1]}</p></div></div>`).join("")}
+  $("faq").innerHTML=THEMES[themeI][1].map((n,k)=>`<div class="qt ${k?"":"ouv"}"><button><span>${GRAS(FAQ[n][0])}</span></button><div class="rep"><p>${GRAS(FAQ[n][1])}</p></div></div>`).join("")}
 faq();
 $("faqCats").onclick=e=>{const b=e.target.closest("button");if(!b)return;themeI=+b.dataset.t;faq()};
 $("faq").onclick=e=>{const b=e.target.closest(".qt>button");if(!b)return;const q=b.parentElement,o=!q.classList.contains("ouv");$("faq").querySelectorAll(".qt").forEach(x=>x.classList.remove("ouv"));if(o)q.classList.add("ouv")};

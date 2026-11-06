@@ -70,7 +70,7 @@ function roue(zone){
   var L=liste("Tous"),o=0,e={pos:0,v:0,auto:360/(N*2.8),vmax:400,tient:false};
   function rend(){var a=e.pos;ro.style.transform="translateZ("+(-Rr)+"px) rotateY("+(-a)+"deg)";
     for(var i=0;i<N;i++){var k=Math.floor((a-i*pas+180)/360),j=((i+N*k-o)%L.length+L.length)%L.length,fa=faces[i],cle=L[j]+"/"+j;
-      if(cle!==fa.c){fa.c=cle;fa.el.innerHTML=carte(L[j],j);fa.el.firstChild.style.transform="scale("+s+")"}}}
+      if(cle!==fa.c){fa.c=cle;fa.el.dataset.i=L[j];fa.el.innerHTML=carte(L[j],j);fa.el.firstChild.style.transform="scale("+s+")"}}}
   main(zone,e,pas/(W+ecart));anime(zone,e,rend);rend();
   return {liste:function(l){L=l;var a=e.pos,i0=((Math.round(a/pas)%N)+N)%N,k0=Math.floor((a-i0*pas+180)/360);o=i0+N*k0;faces.forEach(function(f){f.c=-1});e.v=e.auto*4},
           refait:function(){faces.forEach(function(f){f.c=-1})}};
@@ -85,7 +85,7 @@ function defile(zone){
   addEventListener("resize",function(){larg=zone.clientWidth||innerWidth});
   function rend(){var off=e.pos,g0=Math.floor(off/pas)-Math.ceil(P/2)+1;
     for(var g=g0;g<g0+P;g++){var pl=places[((g%P)+P)%P],j=((g-o)%L.length+L.length)%L.length,cle=L[j]+"/"+j;
-      if(pl.g!==g||pl.cle!==cle){pl.g=g;pl.cle=cle;pl.el.innerHTML=carte(L[j],j);pl.el.firstChild.style.transform="scale("+s+")"}
+      if(pl.g!==g||pl.cle!==cle){pl.g=g;pl.cle=cle;pl.el.dataset.i=L[j];pl.el.innerHTML=carte(L[j],j);pl.el.firstChild.style.transform="scale("+s+")"}
       var x=larg/2-W/2+(g*pas-off),t=Math.max(-1.4,Math.min(1.4,(x+W/2-larg/2)/(larg/2)));
       pl.el.style.transform="translate3d("+x.toFixed(1)+"px,0,"+(-Math.abs(t)*170).toFixed(1)+"px) rotateY("+(-t*20).toFixed(2)+"deg)";
       pl.el.style.zIndex=100-Math.round(Math.abs(t)*50)}}
