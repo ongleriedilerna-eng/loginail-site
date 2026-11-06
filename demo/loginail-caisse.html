@@ -409,7 +409,7 @@ button{font:inherit;color:inherit}
 .nt-g{color:var(--gris)}
 .nt-pied{font-size:9.5px;color:var(--gris);margin-top:8px;border-top:1px solid var(--ligne);padding-top:6px}
 .k-off{background:#fff;border-radius:16px;padding:14px 16px;font-size:13px;line-height:1.5;color:var(--gris)}
-.k-env{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.k-env{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
 .k-env button{border:1.5px solid transparent;background:#fff;border-radius:16px;padding:12px 10px;text-align:left;cursor:pointer}
 .k-env button.on{border-color:var(--noir)}
 .k-env b{display:block;font-weight:500;font-size:14px}.k-env span{display:block;font-size:11.5px;color:var(--gris);margin-top:2px}
@@ -423,7 +423,7 @@ button{font:inherit;color:inherit}
 .k-tk{flex-wrap:wrap;padding:8px 0}.k-renv{flex-basis:100%;text-align:left;border:0;background:none;padding:0 0 4px;font-size:11.5px;cursor:pointer;text-decoration:underline;color:var(--noir)}
 .k-renv:disabled{border-color:transparent;color:var(--gris)}
 </style>
-<link href="../polices.css" rel="stylesheet">
+<link href="../polices.css" rel="stylesheet"><link href="../loginail-site/polices-sites.css" rel="stylesheet">
 <meta name="robots" content="noindex">
 </head>
 <body>
@@ -435,6 +435,11 @@ button{font:inherit;color:inherit}
   <div class="col" data-col="3"><div class="code"><b>3</b>Ma caisse</div><div class="tel"><div class="ecran" data-v="rgk" data-start="re" data-ouvre="ks-caisse" style="--acc:#1E1C1B"></div></div></div>
 </div>
 </div>
+<script>
+/* 06/11 : les ronds de fonds = le fond entier (170×220) réduit à la taille du rond, centré */
+window.__ajusteRonds=z=>{(z||document).querySelectorAll(".rond-f").forEach(r=>{const w=r.clientWidth||r.parentElement.clientWidth;if(!w)return;const f=r.querySelector(".f100");if(!f)return;const k=w/170;
+  f.style.cssText="position:absolute;left:0;top:"+(-(220*k-w)/2)+"px;width:170px;height:220px;transform:scale("+k+");transform-origin:0 0";const t=f.querySelector(".tuile");if(t)t.style.cssText+=";width:170px!important;height:220px!important;border-radius:0!important"})};
+</script>
 <script>
 const I={
  acc:'<svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg>',
@@ -789,13 +794,14 @@ Object.assign(RGF,{
    <div class="petits"><button data-a="bientot">Pas venue</button><button data-a="bientot">Annuler le rendez-vous</button></div>
    <div class="astuce-dep">Le reste à payer tient compte de l’acompte déjà payé en ligne.</div>`,
  "ks-enc":()=>croix+`<h3>Encaisser</h3><div class="sous">Léa M. · Pose gel · reste 25 €</div>
-   <div class="lab">Elle paie</div><div class="pc-g" data-kpg>${["En espèces","Par carte","Par virement"].map((x,i)=>`<button class="chip${i?"":" on"}" data-kp>${x}</button>`).join("")}</div>
+   <div class="lab" style="text-align:center">Elle paie</div><div class="pc-g" data-kpg style="justify-content:center">${["Par virement","En espèces","Par carte"].map(x=>`<button class="chip${x==="En espèces"?" on":""}" data-kp>${x}</button>`).join("")}</div>
    <div class="lab" style="margin-top:14px">Son ticket</div>`+KTICKET("en espèces")+`
    <div class="lab" style="margin-top:14px">Envoyer le ticket de caisse</div>
    <div class="k-env">
-     <button class="on" data-kenv><b>Par e-mail</b><span>Conseillé</span></button>
      <button data-kenv><b>Par SMS</b></button>
-   </div>
+     <button class="on" data-kenv><b>Par e-mail</b><span>Conseillé</span></button>
+   <button data-kenv><b>Pas de ticket</b></button>
+   </div><div class="sous" style="margin-top:6px;font-size:11px">La loi : à partir de 25 €, la cliente doit recevoir une note (SMS ou e-mail). En dessous, seulement si elle la demande.</div>
    
    <button class="btn" data-a="ok-enc" style="width:100%;margin-top:14px">Encaisser</button>`,
  "ks-caisse":()=>croix+`<h3>Ma caisse</h3><div class="sous">Novembre 2026</div><div class="liste" style="margin-bottom:10px">${SWL("Utiliser la caisse","Facultatif · vous l’arrêtez quand vous voulez",1)}</div><div class="k-off" hidden>La caisse est arrêtée. Vos clientes réservent en ligne et paient sur place, comme d’habitude. Dans vos rendez-vous, le bouton devient « Fini ».</div><div class="k-corps">
@@ -834,8 +840,8 @@ document.querySelectorAll(".ecran").forEach(e=>{
   const ouvre=h=>{fc.innerHTML=h;e.classList.add("fe")};const ferme=()=>e.classList.remove("fe");
   const va=p=>{e.querySelectorAll(".vue").forEach(x=>x.classList.toggle("on",x.dataset.p===p));e.querySelectorAll(".ong button").forEach(b=>b.classList.toggle("on",b.dataset.go===p));const vu=e.querySelector(`.vue[data-p="${p}"]`);vu.scrollTop=0};
   e.querySelector(".voile").onclick=()=>{if(e._dep){e._dep.p.style.top=e._dep.top0+"px";e._dep=null}ferme()};
-  if(e.dataset.start)va(e.dataset.start);
-  if(e.dataset.ouvre)setTimeout(()=>ouvre(RGF[e.dataset.ouvre]()),500);
+  if(e.dataset.start)va(/[?&]demo/.test(location.search)?"si":e.dataset.start);
+  if(e.dataset.ouvre&&!/[?&]demo/.test(location.search))setTimeout(()=>ouvre(RGF[e.dataset.ouvre]()),500);
   /* glisser la feuille vers le bas pour la fermer */
   let y0=null;fe.addEventListener("pointerdown",ev=>{if(ev.target.closest("button"))return;y0=ev.clientY});
   addEventListener("pointermove",ev=>{if(y0===null)return;const z=parseFloat(getComputedStyle(e.closest(".tel")).zoom)||1,dy=Math.max(0,(ev.clientY-y0)/z);fe.style.transition="none";fe.style.transform=`translateY(${dy}px)`});
@@ -849,10 +855,10 @@ document.querySelectorAll(".ecran").forEach(e=>{
     const sg=t.closest("[data-seg] button");if(sg){sg.parentNode.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===sg));dit("Votre site passe en "+sg.textContent.toLowerCase());return}
     const go=t.closest("[data-go]");if(go){va(go.dataset.go);return}
     const mj=t.closest("[data-mjour]");if(mj&&AG[v]){const vu=e.querySelector('.vue[data-p="ag"]');vu.innerHTML=AG[v](+mj.dataset.mjour);return}
-    const j=t.closest("[data-jour]");if(j&&AG[v]){const vu=e.querySelector('.vue[data-p="ag"]'),y=vu.scrollTop;vu.innerHTML=AG[v](+j.dataset.jour);vu.scrollTop=y;majBadge(e);return}
+    const j=t.closest("[data-jour]");if(j&&(AG[v]||e.querySelector('.vue[data-p="ag"] .pap'))){const vu=e.querySelector('.vue[data-p="ag"]'),y=vu.scrollTop;vu.innerHTML=PAGES.ag(v,+j.dataset.jour);vu.scrollTop=y;majBadge(e);return}
     if(j){const i=+j.dataset.jour,J=JOURS[i];e.querySelectorAll("[data-jour]").forEach(b=>b.classList.toggle("on",b===j));
       const nom=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"][i];
-      e.querySelector("[data-titre-jour]").textContent=nom+" "+J[1]+(J[2]?" · 4 rendez-vous":" · fermé");
+      {const tj=e.querySelector("[data-titre-jour]");if(tj)tj.textContent=nom+" "+J[1]+(J[2]?" · 4 rendez-vous":" · fermé")}
       e.querySelector("[data-liste-jour]").innerHTML=J[2]?rdvs(false):'<div class="carte"><div class="rdv libre"><div class="t"><b>Pas de rendez-vous</b><span>Jour de fermeture</span></div></div></div>';return}
     const a=t.closest("[data-a]");
     if(a){const k=a.dataset.a;ev.stopPropagation();
@@ -970,13 +976,437 @@ document.querySelectorAll(".ecran").forEach(e=>{
   e.addEventListener("click",ev=>{if(e._sansClic&&Date.now()-e._sansClic<400&&ev.target.closest(".pap .pr"))ev.stopImmediatePropagation()},true);
 });
 document.querySelectorAll(".ecran").forEach(e=>majBadge(e));
-setTimeout(()=>document.querySelectorAll(".ecran[data-ouvre]").forEach(e=>{const c=e.querySelector(`.vue[data-p="cl"] [data-cli="${e.dataset.ouvre}"]`);if(c)c.click()}),600);
+if(!/[?&]demo/.test(location.search))setTimeout(()=>document.querySelectorAll(".ecran[data-ouvre]").forEach(e=>{const c=e.querySelector(`.vue[data-p="cl"] [data-cli="${e.dataset.ouvre}"]`);if(c)c.click()}),600);
 document.querySelectorAll(".ecran[data-day]").forEach(e=>{const vu=e.querySelector('.vue[data-p="ag"]');vu.innerHTML=AG[e.dataset.v](+e.dataset.day);majBadge(e)});
 document.querySelectorAll(".reglages button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".reglages button").forEach(x=>x.classList.toggle("on",x===b));
   document.querySelectorAll(".col").forEach(c=>c.classList.toggle("vis",c.dataset.col===b.dataset.c))});
 function ajuste(){const z=Math.min(1,(innerHeight-130)/866,(innerWidth-120)/(3*412));document.documentElement.style.setProperty("--z",z.toFixed(3))}
 addEventListener("resize",ajuste);ajuste();
+</script>
+<script>
+/* ===== 06/11 (Marie) « Mon appli à mes couleurs » : Oui → boutons et rendez-vous à la couleur de son site, son fond en bandeau en haut (jamais derrière l'agenda). Non → style Loginail. ===== */
+(function(){
+  const INK={noir:"#1E1C1B",choco:"#4A3226",marine:"#24344F",taupe:"#5E5149",greige:"#5F574F",sable:"#80633F",peche:"#7A5444",sauge:"#4F5A45",lin:"#6E6253",nude:"#8A6656",rose:"#9A5D6B",bleup:"#4F6F93",lilas:"#7B62A8",jaune:"#8C6D12",menthe:"#3D7A66",abricot:"#B05E3A",ciel:"#2F7BA0"};
+  const site=()=>{try{return JSON.parse(localStorage.getItem("loginail-brouillon"))||{}}catch(_){return {}}};
+  const oui=()=>{try{return localStorage.getItem("loginail-appli-couleurs")==="oui"}catch(_){return false}};
+  const ban=()=>{try{return localStorage.getItem("loginail-appli-bandeau")!=="non"}catch(_){return true}};
+  const st=document.createElement("style");st.textContent=`
+.ecran.mc .pap .pr{box-shadow:inset 3px 0 0 var(--acc)}
+.ecran.mc .pap .pr{background:color-mix(in srgb,var(--acc) 10%,#FFFFFF)!important}
+.mc-ban{position:relative;height:74px;margin:-4px 0 14px;border-radius:18px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.mc-ban .f100,.mc-ban .tuile{position:absolute!important;inset:0;width:100%!important;height:100%!important;border-radius:0!important}
+.mc-ligne .t span{display:block}
+.mc-ban-l[hidden]{display:none!important}`;
+  document.head.appendChild(st);
+  /* les boutons noirs de l'appli prennent la couleur (on recopie leurs règles avec --acc) */
+  const SEL=[".btn",".noire",".coche.ok>i",".pil.noir",".pc.on",".jai input:checked",".mg button.on",".pts i.on",".semaine button.on",".sw.on",".seg button.on",".toast",".ong.o2 button.on",".ong.o3 button:before",".k-tot"];
+  st.textContent+=SEL.map(s=>`.ecran.mc ${s}{background:var(--acc)!important}`).join("");
+  let fondHTML="";
+  const prepareFond=()=>{const b=site();if(!b.fond){fondHTML="";return}
+    const go=()=>{try{const i=F100.idx[b.fond];if(i!=null){fondHTML='<div class="f100">'+F100.tuile(i)+'</div>';if(!document.getElementById("mcCss")){const c=document.createElement("style");c.id="mcCss";c.textContent=FONDS100.css;document.head.appendChild(c)}applique()}}catch(_){}};
+    if(window.F100)go();else{addEventListener("f100",go,{once:true});if(!document.querySelector('script[src*="fonds-100.js"]')){const sc=document.createElement("script");sc.src="../loginail-site/fonds-100.js";document.head.appendChild(sc)}}};
+  const applique=()=>{const on=oui(),b=site(),acc=INK[b.couleur]||"#1E1C1B";
+    document.querySelectorAll(".ecran").forEach(e=>{e.classList.toggle("mc",on);if(!e.dataset.acc0)e.dataset.acc0=e.style.getPropertyValue("--acc")||"#1E1C1B";e.style.setProperty("--acc",on?acc:e.dataset.acc0);
+      const ag=e.querySelector('.vue[data-p="ag"]');if(!ag)return;let bd=ag.querySelector(":scope>.mc-ban");
+      if(on&&ban()&&fondHTML){if(!bd){bd=document.createElement("div");bd.className="mc-ban";ag.prepend(bd)}if(bd.dataset.f!==b.fond){bd.innerHTML=fondHTML;bd.dataset.f=b.fond}}else if(bd)bd.remove()})};
+  /* la ligne « Mon appli à mes couleurs » dans les Réglages */
+  const ligne=()=>`<div class="ligne mc-ligne"><div class="t">Mon appli à mes couleurs<span>Les couleurs de mon site dans l’appli</span></div><button class="sw${oui()?" on":""}" data-mc></button></div>`
+    +`<div class="ligne mc-ban-l"${oui()?"":' hidden'}><div class="t">Afficher mon fond en haut<span>Le fond de mon site au-dessus de l’agenda</span></div><button class="sw${ban()?" on":""}" data-mcb></button></div>`;
+  const ajoute=()=>{document.querySelectorAll('.vue[data-p="re"]').forEach(v=>{if(v.querySelector(".mc-ligne"))return;const l=v.querySelector(".liste");if(!l)return;
+    const bloc=document.createElement("div");bloc.innerHTML='<div class="k">Mon appli</div><div class="liste">'+ligne()+'</div>';l.parentNode.insertBefore(bloc,l.previousElementSibling&&l.previousElementSibling.classList.contains("k")?l.previousElementSibling:l)})};
+  document.addEventListener("click",ev=>{const bb=ev.target.closest("[data-mcb]");if(bb){ev.stopPropagation();const on=!ban();try{localStorage.setItem("loginail-appli-bandeau",on?"oui":"non")}catch(_){}
+    document.querySelectorAll("[data-mcb]").forEach(x=>x.classList.toggle("on",on));if(on)prepareFond();applique();return}
+    const b=ev.target.closest("[data-mc]");if(!b)return;ev.stopPropagation();const on=!oui();try{localStorage.setItem("loginail-appli-couleurs",on?"oui":"non")}catch(_){}
+    document.querySelectorAll("[data-mc]").forEach(x=>x.classList.toggle("on",on));document.querySelectorAll(".mc-ban-l").forEach(x=>x.hidden=!on);if(on)prepareFond();applique()},true);
+  new MutationObserver(()=>{ajoute();if(oui())applique()}).observe(document.body,{childList:true,subtree:true});
+  setTimeout(()=>{ajoute();if(oui()){prepareFond();applique()}},600);
+})();
+</script>
+<script>
+/* ===== 06/11 (Marie) « Mon site » v2 : son VRAI site en petit en haut, et tout se change depuis l'appli (univers, forme, couleur, fond, écriture, paillettes, charms) ===== */
+(function(){
+  /* 06/11 : mode DÉMO (?demo, page d'accueil) : on essaie tout, le site change en direct, RIEN n'est enregistré chez la visiteuse */
+  const DEMO=/[?&]demo/.test(location.search);
+  let MEM={nom:"Dilerna",style:1,couleur:"rose",mode:"jour",fond:"Rose coquette",police:"bonbon",paillettes:"nacre",charms:["ceriseruban","fraiseperle","noeudgelee","fleurgelee"],univers:"Mignon"};
+  if(DEMO)document.documentElement.classList.add("demo-ms");
+  const lit=()=>{if(DEMO)return JSON.parse(JSON.stringify(MEM));try{return JSON.parse(localStorage.getItem("loginail-brouillon"))||{}}catch(_){return {}}};
+  const ecrit=b=>{if(DEMO){MEM=b;return}try{localStorage.setItem("loginail-brouillon",JSON.stringify(b))}catch(_){}};
+  const UNIV=[["Gothique","style=1&couleur=noir&mode=nuit&fond=&police=gothique&paillettes=argent&charm=araignee,croixgothique,lunegothique,vitrail,clegothique,chauvesouris"],
+   ["Bohème","style=2&couleur=peche&mode=jour&fond=Soleils sur terracotta&police=seventies&paillettes=or&charm=soleilvisage,lunesoleil,coeursoleil,soleil,papillondore"],
+   ["Y2K","style=2&couleur=lilas&mode=jour&fond=Reflets disco&police=y2k&paillettes=holo&charm=coeurlilas,planete,oursonlilas,etoilelilas,martien,coeurchrome"],
+   ["Mignon","style=1&couleur=rose&mode=jour&fond=Rose coquette&police=bonbon&paillettes=nacre&charm=ceriseruban,fraiseperle,noeudgelee,fleurgelee"],
+   ["Clean","style=1&couleur=lin&mode=jour&fond=&police=chic&paillettes=nacre&charm="],
+   ["Baddie","style=1&couleur=noir&mode=nuit&fond=Zèbre&police=retro&paillettes=or&charm=levres,coeurleopard,coeurzebre,cerisesbordeaux"]];
+  const COUL=[["noir","#1E1C1B"],["choco","#4A3226"],["marine","#24344F"],["taupe","#5E5149"],["greige","#BDB3A8"],["sable","#C9A97E"],["peche","#E2C3AF"],["sauge","#9EA791"],["lin","#CFC4B3"],["nude","#D9B8A9"],["rose","#EBC3CC"],["bleup","#B9CCE0"],["lilas","#D5C8EC"],["jaune","#F3E3A0"],["menthe","#BFE3D4"],["abricot","#F6C9AE"],["ciel","#BCDDEE"]];
+  const FORMES=[[1,"Amande"],[2,"Stiletto"],[3,"Carré"],[4,"Ovale"],[5,"Coffin"]];
+  const forme=b=>b.coffin?5:b.epure?4:(b.style||1);
+  const POLF={elegante:"Italiana",manuscrite:"'Great Vibes'",ronde:"'Bagel Fat One'",retro:"'Abril Fatface'",calligraphie:"'Pinyon Script'",parisienne:"Parisienne",chic:"'Playfair Display'",luxe:"Cinzel",surf:"Pacifico",seventies:"Shrikhand",bulle:"'Rubik Bubbles'",bonbon:"'Cherry Bomb One'",y2k:"Monoton",gothique:"UnifrakturMaguntia",feutre:"'Permanent Marker'",moderne:"Jost"};
+  const POL=[["elegante","Élégante"],["manuscrite","Manuscrite"],["ronde","Ronde"],["retro","Rétro"],["chic","Chic"],["luxe","Luxe"],["seventies","Seventies"],["y2k","Y2K"],["bonbon","Bonbon"],["gothique","Gothique"]];
+  const PAIL=[["non","Sans"],["or","Dorées"],["argent","Argentées"],["nacre","Nacrées"],["holo","Holographiques"],["rose","Roses"]];
+  const NOMF={1:"Amande",2:"Stiletto",3:"Carré",4:"Ovale",5:"Coffin"};
+  const url=()=>{if(!DEMO)return "../loginail-creer/pret.html?public&appli="+Date.now();const b=lit(),q=new URLSearchParams({style:b.style||1,couleur:b.couleur||"noir",mode:b.mode||"jour",fond:b.fond||"",police:b.police||"elegante",paillettes:b.paillettes||"non",charm:(b.charms||[]).join(",")});
+    return "../loginail-creer/pret.html?public&exemple=dilerna&"+q.toString()+(b.epure?"&epure=1":"")+(b.coffin?"&coffin=1":"")+"&t="+Date.now()};
+  const st=document.createElement("style");st.textContent=`
+.ms2-apercu{position:relative;height:230px;border-radius:20px;overflow:hidden;background:#EAE5DF;margin:0 0 10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.ms2-apercu iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none}
+.ms2-apercu{background-size:cover;background-position:center;cursor:pointer}
+.ms2-apercu iframe{display:none!important}
+.ms2-apercu:after{content:"";position:absolute;inset:0;background:rgba(20,18,17,.42);pointer-events:none}
+.ms2-apercu .ms2-nom{position:absolute;left:16px;right:16px;top:50%;transform:translateY(-58%);z-index:2;color:#fff;font-size:44px;line-height:1.05;text-align:center;text-shadow:0 2px 18px rgba(0,0,0,.35);overflow:hidden;text-overflow:ellipsis}
+.ms2-apercu .ms2-en{position:absolute;left:0;right:0;bottom:16px;z-index:2;text-align:center;color:rgba(255,255,255,.9);font-size:10px;letter-spacing:.24em;text-transform:uppercase}
+.ms2-p{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 1px 6px}.ms2-p::-webkit-scrollbar{display:none}
+.ms2-p button{flex:none;border:0;border-radius:99px;padding:9px 13px;background:#fff;font-size:13px;box-shadow:0 0 0 1px rgba(30,28,27,.1);cursor:pointer}
+.ms2-p button.on{background:var(--acc,#1E1C1B);color:#fff;box-shadow:none}
+.ms2-dots{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;padding:4px 2px}
+.ms2-dots button{aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.ms2-dots button.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1E1C1B}
+.ms2-ronds{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:4px 2px}
+.ms2-ronds button{aspect-ratio:1;border-radius:50%;overflow:hidden;border:0;padding:0;position:relative;background:#fff;box-shadow:0 0 0 1px rgba(30,28,27,.14);cursor:pointer;font-size:9px;color:#6B625C}
+.ms2-ronds button.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1E1C1B}
+.ms2-ronds .rond-f{position:absolute;inset:0;width:auto;height:auto;border-radius:50%;overflow:hidden}`;
+  document.head.appendChild(st);
+  const resume=b=>[b.univers||NOMF[forme(b)],(COUL.find(c=>c[0]===b.couleur)||["noir"])[0].replace("bleup","bleu pastel"),b.mode==="nuit"?"foncé":"clair"].join(" · ");
+  /* la page « Mon site » */
+  const PAGE=()=>{const b=lit();return tete("Mon site","En ligne")
+    +`<div class="ms2-apercu" data-ms2="voir" style="background-image:url('${String((((b.photos||[])[b.salon!=null?b.salon:(b.principale||0)])||{}).url||"").replace(/^\.\.\//,"").replace(/'/g,"%27")}')"><iframe tabindex="-1" title="Mon site"></iframe><div class="ms2-nom" style="font-family:${POLF[b.police||"elegante"]||"Italiana"},serif">${String(b.nom||"Mon salon").replace(/</g,"&lt;")}</div><span class="ms2-en">Voir mon site en grand</span></div><button class="btn" data-ms2="grand" style="width:100%;margin:0 0 6px">Modifier mon site</button>`
+    +'<div class="k">Mon style</div><div class="liste">'
+    +`<div class="ligne" data-ms2="grand"><div class="t">Style, couleur et fond<span>${resume(b)}${b.fond?" · "+b.fond:""}</span></div><span class="fl">›</span></div>`
+    +`<div class="ligne" data-ms2="grand" data-v="4"><div class="t">Écriture, paillettes et charms<span>${(POL.find(p=>p[0]===b.police)||["","Élégante"])[1]} · ${(PAIL.find(p=>p[0]===(b.paillettes||"non"))||["","Sans"])[1]} · ${(b.charms||[]).length?(b.charms.length+" charms"):"sans charms"}</span></div><span class="fl">›</span></div></div>`
+    +(DEMO?'<div class="k">Et aussi</div><div class="liste"><div class="ligne"><div class="t">Vos prix, vos photos, vos horaires, votre adresse…<span>Tout se change ici, en 2 secondes</span></div></div></div>':'')
+    +(DEMO?'':'<div class="k">Mon contenu</div><div class="liste">'
+    +[["Prestations et prix",(b.prestations||[]).length+" prestations","ms-presta"],["Photos de mes ongles",(b.photos||[]).filter((p,i)=>i!==b.salon).length+" photos","ms-photos"],["Photo de mon salon",(b.salon!=null&&b.photos&&b.photos[b.salon]?"Ajoutée":"Facultatif"),"ms-salon"],["Horaires","","ms-horaires"],["Adresse","","ms-adresse"],["À propos de moi","","ms-apropos"],["Ma photo",(b.quiPhoto?"Ajoutée":"Facultatif · dans « À propos de moi »"),"ms-photo"],["Bon à savoir","Acompte, retard, annulation","ms-bon"]].map(l=>`<div class="ligne" data-a="${l[2]}"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>'
+    +'<div class="k">Faire connaître mon site</div><div class="liste">'
+    +[["QR code à imprimer","Pour le salon, les cartes de visite","qr"],["Lien pour ma bio Instagram","","bio"],["Aperçu quand je partage le lien","Ce que voient les gens sur WhatsApp","apercu"]].map(l=>`<div class="ligne" data-a="${l[2]}"><div class="t">${l[0]}${l[1]?`<span>${l[1]}</span>`:""}</div><span class="fl">›</span></div>`).join("")+'</div>')};
+  /* DÉMO : on touche, le site change au-dessus, tout de suite. Les univers forts en premier. */
+  const ORDRE=[0,2,3,5,1,4];
+  const PAGED=()=>{const b=lit();return tete("Mon site","En ligne")
+    +`<div class="ms2-apercu" data-ms2="voir"><iframe tabindex="-1" title="Mon site"></iframe><span class="ms2-direct">● En direct</span></div>`
+    +`<div class="ms2-d-aide">👇 Touchez, votre site change tout de suite</div>`
+    +`<div class="lab">Partir d’un univers</div><div class="ms2-p ms2-univ">${ORDRE.map(i=>`<button data-ms2="univ" data-v="${i}" data-u="${UNIV[i][0]}"${UNIV[i][0]===b.univers?' class="on"':""}>${UNIV[i][0]}</button>`).join("")}</div>`
+    +`<div class="lab">La forme</div><div class="ms2-p">${FORMES.map(f=>`<button data-ms2="style" data-v="${f[0]}"${f[0]===forme(b)?' class="on"':""}>${f[1]}</button>`).join("")}</div>`
+    +`<div class="lab">Couleur</div><div class="ms2-dots">${COUL.slice(0,9).map(c=>`<button data-ms2="couleur" data-v="${c[0]}" style="background:${c[1]}"${c[0]===b.couleur?' class="on"':""}></button>`).join("")}</div>`
+    +`<div class="ms2-dots">${COUL.slice(9).concat([]).map(c=>`<button data-ms2="couleur" data-v="${c[0]}" style="background:${c[1]}"${c[0]===b.couleur?' class="on"':""}></button>`).join("")}</div>`
+    +`<div class="lab">Clair ou foncé</div><div class="ms2-p"><button data-ms2="mode" data-v="jour"${b.mode!=="nuit"?' class="on"':""}>Clair</button><button data-ms2="mode" data-v="nuit"${b.mode==="nuit"?' class="on"':""}>Foncé</button></div>`
+    +`<div class="lab">L’écriture du nom</div><div class="ms2-p">${POL.map(p=>`<button data-ms2="police" data-v="${p[0]}" style="font-family:${POLF[p[0]]},serif"${p[0]===(b.police||"elegante")?' class="on"':""}>${p[1]}</button>`).join("")}</div>`
+    +`<div class="lab">Paillettes</div><div class="ms2-p">${PAIL.map(p=>`<button data-ms2="paillettes" data-v="${p[0]}"${p[0]===(b.paillettes||"non")?' class="on"':""}>${p[1]}</button>`).join("")}</div>`
+    +`<div class="lab">Charms</div><div class="ms2-p"><button data-ms2="charmsoui" data-v="1"${(b.charms||[]).length?' class="on"':""}>Avec charms</button><button data-ms2="charmsoui" data-v="0"${(b.charms||[]).length?"":' class="on"'}>Sans charms</button></div>`
+    +`<div class="ms2-d-fin">Et aussi vos prix, vos photos, vos horaires… tout se change ici, en 2 secondes.</div>`};
+  if(DEMO){st.textContent+=`html.demo-ms .ms2-apercu{height:300px;background:#EAE5DF!important;cursor:pointer}
+html.demo-ms .ms2-apercu iframe{display:block!important}html.demo-ms .ms2-apercu:after{display:none}
+.ms2-direct{position:absolute;left:10px;top:10px;z-index:2;background:rgba(30,28,27,.78);color:#fff;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;border-radius:99px;padding:5px 9px}
+.ms2-direct{animation:ms2Clign 2s ease-in-out infinite}@keyframes ms2Clign{50%{opacity:.6}}
+.ms2-d-aide{text-align:center;font-size:12px;color:#6B625C;margin:2px 0 10px}
+html.demo-ms .vue[data-p="si"] .lab{margin:12px 2px 6px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a8076}
+html.demo-ms .ms2-dots{grid-template-columns:repeat(9,1fr);margin-bottom:4px}
+.ms2-univ button{font-weight:500;padding:10px 15px}
+.ms2-univ button[data-u="Gothique"]{background:#1E1C1B;color:#F6F3EF;font-family:UnifrakturMaguntia,serif;font-size:15px}
+.ms2-univ button[data-u="Y2K"]{background:linear-gradient(120deg,#D5C8EC,#BCDDEE,#F3C8E8);font-family:Monoton,sans-serif;font-weight:400;letter-spacing:.06em}
+.ms2-univ button[data-u="Mignon"]{background:#F7D6DE;color:#B4405E;font-family:'Cherry Bomb One',sans-serif}
+.ms2-univ button[data-u="Baddie"]{background:#111;color:#E9C46A;font-family:'Abril Fatface',serif;letter-spacing:.04em}
+.ms2-univ button.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1E1C1B!important}
+.ms2-d-fin{margin:16px 4px 26px;padding:12px 14px;border-radius:14px;background:#fff;font-size:12.5px;color:#6B625C;text-align:center}`}
+  const PAGE0=PAGE;const PAGEX=DEMO?PAGED:PAGE0;
+  MS.rgk=PAGEX;
+  document.querySelectorAll('.ecran[data-v="rgk"] .vue[data-p="si"]').forEach(vu=>vu.innerHTML=PAGEX());
+  /* feuille 1 : univers, forme, couleur, clair/foncé, fond */
+  const ronds=b=>{setTimeout(()=>__ajusteRonds(),60);setTimeout(()=>__ajusteRonds(),400);if(!window.F100)return '<div class="sous">Chargement des fonds…</div>';const D=FONDS100;const l=F100.liste("Tous");
+    return `<div class="ms2-ronds"><button data-ms2="fond" data-v=""${b.fond?"":' class="on"'}>Aucun</button>${l.map(i=>`<button data-ms2="fond" data-v="${D.f[i][0].replace(/"/g,"&quot;")}"${D.f[i][0]===b.fond?' class="on"':""}>${F100.rond(i)}</button>`).join("")}</div>`};
+  MSF["ms-style2"]=()=>{const b=lit();chargeF();return croix+`<h3>Style, couleur et fond</h3><div class="sous">Chaque choix change votre site tout de suite</div>
+    <div class="lab" style="margin-top:12px">Partir d’un univers</div><div class="ms2-p">${UNIV.map((u,i)=>`<button data-ms2="univ" data-v="${i}"${u[0]===b.univers?' class="on"':""}>${u[0]}</button>`).join("")}</div>
+    <div class="lab" style="margin-top:10px">La forme du site</div><div class="ms2-p">${FORMES.map(f=>`<button data-ms2="style" data-v="${f[0]}"${f[0]===forme(b)?' class="on"':""}>${f[1]}</button>`).join("")}</div>
+    <div class="lab" style="margin-top:10px">Couleur</div><div class="ms2-dots">${COUL.map(c=>`<button data-ms2="couleur" data-v="${c[0]}" style="background:${c[1]}"${c[0]===b.couleur?' class="on"':""}></button>`).join("")}</div>
+    <div class="lab" style="margin-top:10px">Clair ou foncé</div><div class="ms2-p"><button data-ms2="mode" data-v="jour"${b.mode!=="nuit"?' class="on"':""}>Clair</button><button data-ms2="mode" data-v="nuit"${b.mode==="nuit"?' class="on"':""}>Foncé</button></div>
+    <div class="lab" style="margin-top:10px">Fond</div><div class="ms2-fonds">${ronds(b)}</div>`};
+  /* feuille 2 : écriture, paillettes, charms */
+  MSF["ms-details2"]=()=>{const b=lit();return croix+`<h3>Écriture, paillettes et charms</h3><div class="sous">Les petits détails qui font votre style</div>
+    <div class="lab" style="margin-top:12px">L’écriture du nom</div><div class="ms2-p">${POL.map(p=>`<button data-ms2="police" data-v="${p[0]}"${p[0]===(b.police||"elegante")?' class="on"':""}>${p[1]}</button>`).join("")}</div>
+    <div class="lab" style="margin-top:10px">Paillettes au toucher</div><div class="ms2-p">${PAIL.map(p=>`<button data-ms2="paillettes" data-v="${p[0]}"${p[0]===(b.paillettes||"non")?' class="on"':""}>${p[1]}</button>`).join("")}</div>
+    <div class="lab" style="margin-top:10px">Charms</div><div class="ms2-p"><button data-ms2="charmsoui" data-v="1"${(b.charms||[]).length?' class="on"':""}>Avec charms</button><button data-ms2="charmsoui" data-v="0"${(b.charms||[]).length?"":' class="on"'}>Sans charms</button></div>
+    <div class="sous" style="margin-top:6px;font-size:11.5px">Les charms de votre univers. Bientôt : les choisir un par un.</div>`};
+  let fCharge=0;const chargeF=()=>{if(window.F100||fCharge)return;fCharge=1;addEventListener("f100",()=>{document.querySelectorAll(".ms2-fonds").forEach(z=>z.innerHTML=ronds(lit()));
+    if(!document.getElementById("mcCss")){const c=document.createElement("style");c.id="mcCss";c.textContent=FONDS100.css;document.head.appendChild(c)}},{once:true});
+    if(!document.querySelector('script[src*="fonds-100.js"]')){const sc=document.createElement("script");sc.src="../loginail-site/fonds-100.js";document.head.appendChild(sc)}};
+  /* l'aperçu en direct */
+  const rafraichit=()=>{document.querySelectorAll(".ms2-apercu iframe").forEach(f=>{const z=f.parentElement.clientWidth/390;f.style.transform=`scale(${z})`;
+    f.onload=()=>{try{const d=f.contentDocument,s2=d.createElement("style");s2.textContent=".pret,.langues,.bandeau{display:none!important}";d.head.appendChild(s2)}catch(_){}};f.src=url()})};
+  const RO=new ResizeObserver(en=>en.forEach(x=>{const f=x.target.querySelector("iframe");if(f&&x.contentRect.width)f.style.transform=`scale(${x.contentRect.width/390})`}));
+  new MutationObserver(()=>document.querySelectorAll(".ms2-apercu").forEach(a=>{if(!a._ro){a._ro=1;RO.observe(a)}})).observe(document.body,{childList:true,subtree:true});
+  let dern=0;new MutationObserver(()=>{document.querySelectorAll(".ms2-apercu iframe").forEach(f=>{if(!f.src||f.src==="about:blank"){const z=f.parentElement.clientWidth/390;f.style.transform=`scale(${z})`;f.src=url();
+    f.onload=()=>{try{const d=f.contentDocument,s2=d.createElement("style");s2.textContent=".pret,.langues,.bandeau{display:none!important}";d.head.appendChild(s2)}catch(_){}}}})}).observe(document.body,{childList:true,subtree:true});
+  /* les choix */
+  /* le site en GRAND par-dessus l'appli : pour voir (public) ou pour modifier (avec le panneau en bas) */
+  const grand=(e,modif,tab)=>{let o=e.querySelector(".ms2-grand");if(o)o.remove();o=document.createElement("div");o.className="ms2-grand";
+    o.innerHTML=`<iframe title="Mon site en grand" src="${DEMO?url():`../loginail-creer/pret.html?${modif?"appli=1":"public&appli=2"}&t=${Date.now()}`}"></iframe><button class="ms2-x" aria-label="Fermer">×</button>`;e.appendChild(o);
+    const f=o.querySelector("iframe");f.onload=()=>{try{if(tab){const bt=f.contentDocument.querySelector('[data-tab="'+tab+'"]');bt&&setTimeout(()=>bt.click(),600)}}catch(_){}};
+    o.querySelector(".ms2-x").onclick=()=>ferme(e)};
+  const ferme=e=>{const o=e.querySelector(".ms2-grand");if(o)o.remove();if(DEMO)return;rafraichit();document.querySelectorAll('.vue[data-p="si"]').forEach(vu=>{const y=vu.scrollTop;vu.innerHTML=PAGE();vu.scrollTop=y})};
+  addEventListener("message",m=>{if(m.data==="loginail-site-enregistre"){document.querySelectorAll(".ecran").forEach(ferme);try{dit("Mon site est à jour ✓")}catch(_){}}});
+  st.textContent+=`.ms2-grand{position:absolute;inset:0;z-index:95;background:#F6F3EF;animation:monte .3s both}.ms2-grand iframe{width:100%;height:100%;border:0;display:block}
+.ms2-x{position:absolute;top:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(30,28,27,.82);color:#fff;font-size:22px;line-height:38px;padding:0;cursor:pointer}`;
+  document.addEventListener("click",ev=>{const gg=ev.target.closest('[data-ms2="grand"],[data-ms2="voir"]');if(gg){ev.stopPropagation();grand(gg.closest(".ecran"),gg.dataset.ms2==="grand",gg.dataset.v);return}
+    const x=ev.target.closest("[data-ms2]");if(!x)return;ev.stopPropagation();const k=x.dataset.ms2,v=x.dataset.v,b=lit();
+    if(k==="univ"){const u=UNIV[+v],q=new URLSearchParams(u[1]);b.style=+q.get("style");b.epure=false;b.coffin=false;b.couleur=q.get("couleur");b.mode=q.get("mode");b.fond=q.get("fond")||"";b.police=q.get("police");b.paillettes=q.get("paillettes");b.charms=(q.get("charm")||"").split(",").filter(Boolean);b.univers=u[0];b._charmsU=b.charms.slice()}
+    else if(k==="style"){const f=+v;b.style=f>3?1:f;b.epure=f===4;b.coffin=f===5}else if(k==="charmsoui"){if(v==="1"){b.charms=(b._charmsU&&b._charmsU.length?b._charmsU:["etoileargent","perle","noeudperle"]).slice()}else{if(b.charms&&b.charms.length)b._charmsU=b.charms.slice();b.charms=[]}}
+    else b[k]=v;
+    if(k!=="univ"&&k!=="charmsoui")b.univers="";
+    ecrit(b);const g=x.parentElement;g.querySelectorAll("[data-ms2]").forEach(y=>y.classList.toggle("on",y===x));
+    rafraichit();
+    /* la page Mon site en dessous se met à jour */
+    if(!DEMO)document.querySelectorAll('.vue[data-p="si"]').forEach(vu=>{const y=vu.scrollTop;vu.innerHTML=PAGE();vu.scrollTop=y});
+    if(k==="univ"){document.querySelectorAll('[data-ms2]').forEach(y=>{const kk=y.dataset.ms2,vv=y.dataset.v;const on=kk==="univ"?vv===v:kk==="style"?+vv===forme(b):kk==="couleur"?vv===b.couleur:kk==="mode"?vv===(b.mode||"jour"):kk==="fond"?vv===(b.fond||""):kk==="police"?vv===b.police:kk==="paillettes"?vv===b.paillettes:kk==="charmsoui"?(vv==="1")===!!(b.charms||[]).length:y.classList.contains("on");y.classList.toggle("on",on)})}
+  },true);
+})();
+</script>
+<script>
+/* ===== 06/11 (Marie) : « Photo de mon salon » et « Ma photo » (facultatif) — vraie photo, réduite, enregistrée dans son site ===== */
+(function(){
+  const lit=()=>{try{return JSON.parse(localStorage.getItem("loginail-brouillon"))||{}}catch(_){return {}}};
+  const ecrit=b=>{try{localStorage.setItem("loginail-brouillon",JSON.stringify(b));return true}catch(_){return false}};
+  const salonUrl=b=>b.salon!=null&&b.photos&&b.photos[b.salon]?b.photos[b.salon].url:"";
+  const st=document.createElement("style");st.textContent=`.ph2{position:relative;margin:14px 0 4px;border-radius:18px;overflow:hidden;background:#EFEAE4;aspect-ratio:4/3;display:grid;place-items:center;color:#8a8076;font-size:13px}
+.ph2.rond{width:150px;height:150px;aspect-ratio:auto;border-radius:50%;margin:16px auto 6px}.ph2 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ph2 svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.2}`;document.head.appendChild(st);
+  const icS='<svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9l7-5 7 5v11M9.5 20v-6h5v6"/></svg>',icP='<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg>';
+  const feuille=(type)=>{const b=lit(),u=type==="salon"?salonUrl(b):(b.quiPhoto||"");
+    return croix+`<h3>${type==="salon"?"Photo de mon salon":"Ma photo"}</h3><div class="sous">Facultatif · ${type==="salon"?"elle s’affiche dans « Le salon » sur votre site":"elle s’affiche dans « À propos de moi »"}</div>
+    <div class="ph2${type==="moi"?" rond":""}">${u?`<img src="${u}" alt="">`:(type==="salon"?icS:icP)}</div>
+    <input type="file" accept="image/*" hidden data-ph2-in="${type}">
+    <button class="btn" data-ph2="${type}" style="width:100%;margin-top:12px">${u?"Changer la photo":"Choisir une photo"}</button>
+    ${u?`<button class="btn clair" data-ph2-x="${type}" style="width:100%;margin-top:9px">Retirer la photo</button>`:`<button class="btn clair" data-a="fermer" style="width:100%;margin-top:9px">Plus tard</button>`}`};
+  MSF["ms-salon"]=()=>feuille("salon");MSF["ms-photo"]=()=>feuille("moi");
+  /* réduire la photo (pour que ça reste léger) */
+  const reduit=(file,max,cb)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.82))};im.src=r.result};r.readAsDataURL(file)};
+  const enregistre=(type,url)=>{const b=lit();b.photos=b.photos||[];
+    if(type==="salon"){if(url){if(b.salon!=null&&b.photos[b.salon])b.photos[b.salon]={url,auteurs:[]};else{b.photos.push({url,auteurs:[]});b.salon=b.photos.length-1}}
+      else if(b.salon!=null){b.photos.splice(b.salon,1);if(b.principale!=null&&b.principale>b.salon)b.principale--;b.salon=null}}
+    else b.quiPhoto=url||null;
+    if(!ecrit(b)){try{dit("Photo trop lourde, essayez-en une autre")}catch(_){}return}
+    try{dit(url?"Photo enregistrée ✓":"Photo retirée")}catch(_){}
+    document.querySelectorAll('.vue[data-p="si"]').forEach(vu=>{const y=vu.scrollTop;vu.innerHTML=MS.rgk();vu.scrollTop=y});
+    document.querySelectorAll(".ph2").forEach(z=>{const f=z.closest("[class]");});
+    const op=document.querySelector(".ph2");if(op){const box=op.parentElement;box.innerHTML=feuille(type)}};
+  document.addEventListener("click",ev=>{const c=ev.target.closest("[data-ph2]");if(c){ev.stopPropagation();const i=c.parentElement.querySelector(`[data-ph2-in="${c.dataset.ph2}"]`);i&&i.click();return}
+    const x=ev.target.closest("[data-ph2-x]");if(x){ev.stopPropagation();enregistre(x.dataset.ph2X,"")}},true);
+  document.addEventListener("change",ev=>{const i=ev.target.closest("[data-ph2-in]");if(!i||!i.files[0])return;const t=i.dataset.ph2In;reduit(i.files[0],t==="salon"?1200:600,u=>enregistre(t,u))},true);
+})();
+</script>
+<script>
+/* ===== 06/11 (Marie) « SMS d'anniversaire » : elle écrit elle-même son message, il part le jour de l'anniversaire de chaque cliente ===== */
+(function(){
+  const DEF="Joyeux anniversaire {prénom} ! 🎂 Je vous souhaite une très belle journée. À très vite au salon !";
+  const lit=()=>{try{return JSON.parse(localStorage.getItem("loginail-sms-anniv"))||{on:true,texte:DEF}}catch(_){return {on:true,texte:DEF}}};
+  const ecrit=o=>{try{localStorage.setItem("loginail-sms-anniv",JSON.stringify(o))}catch(_){}};
+  const ligne=()=>{const o=lit();return `<div class="ligne sa-ligne" data-a="ms-anniv"><div class="t">SMS d’anniversaire<span>${o.on?"Envoyé le jour de son anniversaire":"Désactivé"}</span></div><span class="fl">›</span></div>`};
+  MSF["ms-anniv"]=()=>{const o=lit();return croix+`<h3>SMS d’anniversaire</h3><div class="sous">Le jour de son anniversaire, chaque cliente reçoit votre message</div>
+    <div class="liste" style="margin-top:12px"><div class="ligne"><div class="t">Envoyer le SMS d’anniversaire</div><button class="sw${o.on?" on":""}" data-sa-on></button></div></div>
+    <div class="lab" style="margin-top:12px">Mon message</div><textarea class="msg" data-sa-txt style="height:110px">${o.texte.replace(/</g,"&lt;")}</textarea>
+    <div class="sous" style="margin-top:6px;font-size:11.5px">{prénom} est remplacé par le prénom de la cliente. Il faut sa date d’anniversaire dans sa fiche.</div>
+    <div class="sous" style="margin-top:6px;font-size:11.5px">Il part seulement aux clientes qui ont dit oui (case « anniversaire » cochée en réservant, ou dans sa fiche), et seulement si elles sont venues au salon ces 12 derniers mois. « STOP » est ajouté tout seul à la fin.</div>
+    <div class="lab" style="margin-top:12px">Aperçu</div><div class="blanche" data-sa-ap style="font-size:13.5px;line-height:1.5;padding:12px 14px">${o.texte.replace(/\{prénom\}/g,"Léa").replace(/</g,"&lt;")}<span style="color:#8a8076"> · Répondez STOP pour ne plus en recevoir</span></div>
+    <button class="btn" data-sa-ok style="width:100%;margin-top:12px">Enregistrer</button>`};
+  const ajoute=()=>document.querySelectorAll('.vue[data-p="re"]').forEach(v=>{if(v.querySelector(".sa-ligne"))return;const k=[...v.querySelectorAll(".k")].find(x=>/SMS à mes clientes/.test(x.textContent));if(!k)return;
+    const l=k.nextElementSibling;if(l&&l.classList.contains("liste"))l.insertAdjacentHTML("beforeend",ligne())});
+  document.addEventListener("click",ev=>{const sw=ev.target.closest("[data-sa-on]");if(sw){ev.stopPropagation();sw.classList.toggle("on");return}
+    const ok=ev.target.closest("[data-sa-ok]");if(ok){ev.stopPropagation();const z=ok.parentElement;const t=(z.querySelector("[data-sa-txt]").value||"").trim()||DEF;ecrit({on:z.querySelector("[data-sa-on]").classList.contains("on"),texte:t});
+      document.querySelectorAll(".sa-ligne").forEach(x=>x.outerHTML=ligne());try{dit("SMS d’anniversaire enregistré ✓")}catch(_){}const f=z.querySelector('[data-a="fermer"]')||[...z.querySelectorAll("button")].find(b=>b.textContent.trim()==="×");f&&f.click()}},true);
+  document.addEventListener("input",ev=>{const t=ev.target.closest("[data-sa-txt]");if(!t)return;const ap=t.parentElement.querySelector("[data-sa-ap]");if(ap)ap.innerHTML=t.value.replace(/\{prénom\}/g,"Léa").replace(/</g,"&lt;")+'<span style="color:#8a8076"> · Répondez STOP pour ne plus en recevoir</span>'},true);
+  new MutationObserver(ajoute).observe(document.body,{childList:true,subtree:true});setTimeout(ajoute,600);
+})();
+</script>
+<script>
+/* ===== 06/11 (Marie) Ticket par QR code : gratuit, la cliente scanne et garde son ticket (photos / e-mail). « Pas de ticket » seulement sous 25 €. ===== */
+(function(){
+  const st=document.createElement("style");st.textContent=`.k-env.k4{grid-template-columns:1fr 1fr}
+.tq-voir{float:right;border:0;background:none;padding:0;font:inherit;font-size:11px;letter-spacing:.04em;text-transform:none;color:var(--noir);text-decoration:underline;cursor:pointer}
+.k-env button.off{opacity:.38;pointer-events:none}
+.tq{position:absolute;inset:0;z-index:96;background:#F6F3EF;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 26px;animation:monte .3s both}
+.tq h3{font-weight:300;font-size:24px;margin:0 0 6px}.tq p{margin:0 0 18px;font-size:13.5px;color:var(--gris);line-height:1.5}
+.tq .qr{transform:scale(1.15);margin:16px 0 34px}.tq .btn{width:100%}`;document.head.appendChild(st);
+  /* remplace les choix du ticket : QR code · e-mail · SMS (depuis son téléphone) · pas de ticket */
+  const maj=()=>document.querySelectorAll(".k-env").forEach(z=>{if(z.dataset.k4)return;z.dataset.k4=1;z.classList.add("k4");
+    z.innerHTML=`<button data-kenv data-t="mail"><b>Par e-mail</b><span>Gratuit</span></button><button class="on" data-kenv data-t="qr"><b>QR code</b><span>Conseillé · gratuit</span></button>`;
+    const fc=z.closest(".fc")||z.parentElement;const n=z.nextElementSibling;if(n&&n.classList.contains("sous"))n.remove();
+    /* tout sur une page : le ticket est replié, on l'ouvre si on veut le voir */
+    const pa=fc.querySelector(".nt-papier");if(pa&&!pa.dataset.plie){pa.dataset.plie=1;pa.hidden=true;const lb=pa.previousElementSibling;
+      const t=document.createElement("button");t.className="tq-voir";t.type="button";t.textContent="Voir son ticket ›";t.onclick=()=>{pa.hidden=!pa.hidden;t.textContent=pa.hidden?"Voir son ticket ›":"Cacher le ticket ‹"};
+      (lb&&lb.classList.contains("lab")?lb:pa).insertAdjacentElement(lb&&lb.classList.contains("lab")?"beforeend":"beforebegin",t)}});
+  new MutationObserver(maj).observe(document.body,{childList:true,subtree:true});setTimeout(maj,500);
+  /* « Encaisser » avec QR code : l'écran à montrer à la cliente */
+  document.addEventListener("click",ev=>{const b=ev.target.closest('[data-a="ok-enc"]');if(!b)return;const fc=b.closest(".fc")||b.parentElement;const ch=fc.querySelector(".k-env [data-kenv].on");
+    if(!ch||ch.dataset.t!=="qr")return;ev.stopPropagation();ev.preventDefault();const e=b.closest(".ecran");
+    const o=document.createElement("div");o.className="tq";o.innerHTML=`<h3>Son ticket, si elle le veut</h3><p>Elle scanne avec l’appareil photo de son téléphone et garde son ticket dans ses photos.<br>Elle n’en veut pas ? Pas de souci, touchez « C’est bon ».</p><div class="qr">${typeof qr==="function"?qr():""}</div><button class="btn" data-tq-ok>C’est bon, encaissé ✓</button>`;
+    e.appendChild(o);o.querySelector("[data-tq-ok]").onclick=()=>{o.remove();ch.dataset.t="fait";b.click();setTimeout(()=>{ch.dataset.t="qr"},50)}},true);
+})();
+</script>
+<script>
+/* ===== 05/11 (Marie) « Mon contenu » relié au VRAI site : prestations et prix, horaires, adresse, à propos. Ce qu'elle change dans l'appli change sur son site. ===== */
+(function(){
+  const lit=()=>{try{return JSON.parse(localStorage.getItem("loginail-brouillon"))||{}}catch(_){return {}}};
+  const ecrit=b=>{try{localStorage.setItem("loginail-brouillon",JSON.stringify(b));return true}catch(_){return false}};
+  const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+  const JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+  const DUR=[[30,"30 min"],[45,"45 min"],[60,"1 h"],[90,"1 h 30"],[120,"2 h"],[150,"2 h 30"],[180,"3 h"]];
+  const duree=m=>m<60?`${m} min`:`${Math.floor(m/60)} h${m%60?" "+String(m%60).padStart(2,"0"):""}`;
+  const prix=p=>p==null||p===""?"Sur devis":`${String(p).replace(".",",")} €`;
+  const st=document.createElement("style");st.textContent=`
+.cs-h{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 10px;padding:11px 14px;border-bottom:1px solid rgba(30,28,27,.07)}.cs-h:last-child{border-bottom:0}
+.cs-h b{font-weight:400;font-size:14px}.cs-h .cs-hr{grid-column:1/-1;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gris)}
+.cs-h .cs-hr input{flex:1;min-width:0;border:0;border-radius:10px;background:#F4F0EB;padding:8px 9px;font:inherit;font-size:14px;color:var(--noir)}
+.cs-h.ferme .cs-hr{display:none}.cs-h .cs-f{font-size:12px;color:var(--gris)}
+.cs-sup{display:block;width:100%;margin-top:9px;border:0;background:none;color:#A04A4A;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}`;
+  document.head.appendChild(st);
+  /* --- Prestations et prix --- */
+  MSF["ms-presta"]=()=>{const l=lit().prestations||[];return croix+`<h3>Prestations et prix</h3><div class="sous">${l.length} prestation${l.length>1?"s":""} · touchez pour modifier</div>
+    <div class="liste" style="margin-top:12px">${l.map((p,i)=>`<div class="ligne" data-cs-p="${i}"><div class="t">${esc(p.nom)}${p.duree?`<span>${duree(p.duree)}</span>`:""}</div><em>${prix(p.prix)}</em><span class="fl">›</span></div>`).join("")||'<div class="ligne"><div class="t">Aucune prestation pour l’instant</div></div>'}</div>
+    <button class="btn" data-cs-p="-1" style="width:100%;margin-top:14px">Ajouter une prestation</button>`};
+  const pedit=i=>{const p=i>=0?(lit().prestations||[])[i]||{}:{};return croix+`<h3>${i>=0?esc(p.nom):"Nouvelle prestation"}</h3><div class="form" style="margin-top:12px">
+    <label>Nom<input data-cs-nom value="${esc(p.nom)}" placeholder="Par exemple : Pose américaine"></label>
+    <label>Prix en €<input data-cs-prix value="${p.prix==null?"":String(p.prix).replace(".",",")}" placeholder="Par exemple : 55" inputmode="decimal"></label></div>
+    <div class="lab" style="margin-top:12px">Durée</div><div class="chips" data-cs-dur>${DUR.map(d=>`<button class="chip${d[0]===p.duree?" on":""}" data-cs-d="${d[0]}">${d[1]}</button>`).join("")}</div>
+    <div class="sous" style="margin-top:12px;font-size:11.5px">Sans prix, elle s’affiche « Sur devis » sur votre site.</div>
+    <button class="btn" data-cs-ok="presta" data-i="${i}" style="width:100%;margin-top:10px">Enregistrer</button>
+    ${i>=0?`<button class="cs-sup" data-cs-sup="${i}">Supprimer cette prestation</button>`:""}`};
+  /* --- Horaires --- */
+  MSF["ms-horaires"]=()=>{const h=lit().horaires||Array(7).fill(null);return croix+`<h3>Horaires</h3><div class="sous">Ils s’affichent sur votre site</div>
+    <div class="liste" style="margin-top:12px;padding:0">${JOURS.map((j,i)=>{const x=h[i];return `<div class="cs-h${x?"":" ferme"}" data-cs-j="${i}"><b>${j}</b><span style="display:flex;align-items:center;gap:8px">${x?"":'<span class="cs-f">Fermé</span>'}<button class="sw${x?" on":""}" data-cs-sw></button></span>
+      <div class="cs-hr">De<input type="time" data-cs-de value="${x?x.d:"09:00"}">à<input type="time" data-cs-a value="${x?x.f:"18:00"}"></div></div>`}).join("")}</div>
+    <button class="btn" data-cs-ok="horaires" style="width:100%;margin-top:14px">Enregistrer</button>`};
+  /* --- Adresse --- */
+  MSF["ms-adresse"]=()=>{const b=lit(),A=b.acces||{};return croix+`<h3>Adresse</h3><div class="sous">Elle s’affiche avec le plan sur votre site</div><div class="form" style="margin-top:12px">
+    <label>Rue<input data-cs-k="rue" value="${esc(b.rue)}" placeholder="Par exemple : 12 rue des Lilas"></label>
+    <label>Code postal<input data-cs-k="cp" value="${esc(b.cp)}" inputmode="numeric" placeholder="Par exemple : 20137"></label>
+    <label>Ville<input data-cs-k="ville" value="${esc(b.ville)}" placeholder="Par exemple : Porto-Vecchio"></label>
+    <label>Téléphone<input data-cs-k="telephone" value="${esc(b.telephone)}" inputmode="tel" placeholder="Pour que les clientes vous appellent"></label>
+    <label>Comment me trouver <small>facultatif</small><input data-cs-a="etage" value="${esc(A.etage)}" placeholder="Par exemple : 1er étage, porte de droite"></label>
+    <label>Se garer <small>facultatif</small><input data-cs-a="garer" value="${esc(A.garer)}" placeholder="Par exemple : parking gratuit devant"></label></div>
+    <div class="liste" style="margin-top:12px"><div class="ligne"><div class="t">Cacher mon adresse exacte<span>Je travaille chez moi : la cliente la reçoit par SMS après sa réservation</span></div><button class="sw${b.adresseCachee?" on":""}" data-cs-cache></button></div></div>
+    <button class="btn" data-cs-ok="adresse" style="width:100%;margin-top:14px">Enregistrer</button>`};
+  /* --- À propos de moi --- */
+  MSF["ms-apropos"]=()=>{const b=lit();return croix+`<h3>À propos de moi</h3><div class="sous">Quelques lignes, avec vos mots</div>
+    <textarea class="msg" data-cs-txt style="height:170px" placeholder="Par exemple : Passionnée par les ongles, je vous accueille dans mon salon…">${esc(b.presentation)}</textarea>
+    <button class="btn" data-cs-ok="apropos" style="width:100%;margin-top:12px">Enregistrer</button>`};
+  /* --- après chaque enregistrement : la page Mon site et l'aperçu se mettent à jour --- */
+  const toast=(e,t)=>{const z=e&&e.querySelector(".toast");if(!z)return;z.textContent=t;z.classList.add("on");clearTimeout(z._t);z._t=setTimeout(()=>z.classList.remove("on"),1900)};
+  const apres=(e,t)=>{document.querySelectorAll('.vue[data-p="si"]').forEach(vu=>{const y=vu.scrollTop;vu.innerHTML=MS.rgk();vu.scrollTop=y});
+    document.querySelectorAll(".ms2-apercu iframe").forEach(f=>{f.src="../loginail-creer/pret.html?public&appli="+Date.now()});
+    if(e)e.classList.remove("fe");toast(e,t)};
+  document.addEventListener("click",ev=>{const t=ev.target;const fc=t.closest(".fc"),e=t.closest(".ecran");
+    const op=t.closest("[data-cs-p]");if(op&&fc){ev.stopPropagation();fc.innerHTML=pedit(+op.dataset.csP);return}
+    const d=t.closest("[data-cs-d]");if(d){ev.stopPropagation();d.parentElement.querySelectorAll("[data-cs-d]").forEach(x=>x.classList.toggle("on",x===d&&!x.classList.contains("on")));return}
+    const sw=t.closest("[data-cs-sw]");if(sw){ev.stopPropagation();const r=sw.closest(".cs-h");const on=!sw.classList.contains("on");sw.classList.toggle("on",on);r.classList.toggle("ferme",!on);
+      const f=r.querySelector(".cs-f");if(on&&f)f.remove();if(!on&&!f)sw.insertAdjacentHTML("beforebegin",'<span class="cs-f">Fermé</span>');return}
+    const ca=t.closest("[data-cs-cache]");if(ca){ev.stopPropagation();ca.classList.toggle("on");return}
+    const sup=t.closest("[data-cs-sup]");if(sup){ev.stopPropagation();const b=lit();(b.prestations||[]).splice(+sup.dataset.csSup,1);if(!ecrit(b))return;apres(null,"");if(fc)fc.innerHTML=MSF["ms-presta"]();toast(e,"Prestation supprimée");return}
+    const ok=t.closest("[data-cs-ok]");if(!ok||!fc)return;ev.stopPropagation();const k=ok.dataset.csOk,b=lit();
+    if(k==="presta"){const nom=fc.querySelector("[data-cs-nom]").value.trim();if(!nom){toast(e,"Écrivez le nom de la prestation");return}
+      const px=fc.querySelector("[data-cs-prix]").value.replace(",",".").replace(/[^\d.]/g,"");const dd=fc.querySelector("[data-cs-d].on");const i=+ok.dataset.i;
+      b.prestations=b.prestations||[];const p=i>=0?b.prestations[i]||{}:{};Object.assign(p,{nom,prix:px===""?null:+px,duree:dd?+dd.dataset.csD:null});if(i<0)b.prestations.push(p);else b.prestations[i]=p;
+      if(!ecrit(b))return;apres(null,"");fc.innerHTML=MSF["ms-presta"]();toast(e,"Prestation enregistrée ✓ · votre site est à jour");return}
+    if(k==="horaires"){b.horaires=[...fc.querySelectorAll("[data-cs-j]")].map(r=>r.querySelector("[data-cs-sw]").classList.contains("on")?{d:r.querySelector("[data-cs-de]").value||"09:00",f:r.querySelector("[data-cs-a]").value||"18:00"}:null)}
+    if(k==="adresse"){fc.querySelectorAll("[data-cs-k]").forEach(i=>b[i.dataset.csK]=i.value.trim());b.acces=b.acces||{};fc.querySelectorAll("[data-cs-a]").forEach(i=>{const v=i.value.trim();if(v)b.acces[i.dataset.csA]=v;else delete b.acces[i.dataset.csA]});
+      b.adresseCachee=fc.querySelector("[data-cs-cache]").classList.contains("on")}
+    if(k==="apropos")b.presentation=fc.querySelector("[data-cs-txt]").value.trim();
+    if(!ecrit(b))return;apres(e,"Enregistré ✓ · votre site est à jour")},true);
+  /* les petits résumés sous chaque ligne de « Mon contenu » */
+  const resume=()=>{const b=lit();const h=b.horaires||[];const ouv=h.filter(Boolean).length;
+    const R={"ms-presta":(b.prestations||[]).length+" prestations","ms-horaires":ouv?ouv+" jours ouverts"+(h[0]?" · "+h[0].d+" – "+h[0].f:""):"À remplir","ms-adresse":b.adresseCachee?(b.ville||"")+" · adresse cachée":[b.rue,b.ville].filter(Boolean).join(", ")||"À remplir","ms-apropos":b.presentation?"Votre texte est en ligne":"À remplir"};
+    document.querySelectorAll('.vue[data-p="si"] .ligne[data-a]').forEach(l=>{const r=R[l.dataset.a];if(r==null)return;const t=l.querySelector(".t");if(!t)return;let s=t.querySelector("span");if(!s){s=document.createElement("span");t.appendChild(s)}if(s.textContent!==r)s.textContent=r})};
+  new MutationObserver(resume).observe(document.body,{childList:true,subtree:true});setTimeout(resume,700);
+})();
+</script>
+<script>
+/* ===== 05/11 (Marie) Les réservations du site arrivent dans l'agenda : notification en haut du téléphone + le rendez-vous à sa place.
+   Et l'agenda dit au site quels moments sont déjà pris (le site ne propose que les créneaux libres). ===== */
+(function(){
+  const DEBUT=new Date(2026,10,2); /* la semaine de démonstration : lundi 2 → dimanche 8 novembre 2026 */
+  const cle=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const JOURS=[...Array(7)].map((_,i)=>{const d=new Date(DEBUT);d.setDate(d.getDate()+i);return cle(d)});
+  const lis=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(_){return null}};
+  const hm2=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+  const quand=r=>{const[y,mo,da]=r.date.split("-").map(Number);return new Date(y,mo-1,da).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})+" à "+hm2(r.heure)};
+  const st=document.createElement("style");st.textContent=`
+.notif-r{position:absolute;left:10px;right:10px;top:46px;z-index:99;display:flex;gap:11px;align-items:center;padding:12px 14px;border-radius:20px;background:rgba(250,248,245,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(30,28,27,.18);cursor:pointer;transform:translateY(-140%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.notif-r.on{transform:none}.notif-r .ic{flex:none;width:36px;height:36px;border-radius:10px;background:var(--acc,#1E1C1B);color:#fff;display:grid;place-items:center;font:300 17px Jost}
+.notif-r .tx{min-width:0;font-size:12.5px;line-height:1.35}.notif-r .tx small{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}.notif-r .tx b{font-weight:500}
+.pr.site{box-shadow:inset 3px 0 0 #2E7D5B!important}.pr .en-ligne{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:99px;background:#E3F1EA;color:#2E7D5B;font-size:9.5px;letter-spacing:.04em;font-style:normal;vertical-align:1px}`;
+  document.head.appendChild(st);
+  /* 1. l'agenda dit au site ce qui est déjà pris (les rendez-vous de la semaine) */
+  const ecritOccupe=()=>{const o={};JOURS.forEach((k,i)=>{o[k]=(SEM[i]||[]).filter(r=>!r[5]).map(r=>[r[0],r[0]+r[1]])});try{localStorage.setItem("loginail-occupe",JSON.stringify(o))}catch(_){}};
+  /* 2. les réservations du site entrent dans l'agenda */
+  const jourOuvert=e=>{const b=e.querySelector('.vue[data-p="ag"] .semaine button.on');return b?+b.dataset.jour:0};
+  const redessine=()=>document.querySelectorAll(".ecran").forEach(e=>{const vu=e.querySelector('.vue[data-p="ag"]');if(!vu||!vu.querySelector(".semaine"))return;const y=vu.scrollTop,ban=vu.querySelector(":scope>.mc-ban");
+    vu.innerHTML=PAGES.ag(e.dataset.v,jourOuvert(e));if(ban)vu.prepend(ban);vu.scrollTop=y;marque()});
+  const marque=()=>{const L=lis("loginail-resas")||[];document.querySelectorAll('.vue[data-p="ag"] .pr[data-rdv]').forEach(p=>{if(p.classList.contains("site"))return;
+    const r=L.find(x=>x.prenom===p.dataset.rdv&&(p.dataset.info||"").startsWith(hm2(x.heure)));if(!r)return;p.classList.add("site");const b=p.querySelector("b");if(b)b.insertAdjacentHTML("beforeend",'<em class="en-ligne">En ligne</em>')})};
+  const notif=(r,n)=>document.querySelectorAll(".ecran").forEach((e,k)=>{if(k)return;/* une seule notification, sur le premier téléphone */
+    const o=document.createElement("div");o.className="notif-r";o.innerHTML=`<div class="ic">L</div><div class="tx"><small>Loginail · maintenant</small><b>Nouvelle réservation${n>1?` (${n})`:""}</b><br>${r.prenom} · ${r.presta}<br>${quand(r)}${r.acompte?` · acompte ${r.acompte} € payé`:""}</div>`;
+    e.appendChild(o);requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add("on")));
+    const part=()=>{o.classList.remove("on");setTimeout(()=>o.remove(),500)};const t=setTimeout(part,6000);
+    o.onclick=()=>{clearTimeout(t);part();const i=JOURS.indexOf(r.date);const g=e.querySelector('[data-go="ag"]');g&&g.click();
+      if(i>=0)setTimeout(()=>{const j=e.querySelector(`.vue[data-p="ag"] [data-jour="${i}"]`);j&&j.click()},120)}});
+  const synchro=()=>{const L=lis("loginail-resas")||[];let change=false;
+    L.forEach(r=>{const i=JOURS.indexOf(r.date);if(i<0||!SEM[i])return;if(SEM[i].some(x=>x[5]===r.id))return;
+      SEM[i].push([r.heure,r.duree||60,r.prenom||"Cliente",r.presta,r.acompte?1:0,r.id]);SEM[i].sort((a,b)=>a[0]-b[0]);change=true});
+    if(change)redessine();
+    const nv=L.filter(r=>!r.vu);if(nv.length){notif(nv[nv.length-1],nv.length);L.forEach(r=>r.vu=true);try{localStorage.setItem("loginail-resas",JSON.stringify(L))}catch(_){}}};
+  ecritOccupe();setTimeout(synchro,900);
+  addEventListener("storage",ev=>{if(ev.key==="loginail-resas")synchro()});
+  addEventListener("focus",synchro);
+  new MutationObserver(marque).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+<script>
+/* ===== 05/11 (Marie) OBLIGATOIRE : « Mes infos légales » et « Bon à savoir » enregistrés pour de vrai → ils remplissent tout seuls
+   les mentions légales, la confidentialité et les conditions de réservation de son site. ===== */
+(function(){
+  const lit=()=>{try{return JSON.parse(localStorage.getItem("loginail-brouillon"))||{}}catch(_){return {}}};
+  const ecrit=b=>{try{localStorage.setItem("loginail-brouillon",JSON.stringify(b));return true}catch(_){return false}};
+  const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+  const REG0={acompte:true,montant:"15 €",retard:"10 min",annulation:"48 h avant",autre:""};
+  const regles=b=>Object.assign({},REG0,b.regles||{});
+  const manque=b=>{const L=b.legal||{};const m=[];if(!L.nomComplet)m.push("votre nom");if(!/^\d{14}$/.test((L.siret||"").replace(/\s/g,"")))m.push("votre SIRET");return m};
+  const puces=(k,l,v)=>`<div class="chips" data-lg-ch="${k}">${l.map(x=>`<button class="chip${x===v?" on":""}" data-lg-c>${x}</button>`).join("")}</div>`;
+  MSF["ms-legal"]=()=>{const b=lit(),L=b.legal||{};const adr=L.adresse||[b.rue,[b.cp,b.ville].filter(Boolean).join(" ")].filter(Boolean).join(", ");
+    return croix+`<h3>Mes infos légales</h3><div class="sous">Elles remplissent toutes seules les pages légales de votre site</div><div class="form" style="margin-top:12px">
+    <label>Prénom et nom<input data-lg="nomComplet" value="${esc(L.nomComplet)}" placeholder="Prénom Nom"></label>
+    <label>Nom commercial <small>facultatif</small><input data-lg="entreprise" value="${esc(L.entreprise||b.nom)}" placeholder="Votre onglerie"></label>
+    <label>SIRET<input data-lg="siret" value="${esc(L.siret)}" placeholder="14 chiffres" inputmode="numeric"></label>
+    <label>Adresse de l’entreprise<input data-lg="adresse" value="${esc(adr)}" placeholder="Rue, code postal, ville"></label>
+    <label>E-mail de contact<input data-lg="email" value="${esc(L.email||b.email)}" placeholder="vous@exemple.fr" inputmode="email"></label></div>
+    <div class="liste" style="margin-top:10px"><div class="ligne"><div class="t">TVA non applicable<span>Article 293 B du CGI, pour la micro-entreprise</span></div><button class="sw${L.tvaNon===false?"":" on"}" data-lg-sw="tvaNon"></button></div></div>
+    <div class="lab" style="margin-top:14px">Mon médiateur de la consommation <small>facultatif pour enregistrer</small></div>
+    <div class="sous" style="text-align:left;margin:2px 0 8px;font-size:12px;line-height:1.5">Obligatoire pour toute pro qui travaille avec des particuliers, même sans site internet. Beaucoup l’oublient ! Si vous en avez un, écrivez son nom et son site. Sinon, laissez vide : vous pouvez quand même enregistrer.</div>
+    <div class="form"><label>Nom du médiateur<input data-lg="mediateur" value="${esc(L.mediateur)}" placeholder="Nom du médiateur"></label><label>Son site<input data-lg="mediateurSite" value="${esc(L.mediateurSite)}" placeholder="www.exemple.fr"></label></div>
+    <button class="btn" data-lg-ok="legal" style="width:100%;margin-top:14px">Enregistrer</button>`};
+  MSF["ms-bon"]=()=>{const r=regles(lit());return croix+`<h3>Bon à savoir</h3><div class="sous">Vos règles, montrées à la cliente avant qu’elle réserve</div>
+    <div class="liste" style="margin-top:12px"><div class="ligne"><div class="t">Acompte à la réservation<span>Déduit du prix le jour du rendez-vous</span></div><button class="sw${r.acompte?" on":""}" data-lg-sw="acompte"></button></div></div>
+    <div class="lab" style="margin-top:12px">Montant de l’acompte</div>${puces("montant",["10 €","15 €","20 €","30 %"],r.montant)}
+    <div class="lab" style="margin-top:12px">Retard accepté</div>${puces("retard",["5 min","10 min","15 min"],r.retard)}
+    <div class="lab" style="margin-top:12px">Annulation gratuite jusqu’à</div>${puces("annulation",["24 h avant","48 h avant","72 h avant"],r.annulation)}
+    <div class="lab" style="margin-top:12px">Autre chose à dire <small>facultatif</small></div><textarea class="msg" data-lg-txt style="height:80px" placeholder="Par exemple : venez sans vernis">${esc(r.autre)}</textarea>
+    <div class="sous" style="margin-top:10px;font-size:11.5px">Obligatoire : ces règles sont dans vos conditions de réservation, que la cliente accepte avant de réserver.</div>
+    <button class="btn" data-lg-ok="regles" style="width:100%;margin-top:6px">Enregistrer</button>`};
+  const toast=(e,t)=>{const z=e&&e.querySelector(".toast");if(!z)return;z.textContent=t;z.classList.add("on");clearTimeout(z._t);z._t=setTimeout(()=>z.classList.remove("on"),2200)};
+  document.addEventListener("click",ev=>{const t=ev.target;
+    const c=t.closest("[data-lg-c]");if(c){ev.stopPropagation();c.parentElement.querySelectorAll("[data-lg-c]").forEach(x=>x.classList.toggle("on",x===c));return}
+    const sw=t.closest("[data-lg-sw]");if(sw){ev.stopPropagation();sw.classList.toggle("on");return}
+    const ok=t.closest("[data-lg-ok]");if(!ok)return;ev.stopPropagation();const fc=ok.closest(".fc"),e=ok.closest(".ecran"),b=lit();
+    if(ok.dataset.lgOk==="legal"){const L=b.legal||{};fc.querySelectorAll("[data-lg]").forEach(i=>L[i.dataset.lg]=i.value.trim());L.siret=L.siret.replace(/\s/g,"");L.tvaNon=fc.querySelector('[data-lg-sw="tvaNon"]').classList.contains("on");
+      if(L.siret&&!/^\d{14}$/.test(L.siret)){toast(e,"Le SIRET a 14 chiffres");return}b.legal=L}
+    else{const r=regles(b);r.acompte=fc.querySelector('[data-lg-sw="acompte"]').classList.contains("on");fc.querySelectorAll("[data-lg-ch]").forEach(g=>{const o=g.querySelector(".on");if(o)r[g.dataset.lgCh]=o.textContent});r.autre=fc.querySelector("[data-lg-txt]").value.trim();b.regles=r}
+    if(!ecrit(b))return;e.classList.remove("fe");const m=manque(b);toast(e,ok.dataset.lgOk==="legal"&&m.length?"Enregistré · il manque encore "+m.join(", "):"Enregistré ✓ · votre site est à jour");
+    document.querySelectorAll(".ms2-apercu iframe").forEach(f=>{f.src="../loginail-creer/pret.html?public&appli="+Date.now()})},true);
+  /* dans « Mon site » : la partie « Obligatoire » (avec ce qui manque) */
+  const bloc=()=>{const b=lit(),m=manque(b),r=regles(b);
+    return `<div class="lg-bloc"><div class="k">Obligatoire</div><div class="liste"><div class="ligne" data-a="ms-legal"><div class="t">Mes infos légales<span${m.length?' style="color:#A04A4A"':""}>${m.length?"Il manque "+m.join(", "):!(b.legal||{}).mediateur?"Complet ✓ · petit rappel : votre médiateur, quand vous pourrez":"Complet ✓"}</span></div><span class="fl">›</span></div>
+    <div class="ligne" data-a="ms-bon"><div class="t">Bon à savoir<span>${r.acompte?"Acompte "+r.montant:"Sans acompte"} · annulation ${r.annulation}</span></div><span class="fl">›</span></div></div></div>`};
+  const pose=()=>document.querySelectorAll('.vue[data-p="si"]').forEach(vu=>{const ks=[...vu.querySelectorAll(".k")];const k=ks.find(x=>/Mon contenu/.test(x.textContent));if(!k)return;
+    /* « Bon à savoir » passe dans « Obligatoire » */
+    const vieux=k.nextElementSibling&&k.nextElementSibling.querySelector('.ligne[data-a="ms-bon"]');if(vieux)vieux.remove();
+    const html=bloc(),ex=vu.querySelector(".lg-bloc");if(ex){if(ex._h!==html){ex.outerHTML=html;vu.querySelector(".lg-bloc")._h=html}return}
+    const l=k.nextElementSibling;if(l){l.insertAdjacentHTML("afterend",html);vu.querySelector(".lg-bloc")._h=html}});
+  new MutationObserver(pose).observe(document.body,{childList:true,subtree:true});setTimeout(pose,700);
+})();
 </script>
 </body>
 </html>

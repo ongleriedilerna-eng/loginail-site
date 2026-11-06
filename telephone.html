@@ -544,6 +544,24 @@ body{background:var(--creme)}
 .st-c .carte{position:relative;height:var(--hc);border-radius:22px;overflow:hidden;background:#EAE5DF;box-shadow:0 16px 34px -20px rgba(0,0,0,.4)}
 .st-c iframe{position:absolute;left:0;top:0;width:100%;height:2000px;border:0;opacity:0;transition:opacity .4s;pointer-events:none}
 .st-c iframe.pret{opacity:1}
+
+/* les univers : des sites d'exemple tout faits, en carrousel */
+.p-amb{padding-left:0;padding-right:0;--hc:clamp(300px,calc(100svh - 300px),470px)}
+.p-amb>.k,.p-amb>.st-intro,.p-amb>.st-phrase,.p-amb>.note-l{margin-left:24px;margin-right:24px}
+.ambs{display:flex;gap:12px;overflow-x:auto;padding:4px calc(50% - var(--hc) * .29) 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.ambs::-webkit-scrollbar{display:none}
+.am-c{flex:none;width:calc(var(--hc) * .58);scroll-snap-align:center;transition:transform .4s,opacity .4s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.am-c .carte{position:relative;height:var(--hc);border-radius:22px;overflow:hidden;box-shadow:0 16px 34px -20px rgba(0,0,0,.4)}
+.am-c .carte .fd{position:absolute;inset:0}
+.am-c .carte .fd .tuile{width:100%!important;height:100%!important;border-radius:0!important}
+.am-c iframe{position:absolute;left:0;top:0;width:100%;height:2000px;border:0;opacity:0;transition:opacity .5s;pointer-events:none}
+.am-c iframe.pret{opacity:1}
+.am-c .c-nom{flex-direction:column;align-items:center;gap:2px}
+.am-c .c-nom span{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.am-veux{display:block;margin:10px auto 0;border:0;border-radius:99px;padding:11px 18px;background:var(--noir);color:var(--creme);font:500 10.5px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+.am-pts{display:flex;justify-content:center;gap:6px;margin:12px 0 0}
+.am-pts i{width:6px;height:6px;border-radius:50%;background:#D8D0C6;transition:background .3s,width .3s}
+.am-pts i.on{width:18px;border-radius:3px;background:var(--noir)}
 .dots{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;margin:12px 0 2px}
 .dots button{width:44px;height:40px;border:0;cursor:pointer;background:none!important;display:grid;place-items:center;padding:0;-webkit-tap-highlight-color:transparent}
 .dots button i{display:block;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:box-shadow .2s}
@@ -719,7 +737,9 @@ body{background:var(--creme)}
 .p-haut .trois b{font-size:17px;font-weight:600;letter-spacing:.02em}
 .p-haut .prix-sous{margin-top:10px;text-align:center;font-size:12.5px;letter-spacing:.06em;opacity:.85}
 .p-haut h1.h1-pinceau.cinq{font-size:36px!important}
-.p-haut .h1-tout.cinq{font-size:20px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border-top:1px solid rgba(246,243,239,.35);padding-top:10px;margin-top:8px}
+.p-haut .h1-pour{margin:0 0 10px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(246,243,239,.78)}
+.p-haut .h1-tout.cinq.a{text-transform:none!important;letter-spacing:.01em!important;font-weight:400!important;font-size:15px!important}
+.p-haut .h1-tout.cinq{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border-top:1px solid rgba(246,243,239,.35);padding-top:10px;margin-top:8px}
 .p-haut .h1-avant{font-size:17px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin:0 0 6px}
 .p-haut .mots5{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0 0 14px;opacity:.85;line-height:1.7}
 .p-haut .mots5 i{font-style:normal;opacity:.5;margin:0 .4em}
@@ -748,6 +768,41 @@ body{background:var(--creme)}
 @keyframes lueur{0%,100%{filter:drop-shadow(0 0 0 rgba(255,255,255,0))}50%{filter:drop-shadow(0 0 7px rgba(255,255,255,.75))}}
 @keyframes brille{from{background-position:120% 0}to{background-position:-120% 0}}
 .prix-carte>span.brille{opacity:1;letter-spacing:.32em}
+/* 06/11 (Marie) : le prix brille doucement (un reflet passe dessus) */
+.prix-carte b{background:linear-gradient(105deg,currentColor 42%,rgba(255,255,255,.95) 50%,currentColor 58%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:prixBrille 5s ease-in-out infinite}
+@keyframes prixBrille{0%,55%{background-position:115% 0}100%{background-position:-15% 0}}
+/* « Avant, vous ouviez vos DM… » : plus petit, 2 lignes au plus */
+.p-appli .ap-titre{font-size:clamp(13px,3.85vw,22px)!important;line-height:1.25!important;letter-spacing:.01em!important}
+/* « Touchez les onglets » + petite main */
+.touche-ong{text-align:center;font-size:12px;letter-spacing:.06em;color:var(--muted);margin:10px 0 0}
+.touche-ong .main{display:inline-block;animation:mainTouche 1.6s ease-in-out infinite}
+@keyframes mainTouche{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+/* badges « Bientôt sur » (pas encore sur les stores) */
+.stores-b{display:flex;gap:8px;margin:14px 0 0}.stores-b span{flex:1;border:1px solid currentColor;border-radius:12px;padding:7px 10px;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;line-height:1.3}
+.stores-b b{display:block;font-size:14px;letter-spacing:.02em;text-transform:none;font-weight:500}
+#hautTxt{position:relative}
+.haut-stores{position:absolute;right:0;top:4px;display:flex;flex-direction:column;gap:6px;z-index:3}
+.haut-stores span{border:1px solid rgba(246,243,239,.4);border-radius:9px;padding:4px 9px;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,239,.75);line-height:1.25;background:rgba(20,18,17,.25);backdrop-filter:blur(6px)}
+.haut-stores b{display:block;font-size:11px;letter-spacing:.02em;text-transform:none;font-weight:500;color:#F6F3EF}
+/* 3 étapes qui s'allument l'une après l'autre, puis la flèche vers « Créer mon site » */
+.p-etapes .pas li{transition:opacity .5s,transform .5s}.p-etapes.anim .pas li{opacity:.35}
+.p-etapes .pas li.allume{opacity:1!important;animation:scintille 1.1s ease}
+@keyframes scintille{0%{filter:brightness(1)}35%{filter:brightness(1.35) drop-shadow(0 0 10px rgba(255,236,200,.9))}100%{filter:brightness(1)}}
+.vers-creer{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px auto 0;height:48px;padding:0 22px;border:0;border-radius:26px;background:var(--noir);color:var(--creme);font:500 11px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;cursor:pointer;text-decoration:none}
+.vers-creer.on{opacity:1;transform:none}.vers-creer svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;animation:monteF 1.2s ease-in-out infinite}
+@keyframes monteF{0%,100%{transform:translateY(2px)}50%{transform:translateY(-4px)}}
+.suit.pulse{animation:pulseS 1s ease 3}@keyframes pulseS{50%{transform:scale(1.08);box-shadow:0 0 0 8px rgba(30,28,27,.12)}}
+/* « 5 templates… » : la phrase qui change */
+#stIntro{transition:opacity .45s,transform .45s}
+/* 06/11 : « Vous collez des charms… Votre site aussi. » */
+.p-charms{position:relative;overflow:hidden;text-align:center;padding-top:150px!important;padding-bottom:150px!important;background:radial-gradient(120% 70% at 50% 50%,#fff 0%,var(--creme) 70%)}
+.ch-pluie{position:absolute;inset:0;pointer-events:none}
+.ch-pluie img{position:absolute;width:62px;height:62px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(30,28,27,.22));opacity:0;transform:translateY(-40px) rotate(-20deg) scale(.6);transition:opacity .5s,transform .9s cubic-bezier(.3,1.6,.5,1)}
+.p-charms.on .ch-pluie img{opacity:1;transform:none;animation:chFlotte 4s ease-in-out infinite}
+@keyframes chFlotte{0%,100%{translate:0 0;rotate:-6deg}50%{translate:0 -9px;rotate:6deg}}
+.ch-q{font:300 clamp(20px,5.6vw,30px)/1.25 Jost,sans-serif;margin:0 0 8px;position:relative;z-index:1}
+.ch-r{font-family:Italiana,serif;font-size:clamp(44px,13vw,72px);line-height:1;margin:0 0 16px;position:relative;z-index:1;background:linear-gradient(105deg,var(--noir) 40%,#C9A97E 50%,var(--noir) 60%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:prixBrille 4.5s ease-in-out infinite}
+.ch-s{font-size:13.5px;line-height:1.55;color:var(--muted);margin:0 auto;max-width:330px;position:relative;z-index:1}#stIntro.out{opacity:0;transform:translateY(6px)}
 .ap-sous{font-size:13px;line-height:1.5;color:var(--muted);margin:-4px 0 10px;text-align:center}
 .ap-liste{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:13px}
 .ap-liste li::before{content:"✓";margin-right:8px;opacity:.7}
@@ -791,6 +846,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 </div></header>
 
 <section class="pan p-haut" id="haut">
+  <div class="haut-stores" aria-label="Bientôt sur les stores"><span>Bientôt sur<b>iPhone</b></span><span>Bientôt sur<b>Android</b></span></div>
   <div class="k haut-k"></div>
   <div><div id="hautTxt"><p class="mots5 haut">Site internet<i>·</i>Agenda<i>·</i>Fiches clientes<i>·</i>Rappels SMS<i>·</i>Caisse</p><h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p></div>
     <form class="creer" data-lien><div class="lien"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><input placeholder="Collez le lien Google Maps de votre salon" aria-label="Le lien Google Maps de votre salon"></div><button class="btn">Créer mon site</button></form><div class="trois"><span><b>1 mois</b>offert</span><span><b>Sans</b>engagement</span><span><b>+ 6 000</b>variantes</span></div>
@@ -804,9 +860,10 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
   if(v==="2")h.innerHTML='<h1 class="h1-pinceau un">Un site, une appli, un pinceau&nbsp;:</h1><p class="h1-tout">c’est tout ce qu’il vous faut.</p>'+P;
   if(v==="1")h.innerHTML='<h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p>'+M;
   if(v==="4")h.innerHTML='<h1 class="h1-pinceau un">Un site, une appli, un pinceau.</h1><p class="h1-tout">C’est tout ce qu’il vous faut.</p>';
-  if(v==="5")h.innerHTML='<h1 class="h1-pinceau cinq"><span>Un site,</span><span>une appli,</span><span>un pinceau.</span></h1><p class="h1-tout cinq">C’est tout ce qu’il vous faut.</p>';
+  if(v==="5"){h.innerHTML='<p class="h1-pour">Pour les prothésistes ongulaires</p><h1 class="h1-pinceau cinq"><span>Un beau site</span><span>+ une appli.</span></h1><p class="h1-tout cinq a">Pour gérer vos rendez-vous et vos clientes.</p>'}   /* 06/11 (Marie) : version A, claire tout de suite */
   if(v==="6")h.innerHTML='<p class="h1-avant">Tout ce qu’il vous faut&nbsp;:</p><h1 class="h1-pinceau"><span>Un site.</span><span>Une appli.</span><span>Un pinceau.</span></h1>';
   var bt=document.querySelector(".p-haut .creer .btn");if(bt)bt.textContent="Créer mon site + mon appli";
+  var hs=document.querySelector(".haut-stores"),h1=h.querySelector("h1");if(hs&&h1){h.appendChild(hs);hs.style.top=h1.offsetTop+4+"px"}
   if(v==="4"){var n=document.querySelector(".p-haut .note-l");if(n)n.insertAdjacentHTML("afterend",M.replace('mots5','mots5 bas'))}})();
 </script>
 
@@ -879,6 +936,7 @@ html.ronds-2 .p-fonds .plus-cats{display:none!important}
 <script>
 /* la roue des fonds : son fichier (fonds-100.js) ne se charge que quand on approche de la partie */
 (function(){function fait(){setTimeout(function(){var c=document.querySelector(".p-fonds .an-cats");if(!c||c.querySelector(".plus-cats"))return;
+  var qb=c.querySelector('button[data-c="Qui bougent"]'),dk=c.querySelector('button[data-c="Dark"]');if(qb&&dk){var m=document.createElement("i");dk.before(m);qb.before(dk);m.replaceWith(qb)}   /* 06/11 (Marie) : « Qui bougent » en haut à la place de « Dark » */
   var n=c.querySelectorAll("button[data-c]").length-5,b=document.createElement("button");b.className="plus-cats";b.type="button";b.innerHTML="<i>+</i>"+n+" autres";
   b.onclick=function(){var t=c.classList.toggle("tout");b.innerHTML=t?"<i>−</i>Moins":"<i>+</i>"+n+" autres"};c.appendChild(b)},50)}
   if(window.F100)fait();else addEventListener("f100",fait,{once:true})})();
@@ -896,12 +954,14 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
 
 <section class="pan p-styles" id="styles">
   <div class="k">À votre image</div>
-  <p class="st-intro">3 templates.<em>+ de 6 000 variantes</em></p>
+  <p class="st-intro" id="stIntro">5 templates.<em>Amande, Stiletto, Carré, Ovale, Coffin</em></p>
   <p class="st-phrase">Vous travaillez seule&nbsp;? Votre site, lui, a l’air d’un grand salon.</p>
   <div class="styles" id="cartes">
-    <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Photo en grand</b></div><iframe title="Le site Dilerna, forme Photo en grand" data-n="1"></iframe></div></div>
-    <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Tout simple</b></div><iframe title="Le site Dilerna, forme Tout simple" data-n="2"></iframe></div></div>
-    <div class="st-c" data-n="3"><div class="carte"><div class="c-nom"><b>En cartes</b></div><iframe title="Le site Dilerna, forme En cartes" data-n="3"></iframe></div></div>
+    <div class="st-c" data-n="1"><div class="carte"><div class="c-nom"><b>Amande</b></div><iframe title="Le site Dilerna, style Amande" data-n="1"></iframe></div></div>
+    <div class="st-c" data-n="2"><div class="carte"><div class="c-nom"><b>Stiletto</b></div><iframe title="Le site Dilerna, style Stiletto" data-n="2"></iframe></div></div>
+    <div class="st-c" data-n="3"><div class="carte"><div class="c-nom"><b>Carré</b></div><iframe title="Le site Dilerna, style Carré" data-n="3"></iframe></div></div>
+    <div class="st-c" data-n="4"><div class="carte"><div class="c-nom"><b>Ovale</b></div><iframe title="Le site Dilerna, style Ovale" data-n="4"></iframe></div></div>
+    <div class="st-c" data-n="5"><div class="carte"><div class="c-nom"><b>Coffin</b></div><iframe title="Le site Dilerna, style Coffin" data-n="5"></iframe></div></div>
   </div>
   <p class="note-l touchez">Touchez un site pour l’ouvrir en entier</p>
   <div class="dots" id="dots"></div>
@@ -909,12 +969,29 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
   <p class="note-l">En exemple : mon salon, Dilerna</p>
 </section>
 
+<section class="pan p-amb" id="univers">
+  <div class="k">Trouvez votre univers</div>
+  <p class="st-intro">Gothique, bohème, Y2K…<em>Et vous, c’est lequel&nbsp;?</em></p>
+  <p class="st-phrase">Le fond, l’écriture du nom, les paillettes, les charms&nbsp;: tout se choisit. Voici quelques idées.</p>
+  <div class="ambs" id="ambs"></div>
+  <div class="am-pts" id="ambPts"></div>
+  <p class="note-l touchez">Touchez un site pour l’ouvrir en entier</p>
+</section>
+
+<section class="pan p-charms" id="charms">
+  <div class="ch-pluie" id="chPluie" aria-hidden="true"><img src="loginail-site/charms/ceriseruban.png" alt=""><img src="loginail-site/charms/araignee.png" alt=""><img src="loginail-site/charms/coeurlilas.png" alt=""><img src="loginail-site/charms/levres.png" alt=""><img src="loginail-site/charms/fraisegelee.png" alt=""><img src="loginail-site/charms/papillondore.png" alt=""><img src="loginail-site/charms/noeudperle.png" alt=""><img src="loginail-site/charms/croixgothique.png" alt=""><img src="loginail-site/charms/planete.png" alt=""><img src="loginail-site/charms/coeurleopard.png" alt=""><img src="loginail-site/charms/fleurnacre.png" alt=""><img src="loginail-site/charms/etoileargent.png" alt=""></div>
+  <p class="ch-q">Vous collez des charms<br>sur les ongles de vos clientes&nbsp;?</p>
+  <p class="ch-r">Votre site aussi.</p>
+  <p class="ch-s">Des petites cerises, des cœurs, des croix gothiques, des étoiles…<br>Ils brillent sur votre site, comme sur vos poses.</p>
+</section>
+
 <section class="pan p-appli" id="lappli">
   <div class="k">L’appli Loginail · sur votre téléphone</div>
   <h2 class="t2 ap-titre">Avant, vous ouvriez vos DM.<br>Maintenant, vous ouvrez votre appli.</h2>
   <p class="ap-sous">Vous changez votre site dans l’appli&nbsp;? Il change sur votre site. Fin.<br>L’appli est comprise dans l’abonnement, sur iPhone et Android.</p>
-  <div class="ap-scene" id="apScene"><div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div><div class="nt nt-d" style="top:30%"><img src="icone-appli.svg" alt=""><div><b>Rappel SMS envoyé</b><span>Sarah a reçu son rappel pour demain, 14 h</span></div></div><div class="nt nt-g" style="top:50%"><img src="icone-appli.svg" alt=""><div><b>Anniversaire 🎂</b><span>C’est l’anniversaire de Julie aujourd’hui.</span><span class="nt-bt">Lui souhaiter</span></div></div><div class="nt nt-d" style="top:70%"><img src="icone-appli.svg" alt=""><div><b>Caisse</b><span>Vous l’utilisez seulement si vous voulez.</span><span class="nt-sw"><i></i></span></div></div><div class="nt nt-g" style="top:12%"><img src="icone-appli.svg" alt=""><div><b>Mon site</b><span>Vos nouveaux prix sont en ligne.</span></div></div><div class="nt nt-d" style="top:88%"><img src="icone-appli.svg" alt=""><div><b>Nouvelle cliente</b><span>Emma a réservé sa première pose.</span></div></div></div>
+  <div class="ap-scene" id="apScene"><div class="ecran-appli"><div class="ec vraie-appli" id="vraieAppli"><div class="banniere" id="banniere"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b>Léa M. · Remplissage gainage · jeudi 10 h</div><span>maintenant</span></div></div></div><div class="nt nt-d" style="top:30%"><img src="icone-appli.svg" alt=""><div><b>Rappel SMS envoyé</b><span>Sarah a reçu son rappel pour demain, 14 h</span></div></div><div class="nt nt-g" style="top:50%"><img src="icone-appli.svg" alt=""><div><b>Anniversaire 🎂</b><span>C’est l’anniversaire de Julie aujourd’hui.</span><span class="nt-bt">Lui souhaiter</span></div></div><div class="nt nt-d" style="top:70%"><img src="icone-appli.svg" alt=""><div><b>Caisse</b><span>Vous l’utilisez seulement si vous voulez.</span><span class="nt-sw"><i></i></span></div></div><div class="nt nt-g" style="top:12%"><img src="icone-appli.svg" alt=""><div><b>Mon site</b><span>Vos nouveaux prix sont en ligne.</span></div></div><div class="nt nt-d" style="top:88%"><img src="icone-appli.svg" alt=""><div><b>Nouvelle cliente</b><span>Emma a réservé sa première pose.</span></div></div><div class="nt nt-g" style="top:22%"><img src="icone-appli.svg" alt=""><div><b>Annulation</b><span>Inès a annulé mardi 15 h. Le créneau est proposé à la liste d’attente.</span></div></div><div class="nt nt-d" style="top:62%"><img src="icone-appli.svg" alt=""><div><b>Acompte reçu</b><span>15 € pour la pose de Clara, samedi 11 h.</span></div></div><div class="nt nt-g" style="top:78%"><img src="icone-appli.svg" alt=""><div><b>Nouvel avis ★★★★★</b><span>« Toujours parfait, merci ! »</span></div></div><div class="nt nt-d" style="top:42%"><img src="icone-appli.svg" alt=""><div><b>Rappel SMS envoyé</b><span>Léa a reçu son rappel pour jeudi, 10 h.</span></div></div><div class="nt nt-g" style="top:6%"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b><span>Chloé · vendredi 17 h · Remplissage</span></div></div><div class="nt nt-d" style="top:16%"><img src="icone-appli.svg" alt=""><div><b>Rappels de demain ✓</b><span>4 clientes ont reçu leur SMS de rappel.</span></div></div><div class="nt nt-g" style="top:66%"><img src="icone-appli.svg" alt=""><div><b>Rappel SMS envoyé</b><span>Camille a reçu son rappel pour samedi, 9 h 30.</span></div></div><div class="nt nt-d" style="top:80%"><img src="icone-appli.svg" alt=""><div><b>Nouvelle réservation</b><span>Manon · lundi 14 h · Pose gel</span></div></div><div class="nt nt-g" style="top:36%"><img src="icone-appli.svg" alt=""><div><b>Anniversaire 🎂</b><span>Demain, c’est l’anniversaire de Sarah.</span></div></div></div>
   <p class="onglet-txt" id="ongletTxt" hidden></p><nav class="ong-app" id="ongletsApp"><button data-o="accueil" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg><span>Accueil</span></button><button data-o="agenda" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button data-o="clientes" class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/></svg><span>Clientes</span></button><button data-o="site" class=""><svg viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/></svg><span>Mon site</span></button><button data-o="caisse" class=""><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="3"/><path d="M3.5 10.5h17M7.5 15h3"/></svg><span>Caisse</span></button></nav>
+  <p class="touche-ong"><span class="main">👆</span> Touchez les onglets, ou glissez le doigt</p>
   <p class="ap-phrase" id="apPhrase">Changez vos prix en 2 secondes.</p>
 </section>
 <style>
@@ -937,28 +1014,28 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
 .p-petit .t2{margin:0 0 14px}.p-petit p{margin:0;font-size:15px;line-height:1.5}
 </style>
 <script>(function(){var sc=document.getElementById("apScene");if(!sc)return;var n=[].slice.call(sc.querySelectorAll(".nt")),k=0,on=[];
-  function pas(){var b=n[k%n.length];b.classList.add("on");on.push(b);if(on.length>2)on.shift().classList.remove("on");k++}
+  var pause=0;sc.addEventListener("pointerdown",function(){on.forEach(function(x){x.classList.remove("on")});on=[];pause=Date.now()});
+  function pas(){if(Date.now()-pause<7000)return;var b=n[k%n.length];b.classList.add("on");on.push(b);if(on.length>4)on.shift().classList.remove("on");k++}
   var ph=document.getElementById("apPhrase"),L=["Changez vos prix en 2 secondes.", "Toute votre semaine, d’un coup d’œil.", "Les rappels SMS partent tout seuls.", "Chaque cliente a sa fiche : ses poses, vos notes.", "La caisse ? Seulement si vous la voulez.", "Fini les DM à 23 h pour un rendez-vous."],j=0;
   function phrase(){ph.classList.add("out");setTimeout(function(){j=(j+1)%L.length;ph.textContent=L[j];ph.classList.remove("out")},450)}
-  var t1,t2;function go(){if(t1)return;pas();t1=setInterval(pas,2600);t2=setInterval(phrase,3200)}
+  var t1,t2;function go(){if(t1)return;pas();t1=setInterval(pas,1500);t2=setInterval(phrase,3200)}
   function stop(){clearInterval(t1);clearInterval(t2);t1=t2=null}
   if(!("IntersectionObserver" in window))return go();
   new IntersectionObserver(function(e){e[0].isIntersecting?go():stop()},{threshold:.2}).observe(sc)})();</script>
 
 <section class="pan p-etapes" id="etapes">
-  <div class="k">Comment ça marche</div><h2 class="t2">Prête en quelques minutes.</h2>
+  <div class="k">Comment ça marche</div><h2 class="t2">3 étapes.<br>Zéro prise de tête.</h2>
   <div class="case"><span class="kick">Votre site</span><h3>En 3 étapes.</h3>
     <ol class="pas"><li><b>1</b><div><strong>Collez votre lien Google Maps</strong>On récupère votre nom, vos horaires, vos avis et vos photos.</div></li>
         <li><b>2</b><div><strong>Complétez ce qui manque</strong>Quelques questions, juste ce qu’on n’a pas trouvé.</div></li>
-        <li><b>3</b><div><strong>Choisissez votre style</strong>3 styles, plus de 100 fonds et couleurs, clair ou foncé. C’est prêt, et vous le changez quand vous voulez.</div></li></ol></div>
+        <li><b>3</b><div><strong>Choisissez votre style</strong>5 templates, plus de 100 fonds et couleurs, clair ou foncé. C’est prêt, et vous le changez quand vous voulez.</div></li></ol></div>
+  <a class="vers-creer" id="versCreer" href="#haut"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Créer mon site</a>
+</section>
+<section class="pan p-etapes p-appli1" id="appli1">
   <div class="case sombre"><span class="kick">Votre appli</span><h3>En 1 clic.</h3>
     <p>Téléchargez l’appli Loginail et connectez-vous : votre site, vos rendez-vous et vos clientes y sont déjà.</p>
     <ul class="ap-liste"><li>Votre agenda</li><li>Vos clientes</li><li>Votre caisse</li><li>Votre site</li></ul>
-    <div class="stores">
-      <a class="store" href="#" aria-label="Télécharger dans l’App Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 1.4c0 1.1-.5 2.3-1.2 3.1-.7.9-2 1.6-3 1.6-.1 0-.2 0-.3 0 0-.1 0-.2 0-.4 0-1.1.6-2.3 1.2-3 .8-.9 2.1-1.6 3.2-1.7 0 .1.1.3.1.4zm4.5 15.7c0 .1-.5 1.6-1.5 3.1-.9 1.3-1.9 2.7-3.4 2.7s-1.9-.9-3.6-.9-2.3.9-3.7.9-2.3-1.3-3.4-2.8c-1.3-1.8-2.3-4.6-2.3-7.3 0-4.3 2.8-6.5 5.6-6.5 1.4 0 2.7 1 3.6 1 .9 0 2.2-1 3.9-1 .6 0 2.9.1 4.4 2.2-.1.1-2.4 1.4-2.4 4.2 0 3.3 2.9 4.4 2.8 4.4z"/></svg><span><small>Télécharger dans</small>l’App Store</span></a>
-      <a class="store" href="#" aria-label="Disponible sur Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6 13.6 12 4 21.4c-.4-.2-.6-.6-.6-1.1V3.7c0-.5.2-.9.6-1.1z" fill="#00D7FE"/><path d="M16.8 8.8 13.6 12 4 2.6c.3-.2.8-.2 1.2 0z" fill="#00F076"/><path d="M16.8 15.2 5.2 21.4c-.4.2-.9.2-1.2 0l9.6-9.4z" fill="#FF3A44"/><path d="m16.8 8.8 3.4 1.9c.9.5.9 2 0 2.5l-3.4 2L13.6 12z" fill="#FFD400"/></svg><span><small>Disponible sur</small>Google Play</span></a>
-      <div class="qr"><svg viewBox="-2 -2 29 29" aria-hidden="true"><rect x="-2" y="-2" width="29" height="29" rx="3" fill="#fff"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM15 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM11 2h1v1h-1zM15 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM24 8h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM23 9h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM12 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM12 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM1 13h1v1h-1zM5 13h1v1h-1zM6 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM1 15h1v1h-1zM2 15h1v1h-1zM5 15h1v1h-1zM6 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM13 15h1v1h-1zM17 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM12 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM15 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1z" fill="#1E1C1B"/></svg><span>Scannez pour<br>télécharger</span></div>
-    </div></div>
+    <div class="stores-b"><span>Bientôt sur<b>iPhone</b></span><span>Bientôt sur<b>Android</b></span></div></div>
 </section>
 
 
@@ -1036,9 +1113,27 @@ document.querySelectorAll("[data-lien]").forEach(f=>f.onsubmit=e=>{e.preventDefa
 /* la barre : fond crème dès qu'on quitte la photo */
 addEventListener("scroll",()=>$("barre").classList.toggle("fond",scrollY>innerHeight*.75),{passive:true});
 
+/* ---- 06/11 : téléphone de démo : on glisse le doigt à gauche / à droite pour changer d'onglet ---- */
+(function(){const z=document.getElementById("apScene"),nav=document.getElementById("ongletsApp");if(!z||!nav)return;let x0=null,y0=0;
+  z.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  z.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)<50||Math.abs(dy)>Math.abs(dx))return;
+    const b=[...nav.querySelectorAll("button")],i=b.findIndex(x=>x.classList.contains("on")),j=Math.max(0,Math.min(b.length-1,i+(dx<0?1:-1)));if(j!==i)b[j].click()},{passive:true})})();
+/* ---- 06/11 : les charms tombent autour de « Votre site aussi. » ---- */
+(function(){const sec=document.getElementById("charms");if(!sec)return;const im=[...sec.querySelectorAll(".ch-pluie img")];
+  const POS=[[6,8],[78,5],[40,3],[88,30],[2,36],[16,64],[84,62],[60,86],[8,86],[34,90],[90,88],[66,14]];
+  im.forEach((m,i)=>{const p=POS[i%POS.length];m.style.left=p[0]+"%";m.style.top=p[1]+"%";m.style.transitionDelay=(i*.09)+"s";m.style.animationDelay=(i*.33)+"s";if(i%3===1){m.style.width=m.style.height="48px"}});
+  if(!("IntersectionObserver" in window))return sec.classList.add("on");new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){sec.classList.add("on");o.disconnect()}},{threshold:.3}).observe(sec)})();
+/* ---- 06/11 : « 5 templates… » : la phrase qui change toute seule ---- */
+(function(){const el=document.getElementById("stIntro");if(!el)return;const L=["5 templates.<em>Amande, Stiletto, Carré, Ovale, Coffin</em>","+ de 100 fonds.<em>Des fleurs, des strass, du léopard…</em>","17 couleurs.<em>En clair ou en foncé</em>","16 écritures.<em>Des paillettes, des charms…</em>","+ de 6 000 variantes.<em>Et une seule appli pour tout gérer.</em>","Si c’est pas beau, la vie&nbsp;?<em>Votre site, votre agenda, vos clientes</em>"];let i=0;
+  setInterval(()=>{if(document.hidden)return;el.classList.add("out");setTimeout(()=>{i=(i+1)%L.length;el.innerHTML=L[i];el.classList.remove("out")},450)},3200)})();
+/* ---- 06/11 : les 3 étapes s'allument l'une après l'autre, puis la flèche vers « Créer mon site » ---- */
+(function(){const sec=document.getElementById("etapes");if(!sec)return;const li=[...sec.querySelectorAll(".pas li")];if(!li.length)return;sec.classList.add("anim");let fait=0;
+  const go=()=>{if(fait)return;fait=1;li.forEach((l,k)=>setTimeout(()=>l.classList.add("allume"),300+k*900));setTimeout(()=>{const v=document.getElementById("versCreer");if(v)v.classList.add("on");const s=document.getElementById("suit");if(s){s.classList.remove("pulse");void s.offsetWidth;s.classList.add("pulse")}},300+li.length*900+200)};
+  if(!("IntersectionObserver" in window))return go();new IntersectionObserver(e=>{if(e[0].isIntersecting)go()},{threshold:.35}).observe(sec)})();
 /* ---- à votre image : mon vrai site dans les 3 styles, qui défile doucement ; les couleurs et clair/foncé changent les 3 à la fois ---- */
 const COUL=[["noir","#1E1C1B"],["choco","#4A3226"],["marine","#24344F"],["taupe","#5E5149"],["greige","#5F574F"],["sable","#80633F"],["peche","#7A5444"],["sauge","#4F5A45"],["lin","#6E6253"],["nude","#8A6656"],["rose","#9A5D6B"],["bleup","#4F6F93"]];
-const UNE={1:"photo0.jpg",2:"haut.jpg",3:"magazine.webp"};
+const UNE={1:"photo0.jpg",2:"haut.jpg",3:"magazine.webp",4:"photo0.jpg",5:"photo0.jpg"};
+const STYP=n=>n==4?"1&epure=1":n==5?"1&coffin=1":n;   /* 06/11 : Ovale = Amande épuré, Coffin = Amande + barre en bas */
 const PLANCSS="html body .ecran .plan.plan{position:relative;background-color:#EEEAE4!important;background-image:url("+new URL("exemple-dilerna/plan.jpg",location.href).href+")!important;background-size:cover!important;background-position:center!important}.plan .sans,.plan .lmap{display:none!important}.plan::after{content:'© OpenStreetMap';position:absolute;right:8px;bottom:6px;font-size:9px;color:#6f665e;opacity:.85}";let ci=0,modeS="jour";
 $("dots").innerHTML=COUL.map((c,i)=>`<button class="${i?"":"on"}" data-c="${i}" aria-label="Couleur ${i+1}"><i style="background:${c[1]}"></i></button>`).join("");
 document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dataset.c="noir";f.dataset.m="jour";
@@ -1048,19 +1143,19 @@ document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n;f.dat
     [...e.querySelectorAll("a,button")].filter(x=>/laisser mon avis/i.test(x.textContent)).forEach(x=>x.style.display="none");
     const def=e.querySelector(".defile");if(def){const a={def,y:0,sens:1,pause:performance.now()+1200+n*400};f._a=a;
       const pas=t=>{const max=def.scrollHeight-def.clientHeight;if(max>0&&t>a.pause){a.y+=a.sens*1.1;if(a.y>max){a.y=max;a.sens=-1}if(a.y<0){a.y=0;a.sens=1}def.scrollTop=a.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
-  f.src=`forme.html?f=${n}&couleur=noir&mode=jour`});
+  f.src=`loginail-creer/pret.html?public&exemple=dilerna&style=${STYP(n)}&couleur=noir&mode=jour&une=${UNE[n]}`});
 function peint(){document.querySelectorAll(".st-c iframe").forEach(f=>{const n=+f.dataset.n,c=COUL[ci][0];try{const w=f.contentWindow,e=f.contentDocument.querySelector(".ecran");
   const av=w.eval(`cl(${n},"${f.dataset.c}","${f.dataset.m}")`).split(" "),ap=w.eval(`cl(${n},"${c}","${modeS}")`).split(" ");
   av.filter(x=>x&&!ap.includes(x)).forEach(x=>e.classList.remove(x));ap.filter(Boolean).forEach(x=>e.classList.add(x));
   const ink=w.eval("typeof INKJ!=='undefined'?INKJ:null");if(ink&&ink[c])e.style.setProperty("--encre",ink[c]);f.dataset.c=c;f.dataset.m=modeS}catch(x){console.warn(x)}})}
 /* toucher un style : le site s'ouvre en grand, avec la couleur et le mode choisis */
-const NOMS={1:"Photo en grand",2:"Tout simple",3:"En cartes"};
+const NOMS={1:"Amande",2:"Stiletto",3:"Carré",4:"Ovale",5:"Coffin"};
 $("cartes").addEventListener("click",e=>{const c=e.target.closest(".st-c");if(!c)return;const n=+c.dataset.n,g=$("grandSite"),f=g.querySelector("iframe");
-  $("gsNom").textContent=NOMS[n];$("gsTitre").textContent=NOMS[n];
+  $("gsNom").textContent=NOMS[n];$("gsTitre").textContent="Template "+NOMS[n];
   window.__yGrand=scrollY;
   f.onload=()=>{try{const d=f.contentDocument,el=d.querySelector(".ecran");el.remove();d.body.innerHTML="";d.body.append(el);d.body.style.cssText="margin:0;overflow:hidden";
     const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.clientHeight/(f.clientWidth/390))+"px!important}.pret,.langues{display:none!important}"+PLANCSS;d.head.append(st);el.style.zoom=f.clientWidth/390}catch(x){console.warn(x)}};
-  f.src=`forme.html?f=${n}&couleur=${COUL[ci][0]}&mode=${modeS}`;
+  f.src=`loginail-creer/pret.html?public&exemple=dilerna&style=${STYP(n)}&couleur=${COUL[ci][0]}&mode=${modeS}&une=${UNE[n]}`;
   g.hidden=false;requestAnimationFrame(()=>g.classList.add("on"));document.body.style.overflow="hidden"});
 $("gsFerme").onclick=()=>{const g=$("grandSite"),y=window.__yGrand;g.classList.remove("on");document.body.style.overflow="";if(y!=null)scrollTo({top:y,behavior:"instant"});setTimeout(()=>{g.hidden=true;g.querySelector("iframe").src="about:blank";if(y!=null)scrollTo({top:y,behavior:"instant"})},350)};
 $("grandSite").addEventListener("click",e=>{if(e.target.id==="grandSite")$("gsFerme").click()});
@@ -1080,12 +1175,50 @@ $("seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;modeS=b.dat
  const net=()=>{const m=r.scrollLeft+r.clientWidth/2;[...r.children].forEach(c=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-m);c.style.transform=`scale(${d<20?1:.92})`;c.style.opacity=d<20?1:.75})};
  r.addEventListener("scroll",net,{passive:true});setTimeout(net,50)}
 
+
+/* ---- les univers : des sites d'exemple tout faits (template, couleur, fond, écriture, paillettes, charms) ---- */
+const AMB=[
+ ["Gothique","Noir, argent et mystère","style=1&couleur=noir&mode=nuit&police=gothique&paillettes=argent&charm=araignee,croixgothique,lunegothique,vitrail,clegothique,chauvesouris&photos=gothique-8&photoune=5&photosalon=1&portrait=gothique","Dentelle noire"],
+ ["Bohème","Soleil, ambre et douceur","style=2&couleur=peche&mode=jour&fond=Soleils%20sur%20terracotta&police=seventies&paillettes=or&charm=soleilvisage,lunesoleil,coeursoleil,soleil,papillondore&photos=boheme-4&photoune=1&photosalon=1&portrait=boheme","Soleils sur terracotta"],
+ ["Y2K","Chrome, strass et lilas","style=2&couleur=lilas&mode=jour&fond=Reflets%20disco&police=y2k&paillettes=holo&charm=coeurlilas,planete,oursonlilas,etoilelilas,martien,coeurchrome&photos=y2k-3&photoune=3&photosalon=1&portrait=y2k","Reflets disco"],
+ ["Mignon","Rose, nœuds et fraises","style=1&couleur=rose&mode=jour&fond=Rose%20coquette&police=bonbon&paillettes=nacre&charm=ceriseruban,fraiseperle,noeudgelee,fleurgelee&photos=mignon-1&photoune=1&photosalon=1&portrait=mignon","Rose coquette"],
+ ["Clean","Nude, lumière et douceur","style=1&couleur=lin&mode=jour&police=chic&paillettes=nacre&photos=clean-2&photoune=salon&portrait=clean","Uni crème"],
+ ["Baddie","Strass, léopard et cerises","style=1&couleur=noir&mode=nuit&fond=Z%C3%A8bre&police=retro&paillettes=or&charm=levres,coeurleopard,coeurzebre,cerisesbordeaux&photos=baddie-4&photoune=salon&portrait=baddie","Zèbre"]];
+const ambUrl=a=>`loginail-creer/pret.html?public&nouveau&exemple=dilerna&${a[2]}`;
+{const r=$("ambs");
+ r.innerHTML=AMB.map((a,i)=>`<div class="am-c" data-i="${i}"><div class="carte" style="background:#EAE5DF"><div class="fd"></div><iframe title="Exemple de site ${a[0]}" tabindex="-1"></iframe><div class="c-nom"><b>${a[0]}</b><span>${a[1]}</span></div></div><button class="am-veux" data-i="${i}">Je veux ce style</button></div>`).join("");
+ $("ambPts").innerHTML=AMB.map((a,i)=>`<i class="${i?"":"on"}"></i>`).join("");
+ /* en attendant que le site charge, on montre déjà son fond */
+ addEventListener("f100",()=>{try{r.querySelectorAll(".am-c").forEach(c=>{const i=F100.idx[AMB[+c.dataset.i][3]];if(i!=null)c.querySelector(".fd").innerHTML='<div class="f100" style="position:absolute;inset:0">'+F100.tuile(i)+'</div>'})}catch(x){}});
+ const charge=c=>{const f=c.querySelector("iframe");if(f.dataset.ok)return;f.dataset.ok=1;const a=AMB[+c.dataset.i];
+   f.onload=()=>{try{const d=f.contentDocument,e=d.querySelector(".ecran");if(!e)return;e.remove();d.body.innerHTML="";d.body.append(e);d.body.style.cssText="margin:0;overflow:hidden;pointer-events:none";
+     const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.parentElement.clientHeight/(f.clientWidth/390))+"px!important}.defiler,.pret,.langues{display:none!important}"+PLANCSS;d.head.append(st);
+     e.style.zoom=f.clientWidth/390;setTimeout(()=>f.classList.add("pret"),700);
+     const def=e.querySelector(".defile");if(def){const o={y:0,sens:1,pause:performance.now()+2600};f._o=o;const pas=t=>{if(!f.dataset.ok)return;const max=def.scrollHeight-def.clientHeight;
+       if(max>0&&t>o.pause){o.y+=o.sens*.9;if(o.y>max){o.y=max;o.sens=-1}if(o.y<0){o.y=0;o.sens=1}def.scrollTop=o.y}requestAnimationFrame(pas)};requestAnimationFrame(pas)}}catch(x){console.warn(x)}};
+   f.src=ambUrl(a)};
+ const vide=c=>{const f=c.querySelector("iframe");if(!f.dataset.ok)return;delete f.dataset.ok;f.classList.remove("pret");f.onload=null;f.src="about:blank"};
+ /* seulement le site du milieu et ses voisins sont chargés (sinon le téléphone rame) */
+ const net=()=>{const m=r.scrollLeft+r.clientWidth/2,cs=[...r.children];let k=0,dm=1e9;
+   cs.forEach((c,i)=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-m);if(d<dm){dm=d;k=i}c.style.transform=`scale(${d<20?1:.92})`;c.style.opacity=d<20?1:.75});
+   $("ambPts").querySelectorAll("i").forEach((p,i)=>p.classList.toggle("on",i===k));return k};
+ let vu=false,tmr=0;const maj=()=>{const k=net();if(!vu)return;clearTimeout(tmr);tmr=setTimeout(()=>{[...r.children].forEach((c,i)=>Math.abs(i-k)<=1?charge(c):vide(c))},250)};
+ r.addEventListener("scroll",maj,{passive:true});setTimeout(net,50);
+ if("IntersectionObserver" in window){const io=new IntersectionObserver(e=>{if(e.some(x=>x.isIntersecting)){vu=true;io.disconnect();maj()}},{rootMargin:"600px 0px"});io.observe(r)}else{vu=true;maj()}
+ /* toucher un univers : il s'ouvre en grand */
+ r.addEventListener("click",e=>{const v=e.target.closest(".am-veux");if(v){e.stopPropagation();const a=AMB[+v.dataset.i];try{localStorage.setItem("loginail-univers-choisi",JSON.stringify({nom:a[0],reglages:a[2]}))}catch(_){}
+   const f=document.querySelector("form[data-lien]");if(f){f.scrollIntoView({behavior:"smooth",block:"center"});const inp=f.querySelector("input");inp&&setTimeout(()=>inp.focus(),500)}return}
+   const c=e.target.closest(".am-c");if(!c)return;const a=AMB[+c.dataset.i],g=$("grandSite"),f=g.querySelector("iframe");
+   $("gsNom").textContent=a[0];$("gsTitre").textContent="Univers "+a[0];window.__yGrand=scrollY;
+   f.onload=()=>{try{const d=f.contentDocument,el=d.querySelector(".ecran");el.remove();d.body.innerHTML="";d.body.append(el);d.body.style.cssText="margin:0;overflow:hidden";
+     const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:"+Math.round(f.clientHeight/(f.clientWidth/390))+"px!important}.pret,.langues{display:none!important}"+PLANCSS;d.head.append(st);el.style.zoom=f.clientWidth/390}catch(x){console.warn(x)}};
+   f.src=ambUrl(a);g.hidden=false;requestAnimationFrame(()=>g.classList.add("on"));document.body.style.overflow="hidden"});}
 /* ---- l'appli ---- */
 const APPLI={accueil:["demo/loginail-pro.html",1,"Votre journée en un coup d’œil : rendez-vous du jour, ce qu’il reste à faire, vos chiffres."],
   agenda:["demo/loginail-agenda8.html",0,"Vos rendez-vous, avec les rappels SMS partis tout seuls. Quand une cliente réserve sur votre site, ça arrive ici."],
   clientes:["demo/loginail-clientes2.html",0,"Toutes vos clientes, leur fiche, leurs notes, leur anniversaire."],
   caisse:["demo/loginail-caisse.html",2,"Ce que vous avez encaissé, jour après jour, sans calcul."],
-  site:["demo/loginail-monsite2.html",1,"Votre site : photos, prix, textes, style et couleur. Vous changez tout quand vous voulez."]};
+  site:["demo/loginail-caisse.html?demo",0,"Touchez un univers, une forme, une couleur : votre site change sous vos yeux."]};
 function isole(ifr,n){try{const d=ifr.contentDocument,t=d.querySelectorAll(".ecran")[n];if(!t)return;t.remove();d.body.innerHTML="";d.body.append(t);
   d.body.style.cssText="margin:0;background:transparent;overflow:hidden";const st=d.createElement("style");st.textContent=".ecran{position:absolute!important;left:0;top:0;margin:0!important;border-radius:0!important;width:390px!important;height:844px!important}.ong,.ag-tab{display:none!important}";d.head.append(st);
   const ajuste=()=>{t.style.zoom="1";const k=Math.min(ifr.clientWidth/t.offsetWidth,ifr.clientHeight/t.offsetHeight);t.style.zoom=k;t.style.left=Math.max(0,(ifr.clientWidth/k-t.offsetWidth)/2)+"px"};ajuste();new ResizeObserver(ajuste).observe(ifr);ifr.classList.add("pret")}catch(e){console.warn(e)}}
