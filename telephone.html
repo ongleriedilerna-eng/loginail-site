@@ -393,12 +393,12 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)pose();else if(cur){const f=cur.querySelector("iframe");if(f)f.remove();cur=null}},{threshold:.2}).observe(r)});
 /* les charms : rangés autour du texte (jamais cachés), ils tombent en pluie à leur place quand on arrive.
    On en touche un : il se décroche et tombe tranquillement, en se balançant un peu. On le lance : pareil, il finit par tomber doucement.
-   Il se pose (sur le bouton, par terre ou sur un autre charm) et reste comme il est tombé, sans rouler ni tourner.
+   Il se pose (sur le bouton, par terre ou sur un autre charm), bascule d'un côté puis de l'autre, et se cale de travers, sans rouler.
    Quand on quitte la partie, tout se range ; la pluie recommence au retour. */
 (()=>{const z=document.getElementById("pluie"),btn=document.getElementById("chBtn"),bloc=z.parentNode.querySelector(".bloc");
- const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,TA=[58,50,62,54,60,48,56,52];
+ const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,TA=[58,50,62,54,60,48,56,52],TN={teckelcreme:55,sushi:58,hibiscus:59,bouledisco:53,cerisedisco:56,cocker:66,fleur:54,hippocampe:63,martien:58,monstera:55,peche:59,ramen:56,planete:62,pothos:56,koi:66,levresgrillz:60,eclair:68,chatecaille:68,canard:57,chapeaucowboy:60};
  const alea=i=>{const v=Math.sin(i*12.9898+4.1)*43758.5453;return v-Math.floor(v)};
- const items=PLUIE.map((n,i)=>{const im=document.createElement("img");im.src="loginail-site/charms-mini/"+n+".webp";im.alt="";im.draggable=false;const s=TA[i%TA.length];im.style.width=im.style.height=s+"px";z.appendChild(im);return {im,s,i,x:0,y:-200,x0:0,y0:0,r0:0,vx:0,vy:0,r:0,rb:0,k:1,ph:i*.9,mode:"attend",t:0,on:true,sur:null}});
+ const items=PLUIE.map((n,i)=>{const im=document.createElement("img");im.src="loginail-site/charms-mini/"+n+".webp";im.alt="";im.draggable=false;const s=TN[n]||TA[i%TA.length];im.style.width=im.style.height=s+"px";z.appendChild(im);return {im,s,i,x:0,y:-200,x0:0,y0:0,r0:0,vx:0,vy:0,r:0,rb:0,k:1,ph:i*.9,mode:"attend",t:0,on:true,sur:null}});
  let W=0,H=0,E={g:0,d:0,top:0},parti=0,touche=false,hint=0;
  const place=()=>{W=z.clientWidth;H=z.clientHeight;if(!W)return;const zr=z.getBoundingClientRect(),br=bloc.getBoundingClientRect(),bt=btn.getBoundingClientRect();
    E={g:bt.left-zr.left+4,d:bt.right-zr.left-4,top:bt.top-zr.top};
@@ -414,9 +414,10 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
  const appui=(c,py)=>{let y=H-c.s-8,sur="sol";const ce=c.x+c.s/2,et=E.top-c.s+10;
    if(ce>E.g&&ce<E.d&&py<=et+2&&et<y){y=et;sur="btn"}
    items.forEach(o=>{if(o===c||!o.on||o.mode!=="reste")return;const oc=o.x+o.s/2;if(Math.abs(oc-ce)<(o.s+c.s)/2*.6){const yy=o.y-c.s*.62;if(py<=yy+2&&yy<y){y=yy;sur=o}}});return [y,sur]};
- const chute=(c,vx,vy)=>{c.mode="chute";c.vx=vx;c.vy=vy;c.rb=c.r;c.ph=0;c.sur=null};
+ const bascule=(c,t,a)=>{c.rw=a;c.ra=c.r-a;c.rt=t};
+ const chute=(c,vx,vy)=>{c.mode="chute";c.vx=vx;c.vy=vy;c.rb=c.r;c.ph=0;c.sur=null;c.rt=0;c.tour=(alea(c.i+performance.now())>.5?1:-1)*(.5+alea(c.i*7+performance.now())*.5)};
  const pas=t=>{requestAnimationFrame(pas);const zr=z.getBoundingClientRect();
-   if(zr.bottom<0||zr.top>innerHeight){if(parti){parti=0;hint=0;items.forEach(c=>{c.mode="attend";c.vx=c.vy=0;c.k=1;c.r=c.r0;c.x=c.x0;c.y=-c.s-40;c.sur=null;c.im.classList.remove("tenu");c.im.style.transform=`translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0)`})}return}
+   if(zr.bottom<0||zr.top>innerHeight){if(parti){parti=0;hint=0;items.forEach(c=>{c.mode="attend";c.vx=c.vy=0;c.k=1;c.r=c.r0;c.x=c.x0;c.y=-c.s-40;c.sur=null;c.rt=0;c.im.classList.remove("tenu");c.im.style.transform=`translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0)`})}return}
    if(!parti&&zr.top<innerHeight*.3){parti=t;place();items.forEach(c=>{if(RM){c.mode="flotte";c.x=c.x0;c.y=c.y0;c.r=c.r0}else{c.mode="attend";c.t=t+alea(c.i+77)*1100}})}
    if(!parti)return;
    /* tant que personne n'a touché : un charm frétille de temps en temps, pour donner envie */
@@ -429,10 +430,10 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
    else if(c.mode==="secoue"){const u=Math.min(1,(t-c.t)/700);c.r=c.r0+Math.sin(u*Math.PI*4)*9*(1-u);if(u>=1)c.mode="flotte"}
    else if(c.mode==="tenu"){c.k+=(1.15-c.k)*.3}
    else if(c.mode==="chute"){const py=c.y;c.k+=(1-c.k)*.15;c.ph+=.05*dt;
-     c.vy=Math.min(c.vy+.16*dt,4.6);c.vx*=Math.pow(.96,dt);c.x+=(c.vx+Math.sin(c.ph)*.55)*dt;c.y+=c.vy*dt;c.rb+=c.vx*.6*dt;c.r=c.rb+Math.sin(c.ph)*12;
+     c.vy=Math.min(c.vy+.16*dt,4.6);c.vx*=Math.pow(.96,dt);c.x+=(c.vx+Math.sin(c.ph)*.55)*dt;c.y+=c.vy*dt;c.rb+=(c.vx*.6+c.tour)*dt;c.r=c.rb+Math.sin(c.ph)*18;
      if(c.x<0){c.x=0;c.vx=Math.abs(c.vx)*.4}if(c.x>W-c.s){c.x=W-c.s;c.vx=-Math.abs(c.vx)*.4}if(c.y<0){c.y=0;c.vy=Math.abs(c.vy)*.3}
-     if(c.vy>0){const [y,sur]=appui(c,py);if(c.y>=y){c.y=y;c.vx=0;if(c.vy>2.2&&!c.rebond){c.vy=-c.vy*.18;c.rebond=1}else{c.vy=0;c.rebond=0;c.mode="reste";c.sur=sur;if(sur==="btn"){btn.classList.add("pose");setTimeout(()=>btn.classList.remove("pose"),380)}}}}}
-   else if(c.mode==="reste"){if(c.sur==="btn")c.y=E.top-c.s+10;else if(c.sur==="sol")c.y=H-c.s-8;else if(c.sur&&c.sur.mode!=="reste")chute(c,0,0)}
+     if(c.vy>0){const [y,sur]=appui(c,py);if(c.y>=y){c.y=y;c.vx=0;if(c.vy>2.2&&!c.rebond){c.vy=-c.vy*.18;c.rebond=1}else{c.vy=0;c.rebond=0;c.mode="reste";c.sur=sur;bascule(c,t,(alea(c.i*3+t)>.5?1:-1)*(16+alea(c.i+t)*8));if(sur&&typeof sur==="object")bascule(sur,t,(alea(sur.i+t)>.5?1:-1)*6);if(sur==="btn"){btn.classList.add("pose");setTimeout(()=>btn.classList.remove("pose"),380)}}}}}
+   else if(c.mode==="reste"){if(c.rt){const u=t-c.rt,e=Math.exp(-u/420);c.r=c.ra+c.rw*e*Math.cos(u/80);c.k=1+.05*e*Math.abs(Math.sin(u/80));if(e<.01){c.rt=0;c.k=1}}if(c.sur==="btn")c.y=E.top-c.s+10;else if(c.sur==="sol")c.y=H-c.s-8;else if(c.sur&&c.sur.mode!=="reste")chute(c,0,0)}
    c.im.style.transform=`translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.r.toFixed(1)}deg) scale(${c.k.toFixed(3)})`})};
  requestAnimationFrame(pas);
  items.forEach(c=>{let ox=0,oy=0,lx=0,ly=0,lt=0,sx=0,sy=0,st=0;
