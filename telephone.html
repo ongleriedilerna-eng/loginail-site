@@ -42,7 +42,8 @@ img{display:block}a{color:inherit;text-decoration:none}button{font:inherit}
 .mini{width:132px;text-align:center}.mini b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;margin-top:9px;line-height:1}.mini span{display:block;font-size:11px;color:var(--doux);margin-top:3px}
 .mini .ecr{position:relative;height:264px;border-radius:24px;overflow:hidden;border:5px solid var(--noir);background:#fff;box-shadow:0 22px 34px -20px rgba(0,0,0,.5)}
 .mini .ecr img{width:100%;height:100%;object-fit:cover;object-position:top}
-.ecr-site img{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}.ecr-site img.on{opacity:1}
+.eventail{position:relative;height:264px}.eventail .ev{position:absolute;left:0;right:0;top:0}
+.eventail .g{transform:translateX(-16px) rotate(-8deg) scale(.9);opacity:.95}.eventail .d{transform:translateX(16px) rotate(8deg) scale(.9);opacity:.95}.eventail .m{z-index:2}
 .duo .fleche{width:30px;color:var(--doux);margin-bottom:46px}
 .notif-mini{position:absolute;left:5px;right:5px;top:6px;display:flex;gap:5px;align-items:center;padding:6px;border-radius:11px;background:rgba(255,255,255,.94);box-shadow:0 8px 16px -8px rgba(0,0,0,.35);text-align:left;transform:translateY(-130%);opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s}
 .notif-mini.on{transform:none;opacity:1}
@@ -59,7 +60,7 @@ img{display:block}a{color:inherit;text-decoration:none}button{font:inherit}
 .marq{margin:26px 0 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
 .marq .piste{display:flex;gap:10px;width:max-content;animation:defile 52s linear infinite}
 .marq .piste.r{animation-direction:reverse;animation-duration:64s;margin-top:10px}
-.marq img{width:96px;height:150px;object-fit:cover;object-position:top;border-radius:16px;box-shadow:0 14px 24px -16px rgba(0,0,0,.5)}
+.marq img{width:92px;height:196px;object-fit:cover;object-position:top;border-radius:18px;border:3px solid var(--noir);background:#fff;box-shadow:0 14px 24px -16px rgba(0,0,0,.5)}
 @keyframes defile{to{transform:translateX(-50%)}}
 .marq-l{text-align:center;font-size:11px;color:var(--doux);margin:12px 0 0;letter-spacing:.06em}
 /* la construction : fond clair, un vrai téléphone, tout suit le doigt */
@@ -82,8 +83,8 @@ img{display:block}a{color:inherit;text-decoration:none}button{font:inherit}
 /* l'appli : collée à l'écran, les écrans changent, les notifications tombent */
 .app-h{position:relative;height:500vh;background:#141114;color:var(--creme)}
 .app-h .colle{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:calc(60px + env(safe-area-inset-top)) 0 0}
-.a-titre{text-align:center}.a-titre .k{color:rgba(246,243,239,.55)}.a-titre .t2{margin:6px 0 12px}
-.a-tel{height:calc(100dvh - 60px - 230px);max-height:560px;aspect-ratio:390/844;border-radius:38px;border:7px solid #000;box-shadow:0 0 0 1.5px rgba(255,255,255,.14),0 34px 60px -30px rgba(0,0,0,.8);overflow:hidden;flex:none;background:#fff}
+.a-titre{text-align:center}.a-titre .k{color:rgba(246,243,239,.55)}.a-titre .t2{margin:6px 0 6px}
+.a-tel{height:calc(100dvh - 60px - 210px);max-height:560px;aspect-ratio:390/844;border-radius:38px;border:7px solid #000;box-shadow:0 0 0 1.5px rgba(255,255,255,.14),0 34px 60px -30px rgba(0,0,0,.8);overflow:hidden;flex:none;background:#fff}
 .a-ecr{position:relative;width:100%;height:100%}
 .a-ecr img.a{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;will-change:opacity}
 .notifs{position:absolute;left:6px;right:6px;top:8px}
@@ -91,9 +92,18 @@ img{display:block}a{color:inherit;text-decoration:none}button{font:inherit}
 .nt i{flex:none;width:28px;height:28px;border-radius:7px;background:url(loginail-site/icone-appli.svg) center/cover}
 .nt div{flex:1;min-width:0}.nt b{display:block;font:500 11.5px Jost;line-height:1.25}.nt span{display:block;font-size:10.5px;color:#555;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nt small{align-self:flex-start;font-size:9px;color:#888}
-.a-legs{height:104px;margin-top:14px}.a-legs .leg span{color:rgba(246,243,239,.75)}
+.a-legs{height:96px;margin:2px 0 12px}.a-legs .leg b{font-size:clamp(24px,7vw,29px)}.a-legs .leg span{color:rgba(246,243,239,.75);font-size:13px}
+/* les rails (cartes des sites) */
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 22px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.rail::-webkit-scrollbar{display:none}
+.carte{flex:none;width:min(64vw,250px);scroll-snap-align:center;position:relative}
+.carte .ph{position:relative;aspect-ratio:290/560;border-radius:28px;overflow:hidden;background:#EAE5DF;box-shadow:0 26px 40px -26px rgba(0,0,0,.6)}
+.carte .ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.carte .ph iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;opacity:0;transition:opacity .5s;pointer-events:none;background:transparent}
+.carte .ph iframe.pret{opacity:1}
+.carte .ph .ouv{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(30,28,27,.85);color:#fff;font:500 10px Jost;letter-spacing:.18em;text-transform:uppercase;padding:9px 14px;border-radius:99px;white-space:nowrap}
+.carte b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;margin:12px 2px 0;line-height:1}.carte small{display:block;font-size:12.5px;color:var(--doux);margin:5px 2px 0;line-height:1.4}
 /* chiffres */
-.chif{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px 54px}
+.chif{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:56px 16px 54px}
 .chif div{text-align:center;background:#fff;border-radius:16px;padding:14px 4px}
 .chif b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;line-height:1}.chif span{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--doux)}
 .p-uni{background:#141114;color:var(--creme)}.p-uni .k{color:rgba(246,243,239,.55)}.p-uni .p{color:rgba(246,243,239,.78)}.p-uni .carte small{color:rgba(246,243,239,.55)}
@@ -132,7 +142,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <div class="k">Pour les prothésistes ongulaires</div>
   <h1>Un site pour <span style="white-space:nowrap"><span class="mot" id="mot">briller<img src="loginail-site/charms-mini/perle.webp" alt="" id="motCh"></span>.</span><br>Une appli pour tout gérer.</h1>
   <div class="duo">
-    <div class="mini"><div class="ecr ecr-site" id="miniSite"><img src="loginail-site/apercus-mini/s5.webp" alt="" class="on"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt=""><img src="loginail-site/apercus-mini/gothique.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt=""><img src="loginail-site/apercus-mini/y2k.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt=""></div><b>Votre site</b><span>à votre image</span></div>
+    <div class="mini"><div class="eventail"><div class="ecr ev g"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt=""></div><div class="ecr ev d"><img src="loginail-site/apercus-mini/gothique.webp" alt=""></div><div class="ecr ev m"><img src="loginail-site/apercus-mini/s5.webp" alt=""></div></div><b>Votre site</b><span>à votre image</span></div>
     <div class="fleche" aria-hidden="true"><svg viewBox="0 0 40 14"><path d="M1 7h36M31 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
     <div class="mini"><div class="ecr"><img src="loginail-site/apercus-mini/app-accueil.webp" alt=""><div class="notif-mini" id="notifMini"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · sam. 10 h</span></div></div></div><b>Votre appli</b><span>vous gérez tout</span></div>
   </div>
@@ -163,6 +173,13 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 
 <section class="app-h" id="appli"><div class="colle">
   <div class="a-titre"><div class="k">Et derrière le site</div><h2 class="t2">L’appli qui gère <em>tout</em>.</h2></div>
+  <div class="legs a-legs">
+    <div class="leg"><b>Votre journée, d’un coup d’œil.</b><span>Qui vient, à quelle heure, ce qu’il reste à faire.</span></div>
+    <div class="leg"><b>Votre agenda se remplit tout seul.</b><span>Elles réservent sur votre site, jour et nuit. Même pendant une pose.</span></div>
+    <div class="leg"><b>Vos clientes, leurs rappels.</b><span>Leurs notes, leur anniversaire. Le SMS de rappel part tout seul la veille.</span></div>
+    <div class="leg"><b>Votre caisse.</b><span>Vous encaissez, c’est noté. Votre chiffre du jour, du mois.</span></div>
+    <div class="leg"><b>Et votre site, d’ici.</b><span>Fond, charms, photos, prix : vous changez ici, ça change sur votre site.</span></div>
+  </div>
   <div class="a-tel"><div class="a-ecr">
     <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite.webp" alt="">
     <div class="notifs" id="notifs">
@@ -173,13 +190,6 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
       <div class="nt"><i></i><div><b>Votre site est à jour</b><span>Nouveau fond : cerises</span></div><small>maintenant</small></div>
     </div>
   </div></div>
-  <div class="legs a-legs">
-    <div class="leg"><b>Votre journée, d’un coup d’œil.</b><span>Qui vient, à quelle heure, ce qu’il reste à faire.</span></div>
-    <div class="leg"><b>Votre agenda se remplit tout seul.</b><span>Elles réservent sur votre site, jour et nuit. Même pendant une pose.</span></div>
-    <div class="leg"><b>Vos clientes, leurs rappels.</b><span>Leurs notes, leur anniversaire. Le SMS de rappel part tout seul la veille.</span></div>
-    <div class="leg"><b>Votre caisse.</b><span>Vous encaissez, c’est noté. Votre chiffre du jour, du mois.</span></div>
-    <div class="leg"><b>Et votre site, d’ici.</b><span>Fond, charms, photos, prix : vous changez ici, ça change sur votre site.</span></div>
-  </div>
 </div></section>
 
 <div class="chif vu"><div><b>6</b><span>sites classe</span></div><div><b>19</b><span>univers</span></div><div><b>243</b><span>charms</span></div><div><b>217</b><span>fonds</span></div></div>
@@ -272,8 +282,6 @@ document.getElementById("railUni").innerHTML=UNI.map(t=>`<a class="carte" href="
  const top=document.getElementById("top"),cb=document.getElementById("colleBas");
  const lit=()=>{const r=b.getBoundingClientRect(),dans=r.top<=1&&r.bottom>innerHeight;cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(dans)cb.classList.remove("on");if(!raf)raf=requestAnimationFrame(pas)};
  addEventListener("scroll",lit,{passive:true});pose(0);lit()})();
-/* en haut : le petit site change de style toutes les 2,4 s */
-{const I=[...document.querySelectorAll('#miniSite img')];let k=0;setInterval(()=>{I[k].classList.remove('on');k=(k+1)%I.length;I[k].classList.add('on')},2400)}
 /* en haut : la petite notification de l'appli tombe, repart, revient */
 {const n=document.getElementById("notifMini");const go=()=>{n.classList.add("on");setTimeout(()=>n.classList.remove("on"),2600)};setTimeout(go,1200);setInterval(go,4200)}
 /* l'en-tête : caché seulement pendant la construction et l'appli (un seul endroit décide) */
