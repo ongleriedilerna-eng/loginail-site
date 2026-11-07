@@ -1,0 +1,215 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<title>Coups de cœur · prototype</title>
+<link href="loginail-creer/polices.css" rel="stylesheet">
+<style>
+/* 08/11 (Marie) : PROTOTYPE « cartes à glisser ». 0) classique ou ouf ? 1) des propositions de SON site, elle garde (♥) ou pas (✕),
+   2) à la fin, ses coups de cœur, elle en choisit un et le personnalise (maquette-perso.html). Chaque carte = le vrai rendu (pret.html?public). */
+:root{--noir:#1E1C1B;--fond:#F6F3EF;--muted:#6B625C}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+#tel{position:fixed;inset:0;max-width:480px;margin:0 auto;background:var(--fond);overflow:hidden}
+.ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 22px) 20px calc(env(safe-area-inset-bottom) + 18px);opacity:0;pointer-events:none;transition:opacity .4s}
+.ecran.on{opacity:1;pointer-events:auto}
+h1{margin:6px 0 0;font:500 34px/1.02 "Cormorant Garamond",serif;text-align:center}
+.sous{margin:8px 0 0;text-align:center;font:300 14px/1.5 Jost,sans-serif;color:var(--muted)}
+.pts{display:flex;gap:4px;justify-content:center}.pts i{width:22px;height:3px;border-radius:2px;background:rgba(30,28,27,.15)}.pts i.on{background:var(--noir)}
+/* 0 · classique ou ouf */
+.cartes2{flex:1;display:flex;flex-direction:column;gap:12px;margin-top:18px;min-height:0}
+.carte2{flex:1;border:0;border-radius:24px;background:center/cover;position:relative;overflow:hidden;padding:0;transition:transform .2s}
+.carte2:active{transform:scale(.98)}
+.carte2 span{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font:500 19px "Cormorant Garamond",serif;text-align:center}
+.carte2 span small{display:block;font:300 12px Jost,sans-serif;opacity:.9;margin-top:2px}
+.deux{margin-top:12px;border:0;background:none;font:400 14px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
+/* 1 · le paquet */
+.tete{display:flex;align-items:center;justify-content:space-between}
+.tete b{font:500 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase}
+.compte{display:flex;align-items:center;gap:6px;border:0;border-radius:999px;background:#fff;padding:7px 13px;font:500 13px Jost,sans-serif;box-shadow:0 4px 12px -6px rgba(0,0,0,.3)}
+.compte i{font-style:normal;color:var(--noir)}
+.compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.25)}}
+.zone{position:relative;flex:1;margin:14px 0 10px;min-height:0}
+.carte{position:absolute;left:50%;top:0;height:100%;aspect-ratio:390/760;max-width:100%;transform:translateX(-50%);border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 18px 34px -18px rgba(0,0,0,.55);transition:transform .35s cubic-bezier(.3,1.1,.4,1),opacity .35s;will-change:transform}
+.carte iframe{position:absolute;top:0;left:0;width:390px;height:760px;border:0;transform-origin:0 0;pointer-events:none}
+.carte .prise{position:absolute;inset:0;touch-action:none;cursor:grab}
+.carte .info{position:absolute;left:0;right:0;bottom:0;padding:30px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.6));display:flex;flex-wrap:wrap;gap:5px;justify-content:center;pointer-events:none}
+.carte .info span{border-radius:999px;background:rgba(255,255,255,.92);padding:4px 10px;font:400 11px Jost,sans-serif}
+.tampon{position:absolute;top:26px;padding:6px 14px;border:3px solid;border-radius:12px;font:600 22px Jost,sans-serif;letter-spacing:.1em;opacity:0;pointer-events:none;background:rgba(255,255,255,.85)}
+.tampon.oui{left:18px;transform:rotate(-14deg);color:var(--noir)}.tampon.non{right:18px;transform:rotate(14deg);color:#8A847E}
+.carte.dessous{transform:translateX(-50%) scale(.94) translateY(12px);opacity:.9}
+.carte.cache{opacity:0}
+.vote{display:flex;justify-content:center;align-items:center;gap:26px}
+.vote button{width:62px;height:62px;border-radius:50%;border:0;background:#fff;font-size:24px;box-shadow:0 8px 20px -8px rgba(0,0,0,.35);display:grid;place-items:center;transition:transform .15s}
+.vote button:active{transform:scale(.9)}
+.vote .oui{background:var(--noir);color:#fff}
+.vote .petit{width:46px;height:46px;font-size:17px}
+.astuce{margin:8px 0 0;text-align:center;font:300 12px Jost,sans-serif;color:var(--muted)}
+/* voir en grand */
+#grand{position:absolute;inset:0;z-index:20;background:#fff;opacity:0;pointer-events:none;transition:opacity .3s}
+#grand.on{opacity:1;pointer-events:auto}
+#grand iframe{width:100%;height:100%;border:0}
+#grand .bas{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 16px);display:flex;justify-content:center;gap:22px}
+#grand .bas button{width:58px;height:58px;border-radius:50%;border:0;background:#fff;font-size:22px;box-shadow:0 8px 20px -6px rgba(0,0,0,.4)}
+#grand .bas .oui{background:var(--noir);color:#fff}
+#grand .fermer{position:absolute;top:calc(env(safe-area-inset-top) + 12px);left:14px;border:0;border-radius:999px;background:rgba(255,255,255,.92);padding:9px 14px;font:400 13px Jost,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+/* 2 · coups de cœur */
+.grille{flex:1;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 12px;align-content:start;scrollbar-width:none}
+.mini{position:relative;aspect-ratio:390/700;border-radius:18px;overflow:hidden;border:0;padding:0;background:#fff;box-shadow:0 10px 20px -12px rgba(0,0,0,.5);outline:3px solid transparent;outline-offset:2px}
+.mini iframe{position:absolute;top:0;left:0;width:390px;height:700px;border:0;transform-origin:0 0;pointer-events:none}
+.mini.on{outline-color:var(--noir)}
+.mini.on::after{content:"✓";position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:var(--noir);color:#fff;font:500 14px/26px Jost,sans-serif;text-align:center}
+.mini .coeur{position:absolute;top:8px;left:8px;font-size:15px}
+.go{width:100%;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:17px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
+.go:disabled{opacity:.35}
+.encore{margin-top:8px;border:0;background:none;font:400 13.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
+.vide{grid-column:1/-1;text-align:center;font:300 14px/1.5 Jost,sans-serif;color:var(--muted);padding:40px 10px}
+/* 08/11 : coups de cœur en ligne, un par un (on glisse à gauche / à droite), « Enlever » ou « Personnaliser celui-ci » */
+.carrou{--w:260px;--h:500px;flex:1;display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px -20px 8px;padding:0 calc(50% - var(--w) / 2);scrollbar-width:none;min-height:0}
+.carrou::-webkit-scrollbar{display:none}
+.slide{flex:none;width:var(--w);height:var(--h);scroll-snap-align:center;transition:transform .15s,opacity .15s}
+.slide .carte{position:relative;left:auto;transform:none;width:100%;height:100%;aspect-ratio:auto}
+.ptsC{display:flex;gap:5px;justify-content:center;margin-bottom:10px}.ptsC i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.ptsC i.on{width:18px;border-radius:3px;background:var(--noir)}
+.duo{display:flex;gap:10px}
+.duo .enl{flex:none;border:1px solid rgba(30,28,27,.25);border-radius:999px;background:#fff;padding:0 18px;font:400 13px Jost,sans-serif}
+.moi{border:0;background:none;font:400 13px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted);padding:4px}
+.maquette{position:absolute;top:calc(env(safe-area-inset-top) + 6px);right:10px;z-index:30;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.6}
+</style></head><body>
+<div id="tel">
+  <span class="maquette">Prototype</span>
+  <section class="ecran on" id="q">
+    <div class="pts"><i class="on"></i><i></i><i></i></div>
+    <h1>Quel site vous<br>ressemble ?</h1>
+    <p class="sous">On vous prépare des propositions de votre site.<br>Gardez celles que vous aimez.</p>
+    <div class="cartes2">
+      <button class="carte2" data-genre="classique" style="background-image:url(loginail-site/apercus-mini/clean.webp)"><span>Chic et classique<small>Épuré, élégant, intemporel</small></span></button>
+      <button class="carte2" data-genre="ouf" style="background-image:url(loginail-site/apercus-mini/y2k.webp)"><span>Fun et ouf<small>Fonds, charms, écritures folles</small></span></button>
+    </div>
+    <button class="deux" data-genre="mix" type="button">Un peu des deux</button>
+  </section>
+
+  <section class="ecran" id="paquet">
+    <div class="tete"><button class="compte" id="retourQ" type="button" style="background:none;box-shadow:none;padding:7px 0">‹ Style</button><b id="pos">1 / 12</b><button class="compte" id="compte" type="button"><i>♥</i><span id="nbC">0</span></button></div>
+    <div class="zone" id="zone"></div>
+    <div class="vote"><button class="non" id="non" type="button" aria-label="Je ne garde pas">✕</button><button class="oui" id="oui" type="button" aria-label="Je garde">♥</button></div>
+    <p class="astuce">Glissez à droite pour garder, à gauche pour passer · vers le haut pour voir tout le site</p>
+    <button class="moi" id="moi" type="button">Je préfère tout créer moi-même</button>
+  </section>
+
+  <section class="ecran" id="coeurs">
+    <div class="pts"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    <h1>Vos coups de cœur</h1>
+    <p class="sous" id="sousC"></p>
+    <div class="carrou" id="carrou"></div><div class="ptsC" id="ptsC"></div>
+    <div class="duo"><button class="enl" id="enl" type="button">Enlever</button><button class="go" id="perso" type="button">PERSONNALISER CELUI-CI</button></div>
+    <button class="encore" id="encore" type="button">Voir 12 autres propositions</button>
+  </section>
+
+
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const FONDS = [["Soie", 0, ["Élégants"]], ["Soie nuit", 1, ["Élégants"]], ["Nuit douce", 1, ["Élégants"]], ["Marbre", 0, ["Élégants"]], ["Bulles", 0, ["Mignons"]], ["Cœurs", 0, ["Mignons"]], ["Pois", 0, ["Mignons"]], ["Cerises", 0, ["Mignons"]], ["French", 0, ["Mignons"]], ["Marguerites", 0, ["Mignons"]], ["Nuages", 0, ["Douceur"]], ["Fraises", 0, ["Mignons"]], ["Vagues", 0, ["Douceur"]], ["Tulipes", 0, ["Mignons"]], ["Arcs-en-ciel", 0, ["Mignons"]], ["Pattes", 0, ["Animaux"]], ["Plantes", 0, ["Douceur"]], ["Café", 0, ["Douceur"]], ["Noël", 1, ["Fêtes"]], ["Saint-Valentin", 0, ["Fêtes"]], ["Été", 0, ["Fêtes"]], ["Octobre Rose", 0, ["Fêtes"]], ["Fête des mères", 0, ["Fêtes"]], ["Printemps", 0, ["Tout rose"]], ["Mimosa · 8 mars", 0, ["Fêtes"]], ["Rose poudré", 0, ["Tout rose"]], ["Rose satin", 0, ["Tout rose"]], ["Bonbon", 0, ["Tout rose"]], ["Café crème", 0, ["Douceur"]], ["Bulles qui montent", 0, ["Douceur", "Qui bougent"]], ["Cœurs qui flottent", 0, ["Tout rose", "Qui bougent"]], ["Neige qui tombe", 1, ["Fêtes", "Qui bougent"]], ["Pétales qui tombent", 0, ["Douceur", "Qui bougent"]], ["Confettis", 0, ["Fêtes", "Qui bougent"]], ["Reflet glazed", 0, ["Élégants", "Qui bougent"]], ["Aura qui respire · rose", 0, ["Tout rose", "Qui bougent"]], ["Aura qui respire · lilas", 0, ["Douceur", "Qui bougent"]], ["Aura qui respire · bleu ciel", 0, ["Douceur", "Qui bougent"]], ["Aura qui respire · menthe", 0, ["Douceur", "Qui bougent"]], ["Majolique", 0, ["Bohème"]], ["Géométrique", 0, ["Bohème"]], ["Rayures bordeaux", 1, ["Élégants"]], ["Lignes ondulées", 0, ["Y2K"]], ["Damier ondulé", 0, ["Y2K"]], ["Grandes étoiles", 0, ["Y2K"]], ["Piments", 0, ["Y2K"]], ["Martini", 0, ["Mignons"]], ["Pois noirs", 0, ["Élégants"]], ["Zèbre", 0, ["Animaux"]], ["Œil peint", 0, ["Bohème"]], ["Main de Fatma", 0, ["Bohème"]], ["Boules à facettes", 0, ["Y2K"]], ["Sequins", 0, ["Y2K"]], ["Damier aquarelle et cerises", 0, ["Mignons"]], ["Fierté", 0, ["Fêtes"]], ["Bogolan", 1, ["Bohème"]], ["Strass multicolores", 0, ["Y2K"]], ["Faon", 0, ["Animaux"]], ["Chats tigrés", 0, ["Mignons"]], ["Mains vernies", 0, ["Mignons"]], ["Soleil et lune dorés sur bleu nuit", 1, ["Bohème"]], ["Collage stickers rose", 0, ["Tout rose"]], ["Cowgirl rose sur noir", 1, ["Mignons"]], ["Western sur crème", 0, ["Mignons"]], ["Cerises disco", 0, ["Y2K"]], ["Vernis", 0, ["Mignons"]], ["Ongles", 0, ["Mignons"]], ["Nœuds rouges", 0, ["Mignons"]], ["Perles et nœuds", 0, ["Tout rose"]], ["NAILS rouge", 0, ["Phrases"]], ["XOXO rose", 0, ["Phrases"]], ["NAILS blanc", 1, ["Phrases"]], ["MY NAILS ARE BETTER THAN YOUR OPINION", 0, ["Phrases"]], ["SORRY, MY NAILS ARE DRYING", 0, ["Phrases"]], ["TOO CUTE TO CARE", 0, ["Phrases"]], ["NAILS lilas sur violet", 1, ["Phrases"]], ["XOXO bleu ciel sur marine", 1, ["Phrases"]], ["NAILS noir sur blanc", 0, ["Phrases"]], ["Soleils sur vert sapin", 1, ["Bohème"]], ["Soleils et lunes sur vert sauge", 0, ["Bohème"]], ["Soleils sur terracotta", 0, ["Bohème"]], ["Soleils sur rose", 0, ["Bohème"]], ["Soleils dorés sur crème", 0, ["Bohème"]], ["Strass facettés sur rose", 0, ["Y2K"]], ["Strass qui tombent sur rose", 0, ["Y2K", "Qui bougent"]], ["Étoiles strass argent", 0, ["Y2K"]], ["Étoiles qui tombent", 1, ["Y2K", "Qui bougent"]], ["Vache rose peluche", 0, ["Animaux"]], ["Vache marron peluche", 0, ["Animaux"]], ["Vache noire et blanche", 0, ["Animaux"]], ["Léopard", 0, ["Animaux"]], ["Léopard rose", 0, ["Tout rose", "Animaux"]], ["Tigre", 0, ["Animaux"]], ["Tigre blanc", 0, ["Animaux"]], ["Dalmatien", 0, ["Animaux"]], ["Uni vert", 0, ["Couleur simple"]], ["Uni bleu", 0, ["Couleur simple"]], ["Uni rose", 0, ["Couleur simple"]], ["Uni beige", 0, ["Couleur simple"]], ["Uni lilas", 0, ["Couleur simple"]], ["Uni pêche", 0, ["Couleur simple"]], ["Uni crème", 0, ["Couleur simple"]], ["Uni blanc", 0, ["Couleur simple"]], ["Uni noir", 1, ["Couleur simple"]], ["Rayures nuit", 1, ["Élégants", "Dark"]], ["Dentelle noire", 1, ["Élégants", "Dark"]], ["Carreaux nuit", 1, ["Dark"]], ["Spirale", 0, ["Dark"]], ["Traits crème sur noir", 1, ["Dark"]], ["Cœurs bulle", 1, ["Tout rose", "Dark"]], ["Rayures roses", 0, ["Tout rose"]], ["Quadrillage crème", 0, ["Douceur"]], ["Quadrillage cœurs", 0, ["Tout rose", "Mignons"]], ["Fleurettes roses", 0, ["Douceur"]], ["Petites poires", 0, ["Mignons"]], ["Étoiles lavande", 0, ["Douceur"]], ["Nœuds roses", 0, ["Tout rose", "Mignons"]], ["Fleurs noires", 0, ["Élégants", "Dark"]], ["Journal déchiré", 0, ["Vintage"]], ["Apothicaire", 0, ["Vintage"]], ["Stickers disco", 0, ["Y2K"]], ["Étoiles chrome", 0, ["Y2K"]], ["Myrtilles aquarelle", 0, ["Douceur", "Mignons"]], ["Étoiles bleu roi", 0, ["Mignons"]], ["Mosaïque ondulée", 0, ["Bohème"]], ["Rayures moka", 0, ["Élégants"]], ["Rayures bleu ciel", 0, ["Douceur"]], ["Éclaboussures", 0, ["Douceur"]], ["Éclaboussures sur marine", 1, ["Élégants"]], ["Damier chocolat", 0, ["Bohème"]], ["Damier lin", 0, ["Élégants"]], ["Petits fruits", 0, ["Mignons"]], ["Traits crème sur bordeaux", 1, ["Dark"]], ["Traits crème sur vert sapin", 1, ["Dark"]], ["Traits crème sur marine", 1, ["Dark"]], ["Traits terracotta sur crème", 0, ["Bohème"]], ["Fleurettes bleues", 0, ["Douceur"]], ["Fleurettes jaunes sur vert d'eau", 0, ["Douceur"]], ["Fleurettes lilas", 0, ["Douceur"]], ["Fleurettes blanches sur vert", 0, ["Mignons"]], ["Losanges rayés", 0, ["Élégants", "Douceur"]], ["Carreaux émaillés verts", 1, ["Élégants", "Dark"]], ["Chaussons de danse", 0, ["Élégants", "Tout rose", "Douceur", "Mignons"]], ["Boules disco beige", 0, ["Élégants", "Y2K"]], ["Dalmatien aquarelle", 0, ["Animaux"]], ["Sardines aquarelle", 0, ["Douceur", "Animaux", "Mer"]], ["Myrtilles en branches", 0, ["Douceur"]], ["Petites roses", 0, ["Douceur", "Vintage"]], ["Rayures citron", 0, ["Mignons"]], ["Damier marine", 0, ["Élégants", "Bohème"]], ["Azulejos étoilés", 0, ["Bohème"]], ["Coquillages et perles", 0, ["Douceur", "Mer"]], ["Mer et soleil", 0, ["Bohème", "Mer"]], ["Ciel aquarelle", 1, ["Dark"]], ["Tulipes médaillons", 0, ["Tout rose", "Vintage"]], ["Rose coquette", 0, ["Tout rose", "Mignons"]], ["Lapins et cerises", 0, ["Tout rose", "Mignons"]], ["Damier ondulé fleuri", 0, ["Douceur", "Y2K", "Mignons"]], ["Roses floues", 1, ["Tout rose", "Dark"]], ["Guitares sur damier", 0, ["Y2K", "Rock"]], ["Vinyles vintage", 1, ["Dark", "Rock"]], ["Vinyles noir et crème", 0, ["Rock"]], ["Oliviers et hirondelles", 0, ["Élégants", "Vintage"]], ["Homards et coraux", 0, ["Mignons", "Mer"]], ["Figues", 0, ["Douceur", "Vintage"]], ["Café et croissants", 0, ["Tout rose", "Douceur", "Mignons"]], ["Soleils baroques", 1, ["Bohème", "Dark"]], ["Soleil, lune et mains", 0, ["Bohème", "Vintage"]], ["Coquillages en dentelle", 0, ["Élégants", "Mer"]], ["Quartz fumé", 0, ["Élégants"]], ["Fleurs bleues sur damier", 0, ["Douceur", "Mignons"]], ["Vagues qui bougent", 0, ["Douceur", "Mer", "Qui bougent"]], ["Étoiles filantes", 1, ["Dark", "Qui bougent"]], ["Paillettes dorées", 1, ["Élégants", "Dark", "Qui bougent"]], ["Lucioles", 1, ["Dark", "Qui bougent"]], ["Cerises qui tombent", 0, ["Mignons", "Qui bougent"]], ["Nœuds qui flottent", 0, ["Tout rose", "Douceur", "Qui bougent"]], ["Reflets disco", 1, ["Y2K", "Qui bougent"]], ["Pois beige", 0, ["Élégants", "Douceur", "Couleur simple"]], ["Pois sable", 0, ["Élégants", "Couleur simple"]], ["Graffiti", 1, ["Dark", "Rock"]], ["Western", 0, ["Bohème", "Vintage"]], ["Chrome liquide", 1, ["Y2K", "Dark", "Rock"]], ["Fleurs seventies", 0, ["Bohème", "Vintage"]], ["Étoiles holographiques", 1, ["Y2K", "Dark"]], ["Lierre et fougères", 1, ["Élégants", "Bohème", "Dark"]], ["Cœurs de verre", 0, ["Tout rose", "Y2K", "Mignons"]], ["Dentelle bordeaux", 1, ["Élégants", "Dark"]], ["Cerises vichy", 0, ["Douceur", "Mignons", "Vintage"]], ["Léopard fourrure", 0, ["Animaux"]], ["Méduses", 1, ["Dark", "Mer"]], ["Zodiaque doré", 1, ["Élégants", "Bohème", "Dark"]], ["Mont Fuji et sakura", 0, ["Élégants", "Douceur", "Bohème"]], ["Forêt de bambous", 0, ["Bohème"]], ["Vitrail lune et étoiles", 1, ["Bohème", "Dark"]], ["Vitrail hirondelles et roses", 0, ["Bohème", "Vintage"]], ["Sardines et citrons", 0, ["Vintage", "Mer"]], ["Azulejo bleu", 0, ["Élégants", "Vintage"]], ["Jean et épingles", 1, ["Dark", "Rock"]], ["Nacre irisée", 0, ["Élégants", "Douceur", "Y2K", "Mer"]], ["Citrons et rubans", 0, ["Douceur", "Mignons", "Vintage"]], ["Zèbre peint", 0, ["Élégants", "Animaux"]], ["Récif corallien", 1, ["Dark", "Mer"]], ["Boules disco sur velours", 1, ["Tout rose", "Y2K", "Dark"]], ["Nature morte aux figues", 1, ["Élégants", "Dark", "Vintage"]], ["Teckels dans l’herbe", 0, ["Animaux", "Mignons", "Vintage"]], ["Vagues chocolat et rose", 0, ["Tout rose", "Mignons", "Couleur simple"]], ["Bleuets et marguerites", 0, ["Douceur", "Bohème"]], ["Agrumes", 0, ["Y2K"]], ["Vélos fleuris", 0, ["Mignons", "Vintage"]], ["Vagues noir et blanc", 1, ["Élégants", "Dark", "Mer"]], ["Shibori indigo", 1, ["Bohème", "Mer"]], ["Dragons bleus", 0, ["Élégants", "Vintage"]], ["Hibiscus corail", 0, ["Bohème", "Vintage"]], ["Damier rose et chrome", 0, ["Tout rose", "Y2K"]], ["Espace", 1, ["Y2K", "Mignons", "Dark"]], ["Lavande séchée", 0, ["Élégants", "Douceur", "Bohème"]], ["Hot Girls Club étoiles", 0, ["Y2K", "Phrases"]], ["Papillons pastel", 0, ["Douceur"]], ["Pois jaunes sur corail", 0, ["Mignons", "Vintage"]], ["Pois chocolat", 0, ["Mignons", "Vintage"]], ["Étoiles sur cacao", 1, ["Élégants", "Dark"]], ["Raquettes de tennis", 0, ["Tout rose", "Mignons"]], ["Nœuds verts sur lilas", 0, ["Douceur", "Mignons"]], ["Muguet et nœuds marine", 0, ["Élégants", "Vintage"]], ["Rayures ondulées vert anis", 0, ["Douceur", "Bohème"]], ["Nuages et étoiles lilas", 0, ["Douceur"]], ["Roses sur bleu gris", 0, ["Élégants", "Vintage"]], ["Roses et croix bordeaux", 1, ["Dark"]], ["Vagues chocolat et jaune", 0, ["Y2K", "Vintage"]], ["Soleils endormis", 0, ["Douceur", "Bohème"]], ["Café et croissants", 0, ["Tout rose", "Douceur", "Mignons"]], ["Tulipes sur bordeaux", 1, ["Élégants", "Vintage"]], ["Bouquets de tulipes", 0, ["Douceur"]], ["Fraises vichy", 0, ["Tout rose", "Mignons"]], ["Marguerites vichy vert", 0, ["Bohème", "Mignons"]], ["Toile de Jouy bleue", 0, ["Élégants", "Vintage"]], ["Diamants sur violet nuit", 1, ["Y2K", "Dark"]], ["Étincelles sur bordeaux", 1, ["Élégants", "Dark"]], ["Flammes roses sur noir", 1, ["Y2K", "Dark", "Rock"]], ["Grandes fleurs corail", 0, ["Mignons", "Vintage"]], ["Fleurs crème sur bleu", 0, ["Douceur", "Vintage"]], ["Cool Girls Club", 0, ["Phrases"]], ["Fraises et nœuds bleus", 0, ["Douceur", "Mignons"]], ["Fleurs blanches sur rouge", 0, ["Mignons", "Vintage"]], ["Hortensias bleus", 0, ["Élégants", "Douceur"]], ["Léopard rose", 0, ["Tout rose", "Animaux"]], ["Lunes sur bleu nuit", 1, ["Bohème", "Dark"]], ["Matcha latte", 0, ["Douceur", "Mignons"]], ["Mini fleurs bleues", 0, ["Élégants", "Douceur"]], ["Lucky Girl", 0, ["Phrases"]], ["Hot Girls Club rose", 0, ["Tout rose", "Phrases"]], ["Nœuds bleus", 0, ["Douceur", "Mignons"]], ["Nœuds rouges sur rose", 0, ["Tout rose", "Mignons"]], ["Nœuds lilas sur jaune", 0, ["Douceur", "Mignons"]], ["Vagues bordeaux et lilas", 0, ["Y2K", "Vintage"]], ["Oranges et étoiles", 0, ["Mignons", "Vintage"]], ["Chaussons de danse", 0, ["Élégants", "Tout rose", "Douceur", "Mignons"]], ["Bisous rouges", 0, ["Tout rose", "Mignons"]], ["Branches d’olivier", 0, ["Élégants", "Bohème"]], ["Cœurs festonnés", 0, ["Mignons", "Vintage"]], ["Carreaux caramel", 0, ["Élégants", "Vintage"]], ["Cerises et nœuds bleus", 0, ["Mignons", "Vintage"]], ["Cerises sur léopard gris", 0, ["Animaux", "Mignons"]], ["Cœurs argent sur noir", 1, ["Dark", "Rock"]], ["Notes de musique", 0, ["Mignons", "Vintage"]], ["Dentelle et perles pêche", 0, ["Élégants", "Douceur"]], ["Cœurs brodés sur lin", 0, ["Élégants", "Douceur"]], ["Vichy bleu et cœurs", 0, ["Douceur", "Mignons"]], ["Coquillages sur terracotta", 0, ["Bohème", "Mer"]], ["Tribal gris fumé", 1, ["Y2K", "Dark", "Rock"]], ["Cygnes et muguet", 0, ["Élégants", "Douceur"]], ["Damier fleuri bleu et pêche", 0, ["Y2K", "Mignons"]], ["Damier ondulé chocolat", 0, ["Y2K", "Mignons"]], ["Dés et nœuds rouges", 0, ["Tout rose", "Y2K"]], ["Boules disco roses", 1, ["Tout rose", "Y2K", "Dark"]], ["IT GIRL", 0, ["Y2K", "Phrases"]], ["Oranges et fleurs bleues", 0, ["Bohème", "Vintage"]], ["Œil bleu sur jaune", 0, ["Bohème", "Mignons"]], ["Tribal noir sur lilas", 0, ["Y2K", "Rock"]], ["Chrome noir", 1, ["Y2K", "Dark", "Rock"]], ["Orbites argent", 1, ["Y2K", "Dark"]], ["Hot Girls Club noir", 1, ["Phrases", "Dark"]], ["Perles sur chocolat", 1, ["Élégants", "Dark"]], ["Zèbre chocolat", 0, ["Animaux"]], ["Framboises rayées", 0, ["Mignons", "Vintage"]], ["Fines rayures vert sapin", 1, ["Élégants", "Dark"]], ["Vagues kaki sur noir", 1, ["Dark", "Rock"]], ["Faïence bleue sur jaune", 0, ["Bohème", "Vintage"]], ["Roses en dentelle noire", 0, ["Élégants", "Dark"]], ["Nœuds bordeaux sur taupe", 0, ["Élégants"]], ["Étoiles noires sur crème", 0, ["Élégants", "Y2K"]], ["Satin bordeaux", 1, ["Élégants", "Dark"]], ["Tribal argent", 0, ["Y2K", "Rock"]], ["Carreaux fleuris bleu et ocre", 0, ["Bohème", "Vintage"]], ["Treillis fleuri rouille", 0, ["Bohème", "Vintage"]], ["Damier noir et crème", 0, ["Élégants", "Rock"]], ["Satin chocolat et nœuds dorés", 1, ["Élégants", "Dark"]], ["After Hours", 1, ["Phrases", "Dark"]], ["Épingles sur bordeaux", 1, ["Dark", "Rock"]], ["Jean noir et étoiles", 1, ["Dark", "Rock"]], ["Étoiles dorées sur marine", 1, ["Élégants", "Dark"]], ["Satin noir et étoiles", 1, ["Élégants", "Dark"]], ["Rose métallisé et étoiles", 0, ["Tout rose", "Y2K"]], ["Étoiles roses sur bordeaux", 1, ["Y2K", "Dark"]], ["Éventails art déco", 1, ["Élégants", "Dark"]], ["Flammes bleues", 1, ["Dark", "Rock"]], ["Flammes noires sur rouge", 1, ["Dark", "Rock"]], ["Grenades", 0, ["Bohème", "Vintage"]], ["Cadenas cœur", 0, ["Tout rose", "Mignons"]], ["Clés anciennes", 0, ["Douceur", "Vintage"]], ["Flacons de parfum", 0, ["Élégants", "Vintage"]], ["Grains de café", 1, ["Douceur", "Dark"]], ["Piments sur lilas", 0, ["Bohème", "Mignons"]], ["Léopard caramel", 0, ["Animaux"]], ["Écailles lilas", 0, ["Élégants", "Douceur"]], ["Arcs-en-ciel lilas sur chocolat", 1, ["Bohème", "Mignons"]], ["Losanges bordeaux et gris", 1, ["Élégants", "Vintage"]], ["Tricot rouge et menthe", 0, ["Mignons", "Vintage"]], ["Baddie Club", 0, ["Phrases"]], ["Bisous et étoiles sur gris", 0, ["Mignons", "Rock"]], ["Bisous noirs sur beige", 0, ["Élégants"]], ["Anneaux entrelacés", 0, ["Élégants"]], ["Cœurs jaunes sur prune", 1, ["Y2K", "Dark"]], ["Cœurs à piques sur violet", 1, ["Y2K", "Dark", "Rock"]], ["Cœurs d’épines rouges", 0, ["Dark", "Rock"]], ["Cœurs d’épines noirs", 0, ["Dark", "Rock"]], ["Damier ondulé bleu et noir", 0, ["Y2K", "Rock"]], ["Damier ondulé rose fluo", 0, ["Tout rose", "Y2K", "Rock"]], ["Lunes sur vert sapin", 1, ["Élégants", "Dark"]], ["Nœuds argent sur bordeaux", 1, ["Élégants", "Y2K", "Dark"]], ["Pied-de-poule chocolat", 0, ["Élégants", "Vintage"]], ["Nœuds chocolat et pois", 0, ["Élégants", "Douceur"]], ["Voiles caramel", 0, ["Élégants", "Douceur"]], ["Carreaux bordeaux", 1, ["Élégants", "Dark", "Vintage"]], ["Fines rayures dorées sur noir", 1, ["Élégants", "Dark"]]];   // [nom, sombre, catégories]
+const FORMES = [[1, "Amande"], [2, "Stiletto"], [3, "Carré"], [4, "Ovale"], [5, "Coffin"]];
+const UNE = { 1: "photo0.jpg", 2: "haut.jpg", 3: "magazine.webp", 4: "photo0.jpg", 5: "photo0.jpg" };
+const NOMS_POL = { elegante: "Élégante", manuscrite: "Manuscrite", ronde: "Ronde", retro: "Rétro", calligraphie: "Calligraphie", parisienne: "Parisienne", chic: "Chic", luxe: "Luxe", surf: "Années 60", seventies: "Seventies", bulle: "Bulle", bonbon: "Bonbon", y2k: "Y2K", gothique: "Gothique", feutre: "Feutre", moderne: "Moderne", mystique: "Mystique", romantique: "Romantique", astres: "Astres", danse: "Danse", vintage: "Vintage", satin: "Satin", doudou: "Doudou", mode: "Mode", magazine: "Magazine", affiche: "Affiche", guimauve: "Guimauve", relief: "Relief", pixel: "Pixel", artdeco: "Art déco", graffiti: "Graffiti", fondue: "Fondue", cinema: "Cinéma", feminine: "Féminine", pinup: "Pin-up", couture: "Couture", arrondie: "Arrondie", douce: "Douce", gala: "Gala" };
+const STYLES = {
+  classique: { formes: [1, 3, 4, 5], couleurs: ["lin", "greige", "nude", "poudre", "sable", "taupe", "noir", "sauge", "perle", "vanille", "cremedoree", "bordeaux", "marine", "choco", "caramel", "nacre"],
+    polices: ["elegante", "chic", "luxe", "parisienne", "calligraphie", "moderne", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce"],
+    cats: ["Élégants", "Douceur", "Couleur simple"], pail: ["non", "non", "nacre"], charms: [0, 0] },
+  ouf: { formes: [1, 2, 3, 4, 5], couleurs: ["rose", "lilas", "cerise", "framboise", "turquoise", "corail", "jaune", "menthe", "glycine", "lavande", "abricot", "noir", "prune", "ciel", "rosep", "bleup"],
+    polices: ["bulle", "bonbon", "y2k", "gothique", "feutre", "retro", "surf", "seventies", "doudou", "affiche", "guimauve", "relief", "pixel", "graffiti", "fondue", "cinema", "pinup", "arrondie", "mystique", "astres", "magazine"],
+    cats: ["Y2K", "Mignons", "Tout rose", "Vintage", "Bohème", "Rock", "Animaux", "Phrases", "Mer", "Qui bougent", "Fêtes"], pail: ["or", "argent", "holo", "nacre"], charms: [3, 5] } };
+const CHARMS = ["fraisegelee", "oeilbleu", "fleursixties", "couronnestrass", "consoleviolette", "perle", "canard", "levresgrillz", "boule8", "etoiledemerperles", "cristal", "chocolat", "hibiscus", "minaudiere", "cerisesor", "bouledisco", "ceriseruban", "fraiseperle", "noeudgelee", "coeurchrome", "martien", "planete", "papillondore", "soleil", "coeurlilas", "oursonlilas", "etoilelilas", "levres", "coeurleopard", "coeurzebre", "cerisesbordeaux", "fleurgelee", "soleilvisage", "lunesoleil", "coeursoleil", "cerisedisco"];
+const hasard = l => l[Math.floor(Math.random() * l.length)];
+const melange = l => l.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+let genre = "classique", paquet = [], i = 0, coeurs = [], choix = null, dejaFonds = new Set();
+
+function propose(g) {
+  const S = STYLES[g === "mix" ? (Math.random() < .5 ? "classique" : "ouf") : g];
+  const f = hasard(S.formes), pool = FONDS.filter(x => !x[1] && x[2].some(c => S.cats.includes(c)) && !dejaFonds.has(x[0]));
+  const fond = pool.length ? hasard(pool)[0] : ""; dejaFonds.add(fond);
+  const n = g === "mix" ? Math.floor(Math.random() * 3) : S.charms[0] + Math.floor(Math.random() * (S.charms[1] - S.charms[0] + 1));
+  const p = { forme: f, couleur: hasard(S.couleurs), police: hasard(S.polices), fond, pail: hasard(S.pail), charms: melange(CHARMS).slice(0, n) };
+  p.q = `nouveau&exemple=dilerna&style=${f >= 4 ? 1 : f}${f === 4 ? "&epure=1" : ""}${f === 5 ? "&coffin=1" : ""}&couleur=${p.couleur}&mode=jour&une=${UNE[f]}${fond ? "&fond=" + encodeURIComponent(fond) : ""}&police=${p.police}&paillettes=${p.pail}${n ? "&charm=" + p.charms.join(",") : ""}&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise`;
+  return p;
+}
+const src = (p, pub = true) => "loginail-creer/pret.html?" + (pub ? "public&" : "") + p.q;
+const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classList.toggle("on", e.id === id));
+function carteHtml(p) {
+  const c = document.createElement("div"); c.className = "carte";
+  c.innerHTML = `<iframe loading="eager" title="Proposition"></iframe><div class="tampon oui">GARDÉ ♥</div><div class="tampon non">PASSÉ</div>
+    <div class="info"><span>${FORMES.find(x => x[0] === p.forme)[1]}</span>${p.fond ? `<span>${p.fond}</span>` : ""}<span>${NOMS_POL[p.police] || p.police}</span></div><div class="prise"></div>`;
+  const fr = c.querySelector("iframe"); fr.onload = () => cache(fr); fr.src = src(p); c._p = p; return c;
+}
+function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(st); } catch (e) {} }
+function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"); f.style.transform = `scale(${c.clientWidth / 390})`; f.style.height = (c.clientHeight / (c.clientWidth / 390)) + "px"; }); }
+function lancePaquet() { paquet = Array.from({ length: 12 }, () => propose(genre)); i = 0; $("zone").innerHTML = ""; place(); montre("paquet"); }
+function place() {
+  const z = $("zone"); [...z.children].forEach(c => { if (c._n < i) c.remove(); });
+  for (let k = i; k < Math.min(i + 3, paquet.length); k++) if (![...z.children].some(c => c._n === k)) { const c = carteHtml(paquet[k]); c._n = k; z.prepend(c); }
+  [...z.children].forEach(c => { c.classList.toggle("dessous", c._n === i + 1); c.classList.toggle("cache", c._n > i + 1); c.style.zIndex = 100 - c._n; });
+  $("pos").textContent = `${Math.min(i + 1, paquet.length)} / ${paquet.length}`; $("nbC").textContent = coeurs.length;
+  requestAnimationFrame(echelle); branche(z.querySelector(".carte:last-child"));
+  if (i >= paquet.length) finPaquet();
+}
+function vote(oui) {
+  const c = [...$("zone").children].find(x => x._n === i); if (!c) return;
+  if (oui) { coeurs.push(paquet[i]); $("compte").classList.remove("hop"); void $("compte").offsetWidth; $("compte").classList.add("hop"); }
+  c.querySelector(".tampon." + (oui ? "oui" : "non")).style.opacity = 1;
+  c.style.transition = "transform .45s ease-in, opacity .45s"; c.style.transform = `translateX(calc(-50% + ${oui ? 520 : -520}px)) rotate(${oui ? 22 : -22}deg)`; c.style.opacity = 0;
+  i++; setTimeout(place, 260);
+}
+function branche(c) {
+  if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"); let x0 = null, y0 = 0, dx = 0, bouge = false;
+  let sens = null, top0 = 0;
+  const boite = () => { try { const d = c.querySelector("iframe").contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
+  pr.onpointerdown = e => { if (c._n !== i) return; x0 = e.clientX; y0 = e.clientY; dx = 0; sens = null; top0 = boite()?.scrollTop || 0; pr.setPointerCapture(e.pointerId); c.style.transition = "none"; };
+  pr.onpointermove = e => { if (x0 == null) return; dx = e.clientX - x0; const dy = e.clientY - y0;
+    if (!sens && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sens = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    if (sens === "y") { const b = boite(), k = c.clientWidth / 390; if (b) b.scrollTop = top0 - dy / k; return; }
+    if (sens !== "x") return;
+    c.style.transform = `translateX(calc(-50% + ${dx}px)) rotate(${dx / 18}deg)`; c.querySelector(".tampon.oui").style.opacity = Math.max(0, dx / 110); c.querySelector(".tampon.non").style.opacity = Math.max(0, -dx / 110); };
+  pr.onpointerup = () => { if (x0 == null) return; x0 = null; c.style.transition = "";
+    if (sens === "x" && dx > 90) return vote(true); if (sens === "x" && dx < -90) return vote(false);
+    c.style.transform = ""; c.querySelectorAll(".tampon").forEach(t => t.style.opacity = 0); };
+  pr.onwheel = e => { const b = boite(); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } };
+}
+$("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
+/* « je préfère tout créer moi-même » : un site simple de son style, et directement la personnalisation */
+const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=non", ouf: "style=2&couleur=rose&police=bonbon&paillettes=nacre", mix: "style=1&couleur=poudre&police=chic&paillettes=non" };
+$("moi").onclick = () => { location.href = "maquette-perso.html?src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&exemple=dilerna&" + BASE_STYLE[genre] + "&mode=jour&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"); };
+$("compte").onclick = finPaquet;
+$("retourQ").onclick = () => montre("q");
+document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; lancePaquet(); });
+function finPaquet() {
+  const z = $("carrou"); z.innerHTML = ""; $("ptsC").innerHTML = "";
+  $("sousC").textContent = coeurs.length ? "Glissez pour les revoir. Gardez celui que vous préférez : vous pourrez encore tout personnaliser." : "Aucun coup de cœur pour l’instant. On vous en propose d’autres ?";
+  $("enl").hidden = $("perso").hidden = !coeurs.length;
+  coeurs.forEach((p, k) => { const sl = document.createElement("div"); sl.className = "slide"; const c = carteHtml(p); c.querySelector(".tampon.oui").remove(); c.querySelector(".tampon.non").remove();
+    c.insertAdjacentHTML("afterbegin", ""); sl.appendChild(c); z.appendChild(sl); branche2(c); $("ptsC").insertAdjacentHTML("beforeend", `<i class="${k ? "" : "on"}"></i>`); });
+  montre("coeurs"); requestAnimationFrame(dimCarrou);
+}
+const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
+const courant = () => Math.round($("carrou").scrollLeft / pas());
+function dimCarrou() { const z = $("carrou"), h = Math.max(260, z.clientHeight - 8), w = Math.min(z.clientWidth * .72, h * 390 / 760);
+  z.style.setProperty("--w", w + "px"); z.style.setProperty("--h", (w * 760 / 390) + "px"); requestAnimationFrame(() => { echelle(); effet(); }); }
+function effet() { const z = $("carrou"), p = pas(); [...z.children].forEach((sl, n) => { const d = Math.min(1, Math.abs(n * p - z.scrollLeft) / p); sl.style.transform = `scale(${1 - .12 * d})`; sl.style.opacity = 1 - .45 * d; });
+  const k = courant(); [...$("ptsC").children].forEach((x, n) => x.classList.toggle("on", n === k)); }
+$("carrou").addEventListener("scroll", effet, { passive: true });
+/* dans le carrousel : glisser à gauche / à droite = changer de site (le carrousel s'en charge), la molette ou le pouce vertical = faire défiler le site */
+function branche2(c) { const pr = c.querySelector(".prise"); pr.style.touchAction = "pan-x";
+  const boite = () => { try { const d = c.querySelector("iframe").contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
+  let y0 = null, x0 = 0, top0 = 0, sens = null, sl0 = 0; const z = $("carrou");
+  pr.onpointerdown = e => { y0 = e.clientY; x0 = e.clientX; sens = null; top0 = boite()?.scrollTop || 0; sl0 = z.scrollLeft; if (e.pointerType === "mouse") pr.setPointerCapture(e.pointerId); };
+  pr.onpointermove = e => { if (y0 == null) return; const dy = e.clientY - y0, dx = e.clientX - x0; if (!sens && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sens = Math.abs(dy) > Math.abs(dx) ? "y" : "x";
+    if (sens === "y") { const b = boite(); if (b) b.scrollTop = top0 - dy / (c.clientWidth / 390); }
+    if (sens === "x" && e.pointerType === "mouse") { z.style.scrollSnapType = "none"; z.scrollLeft = sl0 - dx; } };
+  pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 400); } y0 = null; };
+  pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boite(); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
+$("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); finPaquet(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 50); };
+$("encore").onclick = lancePaquet;
+$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?src=" + encodeURIComponent(src(p, false)); };
+addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) dimCarrou(); });
+</script>
+</body></html>
