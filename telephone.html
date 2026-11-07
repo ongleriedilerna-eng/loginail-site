@@ -209,6 +209,29 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .ios-safari .ch-bas{bottom:calc(70px + env(safe-area-inset-bottom))}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.vu{opacity:1;transform:none}}
 </style><link href="loginail-site/polices-sites.css" rel="stylesheet"></head><body>
+<div id="intro" aria-hidden="true"><div class="in-l"><img src="loginail-site/intro/f2.webp" alt=""><img src="loginail-site/intro/f5.webp" alt=""><img src="loginail-site/intro/f3.webp" alt=""><img src="loginail-site/intro/f4.webp" alt=""><img src="loginail-site/intro/f7.webp" alt=""><img src="loginail-site/intro/f8.webp" alt=""><img src="loginail-site/intro/f1.webp" alt=""><img class="vrai" src="loginail-site/intro/f6.webp" alt=""></div><b>Loginail</b></div>
+<style>/* 07/11 (Marie) : l'entrée — fond noir, les formes d'ongles défilent vite, puis le vrai logo et « Loginail » */
+#intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:opacity .5s;cursor:pointer}
+#intro.part{opacity:0;pointer-events:none}
+#intro .in-l{position:relative;width:min(62vw,250px);aspect-ratio:402/192}
+#intro img{position:absolute;inset:0;width:100%;height:100%;opacity:0;filter:brightness(0)}
+#intro img.on{opacity:1;filter:none;transition:opacity .09s,filter .09s}
+#intro img.vrai.on{transition:opacity .45s,filter .45s}
+#intro b{font:500 15px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F3EEE8;opacity:0;transform:translateY(6px);transition:opacity .6s,letter-spacing .9s,transform .6s}
+#intro b.on{opacity:1;letter-spacing:.42em;transform:none}
+html.sans-intro #intro{display:none}</style>
+<script>(function(){var d=document.documentElement,v=0;try{v=!/[?&]intro/.test(location.search)&&sessionStorage.getItem("introVue")}catch(e){}
+if(v||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){d.classList.add("sans-intro");return}
+try{sessionStorage.setItem("introVue","1")}catch(e){}
+var o=document.getElementById("intro"),im=o.querySelectorAll("img"),b=o.querySelector("b"),fini=0,T=[];
+d.style.overflow="hidden";
+function fin(){if(fini)return;fini=1;T.forEach(clearTimeout);o.classList.add("part");d.style.overflow="";setTimeout(function(){o.remove()},600)}
+o.addEventListener("click",fin);
+function go(){if(go.d)return;go.d=1;var t=250;for(var i=0;i<im.length;i++)(function(i){T.push(setTimeout(function(){if(i)im[i-1].classList.remove("on");im[i].classList.add("on")},t));t+=i<im.length-2?135:170})(i);
+ T.push(setTimeout(function(){b.classList.add("on")},t+350));T.push(setTimeout(fin,t+1700))}
+var n=0,pret=function(){if(++n==im.length)go()};
+for(var i=0;i<im.length;i++){if(im[i].complete)pret();else{im[i].onload=im[i].onerror=pret}}
+T.push(setTimeout(function(){if(n<im.length){n=im.length-1;pret()}},1500))})()</script>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
 
 <section class="hero">
