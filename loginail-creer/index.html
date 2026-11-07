@@ -333,7 +333,7 @@ $("creer").onclick = () => {
 const verifie = () => { const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || ""; $("lien").classList.toggle("reconnue", estGoogle(l)); if (estGoogle(l)) msg.textContent = ""; };
 champLien.addEventListener("input", verifie);
 // les 3 petits téléphones : des sites qui changent tout seuls
-{const S=["chrome","tpl-maisonnoire","mignon","pop","y2k","clean","sixties","tpl-studiopoudre","tpl-maisonsauge","pastel","baddie","tpl-maisonmoka"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");
+{const S=["chrome","cerise","tpl-studiopoudre","pop","gothique","clean","sixties","tropical","tpl-maisonsauge","baroque","y2k","sirene","baddie","tpl-maisonnoire","japon","feerique","pastel","boheme","street","tpl-maisonmoka","celeste","emo","tpl-atelierronce","bling","riviera"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");
  const T=[...document.querySelectorAll("#tels .t div")],z=$("tels");let k=0,n=2;
  T.forEach((d,j)=>{for(let n=0;n<2;n++){const im=new Image();im.alt="";d.appendChild(im)}const a=d.children[0];a.src=S[j];a.className="on"});
  const tour=()=>{if(document.hidden||!$("lien").classList.contains("on"))return;k++;const j=k%3,d=T[j],[a,b]=d.children,vis=a.classList.contains("on")?a:b,cach=vis===a?b:a;
