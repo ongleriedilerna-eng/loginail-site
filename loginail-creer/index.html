@@ -45,6 +45,25 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .collee .msg:empty{display:none}
 .lien{position:relative}
 .lien .champ{padding-right:104px;padding-top:16px;padding-bottom:16px}
+/* 07/11 : 3 petits téléphones qui montrent des sites, la fiche reconnue en vert, l'aide qui ouvre Google Maps */
+.tels{position:relative;height:178px;margin:22px auto 0;width:100%;flex:none}
+.tels .t{position:absolute;top:14px;left:50%;width:72px;aspect-ratio:420/909;border-radius:13px;background:#1E1C1B;padding:3px;box-shadow:0 14px 26px -12px rgba(30,28,27,.45);transition:transform .6s cubic-bezier(.3,1.3,.5,1)}
+.tels .t div{width:100%;height:100%;border-radius:10px;overflow:hidden;background:#EDE7E0;position:relative}
+.tels .t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.tels .t img.on{opacity:1}
+.tels .g{transform:translateX(-128%) rotate(-9deg)}
+.tels .d{transform:translateX(28%) rotate(9deg)}
+.tels .m{top:0;width:80px;transform:translateX(-50%);z-index:2}
+.tels.hop .g{transform:translateX(-136%) rotate(-12deg) translateY(4px)}
+.tels.hop .d{transform:translateX(36%) rotate(12deg) translateY(4px)}
+.rassure{margin:0;text-align:center;font:300 12.5px Jost,sans-serif;color:var(--muted);letter-spacing:.02em}
+.ok-g{display:none;align-items:center;justify-content:center;gap:7px;margin:0 6px;font:400 14px Jost,sans-serif;color:#2F7A4A}
+.ok-g i{width:18px;height:18px;border-radius:50%;background:#2F7A4A;color:#fff;font:600 11px/18px Jost,sans-serif;font-style:normal;text-align:center}
+.reconnue .ok-g{display:flex}
+.reconnue .lien .champ{border-color:#2F7A4A}
+.aide:not(.ouvert) .maps{display:none}
+.maps svg{width:13px;height:16px}
+.maps{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0 0 16px;border:1px solid rgba(30,28,27,.25);border-radius:999px;padding:12px;background:#fff;font:400 13px Jost,sans-serif;letter-spacing:.06em;color:var(--noir);text-decoration:none}
 .coller{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;border-radius:999px;background:var(--fond);padding:9px 14px;font:400 12px Jost,sans-serif;letter-spacing:.14em}
 .msg{min-height:22px;margin:12px 4px 0;font:300 14px/1.45 Jost,sans-serif;color:var(--noir)}
 .aide{margin-top:18px;background:var(--surface);border-radius:22px;padding:4px 18px}
@@ -179,13 +198,16 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
   <section class="ecran on" id="lien">
     <div data-logo></div>
     <h1>Votre site,<br>prêt à <span class="mot" id="mot"><span class="mt">briller</span><img id="motCh" alt=""></span>.</h1>
-    <p class="sous">Collez le lien de votre fiche Google Maps : on y lit votre nom, vos horaires, vos avis et vos photos. Votre site est prêt en 1 minute.</p>
+    <p class="sous">Collez le lien de votre fiche Google Maps : on y lit votre nom, vos horaires, vos avis et vos photos.</p>
+    <div class="tels" id="tels" aria-hidden="true"><div class="t g"><div></div></div><div class="t d"><div></div></div><div class="t m"><div></div></div></div>
     <div class="aide"><button type="button" id="aideB">Où trouver mon lien ?<i></i></button>
-      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon.</li><li>Touchez <b>Partager</b>, puis <b>Copier le lien</b>.</li><li>Revenez ici, restez appuyée dans la case et touchez <b>Coller</b>.</li></ol></div>
+      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon.</li><li>Touchez <b>Partager</b>, puis <b>Copier le lien</b>.</li><li>Revenez ici, restez appuyée dans la case et touchez <b>Coller</b>.</li></ol><a class="maps" href="https://www.google.com/maps" target="_blank" rel="noopener"><svg viewBox="0 0 13 16" aria-hidden="true"><path d="M6.5 0A6.5 6.5 0 0 0 0 6.5C0 11 6.5 16 6.5 16S13 11 13 6.5A6.5 6.5 0 0 0 6.5 0Zm0 9A2.5 2.5 0 1 1 6.5 4a2.5 2.5 0 0 1 0 5Z" fill="#1E1C1B"/></svg>Ouvrir Google Maps</a></div>
     <div class="bas"><div class="collee">
       <p class="msg" id="msg" role="status"></p>
+      <p class="ok-g"><i>✓</i>Fiche Google reconnue</p>
       <div class="lien"><input class="champ" id="champLien" type="url" inputmode="url" autocomplete="off" placeholder="Le lien de votre fiche Google"><button class="coller" type="button" id="coller">CRÉER</button></div>
-      <button class="go" type="button" id="creer">CRÉER MON SITE</button></div>
+      <button class="go" type="button" id="creer">CRÉER MON SITE</button>
+      <p class="rassure">Gratuit · sans carte bancaire · prêt en 1 minute</p></div>
       <button class="passer" type="button" id="sansGoogle">Je n’ai pas de fiche Google</button></div>
   </section>
 
@@ -307,6 +329,17 @@ $("creer").onclick = () => {
   if (!estGoogle(l)) { msg.textContent = "Ce lien ne vient pas de Google Maps. Touchez « Où trouver mon lien ? »."; return; }
   msg.textContent = ""; lance(l);
 };
+// la fiche est reconnue dès que le lien collé vient de Google Maps
+const verifie = () => { const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || ""; $("lien").classList.toggle("reconnue", estGoogle(l)); if (estGoogle(l)) msg.textContent = ""; };
+champLien.addEventListener("input", verifie);
+// les 3 petits téléphones : des sites qui changent tout seuls
+{const S=["chrome","tpl-maisonnoire","mignon","pop","y2k","clean","sixties","tpl-studiopoudre","tpl-maisonsauge","pastel","baddie","tpl-maisonmoka"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");
+ const T=[...document.querySelectorAll("#tels .t div")],z=$("tels");let k=0,n=2;
+ T.forEach((d,j)=>{for(let n=0;n<2;n++){const im=new Image();im.alt="";d.appendChild(im)}const a=d.children[0];a.src=S[j];a.className="on"});
+ const tour=()=>{if(document.hidden||!$("lien").classList.contains("on"))return;k++;const j=k%3,d=T[j],[a,b]=d.children,vis=a.classList.contains("on")?a:b,cach=vis===a?b:a;
+   cach.src=S[++n%S.length];const f=()=>{cach.classList.add("on");vis.classList.remove("on")};cach.decode?cach.decode().then(f,f):f();
+   if(j===2){z.classList.add("hop");setTimeout(()=>z.classList.remove("hop"),700)}};
+ setInterval(tour,1300)}
 champLien.addEventListener("keydown", e => { if (e.key === "Enter") $("creer").click(); });
 $("sansGoogle").onclick = () => { B.source = "main"; prepareManque(); montre("manque"); };
 
