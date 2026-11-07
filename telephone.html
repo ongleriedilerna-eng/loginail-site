@@ -126,17 +126,22 @@ html,body,button,a,input{touch-action:manipulation}
 .bascule button.on{color:#fff}.styl[data-l="uni"] .bascule .curseur{transform:translateX(100%);background:#fff}.styl[data-l="uni"] .bascule button.on{color:var(--noir)}
 .st-tel{position:relative;display:block;width:min(48vw,184px);aspect-ratio:390/844;margin:0 auto;border-radius:28px;border:5px solid var(--noir);background:#fff;overflow:hidden;box-shadow:0 34px 56px -30px rgba(0,0,0,.55)}
 .st-aide{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--doux);margin:-6px 0 14px}.styl[data-l="uni"] .st-aide{color:rgba(246,243,239,.55)}
+.st-zone{position:relative;display:flex;align-items:center;justify-content:center;gap:14px}
+.st-fl{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(30,28,27,.18);background:rgba(255,255,255,.7);color:inherit;font:300 22px/1 Jost;cursor:pointer;display:grid;place-items:center;padding:0 0 3px}
+.styl[data-l="uni"] .st-fl{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.06)}
+.formes{display:flex;gap:4px;overflow-x:auto;padding:14px 18px 6px;scrollbar-width:none;justify-content:safe center}.formes::-webkit-scrollbar{display:none}
+.formes button{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:60px;border:0;background:none;cursor:pointer;color:inherit;opacity:.45;font:500 9.5px Jost;letter-spacing:.1em;text-transform:uppercase;padding:0 2px;transition:opacity .3s}
+.formes svg{width:22px;height:34px;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}.formes svg path{fill:currentColor;opacity:.35;transition:opacity .3s}
+.formes button.on{opacity:1}.formes button.on svg{transform:translateY(-4px) scale(1.12)}.formes button.on svg path{opacity:1}
+.styl[data-l="uni"] .st-aide{color:rgba(246,243,239,.55)}
 .styl[data-l="uni"] .st-tel{border-color:#000;box-shadow:0 0 0 1.5px rgba(255,255,255,.15),0 34px 56px -26px rgba(0,0,0,.9)}
 .st-tel img{width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .35s}
 .st-tel iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;opacity:0;transition:opacity .5s}.st-tel iframe.pret{opacity:1}
 .st-tel iframe.pret{opacity:1}
 .st-nom{margin:12px 22px 2px;min-height:44px}.st-nom b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:24px;line-height:1}.st-nom small{display:block;font-size:12.5px;color:var(--doux);margin-top:5px}
 .styl[data-l="uni"] .st-nom small{color:rgba(246,243,239,.6)}
-.vign{display:flex;gap:8px;overflow-x:auto;padding:12px 22px 6px;scrollbar-width:none}.vign::-webkit-scrollbar{display:none}
 .vign::-webkit-scrollbar{display:none}
-.vign button{flex:none;border:1px solid rgba(30,28,27,.22);background:none;padding:10px 15px;border-radius:99px;font:500 11px Jost;letter-spacing:.14em;text-transform:uppercase;color:inherit;cursor:pointer;white-space:nowrap;transition:background .3s,color .3s,border-color .3s}
-.vign button.on{background:var(--noir);color:#fff;border-color:var(--noir)}
-.styl[data-l="uni"] .vign button{border-color:rgba(255,255,255,.25)}.styl[data-l="uni"] .vign button.on{background:#fff;color:var(--noir);border-color:#fff}
+.vign::-webkit-scrollbar{display:none}
 /* chiffres */
 .chif{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:56px 16px 54px}
 .chif div{text-align:center;background:#fff;border-radius:16px;padding:14px 4px}
@@ -160,6 +165,7 @@ html,body,button,a,input{touch-action:manipulation}
 .ch-bas{position:absolute;left:18px;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:3;text-align:center}.ch-bas .btn{width:100%}.ch-bas .k{margin-top:10px}
 /* pourquoi */
 .why{display:grid;gap:12px;margin-top:20px}
+.pique{margin:4px 0 6px;font-size:15px;line-height:1.45;color:#4a4440}.pique b{font-weight:500;color:var(--noir)}
 .why div{background:#fff;border-radius:20px;padding:20px 18px}
 .why b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;line-height:1.05;margin-bottom:6px}.why p{margin:0;font-size:14px;line-height:1.5;color:#4a4440}
 /* la recherche Google (exemple) */
@@ -267,10 +273,10 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 <section class="styl" id="styles" data-l="tpl">
   <div class="st-t"><div class="k">Votre style</div><h2 class="t2">Classe&nbsp;? <em>Ou baddie&nbsp;?</em></h2></div>
   <div class="bascule" role="tablist"><button class="on" data-l="tpl" role="tab">Classe</button><button data-l="uni" role="tab">Baddie</button><i class="curseur"></i></div>
-  <div class="st-aide">Faites glisser le site avec le doigt</div>
-  <div class="st-tel" id="stTel"><img id="stImg" alt=""></div>
+  <div class="st-aide">Choisissez une forme · faites glisser le site</div>
+  <div class="st-zone"><button class="st-fl" id="stPrec" aria-label="Site précédent">‹</button><div class="st-tel" id="stTel"><img id="stImg" alt=""></div><button class="st-fl" id="stSuiv" aria-label="Site suivant">›</button></div>
   <div class="st-nom"><b id="stNom"></b><small id="stSous"></small></div>
-  <div class="vign" id="vign"></div>
+  <div class="formes" id="vign"></div>
 </section>
 
 <section class="ch-pin" id="charms"><div class="p-ch">
@@ -282,7 +288,8 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 </div></section>
 
 <section class="sec vu" id="pourquoi">
-  <div class="k">Votre site. Pas une page d’annuaire.</div><h2 class="t2">Elle vous cherche.<br><em>Elle vous trouve.</em></h2>
+  <div class="k">Votre site. Pas une page d’annuaire.</div><h2 class="t2" style="font-size:clamp(28px,8.6vw,38px)">Elle vous cherche.<br><em style="white-space:nowrap">Elle ne trouve que vous.</em></h2>
+  <p class="pique">Votre concurrente est à 200 mètres.<br>Sur votre site, <b>elle n’existe pas.</b></p>
   <div class="goo" aria-hidden="true">
     <div class="goo-bar"><svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8"/></svg><span id="gooTxt"></span><i class="curs"></i></div>
     <div class="goo-res" id="gooRes"><small>lesonglesdecerise.fr</small><b>les Ongles de Cerise · Prothésiste ongulaire · Marseille</b><span>★★★★★ 5,0 · Pose gel, nail art, semi-permanent. Réservez en ligne, jour et nuit.</span><em>Réserver un créneau</em></div>
@@ -297,9 +304,9 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 
 <section class="sec" id="prix">
   <div class="prix-pin" id="prixPin"><div class="prix-colle">
-    <div class="k">Votre premier mois est offert</div><h2 class="t2">Aujourd’hui,<br><em>vous ne payez rien.</em></h2>
+    <div class="k">Combien ça coûte</div><h2 class="t2">Le premier mois, c’est cadeau.<br><em>La suite, c’est vous qui voyez.</em></h2>
     <ol class="tl">
-      <li><b>Aujourd’hui</b><span>Vous créez votre site et votre appli. 0 €.</span></li>
+      <li><b>Aujourd’hui</b><span>Vous créez votre site et votre appli. 0 €. Moins cher qu’une lime.</span></li>
       <li><b>Pendant 30 jours</b><span>Tout est à vous : réservations, SMS, agenda, caisse. Toujours 0 €.</span></li>
       <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si vous restez.</span></li>
       <li class="libre"><b>Quand vous voulez</b><span>Vous arrêtez en 1 clic. Sans frais, sans justification.</span></li>
@@ -385,15 +392,19 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
 {const top=document.getElementById("top"),Z=[document.getElementById("build"),document.getElementById("appli"),document.getElementById("charms")];let t=0;
  let y0=scrollY,bas=false;const maj=()=>{t=0;const y=scrollY;if(Math.abs(y-y0)>6){bas=y>y0&&y>80;y0=y}const cache=bas||Z.some(z=>{const r=z.getBoundingClientRect();return r.top<=1&&r.bottom>innerHeight});if(top.classList.contains("cache")!==cache)top.classList.toggle("cache",cache)};
  addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(maj)},{passive:true});maj()}
-/* les styles : interrupteur Classe / Baddie, le téléphone montre le vrai site (on le fait glisser), des pastilles avec les noms */
+/* les styles : Classe / Baddie, on choisit par forme d'ongle (ou avec les flèches), le téléphone montre le vrai site qu'on fait glisser */
 (()=>{const sec=document.getElementById("styles"),tel=document.getElementById("stTel"),img=document.getElementById("stImg"),nom=document.getElementById("stNom"),sous=document.getElementById("stSous"),V=document.getElementById("vign");
- const L={tpl:TPL.map(t=>[t[0],t[1],t[2],t[3]]),uni:UNI.map(t=>[t[0],t[1],t[2],t[3]])};let liste="tpl",cur=0,tf=0,vis=false;
- const vivant=()=>{const f0=tel.querySelector("iframe");if(f0)f0.remove();if(!vis)return;const t=L[liste][cur],f=document.createElement("iframe");f.title="Exemple";f.tabIndex=-1;f.style.transform="scale("+(tel.clientWidth/390)+")";f.onload=()=>setTimeout(()=>f.classList.add("pret"),450);f.src=url(t[1])+"&v="+Date.now();tel.appendChild(f)};
- const choisis=i=>{cur=i;const t=L[liste][i];img.src="loginail-site/apercus-mini/"+t[2]+".webp";nom.textContent=t[0];sous.textContent=t[3];
-   [...V.children].forEach((b,j)=>{b.classList.toggle("on",j===i);if(j===i)V.scrollTo({left:b.offsetLeft-(V.clientWidth-b.offsetWidth)/2,behavior:"smooth"})});clearTimeout(tf);tf=setTimeout(vivant,400)};
+ const FO={"Amande":"M13 2C7 2 4 12 4 24v14h18V24C22 12 19 2 13 2Z","Ovale":"M13 3C6 3 4 12 4 22v16h18V22C22 12 20 3 13 3Z","Carré arrondi":"M6 4h14c2 0 2 2 2 4v30H4V8c0-2 0-4 2-4Z","Carré":"M4 4h18v34H4Z","Stiletto":"M13 0C10 8 4 16 4 26v12h18V26C22 16 16 8 13 0Z","Coffin":"M9 3h8l5 22v13H4V25Z"};
+ const forme=q=>/style=2/.test(q)?"Stiletto":/style=3/.test(q)?"Carré":/coffin=1/.test(q)?"Coffin":/arrondi=1/.test(q)?"Carré arrondi":/epure=1/.test(q)?"Ovale":"Amande";
+ const L={tpl:TPL.map(t=>({nom:t[0],q:t[1],im:t[2],f:t[3],sous:t[3],lab:t[3]})),uni:UNI.map(t=>({nom:t[0],q:t[1],im:t[2],f:forme(t[1]),sous:t[3],lab:t[0]}))};
+ let liste="tpl",cur=0,tf=0,vis=false;
+ const vivant=()=>{const f0=tel.querySelector("iframe");if(f0)f0.remove();if(!vis)return;const t=L[liste][cur],f=document.createElement("iframe");f.title="Exemple";f.tabIndex=-1;f.style.transform="scale("+(tel.clientWidth/390)+")";f.onload=()=>setTimeout(()=>f.classList.add("pret"),450);f.src=url(t.q)+"&v="+Date.now();tel.appendChild(f)};
+ const choisis=i=>{const n=L[liste].length;cur=(i+n)%n;const t=L[liste][cur];img.src="loginail-site/apercus-mini/"+t.im+".webp";nom.textContent=t.nom;sous.textContent=t.sous;
+   [...V.children].forEach((b,j)=>{b.classList.toggle("on",j===cur);if(j===cur)V.scrollTo({left:b.offsetLeft-(V.clientWidth-b.offsetWidth)/2,behavior:"smooth"})});clearTimeout(tf);tf=setTimeout(vivant,400)};
  const remplis=l=>{liste=l;sec.dataset.l=l;sec.querySelectorAll(".bascule button").forEach(b=>b.classList.toggle("on",b.dataset.l===l));
-   V.innerHTML=L[l].map((t,i)=>`<button data-i="${i}">${t[0]}</button>`).join("");choisis(0)};
+   V.innerHTML=L[l].map((t,i)=>`<button data-i="${i}" aria-label="${t.nom}"><svg viewBox="0 0 26 40" aria-hidden="true"><path d="${FO[t.f]}"/></svg>${t.lab}</button>`).join("");choisis(0)};
  V.addEventListener("click",e=>{const b=e.target.closest("button");if(b)choisis(+b.dataset.i)});
+ document.getElementById("stPrec").addEventListener("click",()=>choisis(cur-1));document.getElementById("stSuiv").addEventListener("click",()=>choisis(cur+1));
  sec.querySelectorAll(".bascule button").forEach(b=>b.addEventListener("click",()=>remplis(b.dataset.l)));
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)vivant();else{const f=tel.querySelector("iframe");if(f)f.remove()}},{threshold:.25}).observe(tel);
  remplis("tpl")})();
