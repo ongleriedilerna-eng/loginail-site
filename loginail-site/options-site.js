@@ -20,7 +20,18 @@ var POLICES=[
  ["y2k","Y2K","Monoton",.72,"Monoton"],
  ["gothique","Gothique","UnifrakturMaguntia",.95,"UnifrakturMaguntia"],
  ["feutre","Feutre","'Permanent Marker'",.85,"loc:PermanentMarker-400-latin"],
- ["moderne","Moderne","Jost",.9,""]];
+ ["moderne","Moderne","Jost",.9,""],
+ ["mystique","Mystique","'Cormorant Garamond'",1.05,""],
+ ["romantique","Romantique","Allura",1.2,""],
+ ["astres","Astres","'Cinzel Decorative'",.8,""],
+ ["danse","Danse","'Dancing Script'",1.1,""],
+ ["vintage","Vintage","'Lobster'",0.9,""],
+ ["satin","Satin","'Satisfy'",1.1,""],
+ ["doudou","Doudou","'Fredoka'",0.9,""],
+ ["mode","Mode","'Bodoni Moda'",0.9,""],
+ ["magazine","Magazine","'DM Serif Display'",0.9,""],
+ ["affiche","Affiche","'Bebas Neue'",1,""],
+ ["guimauve","Guimauve","'Sniglet'",0.9,""]];   /* 06/11 : 2 écritures en plus (déjà chez nous) */
 var charge=false;
 function polices(doc){doc=doc||document;if(doc.__polOpt)return;doc.__polOpt=1;
   var g=POLICES.filter(function(p){return p[4]&&p[4].indexOf("loc:")<0}).map(function(p){return "family="+p[4]}).join("&");
