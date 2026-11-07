@@ -31,7 +31,20 @@ var POLICES=[
  ["mode","Mode","'Bodoni Moda'",0.9,""],
  ["magazine","Magazine","'DM Serif Display'",0.9,""],
  ["affiche","Affiche","'Bebas Neue'",1,""],
- ["guimauve","Guimauve","'Sniglet'",0.9,""]];   /* 06/11 : 2 écritures en plus (déjà chez nous) */
+ ["guimauve","Guimauve","'Sniglet'",0.9,""],
+ /* 07/11 (Marie) : 12 écritures en plus */
+ ["relief","Relief","'Bungee Shade'",0.7,""],
+ ["pixel","Pixel","Silkscreen",0.72,""],
+ ["artdeco","Art déco","Fascinate",0.82,""],
+ ["graffiti","Graffiti","'Sedgwick Ave Display'",1,""],
+ ["fondue","Fondue","'Climate Crisis'",0.68,""],
+ ["cinema","Cinéma","Limelight",0.82,""],
+ ["feminine","Féminine","'Yeseva One'",0.86,""],
+ ["pinup","Pin-up","'Lily Script One'",0.92,""],
+ ["couture","Couture","Gloock",0.88,""],
+ ["arrondie","Arrondie","Righteous",0.86,""],
+ ["douce","Douce","Corben",0.82,""],
+ ["gala","Gala","Playball",1.05,""]];   /* 06/11 : 2 écritures en plus (déjà chez nous) */
 var charge=false;
 function polices(doc){doc=doc||document;if(doc.__polOpt)return;doc.__polOpt=1;
   var g=POLICES.filter(function(p){return p[4]&&p[4].indexOf("loc:")<0}).map(function(p){return "family="+p[4]}).join("&");
