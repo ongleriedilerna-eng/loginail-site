@@ -35,17 +35,17 @@ html,body,button,a,input{touch-action:manipulation}
 .top b{font:500 13px Jost;letter-spacing:.3em;text-transform:uppercase}.top .btn{height:38px;padding:0 16px;font-size:10.5px;box-shadow:none}
 /* héro */
 .hero{padding:76px 22px 30px;text-align:center}
-.hero h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,11.2vw,48px);line-height:.98;margin:8px 0 8px;letter-spacing:-.01em}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,11.2vw,48px);line-height:.98;margin:44px 0 8px;letter-spacing:-.01em}
 .hero h1 .mot{display:inline-block;position:relative;margin-right:.08em;white-space:nowrap;text-align:center;vertical-align:top;overflow:visible;transition:opacity .2s ease}
 .hero h1 .mot.chg{opacity:0}
 .hero h1 .mot img{position:absolute;width:32px;height:32px;left:0;top:0;transform:rotate(12deg)}
 .hero .p{max-width:340px;margin:0 auto 20px;font-size:14.5px}
 .duo{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px auto 22px}
 .mini{width:114px;text-align:center}.mini b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;margin-top:6px;line-height:1}.mini span{display:block;font-size:10.5px;color:var(--doux);margin-top:3px}
-.mini .ecr{position:relative;height:234px;border-radius:21px;overflow:hidden;border:5px solid var(--noir);background:#fff;box-shadow:0 22px 34px -20px rgba(0,0,0,.5)}
+.mini .ecr{position:relative;height:224px;border-radius:21px;overflow:hidden;border:5px solid var(--noir);background:#fff;box-shadow:0 22px 34px -20px rgba(0,0,0,.5)}
 .mini .ecr img{width:100%;height:100%;object-fit:cover;object-position:top}
 .bande{display:flex;height:100%;transition:transform .7s cubic-bezier(.65,0,.25,1);will-change:transform}.bande img{flex:none;width:100%;height:100%;object-fit:cover;object-position:top}
-.duo{margin-bottom:10px}.duo-pts{display:flex;justify-content:center;gap:2px;margin:0 0 12px}.duo-pts i{width:5px;height:5px;margin:6px;cursor:pointer;border-radius:50%;background:rgba(30,28,27,.18);transition:background .3s,transform .3s}.duo-pts i.on{background:var(--noir);transform:scale(1.4)}
+.duo{margin-bottom:10px}.duo-pts{display:flex;justify-content:center;gap:2px;margin:0 0 6px}.duo-pts i{width:5px;height:5px;margin:6px;cursor:pointer;border-radius:50%;background:rgba(30,28,27,.18);transition:background .3s,transform .3s}.duo-pts i.on{background:var(--noir);transform:scale(1.4)}
 .duo .fleche{width:30px;color:var(--doux);margin-bottom:40px}
 .notif-mini{position:absolute;left:5px;right:5px;top:6px;display:flex;gap:5px;align-items:center;padding:6px;border-radius:11px;background:rgba(255,255,255,.94);box-shadow:0 8px 16px -8px rgba(0,0,0,.35);text-align:left;transform:translateY(-130%);opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s}
 .notif-mini.on{transform:none;opacity:1}
@@ -213,7 +213,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 
 <section class="hero">
   <div class="k">Pour les prothésistes ongulaires</div>
-  <h1>Un site pour <span style="white-space:nowrap"><span class="mot" id="mot"><span class="mt">briller</span><img src="loginail-site/charms-mini/martien.webp" alt="" id="motCh"></span>.</span><br>Une appli pour<br>tout gérer.</h1>
+  <h1>Un site pour <span style="white-space:nowrap"><span class="mot" id="mot"><span class="mt">briller</span><img src="loginail-site/charms-mini/fraisegelee.webp" alt="" id="motCh"></span>.</span><br>Une appli pour<br>tout gérer.</h1>
   <div class="duo" id="duo" style="touch-action:pan-y">
     <div class="mini"><div class="ecr"><div class="bande" id="bandeSite"><img src="loginail-site/apercus-mini/chrome.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt=""><img src="loginail-site/apercus-mini/mignon.webp" alt=""><img src="loginail-site/apercus-mini/pop.webp" alt=""><img src="loginail-site/apercus-mini/y2k.webp" alt=""><img src="loginail-site/apercus-mini/clean.webp" alt=""><img src="loginail-site/apercus-mini/sixties.webp" alt=""><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt=""><img src="loginail-site/apercus-mini/pastel.webp" alt=""><img src="loginail-site/apercus-mini/baddie.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt=""></div></div><b>Votre site</b><span>à votre image</span></div>
     <div class="fleche" aria-hidden="true"><svg viewBox="0 0 40 14"><path d="M1 7h36M31 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
@@ -349,12 +349,12 @@ const url=q=>"loginail-creer/pret.html?public&nouveau&exemple=dilerna&"+q;
 void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div class="ph"><img src="loginail-site/apercus-mini/${t[2]}.webp" alt="" loading="lazy"></div><b>${t[0]}</b><small>${t[3]}</small></a>`).join("");
 
 /* le mot « briller » change d'écriture avec son charm : tout est chargé à l'avance, le mot et le charm s'effacent et reviennent ensemble */
-{const F=[["'Monoton'","martien"],["'Cherry Bomb One'","fraisegelee"],["'Gloock'","coeurchrome"],["'Fredoka'","sushi"],["'Bungee Shade'","planeteturquoise"],["'Rubik Bubbles'","cerisedisco"],["'Sedgwick Ave Display'","levresgrillz"],["'Climate Crisis'","etoiledrip"],["'Pacifico'","cocktail"],["'Righteous'","fleursixties"],["'Parisienne'","croissantdore"]];
+{const F=[["'Cherry Bomb One'","fraisegelee",0],["'Sedgwick Ave Display'","levresgrillz",0],["'Righteous'","fleursixties",0],["'Cinzel'","cristal",0],["'Playfair Display'","couronnestrass",0],["'Fascinate'","bouledisco",0],["'Cinzel Decorative'","cerisesor",0],["'Playball'","hibiscus",0],["'Italiana'","perle",0]];
  let i=0;const m=document.getElementById("mot"),c=document.getElementById("motCh"),base=parseFloat(getComputedStyle(m).fontSize);let largeur=0;
  const t=m.querySelector(".mt");
  const cv=document.createElement("canvas").getContext("2d");
  /* le charm se pose sur la dernière lettre (le r), au même endroit pour toutes les écritures : on mesure où l’encre commence vraiment */
- const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("briller"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;c.style.left=(t.offsetLeft+Math.min(t.offsetWidth,mt.actualBoundingBoxRight||t.offsetWidth)-cw*.38).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-ra)-cw*.72).toFixed(1)+"px"};
+ const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("briller"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft+Math.min(t.offsetWidth,mt.actualBoundingBoxRight||t.offsetWidth)-cw*.62+cw*(F[i][2]||0)).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-ia)-cw*.97).toFixed(1)+"px"};
  const cale=()=>{m.style.width="auto";m.style.fontSize=base+"px";const w=t.offsetWidth||1;m.style.fontSize=Math.min(base*1.05,base*largeur/w).toFixed(1)+"px";m.style.width=largeur+"px";m.style.height=m.style.lineHeight=(base*1.02).toFixed(1)+"px";accroche()};
  const IM=F.map(f=>{const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp";return im});
  const prets=Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0)));
