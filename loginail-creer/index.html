@@ -6,7 +6,8 @@
 <title>Loginail · Créer mon site</title>
 <meta name="theme-color" content="#F6F3EF">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link href="polices.css" rel="stylesheet">
+<link href="polices.css" rel="stylesheet"><link href="../loginail-site/polices-sites.css" rel="stylesheet">
+<style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
 <style>
 /* Création du site en 3 étapes : 1. coller le lien (ou tout écrire soi-même), 2. le chargement (L2, les ongles
    s'écrivent comme un mot de passe), 3. « Il manque N choses » (I1, une ligne par chose, l'interrupteur s'allume).
@@ -33,9 +34,17 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .ajouter{border:0;border-radius:999px;padding:14px 20px;background:var(--noir);color:var(--fond);font:500 12px Jost,sans-serif;letter-spacing:.16em;white-space:nowrap}
 .saisie{display:flex;gap:8px;margin-top:12px}
 
-/* 1 · le lien */
-.lien{margin-top:30px;position:relative}
-.lien .champ{padding-right:96px}
+/* 1 · le lien (07/11, Marie) : même univers que l'accueil ; la case du lien est collée au bouton, en bas, sous le pouce */
+#lien h1{margin:36px 0 0;font:500 clamp(40px,11.5vw,50px)/.98 "Cormorant Garamond",serif;letter-spacing:-.01em;text-align:center}
+#lien .sous{text-align:center;margin-top:14px}
+.mot{display:inline-block;position:relative;white-space:nowrap;transition:opacity .2s}.mot.chg{opacity:0}
+.mot img{position:absolute;width:34px;height:34px;transform:rotate(12deg)}
+#lien .aide{margin-top:26px}
+.collee{display:flex;flex-direction:column;gap:10px}
+.collee .msg{margin:0 6px;min-height:0;text-align:center;font-weight:400}
+.collee .msg:empty{display:none}
+.lien{position:relative}
+.lien .champ{padding-right:104px;padding-top:16px;padding-bottom:16px}
 .coller{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;border-radius:999px;background:var(--fond);padding:9px 14px;font:400 12px Jost,sans-serif;letter-spacing:.14em}
 .msg{min-height:22px;margin:12px 4px 0;font:300 14px/1.45 Jost,sans-serif;color:var(--noir)}
 .aide{margin-top:18px;background:var(--surface);border-radius:22px;padding:4px 18px}
@@ -169,13 +178,15 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
 <div id="tel">
   <section class="ecran on" id="lien">
     <div data-logo></div>
-    <h1>Créons votre site.</h1>
-    <p class="sous">Collez le lien de votre fiche Google Maps. On y lit votre nom, votre adresse, vos horaires, vos avis et vos photos.</p>
-    <div class="lien"><input class="champ" id="champLien" type="url" inputmode="url" autocomplete="off" placeholder="Le lien de votre fiche Google"><button class="coller" type="button" id="coller">COLLER</button></div>
-    <p class="msg" id="msg" role="status"></p>
+    <h1>Votre site,<br>prêt à <span class="mot" id="mot"><span class="mt">briller</span><img id="motCh" alt=""></span>.</h1>
+    <p class="sous">Collez le lien de votre fiche Google Maps : on y lit votre nom, vos horaires, vos avis et vos photos. Votre site est prêt en 1 minute.</p>
     <div class="aide"><button type="button" id="aideB">Où trouver mon lien ?<i></i></button>
-      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon.</li><li>Touchez <b>Partager</b>.</li><li>Touchez <b>Copier le lien</b>, puis revenez ici et touchez <b>Coller</b>.</li></ol></div>
-    <div class="bas"><button class="go" type="button" id="creer">CRÉER MON SITE</button><button class="passer" type="button" id="sansGoogle">Je n’ai pas de fiche Google</button></div>
+      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon.</li><li>Touchez <b>Partager</b>, puis <b>Copier le lien</b>.</li><li>Revenez ici, restez appuyée dans la case et touchez <b>Coller</b>.</li></ol></div>
+    <div class="bas"><div class="collee">
+      <p class="msg" id="msg" role="status"></p>
+      <div class="lien"><input class="champ" id="champLien" type="url" inputmode="url" autocomplete="off" placeholder="Le lien de votre fiche Google"><button class="coller" type="button" id="coller">CRÉER</button></div>
+      <button class="go" type="button" id="creer">CRÉER MON SITE</button></div>
+      <button class="passer" type="button" id="sansGoogle">Je n’ai pas de fiche Google</button></div>
   </section>
 
   <section class="ecran" id="charge">
@@ -271,11 +282,23 @@ function depuisGoogle(g) {
 }
 
 /* ---------- 1 · le lien ---------- */
+{const F=[["'Cherry Bomb One'","fraisegelee"],["'Yeseva One'","oeilbleu"],["'Righteous'","fleursixties"],["'Playfair Display'","couronnestrass"],["'Silkscreen'","consoleviolette"],["'Italiana'","perle"],["'Corben'","canard"],["'Sedgwick Ave Display'","levresgrillz"],["'Bebas Neue'","boule8"],["'Allura'","etoiledemerperles"],["'Cinzel'","cristal"],["'Rubik Bubbles'","chocolat"],["'Playball'","hibiscus"],["'Monoton'","minaudiere"],["'Cinzel Decorative'","cerisesor"],["'Fascinate'","bouledisco"]];
+ const m=document.getElementById("mot"),t=m.querySelector(".mt"),c=document.getElementById("motCh"),cv=document.createElement("canvas").getContext("2d");
+ const IM=F.map(f=>{const im=new Image();im.src="../loginail-site/charms-mini/"+f[1]+".webp";return im});let i=0,base=0,larg=0;
+ const pose=()=>{t.style.fontSize=base+"px";const w=t.offsetWidth||1;t.style.fontSize=Math.min(base*1.05,base*larg/w).toFixed(1)+"px";m.style.width=larg+"px";
+   const cs=getComputedStyle(t);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("briller");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9;
+   c.style.left=(t.offsetLeft+Math.min(t.offsetWidth,mt.actualBoundingBoxRight||t.offsetWidth)-34*.18).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-mt.actualBoundingBoxAscent)-34*.62).toFixed(1)+"px"};
+ Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0))).then(()=>{
+   base=parseFloat(getComputedStyle(m).fontSize);t.style.fontFamily="'Cormorant Garamond'";larg=t.offsetWidth;t.style.fontFamily=F[0][0];c.src=IM[0].src;pose();
+   setInterval(()=>{if(document.hidden||!document.getElementById("lien").classList.contains("on"))return;m.classList.add("chg");setTimeout(()=>{i=(i+1)%F.length;t.style.fontFamily=F[i][0];c.src=IM[i].src;pose();requestAnimationFrame(()=>requestAnimationFrame(()=>m.classList.remove("chg")))},210)},1800)})}
 const champLien = $("champLien"), msg = $("msg");
 $("aideB").onclick = () => $("aideB").parentElement.classList.toggle("ouvert");
 $("coller").onclick = async () => {
-  try { const t = await navigator.clipboard.readText(); if (t) { champLien.value = t.trim(); msg.textContent = ""; } }
-  catch { champLien.focus(); msg.textContent = "Restez appuyée dans la case, puis « Coller »."; }
+  if (!champLien.value.trim()) {
+    try { const t = await navigator.clipboard.readText(); if (t) champLien.value = t.trim(); }
+    catch { champLien.focus(); msg.textContent = "Restez appuyée dans la case, touchez « Coller », puis « Créer »."; return; }
+  }
+  $("creer").click();
 };
 const estGoogle = l => /^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|(www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)/i.test(l);
 $("creer").onclick = () => {
