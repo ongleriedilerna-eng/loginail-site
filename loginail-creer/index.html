@@ -110,7 +110,15 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .fait .sw .nf{opacity:0}
 .fait .sw .bout{transform:translateX(var(--dx))}
 /* prestations */
-.puces{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+/* 07/11 (Marie) : les bulles coulissent avec le pouce, sur une seule ligne */
+.puces{display:flex;flex-wrap:nowrap;gap:7px;margin:0 -16px;padding:2px 16px 6px;overflow-x:auto;scrollbar-width:none;-webkit-mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent);mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent)}
+.puces::-webkit-scrollbar{display:none}
+.puces button{flex:none;white-space:nowrap}
+.lire p b{font-weight:500}
+.lire-noir{background:var(--noir)!important;color:var(--fond);gap:8px;display:flex!important;align-items:center;justify-content:center;letter-spacing:.14em;font-size:12px!important;padding:14px 8px!important}
+.lire-noir svg{width:18px;height:18px}
+.colle-bas{position:sticky;bottom:0;margin:0 -16px;padding:10px 16px 12px;background:linear-gradient(180deg,rgba(251,249,246,0),var(--surface) 30%);z-index:3}
+.colle-bas .valider{margin-top:0}
 .puces button{border:1px solid rgba(30,28,27,.22);background:#fff;border-radius:999px;padding:8px 13px;font:300 13.5px Jost,sans-serif}
 .puces button.pris{background:var(--noir);color:var(--fond);border-color:var(--noir)}
 .pr{display:grid;grid-template-columns:1fr 78px;gap:6px;margin-top:10px;padding:10px;background:#fff;border-radius:18px}
@@ -120,7 +128,8 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .pr .enl{border:0;background:none;font:300 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;justify-self:end;grid-column:1/-1;padding:2px}
 .prix{position:relative}.prix::after{content:"€";position:absolute;right:12px;top:50%;transform:translateY(-50%);font:300 15px Jost,sans-serif;color:var(--muted)}
 .prix .champ{padding-right:26px}
-.autre{border:1px dashed rgba(30,28,27,.35);background:none;border-radius:999px;padding:11px;width:100%;margin-top:10px;font:300 14px Jost,sans-serif}
+.autre{display:flex;align-items:center;justify-content:center;gap:9px;border:1.4px solid var(--noir);background:#fff;border-radius:999px;padding:12px;width:100%;margin-top:12px;font:400 14.5px Jost,sans-serif}
+.autre i{width:22px;height:22px;border-radius:50%;background:var(--noir);color:var(--fond);font:400 17px/21px Jost,sans-serif;font-style:normal}
 .valider{width:100%;margin-top:12px;padding:15px}
 .pastille{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;border:0;background:#fff;border-radius:999px;padding:12px 18px;font:300 15px Jost,sans-serif;text-align:left;cursor:pointer}
 .pastille b{font-weight:400;font-size:13.5px;color:var(--muted);white-space:nowrap}
@@ -345,11 +354,14 @@ $("sansGoogle").onclick = () => { B.source = "main"; prepareManque(); montre("ma
 
 /* ---------- 2 · le chargement : un ongle de plus toutes les 0,7 s, les phrases défilent, pendant que Google répond ---------- */
 const PAS = 52, X0 = -104;   /* 06/11 (Marie) : 5 ongles bien droits, comme les 5 doigts */
-$("mdp").outerHTML = `<svg class="mdp" viewBox="-170 -50 340 100" aria-hidden="true">
-  ${[0, 1, 2, 3, 4].map(i => `<g transform="translate(${X0 + i * PAS} 0) scale(.36)"><g class="pt"><path transform="rotate(-90) translate(-227 -65)" d="M172 21H215C254 21 282 42 282 65C282 88 254 109 215 109H172A44 44 0 0 1 172 21Z" fill="${NOIR}"/></g></g>`).join("")}
-  <g class="suit" id="curseur"><line class="clig" x1="${X0 + PAS * .55}" y1="-26" x2="${X0 + PAS * .55}" y2="26" stroke="${NOIR}" stroke-width="2.2" stroke-linecap="round"/></g></svg>`;
-const PHRASES = ["On lit votre fiche", "On cherche vos prix et vos horaires", "On choisit vos plus belles photos", "On crée votre site"];
-$("etapes").innerHTML = PHRASES.map(p => `<p>${p}…</p>`).join("") + `<p class="fini">Tout est lu.</p>`;
+/* 07/11 (Marie) : que ça fasse vraiment des ongles amande — un doigt clair, l'ongle noir en amande, un reflet */
+$("mdp").outerHTML = `<svg class="mdp" viewBox="-170 -58 340 120" aria-hidden="true"><defs><linearGradient id="dgt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2D3C5"/><stop offset=".55" stop-color="#E2D3C5"/><stop offset="1" stop-color="#E2D3C5" stop-opacity="0"/></linearGradient></defs>
+  ${[0, 1, 2, 3, 4].map(i => `<g transform="translate(${X0 + i * PAS} 0)"><g class="pt"><rect x="-22" y="-16" width="44" height="78" rx="22" fill="url(#dgt)"/>
+    <path d="M-16 18C-17 -4-12 -30-3 -42C-1.5 -44 1.5 -44 3 -42C12 -30 17 -4 16 18C15.5 27 8 30 0 30C-8 30 -15.5 27 -16 18Z" fill="${NOIR}"/>
+    <path d="M-8 12C-9 0-7 -16-2.5 -28" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/></g></g>`).join("")}
+  <g class="suit" id="curseur"><line class="clig" x1="${X0 + PAS * .5}" y1="-30" x2="${X0 + PAS * .5}" y2="30" stroke="${NOIR}" stroke-width="2.2" stroke-linecap="round"/></g></svg>`;
+const PHRASES = ["Votre fiche Google passe à la loupe", "Vos prix et vos horaires se rangent", "Vos plus belles photos font leur entrée", "Votre site sèche sous la lampe"];
+$("etapes").innerHTML = PHRASES.map(p => `<p>${p}…</p>`).join("") + `<p class="fini">Prêt à briller.</p>`;
 const attends = ms => new Promise(r => setTimeout(r, ms));
 const prechargePhotos = photos => Promise.all(photos.map(p => new Promise(ok => { const i = new Image(); i.onload = i.onerror = ok; i.src = p.url; })));
 
@@ -410,7 +422,7 @@ function prepareManque() {
   MQ.push({ k: "prenom", t: "Votre prénom", q: "Pour signer votre site et votre espace.", ph: "Votre prénom", champ: "prenom" });
   // seulement ce qui manque vraiment : des tarifs trouvés se vérifient depuis son site (« Vérifier », index.html?tarifs)
   if (!B.prestations.some(p => p.prix != null))
-    MQ.push({ k: "presta", t: "Vos prestations et vos prix", q: "On n’a pas trouvé vos prix sur votre fiche. Ajoutez une photo ou le lien de vos tarifs, ou touchez vos prestations et écrivez le prix." });
+    MQ.push({ k: "presta", t: "Vos prestations et vos prix", q: "Pas de prix sur votre fiche Google." });
   if (!B.rue) MQ.push({ k: "adr", t: "Votre adresse", q: "Pour le plan et l’itinéraire de vos clientes.", ph: "N°, rue, code postal et ville", champ: "adr" });
   if (!B.telephone) MQ.push({ k: "tel", t: "Votre téléphone", q: "Pour que vos clientes puissent vous appeler.", ph: "06 00 00 00 00", champ: "telephone", type: "tel" });
   // Instagram pas trouvé : facultatif (ne bloque pas) ; sans lui, son aperçu montre « @votre.instagram » en exemple
@@ -435,10 +447,11 @@ const resume = m => {
 };
 function corps(m) {
   if (m.k === "presta") return `<p class="q">${B.prestationsTrouvees ? "Nous avons trouvé ces tarifs. Dites-nous s’ils sont encore valables, et s’il en manque." : m.q}</p>
-    <div class="lire"><p>${B.prestationsTrouvees ? "Une autre carte de prix ?" : "Gagnez du temps : on lit vos tarifs pour vous."}</p>
-      <div class="lire-bts"><label class="lire-b">Une photo de mes tarifs<input type="file" accept="image/*" multiple data-tarifphoto></label><button type="button" class="lire-b" data-tariflien>Le lien de mes tarifs</button></div>
+    <div class="lire"><p><b>${B.prestationsTrouvees ? "Une autre carte de prix ?" : "Le plus rapide : une capture d’écran de vos tarifs."}</b><br>Instagram, page de réservation, carte du salon… Vos prix s’écrivent tout seuls.</p>
+      <div class="lire-bts"><label class="lire-b lire-noir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l1.6-2.4h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>AJOUTER MA CAPTURE<input type="file" accept="image/*" multiple data-tarifphoto></label></div>
       ${lienOuvert ? `<div class="saisie"><input class="champ" id="lienTarifs" inputmode="url" placeholder="Votre page de réservation, votre site…"><button class="ajouter" type="button" data-lirelien>LIRE</button></div>` : ""}
       ${etatLecture ? `<p class="lire-etat">${etatLecture}</p>` : ""}</div>
+    <p class="phx-t">Ou touchez vos prestations</p>
     <div class="puces">${SUGG.map(s => `<button type="button" data-sugg="${esc(s)}" class="${brouillonP.some(p => p.nom === s) ? "pris" : ""}">${s}</button>`).join("")}</div>
     ${brouillonP.map((p, i) => p.ferme
       ? `<button type="button" class="pastille" data-po="${i}"><span>${esc(p.nom)}</span><b>${String(p.prix ?? "").trim() === "" ? "Sur devis" : esc(String(p.prix).replace(".", ",")) + " €"} · ${dureeTxt(p.duree)}</b></button>`
@@ -446,8 +459,8 @@ function corps(m) {
       <div class="prix"><input class="champ" data-pp="${i}" inputmode="decimal" value="${p.prix ?? ""}" placeholder="Prix ou vide"></div>
       <select data-pd="${i}" aria-label="Durée">${[...new Set([...DUREES, p.duree])].sort((a, b) => a - b).map(d => `<option value="${d}" ${d === p.duree ? "selected" : ""}>${dureeTxt(d)}</option>`).join("")}</select>
       <button class="enl" type="button" data-pe="${i}">Enlever</button></div>`).join("")}
-    <button class="autre" type="button" data-autre>+ ${brouillonP.length ? "Ajouter une autre prestation" : "Ajouter une prestation"}</button>
-    <button class="ajouter valider" type="button" data-ajoute="presta">AJOUTER</button>`;
+    <button class="autre" type="button" data-autre><i>+</i>${brouillonP.length ? "Ajouter une autre prestation" : "Ajouter une prestation"}</button>
+    <div class="colle-bas"><button class="ajouter valider" type="button" data-ajoute="presta">C’EST BON POUR MES PRIX</button></div>`;
   if (m.k === "choixph") return `<p class="q">${m.q}</p>
       <div class="phx-t">La photo en grand, en haut de votre site</div><div class="phx">${B.photos.map((p, i) => (i < 3 || plusPh.g || i === choixPh.principale) ? `<button type="button" data-pp1="${i}" class="${i === choixPh.principale ? "sel" : ""}"><img src="${esc(p.url)}" alt=""></button>` : "").join("")}</div>
       ${B.photos.length > 3 ? `<button type="button" class="voirplus" data-plus="g">${plusPh.g ? "Voir moins" : "Voir plus"}</button>` : ""}
@@ -501,7 +514,7 @@ $("liste").addEventListener("click", e => {
     if (i >= 0) { brouillonP.splice(i, 1); rendManque(); return; }
     if (!fermeTout()) return; brouillonP.push({ nom: s, prix: "", duree: 60 }); rendManque(); document.querySelector(`[data-pp="${brouillonP.length - 1}"]`)?.focus(); return; }
   if (t.dataset.pe) { brouillonP.splice(+t.dataset.pe, 1); rendManque(); return; }
-  if (t.hasAttribute("data-autre")) { if (!fermeTout()) return; brouillonP.push({ nom: "", prix: "", duree: 60 }); rendManque(); document.querySelector(`[data-pn="${brouillonP.length - 1}"]`)?.focus(); return; }
+  if (t.hasAttribute("data-autre")) { if (!fermeTout()) return; brouillonP.push({ nom: "", prix: "", duree: 60 }); rendManque(); const nv = document.querySelector(`[data-pn="${brouillonP.length - 1}"]`); nv?.focus({ preventScroll: true }); nv?.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
   if (t.dataset.po) { if (!fermeTout()) return; brouillonP[+t.dataset.po].ferme = false; rendManque(); document.querySelector(`[data-pp="${t.dataset.po}"]`)?.focus(); return; }
   if (t.dataset.pp1) { choixPh.principale = +t.dataset.pp1; rendManque(); return; }
   if (t.dataset.ps) { choixPh.salon = +t.dataset.ps < 0 ? null : +t.dataset.ps; rendManque(); return; }
