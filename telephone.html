@@ -66,7 +66,7 @@ html,body,button,a,input{touch-action:manipulation}
 .marq-l{text-align:center;font-size:11px;color:var(--doux);margin:12px 0 0;letter-spacing:.06em}
 .marq-sec{padding:34px 0 46px;background:var(--creme)}
 /* la construction : fond clair, un vrai téléphone, tout suit le doigt */
-.build{position:relative;height:560vh;background:var(--creme)}
+.build{position:relative;height:680vh;background:var(--creme)}
 .build .colle{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:calc(66px + env(safe-area-inset-top)) 0 0}
 .b-tete{width:min(86vw,340px);margin-bottom:12px}.b-tete .k{text-align:center}
 .b-barre{height:3px;border-radius:3px;background:rgba(30,28,27,.1);margin-top:8px;overflow:hidden}.b-barre i{display:block;height:100%;width:0;background:var(--noir);border-radius:3px}
@@ -80,6 +80,7 @@ html,body,button,a,input{touch-action:manipulation}
 .b-hors img{position:absolute;width:64px;height:64px;opacity:0;will-change:transform,opacity}
 .b-ecr{position:relative;width:100%;height:100%;overflow:hidden}
 .b-ecr img.c{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;will-change:opacity}
+.b-ecr img.c.long{bottom:auto;height:auto;will-change:opacity,transform}
 .b-ch{position:absolute;inset:0;pointer-events:none}
 .b-ch img{position:absolute;opacity:0;will-change:transform,opacity}
 .b-pail{position:absolute;inset:0;pointer-events:none;opacity:0}
@@ -96,11 +97,14 @@ html,body,button,a,input{touch-action:manipulation}
 .a-tel{height:calc(100dvh - 60px - 210px);max-height:560px;aspect-ratio:390/844;border-radius:38px;border:7px solid #000;box-shadow:0 0 0 1.5px rgba(255,255,255,.14),0 34px 60px -30px rgba(0,0,0,.8);overflow:hidden;flex:none;background:#fff}
 .a-ecr{position:relative;width:100%;height:100%}
 .a-ecr img.a{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;will-change:opacity}
-.notifs{position:absolute;left:6px;right:6px;top:8px}
-.nt{position:absolute;left:0;right:0;top:0;display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:16px;background:rgba(250,248,246,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 24px -12px rgba(0,0,0,.5);color:var(--noir);opacity:0;transform:translateY(-120%);will-change:transform,opacity}
+.a-telw{position:relative;flex:none}
+.notifs{position:absolute;inset:0;pointer-events:none;z-index:3}
+.nt{position:absolute;width:min(76vw,262px);display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:16px;background:rgba(250,248,246,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 24px -12px rgba(0,0,0,.5);color:var(--noir);opacity:0;transform:translateY(-120%);will-change:transform,opacity}
 .nt i{flex:none;width:28px;height:28px;border-radius:7px;background:url(loginail-site/icone-appli.svg) center/cover}
 .nt div{flex:1;min-width:0}.nt b{display:block;font:500 11.5px Jost;line-height:1.25}.nt span{display:block;font-size:10.5px;color:#555;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nt small{align-self:flex-start;font-size:9px;color:#888}
+.nt.g{left:-36px;transform-origin:20% 50%}.nt.d{right:-36px;transform-origin:80% 50%}
+.nt{box-shadow:0 18px 34px -14px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.4)}
 .a-legs{height:96px;margin:2px 0 12px}.a-legs .leg b{font-size:clamp(24px,7vw,29px)}.a-legs .leg span{color:rgba(246,243,239,.75);font-size:13px}
 /* les rails (cartes des sites) */
 .rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 22px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.rail::-webkit-scrollbar{display:none}
@@ -157,7 +161,7 @@ html,body,button,a,input{touch-action:manipulation}
 .why div{background:#fff;border-radius:20px;padding:20px 18px}
 .why b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;line-height:1.05;margin-bottom:6px}.why p{margin:0;font-size:14px;line-height:1.5;color:#4a4440}
 /* la recherche Google (exemple) */
-.goo{position:relative;margin:22px 0 6px;padding:16px;border-radius:22px;background:#fff;box-shadow:0 24px 40px -30px rgba(0,0,0,.45)}
+.goo{position:relative;margin:14px 0 6px;padding:16px;border-radius:22px;background:#fff;box-shadow:0 24px 40px -30px rgba(0,0,0,.45)}
 .goo-bar{display:flex;align-items:center;gap:10px;height:46px;padding:0 16px;border-radius:99px;box-shadow:0 0 0 1px rgba(0,0,0,.1);font-size:14.5px;color:#222}
 .goo-bar svg{width:17px;height:17px;flex:none;color:#888}.goo-bar .curs{width:1.5px;height:18px;background:#222;animation:cl 1s steps(1) infinite}@keyframes cl{50%{opacity:0}}
 .goo-res{margin-top:14px;padding:4px 4px 2px;text-align:left;opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s}.goo-res.on{opacity:1;transform:none}
@@ -171,9 +175,10 @@ html,body,button,a,input{touch-action:manipulation}
 .prix .creer input{border-color:transparent}.prix .creer .btn{background:#fff;color:var(--noir)}
 .zero{margin-top:14px;font-size:12.5px;color:var(--doux);text-align:center;line-height:1.6}
 .tl{list-style:none;margin:20px 0 0;padding:0 0 0 22px;position:relative}
-.tl:before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:1.5px;background:linear-gradient(var(--noir),rgba(30,28,27,.15))}
-.tl li{position:relative;padding:0 0 16px}.tl li:before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--creme);box-shadow:0 0 0 1.5px var(--noir)}
-.tl li:first-child:before{background:var(--noir)}
+.tl:after{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:1.5px;background:rgba(30,28,27,.1)}
+.tl:before{content:"";position:absolute;z-index:1;left:6px;top:8px;bottom:8px;width:1.5px;background:var(--noir);transform:scaleY(var(--t,0));transform-origin:top}
+.tl li{position:relative;padding:0 0 16px;opacity:.3;transition:opacity .45s}.tl li.on{opacity:1}.tl li:before{content:"";position:absolute;z-index:2;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--creme);box-shadow:0 0 0 1.5px var(--noir);transition:background .3s,transform .3s}
+.tl li.on:before{background:var(--noir);transform:scale(1.15)}
 .tl li.libre{padding-bottom:4px}
 .sans-eng{margin:14px 0 0;padding:22px 20px;border-radius:24px;background:#fff;border:1.5px solid var(--noir);text-align:center;box-shadow:0 18px 34px -26px rgba(0,0,0,.5)}
 .se-t{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(34px,10vw,42px);line-height:1}
@@ -183,6 +188,14 @@ html,body,button,a,input{touch-action:manipulation}
 details{border-top:1px solid var(--ligne);padding:14px 0}details:last-of-type{border-bottom:1px solid var(--ligne)}summary{cursor:pointer;font-weight:500;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}summary:after{content:"+";font-size:22px;font-weight:300}details[open] summary:after{content:"–"}
 details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .pied{padding:30px 22px 120px;text-align:center;font-size:11px;color:var(--doux);line-height:1.7}
+.grand-site{position:fixed;inset:0;z-index:95;background:rgba(246,243,239,.32);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1);opacity:0;transition:opacity .35s}
+.grand-site.on{opacity:1}.grand-site[hidden]{display:none}
+.gs-boite{position:absolute;left:6%;right:6%;top:calc(9% + env(safe-area-inset-top));bottom:5%;border-radius:30px;overflow:hidden;background:var(--creme);box-shadow:0 40px 80px -30px rgba(30,28,27,.55),0 0 0 1px rgba(255,255,255,.5);transform:translateY(40px) scale(.96);transition:transform .5s cubic-bezier(.2,.75,.2,1)}
+.grand-site.on .gs-boite{transform:none}
+.grand-site iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.gs-titre{position:absolute;left:0;right:0;top:calc(9% - 34px + env(safe-area-inset-top));text-align:center;font-size:12px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--noir)}
+.gs-x{position:absolute;z-index:3;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(30,28,27,.85);color:var(--creme);font-size:24px;line-height:40px;padding:0;box-shadow:0 8px 20px -8px rgba(0,0,0,.6);cursor:pointer}
+.piste img{cursor:pointer}
 .colle-bas{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(rgba(246,243,239,0),rgba(246,243,239,.96) 30%);transform:translateY(110%);transition:transform .4s cubic-bezier(.2,.7,.2,1)}
 .colle-bas.on{transform:none}.colle-bas .btn{width:100%}
 .ios-safari .colle-bas{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
@@ -205,13 +218,14 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 </section>
 
 <section class="build" id="build"><div class="colle">
-  <div class="b-tete"><div class="k" id="bNum">1 / 5 · votre site</div><div class="b-barre"><i id="bBarre"></i></div></div>
+  <div class="b-tete"><div class="k" id="bNum">1 / 6 · votre site</div><div class="b-barre"><i id="bBarre"></i></div></div>
   <div class="b-fond" id="bFond"><i style="left:6%;animation-duration:9s"></i><i style="left:24%;animation-duration:12s;animation-delay:-5s;width:18px;height:20px"></i><i style="left:80%;animation-duration:10s;animation-delay:-2s"></i><i style="left:92%;animation-duration:13s;animation-delay:-8s;width:18px;height:20px"></i><i style="left:12%;animation-duration:11s;animation-delay:-7s;width:20px;height:22px"></i><i style="left:70%;animation-duration:14s;animation-delay:-10s;width:20px;height:22px"></i></div>
   <div class="b-telw"><div class="b-tel"><div class="b-ecr" id="bEcr">
     <img class="c" data-c="1" src="loginail-site/apercus-univers/s1.webp" alt="" style="opacity:1">
     <img class="c" data-c="2" src="loginail-site/apercus-univers/s2.webp" alt="">
     <img class="c" data-c="3" src="loginail-site/apercus-univers/s3.webp" alt="">
     <img class="c" data-c="5" src="loginail-site/apercus-univers/s5.webp" alt="">
+    <img class="c long" data-c="6" src="loginail-site/apercus-univers/s5-long.webp" alt="" loading="lazy">
     <div class="b-ch" id="bCh"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="left:72.7%;top:65.1%;width:17.2%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="left:78.8%;top:9.5%;width:17.2%"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:2.8%;top:23.5%;width:17.2%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:80.8%;top:39.5%;width:17.2%"><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="left:1.8%;top:57.5%;width:17.2%"><img src="loginail-site/charms-mini/cerises-roses.webp" alt="" style="left:78.8%;top:73.5%;width:17.2%"><img src="loginail-site/charms-mini/noeudgelee.webp" alt="" style="left:38.8%;top:4.5%;width:17.2%"></div>
     <div class="b-pail" id="bPail"><i style="left:16%;top:18%"></i><i style="left:74%;top:30%;animation-delay:.5s"></i><i style="left:40%;top:52%;animation-delay:1s"></i><i style="left:84%;top:58%;animation-delay:1.4s"></i><i style="left:10%;top:76%;animation-delay:.3s"></i><i style="left:60%;top:86%;animation-delay:.8s"></i></div>
   </div></div>
@@ -222,11 +236,12 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
     <div class="leg"><b>Un fond.</b><span>Des cerises, du léopard, de la lavande… Plus de 217 fonds.</span></div>
     <div class="leg"><b>Vos charms.</b><span>243 charms. Sur votre site, vos clientes les attrapent.</span></div>
     <div class="leg"><b>Votre écriture. Vos couleurs.</b><span>Et voilà : votre univers. Le même site, que personne n’a.</span></div>
+    <div class="leg"><b>Et tout le reste.</b><span>Vos prestations, vos prix, vos réalisations, vos avis. Elle se voit déjà chez vous.</span></div>
   </div>
 </div></section>
 
 <div class="marq-sec"><div class="marq"><div class="piste"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"></div><div class="piste r"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/mignon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/mignon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"></div></div>
-  <p class="marq-l">Des sites faits avec Loginail · salons d’exemple</p></div>
+  <p class="marq-l">Des sites faits avec Loginail · salons d’exemple · touchez-en un pour l’ouvrir</p></div>
 
 <section class="app-h" id="appli"><div class="colle">
   <div class="a-titre"><div class="k">Et derrière le site</div><h2 class="t2">L’appli qui gère <em>tout</em>.</h2></div>
@@ -237,16 +252,18 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
     <div class="leg"><b>Votre caisse.</b><span>Vous encaissez, c’est noté. Votre chiffre du jour, du mois.</span></div>
     <div class="leg"><b>Et votre site, d’ici.</b><span>Fond, charms, photos, prix : vous changez ici, ça change sur votre site.</span></div>
   </div>
-  <div class="a-tel"><div class="a-ecr">
+  <div class="a-telw"><div class="a-tel"><div class="a-ecr">
     <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite2.webp" alt="">
-    <div class="notifs" id="notifs">
-      <div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div><small>maintenant</small></div>
-      <div class="nt"><i></i><div><b>Réservé en ligne, cette nuit</b><span>Sarah · Remplissage · mardi 14 h</span></div><small>2 h 14</small></div>
-      <div class="nt"><i></i><div><b>Rappel SMS envoyé</b><span>Inès · demain 9 h · confirmé</span></div><small>maintenant</small></div>
-      <div class="nt"><i></i><div><b>55 € encaissés</b><span>Léa · Pose gel · carte</span></div><small>maintenant</small></div>
-      <div class="nt"><i></i><div><b>Votre site est à jour</b><span>Nouveau fond : cerises</span></div><small>maintenant</small></div>
-    </div>
   </div></div>
+  <div class="notifs" id="notifs">
+      <div class="nt g" data-a="0.15" style="top:6%"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div><small>maintenant</small></div>
+      <div class="nt d" data-a="1.1" style="top:24%"><i></i><div><b>Réservé en ligne, cette nuit</b><span>Sarah · Remplissage · mardi 14 h</span></div><small>2 h 14</small></div>
+      <div class="nt g" data-a="2.05" style="top:42%"><i></i><div><b>Rappel SMS envoyé</b><span>Inès · demain 9 h · confirmé</span></div><small>maintenant</small></div>
+      <div class="nt d" data-a="2.5" style="top:57%"><i></i><div><b>Anniversaire de Léa demain</b><span>Un petit mot pour elle&nbsp;?</span></div><small>9 h</small></div>
+      <div class="nt g" data-a="3.1" style="top:72%"><i></i><div><b>55 € encaissés</b><span>Léa · Pose gel · carte</span></div><small>maintenant</small></div>
+      <div class="nt d" data-a="4.1" style="top:86%"><i></i><div><b>Votre site est à jour</b><span>Nouveau fond : cerises</span></div><small>maintenant</small></div>
+  </div>
+  </div>
 </div></section>
 
 <div class="chif vu"><div><b>6</b><span>sites classe</span></div><div><b>19</b><span>univers</span></div><div><b>243</b><span>charms</span></div><div><b>217</b><span>fonds</span></div></div>
@@ -309,6 +326,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 </section>
 
 <footer class="pied">Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.</footer>
+<div class="grand-site" id="grandSite" hidden><div class="gs-titre" id="gsTitre"></div><div class="gs-boite"><iframe title="Le site en grand"></iframe><button class="gs-x" id="gsFerme" aria-label="Fermer">×</button></div></div>
 <div class="colle-bas" id="colleBas"><a class="btn" href="#prix">Créer mon site · 1 mois offert</a></div>
 
 <script>
@@ -330,16 +348,19 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
 /* la construction : tout est lié au défilement, en continu (rien ne « saute ») */
 (()=>{const b=document.getElementById("build"),C={},L=[...b.querySelectorAll(".leg")],CH=[...b.querySelectorAll(".b-ch img")],HO=[...b.querySelectorAll(".b-hors img")],fond=document.getElementById("bFond"),pail=document.getElementById("bPail"),barre=document.getElementById("bBarre"),num=document.getElementById("bNum"),top=document.getElementById("top");
  b.querySelectorAll("img.c").forEach(x=>C[x.dataset.c]=x);
- const NOMS=["votre site","vos photos","un fond","vos charms","votre univers"];
+ const NOMS=["votre site","vos photos","un fond","vos charms","votre univers","tout le reste"],ecr=document.getElementById("bEcr"),bch=document.getElementById("bCh");
  const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);
  let cible=0,p=0,raf=0,vu=-1;
- const pose=p=>{C[2].style.opacity=doux(cl(p,.10,.24)).toFixed(3);C[3].style.opacity=doux(cl(p,.30,.44)).toFixed(3);
+ const pose=P=>{const p=Math.min(1,P/.8),sc=doux(cl(P,.84,.985));C[2].style.opacity=doux(cl(p,.10,.24)).toFixed(3);C[3].style.opacity=doux(cl(p,.30,.44)).toFixed(3);
    CH.forEach((c,i)=>{const t=doux(cl(p,.50+i*.025,.60+i*.025));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-140).toFixed(1)}%,0) rotate(${((1-t)*(i%2?40:-40)).toFixed(1)}deg)`});
    fond.style.opacity=(doux(cl(p,.30,.44))*(1-.6*doux(cl(p,.76,.9)))).toFixed(3);HO.forEach((c,i)=>{const t=doux(cl(p,.56+i*.03,.68+i*.03));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-260).toFixed(1)}%,0) scale(${(.6+.4*t).toFixed(3)}) rotate(${((1-t)*(i%2?50:-50)+(i%2?12:-12)).toFixed(1)}deg)`});
    C[5].style.opacity=doux(cl(p,.76,.90)).toFixed(3);pail.style.opacity=doux(cl(p,.80,.92)).toFixed(3);
    const seg=[0,.10,.30,.50,.76,1.01];let k=0;for(let i=0;i<5;i++)if(p>=seg[i])k=i;
-   L.forEach((l,i)=>{const entre=i===0?1:cl(p,seg[i]-.03,seg[i]+.02),sort=i===4?0:cl(p,seg[i+1]-.03,seg[i+1]+.02),o=entre*(1-sort);l.style.opacity=o.toFixed(3);l.style.transform=`translateY(${((1-o)*10).toFixed(1)}px)`});
-   barre.style.width=(p*100).toFixed(1)+"%";if(k!==vu){vu=k;num.textContent=(k+1)+" / 5 · "+NOMS[k]}};
+   if(P>=.82)k=5;
+   L.forEach((l,i)=>{const entre=i===0?1:i===5?cl(P,.81,.85):cl(p,seg[i]-.03,seg[i]+.02),sort=i===5?0:i===4?cl(P,.79,.83):cl(p,seg[i+1]-.03,seg[i+1]+.02),o=entre*(1-sort);l.style.opacity=o.toFixed(3);l.style.transform=`translateY(${((1-o)*10).toFixed(1)}px)`});
+   const lg=C[6];lg.style.opacity=doux(cl(P,.80,.83)).toFixed(3);const max=Math.max(0,ecr.clientWidth*3333/600-ecr.clientHeight),dy=(-sc*max).toFixed(1);
+   lg.style.transform=`translate3d(0,${dy}px,0)`;bch.style.transform=pail.style.transform=`translate3d(0,${dy}px,0)`;
+   barre.style.width=(P*100).toFixed(1)+"%";if(k!==vu){vu=k;num.textContent=(k+1)+" / 6 · "+NOMS[k]}};
  const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
  const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
  addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()})();
@@ -347,7 +368,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
 (()=>{const b=document.getElementById("appli"),A=[...b.querySelectorAll("img.a")],N=[...b.querySelectorAll(".nt")],L=[...b.querySelectorAll(".a-legs .leg")];
  const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);let cible=0,p=0,raf=0;
  const pose=p=>{const f=p*5;A.forEach((a,i)=>{a.style.opacity=i===0?1:doux(cl(f,i-.25,i+.05)).toFixed(3)});
-   N.forEach((n,i)=>{const t=doux(cl(f,i+.12,i+.38)),o=t*(1-doux(cl(f,i+.82,i+1.02)));n.style.opacity=o.toFixed(3);n.style.transform=`translateY(${((1-t)*-120).toFixed(1)}%) scale(${(.96+.04*t).toFixed(3)})`});
+   N.forEach(n=>{const a=+n.dataset.a,t=cl(f,a,a+.24),u=t-1,pop=1+2.7*u*u*u+1.7*u*u,o=Math.min(1,t*3)*(1-doux(cl(f,a+1.55,a+1.8))),cote=n.classList.contains("g")?-1:1;n.style.opacity=o.toFixed(3);n.style.transform=`translate3d(${((1-t)*cote*-40).toFixed(1)}px,0,0) scale(${(.55+.45*pop).toFixed(3)})`});
    L.forEach((l,i)=>{const o=(i===0?1:cl(f,i-.2,i+.05))*(i===4?1:1-cl(f,i+.8,i+1.05));l.style.opacity=o.toFixed(3);l.style.transform=`translateY(${((1-o)*10).toFixed(1)}px)`})};
  const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
  const top=document.getElementById("top"),cb=document.getElementById("colleBas");
@@ -370,6 +391,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
 (()=>{const sec=document.getElementById("styles"),tel=document.getElementById("stTel"),img=document.getElementById("stImg"),nom=document.getElementById("stNom"),sous=document.getElementById("stSous"),V=document.getElementById("vign");
  const L={tpl:TPL.map(t=>[t[0],t[1],t[2],t[3]]),uni:UNI.map(t=>[t[0],t[1],t[2],t[3]])};let liste="tpl",cur=0,tf=0,vis=false;
  const vivant=()=>{const f0=tel.querySelector("iframe");if(f0)f0.remove();if(!vis)return;const t=L[liste][cur],f=document.createElement("iframe");f.title="Exemple";f.tabIndex=-1;f.style.transform="scale("+(tel.clientWidth/390)+")";f.onload=()=>setTimeout(()=>f.classList.add("pret"),450);f.src=url(t[1])+"&v="+Date.now();tel.appendChild(f)};
+ tel.addEventListener("click",e=>{e.preventDefault();const t=L[liste][cur];grand(url(t[1]),t[0])});
  const choisis=i=>{cur=i;const t=L[liste][i];img.src="loginail-site/apercus-mini/"+t[2]+".webp";tel.href=url(t[1]);nom.textContent=t[0];sous.textContent=t[3];
    [...V.children].forEach((b,j)=>b.classList.toggle("on",j===i));clearTimeout(tf);tf=setTimeout(vivant,500)};
  const remplis=l=>{liste=l;sec.dataset.l=l;sec.querySelectorAll(".bascule button").forEach(b=>b.classList.toggle("on",b.dataset.l===l));
@@ -380,7 +402,18 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  remplis("tpl")})();
 /* la recherche Google s'écrit toute seule quand on arrive dessus */
 (()=>{const t=document.getElementById("gooTxt"),r=document.getElementById("gooRes"),q="prothésiste ongulaire marseille";let fait=false;
- new IntersectionObserver(es=>{if(!es[0].isIntersecting||fait)return;fait=true;let i=0;const tape=()=>{t.textContent=q.slice(0,++i);if(i<q.length)setTimeout(tape,55+Math.random()*60);else setTimeout(()=>r.classList.add("on"),350)};setTimeout(tape,300)},{threshold:.5}).observe(t)})();
+ new IntersectionObserver(es=>{if(!es[0].isIntersecting||fait)return;fait=true;let i=0;const tape=()=>{t.textContent=q.slice(0,++i);if(i<q.length)setTimeout(tape,26+Math.random()*30);else setTimeout(()=>r.classList.add("on"),200)};setTimeout(tape,120)},{rootMargin:"0px 0px -12% 0px"}).observe(t)})();
+/* « Voir en grand » et les sites qui défilent : le site s'ouvre dans une fenêtre transparente, on le fait défiler avec le doigt */
+const grand=(u,titre)=>{const g=document.getElementById("grandSite"),f=g.querySelector("iframe");document.getElementById("gsTitre").textContent=titre||"";f.src=u+"&v="+Date.now();g.hidden=false;document.documentElement.style.overflow="hidden";requestAnimationFrame(()=>requestAnimationFrame(()=>g.classList.add("on")))};
+{const g=document.getElementById("grandSite"),ferme=()=>{g.classList.remove("on");document.documentElement.style.overflow="";setTimeout(()=>{g.hidden=true;g.querySelector("iframe").src="about:blank"},350)};
+ document.getElementById("gsFerme").addEventListener("click",ferme);g.addEventListener("click",e=>{if(e.target===g)ferme()});
+ document.querySelectorAll(".piste img").forEach(im=>im.addEventListener("click",()=>{const n=im.src.split("/").pop().replace(".webp",""),t=TPL.concat(UNI).find(x=>x[2]===n);if(t)grand(url(t[1]),t[0])}))}
+/* les chiffres partent de 0 et montent */
+{const c=document.querySelector(".chif"),B=[...c.querySelectorAll("b")],F=B.map(b=>+b.textContent);B.forEach(b=>b.textContent="0");
+ new IntersectionObserver((es,o)=>{if(!es[0].isIntersecting)return;o.disconnect();const t0=performance.now(),d=1500;const pas=t=>{const u=Math.min(1,(t-t0)/d),e=1-Math.pow(1-u,3);B.forEach((b,i)=>b.textContent=Math.round(F[i]*e));if(u<1)requestAnimationFrame(pas)};requestAnimationFrame(pas)},{threshold:.6}).observe(c)}
+/* le prix : la ligne se dessine au fil du doigt, chaque étape s'allume quand la ligne l'atteint */
+{const tl=document.querySelector(".tl"),LI=[...tl.children];const maj=()=>{const r=tl.getBoundingClientRect(),h=innerHeight,p=Math.min(1,Math.max(0,(h*.82-r.top)/(r.height+h*.25)));tl.style.setProperty("--t",p.toFixed(3));
+ LI.forEach(li=>li.classList.toggle("on",p*r.height>=li.offsetTop-4))};addEventListener("scroll",maj,{passive:true});addEventListener("resize",maj);maj()}
 /* apparitions douces */
 {const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("on");io.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll(".vu").forEach(x=>io.observe(x))}
 /* les rails : la carte du milieu devient le VRAI site (une seule à la fois, pour rester fluide) */
@@ -392,9 +425,9 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
  r.addEventListener("scroll",()=>{clearTimeout(t);t=setTimeout(pose,260)},{passive:true});
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)pose();else if(cur){const f=cur.querySelector("iframe");if(f)f.remove();cur=null}},{threshold:.2}).observe(r)});
 /* les charms : rangés autour du texte (jamais cachés), ils tombent en pluie à leur place quand on arrive.
-   On en touche un : il se décroche et tombe tranquillement, en se balançant un peu. On le lance : pareil, il finit par tomber doucement.
-   Il se pose (sur le bouton, par terre ou sur un autre charm), bascule d'un côté puis de l'autre, et se cale de travers, sans rouler.
-   Quand on quitte la partie, tout se range ; la pluie recommence au retour. */
+   On en touche un : il se décroche et tombe. On le lance : il vole, rebondit sur les bords, puis tombe.
+   Il se pose (sur le bouton, par terre ou sur un autre charm), bascule d'un côté puis de l'autre,
+   puis au bout de 2 secondes il rentre tout seul à sa place. Quand on quitte la partie, la pluie recommence au retour. */
 (()=>{const z=document.getElementById("pluie"),btn=document.getElementById("chBtn"),bloc=z.parentNode.querySelector(".bloc");
  const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,TA=[58,50,62,54,60,48,56,52],TN={teckelcreme:55,sushi:58,hibiscus:59,bouledisco:53,cerisedisco:56,cocker:66,fleur:54,hippocampe:63,martien:58,monstera:55,peche:59,ramen:56,planete:62,pothos:56,koi:66,levresgrillz:60,eclair:68,chatecaille:68,canard:57,chapeaucowboy:60};
  const alea=i=>{const v=Math.sin(i*12.9898+4.1)*43758.5453;return v-Math.floor(v)};
@@ -430,10 +463,13 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
    else if(c.mode==="secoue"){const u=Math.min(1,(t-c.t)/700);c.r=c.r0+Math.sin(u*Math.PI*4)*9*(1-u);if(u>=1)c.mode="flotte"}
    else if(c.mode==="tenu"){c.k+=(1.15-c.k)*.3}
    else if(c.mode==="chute"){const py=c.y;c.k+=(1-c.k)*.15;c.ph+=.05*dt;
-     c.vy=Math.min(c.vy+.16*dt,4.6);c.vx*=Math.pow(.96,dt);c.x+=(c.vx+Math.sin(c.ph)*.55)*dt;c.y+=c.vy*dt;c.rb+=(c.vx*.6+c.tour)*dt;c.r=c.rb+Math.sin(c.ph)*18;
+     c.vy=Math.min(c.vy+.55*dt,18);c.vx*=Math.pow(.99,dt);c.x+=c.vx*dt;c.y+=c.vy*dt;c.rb+=(c.vx*.8+c.tour*1.6)*dt;c.r=c.rb+Math.sin(c.ph)*6;
      if(c.x<0){c.x=0;c.vx=Math.abs(c.vx)*.4}if(c.x>W-c.s){c.x=W-c.s;c.vx=-Math.abs(c.vx)*.4}if(c.y<0){c.y=0;c.vy=Math.abs(c.vy)*.3}
-     if(c.vy>0){const [y,sur]=appui(c,py);if(c.y>=y){c.y=y;c.vx=0;if(c.vy>2.2&&!c.rebond){c.vy=-c.vy*.18;c.rebond=1}else{c.vy=0;c.rebond=0;c.mode="reste";c.sur=sur;bascule(c,t,(alea(c.i*3+t)>.5?1:-1)*(16+alea(c.i+t)*8));if(sur&&typeof sur==="object")bascule(sur,t,(alea(sur.i+t)>.5?1:-1)*6);if(sur==="btn"){btn.classList.add("pose");setTimeout(()=>btn.classList.remove("pose"),380)}}}}}
-   else if(c.mode==="reste"){if(c.rt){const u=t-c.rt,e=Math.exp(-u/420);c.r=c.ra+c.rw*e*Math.cos(u/80);c.k=1+.05*e*Math.abs(Math.sin(u/80));if(e<.01){c.rt=0;c.k=1}}if(c.sur==="btn")c.y=E.top-c.s+10;else if(c.sur==="sol")c.y=H-c.s-8;else if(c.sur&&c.sur.mode!=="reste")chute(c,0,0)}
+     if(c.vy>0){const [y,sur]=appui(c,py);if(c.y>=y){c.y=y;c.vx=0;if(c.vy>3&&!c.rebond){c.vy=-c.vy*.3;c.rebond=1}else{c.vy=0;c.rebond=0;c.mode="reste";c.t=t;c.sur=sur;bascule(c,t,(alea(c.i*3+t)>.5?1:-1)*(16+alea(c.i+t)*8));if(sur&&typeof sur==="object")bascule(sur,t,(alea(sur.i+t)>.5?1:-1)*6);if(sur==="btn"){btn.classList.add("pose");setTimeout(()=>btn.classList.remove("pose"),380)}}}}}
+   else if(c.mode==="reste"){if(c.rt){const u=t-c.rt,e=Math.exp(-u/420);c.r=c.ra+c.rw*e*Math.cos(u/80);c.k=1+.05*e*Math.abs(Math.sin(u/80));if(e<.01){c.rt=0;c.k=1}}if(c.sur==="btn")c.y=E.top-c.s+10;else if(c.sur==="sol")c.y=H-c.s-8;else if(c.sur&&c.sur.mode!=="reste")chute(c,0,0);
+     if(c.mode==="reste"&&!c.rt&&t-c.t>2200){c.mode="rentre";c.t=t;c.fx=c.x;c.fy=c.y;c.fr=c.r0+((c.r-c.r0)%360+540)%360-180;c.sur=null}}
+   else if(c.mode==="rentre"){const u=Math.min(1,(t-c.t)/950),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2,arc=Math.sin(Math.PI*u)*Math.min(90,Math.abs(c.fy-c.y0)*.35+30);
+     c.x=c.fx+(c.x0-c.fx)*e;c.y=c.fy+(c.y0-c.fy)*e-arc;c.r=c.fr+(c.r0-c.fr)*e;c.k=1+Math.sin(Math.PI*u)*.1;if(u>=1){c.mode="flotte";c.ph=0;c.k=1}}
    c.im.style.transform=`translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.r.toFixed(1)}deg) scale(${c.k.toFixed(3)})`})};
  requestAnimationFrame(pas);
  items.forEach(c=>{let ox=0,oy=0,lx=0,ly=0,lt=0,sx=0,sy=0,st=0;
@@ -443,7 +479,7 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
      const tap=Math.hypot(e.clientX-sx,e.clientY-sy)<8&&performance.now()-st<350;
      if(tap){if(c.avant==="reste"){c.mode="reste";c.k=1;return}chute(c,0,0);return}
      if(performance.now()-lt>120){c.vx=0;c.vy=0}
-     chute(c,Math.max(-12,Math.min(12,c.vx)),Math.max(-10,Math.min(4,c.vy)))};
+     chute(c,Math.max(-26,Math.min(26,c.vx)),Math.max(-26,Math.min(20,c.vy)))};
    c.im.addEventListener("pointerup",lache);c.im.addEventListener("pointercancel",lache)})})();
 /* bouton collé en bas : après la construction, jusqu'au prix */
 {const bu=document.getElementById("build"),cb=document.getElementById("colleBas"),pr=document.getElementById("prix");addEventListener("scroll",()=>{const fin=pr.getBoundingClientRect().top<innerHeight*.6;const ap=document.getElementById("appli").getBoundingClientRect(),cr=document.getElementById("charms").getBoundingClientRect(),sr=document.getElementById("styles").getBoundingClientRect(),dansApp=(ap.top<=1&&ap.bottom>innerHeight)||(cr.top<innerHeight*.6&&cr.bottom>innerHeight*.4)||(sr.top<innerHeight*.75&&sr.bottom>innerHeight*.3);cb.classList.toggle("on",scrollY>bu.offsetTop+bu.offsetHeight-innerHeight*.9&&!fin&&!dansApp)},{passive:true})}
