@@ -263,7 +263,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <div class="pluie" id="pluie"></div>
   <div class="bloc"><div class="compte"><b>243</b> charms à poser sur votre site</div>
   <h2 class="t2">Vous collez des charms<br>sur vos clientes&nbsp;?<br><em>Votre site aussi.</em></h2>
-  <p class="p" style="max-width:290px;margin:0 auto">Touchez-en un, ou lancez-le&nbsp;: il revient à sa place. Sur votre site, vos clientes font pareil.</p></div>
+  <p class="p" style="max-width:290px;margin:0 auto">Touchez-en un, ou lancez-le. Sur votre site, vos clientes font pareil.</p></div>
   <a class="btn ch-btn" href="#prix" id="chBtn">Créer mon site · 1 mois offert</a>
 </div></section>
 
@@ -392,7 +392,7 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
  r.addEventListener("scroll",()=>{clearTimeout(t);t=setTimeout(pose,260)},{passive:true});
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)pose();else if(cur){const f=cur.querySelector("iframe");if(f)f.remove();cur=null}},{threshold:.2}).observe(r)});
 /* les charms : rangés autour du texte (jamais cachés), ils tombent en pluie à leur place quand on arrive ;
-   on les touche : ils sautent ; on les lance : ils rebondissent (sur le bouton ils se posent), puis ils rentrent tout seuls à leur place */
+   on les touche : ils sautent ; on les lance : ils rebondissent (sur le bouton ils se posent), ils tournent un peu puis restent là ; quand on quitte la partie, tout se range et la pluie recommence au retour */
 (()=>{const z=document.getElementById("pluie"),btn=document.getElementById("chBtn"),bloc=z.parentNode.querySelector(".bloc");
  const RM=matchMedia("(prefers-reduced-motion: reduce)").matches,TA=[58,50,62,54,60,48,56,52];
  const alea=i=>{const v=Math.sin(i*12.9898+4.1)*43758.5453;return v-Math.floor(v)};
@@ -409,7 +409,7 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
      c.x0=Math.max(4,Math.min(W-c.s-4,p[0]-c.s/2+(alea(j+3)-.5)*cw*.28));c.y0=p[1]-c.s/2+(alea(j+51)-.5)*12;c.r0=(alea(j+9)-.5)*26});};
  place();addEventListener("resize",place);addEventListener("load",place);if(document.fonts)document.fonts.ready.then(place);
  const plat=c=>{c.r=c.r0+((c.r-c.r0)%360+540)%360-180};
- const pas=t=>{requestAnimationFrame(pas);const zr=z.getBoundingClientRect();if(zr.bottom<0||zr.top>innerHeight)return;
+ const pas=t=>{requestAnimationFrame(pas);const zr=z.getBoundingClientRect();if(zr.bottom<0||zr.top>innerHeight){if(parti){parti=0;pas.h=0;items.forEach(c=>{c.mode="attend";c.vx=c.vy=c.vr=0;c.k=1;c.r=c.r0;c.x=c.x0;c.y=-c.s-40;c.im.classList.remove("tenu");c.im.style.transform=`translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0)`})}return}
    if(!parti&&zr.top<innerHeight*.3){parti=t;place();items.forEach(c=>{if(RM){c.mode="flotte";c.x=c.x0;c.y=c.y0;c.r=c.r0}else{c.mode="attend";c.t=t+alea(c.i+77)*900}})}
    if(!parti)return;
    if(!touche&&!RM&&t-parti>2600&&!pas.h||(!touche&&pas.h&&t-pas.h>5200)){pas.h=t;const l=items.filter(c=>c.on&&c.mode==="flotte"&&c.y0>E.top-200);const c=l[Math.floor(alea(t)*l.length)]||items.find(c=>c.on&&c.mode==="flotte");if(c)saute(c)}
@@ -418,26 +418,28 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
    if(c.mode==="attend"){c.y=-c.s-40;c.x=c.x0;if(t>=c.t){c.mode="tombe";c.y=-c.s-alea(c.i+5)*90;c.vy=3;c.r=c.r0+(alea(c.i)-.5)*70}}
    else if(c.mode==="tombe"){c.vy+=.6*dt;c.y+=c.vy*dt;c.r+=(c.r0-c.r)*.06*dt;if(c.y>=c.y0){c.y=c.y0;if(c.vy>3.2){c.vy=-c.vy*.34}else{c.vy=0;c.mode="flotte";c.ph=0}}}
    else if(c.mode==="flotte"){c.ph+=.02*dt;const f=Math.min(1,.16*dt);c.x+=(c.x0+Math.sin(c.ph)*4-c.x)*f;c.y+=(c.y0+(1-Math.cos(c.ph*.8))*5-c.y)*f;c.r+=(c.r0+Math.sin(c.ph)*5-c.r)*f;c.k+=(1-c.k)*f}
-   else if(c.mode==="saut"){c.vy+=.55*dt;c.y+=c.vy*dt;c.r+=c.vr*dt;c.vr*=Math.pow(.97,dt);if(c.vy>0&&c.y>=c.y0){c.y=c.y0;if(c.vy>3){c.vy=-c.vy*.3;c.vr*=.4}else{c.vy=0;plat(c);c.mode="flotte";c.ph=0}}}
+   else if(c.mode==="saut"){c.vy+=.55*dt;c.y+=c.vy*dt;c.r+=c.vr*dt;c.vr*=Math.pow(.97,dt);if(c.vy>0&&c.y>=c.sol){c.y=c.sol;if(c.vy>3){c.vy=-c.vy*.3;c.vr*=.4}else{c.vy=0;if(c.ret==="reste"){c.mode="reste";c.ry=c.r;c.ph=0}else{plat(c);c.mode="flotte";c.ph=0}}}}
    else if(c.mode==="tenu"){c.k+=(1.18-c.k)*.3}
    else if(c.mode==="vol"){const py=c.y,sol=H-c.s-8;c.k+=(1-c.k)*.15;c.vy=Math.min(c.vy+.5*dt,24);c.x+=c.vx*dt;c.y+=c.vy*dt;c.r+=c.vr*dt;c.vx*=Math.pow(.995,dt);
      if(c.x<0){c.x=0;c.vx=Math.abs(c.vx)*.55;c.vr=-c.vr*.7}if(c.x>W-c.s){c.x=W-c.s;c.vx=-Math.abs(c.vx)*.55;c.vr=-c.vr*.7}if(c.y<0){c.y=0;c.vy=Math.abs(c.vy)*.4}
      const ce=c.x+c.s/2,et=E.top-c.s+10;let fond=null;if(c.vy>0&&ce>E.g&&ce<E.d&&py<=et+2&&c.y>=et)fond=et;else if(c.y>=sol)fond=sol;
-     if(fond!==null){c.y=fond;if(c.vy>3.5){c.vy=-c.vy*.36;c.vx*=.7;c.vr*=.6}else{c.vy=0;c.mode="pose";c.t=t;if(fond===et){btn.classList.add("pose");setTimeout(()=>btn.classList.remove("pose"),380)}}}}
-   else if(c.mode==="pose"){c.vx*=Math.pow(.85,dt);c.x=Math.max(0,Math.min(W-c.s,c.x+c.vx*dt));c.r+=(c.r0+Math.round((c.r-c.r0)/360)*360-c.r)*Math.min(1,.12*dt);
-     if(t-c.t>1700){c.mode="rentre";c.t=t;c.fx=c.x;c.fy=c.y;plat(c);c.fr=c.r}}
+     if(fond!==null){c.y=fond;if(c.vy>3.5){c.vy=-c.vy*.36;c.vx*=.7;c.vr*=.6}else{c.vy=0;c.mode="pose";c.t=t;c.surBtn=fond===et;c.vr=Math.max(-18,Math.min(18,c.vx*2+(c.vr>=0?1:-1)*9));if(fond===et){btn.classList.add("pose");setTimeout(()=>btn.classList.remove("pose"),380)}}}}
+   else if(c.mode==="pose"){c.y=c.surBtn?E.top-c.s+10:H-c.s-8;c.x+=c.vx*dt;c.vx*=Math.pow(.95,dt);if(c.x<0){c.x=0;c.vx=Math.abs(c.vx)*.5}if(c.x>W-c.s){c.x=W-c.s;c.vx=-Math.abs(c.vx)*.5}
+     c.vr*=Math.pow(.975,dt);c.r+=c.vr*dt;if(c.surBtn){const ce=c.x+c.s/2;if(ce<E.g||ce>E.d){c.mode="vol";c.surBtn=false}}
+     if(c.mode==="pose"&&Math.abs(c.vr)<.35&&Math.abs(c.vx)<.15){c.mode="reste";c.ry=c.r;c.ph=0}}
+   else if(c.mode==="reste"){c.y=c.surBtn?E.top-c.s+10:Math.min(c.y,H-c.s-8);c.ph+=.025*dt;c.r=c.ry+Math.sin(c.ph)*4;c.k+=(1-c.k)*.15}
    else if(c.mode==="rentre"){const u=Math.min(1,(t-c.t)/950),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2,arc=Math.sin(Math.PI*u)*Math.min(90,Math.abs(c.fy-c.y0)*.35+30);
      c.x=c.fx+(c.x0-c.fx)*e;c.y=c.fy+(c.y0-c.fy)*e-arc;c.r=c.fr+(c.r0-c.fr)*e;c.k=1+Math.sin(Math.PI*u)*.1;if(u>=1){c.mode="flotte";c.ph=0;c.k=1}}
    c.im.style.transform=`translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.r.toFixed(1)}deg) scale(${c.k.toFixed(3)})`})};
  requestAnimationFrame(pas);
- const saute=c=>{c.mode="saut";c.vy=-9.5;c.vr=(alea(c.i+performance.now())>.5?1:-1)*18};
+ const saute=(c,ret)=>{c.ret=ret||"flotte";c.sol=c.ret==="flotte"?c.y0:c.y;c.mode="saut";c.vy=-9.5;c.vr=(alea(c.i+performance.now())>.5?1:-1)*18};
  items.forEach(c=>{let ox=0,oy=0,lx=0,ly=0,lt=0,sx=0,sy=0,st=0;
    c.im.addEventListener("pointerdown",e=>{touche=true;c.avant=c.mode;c.mode="tenu";c.im.classList.add("tenu");const r=z.getBoundingClientRect();ox=e.clientX-r.left-c.x;oy=e.clientY-r.top-c.y;sx=lx=e.clientX;sy=ly=e.clientY;st=lt=performance.now();c.vx=c.vy=0;try{c.im.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
    c.im.addEventListener("pointermove",e=>{if(c.mode!=="tenu")return;const r=z.getBoundingClientRect();c.x=e.clientX-r.left-ox;c.y=e.clientY-r.top-oy;const t=performance.now(),d=Math.max(8,t-lt);c.vx=(e.clientX-lx)/d*14;c.vy=(e.clientY-ly)/d*14;lx=e.clientX;ly=e.clientY;lt=t});
    const lache=e=>{if(c.mode!=="tenu")return;c.im.classList.remove("tenu");
-     if(Math.hypot(e.clientX-sx,e.clientY-sy)<8&&performance.now()-st<350){if(c.avant==="flotte"||c.avant==="saut"||c.avant==="tombe"){c.y=Math.min(c.y,c.y0);saute(c)}else{c.mode="rentre";c.t=performance.now();c.fx=c.x;c.fy=c.y;plat(c);c.fr=c.r}return}
+     if(Math.hypot(e.clientX-sx,e.clientY-sy)<8&&performance.now()-st<350){if(c.avant==="flotte"||c.avant==="tombe"||(c.avant==="saut"&&c.ret!=="reste")){c.y=Math.min(c.y,c.y0);saute(c)}else{c.vy=0;saute(c,"reste")}return}
      if(performance.now()-lt>120){c.vx*=.2;c.vy*=.2}
-     c.mode="vol";c.vx=Math.max(-30,Math.min(30,c.vx));c.vy=Math.max(-30,Math.min(30,c.vy));c.vr=c.vx*1.5};
+     c.surBtn=false;c.mode="vol";c.vx=Math.max(-30,Math.min(30,c.vx));c.vy=Math.max(-30,Math.min(30,c.vy));c.vr=c.vx*1.5};
    c.im.addEventListener("pointerup",lache);c.im.addEventListener("pointercancel",lache)})})();
 /* bouton collé en bas : après la construction, jusqu'au prix */
 {const bu=document.getElementById("build"),cb=document.getElementById("colleBas"),pr=document.getElementById("prix");addEventListener("scroll",()=>{const fin=pr.getBoundingClientRect().top<innerHeight*.6;const ap=document.getElementById("appli").getBoundingClientRect(),cr=document.getElementById("charms").getBoundingClientRect(),sr=document.getElementById("styles").getBoundingClientRect(),dansApp=(ap.top<=1&&ap.bottom>innerHeight)||(cr.top<innerHeight*.6&&cr.bottom>innerHeight*.4)||(sr.top<innerHeight*.75&&sr.bottom>innerHeight*.3);cb.classList.toggle("on",scrollY>bu.offsetTop+bu.offsetHeight-innerHeight*.9&&!fin&&!dansApp)},{passive:true})}
