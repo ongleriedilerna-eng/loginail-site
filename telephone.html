@@ -347,7 +347,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
 {const n=document.getElementById("notifMini");const go=()=>{n.classList.add("on");setTimeout(()=>n.classList.remove("on"),2600)};setTimeout(go,1200);setInterval(go,4200)}
 /* l'en-tête : caché seulement pendant la construction et l'appli (un seul endroit décide) */
 {const top=document.getElementById("top"),Z=[document.getElementById("build"),document.getElementById("appli"),document.getElementById("charms")];let t=0;
- const maj=()=>{t=0;const cache=Z.some(z=>{const r=z.getBoundingClientRect();return r.top<=1&&r.bottom>innerHeight});if(top.classList.contains("cache")!==cache)top.classList.toggle("cache",cache)};
+ let y0=scrollY,bas=false;const maj=()=>{t=0;const y=scrollY;if(Math.abs(y-y0)>6){bas=y>y0&&y>80;y0=y}const cache=bas||Z.some(z=>{const r=z.getBoundingClientRect();return r.top<=1&&r.bottom>innerHeight});if(top.classList.contains("cache")!==cache)top.classList.toggle("cache",cache)};
  addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(maj)},{passive:true});maj()}
 /* les styles : interrupteur Classe / Audacieuse, vignettes, le grand téléphone devient le vrai site */
 (()=>{const sec=document.getElementById("styles"),tel=document.getElementById("stTel"),img=document.getElementById("stImg"),nom=document.getElementById("stNom"),sous=document.getElementById("stSous"),V=document.getElementById("vign");
@@ -376,7 +376,7 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)pose();else if(cur){const f=cur.querySelector("iframe");if(f)f.remove();cur=null}},{threshold:.2}).observe(r)});
 /* les charms : on les attrape, on les lance ; ceux qui tombent sur le bouton s'y posent, les autres s'en vont et reviennent en douceur */
 (()=>{const z=document.getElementById("pluie"),btn=document.getElementById("chBtn"),S=58;let W=0,H=0;
- const PL=[[8,8],[30,4],[56,7],[80,10],[4,24],[86,26],[14,64],[78,62],[44,70],[6,80],[30,76],[62,78],[88,80],[22,14],[70,18],[48,16]];
+ const PL=[[8,8],[30,4],[56,7],[80,10],[4,24],[86,26],[14,64],[78,62],[44,70],[6,80],[30,76],[62,78],[88,80],[22,14],[70,18],[48,16]].map(p=>[p[0],Math.round(13+p[1]*.85)]);
  const items=PLUIE.slice(0,PL.length).map((n,i)=>{const im=document.createElement("img");im.src="loginail-site/charms-mini/"+n+".webp";im.alt="";z.appendChild(im);return {im,hx:PL[i][0],hy:PL[i][1],x:0,y:0,vx:0,vy:0,r:0,vr:0,ph:i*.7,mode:"flotte",t:0,o:1}});
  const mesure=()=>{W=z.clientWidth;H=z.clientHeight;items.forEach(c=>{c.x0=c.hx/100*(W-S);c.y0=c.hy/100*(H-S);if(c.mode==="flotte"){c.x=c.x0;c.y=c.y0}})};mesure();addEventListener("resize",mesure);
  const etagere=()=>{const zr=z.getBoundingClientRect(),br=btn.getBoundingClientRect();return {g:br.left-zr.left+6,d:br.right-zr.left-6,y:br.top-zr.top-S+10}};
