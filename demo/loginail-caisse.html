@@ -29,6 +29,9 @@ button{font:inherit;color:inherit}
   .tel{zoom:1!important;width:100vw;height:calc(100dvh - 46px);padding:0;border-radius:0;box-shadow:none;background:none}
   .ecran{width:100%;height:100%;border-radius:0}.ile{display:none}
 }
+/* 07/11 : ?appli = l'appli seule, plein écran, comme sur le téléphone de la prothésiste (sans la barre de présentation) */
+html.appli .reglages,html.appli .bandeau{display:none!important}
+@media (max-width:699px){html.appli .tel{height:100dvh}}
 
 /* pages */
 .vue{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding:62px 22px 120px;display:none}
@@ -428,7 +431,7 @@ button{font:inherit;color:inherit}
 </head>
 <body>
 <div class="bandeau"><b>Loginail · la caisse</b>1 · le bouton « Encaisser » dans le rendez-vous · 2 · l’écran pour encaisser et envoyer le ticket · 3 · la page « Ma caisse » (tickets, total du mois, livre des recettes) · tout se touche · clientes et montants : exemples</div>
-<div class="reglages"><div><button data-c="1" class="on">Rendez-vous</button><button data-c="2">Encaisser</button><button data-c="3">Ma caisse</button></div></div>
+<script>if(/[?&]appli/.test(location.search))document.documentElement.classList.add("appli")</script><div class="reglages"><div><button data-c="1" class="on">Rendez-vous</button><button data-c="2">Encaisser</button><button data-c="3">Ma caisse</button></div></div>
 <div class="rangee">
   <div class="col vis" data-col="1"><div class="code"><b>1</b>Le rendez-vous</div><div class="tel"><div class="ecran" data-v="rgk" data-start="ag" data-ouvre="ks-rdv" style="--acc:#1E1C1B"></div></div></div>
   <div class="col" data-col="2"><div class="code"><b>2</b>Encaisser</div><div class="tel"><div class="ecran" data-v="rgk" data-start="ag" data-ouvre="ks-enc" style="--acc:#1E1C1B"></div></div></div>
