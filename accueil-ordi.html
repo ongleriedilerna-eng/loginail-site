@@ -465,6 +465,93 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 @media (min-width:1000px){.fin-pub{padding:200px 0!important}}
 @media (max-width:999px){.fin-pub{padding:120px 0!important}.fin-pub .fp-carte{margin:0 14px!important}}
 .fp-fond>.fp-piste{opacity:1!important;left:0!important;right:auto!important;bottom:auto!important;transition:none!important}
+
+/* ===== 09/11 (Marie, 2e liste) : la version ORDINATEUR ===== */
+@media (min-width:1000px){
+  /* 1 · « Personnalisez votre site en 1 minute chrono » : tout se joue en 8 crans de molette */
+  .build{height:calc(100vh + 800px)!important}
+
+  /* 2 · L'appli : plus d'effet de molette ; à gauche, les notifications arrivent ; le téléphone un peu plus à droite */
+  .app-h{height:auto!important;background:radial-gradient(ellipse 60% 70% at 78% 50%,#2a2226 0,#141114 70%)!important}
+  .app-h .colle{position:relative!important;top:auto!important;height:auto!important;min-height:100vh;overflow:visible!important;
+    display:grid!important;grid-template-columns:minmax(0,560px) auto!important;grid-template-areas:"titre tel" "flux tel" "flux ong"!important;grid-template-rows:auto 1fr auto!important;
+    justify-content:space-between!important;align-content:center!important;column-gap:120px!important;row-gap:0!important;max-width:1180px;margin:0 auto;padding:110px 64px 90px!important;box-sizing:border-box}
+  .app-h .a-legs,.app-h .a-astuce,.app-h #notifs,.app-h .pop-nt{display:none!important}
+  .app-h .a-ecr img.a~img.a{opacity:0!important}
+  .app-h .a-tel{grid-area:tel!important;height:min(640px,calc(100vh - 250px))!important;max-height:none!important;justify-self:end;margin-right:20px}
+  .app-h .a-titre{grid-area:titre;align-self:end}
+  .app-h .a-titre .k{font-size:12px;letter-spacing:.3em;opacity:.7}
+  .app-h .a-titre .t2{font-size:clamp(60px,5.4vw,84px)!important;line-height:.98;letter-spacing:-.01em;margin:14px 0 0}
+  .app-h .a-titre .t2 em{font-style:italic;background:linear-gradient(100deg,#F4C9D6,#F6E3B5 55%,#D9C8F2);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+  .app-h .a-sous{font:400 17px/1.55 Jost,sans-serif;color:rgba(246,243,239,.72);margin:18px 0 0;max-width:470px}
+  .app-h .a-ong-bloc{grid-area:ong!important;justify-self:end!important;margin:22px 20px 0 0}
+  .a-flux{grid-area:flux;position:relative;height:430px;margin-top:34px;overflow:hidden;
+    -webkit-mask:linear-gradient(180deg,#000 72%,transparent);mask:linear-gradient(180deg,#000 72%,transparent)}
+  .a-flux .fx{display:flex;gap:13px;align-items:flex-start;width:430px;box-sizing:border-box;padding:13px 15px 14px;margin:0 0 10px;border-radius:22px;
+    background:rgba(250,248,246,.95);color:#1E1C1B;box-shadow:0 18px 40px -20px rgba(0,0,0,.7);
+    transform-origin:50% 0;animation:fxArrive .65s cubic-bezier(.25,1.35,.45,1) both}
+  .a-flux .fx:nth-child(2){transform:scale(.985)}
+  .a-flux .fx i{flex:none;width:40px;height:40px;border-radius:11px;background:url(loginail-site/icone-appli.svg) center/cover}
+  .a-flux .fx div{flex:1;min-width:0}
+  .a-flux .fx .h{display:flex;justify-content:space-between;font:500 10.5px Jost;letter-spacing:.14em;text-transform:uppercase;color:#8a8079;margin-bottom:3px}
+  .a-flux .fx .h small{letter-spacing:0;text-transform:none;font-size:11px}
+  .a-flux .fx b{display:block;font:500 15px/1.3 Jost}
+  .a-flux .fx span{display:block;font-size:13px;line-height:1.4;color:#5a524d}
+  @keyframes fxArrive{0%{opacity:0;transform:translateY(-26px) scale(.9);max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0}
+    40%{max-height:120px;margin-bottom:10px;padding-top:13px;padding-bottom:14px}
+    100%{opacity:1;transform:none;max-height:120px}}
+
+  /* 3 · Classe / Baddie : la machine à sous */
+  .styl-duo .styl{background:#EFE7DF!important;color:#1E1C1B!important;transition:color .35s!important}
+  .styl-duo .styl.sl-fonce{color:#F6F3EF!important}
+  .styl-duo .styl .fondP,.styl-duo .st-tel,.styl-duo .st-nom,.styl-duo .st-nav,.styl-duo .st-aide,.styl-duo .formes,.styl-duo .bascule{display:none!important}
+  .styl-duo .styl>.fondS{position:absolute!important;inset:0;z-index:0!important;background:#EFE7DF center/cover no-repeat;transition:opacity .35s;pointer-events:none}
+  .styl-duo .styl>.fondS.b{opacity:0}
+  .styl-duo .styl .st-t{padding:10px 30px 12px;border-radius:24px;background:rgba(246,243,239,.82);box-shadow:0 10px 24px -16px rgba(0,0,0,.3);transition:background .35s}
+  .styl-duo .styl.sl-fonce .st-t{background:rgba(20,18,17,.66)}
+  .styl-duo .styl.sl-fonce .t2,.styl-duo .styl.sl-fonce .sl-nom{text-shadow:0 2px 18px rgba(0,0,0,.6)}
+  .styl-duo .styl .k{opacity:.75}
+  .slot{display:flex;flex-direction:column;align-items:center;margin-top:18px}
+  .sl-tel{--h:min(600px,calc(100vh - 290px));position:relative;height:var(--h);width:calc(var(--h) * .4615 + 24px);padding:12px;box-sizing:border-box;border-radius:calc(var(--h) * .085);
+    background:linear-gradient(145deg,#2b2b2d,#0b0b0c 40%,#1d1d1f);box-shadow:0 0 0 1.5px #6d6a66,inset 0 0 0 1.5px #3a3a3c,0 50px 70px -34px rgba(0,0,0,.7),0 22px 30px -18px rgba(0,0,0,.45);cursor:pointer}
+  .sl-tel::after{content:"";position:absolute;right:-3.5px;top:27%;width:3.5px;height:13%;border-radius:0 3px 3px 0;background:#3c3a38}
+  .sl-tel::before{content:"";position:absolute;left:-3.5px;top:20%;width:3.5px;height:7%;border-radius:3px 0 0 3px;background:#3c3a38;box-shadow:0 calc(var(--h) * .1) 0 #3c3a38}
+  .sl-ecr{position:relative;width:100%;height:100%;border-radius:calc(var(--h) * .07);overflow:hidden;background:#F6F3EF;isolation:isolate}
+  .sl-ecr::before{content:"";position:absolute;z-index:3;top:calc(var(--h) * .018);left:50%;transform:translateX(-50%);width:31%;height:calc(var(--h) * .045);border-radius:99px;background:#050505}
+  .sl-bande{position:absolute;left:0;top:0;width:100%;will-change:transform}
+  .sl-bande img{display:block;width:100%;height:calc(var(--h) - 24px);object-fit:cover;object-position:top}
+  .sl-bande.roule{filter:blur(1.6px) saturate(1.1)}
+  .sl-ecr::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 12%,transparent 88%,rgba(0,0,0,.18));opacity:0;transition:opacity .3s}
+  .slot.roule .sl-ecr::after{opacity:1}
+  .sl-nom{text-align:center;margin-top:18px;min-height:52px;padding:9px 22px 10px;border-radius:18px;background:rgba(246,243,239,.88);box-shadow:0 10px 24px -16px rgba(0,0,0,.35);transition:opacity .25s,transform .25s,background .35s}
+  .styl.sl-fonce .sl-nom{background:rgba(20,18,17,.72)}
+  .sl-nom b{display:block;font:400 30px/1.1 'Cormorant Garamond',serif}
+  .sl-nom small{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.75;margin-top:6px}
+  .slot.roule .sl-nom{opacity:0;transform:translateY(6px)}
+
+  /* 4 · Les charms : on les attrape à la souris */
+  .pluie2 .c2 img{cursor:grab}
+  .pluie2 .c2.tenu{z-index:9}.pluie2 .c2.tenu img{cursor:grabbing;animation:none;filter:drop-shadow(0 18px 18px rgba(0,0,0,.28))}
+
+  /* 5 · « Tout ça, pour vous » : l'écran s'arrête dessus ; derrière les téléphones, une mosaïque de fonds */
+  .fin-pub{height:200vh;padding:0!important;margin:60px 0 0!important;overflow:visible!important}
+  .fin-pub>.fp-colle{position:sticky!important;top:0;z-index:auto!important;height:100vh;overflow:hidden;display:grid;place-items:center;isolation:isolate}
+  .fp-colle>.fp-fond{position:absolute;inset:0;z-index:0;background:#EFE7DF}
+  .fp-colle>.fp-ch{position:absolute;inset:0;z-index:1}
+  .fp-colle>.fp-carte{position:relative;z-index:2;width:760px}
+  .fp-mosa{position:absolute;inset:-2%;display:grid;grid-template-columns:repeat(9,1fr);gap:0;z-index:0}
+  .fp-mosa>div{position:relative;aspect-ratio:1;overflow:hidden}
+  .fp-mosa>div>i{position:absolute;inset:0;background:center/cover no-repeat;transition:opacity 1.2s}
+  .fp-mosa>div>i.b{opacity:0}
+  .fp-fond .fp-piste{z-index:1;gap:84px!important;padding-left:42px}
+  .fp-fond .fp-piste img{width:150px!important;border-width:5px!important;border-radius:22px!important;box-shadow:0 22px 34px -16px rgba(0,0,0,.55)!important}
+  .fp-mosa>div>i{filter:saturate(1.05)}
+}
+@media (min-width:1000px){
+  .fp-fond>.fp-mosa{opacity:1!important;inset:-2%!important;transition:none!important}
+  #charms .ch-bas{pointer-events:none}
+  #charms .ch-bas .btn{pointer-events:auto}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -840,7 +927,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 
   /* ---- 2 · « L’appli qui gère tout » : quelques notifications qui apparaissent autour, tranquillement ---- */
   { const a = document.getElementById("appli"), colle = a && a.querySelector(".colle");
-    if (colle) {
+    if (colle && !ORDI) {
       const N = [["Nouvelle réservation", "Léa · Pose gel · samedi 10 h", "maintenant"], ["Rappel SMS envoyé", "Inès · demain 9 h · confirmé", "maintenant"], ["55 € encaissés", "Sarah · Remplissage · carte", "maintenant"],
         ["Nouvelle cliente ajoutée", "Chloé · dans vos fiches", "maintenant"], ["Réservé cette nuit", "Mia · Semi-permanent · mardi 14 h", "2 h 14"], ["Nouvel avis ★★★★★", "« Trop belle pose, merci ! »", "à l’instant"],
         ["C’est son anniversaire", "Emma · pensez à lui écrire", "aujourd’hui"], ["Acompte reçu", "Jade · 15 € · pose du 12", "maintenant"], ["Fin du mois", "1 840 € encaissés · déjà calculé", "ce soir"]];
@@ -866,17 +953,18 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const barre = document.createElement("div"); barre.className = "a-onglets appel";
       barre.innerHTML = O.map(([k, n], i) => `<button data-i="${i}" type="button" aria-label="Voir ${n}"><svg viewBox="0 0 24 24">${IC[k]}</svg><span>${n}</span></button>`).join("");
       const astuce = document.createElement("div"); astuce.className = "a-astuce"; astuce.innerHTML = '<i>👆</i> Touchez un onglet';
-      if (ORDI) { const bloc = document.createElement("div"); bloc.style.cssText = "grid-area:ong;justify-self:start;z-index:3"; bloc.append(barre, astuce); colle.appendChild(bloc); }
+      if (ORDI) { const bloc = document.createElement("div"); bloc.className = "a-ong-bloc"; bloc.style.cssText = "z-index:3"; bloc.append(barre); colle.appendChild(bloc); barre.querySelector("button").classList.add("on"); }
       else { colle.appendChild(barre); colle.appendChild(astuce); }
       const ov = document.createElement("img"); ov.className = "a-tab"; ov.alt = ""; ecr.appendChild(ov);
       let force = -1, tf = 0;
       const L = [...a.querySelectorAll(".a-legs .leg")];
-      const maj = () => { if (force >= 0) return; let k = 0, m = -1; L.forEach((l, i) => { const o = +l.style.opacity || 0; if (o > m) { m = o; k = i; } }); const on = VERS[k];
+      const maj = () => { if (ORDI || force >= 0) return; let k = 0, m = -1; L.forEach((l, i) => { const o = +l.style.opacity || 0; if (o > m) { m = o; k = i; } }); const on = VERS[k];
         barre.querySelectorAll("button").forEach((b, i) => b.classList.toggle("on", i === on)); };
       let dernierY = scrollY;
-      addEventListener("scroll", () => { if (force >= 0 && Math.abs(scrollY - dernierY) > 140) { force = -1; ov.classList.remove("on"); } requestAnimationFrame(maj); }, { passive: true }); setInterval(maj, 400);
+      if (!ORDI) addEventListener("scroll", () => { if (force >= 0 && Math.abs(scrollY - dernierY) > 140) { force = -1; ov.classList.remove("on"); } requestAnimationFrame(maj); }, { passive: true }); setInterval(maj, 400);
       barre.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; const i = +b.dataset.i; force = i; dernierY = scrollY; barre.classList.remove("appel"); astuce.style.opacity = 0;
         ov.src = `loginail-site/apercus-univers/${O[i][2]}.webp`; ov.classList.add("on"); barre.querySelectorAll("button").forEach((x, j) => x.classList.toggle("on", j === i));
+        if (ORDI) { if (i === 0) ov.classList.remove("on"); return; }
         clearTimeout(tf); tf = setTimeout(() => { force = -1; ov.classList.remove("on"); maj(); }, 7000); });
     } }
 
@@ -939,7 +1027,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         items.forEach(c => { c.vx = hasard(-2.2, 2.2); c.vy = hasard(-3, 0); c.va = 0; c.sol = H - c.t - hasard(2, ORDI ? 46 : 30); c.part = performance.now() + hasard(0, 160); });
         let t0 = performance.now();
         const pas = now => { const dt = Math.min(2.2, (now - t0) / 16.7); t0 = now; let bouge = false;
-          items.forEach(c => { if (now < c.part) { bouge = true; return; }
+          items.forEach(c => { if (c.tenu || now < c.part) { bouge = true; return; }
             c.vy += .9 * dt; c.x += c.vx * dt; c.y += c.vy * dt;
             if (c.y >= c.sol) { c.y = c.sol; if (Math.abs(c.vy) > 2.5) { c.vy = -c.vy * .38; c.vx *= .9; } else { c.vy = 0; c.vx *= Math.pow(.965, dt); } c.va = c.vx / (c.t / 2) * 57.3; }
             if (c.x < 2) { c.x = 2; c.vx = Math.abs(c.vx) * .6; } if (c.x > W - c.t - 2) { c.x = W - c.t - 2; c.vx = -Math.abs(c.vx) * .6; }
@@ -948,12 +1036,24 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           if (bouge && etat === "tombe") raf = requestAnimationFrame(pas); };
         raf = requestAnimationFrame(pas); };
       const remonte = () => { cancelAnimationFrame(raf); etat = "haut"; lay.classList.remove("tombe");
-        items.forEach(c => { c.x = c.x0; c.y = c.y0; c.a = 0; c.w.style.transition = "transform .6s cubic-bezier(.3,1.2,.5,1)"; c.w.style.transform = `translate3d(${c.x0}px,${c.y0}px,0)`; setTimeout(() => c.w.style.transition = "", 650); }); };
+        items.forEach(c => { c.x = c.x0; c.y = c.y0; c.a = 0; c.w.style.transition = ""; c.w.style.transform = `translate3d(${c.x0}px,${c.y0}px,0)`; }); };
       addEventListener("scroll", () => { const r = sec.getBoundingClientRect(), p = -r.top / Math.max(1, r.height - innerHeight);
         if (etat === "haut" && p > .04 && r.top < 1) chute();
-        else if (etat === "tombe" && r.top > innerHeight * .35) remonte(); }, { passive: true });
+        else if (etat === "tombe" && (r.bottom < 0 || r.top > innerHeight)) remonte(); }, { passive: true });
+      /* ordinateur : on attrape un charm au clic gauche, on le soulève ; on le lâche : il retombe tout droit, simplement */
+      if (ORDI) { let tenu = null, dx = 0, dy = 0;
+        lay.addEventListener("pointerdown", e => { if (e.button !== 0) return; const w = e.target.closest(".c2"); if (!w) return; const c = items.find(x => x.w === w); if (!c) return; e.preventDefault();
+          c.tenu = true; if (etat === "haut") { chute(); } const b = pc.getBoundingClientRect(); tenu = c; dx = e.clientX - b.left - c.x; dy = e.clientY - b.top - c.y;
+          w.classList.add("tenu"); w.style.transition = ""; try { w.setPointerCapture(e.pointerId); } catch (x) {} });
+        lay.addEventListener("pointermove", e => { if (!tenu) return; const b = pc.getBoundingClientRect(), c = tenu;
+          c.x = Math.max(2, Math.min(pc.clientWidth - c.t - 2, e.clientX - b.left - dx)); c.y = Math.max(0, Math.min(c.sol || pc.clientHeight - c.t, e.clientY - b.top - dy)); c.vx = 0; c.vy = 0;
+          c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`; });
+        const lache = () => { if (!tenu) return; const c = tenu; tenu = null; c.tenu = false; c.vx = 0; c.vy = 0; c.w.classList.remove("tenu"); const sol = c.sol || pc.clientHeight - c.t - 10, d = Math.max(.25, Math.min(.7, (sol - c.y) / 900));
+          c.y = sol; c.w.style.transition = `transform ${d.toFixed(2)}s cubic-bezier(.45,0,.9,.6)`; c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`;
+          setTimeout(() => c.w.style.transition = "", d * 1000 + 50); };
+        lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache); }
       /* on touche un charm : il saute un peu */
-      lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (!w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return; c.vy = -14; c.vx = hasard(-4, 4); c.sol = c.sol || pc.clientHeight - c.t; const t0b = performance.now();
+      lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (ORDI || !w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return; c.vy = -14; c.vx = hasard(-4, 4); c.sol = c.sol || pc.clientHeight - c.t; const t0b = performance.now();
         const W = pc.clientWidth; let t0 = performance.now(); const saute = now => { const dt = Math.min(2.2, (now - t0) / 16.7); t0 = now; c.vy += .9 * dt; c.x += c.vx * dt; c.y += c.vy * dt;
           if (c.y >= c.sol) { c.y = c.sol; c.vy = Math.abs(c.vy) > 2.5 ? -c.vy * .38 : 0; c.vx *= .97; } c.x = Math.max(2, Math.min(W - c.t - 2, c.x)); c.a += c.vx / (c.t / 2) * 57.3 * dt;
           c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`;
@@ -978,7 +1078,18 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     const l = L.slice(r * 3).concat(L.slice(0, r * 3)); pi.innerHTML = [...l, ...l].map(s => `<img src="${s}" alt="">`).join(""); fond.appendChild(pi); }
   /* les charms tout autour de la carte */
   const lay = document.createElement("div"); lay.className = "fp-ch"; fp.insertBefore(lay, carte);
-  const place = () => { lay.innerHTML = ""; const W = fp.clientWidth, H = fp.clientHeight, c = carte.getBoundingClientRect(), f = fp.getBoundingClientRect();
+  /* 09/11 (Marie, ordinateur) : l'écran s'arrête dessus ; derrière les téléphones, une mosaïque de fonds qui changent */
+  let box = fp;
+  if (matchMedia("(min-width: 1000px)").matches) {
+    const colle = document.createElement("div"); colle.className = "fp-colle"; colle.append(fond, lay, carte); fp.appendChild(colle); box = colle;
+    const FM = ["after-hours", "agrumes", "anneaux", "arcs-lilas-chocolat", "art-deco", "azulejo", "baddie-club", "bambous", "bisous-gris", "bisous-noirs", "bisous", "bleuets", "bouquets-tulipes", "cadenas-coeur", "cafe-croissants-damier", "cafe-croissants", "carreaux-bordeaux", "carreaux-caramel", "carreaux-ocre", "cerises-leopard", "cerises-noeuds-bleus", "cerises-vichy", "chaussons-danse", "chrome-liquide", "chrome-noir", "citrons-rubans", "cles-anciennes", "coeurs-argent-noir", "coeurs-epines-noirs", "coeurs-epines-rouges", "coeurs-festonnes", "coeurs-jaunes-prune", "coeurs-lin", "coeurs-piques-violet", "coeurs-verre", "cool-girls-club", "coquillages-dentelle", "coquillages-terracotta", "cygnes-muguet", "damier-bleu-noir", "damier-choco-noeuds", "damier-chrome", "damier-fleuri", "damier-noir-creme", "damier-rose-fluo", "dentelle-bordeaux", "dentelle-peche", "des-rouges", "diamants-violet", "disco-roses", "disco-velours", "dragons-bleus", "ecailles-lilas", "epingles-bordeaux", "espace", "etincelles-bordeaux", "etoiles-cacao", "etoiles-holo", "etoiles-marine", "etoiles-noires-creme", "etoiles-roses", "faience-jaune", "figues", "flacons-parfum", "flammes-bleues", "flammes-roses", "flammes-rouge", "fleurs-bleu", "fleurs-bleues-damier", "fleurs-corail", "fleurs-rouge", "fleurs-seventies", "fraises-noeuds-bleus", "fraises-vichy", "framboises", "fuji-sakura", "graffiti", "grains-cafe", "grenades", "hibiscus-corail", "homards", "hortensias", "hot-girls-etoiles", "hot-girls-noir", "hot-girls-rose", "it-girl", "jean-epingles", "jean-etoiles", "lavande", "leopard-caramel", "leopard-fourrure", "leopard-rose-doux", "lierre-fougeres", "losanges-bordeaux", "lucky-girl", "lunes-nuit", "lunes-sapin", "marguerites-vichy", "matcha", "meduses", "mini-fleurs-bleues", "muguet-marine", "nacre-irisee", "nature-morte-figues", "noeuds-argent-bordeaux", "noeuds-bleus", "noeuds-chocolat-pois", "noeuds-lilas-jaune", "noeuds-rouges-rose", "noeuds-taupe", "noeuds-verts-lilas", "notes-musique", "nuages-lilas", "oeil-bleu-jaune", "olivier", "oliviers", "oranges-etoiles", "oranges-fleurs", "orbites", "papillons-pastel", "perles-chocolat", "pied-de-poule", "piments-lilas", "pois-chocolat", "pois-corail", "quartz", "rayures-anis", "rayures-dorees", "rayures-sapin", "recif", "rose-metal", "roses-bleu-gris", "roses-croix", "roses-dentelle", "sardines", "satin-bordeaux", "satin-chocolat", "satin-noir", "shibori", "soleil-mains", "soleils-baroques", "soleils-endormis", "teckels", "tennis", "toile-jouy", "treillis-rouille", "tribal-argent", "tribal-gris", "tribal-lilas", "tricot-menthe", "tulipes-bordeaux", "vagues-bordeaux-lilas", "vagues-choco-jaune", "vagues-choco-rose", "vagues-kaki", "vagues-noir-blanc", "velos-fleuris", "vichy-coeurs", "vitrail-hirondelles", "vitrail-lune", "voiles-caramel", "western", "zebre-chocolat", "zebre-peint", "zodiaque"], hasard = () => FM[Math.floor(Math.random() * FM.length)];
+    const mosa = document.createElement("div"); mosa.className = "fp-mosa"; fond.prepend(mosa);
+    const cases = []; for (let i = 0; i < 54; i++) { const d = document.createElement("div"); d.innerHTML = `<i style="background-image:url(loginail-site/fonds-mini/${hasard()}.webp)"></i><i class="b"></i>`; mosa.appendChild(d); cases.push(d); }
+    let vu = false; new IntersectionObserver(es => { vu = es[0].isIntersecting; }).observe(fp);
+    setInterval(() => { if (!vu || document.hidden) return; for (let k = 0; k < 3; k++) { const d = cases[Math.floor(Math.random() * cases.length)], [a, b] = d.children, cache = a.classList.contains("b") ? a : b, montre = cache === a ? b : a;
+      const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); montre.classList.add("b"); }; im.src = `loginail-site/fonds-mini/${hasard()}.webp`; } }, 900);
+  }
+  const place = () => { lay.innerHTML = ""; const W = box.clientWidth, H = box.clientHeight, c = carte.getBoundingClientRect(), f = box.getBoundingClientRect();
     const R = { l: c.left - f.left - 20, r: c.right - f.left + 20, t: c.top - f.top - 20, b: c.bottom - f.top + 20 }, deja = [], n = innerWidth >= 1000 ? 22 : 10;
     for (let i = 0, e = 0; i < n && e < 600; e++) { const t = Math.round((innerWidth >= 1000 ? 54 : 40) + Math.random() * 22), x = Math.random() * (W - t), y = Math.random() * (H - t);
       if (x + t > R.l && x < R.r && y + t > R.t && y < R.b) continue; if (deja.some(p => Math.abs(p[0] - x) < t && Math.abs(p[1] - y) < t)) continue; deja.push([x, y]);
@@ -995,6 +1106,78 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   const lache = () => { if (!tenu) return; const im = tenu; tenu = null; im.classList.remove("tient");
     if (!bouge) { im.classList.add("tombe"); setTimeout(() => { im.classList.remove("tombe"); im.style.opacity = 0; requestAnimationFrame(() => { im.style.transition = "opacity .6s"; im.style.opacity = 1; setTimeout(() => im.style.transition = "", 700); }); }, 1250); } };
   lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache);
+})();
+</script>
+<script id="ordi2">/* 09/11 (Marie, 2e liste) : la version ORDINATEUR — l'appli (le flux de notifications), Classe / Baddie en machine à sous */
+(() => {
+  if (!matchMedia("(min-width: 1000px)").matches) return;
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---- L'appli : à gauche, les notifications arrivent une à une, comme sur un vrai téléphone ---- */
+  { const a = document.getElementById("appli"), colle = a && a.querySelector(".colle"), titre = a && a.querySelector(".a-titre");
+    if (colle && titre) {
+      const sous = document.createElement("p"); sous.className = "a-sous";
+      sous.textContent = "Réservations, rappels SMS, anniversaires, caisse : tout arrive dans votre poche, tout seul. Vous, vous faites les ongles.";
+      titre.appendChild(sous);
+      const flux = document.createElement("div"); flux.className = "a-flux"; flux.setAttribute("aria-hidden", "true"); colle.appendChild(flux);
+      const N = [["Nouvelle réservation", "Léa · Pose gel · samedi 10 h", "maintenant"], ["Rappel SMS envoyé", "Inès · son rendez-vous de demain 9 h", "maintenant"],
+        ["C’est l’anniversaire d’Emma 🎂", "Un petit message pour elle ?", "aujourd’hui"], ["Acompte reçu", "Jade · 15 € · pose du 12", "maintenant"],
+        ["Réservé cette nuit", "Mia · Semi-permanent · mardi 14 h", "2 h 14"], ["55 € encaissés", "Sarah · Remplissage · ticket envoyé", "maintenant"],
+        ["Nouvelle cliente", "Chloé · sa fiche est créée toute seule", "maintenant"], ["Nouvel avis ★★★★★", "« Trop belle pose, merci ! »", "à l’instant"],
+        ["Rappel SMS envoyé", "Sarah · demain 14 h · confirmé", "maintenant"], ["Fin du mois", "1 840 € encaissés · déjà calculé", "ce soir"]];
+      let k = 0;
+      const ajoute = () => { const n = N[k++ % N.length], d = document.createElement("div"); d.className = "fx";
+        d.innerHTML = `<i></i><div><div class="h">Loginail<small>${esc(n[2])}</small></div><b>${esc(n[0])}</b><span>${esc(n[1])}</span></div>`;
+        flux.prepend(d); while (flux.children.length > 5) flux.lastElementChild.remove(); };
+      let vu = false; new IntersectionObserver(es => { vu = es[0].isIntersecting; }, { threshold: .2 }).observe(colle);
+      for (let i = 0; i < 3; i++) ajoute();
+      setInterval(() => { if (vu && !document.hidden) ajoute(); }, 2200);
+    } }
+
+  /* ---- Classe / Baddie : machine à sous. Ça tourne, ça s'arrête sur un site ET son fond ; puis l'autre colonne ; jamais en même temps ---- */
+  { const duo = document.querySelector(".styl-duo"); if (!duo || typeof TPL === "undefined" || typeof UNI === "undefined") return;
+    const FC = {"tpl-maisonmoka": {"img": "loginail-site/fonds-classe/tpl-maisonmoka.webp", "clair": true}, "tpl-maisonnoire": {"img": "loginail-site/fonds-classe/tpl-maisonnoire.webp", "clair": true}, "tpl-atelierronce": {"img": "loginail-site/fonds-classe/tpl-atelierronce.webp", "clair": true}, "tpl-maisonsauge": {"couleur": "#DDE7D0"}, "tpl-maisonlin": {"couleur": "#E7DED0"}, "tpl-studiopoudre": {"img": "loginail-site/fonds-classe/tpl-studiopoudre.webp", "clair": true}, "cerise": {"img": "loginail-site/fonds-classe/cerise.webp", "clair": true}, "pastel": {"img": "loginail-site/fonds-classe/pastel.webp", "clair": true}, "chrome": {"img": "loginail-site/fonds-classe/chrome.webp", "clair": false}, "bling": {"img": "loginail-site/fonds-classe/bling.webp", "clair": true}, "emo": {"img": "loginail-site/fonds-classe/emo.webp", "clair": true}, "riviera": {"img": "loginail-site/fonds-classe/riviera.webp", "clair": true}, "sixties": {"img": "loginail-site/fonds-classe/sixties.webp", "clair": true}, "baroque": {"img": "loginail-site/fonds-classe/baroque.webp", "clair": true}, "street": {"img": "loginail-site/fonds-classe/street.webp", "clair": true}, "japon": {"img": "loginail-site/fonds-classe/japon.webp", "clair": true}, "tropical": {"couleur": "#DDE7D0"}, "sirene": {"img": "loginail-site/fonds-classe/sirene.webp", "clair": true}, "feerique": {"img": "loginail-site/fonds-classe/feerique.webp", "clair": true}, "celeste": {"img": "loginail-site/fonds-classe/celeste.webp", "clair": false}, "pop": {"img": "loginail-site/fonds-classe/pop.webp", "clair": true}, "baddie": {"img": "loginail-site/fonds-classe/baddie.webp", "clair": false}, "mignon": {"img": "loginail-site/fonds-classe/mignon.webp", "clair": true}, "y2k": {"img": "loginail-site/fonds-classe/y2k.webp", "clair": false}, "gothique": {"img": "loginail-site/fonds-classe/gothique.webp", "clair": false}};
+    const lien = q => "loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + q;
+    const L = { tpl: TPL.map(t => ({ nom: t[0], q: t[1], im: t[2], sous: t[3] })), uni: UNI.map(t => ({ nom: t[0], q: t[1], im: t[2], sous: t[3] })) };
+    const S = [...duo.querySelectorAll(".styl")].map((sec, j) => {
+      const l = L[j ? "uni" : "tpl"], n = l.length, R = 6;
+      const fa = document.createElement("div"), fb = document.createElement("div"); fa.className = "fondS a"; fb.className = "fondS b"; sec.prepend(fb); sec.prepend(fa);
+      const slot = document.createElement("div"); slot.className = "slot";
+      slot.innerHTML = `<div class="sl-tel" role="link" tabindex="0" aria-label="Voir ce site"><div class="sl-ecr"><div class="sl-bande">${Array.from({ length: R * n }, (_, i) => `<img src="loginail-site/apercus-univers/${l[i % n].im}.webp" alt="">`).join("")}</div></div></div><div class="sl-nom"><b></b><small></small></div>`;
+      (sec.querySelector(".st-t") || sec.firstChild).after(slot);
+      const bande = slot.querySelector(".sl-bande"), tel = slot.querySelector(".sl-tel");
+      const o = { sec, l, n, slot, bande, cur: 0, pos: n, fa, fb, haut: () => bande.firstElementChild.getBoundingClientRect().height || 1 };
+      tel.addEventListener("click", () => open(lien(l[o.cur].q), "_blank"));
+      tel.addEventListener("keydown", e => { if (e.key === "Enter") open(lien(l[o.cur].q), "_blank"); });
+      return o; });
+    /* le fond d'un site (une image du motif, ou sa couleur), posé d'un coup */
+    const prech = {};
+    const precharge = im => { const f = FC[im]; if (f && f.img && !prech[im]) { prech[im] = new Image(); prech[im].src = f.img; } };
+    const fond = (o, i, vite) => { const t = o.l[i], f = FC[t.im] || { couleur: "#EFE7DF" }, [vieux, neuf] = o.fa.style.opacity === "0" ? [o.fb, o.fa] : [o.fa, o.fb];
+      neuf.style.transition = vite ? "none" : ""; vieux.style.transition = vite ? "none" : "";
+      neuf.style.backgroundImage = f.img ? `url(${f.img})` : "none"; neuf.style.backgroundColor = f.couleur || "#EFE7DF"; neuf.style.backgroundSize = "cover"; neuf.style.backgroundRepeat = "no-repeat"; neuf.style.opacity = "1"; vieux.style.opacity = "0";
+      o.sec.classList.toggle("sl-fonce", f.img ? f.clair === false : false); };
+    const nom = (o, i) => { const t = o.l[i]; o.slot.querySelector(".sl-nom b").textContent = t.nom; o.slot.querySelector(".sl-nom small").textContent = t.sous; };
+    const place = (o, vite) => { o.bande.style.transition = vite ? "none" : ""; o.bande.style.transform = `translate3d(0,${(-o.pos * o.haut()).toFixed(1)}px,0)`; };
+    S.forEach(o => { o.cur = 0; o.pos = o.n; place(o, true); fond(o, 0, true); nom(o, 0); precharge(o.l[1 % o.n].im); });
+    addEventListener("resize", () => S.forEach(o => place(o, true)));
+    /* un tour : ça défile vite, ralentit, rebondit un peu, s'arrête — le fond change à l'arrêt */
+    const tourne = o => new Promise(fin => {
+      let c = o.cur; do { c = Math.floor(Math.random() * o.n); } while (c === o.cur && o.n > 1);
+      precharge(o.l[c].im);
+      const base = ((o.pos % o.n) + o.n) % o.n; o.pos = base + o.n; place(o, true); void o.bande.offsetWidth;
+      const cible = o.n * 3 + c; o.slot.classList.add("roule"); o.bande.classList.add("roule");
+      o.bande.style.transition = "transform 2.3s cubic-bezier(.12,.62,.2,1.035)"; o.pos = cible; o.bande.style.transform = `translate3d(0,${(-cible * o.haut()).toFixed(1)}px,0)`;
+      setTimeout(() => o.bande.classList.remove("roule"), 1500);
+      setTimeout(() => { o.cur = c; o.pos = o.n + c; place(o, true); o.slot.classList.remove("roule"); fond(o, c); nom(o, c); fin(); }, 2350); });
+    let vu = false, tour = 1, enCours = false;
+    const pin = document.querySelector(".styl-pin") || duo;
+    new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu) boucle(); }, { threshold: .15 }).observe(pin);
+    const attends = ms => new Promise(r => setTimeout(r, ms));
+    const boucle = async () => { if (enCours) return; enCours = true; await attends(1100);
+      while (vu) { if (!document.hidden) { await tourne(S[tour % 2]); tour++; } await attends(2600); }
+      enCours = false; };
+  }
 })();
 </script>
 </body></html>
