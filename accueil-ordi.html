@@ -717,7 +717,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       lay.classList.remove("on"); sec.classList.remove("motif");
       const e = D.querySelector(".ecran .defile") || D.querySelector(".ecran"), cs = D.defaultView.getComputedStyle(e); let c = cs.backgroundColor;
       if (!c || /rgba\(0, 0, 0, 0\)|transparent/.test(c)) c = D.defaultView.getComputedStyle(D.querySelector(".ecran")).getPropertyValue("--creme").trim() || "#141114";
-      sec.style.backgroundColor = c; const m = c.match(/\d+(\.\d+)?/g) || [20, 17, 20], lum = (+m[0] * .299 + +m[1] * .587 + +m[2] * .114);
+      sec.style.backgroundColor = c; const m = getComputedStyle(sec).backgroundColor.match(/\d+(\.\d+)?/g) || [20, 17, 20], lum = (+m[0] * .299 + +m[1] * .587 + +m[2] * .114);
       sec.style.color = lum > 150 ? "#1E1C1B" : "#F6F3EF"; } catch (e) {} };
 
   /* ---- 3 · « Vous collez des charms sur vos clientes ? » : des charms TOUT AUTOUR, et quand elle descend, ils tombent ---- */
