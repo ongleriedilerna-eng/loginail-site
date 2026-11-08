@@ -465,91 +465,137 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 @media (max-width:999px){.fin-pub{padding:120px 0!important}.fin-pub .fp-carte{margin:0 14px!important}}
 .fp-fond>.fp-piste{opacity:1!important;left:0!important;right:auto!important;bottom:auto!important;transition:none!important}
 
-/* ===== 09/11 (Marie, 2e liste) : la version ORDINATEUR ===== */
+/* ===== 09/11 (Marie, 3e liste) : la version ORDINATEUR ===== */
 @media (min-width:1000px){
-  /* 1 · « Personnalisez votre site en 1 minute chrono » : tout se joue en 8 crans de molette */
-  .build{height:calc(100vh + 800px)!important}
+  /* ---- 1 · « Personnalisez votre site en 1 minute chrono » : l'écran se bloque, l'animation se joue toute seule ---- */
+  .build{height:calc(100vh + 1500px)!important}
+  .build .b-barre{overflow:hidden}
 
-  /* 2 · L'appli : plus d'effet de molette ; à gauche, les notifications arrivent ; le téléphone un peu plus à droite */
-  .app-h{height:auto!important;background:radial-gradient(ellipse 60% 70% at 78% 50%,#2a2226 0,#141114 70%)!important}
-  .app-h .colle{position:relative!important;top:auto!important;height:auto!important;min-height:100vh;overflow:visible!important;
-    display:grid!important;grid-template-columns:minmax(0,560px) auto!important;grid-template-areas:"titre tel" "flux tel" "flux ong"!important;grid-template-rows:auto 1fr auto!important;
-    justify-content:space-between!important;align-content:center!important;column-gap:120px!important;row-gap:0!important;max-width:1180px;margin:0 auto;padding:110px 64px 90px!important;box-sizing:border-box}
+  /* ---- 2 · « L'appli qui gère tout » : l'écran se bloque, tout tient sur un écran, le téléphone au milieu des 5 boutons ---- */
+  .app-h{height:calc(100vh + 1100px)!important;background:radial-gradient(ellipse 70% 80% at 76% 46%,#2b2227 0,#151113 62%,#100e0f)!important}
+  .app-h .colle{position:sticky!important;top:0!important;height:100vh!important;overflow:hidden!important;
+    display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"titre droite" "flux droite"!important;grid-template-rows:auto minmax(0,1fr)!important;
+    align-content:center!important;justify-content:center!important;column-gap:90px!important;row-gap:0!important;max-width:1240px;margin:0 auto;padding:clamp(40px,7vh,72px) 64px clamp(34px,6vh,60px)!important;box-sizing:border-box}
   .app-h .a-legs,.app-h .a-astuce,.app-h #notifs,.app-h .pop-nt{display:none!important}
   .app-h .a-ecr img.a~img.a{opacity:0!important}
-  .app-h .a-tel{grid-area:tel!important;height:min(640px,calc(100vh - 250px))!important;max-height:none!important;justify-self:end;margin-right:20px}
-  .app-h .a-titre{grid-area:titre;align-self:end}
-  .app-h .a-titre .k{font-size:12px;letter-spacing:.3em;opacity:.7}
-  .app-h .a-titre .t2{font-size:clamp(60px,5.4vw,84px)!important;line-height:.98;letter-spacing:-.01em;margin:14px 0 0}
-  .app-h .a-titre .t2 em{font-style:italic;background:linear-gradient(100deg,#F4C9D6,#F6E3B5 55%,#D9C8F2);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
-  .app-h .a-sous{font:400 17px/1.55 Jost,sans-serif;color:rgba(246,243,239,.72);margin:18px 0 0;max-width:470px}
-  .app-h .a-ong-bloc{grid-area:ong!important;justify-self:end!important;margin:22px 20px 0 0}
-  .a-flux{grid-area:flux;position:relative;height:430px;margin-top:34px;overflow:hidden;
-    -webkit-mask:linear-gradient(180deg,#000 72%,transparent);mask:linear-gradient(180deg,#000 72%,transparent)}
-  .a-flux .fx{display:flex;gap:13px;align-items:flex-start;width:430px;box-sizing:border-box;padding:13px 15px 14px;margin:0 0 10px;border-radius:22px;
-    background:rgba(250,248,246,.95);color:#1E1C1B;box-shadow:0 18px 40px -20px rgba(0,0,0,.7);
-    transform-origin:50% 0;animation:fxArrive .65s cubic-bezier(.25,1.35,.45,1) both}
-  .a-flux .fx:nth-child(2){transform:scale(.985)}
-  .a-flux .fx i{flex:none;width:40px;height:40px;border-radius:11px;background:url(loginail-site/icone-appli.svg) center/cover}
+  .app-h .a-titre{grid-area:titre;align-self:end;max-width:560px;text-align:left}
+  .app-h .a-titre .k{font-size:11.5px;letter-spacing:.3em;opacity:.65}
+  .app-h .a-titre .t2{font-size:clamp(44px,4.4vw,66px)!important;line-height:1;letter-spacing:-.015em;margin:12px 0 0}
+  .app-h .a-titre .t2 em{font-style:italic;background:linear-gradient(100deg,#F4C9D6,#F7E6BC 52%,#D9C8F2);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+  .app-h .a-sous{font:400 clamp(14px,1.15vw,16.5px)/1.55 Jost,sans-serif;color:rgba(246,243,239,.68);margin:14px 0 0;max-width:470px}
+  /* la colonne de droite : le téléphone, puis les 5 onglets, centrés l'un sur l'autre */
+  .a-droite{grid-area:droite;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(16px,2.4vh,26px);min-height:0}
+  .app-h .a-tel{height:clamp(330px,calc(100vh - 400px),540px)!important;max-height:none!important;flex:none;margin:0!important}
+  .app-h .a-ong-bloc{margin:0!important}
+  .a-onglets button{width:76px;padding:10px 5px;font-size:11.5px}
+  .a-onglets svg{width:23px;height:23px}
+  /* à gauche : les notifications qui arrivent, avec le fondu en bas */
+  .a-flux{grid-area:flux;position:relative;min-height:0;margin-top:clamp(16px,2.6vh,30px);overflow:hidden;
+    -webkit-mask:linear-gradient(180deg,#000 60%,transparent 96%);mask:linear-gradient(180deg,#000 60%,transparent 96%)}
+  .a-flux .fx{display:flex;gap:12px;align-items:flex-start;width:min(430px,100%);box-sizing:border-box;padding:12px 15px 13px;margin:0 0 9px;border-radius:21px;
+    background:rgba(250,248,246,.96);color:#1E1C1B;box-shadow:0 18px 40px -22px rgba(0,0,0,.75);
+    transform-origin:50% 0;animation:fxArrive .62s cubic-bezier(.25,1.35,.45,1) both}
+  .a-flux .fx i{flex:none;width:38px;height:38px;border-radius:11px;background:url(loginail-site/icone-appli.svg) center/cover}
   .a-flux .fx div{flex:1;min-width:0}
-  .a-flux .fx .h{display:flex;justify-content:space-between;font:500 10.5px Jost;letter-spacing:.14em;text-transform:uppercase;color:#8a8079;margin-bottom:3px}
-  .a-flux .fx .h small{letter-spacing:0;text-transform:none;font-size:11px}
-  .a-flux .fx b{display:block;font:500 15px/1.3 Jost}
-  .a-flux .fx span{display:block;font-size:13px;line-height:1.4;color:#5a524d}
-  @keyframes fxArrive{0%{opacity:0;transform:translateY(-26px) scale(.9);max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0}
-    40%{max-height:120px;margin-bottom:10px;padding-top:13px;padding-bottom:14px}
+  .a-flux .fx .h{display:flex;justify-content:space-between;font:500 10px Jost;letter-spacing:.14em;text-transform:uppercase;color:#8a8079;margin-bottom:3px}
+  .a-flux .fx .h small{letter-spacing:0;text-transform:none;font-size:10.5px}
+  .a-flux .fx b{display:block;font:500 14.5px/1.3 Jost}
+  .a-flux .fx span{display:block;font-size:12.5px;line-height:1.4;color:#5a524d}
+  @keyframes fxArrive{0%{opacity:0;transform:translateY(-24px) scale(.9);max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0}
+    42%{max-height:120px;margin-bottom:9px;padding-top:12px;padding-bottom:13px}
     100%{opacity:1;transform:none;max-height:120px}}
 
-  /* 3 · Classe / Baddie : la machine à sous */
-  .styl-duo .styl{background:#EFE7DF!important;color:#1E1C1B!important;transition:color .35s!important}
+  /* ---- 3 · Classe / Baddie : TOUT défile (le fond et le téléphone ensemble), puis ça s'arrête ---- */
+  .styl-pin{height:300vh!important}
+  .styl-duo .styl{padding:0!important;height:100vh!important;position:relative;overflow:hidden;display:block!important;background:#EFE7DF!important;color:#1E1C1B!important}
+  .styl-duo .styl .fondP,.styl-duo .styl>.fondS,.styl-duo .st-tel,.styl-duo .st-nom,.styl-duo .st-nav,.styl-duo .st-aide,.styl-duo .formes,.styl-duo .bascule{display:none!important}
+  .styl-duo .styl .st-t{position:absolute;z-index:4;left:0;right:0;top:clamp(26px,5vh,54px);text-align:center;padding:0 20px;pointer-events:none}
+  .styl-duo .styl .st-t .k{font-size:11px;letter-spacing:.3em;opacity:.7;color:inherit}
+  .styl-duo .styl .st-t .t2{margin-top:6px;font-size:clamp(38px,3.6vw,54px);text-shadow:0 2px 20px rgba(246,243,239,.75)}
   .styl-duo .styl.sl-fonce{color:#F6F3EF!important}
-  .styl-duo .styl .fondP,.styl-duo .st-tel,.styl-duo .st-nom,.styl-duo .st-nav,.styl-duo .st-aide,.styl-duo .formes,.styl-duo .bascule{display:none!important}
-  .styl-duo .styl>.fondS{position:absolute!important;inset:0;z-index:0!important;background:#EFE7DF center/cover no-repeat;transition:opacity .35s;pointer-events:none}
-  .styl-duo .styl>.fondS.b{opacity:0}
-  .styl-duo .styl .st-t{padding:10px 30px 12px;border-radius:24px;background:rgba(246,243,239,.82);box-shadow:0 10px 24px -16px rgba(0,0,0,.3);transition:background .35s}
-  .styl-duo .styl.sl-fonce .st-t{background:rgba(20,18,17,.66)}
-  .styl-duo .styl.sl-fonce .t2,.styl-duo .styl.sl-fonce .sl-nom{text-shadow:0 2px 18px rgba(0,0,0,.6)}
-  .styl-duo .styl .k{opacity:.75}
-  .slot{display:flex;flex-direction:column;align-items:center;margin-top:18px}
-  .sl-tel{--h:min(600px,calc(100vh - 290px));position:relative;height:var(--h);width:calc(var(--h) * .4615 + 24px);padding:12px;box-sizing:border-box;border-radius:calc(var(--h) * .085);
-    background:linear-gradient(145deg,#2b2b2d,#0b0b0c 40%,#1d1d1f);box-shadow:0 0 0 1.5px #6d6a66,inset 0 0 0 1.5px #3a3a3c,0 50px 70px -34px rgba(0,0,0,.7),0 22px 30px -18px rgba(0,0,0,.45);cursor:pointer}
-  .sl-tel::after{content:"";position:absolute;right:-3.5px;top:27%;width:3.5px;height:13%;border-radius:0 3px 3px 0;background:#3c3a38}
-  .sl-tel::before{content:"";position:absolute;left:-3.5px;top:20%;width:3.5px;height:7%;border-radius:3px 0 0 3px;background:#3c3a38;box-shadow:0 calc(var(--h) * .1) 0 #3c3a38}
-  .sl-ecr{position:relative;width:100%;height:100%;border-radius:calc(var(--h) * .07);overflow:hidden;background:#F6F3EF;isolation:isolate}
-  .sl-ecr::before{content:"";position:absolute;z-index:3;top:calc(var(--h) * .018);left:50%;transform:translateX(-50%);width:31%;height:calc(var(--h) * .045);border-radius:99px;background:#050505}
-  .sl-bande{position:absolute;left:0;top:0;width:100%;will-change:transform}
-  .sl-bande img{display:block;width:100%;height:calc(var(--h) - 24px);object-fit:cover;object-position:top}
-  .sl-bande.roule{filter:blur(1.6px) saturate(1.1)}
-  .sl-ecr::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 12%,transparent 88%,rgba(0,0,0,.18));opacity:0;transition:opacity .3s}
-  .slot.roule .sl-ecr::after{opacity:1}
-  .sl-nom{text-align:center;margin-top:18px;min-height:52px;padding:9px 22px 10px;border-radius:18px;background:rgba(246,243,239,.88);box-shadow:0 10px 24px -16px rgba(0,0,0,.35);transition:opacity .25s,transform .25s,background .35s}
-  .styl.sl-fonce .sl-nom{background:rgba(20,18,17,.72)}
-  .sl-nom b{display:block;font:400 30px/1.1 'Cormorant Garamond',serif}
-  .sl-nom small{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.75;margin-top:6px}
-  .slot.roule .sl-nom{opacity:0;transform:translateY(6px)}
+  .styl-duo .styl.sl-fonce .st-t .t2{text-shadow:0 2px 22px rgba(0,0,0,.75)}
+  .slot{position:absolute;inset:0;z-index:1;overflow:hidden}
+  .sl-piste{position:absolute;left:0;top:0;width:100%;will-change:transform}
+  .sl-case{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.2vh,24px);padding:clamp(96px,15vh,150px) 20px clamp(34px,6vh,60px);box-sizing:border-box}
+  .sl-bg{position:absolute;inset:0;z-index:0;background:#EFE7DF center/cover no-repeat}
+  .sl-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,243,239,.58),rgba(246,243,239,0) 26%,rgba(246,243,239,0) 72%,rgba(246,243,239,.3))}
+  .sl-case.fonce .sl-bg::after{background:linear-gradient(180deg,rgba(0,0,0,.52),rgba(0,0,0,.05) 28%,rgba(0,0,0,.05) 70%,rgba(0,0,0,.42))}
+  /* un vrai iPhone, bien allongé */
+  .sl-tel{--h:min(calc(100vh - 300px),560px);position:relative;z-index:2;flex:none;height:var(--h);width:calc(var(--h) * .4615 + 22px);padding:11px;box-sizing:border-box;border-radius:calc(var(--h) * .086);
+    background:linear-gradient(145deg,#38383a,#0a0a0b 42%,#232325);box-shadow:0 0 0 1.5px #78746f,inset 0 0 0 1.5px #3a3a3c,0 54px 76px -36px rgba(0,0,0,.72),0 24px 32px -20px rgba(0,0,0,.5)}
+  .sl-tel::after{content:"";position:absolute;right:-3.5px;top:27%;width:3.5px;height:13%;border-radius:0 3px 3px 0;background:#46423f}
+  .sl-tel::before{content:"";position:absolute;left:-3.5px;top:19%;width:3.5px;height:7%;border-radius:3px 0 0 3px;background:#46423f;box-shadow:0 calc(var(--h) * .105) 0 #46423f}
+  .sl-ecr{position:relative;width:100%;height:100%;border-radius:calc(var(--h) * .072);overflow:hidden;background:#F6F3EF}
+  .sl-ecr img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  .sl-ecr::before{content:"";position:absolute;z-index:3;top:calc(var(--h) * .019);left:50%;transform:translateX(-50%);width:31%;height:calc(var(--h) * .044);border-radius:99px;background:#060606}
+  .sl-nom{position:relative;z-index:2;text-align:center;padding:9px 24px 11px;border-radius:19px;background:rgba(246,243,239,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 14px 30px -20px rgba(0,0,0,.5);color:#1E1C1B}
+  .sl-case.fonce .sl-nom{background:rgba(18,16,15,.78);color:#F6F3EF}
+  .sl-nom b{display:block;font:400 clamp(22px,2vw,30px)/1.08 'Cormorant Garamond',serif}
+  .sl-nom small{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.72;margin-top:5px}
+  /* pendant que ça tourne : un léger flou, une brillance qui passe à l'arrivée */
+  .slot .voile{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .35s;
+    background:linear-gradient(180deg,rgba(0,0,0,.32),transparent 18%,transparent 82%,rgba(0,0,0,.32))}
+  .styl.roule .slot .voile{opacity:1}
+  .styl.roule .sl-piste{filter:blur(2px) saturate(1.08)}
+  .slot .eclat{position:absolute;left:-40%;top:0;width:40%;height:100%;z-index:4;pointer-events:none;opacity:0;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent)}
+  .styl.pose .slot .eclat{animation:slEclat .85s cubic-bezier(.3,0,.2,1) both}
+  @keyframes slEclat{0%{opacity:0;left:-40%}18%{opacity:.85}100%{opacity:0;left:110%}}
+  .styl.pose .sl-case.ici .sl-tel{animation:slPose .72s cubic-bezier(.2,1.5,.45,1) both}
+  @keyframes slPose{0%{transform:scale(.955)}60%{transform:scale(1.012)}100%{transform:none}}
+  .styl.pose .sl-case.ici .sl-nom{animation:slNom .6s .1s cubic-bezier(.2,1.3,.4,1) both}
+  @keyframes slNom{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
 
-  /* 4 · Les charms : on les attrape à la souris */
+  /* ---- 4 · Les charms : on les attrape, on les lâche, ils rebondissent ---- */
   .pluie2 .c2 img{cursor:grab}
-  .pluie2 .c2.tenu{z-index:9}.pluie2 .c2.tenu img{cursor:grabbing;animation:none;filter:drop-shadow(0 18px 18px rgba(0,0,0,.28))}
+  .pluie2 .c2.tenu{z-index:9}
+  .pluie2 .c2.tenu img{cursor:grabbing;animation:none;filter:drop-shadow(0 22px 20px rgba(0,0,0,.3));transform:scale(1.08)}
 
-  /* 5 · « Tout ça, pour vous » : l'écran s'arrête dessus ; derrière les téléphones, une mosaïque de fonds */
-  .fin-pub{height:200vh;padding:0!important;margin:60px 0 0!important;overflow:visible!important}
-  .fin-pub>.fp-colle{position:sticky!important;top:0;z-index:auto!important;height:100vh;overflow:hidden;display:grid;place-items:center;isolation:isolate}
+  /* ---- 5 · « Elle vous cherche » : sur fond noir ---- */
+  #pourquoi{background:#131112!important;color:#F6F3EF!important;box-shadow:0 0 0 100vmax #131112;clip-path:inset(0 -100vmax)}
+  #pourquoi .k,#pourquoi .pique{color:rgba(246,243,239,.76)!important}
+  #pourquoi .pique b{color:#F6F3EF!important}
+  #pourquoi .why>div{background:rgba(255,255,255,.055);border:1px solid rgba(246,243,239,.14);border-radius:24px;padding:26px 24px 28px}
+  #pourquoi .why b{color:#F6F3EF}
+  #pourquoi .why p{color:rgba(246,243,239,.72)}
+  .pq-colle .why>div.fort{box-shadow:0 0 0 1.5px rgba(246,243,239,.75),0 26px 46px -26px rgba(0,0,0,.8)!important;background:rgba(255,255,255,.085)}
+  #pourquoi .goo{background:#fff!important;color:#1E1C1B!important;box-shadow:0 34px 70px -34px rgba(0,0,0,.9)!important}
+  #pourquoi .goo b,#pourquoi .goo span,#pourquoi .goo small,#pourquoi .goo em{color:inherit!important}
+  #pourquoi .goo-ex{color:#8a8079!important}
+
+  /* ---- 6 · « Le premier mois, c'est cadeau » : sur fond beige ---- */
+  #prix{background:#EFE7DF!important;box-shadow:0 0 0 100vmax #EFE7DF!important;clip-path:inset(0 -100vmax)}
+  #prix .tl li b{color:#1E1C1B}
+  #prix .zero{color:#6b625c}
+
+  /* ---- 7 · Les chiffres passent sous « Tout ça, pour vous » ---- */
+  .chif{max-width:980px!important;margin:0 auto!important;padding:86px 64px 96px!important;gap:22px!important}
+  .chif div{background:#fff;border-radius:26px;padding:30px 8px 26px!important;box-shadow:0 20px 44px -34px rgba(0,0,0,.45)}
+  .chif b{font-size:54px!important}
+  .chif span{font-size:11px!important;letter-spacing:.22em}
+
+  /* ---- 8 · « Tout ça, pour vous » : l'écran s'arrête, UN SEUL fond en entier qui change doucement ---- */
+  .fin-pub{height:220vh!important;padding:0!important;margin:0!important;overflow:visible!important;background:#EFE7DF}
+  .fin-pub>.fp-colle{position:sticky!important;top:0;height:100vh;overflow:hidden;display:grid;place-items:center;z-index:auto!important}
   .fp-colle>.fp-fond{position:absolute;inset:0;z-index:0;background:#EFE7DF}
-  .fp-colle>.fp-ch{position:absolute;inset:0;z-index:1}
-  .fp-colle>.fp-carte{position:relative;z-index:2;width:760px}
-  .fp-mosa{position:absolute;inset:-2%;display:grid;grid-template-columns:repeat(9,1fr);gap:0;z-index:0}
-  .fp-mosa>div{position:relative;aspect-ratio:1;overflow:hidden}
-  .fp-mosa>div>i{position:absolute;inset:0;background:center/cover no-repeat;transition:opacity 1.2s}
-  .fp-mosa>div>i.b{opacity:0}
-  .fp-fond .fp-piste{z-index:1;gap:84px!important;padding-left:42px}
-  .fp-fond .fp-piste img{width:150px!important;border-width:5px!important;border-radius:22px!important;box-shadow:0 22px 34px -16px rgba(0,0,0,.55)!important}
-  .fp-mosa>div>i{filter:saturate(1.05)}
-}
-@media (min-width:1000px){
-  .fp-fond>.fp-mosa{opacity:1!important;inset:-2%!important;transition:none!important}
+  .fp-colle>.fp-ch{position:absolute;inset:0;z-index:2}
+  .fp-colle>.fp-carte{position:relative;z-index:3;width:min(760px,88vw)}
+  .fp-plein{position:absolute;inset:0;z-index:0}
+  .fp-plein>i{position:absolute;inset:0;background:center/cover no-repeat;transition:opacity 2.4s ease-in-out}
+  .fp-plein>i.b{opacity:0}
+  .fp-fond .fp-piste{z-index:1;gap:88px!important;padding-left:44px}
+  .fp-fond .fp-piste img{width:148px!important;border-width:5px!important;border-radius:22px!important;box-shadow:0 26px 38px -18px rgba(0,0,0,.6)!important}
+  .fin-pub .fp-carte{background:rgba(246,243,239,.93)!important;box-shadow:0 40px 90px -44px rgba(0,0,0,.6)!important}
   #charms .ch-bas{pointer-events:none}
   #charms .ch-bas .btn{pointer-events:auto}
+
+  /* ---- 9 · les petits plus : les titres qui se lèvent, un reflet qui passe sur les boutons ---- */
+  .lever{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.3,1),transform 1s cubic-bezier(.2,.7,.3,1)}
+  .lever.vu2{opacity:1;transform:none}
+  .fin-pub .btn,#prix .btn,.hero .btn{position:relative;overflow:hidden}
+  .fin-pub .btn::after,#prix .btn::after,.hero .btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-14deg);animation:btnLueur 5.5s ease-in-out infinite}
+  @keyframes btnLueur{0%,72%{left:-60%}100%{left:130%}}
 }
 </style>
 </head><body>
@@ -724,7 +770,17 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
    barre.style.width=(P*100).toFixed(1)+"%";if(k!==vu){vu=k;num.textContent=(k+1)+" / 6 · "+NOMS[k]}};
  const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
  const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
- addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()})();
+ if(!matchMedia("(min-width: 1000px)").matches){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
+ else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
+  const DUR=13000;let t0=0,dedans=false,bo=0,actif=false;
+  const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
+   if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
+   cible=Math.max(sc,dedans?Math.min(1,(performance.now()-t0)/DUR):0);
+   if(!raf)raf=requestAnimationFrame(pas);
+   if(actif)bo=requestAnimationFrame(boucle)};
+  new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!bo)bo=requestAnimationFrame(boucle)},{rootMargin:"300px"}).observe(b);
+  addEventListener("resize",lit);pose(0)}
+})();
 /* l'appli : même principe, lié au défilement */
 (()=>{const b=document.getElementById("appli"),A=[...b.querySelectorAll("img.a")],N=[...b.querySelectorAll(".nt")],L=[...b.querySelectorAll(".a-legs .leg")];
  const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);let cible=0,p=0,raf=0;
@@ -1042,14 +1098,22 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       /* ordinateur : on attrape un charm au clic gauche, on le soulève ; on le lâche : il retombe tout droit, simplement */
       if (ORDI) { let tenu = null, dx = 0, dy = 0;
         lay.addEventListener("pointerdown", e => { if (e.button !== 0) return; const w = e.target.closest(".c2"); if (!w) return; const c = items.find(x => x.w === w); if (!c) return; e.preventDefault();
-          c.tenu = true; if (etat === "haut") { chute(); } const b = pc.getBoundingClientRect(); tenu = c; dx = e.clientX - b.left - c.x; dy = e.clientY - b.top - c.y;
+          c.tenu = true; cancelAnimationFrame(c.raf2); if (etat === "haut") { chute(); } const b = pc.getBoundingClientRect(); tenu = c; dx = e.clientX - b.left - c.x; dy = e.clientY - b.top - c.y;
           w.classList.add("tenu"); w.style.transition = ""; try { w.setPointerCapture(e.pointerId); } catch (x) {} });
         lay.addEventListener("pointermove", e => { if (!tenu) return; const b = pc.getBoundingClientRect(), c = tenu;
           c.x = Math.max(2, Math.min(pc.clientWidth - c.t - 2, e.clientX - b.left - dx)); c.y = Math.max(0, Math.min(c.sol || pc.clientHeight - c.t, e.clientY - b.top - dy)); c.vx = 0; c.vy = 0;
           c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`; });
-        const lache = () => { if (!tenu) return; const c = tenu; tenu = null; c.tenu = false; c.vx = 0; c.vy = 0; c.w.classList.remove("tenu"); const sol = c.sol || pc.clientHeight - c.t - 10, d = Math.max(.25, Math.min(.7, (sol - c.y) / 900));
-          c.y = sol; c.w.style.transition = `transform ${d.toFixed(2)}s cubic-bezier(.45,0,.9,.6)`; c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`;
-          setTimeout(() => c.w.style.transition = "", d * 1000 + 50); };
+        /* on le lâche : il retombe et rebondit, comme un vrai petit charm */
+        const lache = () => { if (!tenu) return; const c = tenu; tenu = null; c.w.classList.remove("tenu"); c.w.style.transition = "";
+          c.sol = c.sol || pc.clientHeight - c.t - 10; c.vy = 1; c.vx = hasard(-1.2, 1.2); const W = pc.clientWidth; let t0 = performance.now(), fin = performance.now() + 5000;
+          const chute1 = now => { if (c.tenu) return; const dt = Math.min(2.2, (now - t0) / 16.7); t0 = now;
+            c.vy += .95 * dt; c.x += c.vx * dt; c.y += c.vy * dt;
+            if (c.y >= c.sol) { c.y = c.sol; if (Math.abs(c.vy) > 1.8) { c.vy = -c.vy * .46; c.vx *= .86; } else { c.vy = 0; c.vx *= Math.pow(.93, dt); } }
+            if (c.x < 2) { c.x = 2; c.vx = Math.abs(c.vx) * .6; } if (c.x > W - c.t - 2) { c.x = W - c.t - 2; c.vx = -Math.abs(c.vx) * .6; }
+            c.a += c.vx / (c.t / 2) * 57.3 * dt;
+            c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`;
+            if ((c.y < c.sol || Math.abs(c.vy) > .15 || Math.abs(c.vx) > .06) && now < fin) c.raf2 = requestAnimationFrame(chute1); };
+          c.tenu = false; c.raf2 = requestAnimationFrame(chute1); };
         lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache); }
       /* on touche un charm : il saute un peu */
       lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (ORDI || !w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return; c.vy = -14; c.vx = hasard(-4, 4); c.sol = c.sol || pc.clientHeight - c.t; const t0b = performance.now();
@@ -1082,11 +1146,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   if (matchMedia("(min-width: 1000px)").matches) {
     const colle = document.createElement("div"); colle.className = "fp-colle"; colle.append(fond, lay, carte); fp.appendChild(colle); box = colle;
     const FM = ["after-hours", "agrumes", "anneaux", "arcs-lilas-chocolat", "art-deco", "azulejo", "baddie-club", "bambous", "bisous-gris", "bisous-noirs", "bisous", "bleuets", "bouquets-tulipes", "cadenas-coeur", "cafe-croissants-damier", "cafe-croissants", "carreaux-bordeaux", "carreaux-caramel", "carreaux-ocre", "cerises-leopard", "cerises-noeuds-bleus", "cerises-vichy", "chaussons-danse", "chrome-liquide", "chrome-noir", "citrons-rubans", "cles-anciennes", "coeurs-argent-noir", "coeurs-epines-noirs", "coeurs-epines-rouges", "coeurs-festonnes", "coeurs-jaunes-prune", "coeurs-lin", "coeurs-piques-violet", "coeurs-verre", "cool-girls-club", "coquillages-dentelle", "coquillages-terracotta", "cygnes-muguet", "damier-bleu-noir", "damier-choco-noeuds", "damier-chrome", "damier-fleuri", "damier-noir-creme", "damier-rose-fluo", "dentelle-bordeaux", "dentelle-peche", "des-rouges", "diamants-violet", "disco-roses", "disco-velours", "dragons-bleus", "ecailles-lilas", "epingles-bordeaux", "espace", "etincelles-bordeaux", "etoiles-cacao", "etoiles-holo", "etoiles-marine", "etoiles-noires-creme", "etoiles-roses", "faience-jaune", "figues", "flacons-parfum", "flammes-bleues", "flammes-roses", "flammes-rouge", "fleurs-bleu", "fleurs-bleues-damier", "fleurs-corail", "fleurs-rouge", "fleurs-seventies", "fraises-noeuds-bleus", "fraises-vichy", "framboises", "fuji-sakura", "graffiti", "grains-cafe", "grenades", "hibiscus-corail", "homards", "hortensias", "hot-girls-etoiles", "hot-girls-noir", "hot-girls-rose", "it-girl", "jean-epingles", "jean-etoiles", "lavande", "leopard-caramel", "leopard-fourrure", "leopard-rose-doux", "lierre-fougeres", "losanges-bordeaux", "lucky-girl", "lunes-nuit", "lunes-sapin", "marguerites-vichy", "matcha", "meduses", "mini-fleurs-bleues", "muguet-marine", "nacre-irisee", "nature-morte-figues", "noeuds-argent-bordeaux", "noeuds-bleus", "noeuds-chocolat-pois", "noeuds-lilas-jaune", "noeuds-rouges-rose", "noeuds-taupe", "noeuds-verts-lilas", "notes-musique", "nuages-lilas", "oeil-bleu-jaune", "olivier", "oliviers", "oranges-etoiles", "oranges-fleurs", "orbites", "papillons-pastel", "perles-chocolat", "pied-de-poule", "piments-lilas", "pois-chocolat", "pois-corail", "quartz", "rayures-anis", "rayures-dorees", "rayures-sapin", "recif", "rose-metal", "roses-bleu-gris", "roses-croix", "roses-dentelle", "sardines", "satin-bordeaux", "satin-chocolat", "satin-noir", "shibori", "soleil-mains", "soleils-baroques", "soleils-endormis", "teckels", "tennis", "toile-jouy", "treillis-rouille", "tribal-argent", "tribal-gris", "tribal-lilas", "tricot-menthe", "tulipes-bordeaux", "vagues-bordeaux-lilas", "vagues-choco-jaune", "vagues-choco-rose", "vagues-kaki", "vagues-noir-blanc", "velos-fleuris", "vichy-coeurs", "vitrail-hirondelles", "vitrail-lune", "voiles-caramel", "western", "zebre-chocolat", "zebre-peint", "zodiaque"], hasard = () => FM[Math.floor(Math.random() * FM.length)];
-    const mosa = document.createElement("div"); mosa.className = "fp-mosa"; fond.prepend(mosa);
-    const cases = []; for (let i = 0; i < 54; i++) { const d = document.createElement("div"); d.innerHTML = `<i style="background-image:url(loginail-site/fonds-mini/${hasard()}.webp)"></i><i class="b"></i>`; mosa.appendChild(d); cases.push(d); }
-    let vu = false; new IntersectionObserver(es => { vu = es[0].isIntersecting; }).observe(fp);
-    setInterval(() => { if (!vu || document.hidden) return; for (let k = 0; k < 3; k++) { const d = cases[Math.floor(Math.random() * cases.length)], [a, b] = d.children, cache = a.classList.contains("b") ? a : b, montre = cache === a ? b : a;
-      const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); montre.classList.add("b"); }; im.src = `loginail-site/fonds-mini/${hasard()}.webp`; } }, 900);
+    const plein = document.createElement("div"); plein.className = "fp-plein"; plein.innerHTML = `<i style="background-image:url(loginail-site/fonds-img/${hasard()}.webp)"></i><i class="b"></i>`; fond.prepend(plein);
+    const [pa, pb] = plein.children; let vu = false;
+    new IntersectionObserver(es => { vu = es[0].isIntersecting; }).observe(fp);
+    setInterval(() => { if (!vu || document.hidden) return; const cache = pa.classList.contains("b") ? pa : pb, montre = cache === pa ? pb : pa;
+      const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); montre.classList.add("b"); }; im.src = `loginail-site/fonds-img/${hasard()}.webp`; }, 4200);
   }
   const place = () => { lay.innerHTML = ""; const W = box.clientWidth, H = box.clientHeight, c = carte.getBoundingClientRect(), f = box.getBoundingClientRect();
     const R = { l: c.left - f.left - 20, r: c.right - f.left + 20, t: c.top - f.top - 20, b: c.bottom - f.top + 20 }, deja = [], n = innerWidth >= 1000 ? 22 : 10;
@@ -1107,17 +1171,23 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache);
 })();
 </script>
-<script id="ordi2">/* 09/11 (Marie, 2e liste) : la version ORDINATEUR — l'appli (le flux de notifications), Classe / Baddie en machine à sous */
+<script id="ordi2">/* 09/11 (Marie, 3e liste) : la version ORDINATEUR — l'appli sur un écran, Classe / Baddie en machine à sous (le fond défile AVEC le téléphone) */
 (() => {
   if (!matchMedia("(min-width: 1000px)").matches) return;
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const attends = ms => new Promise(r => setTimeout(r, ms));
 
-  /* ---- L'appli : à gauche, les notifications arrivent une à une, comme sur un vrai téléphone ---- */
-  { const a = document.getElementById("appli"), colle = a && a.querySelector(".colle"), titre = a && a.querySelector(".a-titre");
-    if (colle && titre) {
+  /* ---- L'appli : le titre, le flux de notifications à gauche, le téléphone au milieu des 5 onglets ---- */
+  { const a = document.getElementById("appli"), colle = a && a.querySelector(".colle"), titre = a && a.querySelector(".a-titre"), tel = a && a.querySelector(".a-tel");
+    if (colle && titre && tel) {
       const sous = document.createElement("p"); sous.className = "a-sous";
       sous.textContent = "Réservations, rappels SMS, anniversaires, caisse : tout arrive dans votre poche, tout seul. Vous, vous faites les ongles.";
       titre.appendChild(sous);
+      /* le téléphone et les onglets, l'un au-dessus de l'autre, bien centrés */
+      const droite = document.createElement("div"); droite.className = "a-droite";
+      colle.appendChild(droite); droite.appendChild(tel);
+      const ong = colle.querySelector(".a-ong-bloc"); if (ong) droite.appendChild(ong);
+      /* les notifications arrivent une à une */
       const flux = document.createElement("div"); flux.className = "a-flux"; flux.setAttribute("aria-hidden", "true"); colle.appendChild(flux);
       const N = [["Nouvelle réservation", "Léa · Pose gel · samedi 10 h", "maintenant"], ["Rappel SMS envoyé", "Inès · son rendez-vous de demain 9 h", "maintenant"],
         ["C’est l’anniversaire d’Emma 🎂", "Un petit message pour elle ?", "aujourd’hui"], ["Acompte reçu", "Jade · 15 € · pose du 12", "maintenant"],
@@ -1127,56 +1197,64 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let k = 0;
       const ajoute = () => { const n = N[k++ % N.length], d = document.createElement("div"); d.className = "fx";
         d.innerHTML = `<i></i><div><div class="h">Loginail<small>${esc(n[2])}</small></div><b>${esc(n[0])}</b><span>${esc(n[1])}</span></div>`;
-        flux.prepend(d); while (flux.children.length > 5) flux.lastElementChild.remove(); };
-      let vu = false; new IntersectionObserver(es => { vu = es[0].isIntersecting; }, { threshold: .2 }).observe(colle);
+        flux.prepend(d); while (flux.children.length > 6) flux.lastElementChild.remove(); };
+      let vu = false; new IntersectionObserver(es => { vu = es[0].isIntersecting; }, { threshold: .15 }).observe(colle);
       for (let i = 0; i < 3; i++) ajoute();
-      setInterval(() => { if (vu && !document.hidden) ajoute(); }, 2200);
+      setInterval(() => { if (vu && !document.hidden) ajoute(); }, 2300);
     } }
 
-  /* ---- Classe / Baddie : machine à sous. Ça tourne, ça s'arrête sur un site ET son fond ; puis l'autre colonne ; jamais en même temps ---- */
+  /* ---- Classe / Baddie : machine à sous. TOUT défile ensemble (le fond et le téléphone), puis ça s'arrête ---- */
   { const duo = document.querySelector(".styl-duo"); if (!duo || typeof TPL === "undefined" || typeof UNI === "undefined") return;
-    const FC = {"tpl-maisonmoka": {"img": "loginail-site/fonds-classe/tpl-maisonmoka.webp", "clair": true}, "tpl-maisonnoire": {"img": "loginail-site/fonds-classe/tpl-maisonnoire.webp", "clair": true}, "tpl-atelierronce": {"img": "loginail-site/fonds-classe/tpl-atelierronce.webp", "clair": true}, "tpl-maisonsauge": {"couleur": "#DDE7D0"}, "tpl-maisonlin": {"couleur": "#E7DED0"}, "tpl-studiopoudre": {"img": "loginail-site/fonds-classe/tpl-studiopoudre.webp", "clair": true}, "cerise": {"img": "loginail-site/fonds-classe/cerise.webp", "clair": true}, "pastel": {"img": "loginail-site/fonds-classe/pastel.webp", "clair": true}, "chrome": {"img": "loginail-site/fonds-classe/chrome.webp", "clair": false}, "bling": {"img": "loginail-site/fonds-classe/bling.webp", "clair": true}, "emo": {"img": "loginail-site/fonds-classe/emo.webp", "clair": true}, "riviera": {"img": "loginail-site/fonds-classe/riviera.webp", "clair": true}, "sixties": {"img": "loginail-site/fonds-classe/sixties.webp", "clair": true}, "baroque": {"img": "loginail-site/fonds-classe/baroque.webp", "clair": true}, "street": {"img": "loginail-site/fonds-classe/street.webp", "clair": true}, "japon": {"img": "loginail-site/fonds-classe/japon.webp", "clair": true}, "tropical": {"couleur": "#DDE7D0"}, "sirene": {"img": "loginail-site/fonds-classe/sirene.webp", "clair": true}, "feerique": {"img": "loginail-site/fonds-classe/feerique.webp", "clair": true}, "celeste": {"img": "loginail-site/fonds-classe/celeste.webp", "clair": false}, "pop": {"img": "loginail-site/fonds-classe/pop.webp", "clair": true}, "baddie": {"img": "loginail-site/fonds-classe/baddie.webp", "clair": false}, "mignon": {"img": "loginail-site/fonds-classe/mignon.webp", "clair": true}, "y2k": {"img": "loginail-site/fonds-classe/y2k.webp", "clair": false}, "gothique": {"img": "loginail-site/fonds-classe/gothique.webp", "clair": false}};
+    const FC = {"tpl-maisonmoka": {"img": "loginail-site/fonds-classe/tpl-maisonmoka.webp", "clair": true}, "tpl-maisonnoire": {"img": "loginail-site/fonds-classe/tpl-maisonnoire.webp", "clair": true}, "tpl-atelierronce": {"img": "loginail-site/fonds-classe/tpl-atelierronce.webp", "clair": true}, "tpl-maisonsauge": {"couleur": "#DDE7D0"}, "tpl-maisonlin": {"couleur": "#E7DED0"}, "tpl-studiopoudre": {"img": "loginail-site/fonds-classe/tpl-studiopoudre.webp", "clair": true}, "cerise": {"img": "loginail-site/fonds-classe/cerise.webp", "clair": true}, "pastel": {"img": "loginail-site/fonds-classe/pastel.webp", "clair": true}, "chrome": {"img": "loginail-site/fonds-classe/chrome.webp", "clair": false}, "bling": {"img": "loginail-site/fonds-classe/bling.webp", "clair": true}, "emo": {"img": "loginail-site/fonds-classe/emo.webp", "clair": true}, "riviera": {"img": "loginail-site/fonds-classe/riviera.webp", "clair": true}, "sixties": {"img": "loginail-site/fonds-classe/sixties.webp", "clair": true}, "baroque": {"img": "loginail-site/fonds-classe/baroque.webp", "clair": true}, "street": {"img": "loginail-site/fonds-classe/street.webp", "clair": true}, "japon": {"img": "loginail-site/fonds-classe/japon.webp", "clair": true}, "tropical": {"couleur": "#DDE7D0"}, "sirene": {"img": "loginail-site/fonds-classe/sirene.webp", "clair": true}, "feerique": {"img": "loginail-site/fonds-classe/feerique.webp", "clair": true}, "celeste": {"img": "loginail-site/fonds-classe/celeste.webp", "clair": false}, "pop": {"img": "loginail-site/fonds-classe/pop.webp", "clair": true}, "baddie": {"img": "loginail-site/fonds-classe/baddie.webp", "clair": false}, "mignon": {"img": "loginail-site/fonds-classe/mignon.webp", "clair": true}, "y2k": {"img": "loginail-site/fonds-classe/y2k.webp", "clair": false}, "gothique": {"img": "loginail-site/fonds-classe/gothique.webp", "clair": false}}, R = 6;
     const lien = q => "loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + q;
     const L = { tpl: TPL.map(t => ({ nom: t[0], q: t[1], im: t[2], sous: t[3] })), uni: UNI.map(t => ({ nom: t[0], q: t[1], im: t[2], sous: t[3] })) };
     const S = [...duo.querySelectorAll(".styl")].map((sec, j) => {
-      const l = L[j ? "uni" : "tpl"], n = l.length, R = 6;
-      const fa = document.createElement("div"), fb = document.createElement("div"); fa.className = "fondS a"; fb.className = "fondS b"; sec.prepend(fb); sec.prepend(fa);
+      const l = L[j ? "uni" : "tpl"], n = l.length;
       const slot = document.createElement("div"); slot.className = "slot";
-      slot.innerHTML = `<div class="sl-tel" role="link" tabindex="0" aria-label="Voir ce site"><div class="sl-ecr"><div class="sl-bande">${Array.from({ length: R * n }, (_, i) => `<img src="loginail-site/apercus-univers/${l[i % n].im}.webp" alt="">`).join("")}</div></div></div><div class="sl-nom"><b></b><small></small></div>`;
-      (sec.querySelector(".st-t") || sec.firstChild).after(slot);
-      const bande = slot.querySelector(".sl-bande"), tel = slot.querySelector(".sl-tel");
-      const o = { sec, l, n, slot, bande, cur: 0, pos: n, fa, fb, haut: () => bande.firstElementChild.getBoundingClientRect().height || 1 };
-      tel.addEventListener("click", () => open(lien(l[o.cur].q), "_blank"));
-      tel.addEventListener("keydown", e => { if (e.key === "Enter") open(lien(l[o.cur].q), "_blank"); });
+      const piste = document.createElement("div"); piste.className = "sl-piste";
+      piste.innerHTML = Array.from({ length: R * n }, (_, i) => { const t = l[i % n], f = FC[t.im] || {};
+        return `<div class="sl-case${f.img && f.clair === false ? " fonce" : ""}"><div class="sl-bg" style="${f.img ? `background-image:url(${f.img})` : `background-color:${f.couleur || "#EFE7DF"}`}"></div>` +
+          `<div class="sl-tel"><div class="sl-ecr"><img src="loginail-site/apercus-univers/${t.im}.webp" alt="" ${i < n + 2 ? "" : 'loading="lazy"'}></div></div>` +
+          `<div class="sl-nom"><b>${esc(t.nom)}</b><small>${esc(t.sous)}</small></div></div>`; }).join("");
+      slot.appendChild(piste);
+      slot.insertAdjacentHTML("beforeend", '<div class="voile"></div><div class="eclat"></div>');
+      sec.appendChild(slot);
+      const o = { sec, l, n, slot, piste, cur: 0, pos: n };
+      slot.addEventListener("click", e => { if (e.target.closest(".sl-tel")) open(lien(o.l[o.cur].q), "_blank"); });
       return o; });
-    /* le fond d'un site (une image du motif, ou sa couleur), posé d'un coup */
-    const prech = {};
-    const precharge = im => { const f = FC[im]; if (f && f.img && !prech[im]) { prech[im] = new Image(); prech[im].src = f.img; } };
-    const fond = (o, i, vite) => { const t = o.l[i], f = FC[t.im] || { couleur: "#EFE7DF" }, [vieux, neuf] = o.fa.style.opacity === "0" ? [o.fb, o.fa] : [o.fa, o.fb];
-      neuf.style.transition = vite ? "none" : ""; vieux.style.transition = vite ? "none" : "";
-      neuf.style.backgroundImage = f.img ? `url(${f.img})` : "none"; neuf.style.backgroundColor = f.couleur || "#EFE7DF"; neuf.style.backgroundSize = "cover"; neuf.style.backgroundRepeat = "no-repeat"; neuf.style.opacity = "1"; vieux.style.opacity = "0";
-      o.sec.classList.toggle("sl-fonce", f.img ? f.clair === false : false); };
-    const nom = (o, i) => { const t = o.l[i]; o.slot.querySelector(".sl-nom b").textContent = t.nom; o.slot.querySelector(".sl-nom small").textContent = t.sous; };
-    const place = (o, vite) => { o.bande.style.transition = vite ? "none" : ""; o.bande.style.transform = `translate3d(0,${(-o.pos * o.haut()).toFixed(1)}px,0)`; };
-    S.forEach(o => { o.cur = 0; o.pos = o.n; place(o, true); fond(o, 0, true); nom(o, 0); precharge(o.l[1 % o.n].im); });
-    addEventListener("resize", () => S.forEach(o => place(o, true)));
-    /* un tour : ça défile vite, ralentit, rebondit un peu, s'arrête — le fond change à l'arrêt */
+    const hc = () => S[0].piste.firstElementChild.getBoundingClientRect().height || innerHeight;
+    const place = (o, vite) => { o.piste.style.transition = vite ? "none" : ""; o.piste.style.transform = `translate3d(0,${(-o.pos * hc()).toFixed(1)}px,0)`; };
+    const marque = o => { [...o.piste.children].forEach((c, i) => c.classList.toggle("ici", i === o.pos));
+      o.sec.classList.toggle("sl-fonce", o.piste.children[o.pos].classList.contains("fonce")); };
+    S.forEach(o => { place(o, true); marque(o); });
+    addEventListener("resize", () => S.forEach(o => { place(o, true); }));
+    /* un tour : ça part vite, ça ralentit, ça se pose avec un petit rebond ; le fond arrive avec le téléphone, forcément */
     const tourne = o => new Promise(fin => {
       let c = o.cur; do { c = Math.floor(Math.random() * o.n); } while (c === o.cur && o.n > 1);
-      precharge(o.l[c].im);
-      const base = ((o.pos % o.n) + o.n) % o.n; o.pos = base + o.n; place(o, true); void o.bande.offsetWidth;
-      const cible = o.n * 3 + c; o.slot.classList.add("roule"); o.bande.classList.add("roule");
-      o.bande.style.transition = "transform 2.3s cubic-bezier(.12,.62,.2,1.035)"; o.pos = cible; o.bande.style.transform = `translate3d(0,${(-cible * o.haut()).toFixed(1)}px,0)`;
-      setTimeout(() => o.bande.classList.remove("roule"), 1500);
-      setTimeout(() => { o.cur = c; o.pos = o.n + c; place(o, true); o.slot.classList.remove("roule"); fond(o, c); nom(o, c); fin(); }, 2350); });
+      const base = ((o.pos % o.n) + o.n) % o.n; o.pos = base + o.n; place(o, true); void o.piste.offsetWidth;
+      const cible = o.n * 3 + c; o.sec.classList.remove("pose"); o.sec.classList.add("roule");
+      o.piste.style.transition = "transform 2.45s cubic-bezier(.1,.62,.18,1.035)"; o.pos = cible;
+      o.piste.style.transform = `translate3d(0,${(-cible * hc()).toFixed(1)}px,0)`;
+      setTimeout(() => o.sec.classList.remove("roule"), 1750);
+      setTimeout(() => { o.cur = c; o.pos = o.n + c; place(o, true); marque(o); o.sec.classList.add("pose");
+        setTimeout(() => o.sec.classList.remove("pose"), 1000); fin(); }, 2500); });
     let vu = false, tour = 1, enCours = false;
     const pin = document.querySelector(".styl-pin") || duo;
-    new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu) boucle(); }, { threshold: .15 }).observe(pin);
-    const attends = ms => new Promise(r => setTimeout(r, ms));
-    const boucle = async () => { if (enCours) return; enCours = true; await attends(1100);
-      while (vu) { if (!document.hidden) { await tourne(S[tour % 2]); tour++; } await attends(2600); }
+    const boucle = async () => { if (enCours) return; enCours = true; await attends(1200);
+      while (vu) { if (!document.hidden) { await tourne(S[tour % 2]); tour++; } await attends(2400); }
       enCours = false; };
+    new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu) boucle(); }, { threshold: .12 }).observe(pin);
   }
+
+  /* ---- Les chiffres passent SOUS « Tout ça, pour vous » ---- */
+  { const chif = document.querySelector(".chif"), fp = document.querySelector(".fin-pub");
+    if (chif && fp) fp.after(chif); }
+
+  /* ---- Les titres se lèvent quand on arrive dessus ---- */
+  { const T = [...document.querySelectorAll(".chif>div")];
+    if (T.length) { T.forEach(e => e.classList.add("lever"));
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("vu2"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+      T.forEach((e, i) => { e.style.transitionDelay = (i % 4) * .09 + "s"; io.observe(e); }); } }
 })();
 </script>
 </body></html>
