@@ -58,7 +58,9 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .pastille.on{transform:scale(1.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 3px var(--fond),0 0 0 4.5px var(--noir)}
 .pol{border-radius:16px;padding:10px 15px;font-size:20px;white-space:nowrap;min-width:80px}
 .pol.on{background:#fff;box-shadow:inset 0 0 0 1.5px var(--noir)}
-.pages{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0}.pages::-webkit-scrollbar{display:none}
+.pages{display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;touch-action:pan-x;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0}
+.choix,.bas{overscroll-behavior:contain}
+.ligneH,.grilleF{overflow-y:hidden;touch-action:pan-x}.pages::-webkit-scrollbar{display:none}
 .page6{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:36px;gap:6px 8px;padding:0 22px}
 .page6 .pol{min-width:0;padding:4px 10px;font-size:18px;border-radius:12px;overflow:hidden;text-overflow:ellipsis}
 .ptsP{display:flex;gap:5px;justify-content:center;padding-top:6px}.ptsP i{width:5px;height:5px;border-radius:50%;background:rgba(30,28,27,.2)}.ptsP i.on{background:var(--noir)}
@@ -282,8 +284,8 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.forme) { changeForme(+b.dataset.forme - forme); return; }
   if (b.dataset.cat) { clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(rend, 60); return; }
   if (b.id === "de") { const l = [...D.querySelectorAll("#pzFonds [data-f]")].filter(x => x.dataset.f); const x = l[Math.floor(Math.random() * l.length)];
-    if (x) { x.click(); setTimeout(ambiance, 120); setTimeout(() => { ajusteFonds(); const g = $("grilleF"), v = g.querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`); if (v) g.scrollTo({ left: v.offsetLeft - g.clientWidth / 2 + 22, behavior: "smooth" }); }, 500); } return; }
-  if (b.dataset.f != null) { clique(`#pzFonds [data-f="${CSS.escape(b.dataset.f)}"]`); setTimeout(() => { ajusteFonds(); ambiance(); }, 120); return; }
+    if (x) { x.click(); ambiance(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); setTimeout(() => { ajusteFonds(); const g = $("grilleF"), v = g.querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`); if (v) g.scrollTo({ left: v.offsetLeft - g.clientWidth / 2 + 22, behavior: "smooth" }); }, 500); } return; }
+  if (b.dataset.f != null) { clique(`#pzFonds [data-f="${CSS.escape(b.dataset.f)}"]`); ambiance(); ajusteFonds(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
   if (b.dataset.nomc) { nomc = b.dataset.nomc; marque(b); try { W.eval(`BR.nomc=${JSON.stringify(nomc)}`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); enHaut(); return; }   // l'éditeur repeint le nom lui-même
   if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }
@@ -310,14 +312,14 @@ $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtr
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); };
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
-function prepare() { ouvreOnglet(ONGLET[cle()]); setTimeout(() => { rend(); enHaut(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
+function prepare() { ouvreOnglet(ONGLET[cle()]); ambiance(); setTimeout(() => { rend(); enHaut(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
 addEventListener("scroll", () => { if (scrollX || scrollY) scrollTo(0, 0); });
 F.classList.add("fondu");
 F.onload = () => {
   W = F.contentWindow; D = F.contentDocument;
   W.F100_AUSSI = 1;   // « Tous » = les 336 fonds
-  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}"; D.head.appendChild(st);
+  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}.ch-couche .charm,.charm{outline:none!important}"; D.head.appendChild(st);
   ["gesturestart", "gesturechange"].forEach(t => D.addEventListener(t, e => e.preventDefault(), { passive: false }));
   const copie = () => { D.querySelectorAll("style").forEach(s => { if (s.dataset.copie) return;
       if (s.id === "pzCss") { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = s.textContent.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(c); return; }

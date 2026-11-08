@@ -14,6 +14,10 @@
 html,body{margin:0;height:100%;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);overflow:hidden;touch-action:pan-x pan-y}
 button{font:inherit;color:inherit;cursor:pointer}
 #tel{position:fixed;inset:0;max-width:480px;margin:0 auto;background:var(--fond);overflow:hidden}
+#ambiance{position:absolute;inset:0;opacity:0;transition:opacity .5s;overflow:hidden;pointer-events:none}
+#ambiance.on{opacity:.24}
+#ambiance>.f100{position:absolute!important;inset:0!important}
+#ambiance .tuile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
 .ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 16px);opacity:0;pointer-events:none;transition:opacity .35s}
 .ecran.on{opacity:1;pointer-events:auto}
 .titre{margin:6px 0 0;font:300 24px/1.2 Jost,sans-serif;text-align:center;white-space:nowrap;letter-spacing:-.01em}
@@ -68,10 +72,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 .slide .prise{position:absolute;inset:0;touch-action:pan-x}
 .ptsC{display:flex;gap:5px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}.ptsC i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.ptsC i.on{width:18px;border-radius:3px;background:var(--noir)}
 .duo{display:flex;gap:10px}
+.autres{display:block;margin:10px auto 0;border-radius:999px;padding:10px 18px;font:400 13px Jost,sans-serif}
 .go{flex:1;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:16px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:300;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.5}
 </style></head><body>
 <div id="tel">
+  <div id="ambiance"></div>
   <span class="maquette">Prototype</span>
   <section class="ecran on" id="q">
     <div class="pts"><i class="on"></i><i></i><i></i></div>
@@ -97,6 +103,7 @@ button{font:inherit;color:inherit;cursor:pointer}
     <p class="sous" id="sousC"></p>
     <div class="carrou" id="carrou"></div><div class="ptsC" id="ptsC"></div>
     <div class="duo"><button class="verre" id="enl" type="button">Enlever</button><button class="go" id="perso" type="button">PERSONNALISER CELUI-CI</button></div>
+    <button class="verre autres" id="autres" type="button">+ Choisir d’autres sites</button>
   </section>
 </div>
 <script>
@@ -150,14 +157,27 @@ function propose(g) {
   }
 }
 const src = (p, pub = true) => "loginail-creer/pret.html?" + (pub ? "public&" : "") + p.q;
-const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classList.toggle("on", e.id === id));
+const montre = id => { document.querySelectorAll(".ecran").forEach(e => e.classList.toggle("on", e.id === id)); if (id === "q") $("ambiance").classList.remove("on"); };
+/* le fond du site affiché, recopié derrière en transparence (son style est repris une fois du site) */
+let styleFond = false;
+function ambiance(fr) { const a = $("ambiance");
+  try { const d = fr && fr.contentDocument, t = d && d.querySelector(".ecran .tuile");
+    if (!t) { a.classList.remove("on"); return; }
+    if (!styleFond) { let css = ""; d.querySelectorAll("style").forEach(st => { try { [...st.sheet.cssRules].forEach(r => { if ((r.selectorText && /\.f100|\.tuile|\.anime|\.pa\b/.test(r.selectorText)) || r.type === 7) css += r.cssText + "\n"; }); } catch (e) {} });
+      if (css) { const st = document.createElement("style"); st.textContent = css.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(st); styleFond = true; } }
+    const h = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/");
+    if (a._h !== h) { a._h = h; a.innerHTML = `<div class="f100 fond-site">${h}</div>`;
+      [a.firstElementChild, a.querySelector(".tuile")].forEach(e => { if (!e) return; [["position", "absolute"], ["left", "0"], ["top", "0"], ["width", "100%"], ["height", "100%"], ["transform", "none"], ["border-radius", "0"]].forEach(([k, v]) => e.style.setProperty(k, v, "important")); }); }
+    a.classList.add("on"); } catch (e) { a.classList.remove("on"); }
+}
+const ambianceCarte = () => { const c = [...$("zone").children].find(x => x._n === i); ambiance(c && c.querySelector("iframe")); };
 function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html,body{background:#fff!important;scrollbar-width:none}::-webkit-scrollbar{display:none}.ecran{border-radius:0!important;box-shadow:none!important}*:focus{outline:none!important}"; d.head.appendChild(st); } catch (e) {} }
 const boiteDe = fr => { try { const d = fr.contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
 function carteHtml(p) {
   const c = document.createElement("div"); c.className = "carte";
   c.innerHTML = `<iframe title="Proposition"></iframe><div class="tampon oui">GARDÉ</div><div class="tampon non">PASSÉ</div>
     <div class="prise"></div>`;
-  const fr = c.querySelector("iframe"); fr.onload = () => cache(fr); fr.src = src(p); c._p = p; return c;
+  const fr = c.querySelector("iframe"); fr.onload = () => { cache(fr); if (c._n === i) [100, 600].forEach(t => setTimeout(ambianceCarte, t)); }; fr.src = src(p); c._p = p; return c;
 }
 function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"), k = (c.clientWidth + 2) / 390; f.style.transform = `scale(${k})`; f.style.height = ((c.clientHeight + 2) / k) + "px"; }); }   // 1 px de plus de chaque côté : jamais de trait sombre au bord
 function lancePaquet() { paquet = []; vus = new Set(); i = 0; $("zone").innerHTML = ""; ajoute(8); place(); montre("paquet");
@@ -173,7 +193,7 @@ function place() {
   for (let k = i; k < i + 3; k++) if (![...z.children].some(c => c._n === k)) { const c = carteHtml(paquet[k]); c._n = k; z.prepend(c); }
   [...z.children].forEach(c => { c.classList.toggle("dessous", c._n === i + 1); c.classList.toggle("cache", c._n > i + 1); c.style.zIndex = 100 - (c._n - i); });
   $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`;
-  requestAnimationFrame(echelle); branche([...z.children].find(c => c._n === i));
+  requestAnimationFrame(echelle); branche([...z.children].find(c => c._n === i)); ambianceCarte();
 }
 function vote(oui) {
   const c = [...$("zone").children].find(x => x._n === i); if (!c || c._parti) return; c._parti = 1;
@@ -181,7 +201,7 @@ function vote(oui) {
   c.querySelector(".tampon." + (oui ? "oui" : "non")).style.opacity = 1;
   c.style.transition = "transform .4s ease-in, opacity .4s"; c.style.transform = `translateX(${oui ? 600 : -600}px) rotate(${oui ? 18 : -18}deg)`; c.style.opacity = 0;
   i++; setTimeout(place, 240);
-  if (oui && coeurs.length === OBJECTIF) setTimeout(montreCoeurs, 650);
+  if (oui && coeurs.length >= OBJECTIF) setTimeout(montreCoeurs, 650);
 }
 function branche(c) {
   if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"), fr = c.querySelector("iframe"); let x0 = null, y0 = 0, dx = 0, sens = null, top0 = 0;
@@ -209,7 +229,7 @@ function montreCoeurs() {
   const z = $("carrou"); z.innerHTML = ""; $("ptsC").innerHTML = "";
   $("sousC").textContent = coeurs.length ? "Glissez pour les revoir, puis choisissez votre préféré." : "Pas encore de coup de cœur. Revenez glisser quelques sites !";
   document.querySelector("#coeurs .titre").textContent = coeurs.length ? `Vos ${coeurs.length} coup${coeurs.length > 1 ? "s" : ""} de cœur` : "Vos coups de cœur";
-  $("enl").hidden = $("perso").hidden = !coeurs.length;
+  $("enl").hidden = $("perso").hidden = !coeurs.length; $("autres").hidden = coeurs.length >= OBJECTIF;
   coeurs.forEach((p, k) => { const sl = document.createElement("div"); sl.className = "slide"; sl.innerHTML = `<iframe title="Coup de cœur"></iframe><div class="prise"></div>`; sl._p = p; z.appendChild(sl); branche2(sl); $("ptsC").insertAdjacentHTML("beforeend", `<i class="${k ? "" : "on"}"></i>`); });
   montre("coeurs"); requestAnimationFrame(() => { dimCarrou(); z.scrollLeft = 0; effet(); });
 }
@@ -220,7 +240,8 @@ let tEffet = 0;
 function effet() { const z = $("carrou"), p = pas(), k0 = courant();
   [...z.children].forEach((sl, n) => { const d = Math.min(1, Math.abs(n * p - z.scrollLeft) / p); sl.style.transform = `scale(${1 - .1 * d})`; sl.style.opacity = 1 - .4 * d;
     const f = sl.querySelector("iframe"); if (Math.abs(n - k0) <= 1 && !f.getAttribute("src")) { f.onload = () => cache(f); f.src = src(sl._p); } });
-  [...$("ptsC").children].forEach((x, n) => x.classList.toggle("on", n === k0)); }
+  [...$("ptsC").children].forEach((x, n) => x.classList.toggle("on", n === k0));
+  const fc = z.children[k0]?.querySelector("iframe"); if (fc) { ambiance(fc); if (!fc._amb) { fc._amb = 1; fc.addEventListener("load", () => setTimeout(() => { if (courant() === k0) ambiance(fc); }, 300)); } } }
 $("carrou").addEventListener("scroll", () => { cancelAnimationFrame(tEffet); tEffet = requestAnimationFrame(effet); }, { passive: true });
 function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySelector("iframe"), z = $("carrou");
   let y0 = null, x0 = 0, top0 = 0, sens = null, sl0 = 0;
@@ -230,6 +251,7 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
     if (sens === "x" && e.pointerType === "mouse") { z.style.scrollSnapType = "none"; z.scrollLeft = sl0 - dx; } };
   pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 450); } y0 = null; };
   pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
+$("autres").onclick = () => { montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
 $("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + "&src=" + encodeURIComponent(src(p, false)); };
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });

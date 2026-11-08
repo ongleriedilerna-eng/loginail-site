@@ -3048,11 +3048,11 @@ window.chPlacer=(on)=>{window.CH_PLACER=!!on;document.documentElement.classList.
 addEventListener("message",m=>{if(m.data&&typeof m.data==="object"&&"loginailPlacer" in m.data)chPlacer(m.data.loginailPlacer)});
 if(new URLSearchParams(location.search).get("placer")==="1")window.CH_PLACER=true;
 /* le bouton dans le site quand elle le modifie (pas sur le site public) */
-addEventListener("load",()=>{const st0=document.createElement("style");st0.textContent=`html.ch-placer .ch-couche .charm{outline:2px dashed rgba(255,255,255,.85);outline-offset:4px;border-radius:12px;cursor:grab}`;document.head.append(st0);if(window.CH_PLACER)document.documentElement.classList.add("ch-placer");if(new URLSearchParams(location.search).has("public"))return;const b=document.createElement("button");b.className="ch-placer-btn";b.type="button";
+addEventListener("load",()=>{const st0=document.createElement("style");st0.textContent=`html.ch-placer .ch-couche .charm{outline:none;border-radius:12px;cursor:grab}`;document.head.append(st0);if(window.CH_PLACER)document.documentElement.classList.add("ch-placer");if(new URLSearchParams(location.search).has("public"))return;const b=document.createElement("button");b.className="ch-placer-btn";b.type="button";
   const txt=()=>{b.textContent=window.CH_PLACER?"Voir comme une cliente":"Placer mes charms";b.classList.toggle("on",!window.CH_PLACER)};setTimeout(()=>{chPlacer(true);txt()},1200);   /* 07/11 (Marie) : quand elle modifie son site, les charms se placent directement */
   b.onclick=()=>{const on=!window.CH_PLACER;chPlacer(on);txt();if(!on)document.querySelectorAll(".defile").forEach(d=>{try{chposEnvoie(d)}catch(_){}})};
   const st=document.createElement("style");st.textContent=`.ch-placer-btn{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:9999;border:0;border-radius:99px;padding:10px 18px;background:rgba(30,28,27,.88);color:#fff;font:500 11px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 8px 20px -8px rgba(0,0,0,.4);cursor:pointer}.ch-placer-btn.on{background:#fff;color:#1E1C1B}
-  html.ch-placer .ch-couche .charm{outline:2px dashed rgba(255,255,255,.85);outline-offset:4px;border-radius:12px;cursor:grab}`;document.head.append(st,b)});
+  html.ch-placer .ch-couche .charm{outline:none;border-radius:12px;cursor:grab}`;document.head.append(st,b)});
 /* le charm revient du haut de l'écran et descend tout doucement, en se balançant, comme une plume */
 function plume(c,def,S){const W=def.clientWidth,sol=def._ch?.sol||def.scrollHeight;c.x=20+Math.random()*(W-S-40);c.y=Math.max(sol-420,def.scrollTop-S-10);c.vx=0;c.vy=.4;c.mode="plume";c.vmax=2.4;c.ph=Math.random()*6;c.el.classList.remove("au-sol");c.om.classList.remove("au-sol")}
 
