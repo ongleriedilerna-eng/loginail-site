@@ -1247,6 +1247,17 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .gal-fl:hover{transform:translateY(-50%) scale(1.08)}
 .gal-fl.g{left:clamp(14px,4vw,64px)}.gal-fl.d{right:clamp(14px,4vw,64px)}
 @media (max-width:999px){.gal-fl{width:42px;height:42px;font-size:28px}.gal-fl.g{left:10px}.gal-fl.d{right:10px}}
+
+/* 16/11 (Marie) : le nom du réseau qui change dans la bio */
+.bio-k h2 .scr{display:inline;min-width:0!important;font-style:normal;white-space:nowrap}
+.bio-k h2 .scr-l{white-space:nowrap}
+/* 16/11 (Marie) : coulisse — « Pourquoi pas sur votre site » et « Votre tour » ne bloquent plus l'écran, ils défilent comme le reste */
+.ch-pin{height:auto!important}
+.ch-pin .p-ch{position:relative!important;top:auto!important}
+.fin-pub{height:auto!important;min-height:0!important}
+.fin-pub .fp-colle{position:relative!important;top:auto!important}
+/* le petit texte sous 49,99 € : de la même couleur que le prix (on le voyait mal en blanc) */
+.prix .gros + div{color:inherit!important;opacity:.72}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -2002,6 +2013,13 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const U = [["tpl-maisonnoire", "app-noir", ["perle", "cristal", "coeurchrome", "noeudgelee"]], ["cerise", "app-rose", ["cerisedisco", "noeudcerise", "fraisegelee", "cerisecoeur"]],
                  ["tpl-onglesdemma", "app-lin", ["perle", "hibiscus", "papillondore", "coeurchrome"]], ["bling", "app-choco", ["boule8or", "cerisesor", "levresgrillz", "etoilestrass"]],
                  ["tpl-studiopoudre", "app-poudre", ["noeudgelee", "perle", "papillondore", "fraiseperle"]], ["pop", "app-abricot", ["bouledisco", "framboise", "canard", "oeilbleu"]]];
+      /* 16/11 : ?haut=<image> — un seul site dans le cadre (planche « choisir les sites du haut ») */
+      { const QH = new URLSearchParams(location.search).get("haut");
+        if (QH && typeof TPL !== "undefined") { const t = [...TPL, ...(typeof UNI !== "undefined" ? UNI : [])].find(x => x[2] === QH);
+          if (t) { const p = new URLSearchParams(t[1]), co = p.get("couleur") || "";
+            const app = /noir|marine|gris|greige|taupe/.test(co) ? "app-noir" : /choco|caramel|terracotta|bordeaux|rougefonce/.test(co) ? "app-choco" : /poudre|nude/.test(co) ? "app-poudre" : /abricot|peche|orange|corail|jaune/.test(co) ? "app-abricot" : /rose|cerise|framboise|lilas|lavande|fuchsia/.test(co) ? "app-rose" : "app-lin";
+            const ch = (p.get("charm") || "").split(",").filter(Boolean).slice(0, 4);
+            U.length = 0; U.push([QH, app, ch.length ? ch : ["perle", "noeudgelee", "papillondore", "coeurchrome"]]); } } }
       const pan = document.createElement("div"); pan.className = "h-pan"; pan.setAttribute("aria-hidden", "true");
       pan.innerHTML = '<div class="f a"></div><div class="f b"></div><div class="chs"></div>' +
         '<div class="tel t1"><div class="e"><img alt=""></div></div><div class="tel t2"><div class="e"><img alt=""></div></div>' +
@@ -2103,7 +2121,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     if (pq) {
       const s = document.createElement("section"); s.className = "bio-k"; s.id = "bio";
       const E = "loginail-site/univers-photos/emma/";
-      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio Instagram,<br><em>votre <span class="scr">salon</span>.fr</em></h2>
+      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio <span class="scr-l"><span class="scr">Instagram</span>,</span><br><em>votre salon.fr</em></h2>
         <p>Elle voit vos ongles, elle clique sur votre lien, elle réserve. Pas de page d’annuaire avec vos concurrentes à côté : juste vous.</p>
         <div class="pts"><div><b>votre-salon.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div>
         <div class="ex">Exemple · personnes et photos créées par IA</div></div>
@@ -2122,11 +2140,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
       /* les lettres qui défilent : « site » bascule, l'alphabet défile très vite, et un nom de salon apparaît */
-      const NOMS = ["nanan", "lila", "jadenails", "bymaya", "inesongles", "zoe", "studioluna", "kiara"], AB = "abcdefghijklmnopqrstuvwxyz";
+      const NOMS = ["TikTok", "Google", "Facebook", "Snapchat", "Pinterest", "WhatsApp", "Instagram"], AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";   /* 16/11 : le réseau change, le .fr reste */
       const sc = s.querySelector(".scr"), sc2 = s.querySelector(".scr2"); let kN = 0;
       const melange = (el, fin, ms, cb) => { if (!el) return cb && cb(); el.classList.add("bouge"); const t0 = performance.now(), n = fin.length, pasL = 115, deb = 260;
         let dern = 0; const pas = now => { const t = now - t0; if (t >= deb + n * pasL + 80) { el.textContent = fin; el.classList.remove("bouge"); return cb && cb(); }
-          if (now - dern > 85) { dern = now; let s = ""; for (let k = 0; k < n; k++) s += t > deb + k * pasL ? fin[k] : AB[Math.floor(Math.random() * 26)]; el.textContent = s; }
+          if (now - dern > 85) { dern = now; let s = ""; for (let k = 0; k < n; k++) s += t > deb + k * pasL ? fin[k] : AB[Math.floor(Math.random() * AB.length)]; el.textContent = s; }
           requestAnimationFrame(pas); }; requestAnimationFrame(pas); };
       /* les deux téléphones : le site sort de derrière le profil, passe devant, puis revient derrière */
       const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;

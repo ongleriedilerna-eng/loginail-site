@@ -1,0 +1,55 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Les sites du haut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--creme:#F6F3EF;--noir:#1E1C1B;--gris:#8a8076;--ligne:rgba(30,28,27,.12)}
+*{box-sizing:border-box}body{margin:0;background:var(--creme);color:var(--noir);font:400 15px/1.45 Jost,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(246,243,239,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--ligne);padding:14px 16px;text-align:center}
+h1{margin:0;font:400 clamp(26px,3vw,38px)/1.1 'Cormorant Garamond',serif;letter-spacing:.06em;text-transform:uppercase}
+.aide{margin:6px auto 0;max-width:640px;color:#6b625c;font-size:13.5px}
+.barre{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:10px;flex-wrap:wrap}
+.nb{font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase}
+.btn{border:0;border-radius:99px;background:var(--noir);color:#fff;font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase;padding:12px 20px;cursor:pointer}
+.btn.clair{background:#fff;color:var(--noir);box-shadow:0 0 0 1px var(--ligne)}
+.filtres{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.filtres button{border:0;border-radius:99px;padding:7px 13px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font:500 12px Jost;cursor:pointer}
+.filtres button.on{background:var(--noir);color:#fff;box-shadow:none}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));gap:22px;padding:22px 16px 80px;max-width:1500px;margin:0 auto}
+.c{background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px var(--ligne),0 18px 40px -30px rgba(0,0,0,.4);transition:box-shadow .2s,transform .2s}
+.c img{display:block;width:100%;aspect-ratio:639/420;object-fit:cover;background:#eee}
+.c .b{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.c .n{flex:1;min-width:0}.c .n b{display:block;font:500 15px Jost;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c .n small{color:var(--gris);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.c .n small i{font-style:normal;margin-left:8px;color:#9a6b2f}
+.g{flex:none;border:0;border-radius:99px;padding:11px 16px;font:500 12px Jost;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;background:#fff;color:var(--noir);box-shadow:0 0 0 1px var(--ligne)}
+.c.on{box-shadow:0 0 0 3px var(--noir),0 18px 40px -30px rgba(0,0,0,.4)}
+.c.on .g{background:var(--noir);color:#fff;box-shadow:none}
+.c.non{opacity:.55}
+.copie{position:fixed;left:50%;bottom:18px;transform:translate(-50%,30px);opacity:0;background:var(--noir);color:#fff;padding:12px 20px;border-radius:99px;font-size:13px;transition:.3s;pointer-events:none;z-index:9}
+.copie.on{opacity:1;transform:translate(-50%,0)}
+</style></head><body>
+<header><h1>Les sites du haut</h1>
+<p class="aide">Voici chaque site dans le vrai cadre du haut de l’accueil (« Un site pour briller »). Touchez <b>Je garde</b> sur ceux que vous voulez voir défiler. Les 6 qui passent aujourd’hui sont déjà cochés.</p>
+<div class="filtres"><button class="on" data-f="tous">Tous</button><button data-f="Classe">Classe</button><button data-f="Baddie">Baddie</button><button data-f="on">Gardés</button></div>
+<div class="barre"><span class="nb" id="nb"></span><button class="btn" id="copier">Copier pour me l’envoyer</button><button class="btn clair" id="raz">Revenir à aujourd’hui</button></div></header>
+<main id="m"></main><div class="copie" id="copie">Copié ! Collez-le dans la discussion.</div>
+<script>
+const L=[{"im": "tpl-maisonmoka", "nom": "Maison Moka", "cl": "Classe", "now": false}, {"im": "tpl-maisonnoire", "nom": "Lumière douce.", "cl": "Classe", "now": true}, {"im": "tpl-atelierronce", "nom": "Atelier Ronce", "cl": "Classe", "now": false}, {"im": "tpl-maisonsauge", "nom": "ALFORT onglerie", "cl": "Classe", "now": false}, {"im": "tpl-maisonlin", "nom": "L'onglerie parisienne.", "cl": "Classe", "now": false}, {"im": "tpl-studiopoudre", "nom": "Studio Poudré.", "cl": "Classe", "now": true}, {"im": "tpl-onglesdemma", "nom": "les Ongles d’Emma", "cl": "Classe", "now": true}, {"im": "cerise", "nom": "les Ongles de Cerise", "cl": "Baddie", "now": true}, {"im": "pastel", "nom": "Nails by Guimauve", "cl": "Baddie", "now": false}, {"im": "chrome", "nom": "Sy’lver salon", "cl": "Baddie", "now": false}, {"im": "bling", "nom": "THIS IS NAIL'I", "cl": "Baddie", "now": true}, {"im": "emo", "nom": "naile’mo", "cl": "Baddie", "now": false}, {"im": "riviera", "nom": "Limon’ails", "cl": "Baddie", "now": false}, {"im": "sixties", "nom": "Studio Twiggy onglerie", "cl": "Baddie", "now": false}, {"im": "baroque", "nom": "Les mains de Velours", "cl": "Baddie", "now": false}, {"im": "street", "nom": "Studio Tag", "cl": "Baddie", "now": false}, {"im": "japon", "nom": "JAPO’NAILY ONGLERIE", "cl": "Baddie", "now": false}, {"im": "tropical", "nom": "Maison Papaye", "cl": "Baddie", "now": false}, {"im": "sirene", "nom": "Maison Nacre", "cl": "Baddie", "now": false}, {"im": "feerique", "nom": "Atelier Glycine", "cl": "Baddie", "now": false}, {"im": "celeste", "nom": "L’astre des ongles", "cl": "Baddie", "now": false}, {"im": "pop", "nom": "Atelier Sorbet", "cl": "Baddie", "now": true}, {"im": "baddie", "nom": "Cherry Glam", "cl": "Baddie", "now": false}, {"im": "mignon", "nom": "Petite Cerise", "cl": "Baddie", "now": false}, {"im": "y2k", "nom": "Studio Lilas", "cl": "Baddie", "now": false}, {"im": "gothique", "nom": "Maison Nocturne", "cl": "Baddie", "now": false}];
+let garde;try{garde=JSON.parse(localStorage.getItem("choix-haut")||"null")}catch(_){}
+if(!Array.isArray(garde))garde=L.filter(x=>x.now).map(x=>x.im);
+let f="tous";
+const sauve=()=>{try{localStorage.setItem("choix-haut",JSON.stringify(garde))}catch(_){}};
+function dessine(){const m=document.getElementById("m");
+ m.innerHTML=L.filter(x=>f==="tous"||(f==="on"?garde.includes(x.im):x.cl===f)).map(x=>{const on=garde.includes(x.im);
+  return `<div class="c${on?" on":""}" data-im="${x.im}"><img src="loginail-site/choix-haut/${x.im}.webp?v=1" alt="${x.nom}" loading="lazy"><div class="b"><div class="n"><b>${x.nom}</b><small>${x.cl}${x.now?"<i>· passe aujourd’hui</i>":""}</small></div><button class="g">${on?"✓ Je garde":"Je garde"}</button></div></div>`}).join("");
+ document.getElementById("nb").textContent=garde.length+(garde.length>1?" sites gardés":" site gardé")}
+document.getElementById("m").addEventListener("click",e=>{const c=e.target.closest(".c");if(!c)return;const im=c.dataset.im;
+ garde=garde.includes(im)?garde.filter(x=>x!==im):[...garde,im];sauve();dessine()});
+document.querySelector(".filtres").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;f=b.dataset.f;
+ document.querySelectorAll(".filtres button").forEach(x=>x.classList.toggle("on",x===b));dessine()});
+document.getElementById("raz").onclick=()=>{garde=L.filter(x=>x.now).map(x=>x.im);sauve();dessine()};
+document.getElementById("copier").onclick=async()=>{const t="Les sites du haut que je garde :\n"+L.filter(x=>garde.includes(x.im)).map(x=>"- "+x.nom+" ("+x.im+")").join("\n");
+ try{await navigator.clipboard.writeText(t)}catch(_){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}
+ const c=document.getElementById("copie");c.classList.add("on");setTimeout(()=>c.classList.remove("on"),2200)};
+dessine();
+</script></body></html>
