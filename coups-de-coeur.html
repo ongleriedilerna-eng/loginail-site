@@ -2,110 +2,91 @@
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
 <title>Coups de cœur · prototype</title>
-<link href="loginail-creer/polices.css" rel="stylesheet">
+<link href="loginail-creer/polices.css" rel="stylesheet"><link href="loginail-site/polices-sites.css" rel="stylesheet">
 <style>
-/* 08/11 (Marie) : PROTOTYPE « cartes à glisser ». 0) classique ou ouf ? 1) des propositions de SON site, elle garde (♥) ou pas (✕),
-   2) à la fin, ses coups de cœur, elle en choisit un et le personnalise (maquette-perso.html). Chaque carte = le vrai rendu (pret.html?public). */
+/* 08/11 (Marie) : PROTOTYPE « cartes à glisser ».
+   0) « Quel site vous ressemble ? » (sur une ligne, « ressemble » change d'écriture comme « briller ») : deux rectangles identiques.
+   1) des propositions de SON site, sans fin, en grand, façon Tinder (✕ / ♥), elle regarde ses coups de cœur quand elle veut.
+   2) ses coups de cœur en carrousel (le site au milieu, les voisins à gauche et à droite), puis la personnalisation (maquette-perso.html). */
 :root{--noir:#1E1C1B;--fond:#F6F3EF;--muted:#6B625C}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
 html,body{margin:0;height:100%;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
 #tel{position:fixed;inset:0;max-width:480px;margin:0 auto;background:var(--fond);overflow:hidden}
-.ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 22px) 20px calc(env(safe-area-inset-bottom) + 18px);opacity:0;pointer-events:none;transition:opacity .4s}
+.ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 16px);opacity:0;pointer-events:none;transition:opacity .35s}
 .ecran.on{opacity:1;pointer-events:auto}
-h1{margin:6px 0 0;font:500 34px/1.02 "Cormorant Garamond",serif;text-align:center}
-.sous{margin:8px 0 0;text-align:center;font:300 14px/1.5 Jost,sans-serif;color:var(--muted)}
+.titre{margin:6px 0 0;font:300 24px/1.2 Jost,sans-serif;text-align:center;white-space:nowrap;letter-spacing:-.01em}
+.mot{display:inline-block;position:relative;white-space:nowrap;transition:opacity .2s;font-weight:400}.mot.chg{opacity:0}
+.sous{margin:6px 0 0;text-align:center;font:300 13.5px/1.5 Jost,sans-serif;color:var(--muted)}
 .pts{display:flex;gap:4px;justify-content:center}.pts i{width:22px;height:3px;border-radius:2px;background:rgba(30,28,27,.15)}.pts i.on{background:var(--noir)}
-/* 0 · classique ou ouf */
-.cartes2{flex:1;display:flex;flex-direction:column;gap:12px;margin-top:18px;min-height:0}
-.carte2{flex:1;border:0;border-radius:24px;background:center/cover;position:relative;overflow:hidden;padding:0;transition:transform .2s}
+/* 0 · deux rectangles identiques */
+.cartes2{flex:1;display:grid;grid-template-rows:1fr 1fr;gap:12px;margin-top:16px;min-height:0}
+.carte2{border:0;border-radius:24px;background:#E2DBD3 center/cover;position:relative;overflow:hidden;padding:0;min-height:0;transition:transform .2s}
 .carte2:active{transform:scale(.98)}
-.carte2 span{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font:500 19px "Cormorant Garamond",serif;text-align:center}
+.carte2 span{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font:400 18px Jost,sans-serif;text-align:center}
 .carte2 span small{display:block;font:300 12px Jost,sans-serif;opacity:.9;margin-top:2px}
-.deux{margin-top:12px;border:0;background:none;font:400 14px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
-/* 1 · le paquet */
+.liens{display:flex;justify-content:center;gap:18px;margin-top:10px}
+.lien{border:0;background:none;font:400 13.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted);padding:4px}
+/* 1 · le paquet, en grand */
 .tete{display:flex;align-items:center;justify-content:space-between}
-.tete b{font:500 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase}
-.compte{display:flex;align-items:center;gap:6px;border:0;border-radius:999px;background:#fff;padding:7px 13px;font:500 13px Jost,sans-serif;box-shadow:0 4px 12px -6px rgba(0,0,0,.3)}
-.compte i{font-style:normal;color:var(--noir)}
-.compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.25)}}
-.zone{position:relative;flex:1;margin:14px 0 10px;min-height:0}
-.carte{position:absolute;left:50%;top:0;height:100%;aspect-ratio:390/760;max-width:100%;transform:translateX(-50%);border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 18px 34px -18px rgba(0,0,0,.55);transition:transform .35s cubic-bezier(.3,1.1,.4,1),opacity .35s;will-change:transform}
-.carte iframe{position:absolute;top:0;left:0;width:390px;height:760px;border:0;transform-origin:0 0;pointer-events:none}
+.verre{border:1px solid rgba(255,255,255,.9);border-radius:999px;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 14px;font:400 13px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
+.compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.18)}}
+.zoneW{position:relative;flex:1;margin:12px 0 0;min-height:0}.zone{position:absolute;inset:0}
+.carte{position:absolute;left:50%;top:0;height:100%;aspect-ratio:390/780;max-width:100%;transform:translateX(-50%);border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 18px 34px -18px rgba(0,0,0,.55);transition:transform .35s cubic-bezier(.3,1.1,.4,1),opacity .35s;will-change:transform}
+.carte iframe{position:absolute;top:0;left:0;width:390px;height:780px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
 .carte .prise{position:absolute;inset:0;touch-action:none;cursor:grab}
-.carte .info{position:absolute;left:0;right:0;bottom:0;padding:30px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.6));display:flex;flex-wrap:wrap;gap:5px;justify-content:center;pointer-events:none}
-.carte .info span{border-radius:999px;background:rgba(255,255,255,.92);padding:4px 10px;font:400 11px Jost,sans-serif}
-.tampon{position:absolute;top:26px;padding:6px 14px;border:3px solid;border-radius:12px;font:600 22px Jost,sans-serif;letter-spacing:.1em;opacity:0;pointer-events:none;background:rgba(255,255,255,.85)}
+.carte .info{position:absolute;left:0;right:0;top:0;padding:14px 12px 30px;background:linear-gradient(rgba(0,0,0,.35),transparent);display:flex;flex-wrap:wrap;gap:5px;justify-content:center;pointer-events:none}
+.carte .info span{border-radius:999px;background:rgba(255,255,255,.9);padding:4px 10px;font:400 11px Jost,sans-serif}
+.tampon{position:absolute;top:64px;padding:6px 14px;border:3px solid;border-radius:12px;font:600 24px Jost,sans-serif;letter-spacing:.1em;opacity:0;pointer-events:none;background:rgba(255,255,255,.88)}
 .tampon.oui{left:18px;transform:rotate(-14deg);color:var(--noir)}.tampon.non{right:18px;transform:rotate(14deg);color:#8A847E}
-.carte.dessous{transform:translateX(-50%) scale(.94) translateY(12px);opacity:.9}
+.carte.dessous{transform:translateX(-50%) scale(.95) translateY(10px)}
 .carte.cache{opacity:0}
-.vote{display:flex;justify-content:center;align-items:center;gap:26px}
-.vote button{width:62px;height:62px;border-radius:50%;border:0;background:#fff;font-size:24px;box-shadow:0 8px 20px -8px rgba(0,0,0,.35);display:grid;place-items:center;transition:transform .15s}
-.vote button:active{transform:scale(.9)}
-.vote .oui{background:var(--noir);color:#fff}
-.vote .petit{width:46px;height:46px;font-size:17px}
-.astuce{margin:8px 0 0;text-align:center;font:300 12px Jost,sans-serif;color:var(--muted)}
-/* voir en grand */
-#grand{position:absolute;inset:0;z-index:20;background:#fff;opacity:0;pointer-events:none;transition:opacity .3s}
-#grand.on{opacity:1;pointer-events:auto}
-#grand iframe{width:100%;height:100%;border:0}
-#grand .bas{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 16px);display:flex;justify-content:center;gap:22px}
-#grand .bas button{width:58px;height:58px;border-radius:50%;border:0;background:#fff;font-size:22px;box-shadow:0 8px 20px -6px rgba(0,0,0,.4)}
-#grand .bas .oui{background:var(--noir);color:#fff}
-#grand .fermer{position:absolute;top:calc(env(safe-area-inset-top) + 12px);left:14px;border:0;border-radius:999px;background:rgba(255,255,255,.92);padding:9px 14px;font:400 13px Jost,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-/* 2 · coups de cœur */
-.grille{flex:1;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 12px;align-content:start;scrollbar-width:none}
-.mini{position:relative;aspect-ratio:390/700;border-radius:18px;overflow:hidden;border:0;padding:0;background:#fff;box-shadow:0 10px 20px -12px rgba(0,0,0,.5);outline:3px solid transparent;outline-offset:2px}
-.mini iframe{position:absolute;top:0;left:0;width:390px;height:700px;border:0;transform-origin:0 0;pointer-events:none}
-.mini.on{outline-color:var(--noir)}
-.mini.on::after{content:"✓";position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:var(--noir);color:#fff;font:500 14px/26px Jost,sans-serif;text-align:center}
-.mini .coeur{position:absolute;top:8px;left:8px;font-size:15px}
-.go{width:100%;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:17px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
-.go:disabled{opacity:.35}
-.encore{margin-top:8px;border:0;background:none;font:400 13.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
-.vide{grid-column:1/-1;text-align:center;font:300 14px/1.5 Jost,sans-serif;color:var(--muted);padding:40px 10px}
-/* 08/11 : coups de cœur en ligne, un par un (on glisse à gauche / à droite), « Enlever » ou « Personnaliser celui-ci » */
-.carrou{--w:260px;--h:500px;flex:1;display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px -20px 8px;padding:0 calc(50% - var(--w) / 2);scrollbar-width:none;min-height:0}
+/* les boutons ✕ et ♥ posés sur la carte, comme Tinder */
+.vote{position:absolute;left:0;right:0;bottom:20px;z-index:200;display:flex;justify-content:center;align-items:center;gap:34px;pointer-events:none}
+.vote button{pointer-events:auto;width:70px;height:70px;border-radius:50%;border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 10px 24px -8px rgba(0,0,0,.45);display:grid;place-items:center;transition:transform .15s}
+.vote button:active{transform:scale(.88)}
+.vote svg{width:30px;height:30px}
+.voirC{margin-top:12px;align-self:center}
+/* 2 · coups de cœur en carrousel */
+.carrou{--w:260px;--h:500px;flex:1;display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px -18px 8px;padding:0 calc(50% - var(--w) / 2);scrollbar-width:none;min-height:0}
 .carrou::-webkit-scrollbar{display:none}
-.slide{flex:none;width:var(--w);height:var(--h);scroll-snap-align:center;transition:transform .15s,opacity .15s}
-.slide .carte{position:relative;left:auto;transform:none;width:100%;height:100%;aspect-ratio:auto}
-.ptsC{display:flex;gap:5px;justify-content:center;margin-bottom:10px}.ptsC i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.ptsC i.on{width:18px;border-radius:3px;background:var(--noir)}
+.slide{flex:none;width:var(--w);height:var(--h);scroll-snap-align:center;position:relative;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 14px 28px -16px rgba(0,0,0,.5);transition:transform .12s,opacity .12s}
+.slide iframe{position:absolute;top:0;left:0;width:390px;border:0;transform-origin:0 0;pointer-events:none}
+.slide .prise{position:absolute;inset:0;touch-action:pan-x}
+.ptsC{display:flex;gap:5px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}.ptsC i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.ptsC i.on{width:18px;border-radius:3px;background:var(--noir)}
 .duo{display:flex;gap:10px}
-.duo .enl{flex:none;border:1px solid rgba(30,28,27,.25);border-radius:999px;background:#fff;padding:0 18px;font:400 13px Jost,sans-serif}
-.moi{border:0;background:none;font:400 13px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted);padding:4px}
-.maquette{position:absolute;top:calc(env(safe-area-inset-top) + 6px);right:10px;z-index:30;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.6}
+.go{flex:1;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:16px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
+.maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:300;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.5}
 </style></head><body>
 <div id="tel">
   <span class="maquette">Prototype</span>
   <section class="ecran on" id="q">
     <div class="pts"><i class="on"></i><i></i><i></i></div>
-    <h1>Quel site vous<br>ressemble ?</h1>
-    <p class="sous">On vous prépare des propositions de votre site.<br>Gardez celles que vous aimez.</p>
+    <h1 class="titre">Quel site vous <span class="mot" id="mot">ressemble</span> ?</h1>
+    <p class="sous">On vous prépare des propositions de votre site.</p>
     <div class="cartes2">
       <button class="carte2" data-genre="classique" style="background-image:url(loginail-site/apercus-mini/clean.webp)"><span>Chic et classique<small>Épuré, élégant, intemporel</small></span></button>
       <button class="carte2" data-genre="ouf" style="background-image:url(loginail-site/apercus-mini/y2k.webp)"><span>Fun et ouf<small>Fonds, charms, écritures folles</small></span></button>
     </div>
-    <button class="deux" data-genre="mix" type="button">Un peu des deux</button>
+    <div class="liens"><button class="lien" data-genre="mix" type="button">Un peu des deux</button><button class="lien" id="moi" type="button">Tout créer moi-même</button></div>
   </section>
 
   <section class="ecran" id="paquet">
-    <div class="tete"><button class="compte" id="retourQ" type="button" style="background:none;box-shadow:none;padding:7px 0">‹ Style</button><b id="pos">1 / 12</b><button class="compte" id="compte" type="button"><i>♥</i><span id="nbC">0</span></button></div>
-    <div class="zone" id="zone"></div>
-    <div class="vote"><button class="non" id="non" type="button" aria-label="Je ne garde pas">✕</button><button class="oui" id="oui" type="button" aria-label="Je garde">♥</button></div>
-    <p class="astuce">Glissez à droite pour garder, à gauche pour passer · vers le haut pour voir tout le site</p>
-    <button class="moi" id="moi" type="button">Je préfère tout créer moi-même</button>
+    <div class="tete"><button class="verre" id="retourQ" type="button">‹ Style</button><button class="verre compte" id="compte" type="button">♥ <span id="nbC">0</span></button></div>
+    <div class="zoneW"><div class="zone" id="zone"></div>
+    <div class="vote"><button id="non" type="button" aria-label="Je ne garde pas"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="#1E1C1B" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+      <button id="oui" type="button" aria-label="Je garde"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg></button></div></div>
+    <button class="verre voirC" id="voirC" type="button">Voir mes coups de cœur</button>
   </section>
 
   <section class="ecran" id="coeurs">
-    <div class="pts"><i class="on"></i><i class="on"></i><i class="on"></i></div>
-    <h1>Vos coups de cœur</h1>
+    <div class="tete"><button class="verre" id="retourP" type="button">‹ Continuer</button><span></span></div>
+    <h1 class="titre" style="margin-top:8px">Vos coups de cœur</h1>
     <p class="sous" id="sousC"></p>
     <div class="carrou" id="carrou"></div><div class="ptsC" id="ptsC"></div>
-    <div class="duo"><button class="enl" id="enl" type="button">Enlever</button><button class="go" id="perso" type="button">PERSONNALISER CELUI-CI</button></div>
-    <button class="encore" id="encore" type="button">Voir 12 autres propositions</button>
+    <div class="duo"><button class="verre" id="enl" type="button">Enlever</button><button class="go" id="perso" type="button">PERSONNALISER CELUI-CI</button></div>
   </section>
-
-
 </div>
 <script>
 const $ = id => document.getElementById(id);
@@ -121,95 +102,109 @@ const STYLES = {
     polices: ["bulle", "bonbon", "y2k", "gothique", "feutre", "retro", "surf", "seventies", "doudou", "affiche", "guimauve", "relief", "pixel", "graffiti", "fondue", "cinema", "pinup", "arrondie", "mystique", "astres", "magazine"],
     cats: ["Y2K", "Mignons", "Tout rose", "Vintage", "Bohème", "Rock", "Animaux", "Phrases", "Mer", "Qui bougent", "Fêtes"], pail: ["or", "argent", "holo", "nacre"], charms: [3, 5] } };
 const CHARMS = ["fraisegelee", "oeilbleu", "fleursixties", "couronnestrass", "consoleviolette", "perle", "canard", "levresgrillz", "boule8", "etoiledemerperles", "cristal", "chocolat", "hibiscus", "minaudiere", "cerisesor", "bouledisco", "ceriseruban", "fraiseperle", "noeudgelee", "coeurchrome", "martien", "planete", "papillondore", "soleil", "coeurlilas", "oursonlilas", "etoilelilas", "levres", "coeurleopard", "coeurzebre", "cerisesbordeaux", "fleurgelee", "soleilvisage", "lunesoleil", "coeursoleil", "cerisedisco"];
+const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=non", ouf: "style=2&couleur=rose&police=bonbon&paillettes=nacre", mix: "style=1&couleur=poudre&police=chic&paillettes=non" };
+const SALON = "&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise";   // (exemple) : en vrai, son nom et ses photos à elle
 const hasard = l => l[Math.floor(Math.random() * l.length)];
 const melange = l => l.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
-let genre = "classique", paquet = [], i = 0, coeurs = [], choix = null, dejaFonds = new Set();
+let genre = "classique", paquet = [], i = 0, coeurs = [], vus = new Set();
+
+/* « ressemble » change d'écriture, comme « briller » sur l'accueil (même largeur à chaque fois) */
+{ const POL = ["'Cherry Bomb One'", "'Yeseva One'", "'Righteous'", "'Playfair Display'", "'Silkscreen'", "'Italiana'", "'Corben'", "'Sedgwick Ave Display'", "'Bebas Neue'", "'Allura'", "'Cinzel'", "'Rubik Bubbles'", "'Playball'", "'Monoton'", "'Cinzel Decorative'", "'Fascinate'"];
+  const m = $("mot"); let k = 0, larg = 0, base = 0;
+  const pose = () => { m.style.fontSize = base + "px"; const w = m.offsetWidth || 1; m.style.fontSize = Math.min(base * 1.15, base * larg / w).toFixed(1) + "px"; };
+  Promise.all(POL.map(f => document.fonts ? document.fonts.load("24px " + f).catch(() => 0) : 0)).then(() => {
+    base = parseFloat(getComputedStyle(m).fontSize); larg = m.offsetWidth;
+    setInterval(() => { if (document.hidden || !$("q").classList.contains("on")) return; m.classList.add("chg");
+      setTimeout(() => { k = (k + 1) % POL.length; m.style.fontFamily = POL[k]; pose(); requestAnimationFrame(() => requestAnimationFrame(() => m.classList.remove("chg"))); }, 210); }, 1800); }); }
 
 function propose(g) {
   const S = STYLES[g === "mix" ? (Math.random() < .5 ? "classique" : "ouf") : g];
-  const f = hasard(S.formes), pool = FONDS.filter(x => !x[1] && x[2].some(c => S.cats.includes(c)) && !dejaFonds.has(x[0]));
-  const fond = pool.length ? hasard(pool)[0] : ""; dejaFonds.add(fond);
-  const n = g === "mix" ? Math.floor(Math.random() * 3) : S.charms[0] + Math.floor(Math.random() * (S.charms[1] - S.charms[0] + 1));
-  const p = { forme: f, couleur: hasard(S.couleurs), police: hasard(S.polices), fond, pail: hasard(S.pail), charms: melange(CHARMS).slice(0, n) };
-  p.q = `nouveau&exemple=dilerna&style=${f >= 4 ? 1 : f}${f === 4 ? "&epure=1" : ""}${f === 5 ? "&coffin=1" : ""}&couleur=${p.couleur}&mode=jour&une=${UNE[f]}${fond ? "&fond=" + encodeURIComponent(fond) : ""}&police=${p.police}&paillettes=${p.pail}${n ? "&charm=" + p.charms.join(",") : ""}&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise`;
-  return p;
+  for (let essai = 0; essai < 30; essai++) {
+    const f = hasard(S.formes), pool = FONDS.filter(x => !x[1] && x[2].some(c => S.cats.includes(c)));
+    const fond = Math.random() < .08 ? "" : hasard(pool)[0];
+    const n = S.charms[0] + Math.floor(Math.random() * (S.charms[1] - S.charms[0] + 1));
+    const p = { forme: f, couleur: hasard(S.couleurs), police: hasard(S.polices), fond, pail: hasard(S.pail), charms: melange(CHARMS).slice(0, n) };
+    const cle = [f, p.couleur, p.police, fond].join("|"); if (vus.has(cle) || (fond && [...vus].some(v => v.endsWith("|" + fond)) && essai < 25)) continue; vus.add(cle);
+    p.q = `nouveau&exemple=dilerna&style=${f >= 4 ? 1 : f}${f === 4 ? "&epure=1" : ""}${f === 5 ? "&coffin=1" : ""}&couleur=${p.couleur}&mode=jour&une=${UNE[f]}${fond ? "&fond=" + encodeURIComponent(fond) : ""}&police=${p.police}&paillettes=${p.pail}${n ? "&charm=" + p.charms.join(",") : ""}${SALON}`;
+    return p;
+  }
 }
 const src = (p, pub = true) => "loginail-creer/pret.html?" + (pub ? "public&" : "") + p.q;
 const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classList.toggle("on", e.id === id));
+function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(st); } catch (e) {} }
+const boiteDe = fr => { try { const d = fr.contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
 function carteHtml(p) {
   const c = document.createElement("div"); c.className = "carte";
-  c.innerHTML = `<iframe loading="eager" title="Proposition"></iframe><div class="tampon oui">GARDÉ ♥</div><div class="tampon non">PASSÉ</div>
+  c.innerHTML = `<iframe title="Proposition"></iframe><div class="tampon oui">GARDÉ</div><div class="tampon non">PASSÉ</div>
     <div class="info"><span>${FORMES.find(x => x[0] === p.forme)[1]}</span>${p.fond ? `<span>${p.fond}</span>` : ""}<span>${NOMS_POL[p.police] || p.police}</span></div><div class="prise"></div>`;
   const fr = c.querySelector("iframe"); fr.onload = () => cache(fr); fr.src = src(p); c._p = p; return c;
 }
-function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(st); } catch (e) {} }
-function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"); f.style.transform = `scale(${c.clientWidth / 390})`; f.style.height = (c.clientHeight / (c.clientWidth / 390)) + "px"; }); }
-function lancePaquet() { paquet = Array.from({ length: 12 }, () => propose(genre)); i = 0; $("zone").innerHTML = ""; place(); montre("paquet"); }
+function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"), k = c.clientWidth / 390; f.style.transform = `scale(${k})`; f.style.height = (c.clientHeight / k) + "px"; }); }
+function lancePaquet() { paquet = []; vus = new Set(); i = 0; $("zone").innerHTML = ""; ajoute(8); place(); montre("paquet"); }
+const ajoute = n => { for (let k = 0; k < n; k++) paquet.push(propose(genre)); };
 function place() {
+  if (paquet.length - i < 5) ajoute(6);   // sans fin : on en prépare toujours d'autres
   const z = $("zone"); [...z.children].forEach(c => { if (c._n < i) c.remove(); });
-  for (let k = i; k < Math.min(i + 3, paquet.length); k++) if (![...z.children].some(c => c._n === k)) { const c = carteHtml(paquet[k]); c._n = k; z.prepend(c); }
-  [...z.children].forEach(c => { c.classList.toggle("dessous", c._n === i + 1); c.classList.toggle("cache", c._n > i + 1); c.style.zIndex = 100 - c._n; });
-  $("pos").textContent = `${Math.min(i + 1, paquet.length)} / ${paquet.length}`; $("nbC").textContent = coeurs.length;
-  requestAnimationFrame(echelle); branche(z.querySelector(".carte:last-child"));
-  if (i >= paquet.length) finPaquet();
+  for (let k = i; k < i + 3; k++) if (![...z.children].some(c => c._n === k)) { const c = carteHtml(paquet[k]); c._n = k; z.prepend(c); }
+  [...z.children].forEach(c => { c.classList.toggle("dessous", c._n === i + 1); c.classList.toggle("cache", c._n > i + 1); c.style.zIndex = 100 - (c._n - i); });
+  $("nbC").textContent = coeurs.length; $("voirC").textContent = coeurs.length ? `Voir mes ${coeurs.length} coup${coeurs.length > 1 ? "s" : ""} de cœur` : "Voir mes coups de cœur";
+  requestAnimationFrame(echelle); branche([...z.children].find(c => c._n === i));
 }
 function vote(oui) {
-  const c = [...$("zone").children].find(x => x._n === i); if (!c) return;
+  const c = [...$("zone").children].find(x => x._n === i); if (!c || c._parti) return; c._parti = 1;
   if (oui) { coeurs.push(paquet[i]); $("compte").classList.remove("hop"); void $("compte").offsetWidth; $("compte").classList.add("hop"); }
   c.querySelector(".tampon." + (oui ? "oui" : "non")).style.opacity = 1;
-  c.style.transition = "transform .45s ease-in, opacity .45s"; c.style.transform = `translateX(calc(-50% + ${oui ? 520 : -520}px)) rotate(${oui ? 22 : -22}deg)`; c.style.opacity = 0;
-  i++; setTimeout(place, 260);
+  c.style.transition = "transform .42s ease-in, opacity .42s"; c.style.transform = `translateX(calc(-50% + ${oui ? 560 : -560}px)) rotate(${oui ? 20 : -20}deg)`; c.style.opacity = 0;
+  i++; setTimeout(place, 240);
 }
 function branche(c) {
-  if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"); let x0 = null, y0 = 0, dx = 0, bouge = false;
-  let sens = null, top0 = 0;
-  const boite = () => { try { const d = c.querySelector("iframe").contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
-  pr.onpointerdown = e => { if (c._n !== i) return; x0 = e.clientX; y0 = e.clientY; dx = 0; sens = null; top0 = boite()?.scrollTop || 0; pr.setPointerCapture(e.pointerId); c.style.transition = "none"; };
+  if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"), fr = c.querySelector("iframe"); let x0 = null, y0 = 0, dx = 0, sens = null, top0 = 0;
+  pr.onpointerdown = e => { if (c._n !== i) return; x0 = e.clientX; y0 = e.clientY; dx = 0; sens = null; top0 = boiteDe(fr)?.scrollTop || 0; pr.setPointerCapture(e.pointerId); c.style.transition = "none"; };
   pr.onpointermove = e => { if (x0 == null) return; dx = e.clientX - x0; const dy = e.clientY - y0;
     if (!sens && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sens = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-    if (sens === "y") { const b = boite(), k = c.clientWidth / 390; if (b) b.scrollTop = top0 - dy / k; return; }
+    if (sens === "y") { const b = boiteDe(fr); if (b) b.scrollTop = top0 - dy / (c.clientWidth / 390); return; }
     if (sens !== "x") return;
     c.style.transform = `translateX(calc(-50% + ${dx}px)) rotate(${dx / 18}deg)`; c.querySelector(".tampon.oui").style.opacity = Math.max(0, dx / 110); c.querySelector(".tampon.non").style.opacity = Math.max(0, -dx / 110); };
-  pr.onpointerup = () => { if (x0 == null) return; x0 = null; c.style.transition = "";
+  pr.onpointerup = pr.onpointercancel = () => { if (x0 == null) return; x0 = null; c.style.transition = "";
     if (sens === "x" && dx > 90) return vote(true); if (sens === "x" && dx < -90) return vote(false);
     c.style.transform = ""; c.querySelectorAll(".tampon").forEach(t => t.style.opacity = 0); };
-  pr.onwheel = e => { const b = boite(); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } };
+  pr.onwheel = e => { const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } };
 }
 $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
-/* « je préfère tout créer moi-même » : un site simple de son style, et directement la personnalisation */
-const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=non", ouf: "style=2&couleur=rose&police=bonbon&paillettes=nacre", mix: "style=1&couleur=poudre&police=chic&paillettes=non" };
-$("moi").onclick = () => { location.href = "maquette-perso.html?src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&exemple=dilerna&" + BASE_STYLE[genre] + "&mode=jour&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"); };
-$("compte").onclick = finPaquet;
-$("retourQ").onclick = () => montre("q");
-document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; lancePaquet(); });
-function finPaquet() {
-  const z = $("carrou"); z.innerHTML = ""; $("ptsC").innerHTML = "";
-  $("sousC").textContent = coeurs.length ? "Glissez pour les revoir. Gardez celui que vous préférez : vous pourrez encore tout personnaliser." : "Aucun coup de cœur pour l’instant. On vous en propose d’autres ?";
-  $("enl").hidden = $("perso").hidden = !coeurs.length;
-  coeurs.forEach((p, k) => { const sl = document.createElement("div"); sl.className = "slide"; const c = carteHtml(p); c.querySelector(".tampon.oui").remove(); c.querySelector(".tampon.non").remove();
-    c.insertAdjacentHTML("afterbegin", ""); sl.appendChild(c); z.appendChild(sl); branche2(c); $("ptsC").insertAdjacentHTML("beforeend", `<i class="${k ? "" : "on"}"></i>`); });
-  montre("coeurs"); requestAnimationFrame(dimCarrou);
-}
+$("compte").onclick = $("voirC").onclick = () => montreCoeurs();
+$("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { montre("paquet"); requestAnimationFrame(echelle); };
+document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
+$("moi").onclick = () => { location.href = "maquette-perso.html?src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&exemple=dilerna&" + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+
+/* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
-const courant = () => Math.round($("carrou").scrollLeft / pas());
+const courant = () => Math.max(0, Math.min(coeurs.length - 1, Math.round($("carrou").scrollLeft / pas())));
+function montreCoeurs() {
+  const z = $("carrou"); z.innerHTML = ""; $("ptsC").innerHTML = "";
+  $("sousC").textContent = coeurs.length ? "Glissez pour les revoir, puis choisissez votre préféré." : "Pas encore de coup de cœur. Revenez glisser quelques sites !";
+  $("enl").hidden = $("perso").hidden = !coeurs.length;
+  coeurs.forEach((p, k) => { const sl = document.createElement("div"); sl.className = "slide"; sl.innerHTML = `<iframe title="Coup de cœur"></iframe><div class="prise"></div>`; sl._p = p; z.appendChild(sl); branche2(sl); $("ptsC").insertAdjacentHTML("beforeend", `<i class="${k ? "" : "on"}"></i>`); });
+  montre("coeurs"); requestAnimationFrame(() => { dimCarrou(); z.scrollLeft = 0; effet(); });
+}
 function dimCarrou() { const z = $("carrou"), h = Math.max(260, z.clientHeight - 8), w = Math.min(z.clientWidth * .72, h * 390 / 760);
-  z.style.setProperty("--w", w + "px"); z.style.setProperty("--h", (w * 760 / 390) + "px"); requestAnimationFrame(() => { echelle(); effet(); }); }
-function effet() { const z = $("carrou"), p = pas(); [...z.children].forEach((sl, n) => { const d = Math.min(1, Math.abs(n * p - z.scrollLeft) / p); sl.style.transform = `scale(${1 - .12 * d})`; sl.style.opacity = 1 - .45 * d; });
-  const k = courant(); [...$("ptsC").children].forEach((x, n) => x.classList.toggle("on", n === k)); }
-$("carrou").addEventListener("scroll", effet, { passive: true });
-/* dans le carrousel : glisser à gauche / à droite = changer de site (le carrousel s'en charge), la molette ou le pouce vertical = faire défiler le site */
-function branche2(c) { const pr = c.querySelector(".prise"); pr.style.touchAction = "pan-x";
-  const boite = () => { try { const d = c.querySelector("iframe").contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
-  let y0 = null, x0 = 0, top0 = 0, sens = null, sl0 = 0; const z = $("carrou");
-  pr.onpointerdown = e => { y0 = e.clientY; x0 = e.clientX; sens = null; top0 = boite()?.scrollTop || 0; sl0 = z.scrollLeft; if (e.pointerType === "mouse") pr.setPointerCapture(e.pointerId); };
+  z.style.setProperty("--w", w + "px"); z.style.setProperty("--h", (w * 760 / 390) + "px");
+  z.querySelectorAll(".slide iframe").forEach(f => { const k = w / 390; f.style.transform = `scale(${k})`; f.style.height = (w * 760 / 390 / k) + "px"; }); }
+let tEffet = 0;
+function effet() { const z = $("carrou"), p = pas(), k0 = courant();
+  [...z.children].forEach((sl, n) => { const d = Math.min(1, Math.abs(n * p - z.scrollLeft) / p); sl.style.transform = `scale(${1 - .1 * d})`; sl.style.opacity = 1 - .4 * d;
+    const f = sl.querySelector("iframe"); if (Math.abs(n - k0) <= 1 && !f.getAttribute("src")) { f.onload = () => cache(f); f.src = src(sl._p); } });
+  [...$("ptsC").children].forEach((x, n) => x.classList.toggle("on", n === k0)); }
+$("carrou").addEventListener("scroll", () => { cancelAnimationFrame(tEffet); tEffet = requestAnimationFrame(effet); }, { passive: true });
+function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySelector("iframe"), z = $("carrou");
+  let y0 = null, x0 = 0, top0 = 0, sens = null, sl0 = 0;
+  pr.onpointerdown = e => { y0 = e.clientY; x0 = e.clientX; sens = null; top0 = boiteDe(fr)?.scrollTop || 0; sl0 = z.scrollLeft; if (e.pointerType === "mouse") pr.setPointerCapture(e.pointerId); };
   pr.onpointermove = e => { if (y0 == null) return; const dy = e.clientY - y0, dx = e.clientX - x0; if (!sens && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sens = Math.abs(dy) > Math.abs(dx) ? "y" : "x";
-    if (sens === "y") { const b = boite(); if (b) b.scrollTop = top0 - dy / (c.clientWidth / 390); }
+    if (sens === "y") { const b = boiteDe(fr); if (b) b.scrollTop = top0 - dy / (sl.clientWidth / 390); }
     if (sens === "x" && e.pointerType === "mouse") { z.style.scrollSnapType = "none"; z.scrollLeft = sl0 - dx; } };
-  pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 400); } y0 = null; };
-  pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boite(); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
-$("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); finPaquet(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 50); };
-$("encore").onclick = lancePaquet;
+  pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 450); } y0 = null; };
+  pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
+$("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
 $("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?src=" + encodeURIComponent(src(p, false)); };
-addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) dimCarrou(); });
+addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>
