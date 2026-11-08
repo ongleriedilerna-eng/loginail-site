@@ -1168,6 +1168,25 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .ig .ig-grille i{aspect-ratio:3/4;background:#222 center/cover}
 @keyframes igDefile{0%,8%{transform:translateY(0)}100%{transform:translateY(-58%)}}
 .ig .ig-ex{position:absolute;z-index:3;left:0;right:0;bottom:1.6cqw;text-align:center;font-size:2.4cqw;color:rgba(255,255,255,.75);text-shadow:0 0 3px rgba(0,0,0,.7)}
+/* 15/11 (2) : la photo de profil, les cercles à la une en mots, le lien bien visible */
+.ig .ig-av .ph{width:100%;height:100%;border-radius:50%;border:.8cqw solid #0C0D10;background:center/cover}
+.ig .ig-ronds{justify-content:space-between}
+.ig .ig-ronds i.txt{display:grid;place-items:center;font:500 2.6cqw/1 'Cormorant Garamond',serif;letter-spacing:.02em;color:#3a2e26;background:#D8C2B0;font-style:normal;border-color:#45474d}
+.ig .ig-lien b{background-image:linear-gradient(100deg,#8FB3FF 0,#8FB3FF 38%,#fff6dc 50%,#8FB3FF 62%,#8FB3FF 100%)}
+/* le .fr qui sort du téléphone */
+.bio-k .scene{position:relative}
+.ig-sort{position:absolute;z-index:8;pointer-events:none;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center}
+.ig-sort span{font:600 clamp(15px,1.5vw,22px)/1 Jost,sans-serif;color:#1E1C1B;background:#fff;padding:.7em 1.1em;border-radius:99px;box-shadow:0 18px 40px -14px rgba(0,0,0,.5),0 0 0 1.5px #1E1C1B;white-space:nowrap;animation:igSort 3.2s cubic-bezier(.3,1.4,.5,1) infinite}
+.ig-sort span::before{content:"🔗 "}
+@keyframes igSort{0%,8%{opacity:0;transform:translateX(-60%) scale(.5)}22%,78%{opacity:1;transform:none}92%,100%{opacity:0;transform:translateX(40%) scale(.85)}}
+/* le .fr toujours visible : il sort du profil et flotte entre les deux téléphones */
+.ig-sort{top:36%!important}
+.ig-sort span{animation:igFlotte 3s ease-in-out infinite!important}
+.ig-sort span::after{content:"";position:absolute;left:-26px;top:50%;width:22px;height:1.5px;background:#1E1C1B;opacity:.5}
+.ig-sort span{position:relative}
+@keyframes igFlotte{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.05)}}
+.bio-k.clic .ig-sort span{box-shadow:0 18px 40px -14px rgba(0,0,0,.5),0 0 0 2px #1E1C1B,0 0 0 8px rgba(30,28,27,.12)}
+@media (max-width:999px){.ig-sort{top:30%!important}.ig-sort span{font-size:13px}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -2030,15 +2049,16 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         <div class="ex">Exemple · personnes et photos créées par IA</div></div>
         <div class="scene" aria-hidden="true">
           ${tel3d(`<div class="ig"><div class="ig-haut"><div class="ig-barre"><span>ateliermercure.nails <i>⌄</i></span><span><i>＋</i><i>≡</i></span></div>
-            <div class="ig-tete"><div class="ig-av"><div>mercure<small>NAIL ARTIST</small></div></div><div class="ig-chif"><div><b>17</b>publications</div><div><b>4 812</b>followers</div><div><b>612</b>suivi(e)s</div></div></div>
-            <div class="ig-nom">ATELIER MERCURE</div><div class="ig-cat">Artiste ongulaire</div>
-            <div class="ig-bio">Chrome liquide, nude & bordeaux 🤍<br>📍 Lyon · sur rendez-vous<br>Réservez directement ici ↓</div>
-            <span class="ig-lien"><i>✦</i><b>ateliermercure.fr</b></span>
-            <div class="ig-bts"><span>Réserver</span><span>Message</span><span>Contacter</span></div>
-            <div class="ig-ronds">${[["2","nails"],["10","chrome"],["4","prix"],["15","avis"]].map(r => `<div><i style="background-image:url(loginail-site/insta/${r[0]}.webp)"></i>${r[1]}</div>`).join("")}</div>
+            <div class="ig-tete"><div class="ig-av"><div class="ph" style="background-image:url(loginail-site/insta/profil.webp)"></div></div><div class="ig-chif"><div><b>32</b>publications</div><div><b>10K</b>abonnés</div><div><b>612</b>suivi(e)s</div></div></div>
+            <div class="ig-nom">ATELIER MERCURE | NAIL ART</div><div class="ig-cat">Artiste ongulaire</div>
+            <div class="ig-bio">Des ongles qui prennent toute la place.<br>Nail art · Chrome · Sur-mesure<br>📍 Lyon · Sur rendez-vous<br>Mon prochain set ↓</div>
+            <span class="ig-lien"><i>🔗</i><b>votresalon.fr</b></span>
+            <div class="ig-bts"><span>Suivre</span><span>Message</span><span>Contacter</span></div>
+            <div class="ig-ronds">${["SETS","STUDIO","PRICE","REVIEWS"].map(r => `<div><i class="txt">${r}</i>${r}</div>`).join("")}</div>
             <div class="ig-onglets"><span>▦</span><span>▷</span><span>⟳</span><span>◎</span></div></div>
-            <div class="ig-grille-w"><div class="ig-grille">${Array.from({ length: 17 }, (_, k) => `<i style="background-image:url(loginail-site/insta/${k + 1}.webp)"></i>`).join("")}</div></div>
+            <div class="ig-grille-w"><div class="ig-grille">${Array.from({ length: 18 }, (_, k) => `<i style="background-image:url(loginail-site/insta/${k + 1}.webp)"></i>`).join("")}</div></div>
             <div class="ig-ex">Profil d’exemple</div></div>`, { cl: "insta", w: ORDI ? "min(11.5vw, 27vh)" : "38vw", ry: 26, rx: 6, rz: -2 })}
+          <div class="ig-sort" aria-hidden="true"><span>votresalon.fr</span></div>
           ${tel3d(`<img src="loginail-site/apercus-univers/tpl-ateliermercure.webp" alt="">`, { cl: "site", w: "min(11.5vw, 27vh)", ry: -26, rx: 6, rz: 2 })}</div>`;
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
