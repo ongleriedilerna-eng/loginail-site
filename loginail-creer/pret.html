@@ -3012,11 +3012,11 @@ const chContenu=(n,k)=>CH_IMG[n]?`<img src="${CH_IMG[n]}" alt="" draggable="fals
 window.poseCharms=(liste)=>{document.querySelectorAll(".ecran").forEach(ecran=>{const def=ecran.querySelector(".defile");if(!def)return;
   if(def._ch){cancelAnimationFrame(def._ch.raf);def._ch.couche.remove();def._ch=null}
   def.querySelectorAll(".charm,.charm-mini").forEach(c=>c.remove());
-  liste=(liste||[]).filter(n=>CH_SVG[n]||CH_IMG[n]).slice(0,12);if(!liste.length)return;
+  liste=(liste||[]).filter(n=>CH_SVG[n]||CH_IMG[n]).slice(0,new URLSearchParams(location.search).get("portrait")==="mercure"?60:12);   /* 15/11 : Atelier Mercure (vitrine Instagram) peut en avoir plus */if(!liste.length)return;
   const couche=document.createElement("div");couche.className="ch-couche";def.appendChild(couche);
   const S=58,W=def.clientWidth,H=def.clientHeight,dr=def.getBoundingClientRect(),st0=def.scrollTop,h1=[...def.querySelectorAll(".hf .hf-nom,h1")].find(x=>x.offsetWidth&&!x.closest(".hf-cache"));
   const P=[[.80,.10],[.04,.24],[.82,.40],[.03,.58],[.80,.74],[.40,.05],[.05,.88],[.62,.90],[.78,.57],[.30,.70],[.55,.30]];
-  const items=liste.map((n,k)=>{const el=document.createElement("div");el.className="charm"+(CH_BRILLE[n]?" brille":"");el.innerHTML=`<div class="ch-corps" style="animation-delay:${-k*1.1}s">${chContenu(n,"v"+k)}</div>`;
+  const items=liste.map((n,k)=>{const el=document.createElement("div");el.className="charm"+(CH_BRILLE[n]?" brille":"");el.dataset.n=n;el.innerHTML=`<div class="ch-corps" style="animation-delay:${-k*1.1}s">${chContenu(n,"v"+k)}</div>`;
     const om=document.createElement("div");om.className="ch-ombre";om.innerHTML=`<i style="animation-delay:${-k*1.1}s"></i>`;couche.append(om,el);
     let x,y;if(k===0&&h1){const r=h1.getBoundingClientRect(),rr=document.createRange();rr.selectNodeContents(h1);const t=[...rr.getClientRects()].reduce((m,q)=>q.width?{l:Math.min(m.l,q.left),r:Math.max(m.r,q.right),t:Math.min(m.t,q.top)}:m,{l:1e9,r:-1e9,t:1e9});const R=t.r>t.l?t:{r:r.right,t:r.top};x=R.r-dr.left-14;y=R.t-dr.top+st0-38}else{const p=P[(k-1)%P.length];x=W*p[0];y=st0+H*p[1]}
     {const cl=(new URLSearchParams(location.search).get("chpos")||(typeof BR!=="undefined"&&BR&&BR.chpos)||"").split("_");const cn=cl.find(z=>z.split("~")[0]===n);const cp=cn?cn.split("~")[1]:(cl.some(z=>z.includes("~"))?"":cl[k]);if(cp&&/^\d+(\.\d+)?-\d+(\.\d+)?$/.test(cp)){const [px,py]=cp.split("-").map(Number);x=W*px/100;y=st0+H*py/100}}   /* 07/11 (Marie) : la prothésiste place elle-même ses charms */
@@ -3152,5 +3152,15 @@ document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){
 /* ?activer : elle arrive des charms, on ouvre directement « Activer mon site » */
 if(new URLSearchParams(location.search).has("activer"))setTimeout(()=>{try{ouvreActiver()}catch(e){}},900);
 </script>
+<script>/* 15/11 (Marie) : dans l'outil, on touche un charm du site → une croix pour l'enlever */
+(()=>{if(new URLSearchParams(location.search).get("placer")!=="1")return;
+ const st=document.createElement("style");st.textContent=".ch-x{position:absolute;right:-8px;top:-8px;z-index:20;width:24px;height:24px;border-radius:50%;border:0;background:#1E1C1B;color:#fff;font:500 15px/24px Jost,sans-serif;padding:0;cursor:pointer;box-shadow:0 0 0 2px #fff,0 4px 10px rgba(0,0,0,.35)}";document.head.appendChild(st);
+ let x0=0,y0=0,cible=null;
+ document.addEventListener("pointerdown",e=>{if(e.target.closest(".ch-x"))return;cible=e.target.closest(".ch-couche .charm");x0=e.clientX;y0=e.clientY;if(!cible)document.querySelectorAll(".ch-x").forEach(b=>b.remove())},true);
+ document.addEventListener("pointerup",e=>{const c=cible;cible=null;if(!c||Math.hypot(e.clientX-x0,e.clientY-y0)>6)return;
+   document.querySelectorAll(".ch-x").forEach(b=>b.remove());const b=document.createElement("button");b.className="ch-x";b.type="button";b.textContent="×";b.title="Enlever ce charm";
+   b.addEventListener("pointerdown",ev=>{ev.stopPropagation();ev.preventDefault()},true);
+   b.addEventListener("click",ev=>{ev.stopPropagation();const n=c.dataset.n;c.style.transition="opacity .25s,transform .25s";c.style.opacity=0;c.style.transform+=" scale(.5)";setTimeout(()=>c.remove(),260);try{parent.postMessage({loginailEnleve:n},"*")}catch(_){}});
+   c.appendChild(b)},true);})();</script>
 </body>
 </html>

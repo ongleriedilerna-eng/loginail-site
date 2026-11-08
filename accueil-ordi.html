@@ -2059,7 +2059,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
             <div class="ig-grille-w"><div class="ig-grille">${Array.from({ length: 18 }, (_, k) => `<i style="background-image:url(loginail-site/insta/${k + 1}.webp)"></i>`).join("")}</div></div>
             <div class="ig-ex">Profil d’exemple</div></div>`, { cl: "insta", w: ORDI ? "min(11.5vw, 27vh)" : "38vw", ry: 26, rx: 6, rz: -2 })}
           <div class="ig-sort" aria-hidden="true"><span>votresalon.fr</span></div>
-          ${tel3d(`<img src="loginail-site/apercus-univers/tpl-ateliermercure.webp" alt="">`, { cl: "site", w: "min(11.5vw, 27vh)", ry: -26, rx: 6, rz: 2 })}</div>`;
+          ${tel3d(`<img src="loginail-site/apercus-univers/tpl-ateliermercure.webp?v=2" alt="">`, { cl: "site", w: "min(11.5vw, 27vh)", ry: -26, rx: 6, rz: 2 })}</div>`;
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
       const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;
