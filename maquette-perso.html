@@ -187,6 +187,10 @@ let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom"
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
 if (VRAI) document.documentElement.classList.add("vrai");
+const APPLI = new URLSearchParams(location.search).has("appli");
+/* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
+const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); parent.postMessage({ loginail: "enregistre", br }, location.hostname === "loginail.fr" ? "https://app.loginail.fr" : location.origin); } catch (e) {} };
+
 const ORDRE = VRAI ? ["entete", "ecriture", "fond", "couleurs"] : ["entete", "ecriture", "fond", "couleurs", "charms"];
 /* ses choix sont enregistrés dans son brouillon (comme « C'est parfait » de l'éditeur) */
 function enregistre() { try { W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box||!BR)return;Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m},window.__pzEtat?__pzEtat():{});localStorage.setItem("loginail-brouillon",JSON.stringify(BR))})()`); return true; } catch (e) { return false; } }
@@ -257,7 +261,7 @@ function rend() {
   [...$("barre").children].forEach((i, k) => i.classList.toggle("on", k <= etape));
   $("titre").textContent = TITRES[cle()]; $("aide").textContent = "";
   $("retour").style.visibility = etape ? "visible" : "hidden";
-  $("suivant").textContent = etape === ORDRE.length - 1 ? (VRAI ? "MES CHARMS" : "C’EST PARFAIT") : "SUIVANT";
+  $("suivant").textContent = etape === ORDRE.length - 1 ? (APPLI ? "ENREGISTRER" : VRAI ? "MES CHARMS" : "C’EST PARFAIT") : "SUIVANT";
   const c = $("contenu");
   $("bas").classList.toggle("charms", cle() === "charms"); $("bas").classList.remove("grand", "ouvre"); $("voileC").classList.remove("on");
   const mc = cle() === "charms"; if (mc !== $("tel").classList.contains("mc")) { $("tel").classList.toggle("mc", mc); metPlein(mc); $("fermerPlein").hidden = true; }
@@ -436,7 +440,7 @@ $("cherche").dataset.x = "1";
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); location.href = "charms-presentoir.html?vrai"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };

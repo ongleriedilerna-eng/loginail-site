@@ -129,6 +129,7 @@ const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=
 /* 09/11 (Marie) : ?vrai — elle arrive de « Créer mon site » : les cartes montrent SON salon (son nom, ses photos, ses prix), sinon l'exemple des Ongles de Cerise */
 const VRAI = new URLSearchParams(location.search).has("vrai") && (() => { try { return !!localStorage.getItem("loginail-brouillon"); } catch (e) { return false; } })();
 if (VRAI) document.documentElement.classList.add("vrai");
+const APPLI = new URLSearchParams(location.search).has("appli");
 const DEBUT = VRAI ? "nouveau&essai&" : "nouveau&exemple=dilerna&";
 const SALON = VRAI ? "" : "&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise";   // (exemple) : en vrai, son nom et ses photos à elle
 const hasard = l => l[Math.floor(Math.random() * l.length)];
@@ -227,7 +228,7 @@ $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+$("moi").onclick = () => { location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -260,7 +261,7 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
   pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
-$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>

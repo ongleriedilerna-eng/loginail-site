@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loginail</title>
+<style>html,body{margin:0;height:100%;background:#F6F3EF;font-family:Jost,-apple-system,sans-serif;color:#6a625b;display:flex;align-items:center;justify-content:center;font-size:14px}</style>
+</head><body>Un instant…
+<script>
+/* 09/11 (Marie) : le pont entre l'appli (app.loginail.fr) et les pages de loginail.fr qui changent son site
+   (cartes à glisser, personnalisation, présentoir des charms).
+   L'appli envoie son site (son brouillon) ici ; on le range, puis on ouvre la bonne page. À la fin, ces pages renvoient le site modifié à l'appli. */
+const OK = ["https://app.loginail.fr", location.origin];
+const PAGES = { style: "coups-de-coeur.html?vrai&appli", perso: "maquette-perso.html", charms: "charms-presentoir.html?vrai&appli" };
+const ou = new URLSearchParams(location.search).get("p") || "perso";
+addEventListener("message", m => {
+  if (!OK.includes(m.origin) || !m.data || m.data.loginail !== "brouillon" || !m.data.br) return;
+  try { localStorage.setItem("loginail-brouillon", JSON.stringify(m.data.br)); } catch (e) { document.body.textContent = "Pas assez de place sur ce téléphone."; return; }
+  const b = m.data.br;
+  if (ou === "perso") {
+    const f = b.arrondi ? "&arrondi=1" : b.coffin ? "&coffin=1" : b.epure ? "&epure=1" : "";
+    const q = new URLSearchParams({ style: b.style || 1, couleur: b.couleur || "noir", mode: "jour", police: b.police || "elegante", paillettes: b.paillettes || "non" });
+    if (b.fond) q.set("fond", b.fond);
+    location.replace("maquette-perso.html?vrai=1&appli=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai&" + q.toString() + f));
+  } else location.replace(PAGES[ou] || PAGES.perso);
+});
+/* on dit à l'appli qu'on est prêt à recevoir son site */
+try { parent.postMessage({ loginail: "pret" }, "*"); } catch (e) {}
+</script>
+</body></html>
