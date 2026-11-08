@@ -1,0 +1,193 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="robots" content="noindex">
+<title>Autour de la table · les charms</title>
+<link href="loginail-creer/polices.css" rel="stylesheet">
+<style>
+/* 09/11 (Marie) : « autour de la table » — 5 façons de poser les charms, chacune VRAIMENT utilisable.
+   Partout : glisser au doigt, deux doigts (ou la molette) pour agrandir / tourner, 12 charms maximum. */
+:root{--noir:#1E1C1B;--fond:#F6F3EF;--muted:#6B625C}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus,button:focus-visible{outline:none}
+body{margin:0;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);padding:22px 12px 60px}
+h1{margin:0;font:400 26px Jost,sans-serif;text-align:center}
+.intro{margin:6px auto 22px;max-width:640px;text-align:center;font:300 14px/1.55 Jost,sans-serif;color:var(--muted)}
+.table{display:flex;flex-wrap:wrap;gap:30px 22px;justify-content:center}
+.idee{width:270px;display:flex;flex-direction:column;align-items:center}
+.idee h2{margin:14px 0 2px;font:500 12px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;text-align:center}
+.idee h2 b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--noir);color:#fff;font-size:11px;letter-spacing:0;margin-right:6px}
+.qui{margin:0 0 6px;font:400 11px Jost,sans-serif;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.idee p{margin:0;font:300 12.5px/1.5 Jost,sans-serif;color:var(--muted);text-align:center}
+.tel{position:relative;width:262px;height:540px;border-radius:40px;background:#111;padding:8px;box-shadow:0 20px 40px -22px rgba(0,0,0,.6)}
+.ecr{position:relative;width:100%;height:100%;border-radius:33px;overflow:hidden;background:#fff center top/100% auto no-repeat;touch-action:none;user-select:none}
+.ecr::before{content:"";position:absolute;top:7px;left:50%;width:78px;height:22px;margin-left:-39px;border-radius:12px;background:#111;z-index:30}
+.calque{position:absolute;inset:0;z-index:5;pointer-events:none}
+.st{position:absolute;width:64px;height:64px;translate:-50% -50%;pointer-events:auto;cursor:grab;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));touch-action:none;-webkit-user-drag:none}
+.verre{border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
+.compte{position:absolute;top:36px;left:50%;translate:-50% 0;z-index:20;border-radius:999px;padding:4px 10px;font:500 10px Jost,sans-serif;letter-spacing:.06em;white-space:nowrap}
+.bulle{position:absolute;left:50%;top:46%;translate:-50% 0;z-index:40;border-radius:999px;background:rgba(30,28,27,.88);color:#fff;padding:8px 14px;font:400 12px Jost,sans-serif;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.bulle.on{opacity:1}
+.poubelle{position:absolute;left:50%;bottom:22px;translate:-50% 0;z-index:25;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none}
+.poubelle.on{opacity:1}.poubelle.dessus{transform:scale(1.25);background:rgba(200,40,40,.85)}
+.poubelle svg{width:22px;height:22px}
+@keyframes pop{0%{scale:.2;opacity:0}70%{scale:1.15;opacity:1}100%{scale:1}}
+@keyframes tombe{0%{translate:-50% -900%;rotate:-30deg}75%{translate:-50% -40%}100%{translate:-50% -50%}}
+@keyframes balance{0%,100%{rotate:-7deg}50%{rotate:7deg}}
+@keyframes tampon{0%{scale:1.8;opacity:0}60%{scale:.9;opacity:1}100%{scale:1}}
+/* 1 · Instagram */
+.btnSt{position:absolute;right:12px;top:34px;z-index:20;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;padding:0}
+.btnSt svg{width:20px;height:20px}
+.feuille{position:absolute;left:0;right:0;bottom:0;height:72%;z-index:35;border-radius:22px 22px 0 0;background:rgba(30,28,27,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transform:translateY(102%);transition:transform .35s cubic-bezier(.3,1,.4,1);display:flex;flex-direction:column;padding:8px 10px 0}
+.feuille.on{transform:none}
+.feuille .poi{width:34px;height:4px;border-radius:2px;background:rgba(255,255,255,.4);margin:0 auto 8px}
+.feuille input{border:0;outline:0;border-radius:10px;background:rgba(255,255,255,.14);color:#fff;padding:8px 12px;font:400 14px Jost,sans-serif}
+.feuille input::placeholder{color:rgba(255,255,255,.6)}
+.feuille .g3{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:72px;gap:6px;padding:10px 0 14px;scrollbar-width:none}
+.g3 button,.rang button{border:0;background:none;padding:6px;border-radius:12px}
+.g3 img,.rang img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.g3 button:active,.rang button:active{background:rgba(255,255,255,.12)}
+/* 2 · Décorer pour moi */
+.magie{position:absolute;left:50%;bottom:18px;translate:-50% 0;z-index:20;border-radius:999px;padding:12px 18px;font:500 11px Jost,sans-serif;letter-spacing:.14em;white-space:nowrap;border:0;background:var(--noir);color:#fff;box-shadow:0 10px 22px -10px rgba(0,0,0,.5)}
+.magie2{position:absolute;right:12px;bottom:72px;z-index:20;border-radius:999px;padding:8px 12px;font:400 11px Jost,sans-serif}
+/* 3 · Le bracelet */
+.bracelet{position:absolute;left:0;right:0;bottom:0;height:118px;z-index:20;background:linear-gradient(transparent,rgba(255,255,255,.92) 30%)}
+.bracelet svg.chaine{position:absolute;left:0;top:16px;width:100%;height:40px}
+.bracelet .pend{position:absolute;top:30px;width:46px;height:62px;transform-origin:50% 0;animation:balance 2.6s ease-in-out infinite;touch-action:none;cursor:grab}
+.bracelet .pend::before{content:"";position:absolute;left:50%;top:0;width:1.5px;height:12px;background:#C9A45C}
+.bracelet .pend img{position:absolute;left:0;top:12px;width:46px;height:46px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 3px rgba(0,0,0,.2))}
+.bracelet .fleche{position:absolute;top:44px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:300 16px/1 Jost;padding:0 0 2px;z-index:2}
+.st.pendu{transform-origin:50% 0;animation:balance 3s ease-in-out infinite}
+/* 4 · Le tampon */
+.rang{position:absolute;left:8px;right:8px;bottom:12px;z-index:20;border-radius:20px;padding:6px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.rang::-webkit-scrollbar{display:none}
+.rang button{flex:none;width:44px;height:44px;padding:4px}
+.rang button.on{background:var(--noir)}
+.mode{position:absolute;left:50%;bottom:76px;translate:-50% 0;z-index:20;display:flex;border-radius:999px;padding:3px}
+.mode button{border:0;background:none;border-radius:999px;padding:6px 12px;font:400 11px Jost,sans-serif}
+.mode button.on{background:var(--noir);color:#fff}
+/* 5 · La planche de stickers */
+.planche{position:absolute;left:0;right:0;bottom:0;height:42%;z-index:20;background:#FBF8F3;border-top:1px solid rgba(30,28,27,.08);border-radius:18px 18px 0 0;padding:10px 10px 0;display:flex;flex-direction:column}
+.planche .titre{display:flex;justify-content:space-between;align-items:center;font:500 9.5px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:0 4px 6px}
+.planche .titre span{display:flex;gap:4px}
+.planche .titre button{border:0;background:none;padding:2px 6px;border-radius:999px;font:400 10px Jost,sans-serif;letter-spacing:.06em;text-transform:none;color:var(--muted)}
+.planche .titre button.on{background:var(--noir);color:#fff}
+.feuilleSt{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:58px;gap:4px;padding-bottom:12px;scrollbar-width:none;background:radial-gradient(circle,rgba(30,28,27,.05) 1px,transparent 1.5px) 0 0/12px 12px;border-radius:12px}
+.feuilleSt .autoc{position:relative;display:grid;place-items:center;cursor:grab;touch-action:none}
+.feuilleSt .autoc::before{content:"";position:absolute;inset:5px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.feuilleSt img{position:relative;width:44px;height:44px;object-fit:contain;pointer-events:none}
+.feuilleSt .autoc.pris{opacity:.35}
+.vote{margin-top:10px;display:flex;gap:8px}
+.vote button{border:1px solid rgba(30,28,27,.2);border-radius:999px;background:#fff;padding:8px 14px;font:400 12px Jost,sans-serif}
+.vote button.on{background:var(--noir);color:#fff;border-color:var(--noir)}
+.reco{margin:34px auto 0;max-width:680px;background:#fff;border-radius:22px;padding:18px 22px;font:300 14px/1.65 Jost,sans-serif}
+.reco b{font-weight:500}
+</style></head><body>
+<h1>Autour de la table : les charms</h1>
+<p class="intro">On a réuni les meilleurs (Apple, Instagram, Snapchat, Pandora, Canva) et chacun propose sa façon de poser les charms. <b>Tout marche pour de vrai</b> : touche, glisse, essaie. Deux doigts (ou la molette à l’ordinateur) pour agrandir, Maj + molette pour tourner. Dis-moi ton préféré avec le bouton sous le téléphone.</p>
+<div class="table" id="table"></div>
+<div class="reco"><b>Mon avis d’associée :</b> le côté « trop cool », c’est le <b>2 (Décorer pour moi)</b> : en un geste, son site se remplit de charms qui tombent, elle n’a plus qu’à ajuster. On peut le marier avec le <b>1 (Instagram)</b> pour ajouter ses charms à elle. Et le <b>3 (le bracelet)</b> est le plus « nous » : des charms, c’est des bijoux.</div>
+<script>
+const CH = ["fraisegelee","cerisesor","coeurchrome","perle","cerisedisco","coeurdisco","ceriseruban","coeurcristal","oeilbleu","fleursixties","couronnestrass","consoleviolette","canard","levresgrillz","boule8","etoiledemerperles","cristal","chocolat","hibiscus","minaudiere","bouledisco","fraiseperle","noeudgelee","martien","planete","papillondore","soleil","coeurlilas","oursonlilas","etoilelilas","levres","coeurleopard","cerisesbordeaux","fleurgelee","lunesoleil","coeursoleil","coeurperles","coeurdamier","cerises","coeurchoco"];
+const img = n => `loginail-site/charms-mini/${n}.webp`, grand = n => `loginail-site/charms/${n}.png`;
+const MAX = 12, SITE = "loginail-site/apercus-univers/cerise.webp";
+const IDEES = [
+  ["Le tiroir Instagram", "Instagram", "Un bouton en haut à droite ouvre un grand tiroir noir de charms. Elle touche, le charm apparaît au milieu. Pour l’enlever : le glisser sur la poubelle qui apparaît en bas."],
+  ["Décorer pour moi", "Snapchat", "Un seul bouton : les charms tombent du ciel et se posent joliment sur son site. « Encore » en propose d’autres. Ensuite elle ajuste au doigt."],
+  ["Le bracelet", "Pandora", "Ses charms pendent sur un bracelet doré en bas. Elle en décroche un et le glisse sur son site, où il se balance doucement."],
+  ["Le tampon", "Procreate", "Elle choisit un charm en bas, puis touche son site là où elle le veut : il est tamponné pile à cet endroit. « Déplacer » pour les bouger."],
+  ["La planche de stickers", "Canva", "Une vraie planche de stickers reste ouverte en bas. Elle glisse un charm de la planche directement sur son site."]];
+let choixVote = "";
+document.getElementById("table").innerHTML = IDEES.map((x, k) => `<div class="idee"><div class="tel"><div class="ecr" id="e${k}" style="background-image:url(${SITE})"><div class="calque"></div><span class="compte verre">0 / ${MAX} charms</span><div class="bulle"></div>
+  <div class="poubelle verre"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="#1E1C1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div>
+  <h2><b>${k + 1}</b>${x[0]}</h2><div class="qui">L’idée de ${x[1]}</div><p>${x[2]}</p><div class="vote"><button data-vote="${k + 1}">Je préfère celle-ci</button></div></div>`).join("");
+
+/* ---------- le moteur commun : poser, glisser, deux doigts, poubelle, 12 maximum ---------- */
+function moteur(ecr, opts = {}) {
+  const calque = ecr.querySelector(".calque"), compte = ecr.querySelector(".compte"), bulleE = ecr.querySelector(".bulle"), poub = ecr.querySelector(".poubelle");
+  const M = { ecr, n: () => calque.children.length };
+  M.bulle = t => { bulleE.textContent = t; bulleE.classList.add("on"); clearTimeout(bulleE._t); bulleE._t = setTimeout(() => bulleE.classList.remove("on"), 1300); };
+  M.maj = () => { compte.textContent = `${M.n()} / ${MAX} charms`; opts.change && opts.change(); };
+  M.ajoute = (n, x, y, anim = "pop", s = 64, r = Math.round(Math.random() * 30 - 15)) => {
+    if (M.n() >= MAX) { M.bulle("12 charms maximum"); return null; }
+    const im = document.createElement("img"); im.src = grand(n); im.className = "st" + (opts.pendu ? " pendu" : ""); im.draggable = false; im.dataset.n = n;
+    im._s = s; im._r = r; im.style.left = x + "px"; im.style.top = y + "px"; maj(im);
+    if (anim) im.animate(anim === "tombe" ? [{ translate: "-50% -900%", rotate: "-30deg" }, { translate: "-50% -40%", offset: .75 }, { translate: "-50% -50%" }] : anim === "tampon" ? [{ scale: 1.8, opacity: 0 }, { scale: .9, opacity: 1, offset: .6 }, { scale: 1 }] : [{ scale: .2, opacity: 0 }, { scale: 1.15, opacity: 1, offset: .7 }, { scale: 1 }], { duration: anim === "tombe" ? 700 + Math.random() * 400 : 380, easing: "cubic-bezier(.3,1.2,.5,1)" });
+    calque.appendChild(im); M.maj(); return im; };
+  const maj = im => { im.style.width = im.style.height = im._s + "px"; im.style.transform = `rotate(${im._r}deg)`; };
+  const doigts = new Map(); let cible = null, dep = null;
+  const deux = () => { const p = [...doigts.values()]; if (p.length < 2) return null; return { d: Math.hypot(p[1].x - p[0].x, p[1].y - p[0].y) || 1, a: Math.atan2(p[1].y - p[0].y, p[1].x - p[0].x) * 180 / Math.PI }; };
+  const repart = (x, y) => { dep = { l: parseFloat(cible.style.left), t: parseFloat(cible.style.top), x, y, s: cible._s, r: cible._r, g: deux() }; };
+  M.prend = (im, e) => { cible = im; doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); repart(e.clientX, e.clientY); try { ecr.setPointerCapture(e.pointerId); } catch (x) {} if (poub && !opts.sansPoubelle) poub.classList.add("on"); };
+  ecr.addEventListener("pointerdown", e => { const t = e.target.closest(".st"); if (!t) return; e.preventDefault(); if (!cible) M.prend(t, e); else { doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); repart(e.clientX, e.clientY); } });
+  const dansPoub = (x, y) => { if (!poub || !poub.classList.contains("on")) return false; const r = poub.getBoundingClientRect(); return x > r.left - 10 && x < r.right + 10 && y > r.top - 10 && y < r.bottom + 10; };
+  ecr.addEventListener("pointermove", e => { if (!cible || !doigts.has(e.pointerId)) return; doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); const g = deux();
+    if (g && dep.g) { cible._s = Math.max(28, Math.min(180, dep.s * g.d / dep.g.d)); cible._r = dep.r + g.a - dep.g.a; maj(cible); }
+    else if (!g) { cible.style.left = (dep.l + e.clientX - dep.x) + "px"; cible.style.top = (dep.t + e.clientY - dep.y) + "px"; poub && poub.classList.toggle("dessus", dansPoub(e.clientX, e.clientY)); } });
+  const leve = e => { if (!doigts.has(e.pointerId)) return; doigts.delete(e.pointerId); if (!cible) return;
+    if (!doigts.size) { const c = cible, r = ecr.getBoundingClientRect(); cible = null;
+      if (dansPoub(e.clientX, e.clientY) || e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) { c.animate([{ scale: 1 }, { scale: 0, opacity: 0 }], { duration: 200 }).onfinish = () => { c.remove(); M.maj(); }; }
+      poub && poub.classList.remove("on", "dessus"); }
+    else { const p = [...doigts.values()][0]; repart(p.x, p.y); } };
+  ecr.addEventListener("pointerup", leve); ecr.addEventListener("pointercancel", leve);
+  ecr.addEventListener("wheel", e => { const t = e.target.closest(".st"); if (!t) return; e.preventDefault(); if (e.shiftKey) t._r += e.deltaY > 0 ? 12 : -12; else t._s = Math.max(28, Math.min(180, t._s * (e.deltaY > 0 ? .92 : 1.08))); maj(t); }, { passive: false });
+  ["gesturestart", "gesturechange"].forEach(t => ecr.addEventListener(t, e => e.preventDefault()));
+  return M;
+}
+const ecr = k => document.getElementById("e" + k), centre = e => [e.clientWidth / 2, e.clientHeight * .42];
+
+/* 1 · le tiroir Instagram */
+{ const e = ecr(0), M = moteur(e);
+  e.insertAdjacentHTML("beforeend", `<button class="btnSt verre" aria-label="Charms"><svg viewBox="0 0 24 24"><path d="M14 3H7a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h7l7-7V7a4 4 0 0 0-4-4h-3z" fill="none" stroke="#1E1C1B" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 21v-3a4 4 0 0 1 4-4h3" fill="none" stroke="#1E1C1B" stroke-width="1.6"/><circle cx="9" cy="10" r="1.2" fill="#1E1C1B"/><circle cx="14" cy="10" r="1.2" fill="#1E1C1B"/></svg></button>
+    <div class="feuille"><div class="poi"></div><input placeholder="Rechercher : fraise, cœur…"><div class="g3"></div></div>`);
+  const f = e.querySelector(".feuille"), g = f.querySelector(".g3"), inp = f.querySelector("input");
+  const remplit = () => { const q = inp.value.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); g.innerHTML = CH.filter(n => n.includes(q)).map(n => `<button data-n="${n}"><img src="${img(n)}" alt=""></button>`).join(""); };
+  remplit(); inp.oninput = remplit;
+  e.querySelector(".btnSt").onclick = () => f.classList.add("on");
+  f.querySelector(".poi").onclick = () => f.classList.remove("on");
+  g.onclick = ev => { const b = ev.target.closest("[data-n]"); if (!b) return; f.classList.remove("on"); const [x, y] = centre(e); M.ajoute(b.dataset.n, x, y); };
+  e.addEventListener("pointerdown", ev => { if (f.classList.contains("on") && !ev.target.closest(".feuille")) f.classList.remove("on"); }); }
+
+/* 2 · Décorer pour moi */
+{ const e = ecr(1), M = moteur(e);
+  e.insertAdjacentHTML("beforeend", `<button class="magie">✦ DÉCORER POUR MOI</button><button class="magie2 verre" hidden>Encore</button>`);
+  const PLACES = [[.18, .14], [.84, .16], [.12, .45], [.88, .5], [.5, .58], [.25, .7], [.78, .74]];
+  const pluie = () => { e.querySelector(".calque").innerHTML = ""; M.maj(); const l = CH.map(n => [Math.random(), n]).sort((a, b) => a[0] - b[0]).slice(0, 6).map(x => x[1]);
+    l.forEach((n, k) => setTimeout(() => { const [px, py] = PLACES[k]; M.ajoute(n, px * e.clientWidth + (Math.random() * 16 - 8), py * e.clientHeight, "tombe", 48 + Math.random() * 22); }, k * 160));
+    e.querySelector(".magie").textContent = "✦ REDÉCORER"; e.querySelector(".magie2").hidden = false; };
+  e.querySelector(".magie").onclick = pluie; e.querySelector(".magie2").onclick = pluie; }
+
+/* 3 · Le bracelet */
+{ const e = ecr(2), M = moteur(e, { pendu: true });
+  e.insertAdjacentHTML("beforeend", `<div class="bracelet"><svg class="chaine" viewBox="0 0 262 40" preserveAspectRatio="none"><path d="M0 4 Q131 40 262 4" fill="none" stroke="#C9A45C" stroke-width="2.4" stroke-dasharray="5 3" stroke-linecap="round"/></svg>
+    <button class="fleche verre" style="left:4px">‹</button><button class="fleche verre" style="right:4px">›</button><div class="pends"></div></div>`);
+  let page = 0; const pends = e.querySelector(".pends");
+  const montre = () => { const l = CH.slice(page * 5, page * 5 + 5); pends.innerHTML = l.map((n, k) => { const x = 30 + k * 42, y = 30 + Math.sin((k + .5) / 5 * Math.PI) * 14;
+      return `<div class="pend" data-n="${n}" style="left:${x}px;top:${y}px;animation-delay:${-k * .4}s"><img src="${img(n)}" alt=""></div>`; }).join(""); };
+  montre(); e.querySelectorAll(".fleche")[0].onclick = () => { page = (page + 7) % 8; montre(); }; e.querySelectorAll(".fleche")[1].onclick = () => { page = (page + 1) % 8; montre(); };
+  pends.addEventListener("pointerdown", ev => { const p = ev.target.closest(".pend"); if (!p) return; ev.preventDefault(); const r = e.getBoundingClientRect();
+    const im = M.ajoute(p.dataset.n, ev.clientX - r.left, ev.clientY - r.top - 20, "", 58, 0); if (im) M.prend(im, ev); }); }
+
+/* 4 · Le tampon */
+{ const e = ecr(3); let mode = "tampon", choisi = CH[0]; const M = moteur(e, { sansPoubelle: false });
+  e.insertAdjacentHTML("beforeend", `<div class="mode verre"><button class="on" data-m="tampon">Tamponner</button><button data-m="deplacer">Déplacer</button></div><div class="rang verre">${CH.slice(0, 20).map((n, k) => `<button class="${k ? "" : "on"}" data-n="${n}"><img src="${img(n)}" alt=""></button>`).join("")}</div>`);
+  e.querySelector(".rang").onclick = ev => { const b = ev.target.closest("[data-n]"); if (!b) return; choisi = b.dataset.n; e.querySelectorAll(".rang button").forEach(x => x.classList.toggle("on", x === b)); setMode("tampon"); };
+  const setMode = m => { mode = m; e.querySelectorAll(".mode button").forEach(x => x.classList.toggle("on", x.dataset.m === m)); e.querySelector(".calque").style.pointerEvents = "none"; e.querySelectorAll(".st").forEach(s => s.style.pointerEvents = m === "deplacer" ? "auto" : "none"); };
+  e.querySelector(".mode").onclick = ev => { const b = ev.target.closest("[data-m]"); if (b) setMode(b.dataset.m); };
+  e.addEventListener("click", ev => { if (mode !== "tampon" || ev.target.closest(".rang,.mode,.compte")) return; const r = e.getBoundingClientRect(); const im = M.ajoute(choisi, ev.clientX - r.left, ev.clientY - r.top, "tampon", 58); if (im) im.style.pointerEvents = "none"; }); }
+
+/* 5 · La planche de stickers */
+{ const e = ecr(4), M = moteur(e, { change: () => marque() });
+  const FAMS = [["Tous", CH], ["Cœurs", CH.filter(n => /coeur/.test(n))], ["Cerises", CH.filter(n => /cerise|fraise/.test(n))]];
+  e.insertAdjacentHTML("beforeend", `<div class="planche"><div class="titre">Ma planche<span>${FAMS.map((f, k) => `<button class="${k ? "" : "on"}" data-f="${k}">${f[0]}</button>`).join("")}</span></div><div class="feuilleSt"></div></div>`);
+  const fs = e.querySelector(".feuilleSt"); let fam = 0;
+  const remplit = () => { fs.innerHTML = FAMS[fam][1].map(n => `<div class="autoc" data-n="${n}"><img src="${img(n)}" alt=""></div>`).join(""); marque(); };
+  const marque = () => { const pris = new Set([...e.querySelectorAll(".st")].map(s => s.dataset.n)); fs && fs.querySelectorAll(".autoc").forEach(a => a.classList.toggle("pris", pris.has(a.dataset.n))); };
+  remplit(); e.querySelector(".titre span").onclick = ev => { const b = ev.target.closest("[data-f]"); if (!b) return; fam = +b.dataset.f; e.querySelectorAll(".titre button").forEach(x => x.classList.toggle("on", x === b)); remplit(); };
+  fs.addEventListener("pointerdown", ev => { const a = ev.target.closest(".autoc"); if (!a) return; ev.preventDefault(); const r = e.getBoundingClientRect();
+    const im = M.ajoute(a.dataset.n, ev.clientX - r.left, ev.clientY - r.top, "", 60, 0); if (im) M.prend(im, ev); }); }
+
+/* le vote */
+document.querySelectorAll("[data-vote]").forEach(b => b.onclick = () => { choixVote = b.dataset.vote; document.querySelectorAll("[data-vote]").forEach(x => { x.classList.toggle("on", x === b); x.textContent = x === b ? "♥ Ma préférée" : "Je préfère celle-ci"; }); try { localStorage.setItem("charmsTable", choixVote); } catch (e) {} });
+</script>
+</body></html>
