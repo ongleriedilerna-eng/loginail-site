@@ -217,17 +217,17 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
   <section class="ecran on" id="lien">
     <div data-logo></div>
     <h1>Votre site,<br>prêt à <span class="mot" id="mot"><span class="mt">briller</span><img id="motCh" alt=""></span>.</h1>
-    <p class="sous">Collez le lien de votre fiche Google Maps : on y lit votre nom, vos horaires, vos avis et vos photos.</p>
+    <p class="sous">Collez le lien de votre fiche Google Maps, de votre page Planity ou Booksy, ou de votre site : on y lit votre nom, vos horaires, vos avis et vos photos.</p>
     <div class="tels" id="tels" aria-hidden="true"><div class="t g"><div></div></div><div class="t d"><div></div></div><div class="t m"><div></div></div></div>
     <div class="aide"><button type="button" id="aideB">Où trouver mon lien ?<i></i></button>
-      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon.</li><li>Touchez <b>Partager</b>, puis <b>Copier le lien</b>.</li><li>Revenez ici, restez appuyée dans la case et touchez <b>Coller</b>.</li></ol><a class="maps" href="https://www.google.com/maps" target="_blank" rel="noopener"><svg viewBox="0 0 13 16" aria-hidden="true"><path d="M6.5 0A6.5 6.5 0 0 0 0 6.5C0 11 6.5 16 6.5 16S13 11 13 6.5A6.5 6.5 0 0 0 6.5 0Zm0 9A2.5 2.5 0 1 1 6.5 4a2.5 2.5 0 0 1 0 5Z" fill="#1E1C1B"/></svg>Ouvrir Google Maps</a></div>
+      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon (ou votre page <b>Planity</b>, <b>Booksy</b>, ou votre site).</li><li>Touchez <b>Partager</b>, puis <b>Copier le lien</b>.</li><li>Revenez ici, restez appuyée dans la case et touchez <b>Coller</b>.</li></ol><a class="maps" href="https://www.google.com/maps" target="_blank" rel="noopener"><svg viewBox="0 0 13 16" aria-hidden="true"><path d="M6.5 0A6.5 6.5 0 0 0 0 6.5C0 11 6.5 16 6.5 16S13 11 13 6.5A6.5 6.5 0 0 0 6.5 0Zm0 9A2.5 2.5 0 1 1 6.5 4a2.5 2.5 0 0 1 0 5Z" fill="#1E1C1B"/></svg>Ouvrir Google Maps</a></div>
     <div class="bas"><div class="collee">
       <p class="msg" id="msg" role="status"></p>
-      <p class="ok-g"><i>✓</i>Fiche Google reconnue</p>
-      <div class="lien"><input class="champ" id="champLien" type="url" inputmode="url" autocomplete="off" placeholder="Le lien de votre fiche Google"><button class="coller" type="button" id="coller">CRÉER</button></div>
+      <p class="ok-g"><i>✓</i><span id="okG">Fiche Google reconnue</span></p>
+      <div class="lien"><input class="champ" id="champLien" type="url" inputmode="url" autocomplete="off" placeholder="Maps, Planity, Booksy, votre site…"><button class="coller" type="button" id="coller">CRÉER</button></div>
       <button class="go" type="button" id="creer">CRÉER MON SITE</button>
       <p class="rassure">Gratuit · sans carte bancaire · prêt en 1 minute</p></div>
-      <button class="passer" type="button" id="sansGoogle">Je n’ai pas de fiche Google</button></div>
+      <button class="passer" type="button" id="sansGoogle">Je n’ai pas de lien</button></div>
   </section>
 
   <section class="ecran" id="charge">
@@ -341,18 +341,23 @@ $("coller").onclick = async () => {
   }
   $("creer").click();
 };
+/* 09/11 (Marie) : pas seulement Google Maps — Planity, Booksy, ou son propre site (.fr, .com…). Jamais Instagram. */
+const estInsta = l => /(^|\/\/|\.)(instagram\.com|instagr\.am|tiktok\.com|facebook\.com|fb\.com)/i.test(l);
+const sorte = l => !l || estInsta(l) ? "" : estGoogle(l) ? "Fiche Google reconnue" : /planity\.com/i.test(l) ? "Page Planity reconnue" : /booksy\.com/i.test(l) ? "Page Booksy reconnue"
+  : /^https?:\/\/[^\s/]+\.[a-z]{2,}/i.test(l) ? "Votre site reconnu" : "";
 const estGoogle = l => /^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|(www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)/i.test(l);
 $("creer").onclick = () => {
   const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || "";   // le partage iPhone ajoute parfois le nom avant le lien
-  if (!l) { msg.textContent = "Collez d’abord le lien de votre fiche."; champLien.focus(); return; }
-  if (!estGoogle(l)) { msg.textContent = "Ce lien ne vient pas de Google Maps. Touchez « Où trouver mon lien ? »."; return; }
+  if (!l) { msg.textContent = "Collez d’abord votre lien."; champLien.focus(); return; }
+  if (estInsta(l)) { msg.textContent = "Instagram ne suffit pas. Collez votre fiche Google Maps, votre page Planity ou Booksy, ou votre site."; return; }
+  if (!sorte(l)) { msg.textContent = "Ce lien n’est pas reconnu. Touchez « Où trouver mon lien ? »."; return; }
   msg.textContent = ""; lance(l);
 };
 // la fiche est reconnue dès que le lien collé vient de Google Maps
-const verifie = () => { const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || ""; $("lien").classList.toggle("reconnue", estGoogle(l)); if (estGoogle(l)) msg.textContent = ""; };
+const verifie = () => { const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || "", so = sorte(l); $("lien").classList.toggle("reconnue", !!so); if (so) { msg.textContent = ""; $("okG").textContent = so; } };
 champLien.addEventListener("input", verifie);
 // les 3 petits téléphones : des sites qui changent tout seuls
-{const S=["chrome","cerise","tpl-studiopoudre","pop","gothique","clean","sixties","tropical","tpl-maisonsauge","baroque","y2k","sirene","baddie","tpl-maisonnoire","japon","feerique","pastel","boheme","street","tpl-maisonmoka","celeste","emo","tpl-atelierronce","bling","riviera"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");
+{const S=["y2k","pop","chrome","feerique","tpl-maisonsauge","mignon","gothique","baddie","street","sixties","tpl-maisonnoire"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");
  const T=[...document.querySelectorAll("#tels .t div")],z=$("tels");let k=0,n=2;
  T.forEach((d,j)=>{for(let n=0;n<2;n++){const im=new Image();im.alt="";d.appendChild(im)}const a=d.children[0];a.src=S[j];a.className="on"});
  const tour=()=>{if(document.hidden||!$("lien").classList.contains("on"))return;k++;const j=k%3,d=T[j],[a,b]=d.children,vis=a.classList.contains("on")?a:b,cach=vis===a?b:a;
@@ -422,6 +427,7 @@ async function lance(lien) {
     if (i === 4) while (!fini) await attends(200);
   }
   await lecture;
+  if (erreur && !estGoogle(lien) && !/connexion/i.test(erreur)) { B.source = "main"; B.site = lien; prepareManque(); montre("manque"); return; }   // Planity, Booksy, son site : salon pas retrouvé sur Google, elle complète (ses prix se lisent depuis son lien)
   if (erreur) { montre("lien"); msg.textContent = erreur; return; }
   ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
   ph[5].classList.add("on"); og.classList.add("e5"); $("charge").classList.add("lu");
@@ -481,7 +487,7 @@ function corps(m) {
   if (m.k === "presta") return `<p class="q">${B.prestationsTrouvees ? "Nous avons trouvé ces tarifs. Dites-nous s’ils sont encore valables, et s’il en manque." : m.q}</p>
     <div class="lire"><p><b>${B.prestationsTrouvees ? "Une autre carte de prix ?" : "Le plus rapide : une capture d’écran de vos tarifs."}</b><br>Instagram, page de réservation, carte du salon… Vos prix s’écrivent tout seuls.</p>
       <div class="lire-bts"><label class="lire-b lire-noir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l1.6-2.4h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>AJOUTER MA CAPTURE<input type="file" accept="image/*" multiple data-tarifphoto></label></div>
-      ${lienOuvert ? `<div class="saisie"><input class="champ" id="lienTarifs" inputmode="url" placeholder="Votre page de réservation, votre site…"><button class="ajouter" type="button" data-lirelien>LIRE</button></div>` : ""}
+      ${lienOuvert ? `<div class="saisie"><input class="champ" id="lienTarifs" inputmode="url" placeholder="Votre page de réservation, votre site…" value="${esc(B.site || "")}"><button class="ajouter" type="button" data-lirelien>LIRE</button></div>` : ""}
       ${etatLecture ? `<p class="lire-etat">${etatLecture}</p>` : ""}</div>
     <p class="phx-t">Ou touchez vos prestations</p>
     <div class="puces">${SUGG.map(s => `<button type="button" data-sugg="${esc(s)}" class="${brouillonP.some(p => p.nom === s) ? "pris" : ""}">${s}</button>`).join("")}</div>
