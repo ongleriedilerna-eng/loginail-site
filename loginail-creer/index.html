@@ -280,6 +280,7 @@ const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classLis
 
 /* ---------- ce qu'on sait d'elle (rien n'est inventé : vide tant qu'on ne l'a pas lu ou qu'elle ne l'a pas écrit) ---------- */
 const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+const DEMO = new URLSearchParams(location.search).has("demo");
 let B = { source: "main", nom: "", prenom: "", rue: "", cp: "", ville: "", telephone: "", position: null, placeId: "", lienGoogle: "",
   horaires: null, note: null, nbAvis: 0, avis: [], photos: [], prestations: [] };
 
@@ -412,7 +413,7 @@ async function lance(lien) {
   const og = $("ongle"), ph = [...document.querySelectorAll("#etapes p")];
   og.setAttribute("class", "mdp ongle"); ph.forEach(p => p.classList.remove("on", "parti"));
   let fini = false, erreur = "";
-  const lecture = fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON }, body: JSON.stringify({ lien }) })
+  const lecture = DEMO ? attends(400).then(() => { fini = true; }) : fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON }, body: JSON.stringify({ lien }) })
     .then(r => r.json()).then(async g => { if (g.erreur) throw new Error(g.erreur); depuisGoogle(g); B.site = g.site || "";
       await Promise.all([prechargePhotos(B.photos), litTarifs()]); })
     .catch(e => { erreur = e.message && !/fetch/i.test(e.message) ? e.message : "Pas de connexion. Vérifiez votre réseau et réessayez."; })
@@ -432,7 +433,7 @@ async function lance(lien) {
   ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
   ph[5].classList.add("on"); og.classList.add("e5"); $("charge").classList.add("lu");
 }
-$("continuer").onclick = () => { prepareManque(); montre("manque"); };
+$("continuer").onclick = () => { if (DEMO) { location.href = "../coups-de-coeur.html"; return; } prepareManque(); montre("manque"); };
 
 /* ---------- 3 · il manque (une ligne par chose ; touchée, elle s'ouvre ; « Ajouter » allume l'interrupteur) ---------- */
 const SUGG = ["Pose gel", "Remplissage", "Semi-permanent mains", "Semi-permanent pieds", "Manucure", "Beauté des pieds", "Dépose", "Nail art"];
@@ -681,6 +682,9 @@ $("fini").onclick = () => {
     localStorage.setItem("loginail-brouillon", JSON.stringify(B)); }
   location.href = "pret.html" + IPHONE;
 };
+/* 09/11 (Marie) : ?demo — pour montrer Loginail : un faux lien (les Ongles de Cerise, exemple), rien n'est lu sur Google ;
+   après « Votre site est prêt », on enchaîne sur le choix du style, la personnalisation et les charms */
+if (DEMO) { champLien.value = "https://maps.app.goo.gl/lesonglesdecerise"; verifie(); }
 /* ?lien=… : le lien collé sur la page d'accueil de loginail.fr */
 const venu = new URLSearchParams(location.search).get("lien");
 if (venu) { champLien.value = venu; $("creer").click(); }
