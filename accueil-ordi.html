@@ -342,7 +342,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 @media (min-width:1000px){
   /* moins fade : des taches de couleur douces qui bougent lentement derrière le haut et le début des étapes */
   body{background:#F3ECE4}
-  .hero,.build .colle{position:relative;isolation:isolate}
+  .hero{position:relative;isolation:isolate}.build .colle{isolation:isolate}
   .hero::before,.build .colle::before{content:"";position:absolute;inset:-10%;z-index:-1;pointer-events:none;filter:blur(60px);opacity:.9;
     background:radial-gradient(circle at 20% 25%,#F2C2AE 0,transparent 26%),radial-gradient(circle at 78% 30%,#EBB7C6 0,transparent 28%),radial-gradient(circle at 62% 82%,#CFC4E8 0,transparent 26%),radial-gradient(circle at 12% 85%,#C9D8C3 0,transparent 24%),radial-gradient(circle at 92% 88%,#F4D6A8 0,transparent 22%);
     animation:taches 22s ease-in-out infinite alternate}
@@ -536,10 +536,10 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const NOMS=["votre site","un fond","votre univers","vos photos","vos charms","tout le reste"],ecr=document.getElementById("bEcr"),bch=document.getElementById("bCh");
  const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);
  let cible=0,p=0,raf=0,vu=-1;
- const pose=P=>{const p=Math.min(1,P/.8),sc=doux(cl(P,.84,.985));C[2].style.opacity=doux(cl(p,.10,.24)).toFixed(3);C[3].style.opacity=doux(cl(p,.30,.44)).toFixed(3);
+ const pose=P=>{const p=Math.min(1,P/.8),sc=doux(cl(P,.84,.985));C[2].style.opacity=doux(cl(p,.08,.17)).toFixed(3);C[3].style.opacity=doux(cl(p,.28,.37)).toFixed(3);
    CH.forEach((c,i)=>{const t=doux(cl(p,.76+i*.02,.86+i*.02));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-140).toFixed(1)}%,0) rotate(${((1-t)*(i%2?40:-40)).toFixed(1)}deg)`});
-   fond.style.opacity=(doux(cl(p,.10,.24))*(1-.6*doux(cl(p,.76,.9)))).toFixed(3);HO.forEach((c,i)=>{const t=doux(cl(p,.80+i*.03,.92+i*.03));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-260).toFixed(1)}%,0) scale(${(.6+.4*t).toFixed(3)}) rotate(${((1-t)*(i%2?50:-50)+(i%2?12:-12)).toFixed(1)}deg)`});
-   C[5].style.opacity=doux(cl(p,.50,.64)).toFixed(3);pail.style.opacity=doux(cl(p,.80,.92)).toFixed(3);
+   fond.style.opacity=(doux(cl(p,.08,.17))*(1-.6*doux(cl(p,.76,.9)))).toFixed(3);HO.forEach((c,i)=>{const t=doux(cl(p,.80+i*.03,.92+i*.03));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-260).toFixed(1)}%,0) scale(${(.6+.4*t).toFixed(3)}) rotate(${((1-t)*(i%2?50:-50)+(i%2?12:-12)).toFixed(1)}deg)`});
+   C[5].style.opacity=doux(cl(p,.48,.57)).toFixed(3);pail.style.opacity=doux(cl(p,.80,.92)).toFixed(3);
    const seg=[0,.10,.30,.50,.76,1.01];let k=0;for(let i=0;i<5;i++)if(p>=seg[i])k=i;
    if(P>=.82)k=5;
    L.forEach((l,i)=>{const entre=i===0?1:i===5?cl(P,.81,.85):cl(p,seg[i]-.03,seg[i]+.02),sort=i===5?0:i===4?cl(P,.79,.83):cl(p,seg[i+1]-.03,seg[i+1]+.02),o=entre*(1-sort);l.style.opacity=o.toFixed(3);l.style.transform="none"});
