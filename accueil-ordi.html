@@ -877,7 +877,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .ph3 .tr.ba{bottom:calc(var(--e) / -2);transform:rotateX(-90deg)}
 .ph3 .ombre{position:absolute;left:8%;right:0;bottom:-6%;height:7%;border-radius:50%;background:radial-gradient(ellipse,rgba(70,45,28,.34),transparent 70%);filter:blur(10px);pointer-events:none}
 /* les « 1 000+ » */
-.chif div:nth-child(3) b::after,.p-ch .compte b::after{content:"+"}
+.p-ch .compte b::after{content:"+"}
 @media (max-width:999px){
   .a-anim{position:absolute;inset:0;z-index:4;pointer-events:none;container-type:inline-size;overflow:hidden;border-radius:inherit}
   .a-anim .z{position:absolute;inset:0;background:center top/cover no-repeat}
@@ -1113,6 +1113,38 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 /* « Créer mon site gratuitement » : un petit boing, pour qu'on le voie bien (ordinateur et téléphone) */
 .fin-pub .fp-carte .btn{animation:boing 3.2s ease-in-out infinite}
 @keyframes boing{0%,72%,100%{transform:none}78%{transform:translateY(-7px) scale(1.06,.95)}84%{transform:translateY(0) scale(.97,1.04)}90%{transform:translateY(-3px)}95%{transform:none}}
+
+/* ===== 15/11 (Marie, 4e retour téléphone) ===== */
+@media (max-width:999px){
+  /* l'accueil : un fondu en bas et une petite flèche, pour qu'on sache qu'il y a une suite */
+  .m-cplus .hero{position:relative}
+  .m-cplus .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(rgba(246,243,239,0),#F6F3EF 85%);pointer-events:none;z-index:3}
+  .m-cplus .hero .sous{position:relative;z-index:4}
+  .m-cplus .hero .sous::after{content:"";display:block;width:12px;height:12px;margin:14px auto 0;border-right:1.5px solid #1E1C1B;border-bottom:1.5px solid #1E1C1B;transform:rotate(45deg);opacity:.45;animation:flecheBas 1.8s ease-in-out infinite}
+  @keyframes flecheBas{0%,100%{transform:translateY(0) rotate(45deg)}50%{transform:translateY(6px) rotate(45deg)}}
+  /* les 6 étapes : sans le titre, en 3 swipes */
+  .build{height:calc(100svh + 1500px)!important}
+  .build .leg:first-child b{display:none!important}
+  /* l'appli : on comprend qu'on peut toucher */
+  .app-h .a-ong-bloc::after{content:"Touchez une icône";display:block;text-align:center;font:500 9.5px Jost;letter-spacing:.22em;text-transform:uppercase;color:rgba(246,243,239,.55);margin-top:10px}
+  /* plus de bouton fixe en bas de l'écran */
+  .colle-bas{display:none!important}
+  /* les charms : un petit saut quand on les touche */
+  .pluie2 .c2{transition:opacity .2s}
+  .pluie2 .c2.hop img{animation:hop .55s cubic-bezier(.3,1.6,.5,1)!important}
+  @keyframes hop{0%{transform:none}35%{transform:translateY(-22px) rotate(-14deg) scale(1.12)}70%{transform:translateY(2px) scale(.96,1.04)}100%{transform:none}}
+  .ch-astuce{display:none!important}
+  /* le prix : les coches en noir */
+  #prix .prix ul li{border-top-color:rgba(30,28,27,.12)!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='%231E1C1B' stroke-width='2'/%3E%3C/svg%3E")!important}
+}
+/* le réveil bouge un peu moins (ordinateur et téléphone) */
+.a-anim.sonne .reveil,.a-anim.sonne .z.dix{animation:sonne2 .6s ease-in-out 3!important}
+@keyframes sonne2{0%,100%{transform:rotate(0)}20%{transform:rotate(-5deg)}45%{transform:rotate(4deg)}70%{transform:rotate(-2deg)}}
+/* les chiffres en 3 cases : 26 sites · 1000+ charms · 300+ fonds */
+.chif.trois div:nth-child(2) b::after,.chif.trois div:nth-child(3) b::after{content:"+"}
+.chif.trois div:nth-child(3) b::before{content:none}
+@media (max-width:999px){.chif.trois{grid-template-columns:repeat(3,1fr)!important}}
+@media (min-width:1000px){.chif.trois{max-width:760px!important}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1228,7 +1260,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <div class="zero vu">Un site sur mesure coûte des centaines d’euros. Ici, il est fait en 1 minute, et il est compris.</div>
 </section>
 
-<div class="chif vu"><div><b>7</b><span>sites classe</span></div><div><b>19</b><span>univers</span></div><div><b>1000</b><span>charms</span></div><div><b>336</b><span>fonds</span></div></div>
+<div class="chif vu trois"><div><b>26</b><span>sites classe et baddie</span></div><div><b>1000</b><span>charms</span></div><div><b>300</b><span>fonds</span></div></div>
 <div class="fin-pub"><div class="k">Votre tour</div><h2 class="t2">Tout ça, rien que pour vous.<br><em>Vous attendez quoi&nbsp;?</em></h2><p class="p">Créer votre site, c’est gratuit. Le premier mois aussi. Ensuite, c’est vous qui voyez.</p><a class="btn" href="loginail-creer/index.html">Créer mon site gratuitement</a></div>
 <div class="marq-sec"><div class="marq"><div class="piste"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"></div><div class="piste r"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"></div></div>
   <p class="marq-l">Des sites faits avec Loginail · salons d’exemple</p></div>
@@ -1288,7 +1320,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
  if(false){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
  else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
-  const DUR=matchMedia("(min-width: 1000px)").matches?15000:10000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
+  const DUR=matchMedia("(min-width: 1000px)").matches?15000:16000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
   const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
    if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
    const au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
@@ -1623,9 +1655,17 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         pose3(c); return true; };
       /* on relance un charm tout seul (lâché, ou poussé par la souris) */
       const relance = c => { cancelAnimationFrame(c.raf2); c.t0 = 0; const pas1 = now => { if (c.tenu) return; if (!c.t0) c.t0 = now; c.sol = c.solFixe; if (anime(c, now)) c.raf2 = requestAnimationFrame(pas1); }; c.raf2 = requestAnimationFrame(pas1); };
-      /* téléphone : une petite phrase, une fois les charms tombés */
-      if (!ORDI) { const astuce = document.createElement("div"); astuce.className = "ch-astuce"; astuce.textContent = "Attrapez-les, lancez-les"; pc.appendChild(astuce);
-        addEventListener("scroll", () => astuce.classList.toggle("on", etat === "tombe"), { passive: true }); }
+      /* téléphone (15/11) : on les touche, ils sautillent ; en descendant, ils glissent vers le bas et s'effacent */
+      if (!ORDI) {
+        lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (!w) return; w.classList.remove("hop"); void w.offsetWidth; w.classList.add("hop"); });
+        let rafF = 0;
+        const fond = () => { rafF = 0; const r = sec.getBoundingClientRect(), tot = Math.max(1, r.height - innerHeight), H = pc.clientHeight;
+          const f = Math.min(1, Math.max(0, (-r.top - tot * .25) / (tot * .75 + innerHeight * .55)));
+          items.forEach(c => { if (c.fr == null) { c.fr = hasard(.55, 1.15); c.rr = hasard(-160, 160); c.dx = hasard(-30, 30); }
+            const e = f * f * (3 - 2 * f);
+            c.w.style.transform = `translate3d(${(c.x0 + e * c.dx).toFixed(1)}px,${(c.y0 + e * H * c.fr).toFixed(1)}px,0) rotate(${(e * c.rr).toFixed(1)}deg)`;
+            c.w.style.opacity = Math.max(0, 1 - e * 1.25).toFixed(3); }); };
+        addEventListener("scroll", () => { if (!rafF) rafF = requestAnimationFrame(fond); }, { passive: true }); addEventListener("resize", () => setTimeout(fond, 300)); }
       /* ordinateur : quand la souris passe sur le tas, les charms sautent et culbutent */
       if (ORDI) { let dern = 0;
         pc.addEventListener("pointermove", e => { if (etat !== "tombe" || e.pointerType !== "mouse") return; const now = performance.now(); if (now - dern < 40) return; dern = now;
@@ -1649,10 +1689,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const remonte = () => { cancelAnimationFrame(raf); etat = "haut"; lay.classList.remove("tombe");
         items.forEach(c => { c.x = c.x0; c.y = c.y0; c.a = 0; c.w.style.transition = ""; c.w.style.transform = `translate3d(${c.x0}px,${c.y0}px,0)`; }); };
       addEventListener("scroll", () => { const r = sec.getBoundingClientRect(), p = -r.top / Math.max(1, r.height - innerHeight);
+        if (!ORDI) return;
         if (etat === "haut" && p > .04 && r.top < 1) chute();
         else if (etat === "tombe" && (r.bottom < 0 || r.top > innerHeight)) remonte(); }, { passive: true });
       /* ordinateur : on attrape un charm au clic gauche, on le soulève ; on le lâche : il retombe tout droit, simplement */
-      { let tenu = null, dx = 0, dy = 0, vx = 0, vy = 0, lx = 0, ly = 0, lt = 0, bouge = false;
+      if (ORDI) { let tenu = null, dx = 0, dy = 0, vx = 0, vy = 0, lx = 0, ly = 0, lt = 0, bouge = false;
         lay.addEventListener("pointerdown", e => { if (e.button !== 0) return; const w = e.target.closest(".c2"); if (!w) return; const c = items.find(x => x.w === w); if (!c) return; e.preventDefault();
           c.tenu = true; cancelAnimationFrame(c.raf2); if (etat === "haut") { chute(); } const b = pc.getBoundingClientRect(); tenu = c; dx = e.clientX - b.left - c.x; dy = e.clientY - b.top - c.y;
           w.classList.add("tenu"); w.style.transition = ""; vx = vy = 0; lx = e.clientX; ly = e.clientY; lt = performance.now(); bouge = false; try { w.setPointerCapture(e.pointerId); } catch (x) {} });
@@ -1918,7 +1959,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           const go = () => { A.classList.remove("sonne"); void A.offsetWidth; A.classList.add("sonne"); att(go, 4200); }; att(go, 600); },
         /* 1 · Agenda : les rendez-vous se placent un par un */
         () => { const B = [[39.6, 50.6], [53.8, 61.2], [75.6, 80.4]];
-          A.appendChild(cache(19.8, 39.6, 96.5, 80.6, "#FBF9F5"));
+          B.forEach(b => A.appendChild(cache(19.8, b[0], 96.5, b[1], "#FBF9F5")));
+          /* là où il y avait la pause : la grille, avec ses traits */
+          const gr = cache(19.8, 61.2, 96.5, 75.6, "#FBF9F5"); gr.style.background = "linear-gradient(180deg,#FBF9F5 0 10.4%,#E6E0D9 10.4% 11.3%,#FBF9F5 11.3% 59.2%,#E6E0D9 59.2% 60.1%,#FBF9F5 60.1%)"; A.appendChild(gr);
           const Z = B.map(b => { const z = morceau("app-agenda", 19.8, b[0], 96.5, b[1], "rdv"); A.appendChild(z); return z; });
           /* à la place de la pause : un vrai rendez-vous, le planning est plein */
           const j = document.createElement("div"); j.className = "z rdv rdv-html"; Object.assign(j.style, { left: "20.6%", top: "62%", width: "75%", height: "12.8%" });
@@ -1992,17 +2035,23 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         cache.style.backgroundImage = f && f.img ? `url(${f.img})` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; focus = el; IT.forEach(i => i.classList.toggle("on", i === el)); if (el) fond(el.dataset.im); };
       const boucle = now => { const dt = Math.min(.05, (now - (dern || now)) / 1000); dern = now;
-        if (vu) { if (!survol) { x -= vit * dt; if (larg && -x >= larg) x += larg; }
+        if (vu) { if (!survol && ORDI) { x -= vit * dt; if (larg && -x >= larg) x += larg; }
           piste.style.transform = `translate3d(${x.toFixed(1)}px,-50%,0)`;
-          if (!survol) { const c = innerWidth / 2; let best = null, bd = 1e9; IT.forEach(i => { const r = i.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - c); if (d < bd) { bd = d; best = i; } }); choisis(best); } }
+          if (!survol && ORDI) { const c = innerWidth / 2; let best = null, bd = 1e9; IT.forEach(i => { const r = i.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - c); if (d < bd) { bd = d; best = i; } }); choisis(best); } }
         requestAnimationFrame(boucle); };
       let tm = 0;
+      /* téléphone : le carrousel avance d'un site toutes les 2,8 s, en glissant doucement */
+      const centre = el => { const r = el.getBoundingClientRect(); return innerWidth / 2 - (r.left + r.width / 2); };
+      const cran = () => { if (ORDI || !vu || survol || !larg || document.hidden) return; let k = IT.indexOf(focus); if (k < 0) k = L.length; const nx = IT[k + 1] || IT[L.length];
+        piste.style.transition = "transform 1s cubic-bezier(.35,.75,.25,1)"; x += centre(nx); choisis(nx);
+        setTimeout(() => { if (-x >= larg * 1.6) { piste.style.transition = "none"; x += larg; piste.style.transform = `translate3d(${x.toFixed(1)}px,-50%,0)`; choisis(IT[IT.indexOf(nx) - L.length] || nx); } }, 1050); };
+      if (!ORDI) { setInterval(cran, 2800); setTimeout(() => { if (!focus) { const d = IT[L.length]; x += centre(d); choisis(d); } }, 700); }
       IT.forEach(i => { i.addEventListener("mouseenter", () => { if (!ORDI) return; survol = i; choisis(i); }); i.addEventListener("mouseleave", () => { if (ORDI && survol === i) survol = null; });
         i.addEventListener("click", () => { if (!ORDI && focus !== i) { survol = i; choisis(i); clearTimeout(tm); tm = setTimeout(() => { survol = null; }, 3500); return; }
           open("loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + i.dataset.q, "_blank"); }); });
       /* téléphone : on fait glisser le carrousel au doigt (il repart tout seul après) */
       { let x0 = null, xs = 0, gl = false, tr = 0;
-        g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; xs = x; gl = false; survol = g; clearTimeout(tr); }, { passive: true });
+        g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; xs = x; gl = false; survol = g; clearTimeout(tr); piste.style.transition = "none"; }, { passive: true });
         g.addEventListener("touchmove", e => { if (x0 === null) return; const d = e.touches[0].clientX - x0; if (Math.abs(d) > 6) gl = true; x = xs + d * 1.15;
           if (larg) { while (-x >= larg) x += larg; while (x > 0) x -= larg; } }, { passive: true });
         g.addEventListener("touchend", () => { x0 = null; const c = innerWidth / 2; let best = null, bd = 1e9; IT.forEach(i => { const r = i.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - c); if (d < bd) { bd = d; best = i; } });
