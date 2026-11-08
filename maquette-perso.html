@@ -61,8 +61,8 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .pages{display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;touch-action:pan-x;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0}
 .choix,.bas{overscroll-behavior:contain}
 .ligneH,.grilleF{overflow-y:hidden;touch-action:pan-x}.pages::-webkit-scrollbar{display:none}
-.page6{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:36px;gap:6px 8px;padding:0 22px}
-.page6 .pol{min-width:0;padding:4px 10px;font-size:18px;border-radius:12px;overflow:hidden;text-overflow:ellipsis}
+.page6{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:38px;gap:5px 8px;padding:2px 22px 4px}
+.page6 .pol{min-width:0;padding:0 8px;font-size:17px;line-height:1.5;border-radius:12px;white-space:nowrap;overflow:visible;display:flex;align-items:center;justify-content:center}
 .ptsP{display:flex;gap:5px;justify-content:center;padding-top:6px}.ptsP i{width:5px;height:5px;border-radius:50%;background:rgba(30,28,27,.2)}.ptsP i.on{background:var(--noir)}
 .recherche{margin:0 22px 4px;display:flex;align-items:center;gap:8px;border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.85);border:1px solid rgba(30,28,27,.12)}
 .recherche input{border:0;outline:0;background:none;flex:1;min-width:0;font:400 15px Jost,sans-serif}
@@ -115,6 +115,30 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 #okC{position:absolute;left:18px;bottom:calc(env(safe-area-inset-bottom) + 28px);z-index:5;height:46px;padding:0 22px;border-radius:999px;place-items:center;font:500 12px Jost,sans-serif;letter-spacing:.18em}
 #retC{position:absolute;left:14px;top:calc(env(safe-area-inset-top) + 12px);z-index:5;width:40px;height:40px;border-radius:50%;place-items:center;font:300 22px/1 Jost,sans-serif;padding:0 0 3px}
 #tel.mc #fermerPlein,#tel.mc #oeil{display:none!important}
+/* 09/11 (Marie) : les charms EXACTEMENT comme le clavier d'emojis de l'iPhone (Messages) :
+   une recherche en haut, les charms en petit qui défilent de côté par familles (titre gris au-dessus), la barre des familles en bas
+   (la famille où l'on est s'allume dans une pilule grise). Toucher un charm le pose, le clavier reste ouvert ; ✕ ou glisser vers le bas pour fermer. */
+#tel.mc .bas{height:calc(318px + env(safe-area-inset-bottom));padding:0 0 env(safe-area-inset-bottom);background:rgba(236,236,240,.97);border-radius:0;box-shadow:0 -1px 0 rgba(0,0,0,.08)}
+#tel.mc .choix{height:100%}
+.clavier{height:100%;display:flex;flex-direction:column}
+.cl-haut{display:flex;align-items:center;gap:8px;padding:8px 10px 4px;touch-action:none}
+.cl-cherche{flex:1;display:flex;align-items:center;gap:6px;border-radius:10px;background:rgba(118,118,128,.14);padding:7px 10px;color:#8A8A8E}
+.cl-cherche svg{width:15px;height:15px;flex:none}
+.cl-cherche input{flex:1;min-width:0;border:0;outline:0;background:none;font:400 15px -apple-system,Jost,sans-serif;color:var(--noir)}
+.cl-x{flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(118,118,128,.16);font:500 13px/30px Jost,sans-serif;color:#555;padding:0}
+.cl-grille{flex:1;min-height:0;display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;padding:0 10px;scrollbar-width:none;touch-action:pan-x;overscroll-behavior:contain}.cl-grille::-webkit-scrollbar{display:none}
+.cl-sec{flex:none;display:flex;flex-direction:column}
+.cl-sec h5{margin:6px 0 4px 2px;font:600 11px -apple-system,Jost,sans-serif;letter-spacing:.02em;color:#8A8A8E;text-transform:uppercase;white-space:nowrap}
+.cl-g{display:grid;grid-auto-flow:column;grid-template-rows:repeat(5,40px);grid-auto-columns:40px;gap:3px 4px}
+.cl-g button{position:relative;width:40px;height:40px;border:0;background:none;padding:3px;border-radius:9px}
+.cl-g button:active{background:rgba(0,0,0,.08)}
+.cl-g img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
+.cl-g button.pris::after{content:"";position:absolute;right:0;bottom:0;width:12px;height:12px;border-radius:50%;background:var(--noir) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center/9px no-repeat}
+.cl-g button.fav::before{content:"";position:absolute;left:0;top:0;width:10px;height:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z' fill='%231E1C1B'/%3E%3C/svg%3E") center/contain no-repeat}
+.cl-rien{align-self:center;font:400 13px Jost,sans-serif;color:#8A8A8E;padding:0 20px;white-space:nowrap}
+.cl-barre{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 6px;overflow-x:auto;scrollbar-width:none}.cl-barre::-webkit-scrollbar{display:none}
+.cl-barre button{flex:none;width:30px;height:28px;border:0;border-radius:999px;background:transparent center/18px no-repeat;padding:0;font:500 14px/28px Jost,sans-serif;color:#6E6E73;filter:grayscale(1);opacity:.75;transition:background .2s}
+.cl-barre button.on{background-color:rgba(118,118,128,.22);filter:none;opacity:1}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:8;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.45}
 </style></head><body>
 <div id="tel">
@@ -159,11 +183,15 @@ let famille = "Populaires", recherche = "", enRecherche = false, favoris = [], f
 const GENRE = new URLSearchParams(location.search).get("genre") || "";
 const sansAccent = t => (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 const champRecherche = ph => `<label class="recherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="filtre" placeholder="${ph}" value="${filtre}"></label>`;
-function brancheRecherche() { const i = $("filtre"); if (!i) return; i.oninput = () => { filtre = i.value; const pos = i.selectionStart; rend(); const j = $("filtre"); j.focus(); j.setSelectionRange(pos, pos); }; }
+/* la recherche : on cache ce qui ne correspond pas, sans tout redessiner (plus de saut, le clavier reste ouvert) */
+function brancheRecherche() { const i = $("filtre"); if (!i) return; i.oninput = () => { filtre = i.value; const f = sansAccent(filtre);
+  if (cle() === "fond") document.querySelectorAll("#grilleF .vg").forEach(v => v.hidden = !!f && !sansAccent(v.dataset.f).includes(f));
+  else { document.querySelectorAll(".page6 .pol").forEach(v => v.hidden = !!f && !sansAccent(v.textContent).includes(f));
+    document.querySelectorAll(".page6").forEach(pg => pg.hidden = ![...pg.children].some(x => !x.hidden)); $("ptsP")?.toggleAttribute("hidden", !!f); $("pages").scrollLeft = 0; } }; }
 const MAX_CHARMS = 12;
 try { favoris = JSON.parse(localStorage.getItem("charmsFavoris") || "[]"); } catch (e) {}
 const bulle = t => { let b = $("bulle"); if (!b) { b = document.createElement("div"); b.id = "bulle"; b.className = "bulle"; $("tel").appendChild(b); } b.textContent = t; b.classList.add("on"); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove("on"), 1400); };
-const marquePoses = () => { if (!$("grilleC")) return; const poses = new Set([...D.querySelectorAll(".lgn-sticker")].map(x => x.dataset.n)); $("grilleC").querySelectorAll("[data-ch]").forEach(b => b.classList.toggle("pris", poses.has(b.dataset.ch))); };
+const marquePoses = () => { const g = $("clGrille"); if (!g) return; const poses = new Set([...D.querySelectorAll(".lgn-sticker")].map(x => x.dataset.n)); g.querySelectorAll("[data-ch]").forEach(b => b.classList.toggle("pris", poses.has(b.dataset.ch))); };
 
 const clique = sel => { const b = D && D.querySelector(sel); if (b) b.click(); return b; };
 const defile = () => D.querySelector(".defile") || D.scrollingElement;
@@ -226,19 +254,16 @@ function rend() {
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
     let pols = [...D.querySelectorAll("#pzPol [data-p]")].sort((a, b) => ((ELEG.includes(a.dataset.p) ? 0 : 1) - (ELEG.includes(b.dataset.p) ? 0 : 1)) * (fun ? -1 : 1));
-    if (filtre) pols = pols.filter(b => sansAccent(b.textContent).includes(sansAccent(filtre)));
     const pages = []; for (let k = 0; k < pols.length; k += 6) pages.push(pols.slice(k, k + 6));
     c.innerHTML = (chercheOuvert ? champRecherche("Chercher une écriture…") : "") + `<div class="pages" id="pages">${pages.map(pg => `<div class="page6">${pg.map(b => `<button class="pol verre ${b.classList.contains("on") ? "on" : ""}" data-p="${b.dataset.p}" style="${b.getAttribute("style")}">${b.textContent}</button>`).join("")}</div>`).join("") || `<p class="rien" style="text-align:center;color:var(--muted);font:300 13px Jost">Aucune écriture</p>`}</div>
       ${pages.length > 1 ? `<div class="ptsP" id="ptsP">${pages.map((_, k) => `<i class="${k ? "" : "on"}"></i>`).join("")}</div>` : ""}`;
     const pg = $("pages"); pg.onscroll = () => { const k = Math.round(pg.scrollLeft / pg.clientWidth); document.querySelectorAll("#ptsP i").forEach((x, n) => x.classList.toggle("on", n === k)); };
     brancheRecherche();
   } else {
-    const LOUPE = `<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
-    c.innerHTML = `<div class="tiroir"><button class="poignee" data-poignee aria-label="Agrandir"><i></i></button><div class="familles" id="familles">${enRecherche
-        ? `<button class="loupe on" data-loupe aria-label="Fermer la recherche">${LOUPE}</button><input id="cherche" placeholder="Fraise, cœur, étoile…" value="${recherche}">`
-        : `<button class="loupe" data-loupe aria-label="Chercher">${LOUPE}</button>` + FAM.map(f => `<button class="${f[0] === famille ? "on" : ""}" data-fam="${f[0]}" title="${f[0]}" style="${f[2] ? `background-image:url(loginail-site/charms-mini/${f[2]}.webp)` : ""}">${f[2] ? "" : f[0] === "Favoris" ? "♡" : "★"}</button>`).join("")}</div>
-      <div class="grilleC" id="grilleC"></div></div>`;
-    remplitCharms(); if (enRecherche) { const i = $("cherche"); i.oninput = e => { recherche = e.target.value; remplitCharms(); }; i.focus(); }
+    const LOUPE = `<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+    c.innerHTML = `<div class="clavier"><div class="cl-haut" id="clHaut"><label class="cl-cherche">${LOUPE}<input id="chercheC" placeholder="Rechercher un charm" value="${recherche}"></label><button class="cl-x" data-fermer aria-label="Fermer">✕</button></div>
+      <div class="cl-grille" id="clGrille"></div><div class="cl-barre" id="clBarre"></div></div>`;
+    remplitCharms(); $("chercheC").oninput = e => { recherche = e.target.value; remplitCharms(); };
   }
   requestAnimationFrame(taille);
 }
@@ -246,11 +271,36 @@ function rend() {
 function vignettes() {
   return [...D.querySelectorAll("#pzFonds [data-f]")].map(b => { const t = b.querySelector(".f100"); let h = "";
     if (t) { const c = t.cloneNode(true); c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k)); h = c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); }
-    if (filtre && !sansAccent(b.dataset.f).includes(sansAccent(filtre))) return "";
     return b.dataset.f ? `<button class="vg" data-f="${b.dataset.f.replace(/"/g, "&quot;")}" title="${b.title || ""}">${h}</button>` : `<button class="vg sans" data-f="">Aucun</button>`; }).join("");
 }
 function ajusteFonds() { const g = $("grilleF"); if (!g) return; g.querySelectorAll("[data-f]").forEach(b => b.classList.toggle("on", b.dataset.f === (W.__pzEtat?.().fond || ""))); }
+/* le clavier : une section par famille (Favoris, Aléatoire, Populaires, Cœurs…, puis tous les autres) */
+let aleatoire = [];
+const tireAleatoire = () => { const tous = Object.keys(W.CH_IMG || {}), deja = [...D.querySelectorAll(".lgn-sticker")].map(x => x.dataset.n);
+  const fams = FAM.filter(f => f[1] && deja.some(n => f[1].test(n)));   // de la même famille que ceux qu'elle a déjà posés, sinon au hasard
+  const pool = fams.length ? tous.filter(n => fams.some(f => f[1].test(n)) && !deja.includes(n)) : tous;
+  aleatoire = pool.map(n => [Math.random(), n]).sort((a, b) => a[0] - b[0]).slice(0, 30).map(x => x[1]); };
 function remplitCharms() {
+  const tous = Object.keys(W.CH_IMG || {}), q = sansAccent(recherche).replace(/[^a-z0-9]/g, "");
+  if (!aleatoire.length) tireAleatoire();
+  const poses = new Set([...D.querySelectorAll(".lgn-sticker")].map(x => x.dataset.n));
+  const bt = n => `<button data-ch="${n}" class="${poses.has(n) ? "pris" : ""} ${favoris.includes(n) ? "fav" : ""}" aria-label="${n}"><img src="loginail-site/charms-mini/${n}.webp" loading="lazy" alt=""></button>`;
+  let secs;
+  if (q) { const l = tous.filter(n => n.includes(q)); secs = [["Résultats", "", l]]; }
+  else { const pris = new Set(); const fam = f => { const l = tous.filter(n => f[1].test(n)); l.forEach(n => pris.add(n)); return l; };
+    secs = [["Favoris", "♡", favoris.filter(n => tous.includes(n))], ["Aléatoire", "✦", aleatoire], ["Populaires", "★", POP.filter(n => tous.includes(n))]];
+    FAM.filter(f => f[1]).forEach(f => secs.push([f[0], f[2], fam(f)]));
+    secs.push(["Tous les autres", "…", tous.filter(n => !pris.has(n))]); secs = secs.filter(x => x[2].length); }   // une famille vide (Favoris au début) ne s'affiche pas
+  const g = $("clGrille");
+  g.innerHTML = secs.map(([t, ic, l]) => `<div class="cl-sec" data-sec="${t}"><h5>${t}</h5>${l.length ? `<div class="cl-g">${l.map(bt).join("")}</div>` : `<div class="cl-rien">${t === "Favoris" ? "Restez appuyée sur un charm" : "Aucun charm"}</div>`}</div>`).join("");
+  $("clBarre").innerHTML = q ? "" : secs.map(([t, ic]) => `<button data-sec="${t}" title="${t}" style="${ic.length > 2 ? `background-image:url(loginail-site/charms-mini/${ic}.webp)` : ""}">${ic.length > 2 ? "" : ic}</button>`).join("");
+  g.scrollLeft = 0; g.onscroll = barreCharms; barreCharms();
+}
+/* la famille où l'on est s'allume dans la barre du bas (comme sur l'iPhone) */
+function barreCharms() { const g = $("clGrille"); if (!g) return; let cur = null;
+  g.querySelectorAll(".cl-sec").forEach(sec => { if (sec.offsetLeft - g.scrollLeft <= 30) cur = sec.dataset.sec; });
+  $("clBarre").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.sec === cur)); }
+function ancienRemplitCharms() {
   const tous = Object.keys(W.CH_IMG || {}), q = recherche.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
   const l = q ? tous.filter(n => n.includes(q)) : famille === "Favoris" ? favoris.filter(n => tous.includes(n)) : famille === "Populaires" ? POP.filter(n => tous.includes(n)) : tous.filter(n => FAM.find(f => f[0] === famille)[1].test(n));
   const poses = new Set([...D.querySelectorAll(".lgn-sticker")].map(x => x.dataset.n));
@@ -265,9 +315,10 @@ function poseSticker(n) {
   if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; }
   const box = defile(), im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".png"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
   im._s = 80; im._r = Math.round(Math.random() * 30 - 15);
-  const x = box.clientWidth / 2 - 40 + (Math.random() * 80 - 40), y = box.scrollTop + box.clientHeight * .3 + (Math.random() * 60 - 30);
+  const k = F.getBoundingClientRect().width / 390 || 1, libre = box.clientHeight - ($("bas").classList.contains("ouvre") ? $("bas").offsetHeight / k : 0);   // au-dessus du clavier
+  const x = box.clientWidth / 2 - 40 + (Math.random() * 100 - 50), y = box.scrollTop + Math.max(60, libre * .45) + (Math.random() * 50 - 25);
   im.style.cssText = `position:absolute;z-index:9000;left:${x}px;top:${y}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte ${3 + Math.random() * 1.5}s ease-in-out ${-Math.random() * 3}s infinite`;
-  majS(im); box.appendChild(im); marquePoses(); majCompte(); $("bas").classList.remove("grand"); fermeBoite();
+  majS(im); box.appendChild(im); marquePoses(); majCompte();
 }
 function brancheStickers() {
   const st = D.createElement("style"); st.textContent = "@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}.lgn-sticker.tenu{animation-play-state:paused!important}"; D.head.appendChild(st);
@@ -314,6 +365,8 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.fam) { famille = b.dataset.fam; recherche = ""; rend(); return; }
   if (b.hasAttribute("data-loupe")) { enRecherche = !enRecherche; recherche = ""; rend(); return; }
   if (b.hasAttribute("data-poignee")) { $("bas").classList.toggle("grand"); return; }
+  if (b.hasAttribute("data-fermer")) { fermeBoite(); return; }
+  if (b.closest("#clBarre") && b.dataset.sec) { const sec = $("clGrille").querySelector(`[data-sec="${CSS.escape(b.dataset.sec)}"]`); if (sec) $("clGrille").scrollTo({ left: sec.offsetLeft - 10, behavior: "smooth" }); return; }
   if (b.dataset.ch) { if (b._long) { b._long = 0; return; } poseSticker(b.dataset.ch); return; }
 });
 /* rester appuyée sur un charm = favori */
@@ -323,12 +376,17 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
 ["pointerup", "pointerleave", "pointercancel"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("[data-ch]"); if (b) clearTimeout(b._t); }));
 $("contenu").addEventListener("contextmenu", e => { if (e.target.closest("[data-ch]")) e.preventDefault(); });
 /* le rond « + » ouvre la boîte à charms ; elle se ferme dès qu'un charm est posé (ou si on touche à côté) */
-const ouvreBoite = () => { if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; } $("bas").classList.add("ouvre"); $("voileC").classList.add("on"); };
-const fermeBoite = () => { $("bas").classList.remove("ouvre"); $("voileC").classList.remove("on"); };
+const ouvreBoite = () => { if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; } tireAleatoire(); remplitCharms(); $("bas").classList.add("ouvre"); };
+const fermeBoite = () => { $("bas").classList.remove("ouvre"); $("voileC").classList.remove("on"); $("chercheC")?.blur(); };
+/* glisser le haut du clavier vers le bas = le fermer */
+document.addEventListener("pointerdown", e => { const h = e.target.closest?.("#clHaut"); if (!h || e.target.closest("input,button")) return; const y0 = e.clientY;
+  const mv = ev => { const d = ev.clientY - y0; if (d > 0) $("bas").style.transform = `translateY(${d}px)`; };
+  const up = ev => { document.removeEventListener("pointermove", mv); document.removeEventListener("pointerup", up); $("bas").style.transform = ""; if (ev.clientY - y0 > 60) fermeBoite(); };
+  document.addEventListener("pointermove", mv); document.addEventListener("pointerup", up); });
 $("plusC").onclick = ouvreBoite; $("voileC").onclick = fermeBoite;
 $("okC").onclick = () => $("fin").classList.add("on");
 $("retC").onclick = () => $("retour").click();
-$("cherche").onclick = () => { chercheOuvert = !chercheOuvert; filtre = ""; rend(); if (chercheOuvert) $("filtre")?.focus(); };
+$("cherche").onclick = () => { chercheOuvert = !chercheOuvert; filtre = ""; rend(); if (chercheOuvert) setTimeout(() => $("filtre")?.focus({ preventScroll: true }), 50); };
 /* « 12 charms maximum », écrit en petit au-dessus du téléphone pendant l'étape des charms */
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
