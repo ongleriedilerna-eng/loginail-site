@@ -380,14 +380,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   /* « Prêt en 1 minute » : un fond beige très clair, tout simple */
   .build{background:#F7F2EB}
   .build .colle::before{display:none}
-  /* Classe / Baddie : les formes AU MILIEU, entre les deux téléphones, elles défilent de haut en bas */
-  .styl-duo .styl{position:relative}
-  .styl-duo .formes{position:absolute!important;top:50%;transform:translateY(-50%);height:min(520px,62vh);width:150px;margin:0!important;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;padding:0!important;
-    -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);z-index:2}
-  #styles .formes{right:14px}
-  #styles2 .formes{left:14px}
-  .styl-duo .formes button{width:150px!important;height:76px;flex:none;scroll-snap-align:center;flex-direction:row!important;justify-content:center;gap:10px!important;font-size:12px}
-  .styl-duo .formes button svg{width:20px!important;height:30px!important}
+
 }
 /* « Tout ça, pour vous » : un cadre, un fond qui change, des charms */
 .fin-pub{position:relative;overflow:hidden;isolation:isolate}
@@ -399,12 +392,31 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .fp-ch{position:absolute;inset:0;z-index:1;pointer-events:none}
 .fp-ch img{position:absolute;filter:drop-shadow(0 6px 10px rgba(0,0,0,.2));animation:cerFlotte2 var(--d,4.5s) ease-in-out infinite;animation-delay:var(--r,0s)}
 @keyframes cerFlotte2{0%,100%{transform:translateY(0) rotate(var(--a,0deg))}50%{transform:translateY(-10px) rotate(calc(var(--a,0deg) + 8deg))}}
-.fin-pub .fp-carte{background:rgba(246,243,239,.93);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:30px 26px 32px;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);max-width:640px;margin:0 auto}
+.fin-pub .fp-carte{background:rgba(246,243,239,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:34px 22px 36px;box-shadow:0 20px 50px -30px rgba(0,0,0,.4);max-width:none;margin:0;pointer-events:none}
+.fin-pub .fp-carte .btn{pointer-events:auto}
+.fp-ch img{pointer-events:auto;cursor:grab;touch-action:none;-webkit-user-drag:none;user-select:none}
+.fp-ch img.tient{cursor:grabbing;animation-play-state:paused;z-index:5}
+.fp-ch img.tombe{animation:fpTombe 1.2s cubic-bezier(.4,0,.9,.4) forwards}
+@keyframes fpTombe{to{transform:translateY(120vh) rotate(200deg);opacity:.2}}
 @media (min-width:1000px){
-  .fin-pub{max-width:1200px!important;margin:90px auto 40px!important;padding:110px 40px!important;border-radius:44px;box-shadow:0 40px 80px -40px rgba(0,0,0,.45)}
+  .fin-pub{max-width:none!important;margin:60px 0 0!important;padding:120px 0!important;border-radius:0}
 }
 @media (max-width:999px){
-  .fin-pub{margin:40px 14px 20px;padding:60px 16px!important;border-radius:30px}
+  .fin-pub{margin:30px 0 0;padding:70px 0!important;border-radius:0}
+}
+
+@media (min-width:1000px){
+  /* le prix : fond blanc */
+  #prix{background:#fff;box-shadow:0 0 0 100vmax #fff;clip-path:inset(0 -100vmax)}
+  /* « Elle vous cherche » : l'écran s'arrête dessus, puis les 3 raisons arrivent une à une */
+  #pourquoi{display:block!important;max-width:none!important;padding:0!important;height:300vh;margin:0!important}
+  .pq-colle{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"k goo" "t goo" "p goo" "why why";column-gap:80px;max-width:1200px;margin:0 auto;padding:90px 64px 40px;align-content:center;align-items:start}
+  .pq-colle>.k{grid-area:k}.pq-colle>.t2{grid-area:t;font-size:clamp(46px,4.2vw,62px)!important}.pq-colle>.pique{grid-area:p;font-size:18px}
+  .pq-colle>.goo{grid-area:goo;align-self:center;padding:30px!important}
+  .pq-colle>.why{grid-area:why;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:50px}
+  .pq-colle .why>div{opacity:0;transform:translateY(40px) scale(.96);transition:opacity .6s,transform .7s cubic-bezier(.3,1.3,.5,1)}
+  .pq-colle .why>div.on{opacity:1;transform:none}
+  .pq-colle .why>div.fort{box-shadow:0 0 0 2px #1E1C1B,0 24px 40px -24px rgba(0,0,0,.5)}
 }
 </style>
 </head><body>
@@ -606,7 +618,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  let y0=scrollY,bas=false;const maj=()=>{t=0;const y=scrollY;if(Math.abs(y-y0)>6){bas=y>y0&&y>80;y0=y}const cache=bas||Z.some(z=>{const r=z.getBoundingClientRect();return r.top<=1&&r.bottom>innerHeight});if(top.classList.contains("cache")!==cache)top.classList.toggle("cache",cache)};
  addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(maj)},{passive:true});maj()}
 /* les styles : Classe / Baddie, on choisit par forme d'ongle (ou avec les flèches), le téléphone montre le vrai site qu'on fait glisser */
-const lanceStyles=(sec,depart)=>{const VT=matchMedia("(min-width: 1000px)").matches,SC=VT?"scrollTop":"scrollLeft",CL=VT?"clientHeight":"clientWidth",PA=VT?["paddingTop","paddingBottom"]:["paddingLeft","paddingRight"];const tel=sec.querySelector(".st-tel"),img=tel.querySelector("img"),nom=sec.querySelector(".st-nom b"),sous=sec.querySelector(".st-nom small"),V=sec.querySelector(".formes");
+const lanceStyles=(sec,depart)=>{const tel=sec.querySelector(".st-tel"),img=tel.querySelector("img"),nom=sec.querySelector(".st-nom b"),sous=sec.querySelector(".st-nom small"),V=sec.querySelector(".formes");
  const FO={"Amande":"M13 2C7 2 4 12 4 24v14h18V24C22 12 19 2 13 2Z","Ovale":"M13 3C6 3 4 12 4 22v16h18V22C22 12 20 3 13 3Z","Carré arrondi":"M6 4h14c2 0 2 2 2 4v30H4V8c0-2 0-4 2-4Z","Carré":"M4 4h18v34H4Z","Stiletto":"M13 0C10 8 4 16 4 26v12h18V26C22 16 16 8 13 0Z","Coffin":"M9 3h8l5 22v13H4V25Z"};
  const forme=q=>/style=2/.test(q)?"Stiletto":/style=3/.test(q)?"Carré":/coffin=1/.test(q)?"Coffin":/arrondi=1/.test(q)?"Carré arrondi":/epure=1/.test(q)?"Ovale":"Amande";
  const L={tpl:TPL.map(t=>({nom:t[0],q:t[1],im:t[2],f:t[3],sous:t[3],lab:t[3]})),uni:UNI.map(t=>({nom:t[0],q:t[1],im:t[2],f:forme(t[1]),sous:t[3],lab:t[0]}))};
@@ -615,19 +627,25 @@ const lanceStyles=(sec,depart)=>{const VT=matchMedia("(min-width: 1000px)").matc
  const R=9,BW=76;/* la liste est répétée 9 fois : on reste toujours au milieu, donc on tourne sans jamais voir le bout */
  const choisis=i=>{const n=L[liste].length;cur=(i%n+n)%n;const t=L[liste][cur];img.src="loginail-site/apercus-mini/"+t.im+".webp";sec._cle=liste+"|"+cur;if(window.fondApplique)fondApplique(sec,sec._cle);nom.textContent=t.nom;sous.textContent=t.sous;
    [...V.children].forEach(b=>b.classList.toggle("on",+b.dataset.i===cur));clearTimeout(tf);tf=setTimeout(vivant,450)};
- const pad=()=>{const p=Math.max(0,(V[CL]-BW)/2);V.style[PA[0]]=V.style[PA[1]]=p+"px"};
- const auMilieu=()=>{const n=L[liste].length,c=V[SC]+V[CL]/2-(parseFloat(V.style[PA[0]])||0);return Math.round(c/BW-.5)};
- const recentre=()=>{const n=L[liste].length,j=auMilieu(),blocN=Math.floor(j/n),mid=Math.floor(R/2);if(blocN!==mid){V[SC]+=(mid-blocN)*n*BW}};
+ const pad=()=>{const p=Math.max(0,(V.clientWidth-BW)/2);V.style.paddingLeft=V.style.paddingRight=p+"px"};
+ const auMilieu=()=>{const n=L[liste].length,c=V.scrollLeft+V.clientWidth/2-(parseFloat(V.style.paddingLeft)||0);return Math.round(c/BW-.5)};
+ const recentre=()=>{const n=L[liste].length,j=auMilieu(),blocN=Math.floor(j/n),mid=Math.floor(R/2);if(blocN!==mid){V.scrollLeft+=(mid-blocN)*n*BW}};
  const remplis=l=>{liste=l;sec.dataset.l=l;sec.querySelectorAll(".bascule button").forEach(b=>b.classList.toggle("on",b.dataset.l===l));const n=L[l].length;
    V.innerHTML=Array.from({length:R*n},(_,k)=>{const t=L[l][k%n];return `<button data-i="${k%n}" data-k="${k}" aria-label="${t.nom}"><svg viewBox="0 0 26 40" aria-hidden="true"><path d="${FO[t.f]}"/></svg>${t.lab}</button>`}).join("");
-   pad();V[SC]=Math.floor(R/2)*n*BW;choisis(0)};
+   pad();V.scrollLeft=Math.floor(R/2)*n*BW;choisis(0)};
  let st=0;V.addEventListener("scroll",()=>{clearTimeout(st);const j=auMilieu();if(j>=0&&V.children[j]&&+V.children[j].dataset.i!==cur){cur=+V.children[j].dataset.i;[...V.children].forEach(b=>b.classList.toggle("on",+b.dataset.i===cur))}
    st=setTimeout(()=>{recentre();choisis(+V.children[auMilieu()].dataset.i)},140)},{passive:true});
- V.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;V.scrollTo({[VT?"top":"left"]:+b.dataset.k*BW,behavior:"smooth"})});
+ V.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;V.scrollTo({left:+b.dataset.k*BW,behavior:"smooth"})});
  addEventListener("resize",()=>{pad()});
  sec.querySelectorAll(".bascule button").forEach(b=>b.addEventListener("click",()=>remplis(b.dataset.l)));
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)vivant();else{const f=tel.querySelector("iframe");if(f)f.remove()}},{threshold:.25}).observe(tel);
- remplis(depart);if(window.fondPrecharge)fondPrecharge(sec,L[depart].map((t,i)=>[depart+"|"+i,url(t.q)]))};
+ remplis(depart);
+ sec.addEventListener("wheel",e=>{if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();V.scrollLeft+=e.deltaX},{passive:false});
+ {let x0=null,s0=0,bouge=false;sec.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.button!==0)return;x0=e.clientX;s0=V.scrollLeft;bouge=false});
+  addEventListener("pointermove",e=>{if(x0===null)return;const dx=e.clientX-x0;if(Math.abs(dx)>6)bouge=true;if(bouge){V.style.scrollSnapType="none";V.scrollLeft=s0-dx}});
+  addEventListener("pointerup",()=>{if(x0===null)return;x0=null;V.style.scrollSnapType="";if(bouge){V.scrollTo({left:Math.round(V.scrollLeft/BW)*BW,behavior:"smooth"})}});
+  sec.addEventListener("click",e=>{if(bouge){e.preventDefault();e.stopPropagation();bouge=false}},true);}
+ if(window.fondPrecharge)fondPrecharge(sec,L[depart].map((t,i)=>[depart+"|"+i,url(t.q)]))};
 /* 09/11 (Marie) : sur ordinateur, Classe et Baddie côte à côte */
 {const s1=document.getElementById("styles");if(matchMedia("(min-width: 1000px)").matches){const pin=document.createElement("div");pin.className="styl-pin";s1.before(pin);const duo=document.createElement("div");duo.className="styl-duo";pin.appendChild(duo);const s2=s1.cloneNode(true);s2.id="styles2";s2.querySelectorAll("[id]").forEach(x=>x.removeAttribute("id"));
   s1.querySelector(".t2").innerHTML="Classe&nbsp;?";s2.querySelector(".t2").innerHTML="<em>Ou baddie&nbsp;?</em>";duo.append(s1,s2);lanceStyles(s1,"tpl");lanceStyles(s2,"uni")}else lanceStyles(s1,"tpl")}
@@ -819,6 +837,16 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         scrollTo({ top: a.offsetTop + (a.offsetHeight - innerHeight) * (etape + .45) / 5, behavior: "smooth" }); });
     } }
 
+  /* ---- 6 · « Elle vous cherche » : l'écran s'arrête ; la recherche s'écrit, puis « À votre nom », « Il n'y a que vous », « Dans votre bio » arrivent une à une ---- */
+  { const sec = document.getElementById("pourquoi");
+    if (sec) {
+      const c = document.createElement("div"); c.className = "pq-colle"; [...sec.children].forEach(e => c.appendChild(e)); sec.appendChild(c);
+      const W = [...c.querySelectorAll(".why>div")];
+      const maj = () => { const r = sec.getBoundingClientRect(), p = cl(-r.top / Math.max(1, r.height - innerHeight), 0, 1);
+        W.forEach((w, i) => { w.classList.toggle("on", p > .22 + i * .2); w.classList.toggle("fort", p > .22 + i * .2 && p < .42 + i * .2); }); };
+      addEventListener("scroll", () => requestAnimationFrame(maj), { passive: true }); maj();
+    } }
+
   /* ---- 3 · « Vous collez des charms sur vos clientes ? » : des charms TOUT AUTOUR, et quand elle descend, ils tombent ---- */
   { const sec = document.getElementById("charms"), pc = sec && sec.querySelector(".p-ch");
     if (pc && typeof PLUIE !== "undefined") {
@@ -865,6 +893,15 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       im.style.cssText = `left:${x.toFixed(0)}px;top:${y.toFixed(0)}px;width:${t}px;height:${t}px;--a:${Math.round(Math.random() * 40 - 20)}deg;--d:${(3.5 + Math.random() * 2.5).toFixed(1)}s;--r:${(-Math.random() * 5).toFixed(1)}s`;
       lay.appendChild(im); i++; } };
   addEventListener("load", place); setTimeout(place, 900); addEventListener("resize", () => setTimeout(place, 200));
+  /* on attrape un charm et on le déplace ; on le touche juste : il tombe (puis il revient) */
+  let tenu = null, x0 = 0, y0 = 0, l0 = 0, t0 = 0, bouge = false;
+  lay.addEventListener("pointerdown", e => { const im = e.target.closest("img"); if (!im || im.classList.contains("tombe")) return; e.preventDefault();
+    tenu = im; x0 = e.clientX; y0 = e.clientY; l0 = parseFloat(im.style.left); t0 = parseFloat(im.style.top); bouge = false; im.classList.add("tient"); try { im.setPointerCapture(e.pointerId); } catch (x) {} });
+  lay.addEventListener("pointermove", e => { if (!tenu) return; const dx = e.clientX - x0, dy = e.clientY - y0; if (Math.abs(dx) + Math.abs(dy) > 6) bouge = true;
+    if (bouge) { tenu.style.left = (l0 + dx) + "px"; tenu.style.top = (t0 + dy) + "px"; } });
+  const lache = () => { if (!tenu) return; const im = tenu; tenu = null; im.classList.remove("tient");
+    if (!bouge) { im.classList.add("tombe"); setTimeout(() => { im.classList.remove("tombe"); im.style.opacity = 0; requestAnimationFrame(() => { im.style.transition = "opacity .6s"; im.style.opacity = 1; setTimeout(() => im.style.transition = "", 700); }); }, 1250); } };
+  lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache);
 })();
 </script>
 </body></html>
