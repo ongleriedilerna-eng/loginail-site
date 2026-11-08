@@ -24,8 +24,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cartes2{flex:1;display:grid;grid-template-rows:1fr 1fr;gap:12px;margin-top:16px;min-height:0}
 .carte2{border:0;border-radius:24px;background:#E2DBD3 center/cover;position:relative;overflow:hidden;padding:0;min-height:0;transition:transform .2s}
 .carte2:active{transform:scale(.98)}
-.carte2 span{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font:400 18px Jost,sans-serif;text-align:center}
-.carte2 span small{display:block;font:300 12px Jost,sans-serif;opacity:.9;margin-top:2px}
+.carte2 span{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(0,0,0,.26);color:#fff;font:500 21px Jost,sans-serif;letter-spacing:.22em;text-transform:uppercase;text-align:center;text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.carte2 span small{font:300 12px Jost,sans-serif;letter-spacing:.04em;text-transform:none;opacity:.95}
 .liens{display:flex;justify-content:center;gap:18px;margin-top:10px}
 .lien{border:0;background:none;font:400 13.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted);padding:4px}
 /* 1 · le paquet, en grand */
@@ -36,6 +36,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .marque svg{height:16px;width:auto}
 .compte{display:flex;align-items:center;gap:6px;border:0;background:none;padding:6px 4px;font:500 15px Jost,sans-serif}
 .compte svg{width:22px;height:22px}
+.consigne{position:absolute;left:50%;top:18px;z-index:150;transform:translateX(-50%);white-space:nowrap;border-radius:999px;padding:10px 18px;font:500 13px Jost,sans-serif;letter-spacing:.04em;transition:opacity .5s,transform .5s}
+.consigne.part{opacity:0;transform:translate(-50%,-10px)}
 .verre{border:1px solid rgba(255,255,255,.9);border-radius:999px;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 14px;font:400 13px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
 .compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.18)}}
 .zoneW{position:relative;flex:1;margin:4px 0 0;min-height:0}.zone{position:absolute;inset:0}
@@ -70,7 +72,6 @@ button{font:inherit;color:inherit;cursor:pointer}
   <section class="ecran on" id="q">
     <div class="pts"><i class="on"></i><i></i><i></i></div>
     <h1 class="titre">Quel site vous <span class="mot" id="mot">ressemble</span> ?</h1>
-    <p class="sous">On vous prépare des propositions de votre site.</p>
     <div class="cartes2">
       <button class="carte2" data-genre="classique" style="background-image:url(loginail-site/apercus-mini/clean.webp)"><span>Chic et classique<small>Épuré, élégant, intemporel</small></span></button>
       <button class="carte2" data-genre="ouf" style="background-image:url(loginail-site/apercus-mini/y2k.webp)"><span>Fun et ouf<small>Fonds, charms, écritures folles</small></span></button>
@@ -80,8 +81,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 
   <section class="ecran" id="paquet">
     <div class="barreT"><button class="marque" id="retourQ" type="button" aria-label="Revenir au choix du style"><svg viewBox="0 0 290 130"><rect x="0" y="5" width="225" height="120" rx="60" fill="#1E1C1B"/><path d="M172 21H215C254 21 282 42 282 65C282 88 254 109 215 109H172A44 44 0 0 1 172 21Z" fill="#1E1C1B"/><path d="M172 28H213C247 28 274 47 274 65C274 83 247 102 213 102H172A37 37 0 0 1 172 28Z" fill="#F6F3EF"/></svg>Loginail</button>
-      <button class="compte" id="compte" type="button" aria-label="Voir mes coups de cœur"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg><span id="nbC">0</span></button></div>
-    <div class="zoneW"><div class="zone" id="zone"></div>
+      <button class="compte" id="compte" type="button" aria-label="Voir mes coups de cœur"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg><span id="nbC">0 / 10</span></button></div>
+    <div class="zoneW"><div class="zone" id="zone"></div><div class="consigne verre" id="consigne">Gardez 10 sites que vous aimez ♥</div>
     <div class="vote"><button id="non" type="button" aria-label="Je ne garde pas"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="#1E1C1B" stroke-width="2.2" stroke-linecap="round"/></svg></button>
       <button id="oui" type="button" aria-label="Je garde"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg></button></div></div>
   </section>
@@ -114,6 +115,10 @@ const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=
 const SALON = "&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise";   // (exemple) : en vrai, son nom et ses photos à elle
 const hasard = l => l[Math.floor(Math.random() * l.length)];
 const melange = l => l.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+const OBJECTIF = 10;   // au bout de 10 coups de cœur, on passe à la page d'après
+{ let C = {}; try { C = JSON.parse(localStorage.getItem("photosStyles") || "{}"); } catch (e) {}
+  if (C.chic) document.querySelector('[data-genre="classique"]').style.backgroundImage = `url(${C.chic})`;
+  if (C.fun) document.querySelector('[data-genre="ouf"]').style.backgroundImage = `url(${C.fun})`; }
 let genre = "classique", paquet = [], i = 0, coeurs = [], vus = new Set();
 
 /* « ressemble » change d'écriture, comme « briller » sur l'accueil (même largeur à chaque fois) */
@@ -150,14 +155,15 @@ function carteHtml(p) {
   const fr = c.querySelector("iframe"); fr.onload = () => cache(fr); fr.src = src(p); c._p = p; return c;
 }
 function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"), k = c.clientWidth / 390; f.style.transform = `scale(${k})`; f.style.height = (c.clientHeight / k) + "px"; }); }
-function lancePaquet() { paquet = []; vus = new Set(); i = 0; $("zone").innerHTML = ""; ajoute(8); place(); montre("paquet"); }
+function lancePaquet() { paquet = []; vus = new Set(); i = 0; $("zone").innerHTML = ""; ajoute(8); place(); montre("paquet");
+  const c = $("consigne"); c.classList.remove("part"); clearTimeout(c._t); c._t = setTimeout(() => c.classList.add("part"), 3200); }
 const ajoute = n => { for (let k = 0; k < n; k++) paquet.push(propose(genre)); };
 function place() {
   if (paquet.length - i < 5) ajoute(6);   // sans fin : on en prépare toujours d'autres
   const z = $("zone"); [...z.children].forEach(c => { if (c._n < i) c.remove(); });
   for (let k = i; k < i + 3; k++) if (![...z.children].some(c => c._n === k)) { const c = carteHtml(paquet[k]); c._n = k; z.prepend(c); }
   [...z.children].forEach(c => { c.classList.toggle("dessous", c._n === i + 1); c.classList.toggle("cache", c._n > i + 1); c.style.zIndex = 100 - (c._n - i); });
-  $("nbC").textContent = coeurs.length;
+  $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`;
   requestAnimationFrame(echelle); branche([...z.children].find(c => c._n === i));
 }
 function vote(oui) {
@@ -166,6 +172,7 @@ function vote(oui) {
   c.querySelector(".tampon." + (oui ? "oui" : "non")).style.opacity = 1;
   c.style.transition = "transform .4s ease-in, opacity .4s"; c.style.transform = `translateX(${oui ? 600 : -600}px) rotate(${oui ? 18 : -18}deg)`; c.style.opacity = 0;
   i++; setTimeout(place, 240);
+  if (oui && coeurs.length === OBJECTIF) setTimeout(montreCoeurs, 650);
 }
 function branche(c) {
   if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"), fr = c.querySelector("iframe"); let x0 = null, y0 = 0, dx = 0, sens = null, top0 = 0;
@@ -192,6 +199,7 @@ const courant = () => Math.max(0, Math.min(coeurs.length - 1, Math.round($("carr
 function montreCoeurs() {
   const z = $("carrou"); z.innerHTML = ""; $("ptsC").innerHTML = "";
   $("sousC").textContent = coeurs.length ? "Glissez pour les revoir, puis choisissez votre préféré." : "Pas encore de coup de cœur. Revenez glisser quelques sites !";
+  document.querySelector("#coeurs .titre").textContent = coeurs.length ? `Vos ${coeurs.length} coup${coeurs.length > 1 ? "s" : ""} de cœur` : "Vos coups de cœur";
   $("enl").hidden = $("perso").hidden = !coeurs.length;
   coeurs.forEach((p, k) => { const sl = document.createElement("div"); sl.className = "slide"; sl.innerHTML = `<iframe title="Coup de cœur"></iframe><div class="prise"></div>`; sl._p = p; z.appendChild(sl); branche2(sl); $("ptsC").insertAdjacentHTML("beforeend", `<i class="${k ? "" : "on"}"></i>`); });
   montre("coeurs"); requestAnimationFrame(() => { dimCarrou(); z.scrollLeft = 0; effet(); });
