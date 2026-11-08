@@ -659,6 +659,79 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   .fp-colle>.fp-carte{z-index:4}
   .fin-pub .fp-carte{background:rgba(250,246,241,.95)!important;box-shadow:0 40px 90px -40px rgba(70,40,25,.55)!important}
 }
+
+/* ===== 15/11 (Marie) : les choix de la planche « avis d'expert » — C+, K, G — version ORDINATEUR ===== */
+@media (min-width:1000px){
+  /* ---- C+ · l'accueil : fond crème uni ; à droite, le fond du site + des charms, le site ET l'appli aux mêmes couleurs ---- */
+  .hero{background:#F6F3EF!important;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr)!important;grid-template-areas:"k pan" "titre pan" "lig pan" "creer pan" "sous pan"!important;
+    grid-template-rows:1fr auto auto auto 1fr!important;column-gap:clamp(40px,5vw,80px)!important;padding-right:clamp(20px,2.4vw,40px)!important}
+  .hero::before{display:none!important}
+  .hero .duo,.hero .duo-pts{display:none!important}
+  .hero>.k{align-self:end}
+  .hero .h-lig{grid-area:lig;font:400 13px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#1E1C1B;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:0 0 28px}
+  .hero .h-lig i{display:inline-block;width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.4}
+  .h-pan{grid-area:pan;position:relative;align-self:stretch;margin:84px 0 22px;border-radius:30px;overflow:hidden;background:#EFE7DF;min-height:420px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+  .h-pan .f{position:absolute;inset:0;background:center/cover no-repeat;transition:opacity .7s}
+  .h-pan .f.b{opacity:0}
+  .h-pan .f::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 55%,rgba(246,243,239,.0),rgba(246,243,239,.35))}
+  .h-pan .chs{position:absolute;inset:0;pointer-events:none}
+  .h-pan .chs img{position:absolute;width:clamp(34px,3.4vw,54px);filter:drop-shadow(0 8px 10px rgba(0,0,0,.2));animation:hpFlotte var(--d,5s) ease-in-out infinite;animation-delay:var(--r,0s);transition:opacity .5s}
+  @keyframes hpFlotte{0%,100%{transform:translateY(0) rotate(var(--a,0deg))}50%{transform:translateY(-10px) rotate(calc(var(--a,0deg) + 8deg))}}
+  .h-pan .tel{position:absolute;top:50%;aspect-ratio:420/909;padding:.55%;border-radius:15%/7%;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 1.2px #8a857f,0 40px 60px -30px rgba(0,0,0,.6);z-index:2}
+  .h-pan .tel{padding:6px}
+  .h-pan .tel .e{position:relative;width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff}
+  .h-pan .tel .e img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .45s}
+  .h-pan .tel .e::before{content:"";position:absolute;z-index:2;top:3.2%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
+  .h-pan .t1{height:min(74%,470px);left:20%;transform:translateY(-52%) rotate(-4deg)}
+  .h-pan .t2{height:min(68%,430px);right:16%;transform:translateY(-46%) rotate(4deg)}
+  .h-pan .lab{position:absolute;bottom:20px;z-index:3;font:500 11px Jost;letter-spacing:.2em;text-transform:uppercase;background:rgba(246,243,239,.94);padding:7px 13px;border-radius:99px;box-shadow:0 8px 18px -10px rgba(0,0,0,.4)}
+  .h-pan .lab.l1{left:calc(20% + 10px)}.h-pan .lab.l2{right:calc(16% + 18px)}
+  .h-pan .nt{position:absolute;left:auto!important;right:4%!important;top:7%!important;bottom:auto!important;transform-origin:50% 0;z-index:4;width:min(270px,44%);background:rgba(250,248,246,.97);border-radius:16px;padding:11px 13px;font:400 12px/1.35 Jost;color:#1E1C1B;box-shadow:0 18px 34px -16px rgba(0,0,0,.55);display:flex;gap:10px;align-items:center;animation:hpNt 5.4s ease-in-out infinite}
+  .h-pan .nt i{flex:none;width:32px;height:32px;border-radius:9px;background:url(loginail-site/icone-appli.svg) center/cover}.h-pan .nt b{display:block;font-weight:500;font-size:12.5px}.h-pan .nt span{color:#5a524d}
+  @keyframes hpNt{0%,10%{opacity:0;transform:translateY(-10px) scale(.95)}18%,82%{opacity:1;transform:none}92%,100%{opacity:0;transform:translateY(-6px)}}
+
+  /* ---- K · à la place de « Elle vous cherche » : dans votre bio, votre .fr ---- */
+  #pourquoi{display:none!important}
+  .bio-k{position:relative;height:100vh;min-height:600px;background:#F3EEE8;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;padding:0 clamp(40px,6vw,110px);gap:40px}
+  .bio-k .k{font:500 12px Jost;letter-spacing:.32em;text-transform:uppercase;color:#6b625c}
+  .bio-k h2{font:400 clamp(46px,4.6vw,72px)/1.03 'Cormorant Garamond',serif;margin:16px 0 20px;letter-spacing:-.01em}.bio-k h2 em{font-style:italic}
+  .bio-k p{font:400 17px/1.6 Jost;color:#4a4440;max-width:440px;margin:0}
+  .bio-k .pts{display:flex;gap:40px;margin-top:30px}.bio-k .pts div{font-size:13.5px;color:#6b625c}.bio-k .pts b{display:block;font:400 26px 'Cormorant Garamond',serif;color:#1E1C1B}
+  .bio-k .ex{font-size:11.5px;color:#8a8079;margin-top:26px}
+  .bio-k .scene{position:relative;height:min(78vh,620px)}
+  .bio-k .tel{position:absolute;top:50%;height:100%;aspect-ratio:420/909;padding:9px;border-radius:15%/7%;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 1.2px #8a857f,0 44px 64px -30px rgba(0,0,0,.55);transition:all .9s cubic-bezier(.2,.8,.3,1)}
+  .bio-k .tel .e{position:relative;width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff}
+  .bio-k .tel .e::before{content:"";position:absolute;z-index:2;top:2.6%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
+  .bio-k .insta{left:4%;transform:translateY(-50%)}.bio-k .site{right:4%;transform:translateY(-50%) scale(.9);opacity:.35}
+  .bio-k.ouvre .insta{transform:translateY(-50%) scale(.9);opacity:.35}.bio-k.ouvre .site{transform:translateY(-50%);opacity:1}
+  .bio-k .site img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .prof{width:100%;height:100%;background:#fff;padding:18% 7% 6%;font:400 12px/1.4 Jost;color:#1E1C1B;display:flex;flex-direction:column;gap:9px}
+  .prof .haut{display:flex;align-items:center;gap:14px}.prof .av{flex:none;width:62px;height:62px;border-radius:50%;background:center/cover;box-shadow:0 0 0 3px #fff,0 0 0 5px #d9c8b6}
+  .prof .chiffres{display:flex;gap:16px;text-align:center;font-size:11px;color:#6b625c}.prof .chiffres b{display:block;font-size:13px;color:#1E1C1B;font-weight:500}
+  .prof .nom{font-weight:500;font-size:13.5px}.prof .bio{color:#4a4440;font-size:12px}
+  .prof .lien{display:inline-flex;align-items:center;gap:5px;width:fit-content;color:#2A5BD7;font-weight:500;font-size:12.5px;padding:3px 7px;margin-left:-7px;border-radius:7px;transition:background .3s}
+  .bio-k.clic .prof .lien{background:rgba(42,91,215,.15)}
+  .prof .grille{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:6px}.prof .grille i{aspect-ratio:1;background:center/cover}
+  .bio-k .doigt{position:absolute;z-index:5;font-size:34px;left:30%;top:68%;opacity:0;transition:all .55s;pointer-events:none}.bio-k.clic .doigt{opacity:1;left:18%;top:38%}
+
+  /* ---- G · Classe ou baddie : un carrousel qui tourne sans fin ; la souris agrandit ; le fond suit ---- */
+  .styl-pin{display:none!important}
+  .gal{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#EFE7DF}
+  .gal .bg{position:absolute;inset:0;background:center/cover;transition:opacity 1s}.gal .bg.b{opacity:0}
+  .gal .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,243,239,.62),rgba(246,243,239,.15) 38%,rgba(246,243,239,.2))}
+  .gal .q{position:absolute;left:0;right:0;top:clamp(34px,7vh,70px);text-align:center;z-index:3;pointer-events:none}
+  .gal .q .k{font:500 11.5px Jost;letter-spacing:.32em;text-transform:uppercase;color:#1E1C1B;opacity:.7}
+  .gal .q h2{margin:10px 0 0;font:400 clamp(36px,3.4vw,52px)/1 'Cormorant Garamond',serif;text-transform:uppercase;letter-spacing:.08em}
+  .gal .q h2 em{font-style:italic}
+  .gal .piste{position:absolute;left:0;top:58%;display:flex;align-items:center;gap:clamp(26px,2.6vw,46px);z-index:2;will-change:transform}
+  .gal .it{flex:none;display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;transition:transform .7s cubic-bezier(.25,.8,.3,1),opacity .7s,filter .7s;opacity:.62;transform:scale(.82);filter:saturate(.75)}
+  .gal .it.on{opacity:1;transform:scale(1.14);filter:none}
+  .gal .it .tel{height:min(calc(100vh - 330px),400px);aspect-ratio:420/909;padding:7px;border-radius:15%/7%;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 1.2px #8a857f,0 34px 50px -26px rgba(0,0,0,.6)}
+  .gal .it .e{position:relative;width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff}
+  .gal .it .e img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  .gal .it .e::before{content:"";position:absolute;z-index:2;top:3%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
+  .gal .it small{font:500 10.5px Jost;letter-spacing:.3em;text-transform:uppercase;background:rgba(246,243,239,.92);padding:6px 12px;border-radius:99px}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1372,6 +1445,89 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     const sous = document.elementsFromPoint(e.clientX, e.clientY).find(x => x.closest && x.closest(".s3")); const s = sous && sous.closest(".s3");
     st.querySelectorAll(".s3").forEach(x => { if (x !== s && x.classList.contains("face")) x.classList.remove("face"); });
     if (s && !s.classList.contains("face") && !s.classList.contains("tourne")) s.dispatchEvent(new Event("mouseenter")); });
+})();
+</script>
+<script id="ordi4">/* 15/11 (Marie) : les choix de la planche « avis d'expert » — C+, K, G — version ORDINATEUR */
+(() => {
+  if (!matchMedia("(min-width: 1000px)").matches) return;
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const hasard = (a, b) => a + Math.random() * (b - a);
+
+  /* ---- C+ · l'accueil ---- */
+  { const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1"), mot = document.getElementById("mot");
+    if (h && k && h1) {
+      k.textContent = "Pour les prothésistes ongulaires · prêt en une minute";
+      const lig = document.createElement("div"); lig.className = "h-lig"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig);
+      /* un univers = son fond, ses charms, son site, son appli aux mêmes couleurs */
+      const U = [["tpl-maisonnoire", "app-noir", ["perle", "cristal", "coeurchrome", "noeudgelee"]], ["cerise", "app-rose", ["cerisedisco", "noeudcerise", "fraisegelee", "cerisecoeur"]],
+                 ["tpl-onglesdemma", "app-lin", ["perle", "hibiscus", "papillondore", "coeurchrome"]], ["bling", "app-choco", ["boule8or", "cerisesor", "levresgrillz", "etoilestrass"]],
+                 ["tpl-studiopoudre", "app-poudre", ["noeudgelee", "perle", "papillondore", "fraiseperle"]], ["pop", "app-abricot", ["bouledisco", "framboise", "canard", "oeilbleu"]]];
+      const pan = document.createElement("div"); pan.className = "h-pan"; pan.setAttribute("aria-hidden", "true");
+      pan.innerHTML = '<div class="f a"></div><div class="f b"></div><div class="chs"></div>' +
+        '<div class="tel t1"><div class="e"><img alt=""></div></div><div class="tel t2"><div class="e"><img alt=""></div></div>' +
+        '<div class="lab l1">Votre site</div><div class="lab l2">Votre appli</div>' +
+        '<div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div></div>';
+      h.appendChild(pan);
+      const [fa, fb] = pan.querySelectorAll(".f"), chs = pan.querySelector(".chs"), [is, ia] = pan.querySelectorAll(".tel img");
+      const PL = [[6, 10], [86, 8], [4, 70], [90, 72], [46, 4], [48, 88], [12, 40], [88, 40]];
+      let u = 0;
+      const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp`;
+        chs.innerHTML = PL.map((p, j) => `<img src="loginail-site/charms-mini/${x[2][j % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); };
+      pose();
+      /* quand « briller » change d'écriture, tout l'univers change avec */
+      if (mot) { let dern = mot.style.fontFamily; new MutationObserver(() => { const f = mot.style.fontFamily || (mot.querySelector(".mt") || mot).style.fontFamily; if (f && f !== dern) { dern = f; u++; pose(); } })
+        .observe(mot, { attributes: true, attributeFilter: ["style"], subtree: true }); }
+    } }
+
+  /* ---- K · dans votre bio, votre .fr ---- */
+  { const pq = document.getElementById("pourquoi");
+    if (pq) {
+      const s = document.createElement("section"); s.className = "bio-k"; s.id = "bio";
+      const E = "loginail-site/univers-photos/emma/";
+      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio,<br><em>votre .fr.</em></h2>
+        <p>Elle voit vos ongles, elle clique sur votre lien, elle réserve. Pas de page d’annuaire avec vos concurrentes à côté : juste vous.</p>
+        <div class="pts"><div><b>votre-salon.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div>
+        <div class="ex">Exemple · personnes et photos créées par IA</div></div>
+        <div class="scene" aria-hidden="true"><div class="tel insta"><div class="e"><div class="prof"><div class="haut"><div class="av" style="background-image:url(${E}portrait.webp)"></div><div class="chiffres"><div><b>214</b>posts</div><div><b>3 920</b>abonnés</div></div></div>
+          <div class="nom">les Ongles d’Emma</div><div class="bio">Prothésiste ongulaire · Bordeaux 💅<br>Nude, french, ongles naturels</div><span class="lien">🔗 lesonglesdemma.fr</span>
+          <div class="grille">${["1", "2", "3", "salon", "portrait", "1"].map((n, i) => `<i style="background-image:url(${i === 5 ? "loginail-site/univers-photos/noire/" : E}${n}.webp)"></i>`).join("")}</div></div></div></div>
+          <div class="tel site"><div class="e"><img src="loginail-site/apercus-univers/tpl-onglesdemma.webp" alt=""></div></div><div class="doigt">👆</div></div>`;
+      pq.after(s);
+      let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
+      const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;
+        t.push(setTimeout(() => s.classList.add("clic"), 1900)); t.push(setTimeout(() => s.classList.add("ouvre"), 2800)); t.push(setTimeout(() => { t = []; tour(); }, 7200)); };
+    } }
+
+  /* ---- G · Classe ou baddie : le carrousel sans fin ---- */
+  { const pin = document.querySelector(".styl-pin");
+    if (pin && typeof TPL !== "undefined" && typeof UNI !== "undefined") {
+      const FC = {"tpl-maisonmoka": {"img": "loginail-site/fonds-classe/tpl-maisonmoka.webp", "clair": true}, "tpl-maisonnoire": {"img": "loginail-site/fonds-classe/tpl-maisonnoire.webp", "clair": true}, "tpl-atelierronce": {"img": "loginail-site/fonds-classe/tpl-atelierronce.webp", "clair": true}, "tpl-maisonsauge": {"couleur": "#DDE7D0"}, "tpl-maisonlin": {"couleur": "#E7DED0"}, "tpl-studiopoudre": {"img": "loginail-site/fonds-classe/tpl-studiopoudre.webp", "clair": true}, "tpl-onglesdemma": {"img": "loginail-site/fonds-classe/tpl-onglesdemma.webp", "clair": true}, "cerise": {"img": "loginail-site/fonds-classe/cerise.webp", "clair": true}, "pastel": {"img": "loginail-site/fonds-classe/pastel.webp", "clair": true}, "chrome": {"img": "loginail-site/fonds-classe/chrome.webp", "clair": false}, "bling": {"img": "loginail-site/fonds-classe/bling.webp", "clair": true}, "emo": {"img": "loginail-site/fonds-classe/emo.webp", "clair": true}, "riviera": {"img": "loginail-site/fonds-classe/riviera.webp", "clair": true}, "sixties": {"img": "loginail-site/fonds-classe/sixties.webp", "clair": true}, "baroque": {"img": "loginail-site/fonds-classe/baroque.webp", "clair": true}, "street": {"img": "loginail-site/fonds-classe/street.webp", "clair": true}, "japon": {"img": "loginail-site/fonds-classe/japon.webp", "clair": true}, "tropical": {"couleur": "#DDE7D0"}, "sirene": {"img": "loginail-site/fonds-classe/sirene.webp", "clair": true}, "feerique": {"img": "loginail-site/fonds-classe/feerique.webp", "clair": true}, "celeste": {"img": "loginail-site/fonds-classe/celeste.webp", "clair": false}, "pop": {"img": "loginail-site/fonds-classe/pop.webp", "clair": true}, "baddie": {"img": "loginail-site/fonds-classe/baddie.webp", "clair": false}, "mignon": {"img": "loginail-site/fonds-classe/mignon.webp", "clair": true}, "y2k": {"img": "loginail-site/fonds-classe/y2k.webp", "clair": false}, "gothique": {"img": "loginail-site/fonds-classe/gothique.webp", "clair": false}};
+      const L = []; const n = Math.max(TPL.length, UNI.length);
+      for (let i = 0; i < n; i++) { if (TPL[i]) L.push([TPL[i][2], "Classe", TPL[i][1]]); if (UNI[i]) L.push([UNI[i][2], "Baddie", UNI[i][1]]); }
+      const g = document.createElement("section"); g.className = "gal"; g.id = "styles-gal";
+      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2>Classe <em>ou baddie ?</em></h2></div><div class="piste"></div>';
+      pin.after(g);
+      const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      const IT = [...piste.children];
+      let x = 0, larg = 0, vit = 38, survol = null, focus = null, dern = 0, vu = false;
+      const mesure = () => { larg = IT[L.length].offsetLeft - IT[0].offsetLeft; };
+      const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
+        cache.style.backgroundImage = f && f.img ? `url(${f.img})` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+      const choisis = el => { if (el === focus) return; focus = el; IT.forEach(i => i.classList.toggle("on", i === el)); if (el) fond(el.dataset.im); };
+      const boucle = now => { const dt = Math.min(.05, (now - (dern || now)) / 1000); dern = now;
+        if (vu) { if (!survol) { x -= vit * dt; if (larg && -x >= larg) x += larg; }
+          piste.style.transform = `translate3d(${x.toFixed(1)}px,-50%,0)`;
+          if (!survol) { const c = innerWidth / 2; let best = null, bd = 1e9; IT.forEach(i => { const r = i.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - c); if (d < bd) { bd = d; best = i; } }); choisis(best); } }
+        requestAnimationFrame(boucle); };
+      IT.forEach(i => { i.addEventListener("mouseenter", () => { survol = i; choisis(i); }); i.addEventListener("mouseleave", () => { if (survol === i) survol = null; });
+        i.addEventListener("click", () => open("loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + i.dataset.q, "_blank")); });
+      new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !larg) mesure(); }, { threshold: .05 }).observe(g);
+      addEventListener("resize", mesure); addEventListener("load", mesure); setTimeout(mesure, 600);
+      requestAnimationFrame(boucle);
+    } }
 })();
 </script>
 </body></html>
