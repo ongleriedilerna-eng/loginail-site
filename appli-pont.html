@@ -12,7 +12,8 @@ const OK = ["https://app.loginail.fr", location.origin];
 const PAGES = { style: "coups-de-coeur.html?vrai&appli", perso: "maquette-perso.html", charms: "charms-presentoir.html?vrai&appli" };
 const ou = new URLSearchParams(location.search).get("p") || "perso";
 addEventListener("message", m => {
-  if (!OK.includes(m.origin) || !m.data || m.data.loginail !== "brouillon" || !m.data.br) return;
+  if (!OK.includes(m.origin) || !m.data || m.data.loginail !== "brouillon" || !m.data.br || recu) return;
+  recu = true;
   try { localStorage.setItem("loginail-brouillon", JSON.stringify(m.data.br)); } catch (e) { document.body.textContent = "Pas assez de place sur ce téléphone."; return; }
   const b = m.data.br;
   if (ou === "perso") {
@@ -23,6 +24,6 @@ addEventListener("message", m => {
   } else location.replace(PAGES[ou] || PAGES.perso);
 });
 /* on dit à l'appli qu'on est prêt à recevoir son site */
-try { parent.postMessage({ loginail: "pret" }, "*"); } catch (e) {}
+let recu = false; const dis = () => { if (recu) return; try { parent.postMessage({ loginail: "pret" }, "*"); } catch (e) {} setTimeout(dis, 800); }; dis();   /* on redemande tant que l’appli n’a pas répondu */
 </script>
 </body></html>
