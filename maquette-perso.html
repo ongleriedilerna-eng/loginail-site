@@ -118,10 +118,13 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 /* 09/11 (Marie) : les charms EXACTEMENT comme le clavier d'emojis de l'iPhone (Messages) :
    une recherche en haut, les charms en petit qui défilent de côté par familles (titre gris au-dessus), la barre des familles en bas
    (la famille où l'on est s'allume dans une pilule grise). Toucher un charm le pose, le clavier reste ouvert ; ✕ ou glisser vers le bas pour fermer. */
-#tel.mc .bas{height:calc(318px + env(safe-area-inset-bottom));padding:0 0 env(safe-area-inset-bottom);background:rgba(236,236,240,.97);border-radius:0;box-shadow:0 -1px 0 rgba(0,0,0,.08)}
+#tel.mc .bas{height:calc(330px + env(safe-area-inset-bottom));padding:0 0 env(safe-area-inset-bottom);background:rgba(236,236,240,.97);border-radius:0;box-shadow:0 -1px 0 rgba(0,0,0,.08)}
 #tel.mc .choix{height:100%}
 .clavier{height:100%;display:flex;flex-direction:column}
-.cl-haut{display:flex;align-items:center;gap:8px;padding:8px 10px 4px;touch-action:none}
+.cl-poi{position:relative;height:22px;flex:none;touch-action:none}
+.cl-poi i{position:absolute;left:50%;top:7px;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:rgba(60,60,67,.3)}
+.cl-poi .cl-x{position:absolute;right:8px;top:4px;width:26px;height:26px;font-size:11px;line-height:26px}
+.cl-bas{display:flex;padding:6px 10px 2px}
 .cl-cherche{flex:1;display:flex;align-items:center;gap:6px;border-radius:10px;background:rgba(118,118,128,.14);padding:7px 10px;color:#8A8A8E}
 .cl-cherche svg{width:15px;height:15px;flex:none}
 .cl-cherche input{flex:1;min-width:0;border:0;outline:0;background:none;font:400 15px -apple-system,Jost,sans-serif;color:var(--noir)}
@@ -132,7 +135,8 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .cl-g{display:grid;grid-auto-flow:column;grid-template-rows:repeat(4,46px);grid-auto-columns:46px;gap:4px 6px}
 .cl-g button{position:relative;width:46px;height:46px;border:0;background:none;padding:3px;border-radius:10px}
 /* pendant la recherche : une seule rangée de résultats, collée au-dessus du clavier du téléphone (comme l'iPhone) */
-#tel.mc .bas.cherchant{height:auto;bottom:var(--clav,0px)}
+#tel.mc .bas.cherchant{height:auto;bottom:var(--clav,0px);padding-bottom:0}
+.bas.cherchant .cl-grille{flex:none;height:56px}
 .bas.cherchant .cl-g{grid-template-rows:46px}
 .bas.cherchant .cl-barre{display:none}
 .bas.cherchant .cl-sec h5{display:none}
@@ -141,7 +145,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .cl-g button.pris::after{content:"";position:absolute;right:0;bottom:0;width:12px;height:12px;border-radius:50%;background:var(--noir) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center/9px no-repeat}
 .cl-g button.fav::before{content:"";position:absolute;left:0;top:0;width:10px;height:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z' fill='%231E1C1B'/%3E%3C/svg%3E") center/contain no-repeat}
 .cl-rien{align-self:center;font:400 13px Jost,sans-serif;color:#8A8A8E;padding:0 20px;white-space:nowrap}
-.cl-barre{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 6px;overflow-x:auto;scrollbar-width:none}.cl-barre::-webkit-scrollbar{display:none}
+.cl-barre{position:relative;display:flex;justify-content:space-between;align-items:center;padding:4px 8px 6px;overflow-x:auto;scrollbar-width:none}.cl-barre::-webkit-scrollbar{display:none}
 .cl-barre button{flex:none;width:30px;height:28px;border:0;border-radius:999px;background:transparent center/18px no-repeat;padding:0;font:500 14px/28px Jost,sans-serif;color:#6E6E73;filter:grayscale(1);opacity:.75;transition:background .2s}
 .cl-barre button.on{background-color:rgba(118,118,128,.22);filter:none;opacity:1}
 #rechF{position:absolute;left:0;right:0;top:0;z-index:8;padding:calc(env(safe-area-inset-top) + 10px) 0 10px;background:rgba(246,243,239,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 24px -14px rgba(0,0,0,.3);display:none}
@@ -213,10 +217,11 @@ const marquePoses = () => { const g = $("clGrille"); if (!g) return; const poses
 const clique = sel => { const b = D && D.querySelector(sel); if (b) b.click(); return b; };
 const defile = () => D.querySelector(".defile") || D.scrollingElement;
 const enHaut = () => { try { defile().scrollTop = 0; W.scrollTo(0, 0); } catch (e) {} };
-const ouvreOnglet = n => clique(`.pc-onglets [data-tab="${n}"]`);
+const ouvreOnglet = n => { const b = defile(), y = b ? b.scrollTop : 0, wy = W.scrollY; clique(`.pc-onglets [data-tab="${n}"]`);
+  const garde = () => { try { if (b) b.scrollTop = y; W.scrollTo(0, wy); } catch (e) {} }; garde(); requestAnimationFrame(garde); [60, 200, 500].forEach(t => setTimeout(garde, t)); };   // 09/11 : le site reste où il est
 /* chaque changement en fondu : le site disparaît, change, puis revient (jamais de carré blanc) */
 let tFondu = 0;
-function enFondu(fn) { fn(); clearTimeout(tFondu); tFondu = setTimeout(() => { poseEncre(); enHaut(); ambiance(); }, 120); }   // 08/11 : plus de fondu (il faisait un flash sombre)
+function enFondu(fn) { fn(); clearTimeout(tFondu); tFondu = setTimeout(() => { poseEncre(); ambiance(); }, 120); }   // 08/11 : plus de fondu (il faisait un flash sombre)
 /* les couleurs rangées : d'abord les neutres (du clair au foncé), puis l'arc-en-ciel */
 function rgb(s) { const m = (s || "").match(/\d+/g); if (m && m.length >= 3) return m.slice(0, 3).map(Number); const h = (s.match(/#([0-9a-f]{6})/i) || [])[1]; return h ? [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)) : [0, 0, 0]; }
 function teinte(s) { const [r, g, b] = rgb(s).map(x => x / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
@@ -278,8 +283,10 @@ function rend() {
     brancheRecherche();
   } else {
     const LOUPE = `<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-    c.innerHTML = `<div class="clavier"><div class="cl-haut" id="clHaut"><label class="cl-cherche">${LOUPE}<input id="chercheC" placeholder="Rechercher un charm" value="${recherche}"></label><button class="cl-x" data-fermer aria-label="Fermer">✕</button></div>
-      <div class="cl-grille" id="clGrille"></div><div class="cl-barre" id="clBarre"></div></div>`;
+    c.innerHTML = `<div class="clavier"><div class="cl-poi" id="clHaut"><i></i><button class="cl-x" data-fermer aria-label="Fermer">✕</button></div>
+      <div class="cl-grille" id="clGrille"></div>
+      <div class="cl-bas"><label class="cl-cherche">${LOUPE}<input id="chercheC" placeholder="Rechercher un charm" value="${recherche}" autocomplete="off" enterkeyhint="search"></label></div>
+      <div class="cl-barre" id="clBarre"></div></div>`;
     remplitCharms(); const ic = $("chercheC"); ic.oninput = e => { recherche = e.target.value; remplitCharms(); };
     ic.onfocus = () => { $("bas").classList.add("cherchant"); clavier(); }; ic.onblur = () => setTimeout(() => { if (document.activeElement !== ic) { $("bas").classList.remove("cherchant"); $("bas").style.setProperty("--clav", "0px"); } }, 150);
   }
@@ -305,13 +312,13 @@ function remplitCharms() {
   const bt = n => `<button data-ch="${n}" class="${poses.has(n) ? "pris" : ""} ${favoris.includes(n) ? "fav" : ""}" aria-label="${n}"><img src="loginail-site/charms-mini/${n}.webp" loading="lazy" alt=""></button>`;
   let secs;
   if (q) { const l = tous.filter(n => n.includes(q) || sansAccent(CHNOM[n] || "").replace(/[^a-z0-9]/g, "").includes(q)); secs = [["Résultats", "", l]]; }
-  else { secs = [["Favoris", "♡", favoris.filter(n => tous.includes(n))], ["Aléatoire", "✦", aleatoire], ["Populaires", "★", POP.filter(n => tous.includes(n))]];
+  else { secs = [["Favoris", "♡", favoris.filter(n => tous.includes(n))], ["Populaires", "★", POP.filter(n => tous.includes(n))]];
     FAMILLES.forEach(([f, ic]) => secs.push([f, ic, tous.filter(n => (CHFAM[n] || "Autres") === f)]));
     secs = secs.filter(x => x[2].length); }   // une famille vide (Favoris au début) ne s'affiche pas
   const g = $("clGrille");
   g.innerHTML = secs.map(([t, ic, l]) => `<div class="cl-sec" data-sec="${t}"><h5>${t}</h5>${l.length ? `<div class="cl-g">${l.map(bt).join("")}</div>` : `<div class="cl-rien">${t === "Favoris" ? "Restez appuyée sur un charm" : "Aucun charm"}</div>`}</div>`).join("");
   $("clBarre").innerHTML = q ? "" : secs.map(([t, ic]) => `<button data-sec="${t}" title="${t}" style="${ic.length > 2 ? `background-image:url(loginail-site/charms-mini/${ic}.webp)` : ""}">${ic.length > 2 ? "" : ic}</button>`).join("");
-  g.scrollLeft = 0; g.onscroll = barreCharms; barreCharms();
+  g.onscroll = barreCharms; const pop = g.querySelector('[data-sec="Populaires"]'); g.scrollLeft = pop && !q ? pop.offsetLeft - 10 : 0; barreCharms();   // ouvert sur Populaires
 }
 /* la hauteur du clavier du téléphone (pour poser la recherche juste au-dessus) */
 function clavier() { const vv = window.visualViewport; if (!vv) return; const h = Math.max(0, innerHeight - vv.height - vv.offsetTop); $("bas").style.setProperty("--clav", h + "px"); }
@@ -319,7 +326,8 @@ window.visualViewport?.addEventListener("resize", () => { if ($("bas").classList
 /* la famille où l'on est s'allume dans la barre du bas (comme sur l'iPhone) */
 function barreCharms() { const g = $("clGrille"); if (!g) return; let cur = null;
   g.querySelectorAll(".cl-sec").forEach(sec => { if (sec.offsetLeft - g.scrollLeft <= 30) cur = sec.dataset.sec; });
-  $("clBarre").querySelectorAll("button").forEach(b => { const on = b.dataset.sec === cur; if (on && !b.classList.contains("on")) b.scrollIntoView({ inline: "nearest", block: "nearest" }); b.classList.toggle("on", on); }); }
+  const barre = $("clBarre"); barre.querySelectorAll("button").forEach(b => { const on = b.dataset.sec === cur; b.classList.toggle("on", on);
+    if (on && (b.offsetLeft < barre.scrollLeft || b.offsetLeft + b.offsetWidth > barre.scrollLeft + barre.clientWidth)) barre.scrollLeft = b.offsetLeft - barre.clientWidth / 2; }); }   // (plus de scrollIntoView : il faisait bouger tout l'écran)
 function ancienRemplitCharms() {
   const tous = Object.keys(W.CH_IMG || {}), q = recherche.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
   const l = q ? tous.filter(n => n.includes(q)) : famille === "Favoris" ? favoris.filter(n => tous.includes(n)) : famille === "Populaires" ? POP.filter(n => tous.includes(n)) : tous.filter(n => FAM.find(f => f[0] === famille)[1].test(n));
@@ -378,7 +386,7 @@ $("contenu").addEventListener("click", e => {
     if (x) { x.click(); ambiance(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); setTimeout(() => { ajusteFonds(); const g = $("grilleF"), v = g.querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`); if (v) g.scrollTo({ left: v.offsetLeft - g.clientWidth / 2 + 22, behavior: "smooth" }); }, 500); } return; }
   if (b.dataset.f != null) { clique(`#pzFonds [data-f="${CSS.escape(b.dataset.f)}"]`); ambiance(); ajusteFonds(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
-  if (b.dataset.nomc) { nomc = b.dataset.nomc; marque(b); try { W.eval(`BR.nomc=${JSON.stringify(nomc)}`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); enHaut(); return; }   // l'éditeur repeint le nom lui-même
+  if (b.dataset.nomc) { nomc = b.dataset.nomc; marque(b); try { W.eval(`BR.nomc=${JSON.stringify(nomc)}`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); return; }   // l'éditeur repeint le nom lui-même
   if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }
   if (b.dataset.co) { marque(b); clique(`.pf-dots [data-co="${b.dataset.co}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }   // la couleur du site garde celle des boutons
   if (b.dataset.p) { marque(b); clique(`#pzPol [data-p="${b.dataset.p}"]`); setTimeout(poseEncre, 80); return; }
@@ -398,7 +406,7 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
 ["pointerup", "pointerleave", "pointercancel"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("[data-ch]"); if (b) clearTimeout(b._t); }));
 $("contenu").addEventListener("contextmenu", e => { if (e.target.closest("[data-ch]")) e.preventDefault(); });
 /* le rond « + » ouvre la boîte à charms ; elle se ferme dès qu'un charm est posé (ou si on touche à côté) */
-const ouvreBoite = () => { tireAleatoire(); remplitCharms(); $("bas").classList.add("ouvre"); if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) bulle("12 charms maximum : touchez un charm coché pour l’enlever"); };
+const ouvreBoite = () => { remplitCharms(); $("bas").classList.add("ouvre"); if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) bulle("12 charms maximum : touchez un charm coché pour l’enlever"); };
 const fermeBoite = () => { $("bas").classList.remove("ouvre"); $("voileC").classList.remove("on"); $("chercheC")?.blur(); };
 /* glisser le haut du clavier vers le bas = le fermer */
 document.addEventListener("pointerdown", e => { const h = e.target.closest?.("#clHaut"); if (!h || e.target.closest("input,button")) return; const y0 = e.clientY;
@@ -427,9 +435,9 @@ $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtr
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
-function prepare() { ouvreOnglet(ONGLET[cle()]); ambiance(); setTimeout(() => { rend(); enHaut(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
+function prepare() { ouvreOnglet(ONGLET[cle()]); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
-addEventListener("scroll", () => { if (scrollX || scrollY) scrollTo(0, 0); });
+addEventListener("scroll", () => { if ((scrollX || scrollY) && !document.activeElement?.matches?.("input")) scrollTo(0, 0); });
 F.classList.add("fondu");
 F.onload = () => {
   W = F.contentWindow; D = F.contentDocument;
