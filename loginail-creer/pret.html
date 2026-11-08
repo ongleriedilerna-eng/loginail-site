@@ -3162,5 +3162,11 @@ if(new URLSearchParams(location.search).has("activer"))setTimeout(()=>{try{ouvre
    b.addEventListener("pointerdown",ev=>{ev.stopPropagation();ev.preventDefault()},true);
    b.addEventListener("click",ev=>{ev.stopPropagation();const n=c.dataset.n;c.style.transition="opacity .25s,transform .25s";c.style.opacity=0;c.style.transform+=" scale(.5)";setTimeout(()=>c.remove(),260);try{parent.postMessage({loginailEnleve:n},"*")}catch(_){}});
    c.appendChild(b)},true);})();</script>
+<script>/* 15/11 (Marie) : depuis l'accueil, « Créer mon site avec ce style » */
+(()=>{const q=new URLSearchParams(location.search);if(!q.has("cta"))return;
+ const garde=["style","epure","coffin","arrondi","couleur","mode","fond","police","paillettes","charm","vif","nomc"],m=garde.filter(k=>q.get(k)).map(k=>k+"="+encodeURIComponent(q.get(k))).join("&");
+ const st=document.createElement("style");st.textContent=".cta-style{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:10px;background:#1E1C1B;color:#fff;font:500 12.5px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:15px 24px;border-radius:99px;box-shadow:0 18px 40px -14px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.85);white-space:nowrap;animation:ctaB 3s ease-in-out infinite}@keyframes ctaB{0%,80%,100%{transform:translateX(-50%)}86%{transform:translateX(-50%) translateY(-5px)}92%{transform:translateX(-50%)}}";document.head.appendChild(st);
+ const a=document.createElement("a");a.className="cta-style";a.href="index.html?modele=1";a.textContent="Créer mon site avec ce style";
+ a.addEventListener("click",()=>{try{localStorage.setItem("loginail-modele",m)}catch(_){}});document.body.appendChild(a)})();</script>
 </body>
 </html>
