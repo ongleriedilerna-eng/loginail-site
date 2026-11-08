@@ -319,6 +319,26 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   .styl-duo .st-tel{width:min(200px,14vw)}
   .styl-duo .st-nom{margin-top:8px}
 }
+@media (min-width:1000px){
+  /* plus lent : les 6 étapes prennent plus de place sur ordinateur */
+  .build{height:1150vh}
+  /* moins blanc : une lumière chaude derrière le haut et le début des étapes */
+  body{background:#F2ECE5}
+  .hero{background:radial-gradient(ellipse 55% 60% at 78% 45%,rgba(232,196,178,.55),transparent 70%),radial-gradient(ellipse 45% 50% at 8% 95%,rgba(214,196,226,.35),transparent 70%),radial-gradient(ellipse 40% 40% at 30% 10%,rgba(246,214,190,.45),transparent 70%);max-width:none;padding-left:max(64px,calc((100vw - 1280px)/2 + 64px));padding-right:max(64px,calc((100vw - 1280px)/2 + 64px))}
+  .build{background:linear-gradient(180deg,#F2ECE5,#EFE4DA 40%,#F2ECE5)}
+  .build .colle{background:radial-gradient(ellipse 50% 60% at 72% 50%,rgba(232,196,178,.45),transparent 70%),radial-gradient(ellipse 40% 50% at 15% 85%,rgba(214,196,226,.3),transparent 70%)}
+  /* Classe / Baddie : l'en-tête ne gêne plus ; le fond suit le site choisi */
+  .styl-duo .styl{padding:120px 30px 50px;position:relative;overflow:hidden;background:#141114;color:var(--creme);transition:background-color .6s,color .4s}
+  .styl-duo .styl>*:not(.fondP){position:relative;z-index:1}
+  .styl-duo .styl .k,.styl-duo .styl .st-aide{color:inherit;opacity:.7}
+  .styl-duo .styl .st-nom small{color:inherit;opacity:.75}
+  .styl-duo .styl .formes button{color:inherit}
+  .styl-duo .styl.motif .t2,.styl-duo .styl.motif .st-nom b{text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .fondP{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .6s}
+  .fondP.on{opacity:1}
+  .fondP::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.08) 34%,rgba(0,0,0,.08) 70%,rgba(0,0,0,.42))}
+  .styl-duo .st-tel{width:min(200px,13.5vw)}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -341,8 +361,8 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <div class="b-fond" id="bFond"><i style="left:6%;animation-duration:9s"></i><i style="left:24%;animation-duration:12s;animation-delay:-5s;width:18px;height:20px"></i><i style="left:80%;animation-duration:10s;animation-delay:-2s"></i><i style="left:92%;animation-duration:13s;animation-delay:-8s;width:18px;height:20px"></i><i style="left:12%;animation-duration:11s;animation-delay:-7s;width:20px;height:22px"></i><i style="left:70%;animation-duration:14s;animation-delay:-10s;width:20px;height:22px"></i></div>
   <div class="b-telw"><div class="b-tel"><div class="b-ecr" id="bEcr">
     <img class="c" data-c="1" src="loginail-site/apercus-univers/s1.webp?v=25" alt="" style="opacity:1">
-    <img class="c" data-c="2" src="loginail-site/apercus-univers/s2.webp?v=25" alt="">
-    <img class="c" data-c="3" src="loginail-site/apercus-univers/s3.webp" alt="">
+    <img class="c" data-c="2" src="loginail-site/apercus-univers/o2.webp" alt="">
+    <img class="c" data-c="3" src="loginail-site/apercus-univers/o3.webp" alt="">
     <img class="c" data-c="5" src="loginail-site/apercus-univers/s5.webp" alt="">
     <img class="c long" data-c="6" src="loginail-site/apercus-univers/s5-long.webp" alt="" loading="lazy">
     <div class="b-ch" id="bCh"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="left:72.7%;top:65.1%;width:17.2%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="left:78.8%;top:9.5%;width:17.2%"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:2.8%;top:23.5%;width:17.2%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:80.8%;top:39.5%;width:17.2%"><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="left:1.8%;top:57.5%;width:17.2%"><img src="loginail-site/charms-mini/cerises-roses.webp" alt="" style="left:78.8%;top:73.5%;width:17.2%"><img src="loginail-site/charms-mini/noeudgelee.webp" alt="" style="left:38.8%;top:4.5%;width:17.2%"></div>
@@ -351,16 +371,13 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <div class="b-hors" id="bHors"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:-30px;top:14%"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="right:-32px;top:30%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:-26px;top:66%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="right:-28px;top:78%"></div></div>
   <div class="legs" id="bLegs">
     <div class="leg"><b>Prêt en 1 minute. Chrono.</b><span>Un site classique, élégant, à votre nom. Déjà en ligne.</span></div>
-    <div class="leg"><b>Vos photos.</b><span>Vos plus belles poses, en grand. Vous les changez en 2 secondes.</span></div>
     <div class="leg"><b>Un fond.</b><span>Des cerises, du léopard, de la lavande… Plus de 300 fonds.</span></div>
-    <div class="leg"><b>Vos charms.</b><span>Plus de 1 000 charms. Sur votre site, vos clientes les attrapent.</span></div>
     <div class="leg"><b>Votre écriture. Vos couleurs.</b><span>Et voilà : votre univers. Le même site, que personne n’a.</span></div>
+    <div class="leg"><b>Vos photos.</b><span>Vos plus belles poses, en grand. Vous les changez en 2 secondes.</span></div>
+    <div class="leg"><b>Vos charms.</b><span>Plus de 1 000 charms. Sur votre site, vos clientes les attrapent.</span></div>
     <div class="leg"><b>Et tout le reste.</b><span>Vos prestations, vos prix, vos réalisations, vos avis. Elle se voit déjà chez vous.</span></div>
   </div>
 </div></section>
-
-<div class="marq-sec"><div class="marq"><div class="piste"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"></div><div class="piste r"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"></div></div>
-  <p class="marq-l">Des sites faits avec Loginail · salons d’exemple</p></div>
 
 <section class="app-h" id="appli"><div class="colle">
   <div class="a-titre"><div class="k">Et derrière le site</div><h2 class="t2">L’appli qui gère <em>tout</em>.</h2></div>
@@ -401,6 +418,9 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <p class="p" style="max-width:290px;margin:0 auto">Touchez-en un. Sur votre site, vos clientes font pareil.</p></div>
   <div class="ch-bas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
 </div></section>
+
+<div class="marq-sec"><div class="marq"><div class="piste"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"></div><div class="piste r"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"></div></div>
+  <p class="marq-l">Des sites faits avec Loginail · salons d’exemple</p></div>
 
 <section class="sec vu" id="pourquoi">
   <div class="k">Votre site. Pas une page d’annuaire.</div><h2 class="t2" style="font-size:clamp(28px,8.6vw,38px)">Elle vous cherche.<br><em style="white-space:nowrap">Elle ne trouve que vous.</em></h2>
@@ -475,13 +495,13 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
 /* la construction : tout est lié au défilement, en continu (rien ne « saute ») */
 (()=>{const b=document.getElementById("build"),C={},L=[...b.querySelectorAll(".leg")],CH=[...b.querySelectorAll(".b-ch img")],HO=[...b.querySelectorAll(".b-hors img")],fond=document.getElementById("bFond"),pail=document.getElementById("bPail"),barre=document.getElementById("bBarre"),num=document.getElementById("bNum"),top=document.getElementById("top");
  b.querySelectorAll("img.c").forEach(x=>C[x.dataset.c]=x);
- const NOMS=["votre site","vos photos","un fond","vos charms","votre univers","tout le reste"],ecr=document.getElementById("bEcr"),bch=document.getElementById("bCh");
+ const NOMS=["votre site","un fond","votre univers","vos photos","vos charms","tout le reste"],ecr=document.getElementById("bEcr"),bch=document.getElementById("bCh");
  const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);
  let cible=0,p=0,raf=0,vu=-1;
  const pose=P=>{const p=Math.min(1,P/.8),sc=doux(cl(P,.84,.985));C[2].style.opacity=doux(cl(p,.10,.24)).toFixed(3);C[3].style.opacity=doux(cl(p,.30,.44)).toFixed(3);
-   CH.forEach((c,i)=>{const t=doux(cl(p,.50+i*.025,.60+i*.025));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-140).toFixed(1)}%,0) rotate(${((1-t)*(i%2?40:-40)).toFixed(1)}deg)`});
-   fond.style.opacity=(doux(cl(p,.30,.44))*(1-.6*doux(cl(p,.76,.9)))).toFixed(3);HO.forEach((c,i)=>{const t=doux(cl(p,.56+i*.03,.68+i*.03));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-260).toFixed(1)}%,0) scale(${(.6+.4*t).toFixed(3)}) rotate(${((1-t)*(i%2?50:-50)+(i%2?12:-12)).toFixed(1)}deg)`});
-   C[5].style.opacity=doux(cl(p,.76,.90)).toFixed(3);pail.style.opacity=doux(cl(p,.80,.92)).toFixed(3);
+   CH.forEach((c,i)=>{const t=doux(cl(p,.76+i*.02,.86+i*.02));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-140).toFixed(1)}%,0) rotate(${((1-t)*(i%2?40:-40)).toFixed(1)}deg)`});
+   fond.style.opacity=(doux(cl(p,.10,.24))*(1-.6*doux(cl(p,.76,.9)))).toFixed(3);HO.forEach((c,i)=>{const t=doux(cl(p,.80+i*.03,.92+i*.03));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-260).toFixed(1)}%,0) scale(${(.6+.4*t).toFixed(3)}) rotate(${((1-t)*(i%2?50:-50)+(i%2?12:-12)).toFixed(1)}deg)`});
+   C[5].style.opacity=doux(cl(p,.50,.64)).toFixed(3);pail.style.opacity=doux(cl(p,.80,.92)).toFixed(3);
    const seg=[0,.10,.30,.50,.76,1.01];let k=0;for(let i=0;i<5;i++)if(p>=seg[i])k=i;
    if(P>=.82)k=5;
    L.forEach((l,i)=>{const entre=i===0?1:i===5?cl(P,.81,.85):cl(p,seg[i]-.03,seg[i]+.02),sort=i===5?0:i===4?cl(P,.79,.83):cl(p,seg[i+1]-.03,seg[i+1]+.02),o=entre*(1-sort);l.style.opacity=o.toFixed(3);l.style.transform="none"});
@@ -507,7 +527,8 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  setInterval(()=>{if(auto)va(k+1)},2800);let x0=null,y0=0;
  duo.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
  duo.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>34&&Math.abs(dx)>Math.abs(dy)){auto=false;va(k+(dx<0?1:-1))}},{passive:true});
- P.forEach((x,i)=>x.addEventListener('click',()=>{auto=false;va(i)}))}
+ P.forEach((x,i)=>x.addEventListener('click',()=>{auto=false;va(i)}));
+ let ac=0,bloque=0;duo.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();if(bloque)return;ac+=e.deltaX;if(Math.abs(ac)>40){auto=false;va(k+(ac>0?1:-1));ac=0;bloque=1;setTimeout(()=>bloque=0,500)}},{passive:false})}
 /* en haut : la petite notification de l'appli tombe, repart, revient */
 {const n=document.getElementById("notifMini"),b=n.querySelector("b"),sp=n.querySelector("span");const L=[["Nouvelle réservation","Léa · Pose gel · sam. 10 h"],["Rappel SMS envoyé","Inès · demain 9 h · confirmé"],["55 € encaissés","Sarah · Remplissage · carte"],["Nouvelle cliente ajoutée","Chloé · dans vos fiches"],["Réservé cette nuit","Mia · Semi-permanent · mar. 14 h"],["Anniversaire demain","Léa · un petit mot ?"]];let k=0;
  const go=()=>{b.textContent=L[k][0];sp.textContent=L[k][1];k=(k+1)%L.length;n.classList.add("on");setTimeout(()=>n.classList.remove("on"),2600)};setTimeout(go,1200);setInterval(go,4200)}
@@ -521,7 +542,7 @@ const lanceStyles=(sec,depart)=>{const tel=sec.querySelector(".st-tel"),img=tel.
  const forme=q=>/style=2/.test(q)?"Stiletto":/style=3/.test(q)?"Carré":/coffin=1/.test(q)?"Coffin":/arrondi=1/.test(q)?"Carré arrondi":/epure=1/.test(q)?"Ovale":"Amande";
  const L={tpl:TPL.map(t=>({nom:t[0],q:t[1],im:t[2],f:t[3],sous:t[3],lab:t[3]})),uni:UNI.map(t=>({nom:t[0],q:t[1],im:t[2],f:forme(t[1]),sous:t[3],lab:t[0]}))};
  let liste="tpl",cur=0,tf=0,vis=false;
- const vivant=()=>{const f0=tel.querySelector("iframe");if(f0)f0.remove();if(!vis)return;const t=L[liste][cur],f=document.createElement("iframe");f.title="Exemple";f.tabIndex=-1;f.style.transform="scale("+(tel.clientWidth/390)+")";f.onload=()=>setTimeout(()=>f.classList.add("pret"),450);f.src=url(t.q)+"&v="+Date.now();tel.appendChild(f)};
+ const vivant=()=>{const f0=tel.querySelector("iframe");if(f0)f0.remove();if(!vis)return;const t=L[liste][cur],f=document.createElement("iframe");f.title="Exemple";f.tabIndex=-1;f.style.transform="scale("+(tel.clientWidth/390)+")";f.onload=()=>{setTimeout(()=>f.classList.add("pret"),450);if(window.fondPanneau)setTimeout(()=>fondPanneau(sec,f),700)};f.src=url(t.q)+"&v="+Date.now();tel.appendChild(f)};
  const R=9,BW=76;/* la liste est répétée 9 fois : on reste toujours au milieu, donc on tourne sans jamais voir le bout */
  const choisis=i=>{const n=L[liste].length;cur=(i%n+n)%n;const t=L[liste][cur];img.src="loginail-site/apercus-mini/"+t.im+".webp";nom.textContent=t.nom;sous.textContent=t.sous;
    [...V.children].forEach(b=>b.classList.toggle("on",+b.dataset.i===cur));clearTimeout(tf);tf=setTimeout(vivant,450)};
@@ -650,7 +671,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const CER = ["cerisedisco", "noeudcerise", "cerisecoeur", "framboise", "ceriseruban", "cerises-roses", "cerises", "cerisesbordeaux", "cerisesor", "cerisesrouges", "etoilecerise", "fraisegelee", "fraiseperle", "fraise", "macaronframboise", "ceriseslanternes"];
       const cer = [];
       let raf = 0;
-      const maj = () => { raf = 0; const r = b.getBoundingClientRect(), p = cl(-r.top / Math.max(1, r.height - innerHeight), 0, 1), vu = p > .52 && p < .995;
+      const maj = () => { raf = 0; const r = b.getBoundingClientRect(), p = cl(-r.top / Math.max(1, r.height - innerHeight), 0, 1), vu = p > .6 && p < .995;
         cer.forEach(d => d.style.opacity = vu ? 1 : 0); lay.classList.toggle("brille", vu); lay.querySelectorAll(".sc").forEach(s => s.style.display = vu ? "" : "none"); };
       const pose = () => { lay.querySelectorAll(".cer").forEach(x => x.remove()); cer.length = 0;
         const W = colle.clientWidth, H = colle.clientHeight, I = [rel(colle.querySelector(".b-tete"), colle, 30), rel(colle.querySelector(".legs"), colle, 30), rel(colle.querySelector(".b-telw"), colle, 40)], deja = [];
@@ -682,20 +703,38 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       setInterval(pop, 2100);
     } }
 
+  /* ---- 4 · Classe / Baddie : le fond de chaque côté suit le site choisi (sa couleur, ou son motif) ---- */
+  let cssFonds = false;
+  window.fondPanneau = (sec, f) => { try {
+      const D = f.contentDocument, t = D.querySelector(".ecran .tuile");
+      let lay = sec.querySelector(".fondP"); if (!lay) { lay = document.createElement("div"); lay.className = "fondP"; sec.prepend(lay); }
+      if (t) {
+        if (!cssFonds) { let css = ""; D.querySelectorAll("style").forEach(x => { try { [...x.sheet.cssRules].forEach(r => { if ((r.selectorText && /\.f100|\.tuile|\.anime|\.pa\b/.test(r.selectorText)) || r.type === 7) css += r.cssText + "\n"; }); } catch (e) {} });
+          if (css) { const y = document.createElement("style"); y.textContent = css.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(y); cssFonds = true; } }
+        lay.innerHTML = `<div class="f100 fond-site">${t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/")}</div>`;
+        [lay.firstElementChild, lay.querySelector(".tuile")].forEach(e => { if (!e) return; [["position", "absolute"], ["left", "0"], ["top", "0"], ["width", "100%"], ["height", "100%"], ["transform", "none"], ["border-radius", "0"]].forEach(([k, v]) => e.style.setProperty(k, v, "important")); });
+        lay.classList.add("on"); sec.classList.add("motif"); sec.style.color = "#fff"; return; }
+      lay.classList.remove("on"); sec.classList.remove("motif");
+      const e = D.querySelector(".ecran .defile") || D.querySelector(".ecran"), cs = D.defaultView.getComputedStyle(e); let c = cs.backgroundColor;
+      if (!c || /rgba\(0, 0, 0, 0\)|transparent/.test(c)) c = D.defaultView.getComputedStyle(D.querySelector(".ecran")).getPropertyValue("--creme").trim() || "#141114";
+      sec.style.backgroundColor = c; const m = c.match(/\d+(\.\d+)?/g) || [20, 17, 20], lum = (+m[0] * .299 + +m[1] * .587 + +m[2] * .114);
+      sec.style.color = lum > 150 ? "#1E1C1B" : "#F6F3EF"; } catch (e) {} };
+
   /* ---- 3 · « Vous collez des charms sur vos clientes ? » : des charms TOUT AUTOUR, et quand elle descend, ils tombent ---- */
   { const sec = document.getElementById("charms"), pc = sec && sec.querySelector(".p-ch");
     if (pc && typeof PLUIE !== "undefined") {
       const lay = document.createElement("div"); lay.className = "pluie2"; pc.appendChild(lay);
       let items = [], raf = 0;
       /* elle descend : les charms tombent, chacun à sa vitesse (au début ils sont tous à leur place) */
-      const maj = () => { raf = 0; const r = sec.getBoundingClientRect(), p = cl(-r.top / Math.max(1, r.height - innerHeight), 0, 1), chute = Math.pow(cl(p, .35, 1), 1.6) * innerHeight * 1.1;
-        items.forEach(c => c.w.style.transform = `translate3d(${c.x.toFixed(0)}px,${(c.y + chute * c.v).toFixed(0)}px,0)`); };
+      const maj = () => { raf = 0; const r = sec.getBoundingClientRect(), p = cl(-r.top / Math.max(1, r.height - innerHeight), 0, 1), H = innerHeight;
+        items.forEach(c => { const t = cl(p, .2 + c.d, .2 + c.d + .55), e = t * t, dy = e * (H * 1.25 - c.y + 80) * c.v, dx = Math.sin(e * 6 + c.ph) * 18 * e;
+          c.w.style.transform = `translate3d(${(c.x + dx).toFixed(0)}px,${(c.y + dy).toFixed(0)}px,0) rotate(${(e * c.rot).toFixed(0)}deg)`; c.w.style.opacity = (1 - cl(t, .85, 1)).toFixed(2); }); };
       const pose = () => { lay.innerHTML = ""; items = [];
         const W = pc.clientWidth, H = pc.clientHeight, I = [rel(pc.querySelector(".bloc"), pc, 26), rel(pc.querySelector(".ch-bas"), pc, 16)], deja = [];
         PLUIE.forEach(n => { const t = Math.round(hasard(48, 66)), p = place(W, H, I, t, deja); if (!p) return; const w = document.createElement("span"); w.className = "c2";
           w.style.width = w.style.height = t + "px"; w.innerHTML = `<img src="loginail-site/charms-mini/${n}.webp" alt="" draggable="false" style="--a:${Math.round(hasard(-20, 20))}deg;--d:${hasard(3.4, 5.5).toFixed(1)}s;--r:${(-hasard(0, 5)).toFixed(1)}s">`;
           lay.appendChild(w); const im = w.firstChild; im.addEventListener("click", () => { if (im.classList.contains("tombe2")) return; im.classList.add("tombe2"); setTimeout(() => im.classList.remove("tombe2"), 1300); });
-          items.push({ w, x: p[0], y: p[1], v: hasard(.5, 1.25) }); }); maj(); };
+          items.push({ w, x: p[0], y: p[1], v: hasard(.85, 1.15), d: hasard(0, .25), rot: hasard(-220, 220), ph: hasard(0, 6) }); }); maj(); };
       addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(maj); }, { passive: true });
       addEventListener("load", () => setTimeout(pose, 300)); setTimeout(pose, 1200); addEventListener("resize", () => setTimeout(pose, 200));
     } }
