@@ -92,7 +92,7 @@
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   /* 06/11 (Marie) : couleurs vives (qui pètent) pour les boutons et les détails : &vif=fuchsia… ou BR.vif */
   const VIF = { fuchsia: "#E5197E", orange: "#FF5A14", electrique: "#2747FF", cerise: "#E3122C", violet: "#8B2CF5", vert: "#22A845", turquoise: "#00A3A8", noirb: "#1E1C1B", chocob: "#5A3A28", caramelb: "#A8703A", terracottab: "#BE5A38", bordeauxb: "#7A1F33", rougefonceb: "#7C1218", framboiseb: "#C8326A", pruneb: "#6E3A62", sapinb: "#2F5A45", sauged: "#5E7454", marineb: "#24344F", bleuroib: "#2F57E8", moutardeb: "#B8861A" };
-  const PAST = { rosep: "#F6C1D1", lilasp: "#D7C6F2", bleup: "#BDD7F2", mentep: "#BFE8D6", pechep: "#F9CDB3", jaunep: "#F7E39A", sableb: "#E6D6BC", nudeb: "#E9C9BB", poudreb: "#EBC9C6", lavandeb: "#D4C6F0", vertdeaub: "#C9E4D8", beurreb: "#F5E6A8", corailb: "#F4B3A3", perleb: "#E0E0E5", vertdouxb: "#C8DDBF" };
+  const PAST = { blancb: "#FFFFFF", rosep: "#F6C1D1", lilasp: "#D7C6F2", bleup: "#BDD7F2", mentep: "#BFE8D6", pechep: "#F9CDB3", jaunep: "#F7E39A", sableb: "#E6D6BC", nudeb: "#E9C9BB", poudreb: "#EBC9C6", lavandeb: "#D4C6F0", vertdeaub: "#C9E4D8", beurreb: "#F5E6A8", corailb: "#F4B3A3", perleb: "#E0E0E5", vertdouxb: "#C8DDBF" };
   /* 06/11 (Marie) : le texte clair posé sur une photo claire (Amande, Coffin…) devenait invisible : ombre douce + voile en bas de la photo */
   /* 06/11 (Marie) : Stiletto et Carré avec un fond : plus de « vitre fumée » avec texte blanc (illisible) → cartes claires, texte foncé */
   css.textContent += `:is(.ecran.sa.ma,.ecran.s3c):has(>.fond-site){--fond-carte:rgba(255,255,255,.88)!important}
