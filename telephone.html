@@ -732,6 +732,101 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   .gal .it .e::before{content:"";position:absolute;z-index:2;top:3%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
   .gal .it small{font:500 10.5px Jost;letter-spacing:.3em;text-transform:uppercase;background:rgba(246,243,239,.92);padding:6px 12px;border-radius:99px}
 }
+
+/* ===== 15/11 (Marie) : les charms remplissent tout ; la phrase plus légère (plus de « pâté ») ===== */
+@media (min-width:1000px){
+  .p-ch .bloc{background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(246,243,239,.96) 0,rgba(246,243,239,.9) 45%,rgba(246,243,239,0) 72%)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+    max-width:none!important;padding:70px 140px!important;border-radius:0!important}
+  .p-ch .bloc .ch-petit{font:italic 400 clamp(20px,1.6vw,26px)/1.3 'Cormorant Garamond',serif;color:#6b625c;margin:18px 0 6px}
+  .p-ch .bloc .t2{font-size:clamp(50px,4.6vw,72px)!important;line-height:1.02!important;margin:0!important}
+  .p-ch .bloc .t2 em{font-style:italic}
+  .p-ch .bloc .p{margin-top:16px!important;font-size:14px!important;color:#6b625c}
+}
+
+/* ===== 15/11 (Marie) : un VRAI téléphone en 3D (comme sa photo) : en biais, tranche en métal, cadre fin, reflet en diagonale ===== */
+@media (min-width:1000px){
+  .p3d{position:absolute;aspect-ratio:420/909;perspective:1700px;--ep:5.5%}
+  .p3d .corps{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateY(var(--ry,-22deg)) rotateX(var(--rx,6deg)) rotateZ(var(--rz,-2deg));transition:transform 1s cubic-bezier(.2,.8,.3,1)}
+  .p3d .face{position:absolute;inset:0;border-radius:13.5%/6.3%;padding:3.4%;background:#0d0d0e;transform:translateZ(0);
+    box-shadow:inset 0 0 0 1.5px #3c3c40,inset 0 0 0 3px #0a0a0b,0 0 0 1.4px #7e7c80,0 0 0 2.6px #2a2a2c}
+  .p3d .ecr{position:relative;width:100%;height:100%;border-radius:10.5%/4.9%;overflow:hidden;background:#fff}
+  .p3d .ecr>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+  .p3d .ecr::before{content:"";position:absolute;z-index:4;top:0;left:50%;transform:translateX(-50%);width:42%;height:3.3%;border-radius:0 0 14px 14px;background:#0d0d0e}
+  .p3d .ecr::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+    background:linear-gradient(122deg,rgba(255,255,255,0) 54%,rgba(255,255,255,.26) 54.3%,rgba(255,255,255,.1) 78%,rgba(255,255,255,.04) 100%)}
+  /* la tranche (l'épaisseur), à gauche et à droite : une seule se voit selon le sens */
+  .p3d .tr{position:absolute;top:5.5%;bottom:5.5%;width:var(--ep);border-radius:40px;
+    background:linear-gradient(180deg,#232325,#6d6c70 12%,#3a3a3d 30%,#6a696d 55%,#2e2e31 80%,#5c5b5f 92%,#202022)}
+  .p3d .tr.g{left:0;transform-origin:left center;transform:rotateY(90deg)}
+  .p3d .tr.d{right:0;transform-origin:right center;transform:rotateY(-90deg)}
+  .p3d .tr.g::after{content:"";position:absolute;left:30%;width:40%;top:14%;height:9%;border-radius:4px;background:#4a494d;box-shadow:0 300% 0 #4a494d}
+  /* l'ombre douce au sol */
+  .p3d .ombre{position:absolute;left:6%;right:6%;bottom:-6%;height:7%;border-radius:50%;background:radial-gradient(ellipse,rgba(70,45,28,.38),transparent 70%);filter:blur(10px);transform:translateZ(-40px)}
+
+  /* le K avec ces téléphones ; plus de doigt ; le lien noir qui scintille */
+  .bio-k .tel,.bio-k .doigt{display:none!important}
+  .bio-k .scene .p3d{top:50%;height:100%;transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.3,1)}
+  .bio-k .scene .p3d.insta{left:2%;transform:translateY(-50%);--ry:20deg;--rz:2deg;z-index:2}
+  .bio-k .scene .p3d.site{right:2%;transform:translateY(-50%) scale(.9);--ry:-20deg;--rz:-2deg;opacity:.4;z-index:1}
+  .bio-k.ouvre .scene .p3d.insta{transform:translateY(-50%) scale(.9);opacity:.4;z-index:1}
+  .bio-k.ouvre .scene .p3d.site{transform:translateY(-50%);opacity:1;z-index:2}
+  .prof .lien{color:transparent!important;background:linear-gradient(100deg,#1E1C1B 0,#1E1C1B 38%,#D9B56A 48%,#fff6dc 50%,#D9B56A 52%,#1E1C1B 62%,#1E1C1B 100%)!important;background-size:260% 100%!important;
+    -webkit-background-clip:text!important;background-clip:text!important;animation:lienBrille 2.8s ease-in-out infinite;font-weight:500;letter-spacing:.01em;padding:0!important;margin:0!important}
+  .prof .lien-w{position:relative;display:inline-flex;align-items:center;gap:6px;width:fit-content;transition:transform .4s}
+  .prof .lien-w i{font-style:normal;color:#C9A45C;font-size:12px;animation:etoile 2.8s ease-in-out infinite}
+  .bio-k.clic .prof .lien-w{transform:scale(1.06)}
+  @keyframes lienBrille{0%{background-position:100% 0}60%,100%{background-position:0 0}}
+  @keyframes etoile{0%,55%,100%{opacity:.35;transform:scale(.8) rotate(0)}30%{opacity:1;transform:scale(1.25) rotate(45deg)}}
+}
+
+/* ===== 15/11 (Marie) : « 15 secondes chrono » — un chrono et un trait qui avance ===== */
+@media (min-width:1000px){
+  .build #bNum,.build .b-barre{display:none!important}
+  .b-chrono{display:flex;align-items:center;gap:16px;margin:0 0 6px;width:440px}
+  .b-chrono span{font:400 34px/1 'Cormorant Garamond',serif;font-variant-numeric:tabular-nums;min-width:62px;color:#1E1C1B}
+  .b-chrono i{position:relative;flex:1;height:1.5px;background:rgba(30,28,27,.14);border-radius:2px;overflow:visible}
+  .b-chrono i b{position:absolute;left:0;top:0;height:100%;background:#1E1C1B;border-radius:2px}
+  .b-chrono i b::after{content:"";position:absolute;right:-4px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:#1E1C1B;box-shadow:0 0 0 5px rgba(30,28,27,.08)}
+  .b-chrono.fini span{animation:chFini .6s cubic-bezier(.2,1.6,.4,1)}
+  @keyframes chFini{50%{transform:scale(1.18)}}
+}
+
+/* ===== 15/11 (Marie) : l'appli s'anime — le réveil de 10 h, les rendez-vous qui se placent, une cliente qui s'ajoute, la personnalisation ===== */
+@media (min-width:1000px){
+  .a-anim{position:absolute;inset:0;z-index:4;pointer-events:none;container-type:inline-size;overflow:hidden;border-radius:inherit}
+  .a-anim .z{position:absolute;inset:0;background:center top/cover no-repeat}
+  .a-anim .cache{position:absolute}
+  /* accueil : le 10:00 sonne comme un réveil */
+  .a-anim .reveil{position:absolute;width:9cqw;height:9cqw;left:80%;top:40%;color:#F6F3EF}
+  .a-anim .reveil svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+  .a-anim .onde{position:absolute;left:50%;top:50%;width:100%;height:100%;margin:-50% 0 0 -50%;border-radius:50%;border:1px solid rgba(246,243,239,.6);opacity:0}
+  .a-anim.sonne .reveil,.a-anim.sonne .z.dix{animation:sonne .5s ease-in-out 4}
+  .a-anim.sonne .onde{animation:onde 1s ease-out 2}
+  @keyframes sonne{0%,100%{transform:rotate(0)}15%{transform:rotate(-12deg) translateX(-1px)}35%{transform:rotate(11deg) translateX(1px)}55%{transform:rotate(-8deg)}75%{transform:rotate(6deg)}}
+  @keyframes onde{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
+  .a-anim .z.dix{transform-origin:22% 47%}
+  /* agenda : chaque rendez-vous arrive à sa place */
+  .a-anim .z.rdv{opacity:0;transform:translateX(18%);transition:opacity .5s,transform .7s cubic-bezier(.2,1.2,.4,1)}
+  .a-anim .z.rdv.ok{opacity:1;transform:none}
+  /* clientes : on appuie sur « Ajouter », la fiche se remplit */
+  .a-anim .z.bt{transition:transform .18s}.a-anim .z.bt.appui{transform:scale(.965)}
+  .a-anim .fiche{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:6cqw 6cqw 0 0;padding:6cqw 6cqw 9cqw;box-shadow:0 -4cqw 8cqw -4cqw rgba(0,0,0,.35);transform:translateY(105%);transition:transform .6s cubic-bezier(.2,.9,.3,1);font:400 3.4cqw/1.35 Jost,sans-serif;color:#1E1C1B}
+  .a-anim .fiche.on{transform:none}
+  .a-anim .fiche h4{margin:0 0 4cqw;font:400 6cqw 'Cormorant Garamond',serif}
+  .a-anim .fiche .ch{border-bottom:1px solid rgba(30,28,27,.12);padding:2.4cqw 0 1.6cqw;margin-bottom:2cqw}
+  .a-anim .fiche .ch small{display:block;font-size:2.6cqw;letter-spacing:.18em;text-transform:uppercase;color:#8a8079;margin-bottom:.6cqw}
+  .a-anim .fiche .ch span{min-height:4.2cqw;display:block}
+  .a-anim .fiche .ok2{margin-top:4cqw;text-align:center;font:500 3cqw Jost;letter-spacing:.16em;text-transform:uppercase;background:#1E1C1B;color:#fff;border-radius:99px;padding:3.2cqw;transition:background .3s}
+  .a-anim .fiche .ok2.fait{background:#2F6B4F}
+  /* mon site : on appuie sur « Personnaliser », on choisit un fond, le site change */
+  .a-anim .z.apres{opacity:0;transition:opacity .9s}.a-anim .z.apres.on{opacity:1}
+  .a-anim .perso{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:6cqw 6cqw 0 0;padding:6cqw 6cqw 10cqw;box-shadow:0 -4cqw 8cqw -4cqw rgba(0,0,0,.35);transform:translateY(105%);transition:transform .6s cubic-bezier(.2,.9,.3,1);font:400 3.4cqw Jost,sans-serif}
+  .a-anim .perso.on{transform:none}
+  .a-anim .perso small{display:block;font-size:2.6cqw;letter-spacing:.18em;text-transform:uppercase;color:#8a8079;margin-bottom:3cqw}
+  .a-anim .perso .ronds{display:flex;gap:3cqw}
+  .a-anim .perso .ronds i{width:13cqw;height:13cqw;border-radius:50%;background:center/cover;box-shadow:0 0 0 1px rgba(0,0,0,.1);transition:box-shadow .3s,transform .3s}
+  .a-anim .perso .ronds i.on{box-shadow:0 0 0 .8cqw #fff,0 0 0 1.4cqw #1E1C1B;transform:scale(1.06)}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -763,7 +858,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   </div></div>
   <div class="b-hors" id="bHors"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:-30px;top:14%"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="right:-32px;top:30%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:-26px;top:66%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="right:-28px;top:78%"></div></div>
   <div class="legs" id="bLegs">
-    <div class="leg"><b>Personnalisez votre site en 1 minute chrono.</b><span>Un site classique, élégant, à votre nom. Déjà en ligne.</span></div>
+    <div class="leg"><b>Personnalisez votre site en 15 secondes chrono.</b><span>Un site classique, élégant, à votre nom. Déjà en ligne.</span></div>
     <div class="leg"><b>Un fond.</b><span>Des cerises, du léopard, de la lavande… Plus de 300 fonds.</span></div>
     <div class="leg"><b>Votre écriture. Vos couleurs.</b><span>Et voilà : votre univers. Le même site, que personne n’a.</span></div>
     <div class="leg"><b>Vos photos.</b><span>Vos plus belles poses, en grand. Vous les changez en 2 secondes.</span></div>
@@ -907,14 +1002,14 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
  if(!matchMedia("(min-width: 1000px)").matches){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
  else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
-  const DUR=13000;let t0=0,dedans=false,bo=0,actif=false;
+  const DUR=15000,P0=.085;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
   const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
    if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
-   cible=Math.max(sc,dedans?Math.min(1,(performance.now()-t0)/DUR):0);
+   const au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
    if(!raf)raf=requestAnimationFrame(pas);
    if(actif)bo=requestAnimationFrame(boucle)};
   new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!bo)bo=requestAnimationFrame(boucle)},{rootMargin:"300px"}).observe(b);
-  addEventListener("resize",lit);pose(0)}
+  addEventListener("resize",lit);pose(P0)}
 })();
 /* l'appli : même principe, lié au défilement */
 (()=>{const b=document.getElementById("appli"),A=[...b.querySelectorAll("img.a")],N=[...b.querySelectorAll(".nt")],L=[...b.querySelectorAll(".a-legs .leg")];
@@ -1208,7 +1303,14 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let items = [], etat = "haut", raf = 0;
       const pose = () => { lay.innerHTML = ""; items = []; etat = "haut"; lay.classList.remove("tombe");
         const W = pc.clientWidth, H = pc.clientHeight, I = [rel(pc.querySelector(".bloc"), pc, ORDI ? 26 : 10), rel(pc.querySelector(".ch-bas"), pc, 10)], deja = [];
-        PLUIE.forEach(n => { const t = Math.round(ORDI ? hasard(48, 66) : hasard(34, 46)), p = place(W, H, I, t, deja, ORDI ? 70 : 54); if (!p) return; const w = document.createElement("span"); w.className = "c2";
+        /* 15/11 (Marie) : sur ordinateur, les charms remplissent TOUT l'écran (même sur la phrase), bien répartis, sans trou */
+        let grille = null;
+        if (ORDI) { const N = PLUIE.length, haut = 64, cel = Math.sqrt(W * (H - haut) / N), cols = Math.max(1, Math.round(W / cel)), rows = Math.ceil(N / cols), cw = W / cols, ch = (H - haut) / rows;
+          grille = []; for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) grille.push([c * cw, haut + r * ch, cw, ch]);
+          grille.sort(() => Math.random() - .5); }
+        PLUIE.forEach((n, k) => { const t = Math.round(ORDI ? hasard(50, 68) : hasard(34, 46));
+          let p; if (grille) { const g = grille[k % grille.length]; p = [g[0] + hasard(0, Math.max(0, g[2] - t)), g[1] + hasard(0, Math.max(0, g[3] - t))]; } else p = place(W, H, I, t, deja, 54);
+          if (!p) return; const w = document.createElement("span"); w.className = "c2";
           w.style.width = w.style.height = t + "px"; w.style.transform = `translate3d(${p[0].toFixed(0)}px,${p[1].toFixed(0)}px,0)`;
           w.innerHTML = `<img src="loginail-site/charms-mini/${n}.webp" alt="" draggable="false" style="--a:${Math.round(hasard(-20, 20))}deg;--d:${hasard(3.4, 5.5).toFixed(1)}s;--r:${(-hasard(0, 5)).toFixed(1)}s">`;
           lay.appendChild(w); items.push({ w, x0: p[0], y0: p[1], x: p[0], y: p[1], t, vx: 0, vy: 0, a: 0, va: 0 }); }); };
@@ -1481,6 +1583,58 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         .observe(mot, { attributes: true, attributeFilter: ["style"], subtree: true }); }
     } }
 
+  /* ---- les charms : une phrase plus légère ---- */
+  { const t = document.querySelector("#charms .bloc .t2");
+    if (t) { const petit = document.createElement("p"); petit.className = "ch-petit"; petit.textContent = "On colle des charms sur nos clientes."; t.before(petit);
+      t.innerHTML = "Pourquoi pas<br><em>sur votre site ?</em>"; } }
+
+  /* ---- L'appli s'anime : chaque onglet a sa petite scène, en boucle ---- */
+  { const ecr = document.querySelector("#appli .a-ecr"), barre = document.querySelector("#appli .a-onglets");
+    if (ecr && barre) {
+      const A = document.createElement("div"); A.className = "a-anim"; ecr.appendChild(A);
+      const IMG = n => `loginail-site/apercus-univers/${n}.webp`;
+      /* une copie exacte d'un morceau de l'écran (x1,y1,x2,y2 en %) */
+      const morceau = (n, x1, y1, x2, y2, cl) => { const d = document.createElement("div"); d.className = "z " + (cl || ""); d.style.backgroundImage = `url(${IMG(n)})`; d.style.clipPath = `inset(${y1}% ${100 - x2}% ${100 - y2}% ${x1}%)`; return d; };
+      const cache = (x1, y1, x2, y2, c) => { const d = document.createElement("div"); d.className = "cache"; Object.assign(d.style, { left: x1 + "%", top: y1 + "%", width: (x2 - x1) + "%", height: (y2 - y1) + "%", background: c, borderRadius: "1.6cqw" }); return d; };
+      let ongl = 0, vu = false, T = [];
+      const att = (f, ms) => T.push(setTimeout(f, ms));
+      const efface = () => { T.forEach(clearTimeout); T = []; A.innerHTML = ""; A.className = "a-anim"; };
+      const tape = (el, txt, d0, v) => { [...txt].forEach((c, i) => att(() => { el.textContent = [...txt].slice(0, i + 1).join(""); }, d0 + i * v)); };
+      const S = [
+        /* 0 · Accueil : le 10:00 sonne */
+        () => { A.append(cache(10.5, 44.3, 36, 49.8, "#1E1C1B"), morceau("app-accueil", 10.5, 44.3, 36, 49.8, "dix"));
+          const r = document.createElement("div"); r.className = "reveil"; r.innerHTML = '<i class="onde"></i><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.4 1.6M5 4.5 2.8 6.6M19 4.5l2.2 2.1M7.5 20 6 22M16.5 20l1.5 2"/></svg>'; A.appendChild(r);
+          const go = () => { A.classList.remove("sonne"); void A.offsetWidth; A.classList.add("sonne"); att(go, 4200); }; att(go, 600); },
+        /* 1 · Agenda : les rendez-vous se placent un par un */
+        () => { const B = [[39.6, 50.6], [53.8, 61.2], [61.2, 75.6], [75.6, 80.4]];
+          B.forEach(b => A.appendChild(cache(19.8, b[0], 96.5, b[1], "#FBF9F5")));
+          const Z = B.map(b => { const z = morceau("app-agenda", 19.8, b[0], 96.5, b[1], "rdv"); A.appendChild(z); return z; });
+          const go = () => { Z.forEach(z => z.classList.remove("ok")); Z.forEach((z, i) => att(() => z.classList.add("ok"), 400 + i * 420)); att(go, 5600); }; go(); },
+        /* 2 · Clientes : on ajoute Chloé */
+        () => { const bt = morceau("app-clientes", 5.5, 23.2, 94.5, 29, "bt"); A.appendChild(bt);
+          const f = document.createElement("div"); f.className = "fiche";
+          f.innerHTML = '<h4>Nouvelle cliente</h4><div class="ch"><small>Prénom et nom</small><span class="n"></span></div><div class="ch"><small>Téléphone</small><span class="t"></span></div><div class="ch"><small>Anniversaire</small><span class="a"></span></div><div class="ok2">Enregistrer</div>';
+          A.appendChild(f); const n = f.querySelector(".n"), t = f.querySelector(".t"), a = f.querySelector(".a"), ok = f.querySelector(".ok2");
+          const go = () => { n.textContent = t.textContent = a.textContent = ""; ok.classList.remove("fait"); ok.textContent = "Enregistrer";
+            att(() => bt.classList.add("appui"), 500); att(() => bt.classList.remove("appui"), 700); att(() => f.classList.add("on"), 800);
+            tape(n, "Chloé Bernard", 1500, 70); tape(t, "06 12 34 56 78", 2500, 55); tape(a, "12 mai 🎂", 3400, 80);
+            att(() => { ok.classList.add("fait"); ok.textContent = "Cliente ajoutée ✓"; }, 4300); att(() => f.classList.remove("on"), 5400); att(go, 6600); }; go(); },
+        /* 3 · Mon site : « Personnaliser », on choisit un fond, le site change */
+        () => { const ap = morceau("app-monsite7b", 0, 0, 100, 100, "apres"); A.appendChild(ap);
+          const bt = morceau("app-monsite7", 5.5, 52.8, 94.5, 58.4, "bt"); A.appendChild(bt);
+          const p = document.createElement("div"); p.className = "perso";
+          p.innerHTML = '<small>Le fond de votre site</small><div class="ronds">' + ["tpl-maisonnoire", "tpl-maisonmoka", "tpl-atelierronce", "tpl-studiopoudre", "tpl-onglesdemma"].map(x => `<i style="background-image:url(loginail-site/fonds-classe/${x}.webp)"></i>`).join("") + "</div>";
+          A.appendChild(p); const R = [...p.querySelectorAll("i")];
+          const go = () => { ap.classList.remove("on"); R.forEach((r, i) => r.classList.toggle("on", i === 0));
+            att(() => bt.classList.add("appui"), 600); att(() => bt.classList.remove("appui"), 800); att(() => p.classList.add("on"), 900);
+            att(() => { R[0].classList.remove("on"); R[1].classList.add("on"); }, 2100);
+            att(() => p.classList.remove("on"), 2900); att(() => ap.classList.add("on"), 3200); att(go, 6800); }; go(); }
+      ];
+      const lance = () => { efface(); if (vu && S[ongl]) S[ongl](); };
+      barre.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; ongl = +b.dataset.i; setTimeout(lance, 380); });
+      new IntersectionObserver(es => { const v = es[0].isIntersecting; if (v !== vu) { vu = v; lance(); } }, { threshold: .3 }).observe(ecr);
+    } }
+
   /* ---- K · dans votre bio, votre .fr ---- */
   { const pq = document.getElementById("pourquoi");
     if (pq) {
@@ -1490,10 +1644,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         <p>Elle voit vos ongles, elle clique sur votre lien, elle réserve. Pas de page d’annuaire avec vos concurrentes à côté : juste vous.</p>
         <div class="pts"><div><b>votre-salon.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div>
         <div class="ex">Exemple · personnes et photos créées par IA</div></div>
-        <div class="scene" aria-hidden="true"><div class="tel insta"><div class="e"><div class="prof"><div class="haut"><div class="av" style="background-image:url(${E}portrait.webp)"></div><div class="chiffres"><div><b>214</b>posts</div><div><b>3 920</b>abonnés</div></div></div>
-          <div class="nom">les Ongles d’Emma</div><div class="bio">Prothésiste ongulaire · Bordeaux 💅<br>Nude, french, ongles naturels</div><span class="lien">🔗 lesonglesdemma.fr</span>
-          <div class="grille">${["1", "2", "3", "salon", "portrait", "1"].map((n, i) => `<i style="background-image:url(${i === 5 ? "loginail-site/univers-photos/noire/" : E}${n}.webp)"></i>`).join("")}</div></div></div></div>
-          <div class="tel site"><div class="e"><img src="loginail-site/apercus-univers/tpl-onglesdemma.webp" alt=""></div></div><div class="doigt">👆</div></div>`;
+        <div class="scene" aria-hidden="true">
+          <div class="p3d insta"><div class="corps"><div class="tr g"></div><div class="tr d"></div><div class="face"><div class="ecr"><div class="prof"><div class="haut"><div class="av" style="background-image:url(${E}portrait.webp)"></div><div class="chiffres"><div><b>214</b>posts</div><div><b>3 920</b>abonnés</div></div></div>
+            <div class="nom">les Ongles d’Emma</div><div class="bio">Prothésiste ongulaire · Bordeaux 💅<br>Nude, french, ongles naturels</div><span class="lien-w"><i>✦</i><span class="lien">lesonglesdemma.fr</span></span>
+            <div class="grille">${["1", "2", "3", "salon", "portrait", "1"].map((n, i) => `<i style="background-image:url(${i === 5 ? "loginail-site/univers-photos/noire/" : E}${n}.webp)"></i>`).join("")}</div></div></div></div></div><div class="ombre"></div></div>
+          <div class="p3d site"><div class="corps"><div class="tr g"></div><div class="tr d"></div><div class="face"><div class="ecr"><img src="loginail-site/apercus-univers/tpl-onglesdemma.webp" alt=""></div></div></div><div class="ombre"></div></div></div>`;
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
       const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;
