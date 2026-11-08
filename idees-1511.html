@@ -1,0 +1,199 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Idées · loginail.fr</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Cinzel:wght@500&family=Pinyon+Script&family=Shrikhand&family=Bagel+Fat+One&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--noir:#1E1C1B;--creme:#F6F3EF;--gris:#6b625c}
+*{box-sizing:border-box}html,body{margin:0;background:#E7E2DB;font-family:Jost,sans-serif;color:var(--noir)}
+header{text-align:center;padding:40px 20px 4px}header h1{font:400 40px/1.1 'Cormorant Garamond',serif;margin:0 0 8px}header p{margin:0 auto;max-width:720px;color:var(--gris);font-size:15px;line-height:1.5}
+h2.part{font:400 30px 'Cormorant Garamond',serif;max-width:1180px;margin:48px auto 0;padding:0 20px}
+.v{max-width:1180px;margin:22px auto 0;padding:0 20px}
+.v .tit{display:flex;align-items:baseline;gap:12px;margin:0 0 10px}.v .tit b{font:500 12px Jost;letter-spacing:.16em;text-transform:uppercase;background:var(--noir);color:#fff;border-radius:99px;padding:6px 12px}
+.v .tit span{font:400 23px 'Cormorant Garamond',serif}
+.ecran{position:relative;aspect-ratio:1536/695;border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(0,0,0,.5);background:var(--creme);container-type:inline-size}
+.avis{background:#fff;border-radius:14px;padding:13px 18px;margin-top:10px;font-size:14px;line-height:1.55;color:#4a4440}.avis b{color:var(--noir);font-weight:500}
+.barre{position:absolute;left:0;right:0;top:0;height:5.2cqw;display:flex;align-items:center;justify-content:space-between;padding:0 2.4cqw;z-index:6}
+.barre .logo{font:500 .9cqw Jost;letter-spacing:.36em}.barre .b{font:500 .78cqw Jost;letter-spacing:.14em;text-transform:uppercase;background:var(--noir);color:#fff;border-radius:99px;padding:.7cqw 1.4cqw}
+.k{font:500 .8cqw Jost;letter-spacing:.32em;text-transform:uppercase;color:var(--gris)}
+.h{font:400 4.3cqw/1.04 'Cormorant Garamond',serif;letter-spacing:-.01em;margin:1.3cqw 0}
+.ligne{font:400 .92cqw Jost;letter-spacing:.24em;text-transform:uppercase;display:flex;gap:1.1cqw;align-items:center;flex-wrap:wrap}.ligne i{display:inline-block;width:.32cqw;height:.32cqw;border-radius:50%;background:currentColor;opacity:.4}
+.form{display:flex;gap:.6cqw;margin-top:2cqw}.form .in{width:17cqw;height:3.5cqw;border-radius:99px;background:#fff;border:1px solid rgba(0,0,0,.1);font:400 .92cqw Jost;color:#9a918a;display:flex;align-items:center;padding:0 1.4cqw}
+.form .bt{height:3.5cqw;border-radius:99px;background:var(--noir);color:#fff;font:500 .8cqw Jost;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;padding:0 1.8cqw}
+.sous{font:400 .85cqw Jost;color:var(--gris);margin-top:1cqw}.sous b{color:var(--noir);font-weight:500}
+/* « briller » qui change d'écriture, avec son charm */
+.mot{display:inline-flex;align-items:center;gap:.3em;white-space:nowrap}
+.mot .mt{display:inline-block;transition:opacity .22s,transform .22s;font-weight:600}
+.mot img{width:.85em;height:.85em;object-fit:contain;transition:opacity .22s,transform .3s cubic-bezier(.2,1.6,.4,1);filter:drop-shadow(0 .1em .15em rgba(0,0,0,.2))}
+.mot.chg .mt{opacity:0;transform:translateY(.12em)}.mot.chg img{opacity:0;transform:scale(.4) rotate(-30deg)}
+.tel{position:relative;aspect-ratio:420/909;border-radius:15%/7%;padding:.45cqw;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 .08cqw #8a857f,0 2.6cqw 3.4cqw -1.6cqw rgba(0,0,0,.55)}
+.tel .e{width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff center/cover;transition:background-image .4s}
+.tel .e::before{content:"";position:absolute;z-index:2;top:3.4%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
+/* A · format 5, fond crème uni, briller qui change */
+.vA .g{position:absolute;left:6.5cqw;top:50%;transform:translateY(-45%);width:40cqw}
+.vA .ph{position:absolute;right:0;top:0;bottom:0;width:46cqw;background:center/cover;transition:opacity .5s}
+.vA .ph::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--creme),rgba(246,243,239,0) 26%)}
+.vA .tel{position:absolute;right:30cqw;bottom:-5cqw;width:13cqw;transform:rotate(-5deg);z-index:2}
+/* B · écrit au milieu (comme le 2), photos des deux côtés (comme le 5) */
+.vB .ph{position:absolute;top:0;bottom:0;width:27cqw;background:center/cover}.vB .ph.l{left:0}.vB .ph.r{right:0}
+.vB .ph.l::after,.vB .ph.r::after{content:"";position:absolute;inset:0}.vB .ph.l::after{background:linear-gradient(90deg,rgba(246,243,239,0) 55%,var(--creme))}.vB .ph.r::after{background:linear-gradient(270deg,rgba(246,243,239,0) 55%,var(--creme))}
+.vB .c{position:absolute;left:27cqw;right:27cqw;top:50%;transform:translateY(-46%);text-align:center;display:flex;flex-direction:column;align-items:center}
+.vB .h{font-size:3.8cqw}.vB .ligne{justify-content:center}.vB .form{justify-content:center}
+/* C · format 5, la photo ET le téléphone changent avec « briller » */
+.vC .g{position:absolute;left:6.5cqw;top:50%;transform:translateY(-45%);width:40cqw}
+.vC .ph{position:absolute;right:2.4cqw;top:6.4cqw;bottom:2.4cqw;width:44cqw;border-radius:1.8cqw;background:center/cover;transition:background-image .45s}
+.vC .tel{position:absolute;right:33cqw;top:50%;transform:translateY(-44%);width:12.5cqw;z-index:2}
+.vC .lab{position:absolute;right:4cqw;bottom:4cqw;z-index:2;font:500 .75cqw Jost;letter-spacing:.2em;text-transform:uppercase;background:rgba(246,243,239,.9);padding:.6cqw 1cqw;border-radius:99px}
+/* 4A à sa place */
+.s4{background:#131112;color:var(--creme)}
+.s4 .g{position:absolute;left:6.5cqw;top:50%;transform:translateY(-50%);width:36cqw}.s4 .k{color:rgba(246,243,239,.7)}
+.s4 .h{font-size:3.6cqw}.s4 .h em{font-style:italic}.s4 p{font:400 1.05cqw/1.6 Jost;color:rgba(246,243,239,.75);margin:0}
+.s4 .scene{position:absolute;right:5cqw;top:50%;transform:translateY(-50%);width:44cqw;height:30cqw}
+.s4 .an,.s4 .site{position:absolute;inset:0;transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.3,1)}
+.s4 .lab{font:500 .8cqw Jost;letter-spacing:.24em;text-transform:uppercase;color:#C9B48A;margin-bottom:1.2cqw}
+.s4 .an .l{background:#fff;color:var(--noir);border-radius:1cqw;padding:1cqw 1.4cqw;margin-bottom:.7cqw;font-size:1.05cqw;display:flex;justify-content:space-between;opacity:.55}
+.s4 .an .l.moi{opacity:1;box-shadow:0 0 0 .2cqw #C9B48A}
+.s4 .site .carte{background:#fff;color:var(--noir);border-radius:1.6cqw;padding:2.4cqw;box-shadow:0 2cqw 4cqw -2cqw rgba(0,0,0,.9)}
+.s4 .site .carte b{display:block;font:400 2.6cqw 'Cormorant Garamond',serif}.s4 .site .carte span{font-size:1cqw;color:var(--gris)}
+.s4 .site .carte i{display:inline-block;margin-top:1.6cqw;font-style:normal;font:500 .8cqw Jost;letter-spacing:.14em;text-transform:uppercase;background:var(--noir);color:#fff;border-radius:99px;padding:.9cqw 1.6cqw}
+.s4 .site .seule{margin-top:1.4cqw;font:italic 400 1.6cqw 'Cormorant Garamond',serif;color:rgba(246,243,239,.85)}
+.s4.b .an{opacity:0;transform:translateX(-4cqw)}.s4:not(.b) .site{opacity:0;transform:translateX(4cqw)}
+/* Classe ou baddie */
+.st1 .bg{position:absolute;inset:0;background:center/cover;transition:opacity .9s}.st1 .bg.b{opacity:0}
+.st1 .bg::after{content:"";position:absolute;inset:0;background:rgba(246,243,239,.35)}
+.st1 .q{position:absolute;left:0;right:0;top:6cqw;text-align:center;z-index:2}
+.st1 .q .t{font:400 3.6cqw/1 'Cormorant Garamond',serif}
+.st1 .q .mots{display:flex;justify-content:center;gap:3cqw;margin-top:1.4cqw}
+.st1 .q .mots span{font:italic 400 2.2cqw 'Cormorant Garamond',serif;color:rgba(30,28,27,.45);padding-bottom:.4cqw;border-bottom:1px solid transparent;transition:all .5s}
+.st1 .q .mots span.on{color:var(--noir);border-color:var(--noir)}
+.st1 .tel{position:absolute;left:50%;bottom:-8cqw;transform:translateX(-50%);width:15cqw;z-index:2}
+.st2{display:grid;grid-template-columns:1fr 1fr}
+.st2 .p{position:relative;background:center/cover}.st2 .p::after{content:"";position:absolute;inset:0;background:rgba(246,243,239,.25)}
+.st2 .p .tel{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%) rotate(var(--r));width:13cqw;z-index:2}
+.st2 .mil{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;background:var(--creme);border-radius:50%;width:12cqw;height:12cqw;display:grid;place-items:center;text-align:center;box-shadow:0 2cqw 4cqw -2cqw rgba(0,0,0,.5)}
+.st2 .mil div{font:400 1.5cqw/1.1 'Cormorant Garamond',serif}.st2 .mil small{display:block;font:500 .6cqw Jost;letter-spacing:.24em;color:var(--gris);margin-bottom:.4cqw}
+.st2 .mot2{position:absolute;bottom:2.4cqw;left:0;right:0;text-align:center;z-index:3;font:500 .8cqw Jost;letter-spacing:.34em;text-transform:uppercase}
+.st3{background:#EFE7DF}
+.st3 .q{position:absolute;left:0;right:0;top:6cqw;text-align:center;font:400 3cqw 'Cormorant Garamond',serif;z-index:2}.st3 .q em{font-style:italic}
+.st3 .rang{position:absolute;left:50%;top:56%;display:flex;gap:2cqw;align-items:center;transform:translate(-50%,-50%);transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.st3 .it{display:flex;flex-direction:column;align-items:center;gap:1cqw;transition:transform .9s cubic-bezier(.3,.8,.3,1),opacity .9s;opacity:.5;transform:scale(.8)}
+.st3 .it.on{opacity:1;transform:scale(1.12)}
+.st3 .it .tel{width:10cqw}.st3 .it small{font:500 .7cqw Jost;letter-spacing:.3em;text-transform:uppercase;color:var(--gris)}
+/* Tout ça pour vous : 3D */
+.t3a{background:radial-gradient(ellipse 70% 60% at 50% 40%,#FBF6F0,#EDE2D6 70%,#E2D3C4);perspective:120cqw}
+.t3a .scene{position:absolute;inset:0;transform-style:preserve-3d}
+.t3a .tel{position:absolute;width:11cqw;transform-style:preserve-3d;animation:flotte 7s ease-in-out infinite}
+.t3a .tel::after{content:"";position:absolute;left:8%;right:8%;bottom:-3cqw;height:2cqw;border-radius:50%;background:radial-gradient(ellipse,rgba(80,50,30,.35),transparent 70%);filter:blur(.5cqw);transform:translateZ(-1px)}
+@keyframes flotte{0%,100%{translate:0 0}50%{translate:0 -1.2cqw}}
+.t3a .tel .e::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.35),rgba(255,255,255,0) 35%)}
+.t3b{background:#E6DACB url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 0h6v1H0zM0 3h6v1H0z' fill='%23d8c9b8' fill-opacity='.45'/%3E%3C/svg%3E")}
+.t3b .tel{position:absolute;width:10.5cqw;box-shadow:0 0 0 .08cqw #8a857f,.2cqw .3cqw 0 .08cqw #262524,.4cqw .6cqw 0 .08cqw #141312,1.6cqw 2.4cqw 2cqw -.4cqw rgba(70,45,25,.45)}
+.t3b .ch{position:absolute;width:3.4cqw;filter:drop-shadow(.4cqw .6cqw .5cqw rgba(70,45,25,.35))}
+.t3c{background:linear-gradient(160deg,#F7F1EA,#EADFD2)}
+.t3c .tel{position:absolute;width:12cqw;transform:rotate(-14deg);box-shadow:0 0 0 .08cqw #8a857f,0 3cqw 4cqw -1.6cqw rgba(60,35,20,.5)}
+.t3c .tel.loin{filter:blur(.25cqw);opacity:.75;width:9cqw}.t3c .tel.tl{filter:blur(.5cqw);opacity:.5;width:7cqw}
+.carteF{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;background:rgba(250,246,241,.95);border-radius:2cqw;padding:2.2cqw 3.4cqw;text-align:center;box-shadow:0 3cqw 6cqw -3cqw rgba(70,40,25,.6)}
+.carteF .t{font:400 2.7cqw/1.08 'Cormorant Garamond',serif}.carteF .t em{font-style:italic}.carteF .bt{display:inline-block;margin-top:1.4cqw;font:500 .75cqw Jost;letter-spacing:.16em;text-transform:uppercase;background:var(--noir);color:#fff;border-radius:99px;padding:.9cqw 1.6cqw}
+footer{text-align:center;color:#8a8079;font-size:12px;padding:44px 20px 70px}
+</style></head><body>
+<header><h1>Idées pour loginail.fr</h1><p>Ce que tu m’as dit : le format de l’accueil 5, la couleur de l’accueil 2, « briller » qui bouge et change d’écriture, et la ligne Site · Réservation · Rappels SMS · Caisse. Puis le 4A à sa place, des idées pour « Classe ou baddie », et de vrais téléphones en 3D. Dis-moi les lettres.</p></header>
+
+<h2 class="part">1 · L’accueil</h2>
+<div class="v"><div class="tit"><b>A</b><span>Le format 5, sur fond crème uni</span></div>
+<div class="ecran vA"><div class="barre"><span class="logo">LOGINAIL</span><span class="b">Créer mon site</span></div>
+<div class="ph" style="background-image:url(loginail-site/univers-photos/noire/1.webp)"></div>
+<div class="g"><div class="k">Pour les prothésistes ongulaires · prêt en une minute</div><div class="h">Un site pour <span class="mot"><span class="mt">briller</span><img alt="" src="loginail-site/charms-mini/cerisedisco.webp"></span>.<br>Une appli pour<br>tout gérer.</div>
+<div class="ligne">Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse</div><div class="form"><div class="in">Votre lien Maps, Planity, Booksy…</div><div class="bt">Créer mon site</div></div><div class="sous"><b>1 mois offert</b> · sans engagement · 0 % de commission</div></div>
+<div class="tel"><div class="e" style="background-image:url(loginail-site/apercus-mini/tpl-maisonnoire.webp)"></div></div></div>
+<div class="avis">Exactement le format 5 que tu aimes. Le fond n’a plus de taches de couleur : il est crème uni, comme l’accueil 2, ce qui fait plus chic. « <b>briller</b> » change d’écriture toutes les 2 secondes avec son petit charm, comme sur le site aujourd’hui.</div></div>
+
+<div class="v"><div class="tit"><b>B</b><span>Écrit au milieu, photos des deux côtés</span></div>
+<div class="ecran vB"><div class="barre"><span class="logo">LOGINAIL</span><span class="b">Créer mon site</span></div>
+<div class="ph l" style="background-image:url(loginail-site/univers-photos/emma/2.webp)"></div><div class="ph r" style="background-image:url(loginail-site/univers-photos/emma/salon.webp)"></div>
+<div class="c"><div class="k">Pour les prothésistes ongulaires · prêt en une minute</div><div class="h">Un site pour <span class="mot"><span class="mt">briller</span><img alt="" src="loginail-site/charms-mini/cerisedisco.webp"></span>.<br>Une appli pour tout gérer.</div>
+<div class="ligne">Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse</div><div class="form"><div class="in">Votre lien Maps, Planity, Booksy…</div><div class="bt">Créer mon site</div></div><div class="sous"><b>1 mois offert</b> · sans engagement</div></div></div>
+<div class="avis">Le mélange du 2 et du 5 : tout est écrit au milieu, comme le 2, avec une photo d’ongles à gauche et une photo de salon à droite, qui se fondent doucement dans le crème.</div></div>
+
+<div class="v"><div class="tit"><b>C</b><span>Le format 5, et tout change avec « briller »</span></div>
+<div class="ecran vC" id="vC"><div class="barre"><span class="logo">LOGINAIL</span><span class="b">Créer mon site</span></div>
+<div class="ph" id="cPh"></div><div class="lab" id="cLab"></div>
+<div class="g"><div class="k">Pour les prothésistes ongulaires · prêt en une minute</div><div class="h">Un site pour <span class="mot" id="cMot"><span class="mt">briller</span><img alt="" src="loginail-site/charms-mini/cerisedisco.webp"></span>.<br>Une appli pour<br>tout gérer.</div>
+<div class="ligne">Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse</div><div class="form"><div class="in">Votre lien Maps, Planity, Booksy…</div><div class="bt">Créer mon site</div></div><div class="sous"><b>1 mois offert</b> · sans engagement · 0 % de commission</div></div>
+<div class="tel"><div class="e" id="cTel"></div></div></div>
+<div class="avis">Le format 5, mais vivant : chaque fois que « <b>briller</b> » change d’écriture, la grande photo et le site dans le téléphone changent aussi, pour aller ensemble (Maison Noire en lettres chic, les Ongles de Cerise en lettres rondes, Emma en lettres fines…). On comprend tout de suite : un style, un site.</div></div>
+
+<h2 class="part">2 · Le 4A, à sa place</h2>
+<div class="v"><div class="tit"><b>D</b><span>Dans « Elle vous cherche », à la place de la recherche Google</span></div>
+<div class="ecran s4" id="s4"><div class="g"><div class="k">Votre site. Pas une page d’annuaire.</div><div class="h">Elle vous cherche.<br><em>Elle ne trouve que vous.</em></div><p>Sur un annuaire, vous êtes au milieu de 12 salons. Sur votre site, il n’y a que vous.</p></div>
+<div class="scene"><div class="an"><div class="lab">Sur un annuaire</div><div class="l">Nails by Sarah<span>★ 4,8</span></div><div class="l">Onglerie Lina<span>★ 4,7</span></div><div class="l moi">Votre salon<span>★ 5,0</span></div><div class="l">Beauty Nails<span>★ 4,6</span></div><div class="l">Studio Ongles<span>★ 4,9</span></div></div>
+<div class="site"><div class="lab">Sur votre site</div><div class="carte"><b>Votre salon</b><span>votre-salon.fr · ★★★★★</span><br><i>Réserver un créneau</i></div><div class="seule">Il n’y a que vous.</div></div></div></div>
+<div class="avis">C’est l’endroit qui lui va : la section noire « Elle vous cherche ». À droite, l’annuaire s’affiche, avec ton salon perdu au milieu des autres… puis il glisse et laisse la place à <b>ton site, tout seul</b>. Et ça recommence, doucement. Les 3 cartes du dessous (À votre nom · Il n’y a que vous · Dans votre bio) ne bougent pas.</div></div>
+
+<h2 class="part">3 · Classe ou baddie : d’autres idées, élégantes</h2>
+<div class="v"><div class="tit"><b>E</b><span>Un seul téléphone, deux mots qui s’allument</span></div>
+<div class="ecran st1" id="st1"><div class="bg a"></div><div class="bg b"></div>
+<div class="q"><div class="k">Votre style</div><div class="t">Vous êtes plutôt…</div><div class="mots"><span class="on">classe</span><span>baddie</span></div></div>
+<div class="tel"><div class="e" id="st1e"></div></div></div>
+<div class="avis">Très épuré : « Vous êtes plutôt… » puis deux mots en italique, <i>classe</i> et <i>baddie</i>, qui s’allument à tour de rôle (un trait fin dessous). Un seul grand téléphone qui sort du bas, et le fond du site derrière qui change en fondu lent. On peut aussi toucher le mot.</div></div>
+
+<div class="v"><div class="tit"><b>F</b><span>La double page de magazine</span></div>
+<div class="ecran st2"><div class="p" style="background-image:url(loginail-site/fonds-classe/tpl-maisonnoire.webp)"><div class="tel" style="--r:-5deg"><div class="e" style="background-image:url(loginail-site/apercus-mini/tpl-maisonnoire.webp)"></div></div><div class="mot2">Classe</div></div>
+<div class="p" style="background-image:url(loginail-site/fonds-classe/cerise.webp)"><div class="tel" style="--r:5deg"><div class="e" style="background-image:url(loginail-site/apercus-mini/cerise.webp)"></div></div><div class="mot2">Baddie</div></div>
+<div class="mil"><div><small>VOTRE STYLE</small>Classe,<br><i>ou baddie ?</i></div></div></div>
+<div class="avis">Comme un magazine ouvert : la page de gauche classe, la page de droite baddie, un téléphone légèrement penché sur chacune. Au centre, une pastille ronde crème avec la question. Les mots sont écrits en tout petit, en capitales espacées, en bas. Les pages changent lentement, chacune à son tour.</div></div>
+
+<div class="v"><div class="tit"><b>G</b><span>La galerie qui avance</span></div>
+<div class="ecran st3"><div class="q">Classe <em>ou baddie ?</em></div><div class="rang" id="st3"></div></div>
+<div class="avis">Une rangée de téléphones, classe et baddie mélangés. Celui du milieu est en grand, les autres plus petits et plus pâles. Toutes les 2 secondes, la rangée avance d’un cran, tout en douceur. Sous chaque téléphone, juste le mot : CLASSE ou BADDIE.</div></div>
+
+<h2 class="part">4 · Tout ça, pour vous : de vrais téléphones en 3D</h2>
+<div class="v"><div class="tit"><b>H</b><span>Comme une photo de studio</span></div>
+<div class="ecran t3a" id="t3a"><div class="scene"></div><div class="carteF"><div class="t">Tout ça, pour vous.<br><em>Vous attendez quoi ?</em></div><div class="bt">Créer mon site gratuitement</div></div></div>
+<div class="avis">Six grands téléphones debout, tournés de côté comme dans une pub (on voit leur tranche), à différentes distances. Ils flottent doucement, avec une ombre douce au sol et un reflet de lumière sur l’écran.</div></div>
+
+<div class="v"><div class="tit"><b>I</b><span>Posés à plat, comme une photo Instagram</span></div>
+<div class="ecran t3b" id="t3b"><div class="carteF"><div class="t">Tout ça, pour vous.<br><em>Vous attendez quoi ?</em></div><div class="bt">Créer mon site gratuitement</div></div></div>
+<div class="avis">Vue de dessus, sur un tissu de lin : quelques téléphones posés à plat, un peu de travers, avec leur épaisseur et une vraie ombre. Des charms éparpillés autour, comme sur une table de prothésiste. C’est le style « flat lay » qu’on voit partout sur Instagram.</div></div>
+
+<div class="v"><div class="tit"><b>J</b><span>La pluie de téléphones, avec de la profondeur</span></div>
+<div class="ecran t3c" id="t3c"><div class="carteF"><div class="t">Tout ça, pour vous.<br><em>Vous attendez quoi ?</em></div><div class="bt">Créer mon site gratuitement</div></div></div>
+<div class="avis">Des téléphones penchés qui descendent lentement en diagonale. Ceux de devant sont nets et grands, ceux du fond plus petits et flous, comme une photo avec de la profondeur.</div></div>
+
+<footer>Loginail · planche de travail, pas publiée dans Google · 15/11/2026</footer>
+<script>
+const P="loginail-site/";
+/* « briller » qui change d'écriture */
+const F=[["'Cormorant Garamond',serif","cerisedisco"],["Cinzel,serif","perle"],["'Bagel Fat One',sans-serif","fraisegelee"],["'Pinyon Script',cursive","noeudgelee"],["Shrikhand,serif","bouledisco"],["'Playfair Display',serif","coeurchrome"]];
+const U=[["noire","tpl-maisonnoire","Maison Noire"],["noire","tpl-maisonnoire","Maison Noire"],["cerise","cerise","les Ongles de Cerise"],["emma","tpl-onglesdemma","les Ongles d’Emma"],["bling","bling","Bling"],["poudre","tpl-studiopoudre","Studio Poudré"]];
+let i=0;const mots=[...document.querySelectorAll(".mot")];
+const pose=()=>{mots.forEach(m=>{m.querySelector(".mt").style.fontFamily=F[i][0];m.querySelector("img").src=P+"charms-mini/"+F[i][1]+".webp"});
+ const u=U[i];document.getElementById("cPh").style.backgroundImage=`url(${P}univers-photos/${u[0]}/1.webp)`;document.getElementById("cTel").style.backgroundImage=`url(${P}apercus-mini/${u[1]}.webp)`;document.getElementById("cLab").textContent=u[2]};
+pose();setInterval(()=>{mots.forEach(m=>m.classList.add("chg"));setTimeout(()=>{i=(i+1)%F.length;pose();mots.forEach(m=>m.classList.remove("chg"))},230)},2100);
+/* 4A */
+setInterval(()=>document.getElementById("s4").classList.toggle("b"),3200);
+/* E */
+(()=>{const s=document.getElementById("st1"),[a,b]=s.querySelectorAll(".bg"),e=document.getElementById("st1e"),M=[...s.querySelectorAll(".mots span")];
+ const C=[["tpl-maisonnoire","tpl-maisonnoire"],["cerise","cerise"],["tpl-maisonmoka","tpl-maisonmoka"],["pop","pop"],["tpl-onglesdemma","tpl-onglesdemma"],["baddie","baddie"]];let k=0;
+ const pose=()=>{const c=C[k],cache=a.classList.contains("b")?a:b,mont=cache===a?b:a;cache.style.backgroundImage=`url(${P}fonds-classe/${c[0]}.webp)`;cache.classList.remove("b");mont.classList.add("b");e.style.backgroundImage=`url(${P}apercus-mini/${c[1]}.webp)`;M.forEach((m,j)=>m.classList.toggle("on",j===k%2))};
+ pose();setInterval(()=>{k=(k+1)%C.length;pose()},2600)})();
+/* G */
+(()=>{const r=document.getElementById("st3"),L=[["tpl-maisonnoire","Classe"],["cerise","Baddie"],["tpl-maisonmoka","Classe"],["pop","Baddie"],["tpl-onglesdemma","Classe"],["y2k","Baddie"],["tpl-studiopoudre","Classe"],["bling","Baddie"]];
+ r.innerHTML=L.map(l=>`<div class="it"><div class="tel"><div class="e" style="background-image:url(${P}apercus-mini/${l[0]}.webp)"></div></div><small>${l[1]}</small></div>`).join("");
+ const it=[...r.children];let k=3;const pose=()=>{it.forEach((x,j)=>x.classList.toggle("on",j===k));const w=it[0].getBoundingClientRect().width+r.parentElement.clientWidth*.02;r.style.transform=`translate(calc(-50% + ${((it.length-1)/2-k)*w}px),-50%)`};
+ setTimeout(pose,300);setInterval(()=>{k=(k+1)%it.length;pose()},2000)})();
+/* H : studio */
+(()=>{const sc=document.querySelector("#t3a .scene"),L=["tpl-maisonnoire","cerise","tpl-onglesdemma","chrome","tpl-maisonmoka","pop"];
+ const pos=[[6,22,-28,-120,-6],[18,10,-18,40,-3],[34,30,14,-60,0],[58,24,-14,-60,2],[72,8,22,40,4],[84,28,30,-130,6]];
+ sc.innerHTML=L.map((l,j)=>{const p=pos[j];return `<div class="tel" style="left:${p[0]}cqw;top:${p[1]}cqw;transform:rotateY(${p[2]}deg) translateZ(${p[3]}px) rotateZ(${p[4]}deg);animation-delay:${-j*1.1}s"><div class="e" style="background-image:url(${P}apercus-mini/${l}.webp)"></div></div>`}).join("")})();
+/* I : flat lay */
+(()=>{const t=document.getElementById("t3b"),L=["tpl-maisonnoire","cerise","tpl-onglesdemma","tpl-studiopoudre","pop","tpl-maisonmoka"];
+ const pos=[[4,6,-14],[18,30,9],[66,4,12],[80,26,-10],[38,-12,6],[52,40,-6]];
+ t.insertAdjacentHTML("afterbegin",L.map((l,j)=>{const p=pos[j];return `<div class="tel" style="left:${p[0]}cqw;top:${p[1]}cqw;transform:rotate(${p[2]}deg)"><div class="e" style="background-image:url(${P}apercus-mini/${l}.webp)"></div></div>`}).join("")+
+  [["cerisedisco",32,8],["perle",60,34],["noeudgelee",14,22],["coeurchrome",90,14],["fraisegelee",47,4],["bouledisco",74,40],["papillondore",28,40],["hibiscus",62,16]].map(c=>`<img class="ch" src="${P}charms-mini/${c[0]}.webp" style="left:${c[1]}cqw;top:${c[2]}cqw" alt="">`).join(""))})();
+/* J : profondeur */
+(()=>{const t=document.getElementById("t3c"),L=["tpl-maisonnoire","cerise","tpl-onglesdemma","chrome","tpl-maisonmoka","pop","y2k","tpl-studiopoudre","bling"];
+ const pos=[[4,-6,""],[22,18,"loin"],[40,-14,"tl"],[62,6,"loin"],[80,-10,""],[12,28,"tl"],[70,30,""],[50,34,"loin"],[88,24,"tl"]];
+ t.insertAdjacentHTML("afterbegin",L.map((l,j)=>{const p=pos[j];return `<div class="tel ${p[2]}" style="left:${p[0]}cqw;top:${p[1]}cqw"><div class="e" style="background-image:url(${P}apercus-mini/${l}.webp)"></div></div>`}).join(""));
+ const T=[...t.querySelectorAll(".tel")];let y=0;const v=T.map(x=>x.classList.contains("tl")?.04:x.classList.contains("loin")?.07:.11);
+ T.forEach(x=>x.style.top="0");
+ const anime=()=>{y+=1;T.forEach((x,j)=>{const d=((y*v[j]+j*8.4)%78)-28;x.style.translate=`${(d*.3).toFixed(2)}cqw ${d.toFixed(2)}cqw`});requestAnimationFrame(anime)};anime()})();
+</script>
+</body></html>
