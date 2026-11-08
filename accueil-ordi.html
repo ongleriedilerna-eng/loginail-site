@@ -1282,6 +1282,21 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 }
 .chif b.mio{white-space:nowrap}
 .gal .piste{cursor:grab}
+
+/* ===== 16/11 (3) ===== */
+/* « tout compris » surligné, comme au feutre */
+#prix .prix .k mark.surl{color:inherit;background:linear-gradient(100deg,transparent 2%,rgba(233,196,106,.75) 4%,rgba(233,196,106,.62) 96%,transparent 98%) 0 72%/100% 58% no-repeat;padding:0 .25em;margin:0 -.1em;border-radius:3px}
+/* « Sans engagement » qui scintille : un reflet qui passe + petites étoiles */
+#prix .pastille-se.scint{position:relative;overflow:visible;isolation:isolate}
+#prix .pastille-se.scint::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.85) 47%,rgba(255,240,200,.95) 50%,rgba(255,255,255,.85) 53%,transparent 70%) -150% 0/250% 100% no-repeat;animation:seBrille 3.2s ease-in-out infinite}
+@keyframes seBrille{0%,35%{background-position:150% 0}75%,100%{background-position:-150% 0}}
+#prix .pastille-se.scint i{position:absolute;z-index:2;font-style:normal;color:#D9B56A;font-size:11px;line-height:1;pointer-events:none;opacity:0;animation:seEtoile 3.2s ease-in-out infinite}
+#prix .pastille-se.scint .sc1{left:-4px;top:-6px}
+#prix .pastille-se.scint .sc2{right:8%;top:-8px;font-size:9px;animation-delay:.5s}
+#prix .pastille-se.scint .sc3{right:-5px;bottom:-5px;font-size:13px;animation-delay:1.1s}
+@keyframes seEtoile{0%,100%{opacity:0;transform:scale(.4) rotate(0)}18%{opacity:1;transform:scale(1.15) rotate(45deg)}36%{opacity:0;transform:scale(.5) rotate(90deg)}}
+#prix .prix .k mark.surl{color:#1E1C1B!important;opacity:1}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -2088,10 +2103,24 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const maj = () => { const r = tl.getBoundingClientRect(), p = Math.min(1, Math.max(0, (innerHeight * .7 - r.top) / Math.max(1, r.height)));
         tl.style.setProperty("--t2", p.toFixed(3)); LI.forEach(li => li.classList.toggle("on2", p * r.height >= li.offsetTop + 8)); };
       addEventListener("scroll", maj, { passive: true }); addEventListener("resize", maj); maj(); } }
+
+  /* ---- 16/11 (Marie) : « Pourquoi pas sur notre site ? » — on touche un charm : il tombe, vite, et disparaît pour de bon ---- */
+  { const pc = document.querySelector("#charms .p-ch");
+    if (pc) { const tombe = e => { const w = e.target.closest && e.target.closest(".pluie2 .c2"); if (!w) return; e.stopPropagation(); e.preventDefault(); if (w.dataset.parti) return; w.dataset.parti = 1;
+        const m = new DOMMatrixReadOnly(getComputedStyle(w).transform), H = pc.clientHeight, x = m.m41, y = m.m42, rz = (Math.random() < .5 ? -1 : 1) * (120 + Math.random() * 160);
+        w.style.pointerEvents = "none";
+        const a = w.animate([{ transform: `translate3d(${x}px,${y}px,0) rotate(0deg)` }, { transform: `translate3d(${x}px,${y - 18}px,0) rotate(${rz * .08}deg)`, offset: .12 },
+          { transform: `translate3d(${x + (Math.random() * 60 - 30)}px,${H + 160}px,0) rotate(${rz}deg)` }], { duration: 520 + Math.max(0, H - y) * .25, easing: "cubic-bezier(.55,0,1,.6)", fill: "forwards" });
+        a.onfinish = () => w.remove(); };
+      pc.addEventListener("pointerdown", tombe, true); pc.addEventListener("click", e => { if (e.target.closest && e.target.closest(".pluie2 .c2")) e.stopPropagation(); }, true); } }
+
+  /* ---- 16/11 (Marie) : « tout compris » surligné ; « Sans engagement » qui scintille ---- */
+  { const k = document.querySelector("#prix .prix > .k"); if (k && k.textContent.includes("tout compris")) k.innerHTML = k.textContent.replace("tout compris", '<mark class="surl">tout compris</mark>');
+    const se = document.querySelector("#prix .pastille-se"); if (se) { se.classList.add("scint"); se.insertAdjacentHTML("beforeend", '<i class="sc1">✦</i><i class="sc2">✦</i><i class="sc3">✦</i>'); } }
   /* ---- les charms : une phrase plus légère ---- */
   { const t = document.querySelector("#charms .bloc .t2");
     if (t) { const petit = document.createElement("p"); petit.className = "ch-petit"; petit.textContent = "On colle des charms sur les ongles de nos clientes,"; t.before(petit);
-      t.innerHTML = "Pourquoi pas<br><em>sur votre site ?</em>";
+      t.innerHTML = "Pourquoi pas<br><em>sur notre site ?</em>";
       const pp = t.parentElement.querySelector(".p"); if (pp) { pp.innerHTML = "Touchez-en un.<br>Sur votre site, vos clientes font pareil."; pp.classList.add("ch-p2"); } } }
 
   /* ---- L'appli s'anime : chaque onglet a sa petite scène, en boucle ---- */
@@ -2174,16 +2203,20 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
       /* les lettres qui défilent : « site » bascule, l'alphabet défile très vite, et un nom de salon apparaît */
-      const NOMS = ["TikTok", "Google", "Facebook", "Snapchat", "Pinterest", "WhatsApp", "Instagram"], AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";   /* 16/11 : le réseau change, le .fr reste */
+      const NOMS = ["TikTok", "Facebook", "Pinterest", "Snapchat", "Google", "Instagram"], AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";   /* 16/11 : le réseau change, le .fr reste */
       const sc = s.querySelector(".scr"), sc2 = s.querySelector(".scr2"); let kN = 0;
       const melange = (el, fin, ms, cb) => { if (!el) return cb && cb(); el.classList.add("bouge"); const t0 = performance.now(), n = fin.length, pasL = 115, deb = 260;
         let dern = 0; const pas = now => { const t = now - t0; if (t >= deb + n * pasL + 80) { el.textContent = fin; el.classList.remove("bouge"); return cb && cb(); }
           if (now - dern > 85) { dern = now; let s = ""; for (let k = 0; k < n; k++) s += t > deb + k * pasL ? fin[k] : AB[Math.floor(Math.random() * AB.length)]; el.textContent = s; }
           requestAnimationFrame(pas); }; requestAnimationFrame(pas); };
+      /* 16/11 (Marie) : le nom du réseau s'efface puis s'écrit doucement, lettre par lettre */
+      const ecrit = (el, fin) => { if (!el) return; clearInterval(el._ec); let s = el.textContent, ef = true;
+        el._ec = setInterval(() => { if (ef) { s = s.slice(0, -1); el.textContent = s || "\u200b"; if (!s) ef = false; return; }
+          s = fin.slice(0, s.length + 1); el.textContent = s; if (s === fin) clearInterval(el._ec); }, 95); };
       /* les deux téléphones : le site sort de derrière le profil, passe devant, puis revient derrière */
       const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;
         const nom = NOMS[kN++ % NOMS.length];
-        t.push(setTimeout(() => { melange(sc, nom); }, 300));   /* 15/11 : le lien et l’étiquette restent « votresalon.fr » */
+        t.push(setTimeout(() => { ecrit(sc, nom); }, 300));   /* 15/11 : le lien et l’étiquette restent « votresalon.fr » */
         t.push(setTimeout(() => s.classList.add("clic"), 1500)); t.push(setTimeout(() => s.classList.add("ouvre"), 2900));
         t.push(setTimeout(() => { s.classList.remove("clic"); }, 5600));
         t.push(setTimeout(() => s.classList.remove("ouvre"), 6000));
