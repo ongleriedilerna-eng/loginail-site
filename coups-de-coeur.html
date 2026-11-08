@@ -36,14 +36,17 @@ button{font:inherit;color:inherit;cursor:pointer}
 .marque svg{height:16px;width:auto}
 .compte{display:flex;align-items:center;gap:6px;border:0;background:none;padding:6px 4px;font:500 15px Jost,sans-serif}
 .compte svg{width:22px;height:22px}
-.consigne{position:absolute;inset:0 0 86px;z-index:150;display:flex;align-items:center;justify-content:center;gap:10px;flex-direction:column;border-radius:20px;background:rgba(246,243,239,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font:400 30px/1.15 Jost,sans-serif;text-align:center;letter-spacing:-.01em;pointer-events:none;transition:opacity .6s}
+.consigne{position:absolute;inset:0 0 86px;z-index:150;display:flex;align-items:center;justify-content:center;gap:10px;flex-direction:column;border-radius:6px;background:var(--fond);font:400 30px/1.15 Jost,sans-serif;text-align:center;letter-spacing:-.01em;pointer-events:none;transition:opacity .6s}
 .consigne svg{width:34px!important;height:34px!important}
 .consigne.part{opacity:0}
+.glisse{position:absolute;left:50%;top:44%;z-index:160;translate:-50% 0;display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 18px;background:rgba(30,28,27,.82);color:#fff;font:400 13px Jost,sans-serif;letter-spacing:.06em;opacity:0;transition:opacity .4s;pointer-events:none}
+.glisse.on{opacity:1}
 .verre{border:1px solid rgba(255,255,255,.9);border-radius:999px;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 14px;font:400 13px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
 .compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.18)}}
-.zoneW{position:relative;flex:1;margin:4px 0 0;min-height:0;padding-bottom:86px}.zone{bottom:86px!important}.zone{position:absolute;inset:0}
-.carte{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 10px 30px -16px rgba(30,28,27,.28);transition:transform .35s cubic-bezier(.3,1.1,.4,1),opacity .35s;will-change:transform}
-.carte iframe{position:absolute;top:0;left:0;width:390px;height:780px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+.zoneW{position:relative;flex:1;margin:4px 0 0;min-height:0;padding-bottom:86px}.zone{bottom:86px!important}
+.consigne{left:50%!important;right:auto!important;translate:-50% 0;height:calc(100% - 86px);aspect-ratio:390/820;max-width:100%}.zone{position:absolute;inset:0}
+.carte{position:absolute;left:50%;top:0;height:100%;aspect-ratio:390/820;max-width:100%;margin-left:0;translate:-50% 0;border-radius:6px;overflow:hidden;background:#fff;box-shadow:0 10px 30px -18px rgba(30,28,27,.25);transition:transform .35s cubic-bezier(.3,1.1,.4,1),opacity .35s;will-change:transform}
+.carte iframe{position:absolute;top:-1px;left:-1px;width:390px;height:780px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
 .carte .prise{position:absolute;inset:0;touch-action:none;cursor:grab}
 .carte .info{position:absolute;left:0;right:0;top:0;padding:14px 12px 30px;background:linear-gradient(rgba(0,0,0,.35),transparent);display:flex;flex-wrap:wrap;gap:5px;justify-content:center;pointer-events:none}
 .carte .info span{border-radius:999px;background:rgba(255,255,255,.9);padding:4px 10px;font:400 11px Jost,sans-serif}
@@ -83,7 +86,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   <section class="ecran" id="paquet">
     <div class="barreT"><button class="marque" id="retourQ" type="button" aria-label="Revenir au choix du style">‹&nbsp; LOGINAIL</button>
       <button class="compte" id="compte" type="button" aria-label="Voir mes coups de cœur"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg><span id="nbC">0 / 5</span></button></div>
-    <div class="zoneW"><div class="zone" id="zone"></div><div class="consigne" id="consigne">Gardez 5 sites<br>que vous aimez<svg viewBox="0 0 24 24" style="width:15px;height:15px;vertical-align:-2px"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg></div>
+    <div class="zoneW"><div class="zone" id="zone"></div><div class="glisse" id="glisse">‹ &nbsp;Glissez la carte&nbsp; ›</div><div class="consigne" id="consigne">Gardez 5 sites<br>que vous aimez<svg viewBox="0 0 24 24" style="width:15px;height:15px;vertical-align:-2px"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg></div>
     <div class="vote"><button id="non" type="button" aria-label="Je ne garde pas"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="#1E1C1B" stroke-width="2.2" stroke-linecap="round"/></svg></button>
       <button id="oui" type="button" aria-label="Je garde"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.6 4.5 7 4.5c2.1 0 3.8 1.2 5 3 1.2-1.8 2.9-3 5-3 3.4 0 5.3 3.4 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#1E1C1B"/></svg></button></div></div>
   </section>
@@ -148,7 +151,7 @@ function propose(g) {
 }
 const src = (p, pub = true) => "loginail-creer/pret.html?" + (pub ? "public&" : "") + p.q;
 const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classList.toggle("on", e.id === id));
-function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(st); } catch (e) {} }
+function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html,body{background:#fff!important;scrollbar-width:none}::-webkit-scrollbar{display:none}.ecran{border-radius:0!important;box-shadow:none!important}*:focus{outline:none!important}"; d.head.appendChild(st); } catch (e) {} }
 const boiteDe = fr => { try { const d = fr.contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
 function carteHtml(p) {
   const c = document.createElement("div"); c.className = "carte";
@@ -156,9 +159,13 @@ function carteHtml(p) {
     <div class="prise"></div>`;
   const fr = c.querySelector("iframe"); fr.onload = () => cache(fr); fr.src = src(p); c._p = p; return c;
 }
-function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"), k = c.clientWidth / 390; f.style.transform = `scale(${k})`; f.style.height = (c.clientHeight / k) + "px"; }); }
+function echelle() { document.querySelectorAll(".carte").forEach(c => { const f = c.querySelector("iframe"), k = (c.clientWidth + 2) / 390; f.style.transform = `scale(${k})`; f.style.height = ((c.clientHeight + 2) / k) + "px"; }); }   // 1 px de plus de chaque côté : jamais de trait sombre au bord
 function lancePaquet() { paquet = []; vus = new Set(); i = 0; $("zone").innerHTML = ""; ajoute(8); place(); montre("paquet");
-  const c = $("consigne"); c.classList.remove("part"); clearTimeout(c._t); c._t = setTimeout(() => c.classList.add("part"), 3200); }
+  const c = $("consigne"); c.classList.remove("part"); clearTimeout(c._t); c._t = setTimeout(() => { c.classList.add("part"); montreGlisse(); }, 2600); }
+/* on lui montre qu'elle peut glisser : la carte part un peu à gauche, puis à droite */
+function montreGlisse() { const c = [...$("zone").children].find(x => x._n === i), g = $("glisse"); if (!c) return; g.classList.add("on");
+  c.animate([{ transform: "none" }, { transform: "translateX(-46px) rotate(-3deg)" }, { transform: "translateX(46px) rotate(3deg)" }, { transform: "none" }], { duration: 1500, easing: "ease-in-out", delay: 300 });
+  setTimeout(() => g.classList.remove("on"), 2300); }
 const ajoute = n => { for (let k = 0; k < n; k++) paquet.push(propose(genre)); };
 function place() {
   if (paquet.length - i < 5) ajoute(6);   // sans fin : on en prépare toujours d'autres
@@ -193,7 +200,7 @@ $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { montre("paquet"); requestAnimationFrame(echelle); };
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&exemple=dilerna&" + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+$("moi").onclick = () => { location.href = "maquette-perso.html?genre=" + genre + "&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&exemple=dilerna&" + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -224,7 +231,7 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
   pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 450); } y0 = null; };
   pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
-$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?src=" + encodeURIComponent(src(p, false)); };
+$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + "&src=" + encodeURIComponent(src(p, false)); };
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>

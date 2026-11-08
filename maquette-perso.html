@@ -12,6 +12,7 @@
 :root{--noir:#1E1C1B;--fond:#F6F3EF;--muted:#6B625C;--basH:204px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
+button:focus,button:focus-visible,input:focus{outline:none}
 html,body{margin:0;height:100%;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);overflow:hidden;touch-action:pan-x pan-y;-webkit-user-select:none;user-select:none}
 input{-webkit-user-select:text;user-select:text}
 button,input{font:inherit;color:inherit}button{cursor:pointer}
@@ -57,6 +58,17 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .pastille.on{transform:scale(1.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 3px var(--fond),0 0 0 4.5px var(--noir)}
 .pol{border-radius:16px;padding:10px 15px;font-size:20px;white-space:nowrap;min-width:80px}
 .pol.on{background:#fff;box-shadow:inset 0 0 0 1.5px var(--noir)}
+.pages{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0}.pages::-webkit-scrollbar{display:none}
+.page6{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:36px;gap:6px 8px;padding:0 22px}
+.page6 .pol{min-width:0;padding:4px 10px;font-size:18px;border-radius:12px;overflow:hidden;text-overflow:ellipsis}
+.ptsP{display:flex;gap:5px;justify-content:center;padding-top:6px}.ptsP i{width:5px;height:5px;border-radius:50%;background:rgba(30,28,27,.2)}.ptsP i.on{background:var(--noir)}
+.recherche{margin:0 22px 4px;display:flex;align-items:center;gap:8px;border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.85);border:1px solid rgba(30,28,27,.12)}
+.recherche input{border:0;outline:0;background:none;flex:1;min-width:0;font:400 15px Jost,sans-serif}
+.cherche-rond{position:absolute;right:22px;top:50%;margin-top:4px;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;padding:0}
+.cherche-rond svg{width:18px;height:18px}
+.surprise{display:flex;align-items:center;gap:6px;font-size:12.5px!important}
+.surprise svg{width:14px;height:14px}
+.compteC{position:absolute;z-index:4;transform:translate(-50%,-50%);border-radius:999px;padding:5px 10px;font:500 11px Jost,sans-serif;letter-spacing:.06em}
 /* 08/11 (Marie) : les charms comme les stickers de l'iPhone : un tiroir, une grille de gros charms, les familles en petites icônes */
 .bas.charms .choix{position:relative}
 .bas.grand .choix{position:absolute;left:0;right:0;bottom:74px;height:min(62vh,520px);z-index:5}
@@ -97,7 +109,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="verre" id="fermerPlein" type="button" hidden>‹ Personnaliser</button>
   <div class="bas" id="bas"><div class="choix" id="contenu"></div>
-    <div class="pied"><button class="retour verre" id="retour" type="button" aria-label="Retour">‹</button><button class="suivant verre" id="suivant" type="button">SUIVANT</button></div></div>
+    <div class="pied"><button class="retour verre" id="retour" type="button" aria-label="Retour">‹</button><button class="suivant verre" id="suivant" type="button">SUIVANT</button><button class="cherche-rond verre" id="cherche" type="button" aria-label="Rechercher" hidden><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div></div>
   <div class="fin" id="fin"><div><h3>Votre site est prêt à briller.</h3><p>Personnalisé par vous, jusqu’au moindre charm.<br>Le premier mois est offert.</p>
     <button class="noir" type="button">ACTIVER MON SITE</button><small>Sans engagement · (maquette : rien n’est payé)</small>
     <button class="lien" id="finRetour" type="button">Continuer à personnaliser</button></div></div>
@@ -113,7 +125,8 @@ const TITRES = { entete: "Votre en-tête", ecriture: "Votre écriture", fond: "V
 const ONGLET = { entete: 1, ecriture: 4, fond: 3, couleurs: 2, charms: 4 };
 const cle = () => ORDRE[etape];
 const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
-const ENCRES = [["#1E1C1B", "Noir"], ["#FFFFFF", "Blanc"], ["#B8B8C0", "Argent"], ["#C9A45C", "Doré"], ["#5B3A2E", "Chocolat"], ["#C8102E", "Rouge"], ["#6E0F31", "Bordeaux"], ["#B4587A", "Vieux rose"], ["#E5197E", "Fuchsia"], ["#7B62A8", "Lilas"], ["#2E4A8A", "Bleu"], ["#3E6A4A", "Vert"]];
+const NOMC = {"noir": "#1E1C1B", "blanc": "#FFFFFF", "or": "linear-gradient(170deg,#FFF3C4 0%,#E8C66A 38%,#B8862E 62%,#F6DE92 100%)", "argent": "linear-gradient(170deg,#FFFFFF 0%,#D9DCE2 35%,#8C9098 60%,#F2F3F6 100%)", "rosegold": "linear-gradient(170deg,#FCE3DA 0%,#E8A99A 40%,#B9706A 65%,#F6CFC4 100%)", "champagne": "linear-gradient(170deg,#FFF8EA 0%,#E9D3A8 40%,#B8975E 65%,#F6E7C6 100%)", "cuivre": "linear-gradient(170deg,#FBE0C8 0%,#D98B5A 40%,#9A5530 65%,#F2C29E 100%)", "holo": "linear-gradient(100deg,#FFB3E6 0%,#B3D4FF 30%,#B9FFE0 60%,#FFF3B0 100%)", "pastel": "linear-gradient(100deg,#F7B9CF 0%,#D9C2F2 35%,#B9DAF5 65%,#BDEBD7 100%)", "coucher": "linear-gradient(100deg,#F9C49A 0%,#F6A99B 45%,#F4B6C8 100%)", "glace": "linear-gradient(100deg,#B7D3F0 0%,#CDB8EE 50%,#F4B6C8 100%)", "citron": "linear-gradient(100deg,#F6E3A1 0%,#B9E6D3 100%)", "rosep": "#F4B6C8", "lilasp": "#CDB8EE", "bleup": "#B7D3F0", "mentep": "#B9E6D3", "peche": "#F7C6A8", "orangep": "#F9C49A", "jaunep": "#F6E3A1", "corailp": "#F6A99B", "lavande": "#B9A6E8", "sauge": "#A9C3A2", "ciel": "#9FCBEB", "creme": "#F4EADB", "beige": "#D9C4A8", "corail": "#F07A65", "rouge": "#C8243A", "bordeaux": "#7A1F33", "fuchsia": "#E0368C", "violet": "#7B3FB5", "turquoise": "#2BB3B1", "vert": "#1F7A55", "bleunuit": "#1F2E5C", "choco": "#5A3A28", "bleuroi": "#2F57E8", "bleuneon": "linear-gradient(100deg,#6FA8FF 0%,#2F57E8 50%,#7B5CFF 100%)"};   // les couleurs du nom de l'éditeur (hero-format.js)
+let nomc = "";
 let encre = "";
 const FAM = [["Favoris", null, ""], ["Populaires", null, ""], ["Cœurs", /coeur/, "coeurchrome"], ["Fruits", /fraise|cerise|citron|peche|orange|ananas|pomme|framboise|kiwi|banane|myrtille|pasteque|raisin|poire|fruit/, "fraisegelee"],
   ["Fleurs", /fleur|rose|hibiscus|marguerite|tulipe|lys|pivoine|lotus|tournesol/, "hibiscus"], ["Étoiles", /etoile|lune|planete|soleil|ciel|comete|astro/, "planete"],
@@ -121,7 +134,12 @@ const FAM = [["Favoris", null, ""], ["Populaires", null, ""], ["Cœurs", /coeur/
   ["Gourmand", /gateau|glace|bonbon|chocolat|cookie|donut|cafe|sushi|macaron|cupcake|sucette|boba|bubble|croissant|pizza|cocktail/, "chocolat"],
   ["Bijoux", /perle|strass|diamant|cristal|couronne|noeud|bague|bijou|minaudiere|sac|parfum|levre/, "perle"]];
 const POP = ["fraisegelee", "oeilbleu", "fleursixties", "couronnestrass", "consoleviolette", "perle", "canard", "levresgrillz", "boule8", "etoiledemerperles", "cristal", "chocolat", "hibiscus", "minaudiere", "cerisesor", "bouledisco", "ceriseruban", "fraiseperle", "noeudgelee", "coeurchrome", "martien", "planete", "papillondore", "soleil"];
-let famille = "Populaires", recherche = "", enRecherche = false, favoris = [];
+let famille = "Populaires", recherche = "", enRecherche = false, favoris = [], filtre = "", chercheOuvert = false;
+const GENRE = new URLSearchParams(location.search).get("genre") || "";
+const sansAccent = t => (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const champRecherche = ph => `<label class="recherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="filtre" placeholder="${ph}" value="${filtre}"></label>`;
+function brancheRecherche() { const i = $("filtre"); if (!i) return; i.oninput = () => { filtre = i.value; const pos = i.selectionStart; rend(); const j = $("filtre"); j.focus(); j.setSelectionRange(pos, pos); }; }
+const MAX_CHARMS = 12;
 try { favoris = JSON.parse(localStorage.getItem("charmsFavoris") || "[]"); } catch (e) {}
 const bulle = t => { let b = $("bulle"); if (!b) { b = document.createElement("div"); b.id = "bulle"; b.className = "bulle"; $("tel").appendChild(b); } b.textContent = t; b.classList.add("on"); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove("on"), 1400); };
 const marquePoses = () => { if (!$("grilleC")) return; const poses = new Set([...D.querySelectorAll(".lgn-sticker")].map(x => x.dataset.n)); $("grilleC").querySelectorAll("[data-ch]").forEach(b => b.classList.toggle("pris", poses.has(b.dataset.ch))); };
@@ -165,23 +183,33 @@ function rend() {
   $("suivant").textContent = etape === ORDRE.length - 1 ? "C’EST PARFAIT" : "SUIVANT";
   const c = $("contenu");
   $("bas").classList.toggle("charms", cle() === "charms"); $("bas").classList.remove("grand");
+  $("cherche").hidden = !["ecriture", "fond"].includes(cle());
+  majCompte();
   if (cle() === "entete") {
     c.innerHTML = `<div class="formes" id="formes">${NOMS_FORMES.map((n, k) => `<button class="puce verre ${k + 1 === forme ? "on" : ""}" data-forme="${k + 1}">${n}</button>`).join("")}</div>`;
   } else if (cle() === "fond") {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
-    c.innerHTML = `<div class="ligneH"><button class="puce verre" id="de" type="button">🎲 Surprenez-moi</button>${cats.map(b => `<button class="puce verre ${b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>
-      <div class="grilleF" id="grilleF">${vignettes()}</div>`;
+    const SURPRISE = `<svg viewBox="0 0 24 24"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    c.innerHTML = (chercheOuvert ? champRecherche("Chercher un fond…") : `<div class="ligneH"><button class="puce verre surprise" id="de" type="button">${SURPRISE}Surprise</button>${cats.map(b => `<button class="puce verre ${b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
+      + `<div class="grilleF" id="grilleF">${vignettes()}</div>`;
+    brancheRecherche();
     ajusteFonds();
   } else if (cle() === "couleurs") {
     const SC = [["nom", "Le nom"], ["boutons", "Les boutons"], ["site", "Le site"]];
     let l = "";
-    if (sousCouleur === "nom") l = ENCRES.map(x => `<button class="pastille ${x[0] === encre ? "on" : ""}" data-encre="${x[0]}" title="${x[1]}" style="background:${x[2] || x[0]}"></button>`).join("");
+    if (sousCouleur === "nom") l = Object.entries(NOMC).map(([k, v]) => `<button class="pastille ${k === nomc ? "on" : ""}" data-nomc="${k}" title="${k}" style="background:${v}"></button>`).join("");
     if (sousCouleur === "boutons") l = range([...D.querySelectorAll(".pf-vifs [data-vif]")]).map(b => `<button class="pastille ${b.dataset.vif === vifChoisi ? "on" : ""}" data-vif="${b.dataset.vif}" title="${b.title}" style="background:${b.style.background}"></button>`).join("");
     if (sousCouleur === "site") l = range([...D.querySelectorAll(".pf-dots [data-co]")]).map(b => `<button class="pastille ${b.classList.contains("on") ? "on" : ""}" data-co="${b.dataset.co}" title="${b.title}" style="background:${b.style.background}"></button>`).join("");
     c.innerHTML = `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div><div class="ligneH" id="teintes">${l}</div>`;
   } else if (cle() === "ecriture") {
-    const pols = [...D.querySelectorAll("#pzPol [data-p]")];
-    c.innerHTML = `<div class="ligneH">${pols.map(b => `<button class="pol verre ${b.classList.contains("on") ? "on" : ""}" data-p="${b.dataset.p}" style="${b.getAttribute("style")}">${b.textContent}</button>`).join("")}</div>`;
+    const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
+    let pols = [...D.querySelectorAll("#pzPol [data-p]")].sort((a, b) => ((ELEG.includes(a.dataset.p) ? 0 : 1) - (ELEG.includes(b.dataset.p) ? 0 : 1)) * (fun ? -1 : 1));
+    if (filtre) pols = pols.filter(b => sansAccent(b.textContent).includes(sansAccent(filtre)));
+    const pages = []; for (let k = 0; k < pols.length; k += 6) pages.push(pols.slice(k, k + 6));
+    c.innerHTML = (chercheOuvert ? champRecherche("Chercher une écriture…") : "") + `<div class="pages" id="pages">${pages.map(pg => `<div class="page6">${pg.map(b => `<button class="pol verre ${b.classList.contains("on") ? "on" : ""}" data-p="${b.dataset.p}" style="${b.getAttribute("style")}">${b.textContent}</button>`).join("")}</div>`).join("") || `<p class="rien" style="text-align:center;color:var(--muted);font:300 13px Jost">Aucune écriture</p>`}</div>
+      ${pages.length > 1 ? `<div class="ptsP" id="ptsP">${pages.map((_, k) => `<i class="${k ? "" : "on"}"></i>`).join("")}</div>` : ""}`;
+    const pg = $("pages"); pg.onscroll = () => { const k = Math.round(pg.scrollLeft / pg.clientWidth); document.querySelectorAll("#ptsP i").forEach((x, n) => x.classList.toggle("on", n === k)); };
+    brancheRecherche();
   } else {
     const LOUPE = `<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
     c.innerHTML = `<div class="tiroir"><button class="poignee" data-poignee aria-label="Agrandir"><i></i></button><div class="familles" id="familles">${enRecherche
@@ -196,6 +224,7 @@ function rend() {
 function vignettes() {
   return [...D.querySelectorAll("#pzFonds [data-f]")].map(b => { const t = b.querySelector(".f100"); let h = "";
     if (t) { const c = t.cloneNode(true); c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k)); h = c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); }
+    if (filtre && !sansAccent(b.dataset.f).includes(sansAccent(filtre))) return "";
     return b.dataset.f ? `<button class="vg" data-f="${b.dataset.f.replace(/"/g, "&quot;")}" title="${b.title || ""}">${h}</button>` : `<button class="vg sans" data-f="">Aucun</button>`; }).join("");
 }
 function ajusteFonds() { const g = $("grilleF"); if (!g) return; g.querySelectorAll("[data-f]").forEach(b => b.classList.toggle("on", b.dataset.f === (W.__pzEtat?.().fond || ""))); }
@@ -211,11 +240,12 @@ function poseEncre() { if (!D) return; D.querySelectorAll(".ecran h1, .ecran h1 
 /* ---------- les charms : posés DANS le site, ils flottent doucement ; glisser, deux doigts = taille et rotation ---------- */
 const majS = im => { im.style.width = im.style.height = im._s + "px"; im.style.rotate = im._r + "deg"; };
 function poseSticker(n) {
+  if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; }
   const box = defile(), im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".png"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
   im._s = 80; im._r = Math.round(Math.random() * 30 - 15);
   const x = box.clientWidth / 2 - 40 + (Math.random() * 80 - 40), y = box.scrollTop + box.clientHeight * .3 + (Math.random() * 60 - 30);
   im.style.cssText = `position:absolute;z-index:9000;left:${x}px;top:${y}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte ${3 + Math.random() * 1.5}s ease-in-out ${-Math.random() * 3}s infinite`;
-  majS(im); box.appendChild(im); marquePoses(); $("bas").classList.remove("grand");
+  majS(im); box.appendChild(im); marquePoses(); majCompte(); $("bas").classList.remove("grand");
 }
 function brancheStickers() {
   const st = D.createElement("style"); st.textContent = "@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}.lgn-sticker.tenu{animation-play-state:paused!important}"; D.head.appendChild(st);
@@ -235,7 +265,7 @@ function brancheStickers() {
   const leve = e => { if (!doigts.has(e.pointerId)) return; doigts.delete(e.pointerId); if (!cible) return;
     if (!doigts.size) { const c = cible; c.classList.remove("tenu"); c.style.cursor = "grab"; cible = null;
       const r = c.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      if (e.clientY > W.innerHeight - 70 || cx < 0 || cx > W.innerWidth || cy < 0 || cy > W.innerHeight) c.animate([{ scale: 1 }, { scale: 0, opacity: 0 }], { duration: 250 }).onfinish = () => { c.remove(); marquePoses(); }; }   // sorti de l'écran = enlevé
+      if (e.clientY > W.innerHeight - 70 || cx < 0 || cx > W.innerWidth || cy < 0 || cy > W.innerHeight) c.animate([{ scale: 1 }, { scale: 0, opacity: 0 }], { duration: 250 }).onfinish = () => { c.remove(); marquePoses(); majCompte(); }; }   // sorti de l'écran = enlevé
     else { const p = [...doigts.values()][0]; repart(p.x, p.y); } };
   D.addEventListener("pointerup", leve); D.addEventListener("pointercancel", leve);
   D.addEventListener("wheel", e => { const t = e.target.closest?.(".lgn-sticker"); if (!t) return; e.preventDefault();
@@ -255,7 +285,7 @@ $("contenu").addEventListener("click", e => {
     if (x) { x.click(); setTimeout(ambiance, 120); setTimeout(() => { ajusteFonds(); const g = $("grilleF"), v = g.querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`); if (v) g.scrollTo({ left: v.offsetLeft - g.clientWidth / 2 + 22, behavior: "smooth" }); }, 500); } return; }
   if (b.dataset.f != null) { clique(`#pzFonds [data-f="${CSS.escape(b.dataset.f)}"]`); setTimeout(() => { ajusteFonds(); ambiance(); }, 120); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
-  if (b.dataset.encre != null) { encre = b.dataset.encre; marque(b); poseEncre(); enHaut(); return; }
+  if (b.dataset.nomc) { nomc = b.dataset.nomc; marque(b); try { W.eval(`BR.nomc=${JSON.stringify(nomc)}`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); enHaut(); return; }   // l'éditeur repeint le nom lui-même
   if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }
   if (b.dataset.co) { marque(b); clique(`.pf-dots [data-co="${b.dataset.co}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }   // la couleur du site garde celle des boutons
   if (b.dataset.p) { marque(b); clique(`#pzPol [data-p="${b.dataset.p}"]`); setTimeout(poseEncre, 80); return; }
@@ -270,8 +300,13 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
     try { localStorage.setItem("charmsFavoris", JSON.stringify(favoris)); } catch (x) {} b.classList.toggle("fav", i < 0); bulle(i < 0 ? "Ajouté à vos favoris" : "Retiré de vos favoris"); navigator.vibrate?.(15); }, 480); });
 ["pointerup", "pointerleave", "pointercancel"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("[data-ch]"); if (b) clearTimeout(b._t); }));
 $("contenu").addEventListener("contextmenu", e => { if (e.target.closest("[data-ch]")) e.preventDefault(); });
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { $("fin").classList.add("on"); return; } etape++; prepare(); };
-$("retour").onclick = () => { if (etape) { etape--; prepare(); } };
+$("cherche").onclick = () => { chercheOuvert = !chercheOuvert; filtre = ""; rend(); if (chercheOuvert) $("filtre")?.focus(); };
+/* « 12 charms maximum », écrit en petit au-dessus du téléphone pendant l'étape des charms */
+function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
+  const n = D ? D.querySelectorAll(".lgn-sticker").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
+  c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = (m.top - t.top + 2) + "px"; }
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
+$("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); };
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
@@ -282,7 +317,7 @@ F.classList.add("fondu");
 F.onload = () => {
   W = F.contentWindow; D = F.contentDocument;
   W.F100_AUSSI = 1;   // « Tous » = les 336 fonds
-  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}"; D.head.appendChild(st);
+  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}"; D.head.appendChild(st);
   ["gesturestart", "gesturechange"].forEach(t => D.addEventListener(t, e => e.preventDefault(), { passive: false }));
   const copie = () => { D.querySelectorAll("style").forEach(s => { if (s.dataset.copie) return;
       if (s.id === "pzCss") { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = s.textContent.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(c); return; }
