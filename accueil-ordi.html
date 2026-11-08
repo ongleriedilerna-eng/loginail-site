@@ -1016,6 +1016,39 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   .m-cplus .h-pan .nt{position:absolute;right:4%;top:6%;z-index:4;width:58%;background:rgba(250,248,246,.97);border-radius:12px;padding:7px 9px;font:400 10px/1.3 Jost;display:flex;gap:7px;align-items:center;box-shadow:0 12px 22px -12px rgba(0,0,0,.55)}
   .m-cplus .h-pan .nt i{flex:none;width:22px;height:22px;border-radius:6px;background:url(loginail-site/icone-appli.svg) center/cover}.m-cplus .h-pan .nt b{display:block;font-weight:500}
 }
+
+/* ===== 15/11 : 5 formats d'essai pour l'accueil sur téléphone (?accueil=petit|grand|plein|un|bas) ===== */
+@media (max-width:999px){
+  /* PETIT : un petit cadre discret, le titre garde la place */
+  .m-v-petit .h-pan{height:min(27svh,230px)!important;width:calc(100% - 64px)!important;border-radius:20px!important}
+  .m-v-petit .h-pan .t1{height:88%!important;left:22%!important}.m-v-petit .h-pan .t2{height:80%!important;right:20%!important}
+  .m-v-petit .h-pan .lab,.m-v-petit .h-pan .nt{display:none!important}
+  /* GRAND : le cadre d'un bord à l'autre, très haut, les téléphones en grand */
+  .m-v-grand .hero h1{font-size:34px!important}
+  .m-v-grand .h-pan{width:100%!important;height:min(60svh,520px)!important;border-radius:0!important;margin:0 0 18px!important}
+  .m-v-grand .h-pan .t1{height:84%!important;left:8%!important}.m-v-grand .h-pan .t2{height:76%!important;right:7%!important}
+  .m-v-grand .h-pan .chs img{width:40px!important}
+  /* PLEIN : le fond du site derrière tout l'accueil, le texte sur un voile crème, les téléphones en bas */
+  .m-v-plein .hero{position:relative!important;isolation:isolate;padding-bottom:calc(min(34svh,300px) + 26px)!important}
+  .m-v-plein .h-pan{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;margin:0!important;border-radius:0!important;z-index:-1}
+  .m-v-plein .hero>*:not(.h-pan){position:relative;z-index:2}
+  .m-v-plein .hero>.k,.m-v-plein .hero h1,.m-v-plein .hero .h-lig{background:rgba(246,243,239,.9);margin-left:18px!important;margin-right:18px!important}
+  .m-v-plein .hero>.k{border-radius:22px 22px 0 0;padding:16px 10px 0!important;margin-top:8px!important}
+  .m-v-plein .hero h1{padding:6px 10px 2px!important;margin-top:0!important;margin-bottom:0!important}
+  .m-v-plein .hero .h-lig{border-radius:0 0 22px 22px;padding:10px 10px 18px!important;margin-top:0!important}
+  .m-v-plein .h-pan .t1,.m-v-plein .h-pan .t2{top:auto!important;bottom:18px!important;height:min(32svh,280px)!important;transform:none!important}
+  .m-v-plein .h-pan .t1{left:16%!important;rotate:-4deg}.m-v-plein .h-pan .t2{right:14%!important;rotate:4deg}
+  .m-v-plein .h-pan .lab,.m-v-plein .h-pan .nt{display:none!important}
+  /* UN : un seul grand téléphone (le site), l'appli en petit qui dépasse dans le coin */
+  .m-v-un .h-pan{height:min(52svh,450px)!important}
+  .m-v-un .h-pan .t1{height:90%!important;left:50%!important;transform:translate(-62%,-50%) rotate(-3deg)!important}
+  .m-v-un .h-pan .t2{height:52%!important;right:8%!important;top:auto!important;bottom:6%!important;transform:rotate(6deg)!important;z-index:3!important}
+  .m-v-un .h-pan .lab{display:none!important}
+  /* BAS : les images d'abord, le titre et le bouton dessous */
+  .m-v-bas .hero>.k{margin-bottom:14px!important}
+  .m-v-bas .h-pan{height:min(44svh,370px)!important;margin-bottom:22px!important}
+  .m-v-bas .hero h1{font-size:34px!important}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1748,7 +1781,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 
   /* ---- C+ · l'accueil (ordinateur ; sur téléphone seulement pour l'essai ?accueil=cplus) ---- */
   if (QA === "ligne" && !ORDI) { const h1 = document.querySelector(".hero h1"); if (h1) { const lig = document.createElement("div"); lig.className = "h-lig m"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig); } }
-  if (ORDI || QA === "cplus") { if (!ORDI) document.documentElement.classList.add("m-cplus"); const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1"), mot = document.getElementById("mot");
+  if (ORDI || (QA && QA !== "ligne")) { if (!ORDI) { document.documentElement.classList.add("m-cplus"); if (QA !== "cplus") document.documentElement.classList.add("m-v-" + QA); } const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1"), mot = document.getElementById("mot");
     if (h && k && h1) {
       k.textContent = "Pour les prothésistes ongulaires · prêt en une minute";
       const lig = document.createElement("div"); lig.className = "h-lig"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig);
@@ -1761,7 +1794,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         '<div class="tel t1"><div class="e"><img alt=""></div></div><div class="tel t2"><div class="e"><img alt=""></div></div>' +
         '<div class="lab l1">Votre site</div><div class="lab l2">Votre appli</div>' +
         '<div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div></div>';
-      h.appendChild(pan); if (!ORDI) lig.after(pan);
+      h.appendChild(pan); if (!ORDI) { if (QA === "bas") k.after(pan); else if (QA === "plein") h.prepend(pan); else lig.after(pan); }
       const [fa, fb] = pan.querySelectorAll(".f"), chs = pan.querySelector(".chs"), [is, ia] = pan.querySelectorAll(".tel img");
       const PL = [[6, 10], [86, 8], [4, 70], [90, 72], [46, 4], [48, 88], [12, 40], [88, 40]];
       let u = 0;
