@@ -22,9 +22,9 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .barre{display:flex;gap:4px}.barre i{width:24px;height:3px;border-radius:2px;background:rgba(30,28,27,.15);transition:background .3s}.barre i.on{background:var(--noir)}
 .haut h2{margin:4px 0 0;font:400 20px/1.1 Jost,sans-serif;text-align:center;letter-spacing:-.01em}
 .haut p{margin:0;font:300 12px Jost,sans-serif;color:var(--muted);text-align:center}
-#mini{position:absolute;left:50%;transform:translateX(-50%);border-radius:30px;border:6px solid #111;background:#fff;overflow:hidden;box-shadow:0 22px 40px -22px rgba(0,0,0,.6);z-index:2}
+#mini{position:absolute;left:50%;transform:translateX(-50%);border-radius:30px;border:6px solid #111;background:#111;overflow:hidden;box-shadow:0 22px 40px -22px rgba(0,0,0,.6);z-index:2}
 #site{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff;transition:opacity .18s}
-#site.fondu{opacity:0}
+#site.fondu{opacity:.35}
 .verre{border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 20px -12px rgba(0,0,0,.4)}
 .fl{position:absolute;z-index:4;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:300 24px/1 Jost,sans-serif;transform:translate(-50%,-50%);padding:0 0 3px}
 #oeil svg{width:18px;height:18px}
@@ -42,8 +42,8 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .puce.on{background:var(--noir);color:var(--fond);border-color:var(--noir)}
 .pts{display:flex;gap:6px;justify-content:center;padding:8px 0 4px}.pts i{width:7px;height:7px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.pts i.on{width:20px;border-radius:4px;background:var(--noir)}
 .style-lien{display:block;margin:6px auto 0;border:0;background:none;padding:4px;font:400 12.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
-.grilleF{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,46px);grid-auto-columns:46px;gap:8px;overflow-x:auto;padding:6px 22px 6px;scrollbar-width:none}.grilleF::-webkit-scrollbar{display:none}
-.grilleF button{width:46px;height:46px;padding:0;border:0;border-radius:50%;overflow:hidden;position:relative;background:#eee;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.grilleF{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,40px);grid-auto-columns:40px;gap:7px;overflow-x:auto;padding:4px 22px 4px;scrollbar-width:none}.grilleF::-webkit-scrollbar{display:none}
+.grilleF button{width:40px;height:40px;padding:0;border:0;border-radius:50%;overflow:hidden;position:relative;background:#eee;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .grilleF button.on{box-shadow:0 0 0 2.5px var(--fond),0 0 0 4px var(--noir)}
 .grilleF button.sans{font:300 10px Jost,sans-serif;background:#fff;border:1px dashed rgba(30,28,27,.3)}
 .pastille{width:40px;height:40px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .2s}
@@ -54,7 +54,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .cherche input{border:0;outline:0;background:none;flex:1;min-width:0;font:300 15px Jost,sans-serif}
 .cherche svg{width:16px;height:16px;flex:none}
 .grilleC{display:flex;gap:6px;overflow-x:auto;padding:2px 22px 2px;scrollbar-width:none}.grilleC::-webkit-scrollbar{display:none}
-.grilleC button{flex:none;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.7) center/74% no-repeat;padding:0;border:1px solid rgba(255,255,255,.95)}
+.grilleC button{flex:none;width:50px;height:50px;border:0;background:transparent center/88% no-repeat;padding:0;filter:drop-shadow(0 3px 4px rgba(0,0,0,.18))}
 .grilleC .rien{font:300 13px Jost,sans-serif;color:var(--muted);padding:14px 0}
 .fin{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(30,28,27,.35);opacity:0;pointer-events:none;transition:opacity .35s}
 .fin.on{opacity:1;pointer-events:auto}
@@ -86,11 +86,7 @@ const F = $("site");
 { const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 const ETAPES = [
-  { t: "Votre en-tête", a: "Le haut de votre site. Changez-le avec les flèches." },
-  { t: "Votre fond", a: "Glissez pour tout voir, ou laissez-vous surprendre." },
-  { t: "Vos couleurs", a: "Le nom, les boutons, puis le site." },
-  { t: "Votre écriture", a: "Le nom de votre salon, en grand." },
-  { t: "Vos charms", a: "Touchez un charm, puis glissez-le où vous voulez." }];
+  { t: "Votre en-tête", a: "" }, { t: "Votre fond", a: "" }, { t: "Vos couleurs", a: "" }, { t: "Votre écriture", a: "" }, { t: "Vos charms", a: "" }];
 const NB_FORMES = 6;
 const ENCRES = [["", "Comme le site", "conic-gradient(#E8C4B0,#C6B4E6,#B9D7EE,#A9B59C,#E8C4B0)"], ["#1E1C1B", "Noir"], ["#FFFFFF", "Blanc"], ["#B8B8C0", "Argent"], ["#C9A45C", "Doré"], ["#5B3A2E", "Chocolat"], ["#C8102E", "Rouge"], ["#6E0F31", "Bordeaux"], ["#B4587A", "Vieux rose"], ["#E5197E", "Fuchsia"], ["#7B62A8", "Lilas"], ["#2E4A8A", "Bleu"], ["#3E6A4A", "Vert"]];
 let encre = "";
@@ -143,7 +139,7 @@ function rend() {
   const c = $("contenu");
   if (etape === 0) {
     c.innerHTML = `<div class="pts">${Array.from({ length: NB_FORMES }, (_, k) => `<i class="${k + 1 === forme ? "on" : ""}"></i>`).join("")}</div>
-      <button class="style-lien" id="styleLien" type="button">ou partir d’un style tout prêt</button><div class="ligneH" id="styles" hidden></div>`;
+`;
   } else if (etape === 1) {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     c.innerHTML = `<div class="ligneH"><button class="puce verre" id="de" type="button">🎲 Surprenez-moi</button>${cats.map(b => `<button class="puce verre ${b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>
@@ -215,13 +211,13 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.u) { enFondu(() => clique(`#pzUni [data-u="${b.dataset.u}"]`)); $("styles").querySelectorAll(".puce").forEach(x => x.classList.toggle("on", x === b)); return; }
   if (b.dataset.cat) { clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(rend, 60); return; }
   if (b.id === "de") { const l = [...D.querySelectorAll("#pzFonds [data-f]")].filter(x => x.dataset.f); const x = l[Math.floor(Math.random() * l.length)];
-    if (x) { enFondu(() => x.click()); setTimeout(() => { ajusteFonds(); $("grilleF").querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`)?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" }); }, 500); } return; }
-  if (b.dataset.f != null) { enFondu(() => clique(`#pzFonds [data-f="${CSS.escape(b.dataset.f)}"]`)); setTimeout(ajusteFonds, 500); return; }
+    if (x) { x.click(); setTimeout(ambiance, 120); setTimeout(() => { ajusteFonds(); $("grilleF").querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`)?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" }); }, 500); } return; }
+  if (b.dataset.f != null) { clique(`#pzFonds [data-f="${CSS.escape(b.dataset.f)}"]`); setTimeout(() => { ajusteFonds(); ambiance(); }, 120); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
   if (b.dataset.encre != null) { encre = b.dataset.encre; marque(b); poseEncre(); enHaut(); return; }
-  if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); enFondu(() => clique(`.pf-vifs [data-vif="${vifChoisi}"]`)); return; }
-  if (b.dataset.co) { marque(b); enFondu(() => { clique(`.pf-dots [data-co="${b.dataset.co}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); }); return; }   // la couleur du site garde celle des boutons
-  if (b.dataset.p) { marque(b); enFondu(() => clique(`#pzPol [data-p="${b.dataset.p}"]`)); return; }
+  if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }
+  if (b.dataset.co) { marque(b); clique(`.pf-dots [data-co="${b.dataset.co}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }   // la couleur du site garde celle des boutons
+  if (b.dataset.p) { marque(b); clique(`#pzPol [data-p="${b.dataset.p}"]`); setTimeout(poseEncre, 80); return; }
   if (b.dataset.fam) { famille = b.dataset.fam; recherche = ""; rend(); return; }
   if (b.dataset.ch) { poseSticker(b.dataset.ch); return; }
 });
