@@ -1049,6 +1049,21 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   .m-v-bas .h-pan{height:min(44svh,370px)!important;margin-bottom:22px!important}
   .m-v-bas .hero h1{font-size:34px!important}
 }
+
+/* ===== 15/11 : le mélange 1 + 3 (?accueil=mix) — la mise en page du 1, le fond du 3 très adouci derrière ===== */
+@media (max-width:999px){
+  .m-v-mix .hero{position:relative!important;isolation:isolate;overflow:hidden}
+  .h-fondpl{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .h-fondpl>i{position:absolute;inset:0;background:center/cover no-repeat;opacity:0;transition:opacity 1s}
+  .h-fondpl>i.on{opacity:.3}
+  .h-fondpl::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 85% 60% at 50% 34%,rgba(246,243,239,.9) 0,rgba(246,243,239,.62) 55%,rgba(246,243,239,.3) 100%)}
+  .h-fondpl .chs2{position:absolute;inset:0;z-index:1}
+  .h-fondpl .chs2 img{position:absolute;width:30px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18));opacity:.9;animation:hpFlotte var(--d,5s) ease-in-out infinite;animation-delay:var(--r,0s)}
+  @keyframes hpFlotte{0%,100%{transform:translateY(0) rotate(var(--a,0deg))}50%{transform:translateY(-8px) rotate(calc(var(--a,0deg) + 8deg))}}
+  .m-v-mix .h-pan{height:min(27svh,230px)!important;width:calc(100% - 64px)!important;border-radius:20px!important;box-shadow:0 18px 40px -26px rgba(0,0,0,.45)}
+  .m-v-mix .h-pan .t1{height:88%!important;left:22%!important}.m-v-mix .h-pan .t2{height:80%!important;right:20%!important}
+  .m-v-mix .h-pan .lab,.m-v-mix .h-pan .nt{display:none!important}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1794,13 +1809,21 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         '<div class="tel t1"><div class="e"><img alt=""></div></div><div class="tel t2"><div class="e"><img alt=""></div></div>' +
         '<div class="lab l1">Votre site</div><div class="lab l2">Votre appli</div>' +
         '<div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div></div>';
-      h.appendChild(pan); if (!ORDI) { if (QA === "bas") k.after(pan); else if (QA === "plein") h.prepend(pan); else lig.after(pan); }
+      h.appendChild(pan); if (!ORDI) { if (QA === "bas") k.after(pan); else if (QA === "mix") lig.after(pan); else if (QA === "plein") h.prepend(pan); else lig.after(pan); }
       const [fa, fb] = pan.querySelectorAll(".f"), chs = pan.querySelector(".chs"), [is, ia] = pan.querySelectorAll(".tel img");
+      /* mélange 1 + 3 (téléphone) : le fond du site, très adouci, derrière tout l'accueil, avec des charms qui flottent */
+      let fpl = null;
+      if (!ORDI && QA === "mix") { fpl = document.createElement("div"); fpl.className = "h-fondpl"; fpl.setAttribute("aria-hidden", "true");
+        fpl.innerHTML = '<i class="a"></i><i class="b"></i><div class="chs2"></div>'; h.prepend(fpl); }
+      const PL2 = [[4, 12], [86, 9], [6, 46], [90, 40], [3, 78], [88, 74], [44, 3], [20, 92], [72, 94]];
       const PL = [[6, 10], [86, 8], [4, 70], [90, 72], [46, 4], [48, 88], [12, 40], [88, 40]];
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp`;
         is.src = `loginail-site/apercus-univers/${x[0]}.webp`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp`;
+        if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
+          const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
+          fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
         chs.innerHTML = PL.map((p, j) => `<img src="loginail-site/charms-mini/${x[2][j % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); };
       pose();
       /* quand « briller » change d'écriture, tout l'univers change avec */
