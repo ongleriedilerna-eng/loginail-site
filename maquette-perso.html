@@ -42,20 +42,29 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .puce.on{background:var(--noir);color:var(--fond);border-color:var(--noir)}
 .pts{display:flex;gap:6px;justify-content:center;padding:8px 0 4px}.pts i{width:7px;height:7px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.pts i.on{width:20px;border-radius:4px;background:var(--noir)}
 .style-lien{display:block;margin:6px auto 0;border:0;background:none;padding:4px;font:400 12.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
-.grilleF{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,40px);grid-auto-columns:40px;gap:7px;overflow-x:auto;padding:4px 22px 4px;scrollbar-width:none}.grilleF::-webkit-scrollbar{display:none}
-.grilleF button{width:40px;height:40px;padding:0;border:0;border-radius:50%;overflow:hidden;position:relative;background:#eee;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
-.grilleF button.on{box-shadow:0 0 0 2.5px var(--fond),0 0 0 4px var(--noir)}
-.grilleF button.sans{font:300 10px Jost,sans-serif;background:#fff;border:1px dashed rgba(30,28,27,.3)}
+/* 08/11 (Marie) : le fond en vignettes, comme de petits fonds d'écran (fini les ronds) */
+.grilleF{display:flex;gap:8px;overflow-x:auto;padding:6px 22px 8px;scrollbar-width:none;scroll-snap-type:x proximity}.grilleF::-webkit-scrollbar{display:none}
+.vg{flex:none;width:44px;height:78px;padding:0;border:0;border-radius:11px;overflow:hidden;position:relative;background:#eee;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);scroll-snap-align:center;transition:transform .2s}
+.vg .f100{position:absolute!important;left:0;top:0;width:170px!important;height:302px!important;transform:scale(.2588);transform-origin:0 0;pointer-events:none}
+.vg .f100 .tuile{width:170px!important;height:302px!important;border-radius:0!important}
+.vg.on{box-shadow:0 0 0 2.5px var(--fond),0 0 0 4px var(--noir);transform:translateY(-2px)}
+.vg.sans{display:grid;place-items:center;font:400 9.5px Jost,sans-serif;color:var(--muted);background:rgba(255,255,255,.6);border:1px dashed rgba(30,28,27,.3)}
 .pastille{width:40px;height:40px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .2s}
 .pastille.on{transform:scale(1.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 3px var(--fond),0 0 0 4.5px var(--noir)}
 .pol{border-radius:16px;padding:10px 15px;font-size:20px;white-space:nowrap;min-width:80px}
 .pol.on{background:#fff;box-shadow:inset 0 0 0 1.5px var(--noir)}
-.cherche{margin:0 22px 4px;display:flex;align-items:center;gap:8px;border-radius:999px;padding:7px 14px}
-.cherche input{border:0;outline:0;background:none;flex:1;min-width:0;font:300 15px Jost,sans-serif}
-.cherche svg{width:16px;height:16px;flex:none}
-.grilleC{display:flex;gap:6px;overflow-x:auto;padding:2px 22px 2px;scrollbar-width:none}.grilleC::-webkit-scrollbar{display:none}
-.grilleC button{flex:none;width:50px;height:50px;border:0;background:transparent center/88% no-repeat;padding:0;filter:drop-shadow(0 3px 4px rgba(0,0,0,.18))}
-.grilleC .rien{font:300 13px Jost,sans-serif;color:var(--muted);padding:14px 0}
+/* 08/11 (Marie) : les charms comme les stickers de l'iPhone : un tiroir, une grille de gros charms, les familles en petites icônes */
+.tiroir{margin:0 12px;height:100%;display:flex;flex-direction:column;border-radius:22px;background:rgba(255,255,255,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 26px -14px rgba(0,0,0,.35);overflow:hidden}
+.familles{display:flex;align-items:center;gap:2px;padding:6px 8px 4px;overflow-x:auto;scrollbar-width:none;flex:none}.familles::-webkit-scrollbar{display:none}
+.familles button{flex:none;width:34px;height:30px;border:0;border-radius:10px;background:transparent center/22px no-repeat;padding:0;opacity:.55;font:500 15px/30px Jost,sans-serif;transition:background .2s,opacity .2s}
+.familles button.on{opacity:1;background-color:rgba(30,28,27,.08)}
+.familles .loupe{background-image:none}
+.familles .loupe svg{width:17px;height:17px;vertical-align:middle}
+.familles input{flex:1;min-width:0;border:0;outline:0;border-radius:10px;background:rgba(118,118,128,.12);padding:6px 10px;font:400 14px Jost,sans-serif}
+.grilleC{flex:1;min-height:0;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:44px;gap:2px 0;overflow-y:auto;padding:0 6px 6px;scrollbar-width:none;align-content:start}.grilleC::-webkit-scrollbar{display:none}
+.grilleC button{border:0;background:transparent center/80% no-repeat;padding:0;border-radius:10px;transition:transform .12s}
+.grilleC button:active{transform:scale(.85)}
+.grilleC .rien{grid-column:1/-1;font:300 13px Jost,sans-serif;color:var(--muted);padding:14px 0;text-align:center}
 .fin{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(30,28,27,.35);opacity:0;pointer-events:none;transition:opacity .35s}
 .fin.on{opacity:1;pointer-events:auto}
 .fin>div{background:#fff;border-radius:26px 26px 0 0;padding:26px 22px calc(env(safe-area-inset-bottom) + 18px);text-align:center}
@@ -90,13 +99,13 @@ const ETAPES = [
 const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
 const ENCRES = [["", "Comme le site", "conic-gradient(#E8C4B0,#C6B4E6,#B9D7EE,#A9B59C,#E8C4B0)"], ["#1E1C1B", "Noir"], ["#FFFFFF", "Blanc"], ["#B8B8C0", "Argent"], ["#C9A45C", "Doré"], ["#5B3A2E", "Chocolat"], ["#C8102E", "Rouge"], ["#6E0F31", "Bordeaux"], ["#B4587A", "Vieux rose"], ["#E5197E", "Fuchsia"], ["#7B62A8", "Lilas"], ["#2E4A8A", "Bleu"], ["#3E6A4A", "Vert"]];
 let encre = "";
-const FAM = [["Populaires", null], ["Cœurs", /coeur/], ["Fruits", /fraise|cerise|citron|peche|orange|ananas|pomme|framboise|kiwi|banane|myrtille|pasteque|raisin|poire|fruit/],
-  ["Fleurs", /fleur|rose|hibiscus|marguerite|tulipe|lys|pivoine|lotus|tournesol/], ["Étoiles", /etoile|lune|planete|soleil|ciel|comete|astro/],
-  ["Animaux", /chat|ours|papillon|lapin|chien|canard|poisson|cygne|abeille|serpent|grenouille|dauphin|licorne|coccinelle|tortue|cheval|panda|renard|biche/],
-  ["Gourmand", /gateau|glace|bonbon|chocolat|cookie|donut|cafe|sushi|macaron|cupcake|sucette|boba|bubble|croissant|pizza|cocktail/],
-  ["Bijoux", /perle|strass|diamant|cristal|couronne|noeud|bague|bijou|minaudiere|sac|parfum|levre/]];
+const FAM = [["Populaires", null, ""], ["Cœurs", /coeur/, "coeurchrome"], ["Fruits", /fraise|cerise|citron|peche|orange|ananas|pomme|framboise|kiwi|banane|myrtille|pasteque|raisin|poire|fruit/, "fraisegelee"],
+  ["Fleurs", /fleur|rose|hibiscus|marguerite|tulipe|lys|pivoine|lotus|tournesol/, "hibiscus"], ["Étoiles", /etoile|lune|planete|soleil|ciel|comete|astro/, "planete"],
+  ["Animaux", /chat|ours|papillon|lapin|chien|canard|poisson|cygne|abeille|serpent|grenouille|dauphin|licorne|coccinelle|tortue|cheval|panda|renard|biche/, "papillondore"],
+  ["Gourmand", /gateau|glace|bonbon|chocolat|cookie|donut|cafe|sushi|macaron|cupcake|sucette|boba|bubble|croissant|pizza|cocktail/, "chocolat"],
+  ["Bijoux", /perle|strass|diamant|cristal|couronne|noeud|bague|bijou|minaudiere|sac|parfum|levre/, "perle"]];
 const POP = ["fraisegelee", "oeilbleu", "fleursixties", "couronnestrass", "consoleviolette", "perle", "canard", "levresgrillz", "boule8", "etoiledemerperles", "cristal", "chocolat", "hibiscus", "minaudiere", "cerisesor", "bouledisco", "ceriseruban", "fraiseperle", "noeudgelee", "coeurchrome", "martien", "planete", "papillondore", "soleil"];
-let famille = "Populaires", recherche = "";
+let famille = "Populaires", recherche = "", enRecherche = false;
 
 const clique = sel => { const b = D && D.querySelector(sel); if (b) b.click(); return b; };
 const defile = () => D.querySelector(".defile") || D.scrollingElement;
@@ -143,7 +152,7 @@ function rend() {
   } else if (etape === 1) {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     c.innerHTML = `<div class="ligneH"><button class="puce verre" id="de" type="button">🎲 Surprenez-moi</button>${cats.map(b => `<button class="puce verre ${b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>
-      <div class="grilleF" id="grilleF">${D.querySelector("#pzFonds")?.innerHTML || ""}</div>`;
+      <div class="grilleF" id="grilleF">${vignettes()}</div>`;
     ajusteFonds();
   } else if (etape === 2) {
     const SC = [["nom", "Le nom"], ["boutons", "Les boutons"], ["site", "Le site"]];
@@ -156,18 +165,27 @@ function rend() {
     const pols = [...D.querySelectorAll("#pzPol [data-p]")];
     c.innerHTML = `<div class="ligneH">${pols.map(b => `<button class="pol verre ${b.classList.contains("on") ? "on" : ""}" data-p="${b.dataset.p}" style="${b.getAttribute("style")}">${b.textContent}</button>`).join("")}</div>`;
   } else {
-    c.innerHTML = `<label class="cherche verre"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="cherche" placeholder="Chercher : fraise, cœur, étoile…" value="${recherche}"></label>
-      <div class="ligneH">${FAM.map(f => `<button class="puce verre ${f[0] === famille ? "on" : ""}" data-fam="${f[0]}">${f[0]}</button>`).join("")}</div>
-      <div class="grilleC" id="grilleC"></div>`;
-    remplitCharms(); $("cherche").oninput = e => { recherche = e.target.value; remplitCharms(); };
+    const LOUPE = `<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+    c.innerHTML = `<div class="tiroir"><div class="familles" id="familles">${enRecherche
+        ? `<button class="loupe on" data-loupe aria-label="Fermer la recherche">${LOUPE}</button><input id="cherche" placeholder="Fraise, cœur, étoile…" value="${recherche}">`
+        : `<button class="loupe" data-loupe aria-label="Chercher">${LOUPE}</button>` + FAM.map(f => `<button class="${f[0] === famille ? "on" : ""}" data-fam="${f[0]}" title="${f[0]}" style="${f[2] ? `background-image:url(loginail-site/charms-mini/${f[2]}.webp)` : ""}">${f[2] ? "" : "★"}</button>`).join("")}</div>
+      <div class="grilleC" id="grilleC"></div></div>`;
+    remplitCharms(); if (enRecherche) { const i = $("cherche"); i.oninput = e => { recherche = e.target.value; remplitCharms(); }; i.focus(); }
   }
   requestAnimationFrame(taille);
 }
-function ajusteFonds() { const g = $("grilleF"); if (!g) return; g.querySelectorAll("[data-f]").forEach(b => b.classList.toggle("on", b.dataset.f === (W.__pzEtat?.().fond || ""))); try { W.__ajusteRonds(g); } catch (e) {} }
+/* les vignettes : le vrai fond (celui du site), en petit format téléphone */
+function vignettes() {
+  return [...D.querySelectorAll("#pzFonds [data-f]")].map(b => { const t = b.querySelector(".f100"); let h = "";
+    if (t) { const c = t.cloneNode(true); c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k)); h = c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); }
+    return b.dataset.f ? `<button class="vg" data-f="${b.dataset.f.replace(/"/g, "&quot;")}" title="${b.title || ""}">${h}</button>` : `<button class="vg sans" data-f="">Aucun</button>`; }).join("");
+}
+function ajusteFonds() { const g = $("grilleF"); if (!g) return; g.querySelectorAll("[data-f]").forEach(b => b.classList.toggle("on", b.dataset.f === (W.__pzEtat?.().fond || ""))); }
 function remplitCharms() {
   const tous = Object.keys(W.CH_IMG || {}), q = recherche.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
   const l = q ? tous.filter(n => n.includes(q)) : famille === "Populaires" ? POP.filter(n => tous.includes(n)) : tous.filter(n => FAM.find(f => f[0] === famille)[1].test(n));
   $("grilleC").innerHTML = l.length ? l.slice(0, 300).map(n => `<button data-ch="${n}" aria-label="${n}" style="background-image:url(loginail-site/charms-mini/${n}.webp)"></button>`).join("") : `<div class="rien">Aucun charm trouvé</div>`;
+  $("grilleC").scrollTop = 0;
 }
 function poseEncre() { if (!D) return; D.querySelectorAll(".ecran h1, .ecran h1 *, .ecran .hf-nom, .ecran .hf-nom *").forEach(x => { if (encre) x.style.setProperty("color", encre, "important"); else x.style.removeProperty("color"); }); }
 /* ---------- les charms : posés DANS le site, ils flottent doucement ; glisser, deux doigts = taille et rotation ---------- */
@@ -220,6 +238,7 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.co) { marque(b); clique(`.pf-dots [data-co="${b.dataset.co}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }   // la couleur du site garde celle des boutons
   if (b.dataset.p) { marque(b); clique(`#pzPol [data-p="${b.dataset.p}"]`); setTimeout(poseEncre, 80); return; }
   if (b.dataset.fam) { famille = b.dataset.fam; recherche = ""; rend(); return; }
+  if (b.hasAttribute("data-loupe")) { enRecherche = !enRecherche; recherche = ""; rend(); return; }
   if (b.dataset.ch) { poseSticker(b.dataset.ch); return; }
 });
 $("suivant").onclick = () => { if (etape === 4) { $("fin").classList.add("on"); return; } etape++; prepare(); };
@@ -237,7 +256,7 @@ F.onload = () => {
   const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; D.head.appendChild(st);
   const copie = () => { D.querySelectorAll("style").forEach(s => { if (s.dataset.copie) return;
       if (s.id === "pzCss") { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = s.textContent.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(c); return; }
-      let t = ""; try { [...s.sheet.cssRules].forEach(r => { if ((r.selectorText && /rond-f|\.f100|\.tuile|pz-ronds/.test(r.selectorText)) || r.type === 7) t += r.cssText.replace(/#pzFonds|\.pz-ronds/g, "#grilleF") + "\n"; }); } catch (e) {}
+      let t = ""; try { [...s.sheet.cssRules].forEach(r => { if ((r.selectorText && /rond-f|\.f100|\.tuile|pz-ronds/.test(r.selectorText)) || r.type === 7) t += r.cssText + "\n"; }); } catch (e) {}
       if (t) { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = t; document.head.appendChild(c); } }); };
   copie(); W.addEventListener("f100", () => setTimeout(() => { copie(); ambiance(); if (etape === 1) rend(); }, 150));
   const pf = D.querySelector("[data-pf]"); forme = pf?._st || 1;
