@@ -177,6 +177,15 @@
       else { el.style.setProperty("color", c, "important"); el.style.setProperty("-webkit-text-fill-color", c, "important"); el.querySelectorAll("*:not(i)").forEach(x => { x.style.setProperty("color", c, "important"); x.style.setProperty("-webkit-text-fill-color", c, "important"); }); } }); };
   new MutationObserver(() => { clearTimeout(peintNom.t); peintNom.t = setTimeout(peintNom, 120); }).observe(document.body, { childList: true, subtree: true });
   setTimeout(peintNom, 700); setTimeout(peintNom, 1500);
+  /* 09/11 (Marie) : le nom ne doit jamais être coupé (« Priscil… » avec une écriture très large) : s'il dépasse, il rapetisse juste assez */
+  const ajusteNom = () => document.querySelectorAll(".ecran .hf-nom, .ecran h1").forEach(el => {
+    if (!el.offsetWidth) return; const pol = getComputedStyle(el).fontFamily + "|" + el.textContent + "|" + el.parentElement.clientWidth;
+    if (el._fitCle === pol) return; if (el._fs0 === undefined) el._fs0 = el.style.getPropertyValue("font-size");
+    if (el._fs0) el.style.setProperty("font-size", el._fs0); else el.style.removeProperty("font-size");
+    let fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+    while (el.scrollWidth > el.clientWidth + 1 && fs > 18 && n++ < 40) { fs *= .95; el.style.setProperty("font-size", fs.toFixed(1) + "px", "important"); }
+    el._fitCle = pol; });
+  setInterval(ajusteNom, 500); if (document.fonts) document.fonts.ready.then(ajusteNom);
   /* dans « Personnaliser » : les couleurs vives (elles remplacent la couleur des boutons ; une couleur normale les enlève) */
   css.textContent += `.pf-vifk{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin:12px 0 6px;text-align:center}.pf-vifs .pf-d.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1E1C1B}`;
   const marque = () => document.querySelectorAll("[data-vif]").forEach(b => b.classList.toggle("on", typeof BR !== "undefined" && BR && BR.vif === b.dataset.vif));
