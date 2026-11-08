@@ -76,6 +76,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .autres{display:block;margin:10px auto 0;border-radius:999px;padding:10px 18px;font:400 13px Jost,sans-serif}
 .go{flex:1;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:16px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:300;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.5}
+html.vrai .maquette{display:none}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
@@ -125,7 +126,11 @@ const STYLES = {
     cats: ["Y2K", "Mignons", "Tout rose", "Vintage", "Bohème", "Rock", "Animaux", "Mer", "Qui bougent", "Fêtes"], pail: ["or", "argent", "holo", "nacre"], charms: [3, 5] } };
 const CHARMS = ["fraisegelee", "oeilbleu", "fleursixties", "couronnestrass", "consoleviolette", "perle", "canard", "levresgrillz", "boule8", "etoiledemerperles", "cristal", "chocolat", "hibiscus", "minaudiere", "cerisesor", "bouledisco", "ceriseruban", "fraiseperle", "noeudgelee", "coeurchrome", "martien", "planete", "papillondore", "soleil", "coeurlilas", "oursonlilas", "etoilelilas", "levres", "coeurleopard", "coeurzebre", "cerisesbordeaux", "fleurgelee", "soleilvisage", "lunesoleil", "coeursoleil", "cerisedisco"];
 const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=non", ouf: "style=2&couleur=rose&police=bonbon&paillettes=nacre", mix: "style=1&couleur=poudre&police=chic&paillettes=non" };
-const SALON = "&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise";   // (exemple) : en vrai, son nom et ses photos à elle
+/* 09/11 (Marie) : ?vrai — elle arrive de « Créer mon site » : les cartes montrent SON salon (son nom, ses photos, ses prix), sinon l'exemple des Ongles de Cerise */
+const VRAI = new URLSearchParams(location.search).has("vrai") && (() => { try { return !!localStorage.getItem("loginail-brouillon"); } catch (e) { return false; } })();
+if (VRAI) document.documentElement.classList.add("vrai");
+const DEBUT = VRAI ? "nouveau&essai&" : "nouveau&exemple=dilerna&";
+const SALON = VRAI ? "" : "&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise";   // (exemple) : en vrai, son nom et ses photos à elle
 const hasard = l => l[Math.floor(Math.random() * l.length)];
 const melange = l => l.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
 const OBJECTIF = 5;   // au bout de 10 coups de cœur, on passe à la page d'après
@@ -153,7 +158,7 @@ function propose(g) {
     const n = S.charms[0] + Math.floor(Math.random() * (S.charms[1] - S.charms[0] + 1));
     const p = { forme: f, couleur: hasard(proches), police: hasard(S.polices), fond, pail: hasard(S.pail), charms: melange(CHARMS).slice(0, n) };
     const cle = [f, p.couleur, p.police, fond].join("|"); if (vus.has(cle) || (fond && [...vus].some(v => v.endsWith("|" + fond)) && essai < 25)) continue; vus.add(cle);
-    p.q = `nouveau&exemple=dilerna&style=${f >= 4 ? 1 : f}${f === 4 ? "&epure=1" : ""}${f === 5 ? "&coffin=1" : ""}&couleur=${p.couleur}&mode=jour&une=${UNE[f]}${fond ? "&fond=" + encodeURIComponent(fond) : ""}&police=${p.police}&paillettes=${p.pail}${n ? "&charm=" + p.charms.join(",") : ""}${SALON}`;
+    p.q = `${DEBUT}style=${f >= 4 ? 1 : f}${f === 4 ? "&epure=1" : ""}${f === 5 ? "&coffin=1" : ""}&couleur=${p.couleur}&mode=jour${VRAI ? "" : "&une=" + UNE[f]}${fond ? "&fond=" + encodeURIComponent(fond) : ""}&police=${p.police}&paillettes=${p.pail}${n ? "&charm=" + p.charms.join(",") : ""}${SALON}`;
     return p;
   }
 }
@@ -222,7 +227,7 @@ $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?genre=" + genre + "&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&exemple=dilerna&" + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+$("moi").onclick = () => { location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -255,7 +260,7 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
   pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
-$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + "&src=" + encodeURIComponent(src(p, false)); };
+$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>

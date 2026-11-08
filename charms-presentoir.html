@@ -22,6 +22,11 @@ input{-webkit-user-select:text;user-select:text}
 .pageSite{position:relative;width:100%;padding-bottom:46vh}
 .pageSite>img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-select:none;user-select:none}
 .calque{position:absolute;inset:0;z-index:5;pointer-events:none}
+/* 09/11 (Marie) : ?vrai — son vrai site derrière les charms */
+.vraiSite{position:sticky;top:0;height:var(--hEcr,100vh);overflow:hidden;background:#fff}
+.vraiSite iframe{width:100%;height:100%;border:0;display:block;pointer-events:none}
+.vraiSite .attente{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 13px Jost,sans-serif;color:#6a625b;background:#fff;transition:opacity .3s}
+.vraiSite.pret .attente{opacity:0;pointer-events:none}
 .st{position:absolute;width:62px;height:62px;translate:-50% -50%;background:transparent;border:0;pointer-events:auto;cursor:grab;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));touch-action:none;-webkit-user-drag:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;outline:none}
 .verre{border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 6px 18px -10px rgba(0,0,0,.35)}
 .blanc{background:rgba(255,255,255,.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.95);box-shadow:0 -10px 28px -16px rgba(0,0,0,.3)}
@@ -107,6 +112,7 @@ const sa = t => (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
 const cherche = q => { q = sa(q).trim(); const q2 = q.replace(/[^a-z0-9]/g, ""); return TOUS.filter(n => n.includes(q2) || sa(NOM[n]).includes(q)); };
 const img = n => `loginail-site/charms-mini/${n}.webp`, grand = n => `loginail-site/charms/${n}.png`;
 const MAX = 12, SITE = "loginail-site/apercus-univers/tpl-maisonlin.webp";
+const VRAI = new URLSearchParams(location.search).has("vrai") && (() => { try { return !!localStorage.getItem("loginail-brouillon"); } catch (e) { return false; } })();
 const LOUPE = `<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 const ICONES = { "*etoile": `<svg viewBox="0 0 24 24" width="17" height="17"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="#1E1C1B"/></svg>`,
   "*flamme": `<svg viewBox="0 0 24 24" width="17" height="17"><path d="M12 22c-4.2 0-7-2.9-7-6.8 0-3.6 2.6-5.6 3.6-8.6.3-.9 1.5-1 1.9-.1.6 1.3.9 2.6.8 3.9 1.3-1.1 2.2-3.2 2.1-5.9 0-.8.9-1.3 1.5-.8C17.6 6.1 19 9.8 19 14.4 19 18.8 16.1 22 12 22z" fill="#1E1C1B"/></svg>`,
@@ -216,7 +222,7 @@ function panneau(e, M, opts) {
 
 /* ---------- le présentoir 6×3 (choisi par Marie) ---------- */
 const VERSIONS = [{ cols: 6, rows: 3, h: "48px", pad: "4px" }];   // 09/11 : 6×3 CHOISI (si les tests ne vont pas : 5×4, rows 4, h 46px)
-document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite"><img src="${SITE}" alt=""><div class="calque"></div></div></div>
+document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?nouveau&public&charms=0"></iframe><div class="attente">Votre site arrive…</div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
   <div class="poubelle verre"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="#1E1C1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   <button class="btnBas verre" data-ouvre hidden style="left:30%">＋ CHARMS</button><button class="btnBas" data-valider hidden style="left:72%;background:#1E1C1B;color:#fff;border:0">VALIDER</button><div class="panneau blanc presentoir"></div></div>`).join("");
 const e = document.getElementById("e0"), M = moteur(e), b = e.querySelector("[data-ouvre]"), val = e.querySelector("[data-valider]"); POSES = () => M.poses();
@@ -228,7 +234,23 @@ val.onclick = () => {
   e.classList.add("finie"); document.getElementById("explique").style.opacity = 0; e.querySelectorAll(".st").forEach((s, n) => { s.classList.add("flotte"); s.style.animationDelay = (-n * .45) + "s"; });
   document.getElementById("fini").hidden = false; };
 document.querySelector("[data-modifier]").onclick = () => { document.getElementById("fini").hidden = true; e.classList.remove("finie"); document.getElementById("explique").style.opacity = 1; e.querySelectorAll(".st").forEach(s => s.classList.remove("flotte")); };
-document.querySelector("[data-activer]").onclick = () => bulle("(maquette) Ici : le paiement, puis son site est en ligne");
+document.querySelector("[data-activer]").onclick = () => {
+  if (!VRAI) { bulle("(maquette) Ici : le paiement, puis son site est en ligne"); return; }
+  /* ses charms sont enregistrés dans son brouillon, puis « Activer mon site » */
+  const cq = e.querySelector(".calque"), w = cq.clientWidth;
+  try { const b = JSON.parse(localStorage.getItem("loginail-brouillon"));
+    b.stickers = [...cq.querySelectorAll(".st")].filter(x => x.dataset.n).map(x => ({ n: x.dataset.n, x: +(parseFloat(x.style.left) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top)), s: Math.round(x._s), r: Math.round(x._r || 0), w }));
+    b.charms = []; localStorage.setItem("loginail-brouillon", JSON.stringify(b)); } catch (x) {}
+  location.href = "loginail-creer/pret.html?activer"; };
+/* son vrai site : la page défile, la fenêtre du site suit (les charms restent accrochés au bon endroit) */
+if (VRAI) { const f = document.getElementById("vrai"), dz = e.querySelector(".defileSite"), es = e.querySelector(".espace"), vs = e.querySelector(".vraiSite");
+  const boite = () => { try { return f.contentDocument.querySelector(".ecran .defile"); } catch (x) { return null; } };
+  const mesure = () => { const d = boite(); if (!d) return; vs.style.setProperty("--hEcr", dz.clientHeight + "px"); es.style.height = Math.max(0, d.scrollHeight - d.clientHeight) + "px"; };
+  f.onload = () => { try { const D = f.contentDocument, st = D.createElement("style");
+      st.textContent = ".pret,.langues,.lgn-st,.ch-couche{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; D.head.appendChild(st); } catch (x) {}
+    [300, 1200, 3000, 6000].forEach(t => setTimeout(mesure, t)); setTimeout(() => vs.classList.add("pret"), 900); };
+  dz.addEventListener("scroll", () => { const d = boite(); if (d) d.scrollTop = dz.scrollTop; }, { passive: true });
+  addEventListener("resize", mesure); }
 /* tout effacer (avec une question avant) */
 document.getElementById("toutEffacer").onclick = () => { if (M.n()) document.getElementById("confirme").hidden = false; };
 document.querySelector("#confirme [data-non]").onclick = () => document.getElementById("confirme").hidden = true;

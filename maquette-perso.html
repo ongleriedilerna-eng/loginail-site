@@ -157,6 +157,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 #rechF .grilleF{padding:2px 14px 4px}
 #rechF .vide{font:300 13px Jost,sans-serif;color:var(--muted);padding:10px 16px}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:8;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.45}
+html.vrai .maquette{display:none}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
@@ -183,7 +184,12 @@ const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
 { const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
-const ORDRE = ["entete", "ecriture", "fond", "couleurs", "charms"];
+/* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
+const VRAI = new URLSearchParams(location.search).has("vrai");
+if (VRAI) document.documentElement.classList.add("vrai");
+const ORDRE = VRAI ? ["entete", "ecriture", "fond", "couleurs"] : ["entete", "ecriture", "fond", "couleurs", "charms"];
+/* ses choix sont enregistrés dans son brouillon (comme « C'est parfait » de l'éditeur) */
+function enregistre() { try { W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box||!BR)return;Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m},window.__pzEtat?__pzEtat():{});localStorage.setItem("loginail-brouillon",JSON.stringify(BR))})()`); return true; } catch (e) { return false; } }
 const TITRES = { entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", charms: "Vos charms" };
 const ONGLET = { entete: 1, ecriture: 4, fond: 3, couleurs: 2, charms: 4 };
 const cle = () => ORDRE[etape];
@@ -247,11 +253,11 @@ function ambiance() {
     const h = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); if (a._h !== h) { a._h = h; a.innerHTML = `<div class="f100 fond-site" style="position:absolute;inset:0">${h}</div>`; } } catch (e) {}
 }
 function rend() {
-  $("hautT").textContent = `Personnalisez · ${etape + 1} sur 5`;
+  $("hautT").textContent = `Personnalisez · ${etape + 1} sur 5`; document.querySelectorAll("#barre i").forEach((x, k) => x.classList.toggle("on", k <= etape));
   [...$("barre").children].forEach((i, k) => i.classList.toggle("on", k <= etape));
   $("titre").textContent = TITRES[cle()]; $("aide").textContent = "";
   $("retour").style.visibility = etape ? "visible" : "hidden";
-  $("suivant").textContent = etape === ORDRE.length - 1 ? "C’EST PARFAIT" : "SUIVANT";
+  $("suivant").textContent = etape === ORDRE.length - 1 ? (VRAI ? "MES CHARMS" : "C’EST PARFAIT") : "SUIVANT";
   const c = $("contenu");
   $("bas").classList.toggle("charms", cle() === "charms"); $("bas").classList.remove("grand", "ouvre"); $("voileC").classList.remove("on");
   const mc = cle() === "charms"; if (mc !== $("tel").classList.contains("mc")) { $("tel").classList.toggle("mc", mc); metPlein(mc); $("fermerPlein").hidden = true; }
@@ -430,7 +436,7 @@ $("cherche").dataset.x = "1";
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); location.href = "charms-presentoir.html?vrai"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };

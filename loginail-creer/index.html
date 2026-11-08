@@ -680,7 +680,7 @@ $("fini").onclick = () => {
     const garde = B.photos.map(p => !p.url.startsWith("data:")), place = i => i == null || !garde[i] ? null : garde.slice(0, i).filter(Boolean).length;
     B.principale = place(B.principale) ?? 0; B.salon = place(B.salon); B.photos = B.photos.filter((p, i) => garde[i]);
     localStorage.setItem("loginail-brouillon", JSON.stringify(B)); }
-  location.href = "pret.html" + IPHONE;
+  location.href = "../coups-de-coeur.html?vrai";   // 09/11 (Marie) : ensuite, elle choisit son style (cartes à glisser), le personnalise et pose ses charms
 };
 /* 09/11 (Marie) : ?demo — pour montrer Loginail : un faux lien (les Ongles de Cerise, exemple), rien n'est lu sur Google ;
    après « Votre site est prêt », on enchaîne sur le choix du style, la personnalisation et les charms */

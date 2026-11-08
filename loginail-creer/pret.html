@@ -1985,7 +1985,11 @@ const BR=(()=>{try{
   {const b=JSON.parse(localStorage.getItem("loginail-brouillon"));if(b){try{const u=JSON.parse(localStorage.getItem("loginail-univers-choisi")||"null");if(u&&u.reglages&&b.univers!==u.nom){const q=new URLSearchParams(u.reglages);
     if(q.get("style"))b.style=+q.get("style");if(q.get("couleur"))b.couleur=q.get("couleur");if(q.get("mode"))b.mode=q.get("mode");
     if(q.get("fond"))b.fond=q.get("fond");if(q.get("police"))b.police=q.get("police");if(q.get("paillettes"))b.paillettes=q.get("paillettes");if(q.get("charm"))b.charms=q.get("charm").split(",");
-    b.univers=u.nom;try{localStorage.setItem("loginail-brouillon",JSON.stringify(b))}catch(_){}}}catch(_){}}return b}}catch(e){return null}})();
+    b.univers=u.nom;try{localStorage.setItem("loginail-brouillon",JSON.stringify(b))}catch(_){}}}catch(_){}
+    /* 09/11 (Marie) : les cartes à glisser et la personnalisation essaient des styles sur SON site (?essai&style=…) ; rien n'est enregistré tant qu'elle n'a pas fini */
+    {const q=new URLSearchParams(location.search);if(q.has("essai")){if(q.get("style"))b.style=+q.get("style");if(q.get("couleur"))b.couleur=q.get("couleur");if(q.get("mode"))b.mode=q.get("mode");
+      b.epure=q.get("epure")==="1";b.coffin=q.get("coffin")==="1";b.arrondi=q.get("arrondi")==="1";b.fond=q.get("fond")||"";b.police=q.get("police")||"";b.paillettes=q.get("paillettes")||"non";b.charms=(q.get("charm")||"").split(",").filter(Boolean)}}}
+    return b}}catch(e){return null}})();
 if(!BR)location.replace("index.html"+location.search);
 else{
   const ordre=BR.photos.map((_,i)=>i);if(BR.principale>0){ordre.splice(BR.principale,1);ordre.unshift(BR.principale)}
@@ -3118,5 +3122,16 @@ document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){
 </script>
 <script src="../loginail-site/options-site.js"></script><script src="resa-simu.js"></script><script src="legal-site.js"></script><script src="menu-carre.js?v=3"></script><script src="menu-coffin.js?v=3"></script>
 <script src="hero-format.js?v=47"></script>
+<script>
+/* 09/11 (Marie) : les charms posés avec le présentoir (BR.stickers : n, x en % de la largeur, y en px, taille s, rotation r, largeur w du téléphone) ; ils flottent doucement */
+(function(){try{if(typeof BR==="undefined"||!BR||!Array.isArray(BR.stickers)||!BR.stickers.length)return;
+  const st=document.createElement("style");st.textContent="@keyframes lgnFlotte2{0%,100%{translate:-50% -50%}50%{translate:-50% calc(-50% - 7px)}}.lgn-st{position:absolute;z-index:30;translate:-50% -50%;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte2 3.2s ease-in-out infinite}";document.head.appendChild(st);
+  const pose=()=>{const d=document.querySelector(".ecran .defile");if(!d)return setTimeout(pose,200);d.querySelectorAll(".lgn-st").forEach(x=>x.remove());const k=d.clientWidth/(BR.stickers[0].w||d.clientWidth||390);
+    BR.stickers.forEach((c,i)=>{const im=document.createElement("img");im.className="lgn-st";im.alt="";im.src="../loginail-site/charms/"+String(c.n).replace(/[^a-z0-9-]/gi,"")+".png";
+      im.style.left=c.x+"%";im.style.top=(c.y*k)+"px";im.style.width=im.style.height=(c.s*k)+"px";im.style.rotate=(c.r||0)+"deg";im.style.animationDelay=(-i*.45)+"s";d.appendChild(im)})};
+  setTimeout(pose,500)}catch(e){}})();
+/* ?activer : elle arrive des charms, on ouvre directement « Activer mon site » */
+if(new URLSearchParams(location.search).has("activer"))setTimeout(()=>{try{ouvreActiver()}catch(e){}},900);
+</script>
 </body>
 </html>
