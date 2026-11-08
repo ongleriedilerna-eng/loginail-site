@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>La couleur du site</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:#F4F1EC;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;color:#1E1C1B}
+.tout{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 10px)}
+h1{font-size:15px;font-weight:600;letter-spacing:.02em;margin:2px 0 8px;text-align:center}
+.idees{display:flex;gap:6px;width:100%;max-width:420px;margin-bottom:8px}
+.idees button:first-child{flex:2.2}
+.idees button{flex:1;white-space:nowrap;border:0;border-radius:999px;padding:8px 4px;font-size:12px;font-weight:600;background:#fff;color:#1E1C1B;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.idees button.on{background:#1E1C1B;color:#fff}
+.dit{font-size:12px;color:#6a625b;text-align:center;min-height:32px;max-width:380px;line-height:1.35;margin-bottom:8px}
+.tel{flex:1;min-height:0;aspect-ratio:390/780;max-width:100%;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.14);position:relative}
+.tel iframe{position:absolute;left:0;top:0;width:390px;height:780px;border:0;transform-origin:0 0}
+.coul{display:flex;gap:10px;margin-top:10px;overflow-x:auto;max-width:100%;padding:2px;scrollbar-width:none}
+.coul::-webkit-scrollbar{display:none}
+.coul button{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.coul button.on{box-shadow:0 0 0 2px #1E1C1B}
+.voile{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#6a625b;transition:opacity .3s}
+.voile.parti{opacity:0;pointer-events:none}
+</style></head><body>
+<div class="tout">
+  <h1>La couleur du site</h1>
+  <div class="idees">
+    <button data-v="" class="on">Aujourd’hui</button><button data-v="vA">1</button><button data-v="vB">2</button><button data-v="vC">3</button><button data-v="vD">4</button>
+  </div>
+  <div class="dit" id="dit"></div>
+  <div class="tel" id="tel"><iframe id="f" src="loginail-creer/pret.html?nouveau&exemple=dilerna&style=1&couleur=cerise&mode=jour&police=bonbon&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe><div class="voile" id="voile">Chargement du site…</div></div>
+  <div class="coul" id="coul"></div>
+</div>
+<script>
+const DIT = {
+  "": "Aujourd’hui : la couleur ne change que l’écriture et les boutons. On ne la voit presque pas.",
+  vA: "1 · Douce : tout le site prend une teinte légère de la couleur.",
+  vB: "2 · Cartes : chaque partie est dans une carte de la couleur, sur du blanc.",
+  vC: "3 · Rayures : une partie sur deux est colorée, l’autre reste blanche.",
+  vD: "4 · Audacieuse : le fond est de la couleur, les parties sont des cartes blanches."
+};
+const COULS = ["cerise","noir","choco","marine","sauge","emeraude","ciel","lilas","lavande","prune","bordeaux","terracotta","caramel","corail","jaune","menthe","framboise","nude"];
+const CSS = `.pret,.langues{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}
+.ecran.vA .defile,.ecran.vA{background:color-mix(in srgb,var(--noir) 13%,#fff)!important}
+.ecran.vA .sec{background:transparent!important}
+.ecran.vB .defile{background:#fff!important}
+.ecran.vB .sec{background:color-mix(in srgb,var(--noir) 11%,#fff)!important;margin:14px 12px 0!important;border-radius:22px!important;padding-top:34px!important}
+.ecran.vC .sec:nth-of-type(odd){background:color-mix(in srgb,var(--noir) 16%,#fff)!important}
+.ecran.vC .sec:nth-of-type(even){background:#fff!important}
+.ecran.vD .defile{background:var(--noir)!important}
+.ecran.vD .sec{background:#fff!important;margin:14px 12px 0!important;border-radius:22px!important;padding-top:34px!important}`;
+const F = document.getElementById("f"), tel = document.getElementById("tel");
+let V = "", C = "cerise", pret = false;
+const taille = () => { const k = tel.clientWidth / 390; F.style.transform = `scale(${k})`; };
+addEventListener("resize", taille); taille();
+const D = () => F.contentDocument;
+const applique = () => {
+  if (!pret) return;
+  const e = D().querySelector(".ecran"); if (!e) return;
+  e.classList.remove("vA","vB","vC","vD"); if (V) e.classList.add(V);
+  document.getElementById("dit").textContent = DIT[V];
+};
+const descend = () => { const p = D().querySelector('[data-s="presta"]'); const d = D().querySelector(".ecran .defile"); if (p && d) d.scrollTop = p.closest(".sec").offsetTop - 10; };
+F.addEventListener("load", () => {
+  const s = D().createElement("style"); s.textContent = CSS; D().head.appendChild(s);
+  const ok = () => { if (!D().querySelector(".ecran .sec")) return setTimeout(ok, 150); pret = true; applique(); descend(); document.getElementById("voile").classList.add("parti"); };
+  ok();
+});
+document.querySelectorAll(".idees button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".idees button").forEach(x => x.classList.toggle("on", x === b)); V = b.dataset.v; applique();
+});
+const coul = document.getElementById("coul");
+const fonds = { cerise:"#C8243A",noir:"#1E1C1B",choco:"#4A3226",marine:"#24344F",sauge:"#9EA791",emeraude:"#1F7A55",ciel:"#BCDDEE",lilas:"#D5C8EC",lavande:"#CDBDF0",prune:"#6E3A62",bordeaux:"#7A1F33",terracotta:"#C66B4A",caramel:"#C68A4E",corail:"#F2A08F",jaune:"#F3E3A0",menthe:"#BFE3D4",framboise:"#D9668A",nude:"#D9B8A9" };
+coul.innerHTML = COULS.map(c => `<button data-c="${c}" class="${c===C?"on":""}" style="background:${fonds[c]}" aria-label="${c}"></button>`).join("");
+coul.querySelectorAll("button").forEach(b => b.onclick = () => {
+  coul.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); C = b.dataset.c;
+  if (!pret) return;
+  const d = D().querySelector(".ecran .defile"), y = d ? d.scrollTop : 0;
+  const k = D().querySelector(`.pf-dots [data-co="${C}"]`); if (k) k.click();
+  setTimeout(() => { applique(); const d2 = D().querySelector(".ecran .defile"); if (d2) d2.scrollTop = y; }, 160);
+});
+</script>
+</body></html>
