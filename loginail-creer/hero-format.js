@@ -31,7 +31,7 @@
   .hf.C .hf-nom{position:relative;z-index:2;margin:-0.95em 22px 0;font-size:clamp(60px,19vw,92px)}
   .hf.C .hf-nom span{display:block}
   .hf.C .hf-nom .sur{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.28)}
-  .hf.C .hf-bas{padding:14px 24px 30px}
+  .hf.C .hf-bas{padding:14px 24px 30px}.ecran:has(.fond-site) .hf.C .hf-nom span:not(.sur),.ecran:has(.fond-site) .hf.C .hf-bas{background:var(--creme,#F6F3EF)}.ecran:has(.fond-site) .hf.C .hf-nom span:not(.sur){box-shadow:-22px 0 0 var(--creme,#F6F3EF),22px 0 0 var(--creme,#F6F3EF)}
   .hf.C .hf-res{margin-top:16px;background:var(--encre,#1E1C1B);color:#F6F3EF}
   /* B : arche : le nom en haut, une photo d'ongles dans une arche arrondie (comme un ongle amande) */
   .hf.B{color:var(--encre,#1E1C1B);text-align:center;padding:calc(var(--hf-top,22px) + 30px) 22px 34px}
