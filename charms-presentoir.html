@@ -247,7 +247,7 @@ if (VRAI) { const f = document.getElementById("vrai"), dz = e.querySelector(".de
   const boite = () => { try { return f.contentDocument.querySelector(".ecran .defile"); } catch (x) { return null; } };
   const mesure = () => { const d = boite(); if (!d) return; vs.style.setProperty("--hEcr", dz.clientHeight + "px"); es.style.height = Math.max(0, d.scrollHeight - d.clientHeight) + "px"; };
   f.onload = () => { try { const D = f.contentDocument, st = D.createElement("style");
-      st.textContent = ".pret,.langues,.lgn-st,.ch-couche{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; D.head.appendChild(st); } catch (x) {}
+      st.textContent = ".pret,.langues,.lgn-st,.ch-couche{display:none!important}.defile{scroll-behavior:auto!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; D.head.appendChild(st); } catch (x) {}
     [300, 1200, 3000, 6000].forEach(t => setTimeout(mesure, t)); setTimeout(() => vs.classList.add("pret"), 900); };
   dz.addEventListener("scroll", () => { const d = boite(); if (d) d.scrollTop = dz.scrollTop; }, { passive: true });
   addEventListener("resize", mesure); }
