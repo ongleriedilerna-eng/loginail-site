@@ -1,0 +1,160 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Avis d’expert · loginail.fr</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Cinzel:wght@500&family=Pinyon+Script&family=Shrikhand&family=Bagel+Fat+One&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--noir:#1E1C1B;--creme:#F6F3EF;--gris:#6b625c}
+*{box-sizing:border-box}html,body{margin:0;background:#E7E2DB;font-family:Jost,sans-serif;color:var(--noir)}
+header{text-align:center;padding:40px 20px 4px}header h1{font:400 40px/1.1 'Cormorant Garamond',serif;margin:0 0 8px}header p{margin:0 auto;max-width:740px;color:var(--gris);font-size:15px;line-height:1.55}
+h2.part{font:400 30px 'Cormorant Garamond',serif;max-width:1180px;margin:52px auto 0;padding:0 20px}
+.regle{max-width:1180px;margin:14px auto 0;padding:0 20px}.regle div{background:#1E1C1B;color:var(--creme);border-radius:16px;padding:16px 20px;font-size:14.5px;line-height:1.6}
+.regle b{color:#F7E6BC;font-weight:500}.regle ol{margin:8px 0 0;padding-left:20px}
+.v{max-width:1180px;margin:22px auto 0;padding:0 20px}
+.v .tit{display:flex;align-items:baseline;gap:12px;margin:0 0 10px}.v .tit b{font:500 12px Jost;letter-spacing:.16em;text-transform:uppercase;background:var(--noir);color:#fff;border-radius:99px;padding:6px 12px}
+.v .tit b.top{background:linear-gradient(100deg,#C9A45C,#E6CC8C);color:#1E1C1B}
+.v .tit span{font:400 23px 'Cormorant Garamond',serif}
+.ecran{position:relative;aspect-ratio:1536/695;border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(0,0,0,.5);background:var(--creme);container-type:inline-size}
+.avis{background:#fff;border-radius:14px;padding:13px 18px;margin-top:10px;font-size:14px;line-height:1.55;color:#4a4440}.avis b{color:var(--noir);font-weight:500}
+.barre{position:absolute;left:0;right:0;top:0;height:5.2cqw;display:flex;align-items:center;justify-content:space-between;padding:0 2.4cqw;z-index:6}
+.barre .logo{font:500 .9cqw Jost;letter-spacing:.36em}.barre .b{font:500 .78cqw Jost;letter-spacing:.14em;text-transform:uppercase;background:var(--noir);color:#fff;border-radius:99px;padding:.7cqw 1.4cqw}
+.k{font:500 .8cqw Jost;letter-spacing:.32em;text-transform:uppercase;color:var(--gris)}
+.h{font:400 4.3cqw/1.04 'Cormorant Garamond',serif;letter-spacing:-.01em;margin:1.3cqw 0}
+.ligne{font:400 .92cqw Jost;letter-spacing:.24em;text-transform:uppercase;display:flex;gap:1.1cqw;align-items:center;flex-wrap:wrap}.ligne i{display:inline-block;width:.32cqw;height:.32cqw;border-radius:50%;background:currentColor;opacity:.4}
+.form{display:flex;gap:.6cqw;margin-top:2cqw}.form .in{width:17cqw;height:3.5cqw;border-radius:99px;background:#fff;border:1px solid rgba(0,0,0,.1);font:400 .92cqw Jost;color:#9a918a;display:flex;align-items:center;padding:0 1.4cqw}
+.form .bt{height:3.5cqw;border-radius:99px;background:var(--noir);color:#fff;font:500 .8cqw Jost;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;padding:0 1.8cqw}
+.sous{font:400 .85cqw Jost;color:var(--gris);margin-top:1cqw}.sous b{color:var(--noir);font-weight:500}
+.mot{display:inline-flex;align-items:center;gap:.3em;white-space:nowrap}.mot .mt{display:inline-block;transition:opacity .22s,transform .22s;font-weight:600}
+.mot img{width:.85em;height:.85em;object-fit:contain;transition:opacity .22s,transform .3s cubic-bezier(.2,1.6,.4,1)}.mot.chg .mt{opacity:0;transform:translateY(.12em)}.mot.chg img{opacity:0;transform:scale(.4) rotate(-30deg)}
+.tel{position:relative;aspect-ratio:420/909;border-radius:15%/7%;padding:.42cqw;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 .08cqw #8a857f,0 2.6cqw 3.4cqw -1.6cqw rgba(0,0,0,.55)}
+.tel .e{width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff center/cover}
+.tel .e::before{content:"";position:absolute;z-index:2;top:3.4%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
+.etiq{position:absolute;font:500 .72cqw Jost;letter-spacing:.2em;text-transform:uppercase;background:rgba(246,243,239,.94);padding:.55cqw 1cqw;border-radius:99px;z-index:4;box-shadow:0 .6cqw 1.4cqw -.8cqw rgba(0,0,0,.5);white-space:nowrap}
+.fl{position:absolute;z-index:4;font-size:1.6cqw;color:#fff;text-shadow:0 .2cqw .6cqw rgba(0,0,0,.5)}
+/* C+ */
+.vC .g{position:absolute;left:6.5cqw;top:50%;transform:translateY(-45%);width:40cqw}
+.vC .ph{position:absolute;right:2.4cqw;top:6.4cqw;bottom:2.4cqw;width:46cqw;border-radius:1.8cqw;background:center/cover;transition:background-image .45s}
+.vC .ph::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(0deg,rgba(0,0,0,.25),transparent 40%)}
+.vC .t1{position:absolute;right:31cqw;top:50%;transform:translateY(-44%) rotate(-4deg);width:12.5cqw;z-index:3}
+.vC .t2{position:absolute;right:14.5cqw;top:50%;transform:translateY(-38%) rotate(4deg);width:11.5cqw;z-index:3}
+.vC .notif{position:absolute;right:6cqw;top:11cqw;z-index:5;width:15cqw;background:rgba(250,248,246,.97);border-radius:1cqw;padding:.8cqw 1cqw;font-size:.72cqw;line-height:1.35;box-shadow:0 1cqw 2cqw -1cqw rgba(0,0,0,.6);display:flex;gap:.7cqw;align-items:center;animation:nt 4.2s ease-in-out infinite}
+.vC .notif i{flex:none;width:2cqw;height:2cqw;border-radius:.5cqw;background:url(loginail-site/icone-appli.svg) center/cover}.vC .notif b{display:block;font-weight:500;font-size:.78cqw}
+@keyframes nt{0%,12%{opacity:0;transform:translateY(-.8cqw) scale(.95)}20%,85%{opacity:1;transform:none}100%{opacity:0}}
+/* B+ */
+.vB .ph{position:absolute;top:0;bottom:0;width:26cqw;background:center/cover}.vB .ph.l{left:0}.vB .ph.r{right:0}
+.vB .ph.l::after,.vB .ph.r::after{content:"";position:absolute;inset:0}.vB .ph.l::after{background:linear-gradient(90deg,rgba(246,243,239,0) 50%,var(--creme))}.vB .ph.r::after{background:linear-gradient(270deg,rgba(246,243,239,0) 50%,var(--creme))}
+.vB .c{position:absolute;left:24cqw;right:24cqw;top:7.6cqw;text-align:center;display:flex;flex-direction:column;align-items:center}
+.vB .h{font-size:3.6cqw;margin:1cqw 0}.vB .ligne{justify-content:center}.vB .form{justify-content:center;margin-top:1.4cqw}
+.vB .duo{position:absolute;left:50%;bottom:-9cqw;transform:translateX(-50%);display:flex;gap:4cqw;align-items:flex-end}
+.vB .duo .tel{width:11cqw}.vB .duo .tel:first-child{transform:rotate(-5deg)}.vB .duo .tel:last-child{transform:rotate(5deg)}
+.vB .duo .etiq{bottom:10.6cqw}
+/* K : la bio */
+.k1{background:#F3EEE8}
+.k1 .g{position:absolute;left:7cqw;top:50%;transform:translateY(-50%);width:38cqw}
+.k1 .h{font-size:3.8cqw}.k1 .h em{font-style:italic}.k1 p{font:400 1.05cqw/1.6 Jost;color:#4a4440;margin:0;max-width:32cqw}
+.k1 .pts{display:flex;gap:2.4cqw;margin-top:2cqw}.k1 .pts div{font:400 .9cqw Jost;color:var(--gris)}.k1 .pts b{display:block;font:400 1.6cqw 'Cormorant Garamond',serif;color:var(--noir)}
+.k1 .scene{position:absolute;right:9cqw;top:50%;transform:translateY(-50%);width:36cqw;height:38cqw}
+.k1 .tel{position:absolute;width:15cqw;top:0;transition:all .8s cubic-bezier(.2,.8,.3,1)}
+.k1 .insta{position:absolute;left:2cqw}.k1 .site{position:absolute;right:2cqw;opacity:.35;transform:scale(.92)}
+.k1.ouvre .insta{opacity:.35;transform:scale(.92)}.k1.ouvre .site{opacity:1;transform:none}
+.prof{width:100%;height:100%;background:#fff;padding:2.2cqw 1cqw 1cqw;font-size:.62cqw;color:#1E1C1B;display:flex;flex-direction:column;gap:.5cqw}
+.prof .haut{display:flex;align-items:center;gap:.8cqw}.prof .av{width:3.2cqw;height:3.2cqw;border-radius:50%;background:url(loginail-site/univers-photos/emma/portrait.webp) center/cover;box-shadow:0 0 0 .15cqw #fff,0 0 0 .3cqw #d9c8b6}
+.prof .chiffres{display:flex;gap:.9cqw;text-align:center}.prof .chiffres b{display:block;font-size:.72cqw}
+.prof .nom{font-weight:500;font-size:.72cqw}.prof .bio{color:#4a4440;line-height:1.4}
+.prof .lien{display:inline-flex;align-items:center;gap:.3cqw;color:#2A5BD7;font-weight:500;font-size:.7cqw;padding:.2cqw .4cqw;border-radius:.4cqw;transition:background .3s}
+.k1.clic .prof .lien{background:rgba(42,91,215,.15)}
+.prof .grille{display:grid;grid-template-columns:repeat(3,1fr);gap:.15cqw;margin-top:.4cqw}.prof .grille i{aspect-ratio:1;background:center/cover}
+.k1 .doigt{position:absolute;z-index:5;font-size:2cqw;left:10cqw;top:24cqw;opacity:0;transition:all .5s}.k1.clic .doigt{opacity:1;left:6.5cqw;top:15.4cqw}
+/* L : partout le même lien */
+.l1{background:#131112;color:var(--creme)}
+.l1 .t{position:absolute;left:0;right:0;top:5.6cqw;text-align:center}.l1 .t .h{font-size:3.6cqw;margin:.8cqw 0}.l1 .t .h em{font-style:italic;color:#E6CC8C}.l1 .k{color:rgba(246,243,239,.6)}
+.l1 .cols{position:absolute;left:6cqw;right:6cqw;bottom:4cqw;display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw}
+.l1 .col{background:rgba(255,255,255,.06);border:1px solid rgba(246,243,239,.14);border-radius:1.6cqw;padding:1.6cqw;height:19cqw;position:relative;overflow:hidden}
+.l1 .col small{font:500 .7cqw Jost;letter-spacing:.24em;text-transform:uppercase;color:rgba(246,243,239,.6)}
+.l1 .col .url{position:absolute;left:1.6cqw;right:1.6cqw;bottom:1.6cqw;font:500 1cqw Jost;color:#E6CC8C;letter-spacing:.04em}
+.l1 .goo{background:#fff;color:#1E1C1B;border-radius:1cqw;padding:1cqw;margin-top:1.2cqw;font-size:.7cqw}.l1 .goo .bar{border:1px solid #ddd;border-radius:99px;padding:.4cqw .8cqw;color:#666;margin-bottom:.8cqw}
+.l1 .goo b{display:block;color:#1a0dab;font-weight:400;font-size:.85cqw}.l1 .goo small{color:#0d652d;letter-spacing:0;text-transform:none;font-size:.65cqw}
+.l1 .bio{background:#fff;color:#1E1C1B;border-radius:1cqw;padding:1cqw;margin-top:1.2cqw;font-size:.72cqw;line-height:1.5}.l1 .bio a{color:#2A5BD7;font-weight:500}
+.l1 .qr{margin:1.2cqw auto 0;width:7cqw;height:7cqw;border-radius:.6cqw;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 21'%3E%3Cpath d='M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0z M9 0h2v2H9zM9 4h4v2H9zM11 8h2v4h-2zM8 9h2v2H8zM14 9h3v2h-3zM18 9h3v3h-3zM9 13h3v2H9zM14 14h2v3h-2zM17 15h4v2h-4zM9 17h3v4H9zM13 19h4v2h-4zM19 18h2v3h-2z' fill='%231E1C1B'/%3E%3Cpath d='M1.5 1.5h4v4h-4zM15.5 1.5h4v4h-4zM1.5 15.5h4v4h-4z' fill='%23fff'/%3E%3C/svg%3E") center/80% no-repeat}
+/* G+ */
+.gp .bg{position:absolute;inset:0;background:center/cover;transition:opacity 1s}.gp .bg.b{opacity:0}
+.gp .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,243,239,.55),rgba(246,243,239,.15) 40%,rgba(246,243,239,.25))}
+.gp .q{position:absolute;left:0;right:0;top:5.4cqw;text-align:center;z-index:2}
+.gp .q .t{font:400 3.2cqw/1 'Cormorant Garamond',serif}.gp .q .t em{font-style:italic}
+.gp .rang{position:absolute;left:50%;top:57%;display:flex;gap:2.4cqw;align-items:center;z-index:2;transition:transform 1s cubic-bezier(.3,.8,.3,1)}
+.gp .it{display:flex;flex-direction:column;align-items:center;gap:1cqw;transition:transform 1s cubic-bezier(.3,.8,.3,1),opacity 1s,filter 1s;opacity:.55;transform:scale(.78);filter:saturate(.7)}
+.gp .it.on{opacity:1;transform:scale(1.15);filter:none}
+.gp .it .tel{width:10cqw}.gp .it small{font:500 .7cqw Jost;letter-spacing:.3em;text-transform:uppercase;background:rgba(246,243,239,.9);padding:.4cqw .8cqw;border-radius:99px}
+footer{text-align:center;color:#8a8079;font-size:12px;padding:44px 20px 70px}
+</style></head><body>
+<header><h1>Avis d’expert</h1><p>Je me mets dans la peau de quelqu’un dont le métier est de faire des accueils de sites qui vendent. Pour chaque question, je te donne la règle, je te montre les options, et je te dis ce que je choisirais à ta place (la pastille dorée).</p></header>
+
+<h2 class="part">1 · L’accueil : B ou C ?</h2>
+<div class="regle"><div><b>La règle des 5 secondes.</b> En arrivant, une prothésiste doit comprendre 4 choses, sans rien faire défiler :
+<ol><li><b>Ce que c’est</b> : un site ET une appli (tu as raison : avec B et C seuls, l’appli disparaît, c’est le gros défaut).</li><li><b>Pour qui</b> : « pour les prothésistes ongulaires ».</li><li><b>Ce que ça change pour elle</b> : Site · Réservation · Rappels SMS · Caisse.</li><li><b>Quoi faire</b> : coller son lien, « Créer mon site ».</li></ol>
+Donc : on garde ton C, mais on remet <b>deux téléphones</b> : le site et l’appli, côte à côte, aux mêmes couleurs, avec une notification qui tombe sur l’appli.</div></div>
+
+<div class="v"><div class="tit"><b class="top">★ C+</b><span>Le C, avec le site ET l’appli</span></div>
+<div class="ecran vC"><div class="barre"><span class="logo">LOGINAIL</span><span class="b">Créer mon site</span></div>
+<div class="ph" id="cPh"></div>
+<div class="g"><div class="k">Pour les prothésistes ongulaires · prêt en une minute</div><div class="h">Un site pour <span class="mot"><span class="mt">briller</span><img alt="" src="loginail-site/charms-mini/cerisedisco.webp"></span>.<br>Une appli pour<br>tout gérer.</div>
+<div class="ligne">Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse</div><div class="form"><div class="in">Votre lien Maps, Planity, Booksy…</div><div class="bt">Créer mon site</div></div><div class="sous"><b>1 mois offert</b> · sans engagement · 0 % de commission</div></div>
+<div class="tel t1"><div class="e" id="cSite"></div></div><div class="tel t2"><div class="e" id="cApp"></div></div>
+<div class="etiq" style="right:32.5cqw;bottom:4cqw">Votre site</div><div class="etiq" style="right:15.6cqw;bottom:4cqw">Votre appli</div>
+<div class="notif"><i></i><div><b>Nouvelle réservation</b>Léa · Pose gel · samedi 10 h</div></div></div>
+<div class="avis"><b>Mon choix.</b> C’est ton C, avec ce qui manquait : à côté du téléphone « Votre site », un deuxième téléphone « Votre appli », <b>aux mêmes couleurs</b>. Quand « briller » change d’écriture, la photo, le site ET l’appli changent ensemble (Maison Noire en noir, Cerise en rose, Emma en lin…). Une notification « Nouvelle réservation » tombe de temps en temps. En un regard : un style → un site → une appli → des réservations.</div></div>
+
+<div class="v"><div class="tit"><b>B+</b><span>Le B, avec le site ET l’appli</span></div>
+<div class="ecran vB"><div class="barre"><span class="logo">LOGINAIL</span><span class="b">Créer mon site</span></div>
+<div class="ph l" style="background-image:url(loginail-site/univers-photos/emma/2.webp)"></div><div class="ph r" style="background-image:url(loginail-site/univers-photos/emma/salon.webp)"></div>
+<div class="c"><div class="k">Pour les prothésistes ongulaires · prêt en une minute</div><div class="h">Un site pour <span class="mot"><span class="mt">briller</span><img alt="" src="loginail-site/charms-mini/cerisedisco.webp"></span>.<br>Une appli pour tout gérer.</div>
+<div class="ligne">Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse</div><div class="form"><div class="in">Votre lien Maps, Planity, Booksy…</div><div class="bt">Créer mon site</div></div></div>
+<div class="duo"><div class="tel"><div class="e" style="background-image:url(loginail-site/apercus-mini/tpl-onglesdemma.webp)"></div></div><div class="tel"><div class="e" style="background-image:url(loginail-site/apercus-mini/app-lin.webp)"></div></div></div></div>
+<div class="avis">Le B garde son charme (tout au milieu), et deux téléphones sortent du bas : le site et l’appli. <b>Son défaut</b> : sur ton écran d’ordinateur (pas très haut), les téléphones n’ont la place de sortir qu’à moitié. C’est pour ça que je préfère le C+.</div></div>
+
+<h2 class="part">2 · À la place de « Elle vous cherche »</h2>
+<div class="regle"><div><b>Tu as raison, il faut parler du .fr.</b> C’est le vrai argument contre Planity : sur Planity, ta cliente voit tes concurrentes à côté de toi. Avec Loginail, elle a <b>ton lien à toi</b>, en .fr, à ton nom, partout : dans ta bio, sur Google, sur ton QR code. <b>Attention, c’est la loi</b> : on n’a pas le droit d’écrire « premier sur Google » (on ne peut pas le promettre, ce serait de la publicité trompeuse). On dit « à votre nom », « que Google retrouve », « rien qu’à vous ».</div></div>
+
+<div class="v"><div class="tit"><b class="top">★ K</b><span>« Dans votre bio, votre .fr. »</span></div>
+<div class="ecran k1" id="k1"><div class="g"><div class="k">Votre lien à vous</div><div class="h">Dans votre bio,<br><em>votre .fr.</em></div>
+<p>Elle voit vos ongles, elle clique sur votre lien, elle réserve. Pas de page d’annuaire avec vos concurrentes à côté : juste vous.</p>
+<div class="pts"><div><b>lesonglesdemma.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div></div>
+<div class="scene"><div class="tel insta"><div class="e"><div class="prof"><div class="haut"><div class="av"></div><div class="chiffres"><div><b>214</b>posts</div><div><b>3 920</b>abonnés</div></div></div>
+<div class="nom">les Ongles d’Emma</div><div class="bio">Prothésiste ongulaire · Bordeaux 💅<br>Nude, french, ongles naturels</div><span class="lien">🔗 lesonglesdemma.fr</span>
+<div class="grille"><i style="background-image:url(loginail-site/univers-photos/emma/1.webp)"></i><i style="background-image:url(loginail-site/univers-photos/emma/2.webp)"></i><i style="background-image:url(loginail-site/univers-photos/emma/3.webp)"></i><i style="background-image:url(loginail-site/univers-photos/emma/salon.webp)"></i><i style="background-image:url(loginail-site/univers-photos/emma/portrait.webp)"></i><i style="background-image:url(loginail-site/univers-photos/noire/1.webp)"></i></div></div></div></div>
+<div class="tel site"><div class="e" style="background-image:url(loginail-site/apercus-mini/tpl-onglesdemma.webp)"></div></div><div class="doigt">👆</div></div></div>
+<div class="avis"><b>Mon choix.</b> Le titre « Dans votre bio, votre .fr. » dit l’avantage en 5 mots. À droite, en boucle : un profil (sans logo de réseau social, on n’a pas le droit d’utiliser leur marque) avec « lesonglesdemma.fr » dans la bio → un doigt touche le lien → <b>son site s’ouvre</b>, aux mêmes couleurs que son profil. C’est l’animation Instagram dont tu avais eu l’idée le 7 novembre. (Profil d’exemple : personnes et photos créées par IA.)</div></div>
+
+<div class="v"><div class="tit"><b>L</b><span>« Un seul lien. Le vôtre. »</span></div>
+<div class="ecran l1"><div class="t"><div class="k">Votre .fr, partout</div><div class="h">Un seul lien. <em>Le vôtre.</em></div></div>
+<div class="cols"><div class="col"><small>Dans votre bio</small><div class="bio"><b>les Ongles d’Emma</b><br>Prothésiste ongulaire · Bordeaux<br><a>🔗 lesonglesdemma.fr</a></div><div class="url">lesonglesdemma.fr</div></div>
+<div class="col"><small>Sur Google</small><div class="goo"><div class="bar">les ongles d’emma bordeaux</div><small>lesonglesdemma.fr</small><b>les Ongles d’Emma · Prothésiste ongulaire</b>★★★★★ · Réservez en ligne</div><div class="url">lesonglesdemma.fr</div></div>
+<div class="col"><small>Sur votre QR code</small><div class="qr"></div><div class="url">lesonglesdemma.fr</div></div></div></div>
+<div class="avis">Trois cartes, un seul lien en doré : dans la bio, sur Google quand on tape son nom, sur le QR code du salon. Simple et très clair. On peut le mettre <b>juste sous le K</b>, à la place des 3 cartes « À votre nom · Il n’y a que vous · Dans votre bio ».</div></div>
+
+<h2 class="part">3 · Classe ou baddie : E, F, ou la galerie ?</h2>
+<div class="regle"><div><b>Ce que tu aimes</b> : un seul fond avec le téléphone (E), le côté magazine (F), et le mouvement de la galerie (G). <b>Ce qui marche le mieux</b> : la galerie, si le <b>fond change avec le téléphone du milieu</b>, comme tu l’as dit. On a alors un seul fond (E), du mouvement (G), et on voit qu’il y a plein de styles. C’est ma recommandation.</div></div>
+<div class="v"><div class="tit"><b class="top">★ G+</b><span>La galerie, et le fond qui change avec</span></div>
+<div class="ecran gp" id="gp"><div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><div class="t">Classe <em>ou baddie ?</em></div></div><div class="rang" id="gpr"></div></div>
+<div class="avis"><b>Mon choix.</b> Les téléphones avancent d’un cran toutes les 2,5 secondes. Celui du milieu grandit, et <b>tout le fond prend le fond de son site</b>, en fondu. Sous chaque téléphone, juste le mot CLASSE ou BADDIE. On pourra aussi cliquer sur un téléphone pour l’amener au milieu.</div></div>
+
+<footer>Loginail · planche de travail, pas publiée dans Google · 15/11/2026 · E et F sont toujours sur loginail.fr/idees-1511.html</footer>
+<script>
+const P="loginail-site/";
+const F=[["'Cormorant Garamond',serif","cerisedisco"],["Cinzel,serif","perle"],["'Bagel Fat One',sans-serif","fraisegelee"],["'Pinyon Script',cursive","noeudgelee"],["Shrikhand,serif","bouledisco"],["'Playfair Display',serif","coeurchrome"]];
+const U=[["noire","tpl-maisonnoire","app-noir"],["noire","tpl-maisonnoire","app-noir"],["cerise","cerise","app-rose"],["emma","tpl-onglesdemma","app-lin"],["bling","bling","app-choco"],["poudre","tpl-studiopoudre","app-poudre"]];
+let i=0;const mots=[...document.querySelectorAll(".mot")];
+const pose=()=>{mots.forEach(m=>{m.querySelector(".mt").style.fontFamily=F[i][0];m.querySelector("img").src=P+"charms-mini/"+F[i][1]+".webp"});const u=U[i];
+ document.getElementById("cPh").style.backgroundImage=`url(${P}univers-photos/${u[0]}/1.webp)`;document.getElementById("cSite").style.backgroundImage=`url(${P}apercus-mini/${u[1]}.webp)`;document.getElementById("cApp").style.backgroundImage=`url(${P}apercus-mini/${u[2]}.webp)`};
+pose();setInterval(()=>{mots.forEach(m=>m.classList.add("chg"));setTimeout(()=>{i=(i+1)%F.length;pose();mots.forEach(m=>m.classList.remove("chg"))},230)},2100);
+/* K */
+(()=>{const k=document.getElementById("k1");const tour=()=>{k.classList.remove("clic","ouvre");setTimeout(()=>k.classList.add("clic"),1800);setTimeout(()=>k.classList.add("ouvre"),2700);setTimeout(tour,6200)};tour()})();
+/* G+ */
+(()=>{const g=document.getElementById("gp"),r=document.getElementById("gpr"),[a,b]=g.querySelectorAll(".bg");
+ const L=[["tpl-maisonnoire","Classe"],["cerise","Baddie"],["tpl-maisonmoka","Classe"],["pop","Baddie"],["tpl-onglesdemma","Classe"],["y2k","Baddie"],["tpl-studiopoudre","Classe"],["bling","Baddie"]];
+ r.innerHTML=L.map(l=>`<div class="it"><div class="tel"><div class="e" style="background-image:url(${P}apercus-mini/${l[0]}.webp)"></div></div><small>${l[1]}</small></div>`).join("");
+ const it=[...r.children];let k=0;
+ const pose=()=>{it.forEach((x,j)=>x.classList.toggle("on",j===k));const gap=g.clientWidth*.024,w=it[0].offsetWidth+gap;r.style.transform=`translate(${-(w*k+(w-gap)/2)}px,-50%)`;
+  const cache=a.classList.contains("b")?a:b,mont=cache===a?b:a;cache.style.backgroundImage=`url(${P}fonds-classe/${L[k][0]}.webp)`;cache.classList.remove("b");mont.classList.add("b")};
+ it.forEach((x,j)=>x.addEventListener("click",()=>{k=j;pose()}));
+ setTimeout(pose,300);setInterval(()=>{k=(k+1)%it.length;pose()},2500)})();
+</script>
+</body></html>
