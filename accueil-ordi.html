@@ -513,7 +513,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
     <div class="leg"><b>Votre site, depuis le canapé.</b><span>Un fond, un prix&nbsp;: c’est changé.</span></div>
   </div>
   <div class="a-tel"><div class="a-ecr">
-    <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite4.webp" alt="">
+    <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite5.webp" alt="">
     <div class="notifs" id="notifs">
       <div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div><small>maintenant</small></div>
       <div class="nt"><i></i><div><b>Réservé cette nuit</b><span>Sarah · Remplissage · mardi 14 h</span></div><small>2 h 14</small></div>
@@ -859,7 +859,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     if (colle && ecr) {
       const IC = { acc: '<path d="M4 11l8-6.5 8 6.5V20H4z"/>', ag: '<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>', cl: '<circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/>',
         si: '<rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/>', re: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>' };
-      const O = [["acc", "Accueil", "app-accueil"], ["ag", "Agenda", "app-agenda"], ["cl", "Clientes", "app-clientes"], ["si", "Mon site", "app-monsite4"], ["re", "Réglages", "app-reglages"]];
+      const O = [["acc", "Accueil", "app-accueil"], ["ag", "Agenda", "app-agenda"], ["cl", "Clientes", "app-clientes"], ["si", "Mon site", "app-monsite5"], ["re", "Réglages", "app-reglages"]];
       const VERS = [0, 1, 2, 0, 3];   // les 5 écrans montrés en descendant → l'onglet allumé
       const barre = document.createElement("div"); barre.className = "a-onglets appel";
       barre.innerHTML = O.map(([k, n], i) => `<button data-i="${i}" type="button" aria-label="Voir ${n}"><svg viewBox="0 0 24 24">${IC[k]}</svg><span>${n}</span></button>`).join("");
