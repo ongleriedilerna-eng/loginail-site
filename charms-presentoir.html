@@ -90,8 +90,8 @@ input{-webkit-user-select:text;user-select:text}
 .pageP .ch{padding:var(--pad,7px)}
 .ptsP{flex:none;display:flex;justify-content:center;gap:5px;padding:8px 0 6px}.ptsP i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.18)}.ptsP i.on{background:var(--noir)}
 </style></head><body>
-<div class="haut"><span class="compte verre" id="compte">0 / 12</span><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
-<p class="explique" id="explique">12 charms maximum · touchez-en un, puis deux doigts pour l’agrandir ou le tourner</p>
+<div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
+<p class="explique" id="explique">21 charms maximum · touchez-en un, puis deux doigts pour l’agrandir ou le tourner</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
 <div class="fini" id="fini" hidden><div><h3>Votre site est prêt à briller ✦</h3><p>Vos charms sont posés. Ils bougent tout doucement, comme sur votre site.</p><button type="button" class="noir" data-activer>ACTIVER MON SITE</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
 <div class="bulle" id="bulle"></div>
@@ -111,7 +111,7 @@ const liste = f => f === "Vos favoris" ? FAV.filter(n => CAT[n]) : f === "Sur vo
 const sa = t => (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const cherche = q => { q = sa(q).trim(); const q2 = q.replace(/[^a-z0-9]/g, ""); return TOUS.filter(n => n.includes(q2) || sa(NOM[n]).includes(q)); };
 const img = n => `loginail-site/charms-mini/${n}.webp`, grand = n => `loginail-site/charms/${n}.png`;
-const MAX = 12, SITE = "loginail-site/apercus-univers/tpl-maisonlin.webp";
+const MAX = 21, SITE = "loginail-site/apercus-univers/tpl-maisonlin.webp";
 const APPLI = new URLSearchParams(location.search).has("appli");
 /* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
 const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); parent.postMessage({ loginail: "enregistre", br }, location.hostname === "loginail.fr" ? "https://app.loginail.fr" : location.origin); } catch (e) {} };
