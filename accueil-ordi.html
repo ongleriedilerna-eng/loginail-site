@@ -632,63 +632,28 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   .sl-case{justify-content:flex-end!important;padding:0 20px clamp(18px,3.5vh,40px)!important}
 }
 
-/* ===== 15/11 (Marie) : la table des designers — version ORDINATEUR ===== */
+/* ===== 15/11 (Marie) : « Tout ça, pour vous » — des téléphones POSÉS sur une table, en 3D (ordinateur) ===== */
 @media (min-width:1000px){
-  /* ---- A · L'accueil dit tout de suite à quoi ça sert ---- */
-  .hero{grid-template-areas:"k duo" "titre duo" "dit duo" "creer duo" "sous duo" ". pts"!important;grid-template-rows:1fr auto auto auto 1fr auto!important}
-  .hero>.k{font-size:12.5px!important;letter-spacing:.3em}
-  .hero>.k b{font-weight:500;color:#1E1C1B;letter-spacing:.34em}
-  .hero h1{margin:22px 0 18px!important;font-size:clamp(50px,4.3vw,70px)!important}
-  .hero .hero-dit{grid-area:dit;font:400 clamp(16px,1.25vw,19px)/1.55 Jost,sans-serif;color:#4a4440;max-width:520px;margin:0 0 26px}
-  .hero .hero-dit b{font-weight:500;color:#1E1C1B}
-  .hero .hero-preuves{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-  .hero .hero-preuves span{font:500 11.5px Jost;letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:99px;background:rgba(255,255,255,.75);border:1px solid rgba(30,28,27,.1);color:#1E1C1B}
-  .hero .hero-preuves span i{font-style:normal;margin-right:6px}
-
-  /* ---- B · « Personnalisez votre site en 1 minute chrono » : un film qui tourne tout seul, 6 chapitres cliquables, plus de molette ---- */
-  .build{height:100vh!important;min-height:640px}
-  .build .colle{position:relative!important;top:auto!important;height:100vh!important;min-height:640px}
-  .b-etapes{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0 0}
-  .b-etapes button{appearance:none;border:1px solid rgba(30,28,27,.16);background:rgba(255,255,255,.6);color:#6b625c;font:500 11px Jost;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;border-radius:99px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:7px}
-  .b-etapes button i{font-style:normal;width:17px;height:17px;border-radius:50%;background:rgba(30,28,27,.08);display:grid;place-items:center;font-size:10px;color:#1E1C1B;transition:all .3s}
-  .b-etapes button:hover{border-color:#1E1C1B;color:#1E1C1B}
-  .b-etapes button.on{background:#1E1C1B;color:#F6F3EF;border-color:#1E1C1B}
-  .b-etapes button.on i{background:#F6F3EF;color:#1E1C1B}
-  .build .b-tete .k{font-size:11.5px}
-  .build .b-barre{height:2px;background:rgba(30,28,27,.1)}
-  .build .b-barre i{background:#1E1C1B}
-  .build .b-indice{font:400 12.5px Jost;color:#8a8079;margin-top:14px}
-  .build .b-indice b{font-weight:500;color:#1E1C1B}
-
-  /* ---- C · Classe ou baddie : la question en haut, au milieu ; les mots en MAJUSCULES ; plus de noms ---- */
-  .styl-duo{position:relative}
-  .styl-duo .styl .st-t{display:none!important}
-  .styl-duo .sl-nom{display:none!important}
-  .st-question{position:absolute;z-index:6;left:50%;top:clamp(22px,4.5vh,46px);transform:translateX(-50%);text-align:center;pointer-events:none;width:min(820px,92%)}
-  .st-question .k{display:inline-block;font:500 11px Jost;letter-spacing:.32em;text-transform:uppercase;color:#1E1C1B;background:rgba(246,243,239,.9);padding:7px 14px;border-radius:99px;box-shadow:0 10px 30px -18px rgba(0,0,0,.5)}
-  .st-question h2{margin:12px 0 0;font:400 clamp(32px,3vw,46px)/1.05 'Cormorant Garamond',serif;color:#1E1C1B;letter-spacing:-.01em;
-    display:inline-block;padding:12px 30px 15px;border-radius:26px;background:rgba(246,243,239,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 20px 50px -26px rgba(0,0,0,.55)}
-  .st-question h2 b{font:500 .78em Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;vertical-align:.06em;padding:3px 10px 4px;border-radius:10px;margin:0 2px}
-  .st-question h2 b.c{background:#1E1C1B;color:#F6F3EF}
-  .st-question h2 b.b{background:linear-gradient(100deg,#F4A1C0,#E0558D 55%,#B33CF2);color:#fff}
-  .sl-mot{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%) translateY(2vh);font:500 clamp(80px,10.5vw,170px)/1 Jost,sans-serif;letter-spacing:.03em;text-transform:uppercase;color:rgba(30,28,27,.08);pointer-events:none;white-space:nowrap;transition:color .4s}
-  .styl.sl-fonce .sl-mot{color:rgba(246,243,239,.12)}
-  .sl-case{padding-top:clamp(120px,19vh,170px)!important;padding-bottom:clamp(20px,4vh,46px)!important;justify-content:flex-end!important}
-  .sl-tel{--h:min(calc(100vh - 230px),600px)!important;z-index:2}
-  .sl-ouvrir{position:absolute;z-index:5;left:50%;bottom:clamp(14px,3vh,30px);transform:translateX(-50%);font:500 10.5px Jost;letter-spacing:.2em;text-transform:uppercase;color:#1E1C1B;background:rgba(246,243,239,.88);padding:7px 13px;border-radius:99px;opacity:0;transition:opacity .3s;pointer-events:none}
-  .styl:hover .sl-ouvrir{opacity:1}
-  .styl.sl-fonce .sl-ouvrir{background:rgba(18,16,15,.78);color:#F6F3EF}
-
-  /* ---- F · « Tout ça, pour vous » : plus de motifs ; un mur de VOS sites, en perspective, dans une lumière chaude ---- */
-  .fp-colle>.fp-fond{background:radial-gradient(ellipse 70% 60% at 50% 40%,#F8EFE6 0,#EADBCF 60%,#D9C4B4 100%)!important;perspective:1400px;overflow:hidden}
-  .fp-fond .fp-plein{display:none!important}
-  .fp-fond>.fp-mur{opacity:1!important;transition:none!important}
-  .fp-fond .fp-piste{opacity:1!important}
-  .fp-fond .fp-mur{position:absolute;inset:-18% -14%;transform-origin:50% 50%;transform:rotateX(16deg) rotateZ(-7deg) scale(1.08);transform-style:preserve-3d}
-  .fp-fond .fp-mur .fp-piste{position:absolute!important;left:0!important;gap:28px!important;padding-left:0!important}
-  .fp-fond .fp-piste img{width:168px!important;border-width:6px!important;border-radius:26px!important;box-shadow:0 40px 60px -26px rgba(60,30,20,.55)!important;filter:saturate(1.05)}
-  .fp-fond::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 60% 60% at 50% 50%,transparent 40%,rgba(234,219,207,.75) 100%)}
-  .fin-pub .fp-carte{background:rgba(246,243,239,.95)!important}
+  .fp-fond .fp-piste,.fp-fond .fp-plein,.fp-fond .fp-mur{display:none!important}
+  .fp-colle>.fp-fond{background:radial-gradient(ellipse 80% 70% at 50% 35%,#FBF4EC 0,#EFE2D5 55%,#E2CFBF 100%)!important;overflow:hidden}
+  .fp-fond>.fp-table{opacity:1!important;transition:none!important}
+  .fp-table{position:absolute;inset:0;perspective:1500px;perspective-origin:50% 30%;pointer-events:none}
+  .fp-plan{position:absolute;left:50%;top:50%;width:2800px;height:2400px;margin:-1200px 0 0 -1400px;transform:rotateX(52deg) rotateZ(-26deg);transform-style:preserve-3d}
+  .fp-rang{display:flex;gap:54px;width:max-content;margin:0 0 70px;animation:fpGlisse 140s linear infinite}
+  .fp-rang.r{animation-direction:reverse;animation-duration:170s;margin-left:-110px}
+  @keyframes fpGlisse{to{transform:translateX(-50%)}}
+  /* un téléphone : coque noire, bord clair, ÉPAISSEUR (la tranche), ombre portée sur la table */
+  .p3{flex:none;width:156px;padding:7px;border-radius:26px;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);
+    box-shadow:0 0 0 1.2px #8a857f,1.5px 2px 0 1.2px #2c2b2a,3px 4px 0 1.2px #1c1b1a,4.5px 6px 0 1.2px #121110,6px 8px 0 1.2px #0b0b0a,
+      26px 34px 26px -6px rgba(70,40,25,.32),48px 64px 70px -10px rgba(70,40,25,.18)}
+  .p3 .e{position:relative;border-radius:20px;overflow:hidden;background:#F6F3EF}
+  .p3 .e img{display:block;width:100%;height:auto}
+  .p3 .e::before{content:"";position:absolute;z-index:2;top:6px;left:50%;transform:translateX(-50%);width:32%;height:11px;border-radius:99px;background:#060606}
+  .p3 .e::after{content:"";position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.22),rgba(255,255,255,0) 38%);pointer-events:none}
+  /* une lumière douce de fenêtre, et le bord de la table qui s'efface */
+  .fp-fond::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse 55% 50% at 50% 48%,rgba(251,244,236,.0) 30%,rgba(239,226,213,.55) 75%,rgba(226,207,191,.9) 100%)}
+  .fin-pub .fp-carte{background:rgba(250,246,241,.94)!important;box-shadow:0 40px 90px -40px rgba(70,40,25,.55)!important}
 }
 </style>
 </head><body>
@@ -740,7 +705,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
     <div class="leg"><b>Votre site, depuis le canapé.</b><span>Un fond, un prix&nbsp;: c’est changé.</span></div>
   </div>
   <div class="a-tel"><div class="a-ecr">
-    <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite5.webp" alt="">
+    <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite6.webp" alt="">
     <div class="notifs" id="notifs">
       <div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div><small>maintenant</small></div>
       <div class="nt"><i></i><div><b>Réservé cette nuit</b><span>Sarah · Remplissage · mardi 14 h</span></div><small>2 h 14</small></div>
@@ -864,12 +829,15 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
  const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
  if(!matchMedia("(min-width: 1000px)").matches){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
- else{/* 15/11 (Marie) : un film qui tourne tout seul, 6 chapitres ; on peut cliquer un chapitre */
-  const DUR=14000,PAUSE=2200,SEG=[0,.09,.25,.41,.62,.84];let t0=performance.now(),vis=false,manuel=-1,tm=0;
-  const boucle=now=>{if(vis&&manuel<0&&!document.hidden){const u=((now-t0)%(DUR+PAUSE))/DUR;pose(Math.min(1,u))}requestAnimationFrame(boucle)};
-  window.__build={va:k=>{manuel=k;pose(SEG[k]+.012);clearTimeout(tm);tm=setTimeout(()=>{manuel=-1;t0=performance.now()-SEG[k]*DUR},5000)}};
-  new IntersectionObserver(es=>{const v=es[0].isIntersecting;if(v&&!vis)t0=performance.now();vis=v},{threshold:.3}).observe(b);
-  addEventListener("resize",()=>pose(manuel<0?0:SEG[manuel]+.012));pose(0);requestAnimationFrame(boucle)}
+ else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
+  const DUR=13000;let t0=0,dedans=false,bo=0,actif=false;
+  const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
+   if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
+   cible=Math.max(sc,dedans?Math.min(1,(performance.now()-t0)/DUR):0);
+   if(!raf)raf=requestAnimationFrame(pas);
+   if(actif)bo=requestAnimationFrame(boucle)};
+  new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!bo)bo=requestAnimationFrame(boucle)},{rootMargin:"300px"}).observe(b);
+  addEventListener("resize",lit);pose(0)}
 })();
 /* l'appli : même principe, lié au défilement */
 (()=>{const b=document.getElementById("appli"),A=[...b.querySelectorAll("img.a")],N=[...b.querySelectorAll(".nt")],L=[...b.querySelectorAll(".a-legs .leg")];
@@ -1093,7 +1061,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     if (colle && ecr) {
       const IC = { acc: '<path d="M4 11l8-6.5 8 6.5V20H4z"/>', ag: '<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>', cl: '<circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.6 4-5 7-5s5.8 1.4 7 5"/>',
         si: '<rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M10.5 18h3"/>', re: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>' };
-      const O = [["acc", "Accueil", "app-accueil"], ["ag", "Agenda", "app-agenda"], ["cl", "Clientes", "app-clientes"], ["si", "Mon site", "app-monsite5"], ["re", "Réglages", "app-reglages"]];
+      const O = [["acc", "Accueil", "app-accueil"], ["ag", "Agenda", "app-agenda"], ["cl", "Clientes", "app-clientes"], ["si", "Mon site", "app-monsite6"], ["re", "Réglages", "app-reglages"]];
       const VERS = [0, 1, 2, 0, 3];   // les 5 écrans montrés en descendant → l'onglet allumé
       const barre = document.createElement("div"); barre.className = "a-onglets appel";
       barre.innerHTML = O.map(([k, n], i) => `<button data-i="${i}" type="button" aria-label="Voir ${n}"><svg viewBox="0 0 24 24">${IC[k]}</svg><span>${n}</span></button>`).join("");
@@ -1167,17 +1135,34 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           w.style.width = w.style.height = t + "px"; w.style.transform = `translate3d(${p[0].toFixed(0)}px,${p[1].toFixed(0)}px,0)`;
           w.innerHTML = `<img src="loginail-site/charms-mini/${n}.webp" alt="" draggable="false" style="--a:${Math.round(hasard(-20, 20))}deg;--d:${hasard(3.4, 5.5).toFixed(1)}s;--r:${(-hasard(0, 5)).toFixed(1)}s">`;
           lay.appendChild(w); items.push({ w, x0: p[0], y0: p[1], x: p[0], y: p[1], t, vx: 0, vy: 0, a: 0, va: 0 }); }); };
-      /* la chute : gravité, rebond sur le « sol » (le bas de l'écran), puis ils roulent et s'arrêtent */
-      const chute = () => { etat = "tombe"; lay.classList.add("tombe"); const W = pc.clientWidth, H = pc.clientHeight;
-        items.forEach(c => { c.vx = hasard(-2.2, 2.2); c.vy = hasard(-3, 0); c.va = 0; c.sol = H - c.t - hasard(2, ORDI ? 46 : 30); c.part = performance.now() + hasard(0, 160); });
-        let t0 = performance.now();
-        const pas = now => { const dt = Math.min(2.2, (now - t0) / 16.7); t0 = now; let bouge = false;
-          items.forEach(c => { if (c.tenu || now < c.part) { bouge = true; return; }
-            c.vy += .9 * dt; c.x += c.vx * dt; c.y += c.vy * dt;
-            if (c.y >= c.sol) { c.y = c.sol; if (Math.abs(c.vy) > 2.5) { c.vy = -c.vy * .38; c.vx *= .9; } else { c.vy = 0; c.vx *= Math.pow(.965, dt); } c.va = c.vx / (c.t / 2) * 57.3; }
-            if (c.x < 2) { c.x = 2; c.vx = Math.abs(c.vx) * .6; } if (c.x > W - c.t - 2) { c.x = W - c.t - 2; c.vx = -Math.abs(c.vx) * .6; }
-            c.a += c.va * dt; if (Math.abs(c.vx) > .05 || c.y < c.sol || Math.abs(c.vy) > .1) bouge = true;
-            c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`; });
+      /* la chute (15/11) : une vraie physique, en secondes. Ils partent du bas vers le haut, comme une vague ; un petit écrasement quand ils touchent ;
+         ils s'EMPILENT en un joli tas (chacun se pose sur ceux d'en dessous), puis se calment doucement */
+      const G = 2300, COL = 8; let tas = [];
+      const sol = c => { const H = pc.clientHeight, a = Math.max(0, Math.floor(c.x / COL)), b = Math.min(tas.length - 1, Math.floor((c.x + c.t) / COL)); let m = 0;
+        for (let k = a; k <= b; k++) m = Math.max(m, tas[k] || 0); return H - (ORDI ? 8 : 4) - c.t - Math.min(c.t * 1.05, Math.max(0, m * .5)); };
+      const empile = c => { const H = pc.clientHeight, haut = H - (ORDI ? 8 : 4) - c.y, a = Math.max(0, Math.floor((c.x + c.t * .12) / COL)), b = Math.min(tas.length - 1, Math.floor((c.x + c.t * .88) / COL));
+        for (let k = a; k <= b; k++) tas[k] = Math.max(tas[k] || 0, haut); };
+      const anime = (c, now) => { const dt = Math.min(.034, (now - (c.t0 || now)) / 1000); c.t0 = now; if (c.posee) return false;
+        c.vy += G * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.a += c.va * dt;
+        const W = pc.clientWidth; if (c.x < 2) { c.x = 2; c.vx = Math.abs(c.vx) * .5; } if (c.x > W - c.t - 2) { c.x = W - c.t - 2; c.vx = -Math.abs(c.vx) * .5; }
+        if (c.y >= c.sol) { c.y = c.sol;
+          if (c.vy > 260) { c.sq = Math.min(.16, c.vy / 5200); c.vy = -c.vy * .3; c.vx *= .62; c.va = c.va * .5 + c.vx * 1.6; c.bonds = (c.bonds || 0) + 1; }
+          else { c.vy = 0; c.vx = 0; c.va = 0; c.posee = true; c.sq = 0; empile(c); } }
+        if (!c.posee) c.sq = (c.sq || 0) * Math.pow(.0005, dt);   // l'écrasement disparaît très vite
+        const sx = 1 + c.sq, sy = 1 - c.sq;
+        c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg) scale(${sx.toFixed(3)},${sy.toFixed(3)})`;
+        return !c.posee; };
+      const chute = () => { etat = "tombe"; lay.classList.add("tombe"); const H = pc.clientHeight, now = performance.now();
+        tas = new Array(Math.ceil(pc.clientWidth / COL) + 2).fill(0);
+        /* ceux du bas partent d'abord : le tas se construit de bas en haut */
+        const ordre = [...items].sort((a, b) => b.y - a.y);
+        ordre.forEach((c, i) => { c.posee = false; c.bonds = 0; c.sq = 0; c.t0 = 0; c.vx = hasard(-45, 45); c.vy = hasard(-60, 10); c.va = hasard(-90, 90);
+          c.part = now + (1 - c.y / H) * 420 + hasard(0, 140);
+          /* la place qu'il prendra dans le tas (réservée dans l'ordre d'arrivée) */
+          const xf = c.x + c.vx * .55; const keep = c.x; c.x = Math.max(2, Math.min(pc.clientWidth - c.t - 2, xf)); c.sol = sol(c); const y0 = c.y; c.y = c.sol; empile(c); c.y = y0; c.x = keep; });
+        tas.fill(0); ordre.forEach(c => { /* on recalcule proprement à l'atterrissage */ c.solFixe = c.sol; });
+        const pas = now => { let bouge = false;
+          items.forEach(c => { if (c.tenu || now < c.part) { bouge = true; return; } if (!c.t0) c.t0 = now; c.sol = c.solFixe; if (anime(c, now)) bouge = true; });
           if (bouge && etat === "tombe") raf = requestAnimationFrame(pas); };
         raf = requestAnimationFrame(pas); };
       const remonte = () => { cancelAnimationFrame(raf); etat = "haut"; lay.classList.remove("tombe");
@@ -1193,17 +1178,13 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         lay.addEventListener("pointermove", e => { if (!tenu) return; const b = pc.getBoundingClientRect(), c = tenu;
           c.x = Math.max(2, Math.min(pc.clientWidth - c.t - 2, e.clientX - b.left - dx)); c.y = Math.max(0, Math.min(c.sol || pc.clientHeight - c.t, e.clientY - b.top - dy)); c.vx = 0; c.vy = 0;
           c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`; });
-        /* on le lâche : il retombe et rebondit, comme un vrai petit charm */
+        /* on le lâche (15/11) : il tombe sur le tas, petit rebond, petit écrasement, il se pose */
         const lache = () => { if (!tenu) return; const c = tenu; tenu = null; c.w.classList.remove("tenu"); c.w.style.transition = "";
-          c.sol = c.sol || pc.clientHeight - c.t - 10; c.vy = 1; c.vx = hasard(-1.2, 1.2); const W = pc.clientWidth; let t0 = performance.now(), fin = performance.now() + 5000;
-          const chute1 = now => { if (c.tenu) return; const dt = Math.min(2.2, (now - t0) / 16.7); t0 = now;
-            c.vy += 1.35 * dt; c.x += c.vx * dt; c.y += c.vy * dt;
-            if (c.y >= c.sol) { c.y = c.sol; if (Math.abs(c.vy) > 2.2) { c.vy = -c.vy * .34; c.vx *= .84; } else { c.vy = 0; c.vx *= Math.pow(.93, dt); } }
-            if (c.x < 2) { c.x = 2; c.vx = Math.abs(c.vx) * .6; } if (c.x > W - c.t - 2) { c.x = W - c.t - 2; c.vx = -Math.abs(c.vx) * .6; }
-            c.a += c.vx / (c.t / 2) * 57.3 * dt;
-            c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`;
-            if ((c.y < c.sol || Math.abs(c.vy) > .15 || Math.abs(c.vx) > .06) && now < fin) c.raf2 = requestAnimationFrame(chute1); };
-          c.tenu = false; c.raf2 = requestAnimationFrame(chute1); };
+          c.posee = false; c.bonds = 0; c.vx = hasard(-30, 30); c.vy = 0; c.va = hasard(-60, 60); c.t0 = 0;
+          if (!tas.length) tas = new Array(Math.ceil(pc.clientWidth / COL) + 2).fill(0);
+          c.sol = sol(c); c.solFixe = c.sol; c.tenu = false;
+          const pas1 = now => { if (c.tenu) return; if (!c.t0) c.t0 = now; c.sol = c.solFixe; if (anime(c, now)) c.raf2 = requestAnimationFrame(pas1); };
+          c.raf2 = requestAnimationFrame(pas1); };
         lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache); }
       /* on touche un charm : il saute un peu */
       lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (ORDI || !w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return; c.vy = -14; c.vx = hasard(-4, 4); c.sol = c.sol || pc.clientHeight - c.t; const t0b = performance.now();
@@ -1352,51 +1333,21 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       T.forEach((e, i) => { e.style.transitionDelay = (i % 4) * .09 + "s"; io.observe(e); }); } }
 })();
 </script>
-<script id="ordi3">/* 15/11 (Marie) : la table des designers — version ORDINATEUR */
+<script id="ordi3">/* 15/11 (Marie) : « Tout ça, pour vous » — des téléphones posés sur une table, en 3D (ordinateur) */
 (() => {
   if (!matchMedia("(min-width: 1000px)").matches) return;
-
-  /* ---- A · L'accueil : en une phrase, on comprend ce que c'est ---- */
-  { const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1");
-    if (h && k && h1) {
-      k.innerHTML = "<b>Loginail</b> · pour les prothésistes ongulaires";
-      const dit = document.createElement("p"); dit.className = "hero-dit";
-      dit.innerHTML = "Votre site, <b>à votre nom</b>, où vos clientes <b>réservent toutes seules</b>, jour et nuit. Et l’appli qui tient votre agenda, vos rappels SMS et votre caisse.";
-      const pr = document.createElement("div"); pr.className = "hero-preuves";
-      pr.innerHTML = "<span><i>⏱</i>Prêt en 1 minute</span><span><i>🎁</i>1er mois offert</span><span><i>0 %</i>de commission</span>";
-      dit.appendChild(pr); h1.after(dit);
-    } }
-
-  /* ---- B · Les 6 étapes : les chapitres cliquables ---- */
-  { const b = document.getElementById("build"), tete = b && b.querySelector(".b-tete"), num = document.getElementById("bNum");
-    if (b && tete && num) {
-      const NOMS = ["Votre site", "Un fond", "Votre univers", "Vos photos", "Vos charms", "Tout le reste"];
-      const bar = document.createElement("div"); bar.className = "b-etapes";
-      bar.innerHTML = NOMS.map((n, i) => `<button type="button" data-k="${i}"><i>${i + 1}</i>${n}</button>`).join("");
-      tete.appendChild(bar);
-      const ind = document.createElement("div"); ind.className = "b-indice"; ind.innerHTML = "Ça se joue tout seul. <b>Touchez une étape</b> pour y aller.";
-      tete.appendChild(ind);
-      const maj = () => { const m = num.textContent.match(/^(\d)/), k = m ? +m[1] - 1 : 0; bar.querySelectorAll("button").forEach((x, i) => x.classList.toggle("on", i === k)); };
-      new MutationObserver(maj).observe(num, { childList: true, characterData: true, subtree: true }); maj();
-      bar.addEventListener("click", e => { const x = e.target.closest("button"); if (!x || !window.__build) return; window.__build.va(+x.dataset.k); });
-    } }
-
-  /* ---- C · Classe ou baddie : la question, les grands mots, plus de noms ---- */
-  { const duo = document.querySelector(".styl-duo");
-    if (duo) {
-      const q = document.createElement("div"); q.className = "st-question";
-      q.innerHTML = '<div class="k">Quel est votre style ?</div><h2>Plutôt <b class="c">Classe</b> ou plutôt <b class="b">Baddie</b> ?</h2>';
-      duo.appendChild(q);
-      duo.querySelectorAll(".styl").forEach((s, i) => { const m = document.createElement("div"); m.className = "sl-mot"; m.textContent = i ? "Baddie" : "Classe"; s.appendChild(m);
-        const o = document.createElement("div"); o.className = "sl-ouvrir"; o.textContent = "Toucher le téléphone pour ouvrir le site"; s.appendChild(o); });
-    } }
-
-  /* ---- F · « Tout ça, pour vous » : le mur de sites en perspective ---- */
-  { const fond = document.querySelector(".fp-colle>.fp-fond");
-    if (fond) { const mur = document.createElement("div"); mur.className = "fp-mur"; fond.appendChild(mur);
-      const P = [...fond.querySelectorAll(".fp-piste")]; const h = 430; P.forEach((p, r) => { mur.appendChild(p); p.style.top = (r * h - 120) + "px"; });
-      /* une 4e et une 5e rangée pour remplir le mur incliné */
-      for (let r = P.length; r < 5; r++) { const c = P[r % P.length].cloneNode(true); c.className = "fp-piste" + (r % 2 ? " r" : ""); c.style.top = (r * h - 120) + "px"; mur.appendChild(c); } } }
+  const fond = document.querySelector(".fp-colle>.fp-fond"); if (!fond) return;
+  const SRC = [...new Set([...document.querySelectorAll(".marq-sec img")].map(i => i.getAttribute("src")))];
+  if (!SRC.length) return;
+  const table = document.createElement("div"); table.className = "fp-table"; table.setAttribute("aria-hidden", "true");
+  const plan = document.createElement("div"); plan.className = "fp-plan"; table.appendChild(plan);
+  for (let r = 0; r < 6; r++) {
+    const l = SRC.slice((r * 5) % SRC.length).concat(SRC.slice(0, (r * 5) % SRC.length)).slice(0, 11);
+    const rang = document.createElement("div"); rang.className = "fp-rang" + (r % 2 ? " r" : "");
+    rang.innerHTML = [...l, ...l].map(s => `<div class="p3"><div class="e"><img src="${s}" alt="" loading="lazy"></div></div>`).join("");
+    plan.appendChild(rang);
+  }
+  fond.appendChild(table);
 })();
 </script>
 </body></html>
