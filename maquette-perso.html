@@ -100,6 +100,21 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .fin small{display:block;margin-top:10px;font:300 12px Jost,sans-serif;color:var(--muted)}
 .fin .noir{width:100%;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:16px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
 .fin .lien{border:0;background:none;padding:12px;font:300 14px Jost,sans-serif;color:var(--muted)}
+/* 09/11 (Marie) : charms, format « plein écran + bouton + » */
+#tel.mc .bas{opacity:1!important;pointer-events:auto!important;height:min(58vh,480px);padding-top:6px;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:24px 24px 0 0;box-shadow:0 -14px 34px -16px rgba(0,0,0,.35);transform:translateY(105%);transition:transform .35s cubic-bezier(.3,1,.4,1);z-index:7}
+#tel.mc .bas.ouvre{transform:none}
+#tel.mc .pied{display:none}
+#tel.mc .tiroir{margin:0 6px;background:none;border:0;box-shadow:none;backdrop-filter:none}
+#tel.mc .grilleC{grid-template-columns:repeat(5,1fr);grid-auto-rows:64px}
+#tel.mc .poignee{display:none}
+.mcUI{display:none}
+#tel.mc .mcUI{display:grid}
+#voileC{position:absolute;inset:0;z-index:6;background:rgba(30,28,27,.18);opacity:0;pointer-events:none;transition:opacity .3s}
+#tel.mc #voileC.on{opacity:1;pointer-events:auto}
+#plusC{position:absolute;right:18px;bottom:calc(env(safe-area-inset-bottom) + 22px);z-index:5;width:58px;height:58px;border-radius:50%;border:0;background:var(--noir);color:#fff;place-items:center;font:300 32px/1 Jost,sans-serif;padding:0 0 4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.45)}
+#okC{position:absolute;left:18px;bottom:calc(env(safe-area-inset-bottom) + 28px);z-index:5;height:46px;padding:0 22px;border-radius:999px;place-items:center;font:500 12px Jost,sans-serif;letter-spacing:.18em}
+#retC{position:absolute;left:14px;top:calc(env(safe-area-inset-top) + 12px);z-index:5;width:40px;height:40px;border-radius:50%;place-items:center;font:300 22px/1 Jost,sans-serif;padding:0 0 3px}
+#tel.mc #fermerPlein,#tel.mc #oeil{display:none!important}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:8;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.45}
 </style></head><body>
 <div id="tel">
@@ -110,6 +125,10 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
   <button class="fl verre" id="avant" type="button" aria-label="En-tête précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="En-tête suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="verre" id="fermerPlein" type="button" hidden>‹ Personnaliser</button>
+  <div id="voileC"></div>
+  <button class="mcUI verre" id="retC" type="button" aria-label="Retour">‹</button>
+  <button class="mcUI verre" id="okC" type="button">C’EST BON</button>
+  <button class="mcUI" id="plusC" type="button" aria-label="Ajouter un charm">+</button>
   <div class="bas" id="bas"><div class="choix" id="contenu"></div>
     <div class="pied"><button class="retour verre" id="retour" type="button" aria-label="Retour">‹</button><button class="suivant verre" id="suivant" type="button">SUIVANT</button><button class="cherche-rond verre" id="cherche" type="button" aria-label="Rechercher" hidden><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div></div>
   <div class="fin" id="fin"><div><h3>Votre site est prêt à briller.</h3><p>Personnalisé par vous, jusqu’au moindre charm.<br>Le premier mois est offert.</p>
@@ -184,7 +203,8 @@ function rend() {
   $("retour").style.visibility = etape ? "visible" : "hidden";
   $("suivant").textContent = etape === ORDRE.length - 1 ? "C’EST PARFAIT" : "SUIVANT";
   const c = $("contenu");
-  $("bas").classList.toggle("charms", cle() === "charms"); $("bas").classList.remove("grand");
+  $("bas").classList.toggle("charms", cle() === "charms"); $("bas").classList.remove("grand", "ouvre"); $("voileC").classList.remove("on");
+  const mc = cle() === "charms"; if (mc !== $("tel").classList.contains("mc")) { $("tel").classList.toggle("mc", mc); metPlein(mc); $("fermerPlein").hidden = true; }
   $("cherche").hidden = !["ecriture", "fond"].includes(cle());
   majCompte();
   if (cle() === "entete") {
@@ -247,7 +267,7 @@ function poseSticker(n) {
   im._s = 80; im._r = Math.round(Math.random() * 30 - 15);
   const x = box.clientWidth / 2 - 40 + (Math.random() * 80 - 40), y = box.scrollTop + box.clientHeight * .3 + (Math.random() * 60 - 30);
   im.style.cssText = `position:absolute;z-index:9000;left:${x}px;top:${y}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte ${3 + Math.random() * 1.5}s ease-in-out ${-Math.random() * 3}s infinite`;
-  majS(im); box.appendChild(im); marquePoses(); majCompte(); $("bas").classList.remove("grand");
+  majS(im); box.appendChild(im); marquePoses(); majCompte(); $("bas").classList.remove("grand"); fermeBoite();
 }
 function brancheStickers() {
   const st = D.createElement("style"); st.textContent = "@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}.lgn-sticker.tenu{animation-play-state:paused!important}"; D.head.appendChild(st);
@@ -302,15 +322,21 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
     try { localStorage.setItem("charmsFavoris", JSON.stringify(favoris)); } catch (x) {} b.classList.toggle("fav", i < 0); bulle(i < 0 ? "Ajouté à vos favoris" : "Retiré de vos favoris"); navigator.vibrate?.(15); }, 480); });
 ["pointerup", "pointerleave", "pointercancel"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("[data-ch]"); if (b) clearTimeout(b._t); }));
 $("contenu").addEventListener("contextmenu", e => { if (e.target.closest("[data-ch]")) e.preventDefault(); });
+/* le rond « + » ouvre la boîte à charms ; elle se ferme dès qu'un charm est posé (ou si on touche à côté) */
+const ouvreBoite = () => { if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; } $("bas").classList.add("ouvre"); $("voileC").classList.add("on"); };
+const fermeBoite = () => { $("bas").classList.remove("ouvre"); $("voileC").classList.remove("on"); };
+$("plusC").onclick = ouvreBoite; $("voileC").onclick = fermeBoite;
+$("okC").onclick = () => $("fin").classList.add("on");
+$("retC").onclick = () => $("retour").click();
 $("cherche").onclick = () => { chercheOuvert = !chercheOuvert; filtre = ""; rend(); if (chercheOuvert) $("filtre")?.focus(); };
 /* « 12 charms maximum », écrit en petit au-dessus du téléphone pendant l'étape des charms */
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
-  c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = (m.top - t.top + 2) + "px"; }
+  c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
 $("suivant").onclick = () => { if (etape === ORDRE.length - 1) { $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
-const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); };
+const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
 function prepare() { ouvreOnglet(ONGLET[cle()]); ambiance(); setTimeout(() => { rend(); enHaut(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
