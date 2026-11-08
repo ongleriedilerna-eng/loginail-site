@@ -878,6 +878,144 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 .ph3 .ombre{position:absolute;left:8%;right:0;bottom:-6%;height:7%;border-radius:50%;background:radial-gradient(ellipse,rgba(70,45,28,.34),transparent 70%);filter:blur(10px);pointer-events:none}
 /* les « 1 000+ » */
 .chif div:nth-child(3) b::after,.p-ch .compte b::after{content:"+"}
+@media (max-width:999px){
+  .a-anim{position:absolute;inset:0;z-index:4;pointer-events:none;container-type:inline-size;overflow:hidden;border-radius:inherit}
+  .a-anim .z{position:absolute;inset:0;background:center top/cover no-repeat}
+  .a-anim .cache{position:absolute}
+  .a-anim .reveil{position:absolute;width:9cqw;height:9cqw;left:80%;top:40%;color:#F6F3EF}
+  .a-anim .reveil svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+  .a-anim .onde{position:absolute;left:50%;top:50%;width:100%;height:100%;margin:-50% 0 0 -50%;border-radius:50%;border:1px solid rgba(246,243,239,.6);opacity:0}
+  .a-anim.sonne .reveil,.a-anim.sonne .z.dix{animation:sonne .5s ease-in-out 4}
+  .a-anim.sonne .onde{animation:onde 1s ease-out 2}
+  @keyframes sonne{0%,100%{transform:rotate(0)}15%{transform:rotate(-12deg) translateX(-1px)}35%{transform:rotate(11deg) translateX(1px)}55%{transform:rotate(-8deg)}75%{transform:rotate(6deg)}}
+  @keyframes onde{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(1.9)}}
+  .a-anim .z.dix{transform-origin:22% 47%}
+  .a-anim .z.rdv{opacity:0;transform:translateX(18%);transition:opacity .5s,transform .7s cubic-bezier(.2,1.2,.4,1)}
+  .a-anim .z.rdv.ok{opacity:1;transform:none}
+  .a-anim .z.bt{transition:transform .18s}.a-anim .z.bt.appui{transform:scale(.965)}
+  .a-anim .fiche{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:6cqw 6cqw 0 0;padding:6cqw 6cqw 9cqw;box-shadow:0 -4cqw 8cqw -4cqw rgba(0,0,0,.35);transform:translateY(105%);transition:transform .6s cubic-bezier(.2,.9,.3,1);font:400 3.4cqw/1.35 Jost,sans-serif;color:#1E1C1B}
+  .a-anim .fiche.on{transform:none}
+  .a-anim .fiche h4{margin:0 0 4cqw;font:400 6cqw 'Cormorant Garamond',serif}
+  .a-anim .fiche .ch{border-bottom:1px solid rgba(30,28,27,.12);padding:2.4cqw 0 1.6cqw;margin-bottom:2cqw}
+  .a-anim .fiche .ch small{display:block;font-size:2.6cqw;letter-spacing:.18em;text-transform:uppercase;color:#8a8079;margin-bottom:.6cqw}
+  .a-anim .fiche .ch span{min-height:4.2cqw;display:block}
+  .a-anim .fiche .ok2{margin-top:4cqw;text-align:center;font:500 3cqw Jost;letter-spacing:.16em;text-transform:uppercase;background:#1E1C1B;color:#fff;border-radius:99px;padding:3.2cqw;transition:background .3s}
+  .a-anim .fiche .ok2.fait{background:#1E1C1B}
+  .a-anim .z.apres{opacity:0;transition:opacity .9s}.a-anim .z.apres.on{opacity:1}
+  .a-anim .perso{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:6cqw 6cqw 0 0;padding:6cqw 6cqw 10cqw;box-shadow:0 -4cqw 8cqw -4cqw rgba(0,0,0,.35);transform:translateY(105%);transition:transform .6s cubic-bezier(.2,.9,.3,1);font:400 3.4cqw Jost,sans-serif}
+  .a-anim .perso.on{transform:none}
+  .a-anim .perso small{display:block;font-size:2.6cqw;letter-spacing:.18em;text-transform:uppercase;color:#8a8079;margin-bottom:3cqw}
+  .a-anim .perso .ronds{display:flex;gap:3cqw}
+  .a-anim .perso .ronds i{width:13cqw;height:13cqw;border-radius:50%;background:center/cover;box-shadow:0 0 0 1px rgba(0,0,0,.1);transition:box-shadow .3s,transform .3s}
+  .a-anim .perso .ronds i.on{box-shadow:0 0 0 .8cqw #fff,0 0 0 1.4cqw #1E1C1B;transform:scale(1.06)}
+  .a-anim .rdv-html{position:absolute;inset:auto;background:#F2ECE7;border-radius:1.6cqw;padding:2.2cqw 2.6cqw;font:500 3.1cqw/1.3 Jost,sans-serif;color:#1E1C1B;box-sizing:border-box}
+  .a-anim .rdv-html b{font-weight:500}.a-anim .rdv-html .r{float:right;font-weight:400;font-size:2.4cqw;color:#5a524d}
+  .a-anim .rdv-html small{display:block;font-weight:400;font-size:2.5cqw;color:#8a8079;margin-top:.8cqw}
+  .a-anim .z.nuit{opacity:0;filter:invert(.92) hue-rotate(180deg) saturate(.8);transition:opacity .8s}.a-anim .z.nuit.on{opacity:1}
+  .a-anim .app-jn{position:absolute;left:6%;right:6%;top:58%;background:#fff;border-radius:4cqw;padding:4cqw 4.6cqw;box-shadow:0 3cqw 6cqw -3cqw rgba(0,0,0,.4);display:flex;justify-content:space-between;align-items:center;font:400 3.4cqw Jost}
+  .a-anim .app-jn small{font-size:3.4cqw}
+  .a-anim .app-jn .sw{display:flex;background:#F2ECE7;border-radius:99px;padding:.8cqw}
+  .a-anim .app-jn .sw i{font-style:normal;font-size:3cqw;padding:1.6cqw 3.2cqw;border-radius:99px;transition:all .4s}
+  .a-anim .app-jn .sw i.on{background:#1E1C1B;color:#fff}
+}
+@media (max-width:999px){
+  .prof{width:100%;height:100%;background:#fff;padding:18% 7% 6%;font:400 12px/1.4 Jost;color:#1E1C1B;display:flex;flex-direction:column;gap:9px}
+  .prof .haut{display:flex;align-items:center;gap:14px}.prof .av{flex:none;width:62px;height:62px;border-radius:50%;background:center/cover;box-shadow:0 0 0 3px #fff,0 0 0 5px #d9c8b6}
+  .prof .chiffres{display:flex;gap:16px;text-align:center;font-size:11px;color:#6b625c}.prof .chiffres b{display:block;font-size:13px;color:#1E1C1B;font-weight:500}
+  .prof .nom{font-weight:500;font-size:13.5px}.prof .bio{color:#4a4440;font-size:12px}
+  .prof .lien{display:inline-flex;align-items:center;gap:5px;width:fit-content;color:#2A5BD7;font-weight:500;font-size:12.5px;padding:3px 7px;margin-left:-7px;border-radius:7px;transition:background .3s}
+  .prof .grille{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:6px}.prof .grille i{aspect-ratio:1;background:center/cover}
+  .prof .lien{color:transparent!important;background:linear-gradient(100deg,#1E1C1B 0,#1E1C1B 38%,#D9B56A 48%,#fff6dc 50%,#D9B56A 52%,#1E1C1B 62%,#1E1C1B 100%)!important;background-size:260% 100%!important;
+  .prof .lien-w{position:relative;display:inline-flex;align-items:center;gap:6px;width:fit-content;transition:transform .4s}
+  .prof .lien-w i{font-style:normal;color:#C9A45C;font-size:12px;animation:etoile 2.8s ease-in-out infinite}
+  @keyframes lienBrille{0%{background-position:100% 0}60%,100%{background-position:0 0}}
+  @keyframes etoile{0%,55%,100%{opacity:.35;transform:scale(.8) rotate(0)}30%{opacity:1;transform:scale(1.25) rotate(45deg)}}
+}
+
+/* ===== 15/11 (Marie) : la version TÉLÉPHONE reprend l'ordinateur ===== */
+@media (max-width:999px){
+  /* ---- l'appli : un écran, le titre en haut, le téléphone au milieu, les 5 onglets dessous ---- */
+  .app-h{height:calc(100svh + 260px)!important}
+  .app-h .colle{justify-content:flex-start!important;gap:0;padding:calc(54px + env(safe-area-inset-top)) 0 14px!important}
+  .app-h .a-legs,.app-h .a-astuce,.app-h #notifs{display:none!important}
+  .app-h .a-ecr img.a~img.a{opacity:0!important}
+  .app-h .a-titre{text-align:center;margin:0 0 12px}
+  .app-h .a-tel{height:min(58svh,520px)!important;flex:none}
+  .app-h .a-ong-bloc{margin-top:14px}
+  .a-onglets{gap:5px!important}.a-onglets button{width:60px!important;padding:8px 2px!important;font-size:10px!important}
+  .app-h .pop-nt{left:10%!important;right:10%!important;top:132px!important;bottom:auto!important;width:auto!important;z-index:6}
+
+  /* ---- les charms : la phrase plus légère, posée sur un voile ---- */
+  .p-ch .bloc{background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(246,243,239,.96) 0,rgba(246,243,239,.88) 50%,rgba(246,243,239,0) 76%)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding:46px 30px!important;margin:0!important}
+  .p-ch .bloc .ch-petit{font:italic 400 19px/1.3 'Cormorant Garamond',serif;color:#6b625c;margin:12px 0 4px}
+  .p-ch .bloc .t2 em{font-style:italic}
+
+  /* ---- Dans votre bio, votre .fr ---- */
+  #pourquoi{display:none!important}
+  .bio-k{background:#F3EEE8;padding:70px 22px 60px;text-align:center;overflow:hidden}
+  .bio-k .k{font:500 11px Jost;letter-spacing:.3em;text-transform:uppercase;color:#6b625c}
+  .bio-k h2{font:400 42px/1.03 'Cormorant Garamond',serif;margin:12px 0 14px}.bio-k h2 em{font-style:italic}
+  .bio-k p{font:400 15px/1.55 Jost;color:#4a4440;max-width:330px;margin:0 auto}
+  .bio-k .pts{display:flex;gap:30px;justify-content:center;margin-top:20px}.bio-k .pts div{font-size:12.5px;color:#6b625c}.bio-k .pts b{display:block;font:400 22px 'Cormorant Garamond',serif;color:#1E1C1B}
+  .bio-k .ex{font-size:10.5px;color:#8a8079;margin-top:14px}
+  .bio-k .scene{display:flex;justify-content:center;align-items:center;gap:7vw;margin-top:34px}
+  .bio-k .scene .ph3{--w:38vw!important;transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.3,1)}
+  .bio-k .scene .ph3.site{opacity:.45;transform:scale(.9)}
+  .bio-k.ouvre .scene .ph3.insta{opacity:.45;transform:scale(.9)}
+  .bio-k.ouvre .scene .ph3.site{opacity:1;transform:none}
+
+  /* ---- CLASSE OU BADDIE ? : le carrousel ---- */
+  #styles{display:none!important}
+  .gal{position:relative;height:100svh;min-height:600px;max-height:860px;overflow:hidden;background:#EFE7DF}
+  .gal .bg{position:absolute;inset:0;background:center/cover;transition:opacity 1s}.gal .bg.b{opacity:0}
+  .gal .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,243,239,.66),rgba(246,243,239,.15) 34%,rgba(246,243,239,.2))}
+  .gal .q{position:absolute;left:0;right:0;top:56px;text-align:center;z-index:3;pointer-events:none}
+  .gal .q .k{font:500 10.5px Jost;letter-spacing:.32em;text-transform:uppercase;opacity:.7}
+  .gal .q h2{margin:8px 0 0;font:400 32px/1 'Cormorant Garamond',serif;text-transform:uppercase;letter-spacing:.06em}.gal .q h2 em{font-style:italic}
+  .gal .piste{position:absolute;left:0;top:57%;display:flex;align-items:center;gap:22px;z-index:2;will-change:transform}
+  .gal .it{flex:none;display:flex;flex-direction:column;align-items:center;gap:12px;transition:transform .7s cubic-bezier(.25,.8,.3,1),opacity .7s,filter .7s;opacity:.6;transform:scale(.8);filter:saturate(.75)}
+  .gal .it.on{opacity:1;transform:scale(1.12);filter:none}
+  .gal .it .tel{height:min(52svh,430px);aspect-ratio:420/909;padding:6px;border-radius:15%/7%;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 1.2px #8a857f,0 30px 44px -24px rgba(0,0,0,.6)}
+  .gal .it .e{position:relative;width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff}
+  .gal .it .e img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  .gal .it .e::before{content:"";position:absolute;z-index:2;top:3%;left:50%;transform:translateX(-50%);width:28%;height:3%;border-radius:99px;background:#060606}
+  .gal .it small{font:500 10px Jost;letter-spacing:.28em;text-transform:uppercase;background:rgba(246,243,239,.92);padding:5px 11px;border-radius:99px}
+
+  /* ---- Tout ça, pour vous : l'écran s'arrête, des téléphones 3D autour et derrière la carte ---- */
+  .fin-pub{height:170svh!important;padding:0!important;margin:0!important;overflow:visible!important;background:#EFE7DF}
+  .fin-pub>.fp-colle{position:sticky!important;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+  .fp-colle>.fp-fond{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 65% at 50% 40%,#FBF6F0 0,#EFE4D8 62%,#E2D3C4 100%)!important;overflow:hidden}
+  .fp-fond .fp-piste,.fp-fond .fp-plein{display:none!important}
+  .fp-fond>.fp-studio{opacity:1!important;transition:none!important}
+  .fp-studio{position:absolute;inset:0;z-index:1}
+  .fp-studio .s3{position:absolute;animation:s3Flotte var(--d,7s) ease-in-out infinite;animation-delay:var(--r,0s)}
+  @keyframes s3Flotte{0%,100%{translate:0 0}50%{translate:0 -10px}}
+  .fp-colle>.fp-ch{position:absolute;inset:0;z-index:5;pointer-events:none}.fp-colle>.fp-ch img{pointer-events:auto}
+  .fp-colle>.fp-carte{position:relative;z-index:4;width:88vw;margin:0!important}
+  .fin-pub .fp-carte{background:rgba(250,246,241,.95)!important;box-shadow:0 30px 70px -36px rgba(70,40,25,.55)!important}
+
+  /* ---- essai d'accueil : la ligne du métier ---- */
+  .h-lig.m{font:400 10.5px Jost;letter-spacing:.2em;text-transform:uppercase;color:#1E1C1B;display:flex;gap:9px;align-items:center;justify-content:center;flex-wrap:wrap;margin:-4px 0 16px}
+  .h-lig.m i{display:inline-block;width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.4}
+  /* ---- essai d'accueil C+ sur téléphone ---- */
+  .m-cplus .hero{background:#F6F3EF!important}
+  .m-cplus .hero::before{display:none!important}
+  .m-cplus .hero .duo,.m-cplus .hero .duo-pts{display:none!important}
+  .m-cplus .hero .h-lig{font:400 10.5px Jost;letter-spacing:.2em;text-transform:uppercase;display:flex;gap:9px;align-items:center;justify-content:center;flex-wrap:wrap;margin:-4px 0 14px}
+  .m-cplus .hero .h-lig i{display:inline-block;width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.4}
+  .m-cplus .h-pan{position:relative;width:calc(100% - 32px);margin:0 auto 18px;height:min(46svh,380px);border-radius:24px;overflow:hidden;background:#EFE7DF}
+  .m-cplus .h-pan .f{position:absolute;inset:0;background:center/cover no-repeat;transition:opacity .7s}.m-cplus .h-pan .f.b{opacity:0}
+  .m-cplus .h-pan .chs{position:absolute;inset:0;pointer-events:none}.m-cplus .h-pan .chs img{position:absolute;width:30px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2))}
+  .m-cplus .h-pan .tel{position:absolute;top:50%;aspect-ratio:420/909;padding:5px;border-radius:15%/7%;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21);box-shadow:0 0 0 1px #8a857f,0 24px 34px -20px rgba(0,0,0,.6);z-index:2}
+  .m-cplus .h-pan .tel .e{position:relative;width:100%;height:100%;border-radius:12%/5.6%;overflow:hidden;background:#fff}
+  .m-cplus .h-pan .tel .e img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+  .m-cplus .h-pan .t1{height:80%;left:14%;transform:translateY(-52%) rotate(-4deg)}
+  .m-cplus .h-pan .t2{height:72%;right:12%;transform:translateY(-46%) rotate(4deg)}
+  .m-cplus .h-pan .lab{position:absolute;bottom:10px;z-index:3;font:500 9px Jost;letter-spacing:.18em;text-transform:uppercase;background:rgba(246,243,239,.94);padding:5px 9px;border-radius:99px}
+  .m-cplus .h-pan .lab.l1{left:16%}.m-cplus .h-pan .lab.l2{right:14%}
+  .m-cplus .h-pan .nt{position:absolute;right:4%;top:6%;z-index:4;width:58%;background:rgba(250,248,246,.97);border-radius:12px;padding:7px 9px;font:400 10px/1.3 Jost;display:flex;gap:7px;align-items:center;box-shadow:0 12px 22px -12px rgba(0,0,0,.55)}
+  .m-cplus .h-pan .nt i{flex:none;width:22px;height:22px;border-radius:6px;background:url(loginail-site/icone-appli.svg) center/cover}.m-cplus .h-pan .nt b{display:block;font-weight:500}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1289,18 +1427,17 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const barre = document.createElement("div"); barre.className = "a-onglets appel";
       barre.innerHTML = O.map(([k, n], i) => `<button data-i="${i}" type="button" aria-label="Voir ${n}"><svg viewBox="0 0 24 24">${IC[k]}</svg><span>${n}</span></button>`).join("");
       const astuce = document.createElement("div"); astuce.className = "a-astuce"; astuce.innerHTML = '<i>👆</i> Touchez un onglet';
-      if (ORDI) { const bloc = document.createElement("div"); bloc.className = "a-ong-bloc"; bloc.style.cssText = "z-index:3"; bloc.append(barre); colle.appendChild(bloc); barre.querySelector("button").classList.add("on"); }
-      else { colle.appendChild(barre); colle.appendChild(astuce); }
+      { const bloc = document.createElement("div"); bloc.className = "a-ong-bloc"; bloc.style.cssText = "z-index:3"; bloc.append(barre); colle.appendChild(bloc); barre.querySelector("button").classList.add("on"); barre.classList.remove("appel"); }
       const ov = document.createElement("img"); ov.className = "a-tab"; ov.alt = ""; ecr.appendChild(ov);
       let force = -1, tf = 0;
       const L = [...a.querySelectorAll(".a-legs .leg")];
-      const maj = () => { if (ORDI || force >= 0) return; let k = 0, m = -1; L.forEach((l, i) => { const o = +l.style.opacity || 0; if (o > m) { m = o; k = i; } }); const on = VERS[k];
+      const maj = () => { return; let k = 0, m = -1; L.forEach((l, i) => { const o = +l.style.opacity || 0; if (o > m) { m = o; k = i; } }); const on = VERS[k];
         barre.querySelectorAll("button").forEach((b, i) => b.classList.toggle("on", i === on)); };
       let dernierY = scrollY;
-      if (!ORDI) addEventListener("scroll", () => { if (force >= 0 && Math.abs(scrollY - dernierY) > 140) { force = -1; ov.classList.remove("on"); } requestAnimationFrame(maj); }, { passive: true }); setInterval(maj, 400);
+      if (false) addEventListener("scroll", () => { if (force >= 0 && Math.abs(scrollY - dernierY) > 140) { force = -1; ov.classList.remove("on"); } requestAnimationFrame(maj); }, { passive: true }); setInterval(maj, 400);
       barre.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; const i = +b.dataset.i; force = i; dernierY = scrollY; barre.classList.remove("appel"); astuce.style.opacity = 0;
         ov.src = `loginail-site/apercus-univers/${O[i][2]}.webp`; ov.classList.add("on"); barre.querySelectorAll("button").forEach((x, j) => x.classList.toggle("on", j === i));
-        if (ORDI) { if (i === 0) ov.classList.remove("on"); return; }
+        { if (i === 0) ov.classList.remove("on"); return; }
         clearTimeout(tf); tf = setTimeout(() => { force = -1; ov.classList.remove("on"); maj(); }, 7000); });
     } }
 
@@ -1356,7 +1493,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         const W = pc.clientWidth, H = pc.clientHeight, I = [rel(pc.querySelector(".bloc"), pc, ORDI ? 26 : 10), rel(pc.querySelector(".ch-bas"), pc, 10)], deja = [];
         /* 15/11 (Marie) : sur ordinateur, les charms remplissent TOUT l'écran (même sur la phrase), bien répartis, sans trou */
         let grille = null;
-        if (ORDI) { const N = PLUIE.length, haut = 64, cel = Math.sqrt(W * (H - haut) / N), cols = Math.max(1, Math.round(W / cel)), rows = Math.ceil(N / cols), cw = W / cols, ch = (H - haut) / rows;
+        { const N = PLUIE.length, haut = ORDI ? 64 : 40, cel = Math.sqrt(W * (H - haut) / N), cols = Math.max(1, Math.round(W / cel)), rows = Math.ceil(N / cols), cw = W / cols, ch = (H - haut) / rows;
           grille = []; for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) grille.push([c * cw, haut + r * ch, cw, ch]);
           grille.sort(() => Math.random() - .5); }
         PLUIE.forEach((n, k) => { const t = Math.round(ORDI ? hasard(50, 68) : hasard(34, 46));
@@ -1426,12 +1563,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           if (!tas.length) tas = new Array(Math.ceil(pc.clientWidth / COL) + 2).fill(0);
           c.sol = sol(c); c.solFixe = c.sol; c.tenu = false; c.wob = 0; relance(c); };
         lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache); }
-      /* on touche un charm : il saute un peu */
-      lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (ORDI || !w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return; c.vy = -14; c.vx = hasard(-4, 4); c.sol = c.sol || pc.clientHeight - c.t; const t0b = performance.now();
-        const W = pc.clientWidth; let t0 = performance.now(); const saute = now => { const dt = Math.min(2.2, (now - t0) / 16.7); t0 = now; c.vy += .9 * dt; c.x += c.vx * dt; c.y += c.vy * dt;
-          if (c.y >= c.sol) { c.y = c.sol; c.vy = Math.abs(c.vy) > 2.5 ? -c.vy * .38 : 0; c.vx *= .97; } c.x = Math.max(2, Math.min(W - c.t - 2, c.x)); c.a += c.vx / (c.t / 2) * 57.3 * dt;
-          c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`;
-          if ((c.y < c.sol || Math.abs(c.vx) > .05) && performance.now() - t0b < 4000) requestAnimationFrame(saute); }; requestAnimationFrame(saute); });
+      /* téléphone : on touche un charm, il saute et culbute */
+      lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (ORDI || !w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return;
+        c.posee = false; c.wob = 0; c.vy = -hasard(520, 760); c.vx = hasard(-150, 150); c.va = hasard(-480, 480); if (!c.solFixe) c.solFixe = c.sol || pc.clientHeight - c.t; relance(c); });
       addEventListener("load", () => setTimeout(pose, 300)); setTimeout(pose, 1200); addEventListener("resize", () => setTimeout(pose, 200));
     } }
 })();
@@ -1454,8 +1588,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   const lay = document.createElement("div"); lay.className = "fp-ch"; fp.insertBefore(lay, carte);
   /* 09/11 (Marie, ordinateur) : l'écran s'arrête dessus ; derrière les téléphones, une mosaïque de fonds qui changent */
   let box = fp;
+  { const colle = document.createElement("div"); colle.className = "fp-colle"; colle.append(fond, lay, carte); fp.appendChild(colle); box = colle; }
   if (matchMedia("(min-width: 1000px)").matches) {
-    const colle = document.createElement("div"); colle.className = "fp-colle"; colle.append(fond, lay, carte); fp.appendChild(colle); box = colle;
     const FM = ["after-hours", "agrumes", "anneaux", "arcs-lilas-chocolat", "art-deco", "azulejo", "baddie-club", "bambous", "bisous-gris", "bisous-noirs", "bisous", "bleuets", "bouquets-tulipes", "cadenas-coeur", "cafe-croissants-damier", "cafe-croissants", "carreaux-bordeaux", "carreaux-caramel", "carreaux-ocre", "cerises-leopard", "cerises-noeuds-bleus", "cerises-vichy", "chaussons-danse", "chrome-liquide", "chrome-noir", "citrons-rubans", "cles-anciennes", "coeurs-argent-noir", "coeurs-epines-noirs", "coeurs-epines-rouges", "coeurs-festonnes", "coeurs-jaunes-prune", "coeurs-lin", "coeurs-piques-violet", "coeurs-verre", "cool-girls-club", "coquillages-dentelle", "coquillages-terracotta", "cygnes-muguet", "damier-bleu-noir", "damier-choco-noeuds", "damier-chrome", "damier-fleuri", "damier-noir-creme", "damier-rose-fluo", "dentelle-bordeaux", "dentelle-peche", "des-rouges", "diamants-violet", "disco-roses", "disco-velours", "dragons-bleus", "ecailles-lilas", "epingles-bordeaux", "espace", "etincelles-bordeaux", "etoiles-cacao", "etoiles-holo", "etoiles-marine", "etoiles-noires-creme", "etoiles-roses", "faience-jaune", "figues", "flacons-parfum", "flammes-bleues", "flammes-roses", "flammes-rouge", "fleurs-bleu", "fleurs-bleues-damier", "fleurs-corail", "fleurs-rouge", "fleurs-seventies", "fraises-noeuds-bleus", "fraises-vichy", "framboises", "fuji-sakura", "graffiti", "grains-cafe", "grenades", "hibiscus-corail", "homards", "hortensias", "hot-girls-etoiles", "hot-girls-noir", "hot-girls-rose", "it-girl", "jean-epingles", "jean-etoiles", "lavande", "leopard-caramel", "leopard-fourrure", "leopard-rose-doux", "lierre-fougeres", "losanges-bordeaux", "lucky-girl", "lunes-nuit", "lunes-sapin", "marguerites-vichy", "matcha", "meduses", "mini-fleurs-bleues", "muguet-marine", "nacre-irisee", "nature-morte-figues", "noeuds-argent-bordeaux", "noeuds-bleus", "noeuds-chocolat-pois", "noeuds-lilas-jaune", "noeuds-rouges-rose", "noeuds-taupe", "noeuds-verts-lilas", "notes-musique", "nuages-lilas", "oeil-bleu-jaune", "olivier", "oliviers", "oranges-etoiles", "oranges-fleurs", "orbites", "papillons-pastel", "perles-chocolat", "pied-de-poule", "piments-lilas", "pois-chocolat", "pois-corail", "quartz", "rayures-anis", "rayures-dorees", "rayures-sapin", "recif", "rose-metal", "roses-bleu-gris", "roses-croix", "roses-dentelle", "sardines", "satin-bordeaux", "satin-chocolat", "satin-noir", "shibori", "soleil-mains", "soleils-baroques", "soleils-endormis", "teckels", "tennis", "toile-jouy", "treillis-rouille", "tribal-argent", "tribal-gris", "tribal-lilas", "tricot-menthe", "tulipes-bordeaux", "vagues-bordeaux-lilas", "vagues-choco-jaune", "vagues-choco-rose", "vagues-kaki", "vagues-noir-blanc", "velos-fleuris", "vichy-coeurs", "vitrail-hirondelles", "vitrail-lune", "voiles-caramel", "western", "zebre-chocolat", "zebre-peint", "zodiaque"], hasard = () => FM[Math.floor(Math.random() * FM.length)];
     const plein = document.createElement("div"); plein.className = "fp-plein"; fond.prepend(plein);
     const C = []; for (let k = 0; k < 3; k++) { const i = document.createElement("i"); plein.appendChild(i); C.push(i); }
@@ -1583,16 +1717,20 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     el.addEventListener("mouseenter", () => { el.style.setProperty("--ry", "360deg"); el.style.setProperty("--rx", "0deg"); el.style.setProperty("--rz", "0deg"); });
     el.addEventListener("mouseleave", () => { const b = el.querySelector(".b"); b.style.transition = "none"; el.style.setProperty("--ry", "0deg"); void b.offsetWidth; b.style.transition = "";
       el.style.setProperty("--ry", base + "deg"); el.style.removeProperty("--rx"); el.style.removeProperty("--rz"); }); };
-  if (!matchMedia("(min-width: 1000px)").matches) return;
+  const ORDI = matchMedia("(min-width: 1000px)").matches;
   const fond = document.querySelector(".fp-colle>.fp-fond"), colle = document.querySelector(".fp-colle"); if (!fond || !colle) return;
   /* [site, gauche %, haut %, largeur (en unités qui suivent la hauteur), ry, rx, rz] */
   const P = [["tpl-maisonnoire", 3, 10, 12, 30, 8, -4], ["cerise", 16, 46, 10.5, 24, 6, 5], ["tpl-onglesdemma", 5, 64, 8.5, 34, 4, -8],
              ["chrome", 78, 6, 12, -30, 8, 4], ["tpl-maisonmoka", 86, 50, 9, -34, 4, 8], ["pop", 72, 58, 10.5, -24, 6, -5],
              /* les deux du milieu, derrière la carte */
              ["tpl-studiopoudre", 37, -8, 12.5, 18, 10, -6], ["bling", 49, 64, 12.5, -18, 8, 6]];
+  /* téléphone : 6 téléphones, en haut et en bas de la carte, deux derrière elle */
+  const PT = [["tpl-maisonnoire", -6, 4, 30, 26, 8, -6], ["cerise", 66, 2, 30, -24, 8, 6], ["tpl-studiopoudre", 30, -10, 34, 10, 10, -3],
+              ["tpl-onglesdemma", -4, 70, 28, 28, 6, 6], ["bling", 70, 72, 28, -28, 6, -6], ["pop", 32, 74, 32, -10, 8, 3]];
+  if (!ORDI) P.splice(0, P.length, ...PT);
   const st = document.createElement("div"); st.className = "fp-studio"; st.setAttribute("aria-hidden", "true");
   st.innerHTML = P.map((p, i) => `<div class="s3" style="left:${p[1]}%;top:${p[2]}%;--d:${(6 + i * .7).toFixed(1)}s;--r:${(-i * 1.3).toFixed(1)}s">` +
-    tel3d(`<img src="loginail-site/apercus-univers/${p[0]}.webp" alt="" loading="lazy">`, { w: `calc(${p[3]} * min(1vw, 1.45vh))`, ry: p[4], rx: p[5], rz: p[6] }) + "</div>").join("");
+    tel3d(`<img src="loginail-site/apercus-univers/${p[0]}.webp" alt="" loading="lazy">`, { w: ORDI ? `calc(${p[3]} * min(1vw, 1.45vh))` : `${p[3]}vw`, ry: p[4], rx: p[5], rz: p[6] }) + "</div>").join("");
   fond.appendChild(st);
   st.querySelectorAll(".ph3").forEach(tel3dTourne);
   /* la souris passe à travers les charms jusqu'aux téléphones */
@@ -1604,12 +1742,13 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 </script>
 <script id="ordi4">/* 15/11 (Marie) : les choix de la planche « avis d'expert » — C+, K, G — version ORDINATEUR */
 (() => {
-  if (!matchMedia("(min-width: 1000px)").matches) return;
+  const ORDI = matchMedia("(min-width: 1000px)").matches, QA = new URLSearchParams(location.search).get("accueil");
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const hasard = (a, b) => a + Math.random() * (b - a);
 
-  /* ---- C+ · l'accueil ---- */
-  { const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1"), mot = document.getElementById("mot");
+  /* ---- C+ · l'accueil (ordinateur ; sur téléphone seulement pour l'essai ?accueil=cplus) ---- */
+  if (QA === "ligne" && !ORDI) { const h1 = document.querySelector(".hero h1"); if (h1) { const lig = document.createElement("div"); lig.className = "h-lig m"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig); } }
+  if (ORDI || QA === "cplus") { if (!ORDI) document.documentElement.classList.add("m-cplus"); const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1"), mot = document.getElementById("mot");
     if (h && k && h1) {
       k.textContent = "Pour les prothésistes ongulaires · prêt en une minute";
       const lig = document.createElement("div"); lig.className = "h-lig"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig);
@@ -1622,7 +1761,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         '<div class="tel t1"><div class="e"><img alt=""></div></div><div class="tel t2"><div class="e"><img alt=""></div></div>' +
         '<div class="lab l1">Votre site</div><div class="lab l2">Votre appli</div>' +
         '<div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div></div>';
-      h.appendChild(pan);
+      h.appendChild(pan); if (!ORDI) lig.after(pan);
       const [fa, fb] = pan.querySelectorAll(".f"), chs = pan.querySelector(".chs"), [is, ia] = pan.querySelectorAll(".tel img");
       const PL = [[6, 10], [86, 8], [4, 70], [90, 72], [46, 4], [48, 88], [12, 40], [88, 40]];
       let u = 0;
@@ -1635,6 +1774,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (mot) { let dern = mot.style.fontFamily; new MutationObserver(() => { const f = mot.style.fontFamily || (mot.querySelector(".mt") || mot).style.fontFamily; if (f && f !== dern) { dern = f; u++; pose(); } })
         .observe(mot, { attributes: true, attributeFilter: ["style"], subtree: true }); }
     } }
+
+  /* ---- téléphone : les chiffres sous « Tout ça, pour vous » (comme sur ordinateur) ---- */
+  if (!ORDI) { const chif = document.querySelector(".chif"), fp = document.querySelector(".fin-pub"); if (chif && fp) fp.after(chif); }
 
   /* ---- les charms : une phrase plus légère ---- */
   { const t = document.querySelector("#charms .bloc .t2");
@@ -1716,7 +1858,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     } }
 
   /* ---- G · Classe ou baddie : le carrousel sans fin ---- */
-  { const pin = document.querySelector(".styl-pin");
+  { const pin = document.querySelector(".styl-pin") || document.getElementById("styles");
     if (pin && typeof TPL !== "undefined" && typeof UNI !== "undefined") {
       const FC = {"tpl-maisonmoka": {"img": "loginail-site/fonds-classe/tpl-maisonmoka.webp", "clair": true}, "tpl-maisonnoire": {"img": "loginail-site/fonds-classe/tpl-maisonnoire.webp", "clair": true}, "tpl-atelierronce": {"img": "loginail-site/fonds-classe/tpl-atelierronce.webp", "clair": true}, "tpl-maisonsauge": {"couleur": "#DDE7D0"}, "tpl-maisonlin": {"couleur": "#E7DED0"}, "tpl-studiopoudre": {"img": "loginail-site/fonds-classe/tpl-studiopoudre.webp", "clair": true}, "tpl-onglesdemma": {"img": "loginail-site/fonds-classe/tpl-onglesdemma.webp", "clair": true}, "cerise": {"img": "loginail-site/fonds-classe/cerise.webp", "clair": true}, "pastel": {"img": "loginail-site/fonds-classe/pastel.webp", "clair": true}, "chrome": {"img": "loginail-site/fonds-classe/chrome.webp", "clair": false}, "bling": {"img": "loginail-site/fonds-classe/bling.webp", "clair": true}, "emo": {"img": "loginail-site/fonds-classe/emo.webp", "clair": true}, "riviera": {"img": "loginail-site/fonds-classe/riviera.webp", "clair": true}, "sixties": {"img": "loginail-site/fonds-classe/sixties.webp", "clair": true}, "baroque": {"img": "loginail-site/fonds-classe/baroque.webp", "clair": true}, "street": {"img": "loginail-site/fonds-classe/street.webp", "clair": true}, "japon": {"img": "loginail-site/fonds-classe/japon.webp", "clair": true}, "tropical": {"couleur": "#DDE7D0"}, "sirene": {"img": "loginail-site/fonds-classe/sirene.webp", "clair": true}, "feerique": {"img": "loginail-site/fonds-classe/feerique.webp", "clair": true}, "celeste": {"img": "loginail-site/fonds-classe/celeste.webp", "clair": false}, "pop": {"img": "loginail-site/fonds-classe/pop.webp", "clair": true}, "baddie": {"img": "loginail-site/fonds-classe/baddie.webp", "clair": false}, "mignon": {"img": "loginail-site/fonds-classe/mignon.webp", "clair": true}, "y2k": {"img": "loginail-site/fonds-classe/y2k.webp", "clair": false}, "gothique": {"img": "loginail-site/fonds-classe/gothique.webp", "clair": false}};
       const L = []; const n = Math.max(TPL.length, UNI.length);
@@ -1737,8 +1879,10 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           piste.style.transform = `translate3d(${x.toFixed(1)}px,-50%,0)`;
           if (!survol) { const c = innerWidth / 2; let best = null, bd = 1e9; IT.forEach(i => { const r = i.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - c); if (d < bd) { bd = d; best = i; } }); choisis(best); } }
         requestAnimationFrame(boucle); };
-      IT.forEach(i => { i.addEventListener("mouseenter", () => { survol = i; choisis(i); }); i.addEventListener("mouseleave", () => { if (survol === i) survol = null; });
-        i.addEventListener("click", () => open("loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + i.dataset.q, "_blank")); });
+      let tm = 0;
+      IT.forEach(i => { i.addEventListener("mouseenter", () => { if (!ORDI) return; survol = i; choisis(i); }); i.addEventListener("mouseleave", () => { if (ORDI && survol === i) survol = null; });
+        i.addEventListener("click", () => { if (!ORDI && focus !== i) { survol = i; choisis(i); clearTimeout(tm); tm = setTimeout(() => { survol = null; }, 3500); return; }
+          open("loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + i.dataset.q, "_blank"); }); });
       new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !larg) mesure(); }, { threshold: .05 }).observe(g);
       addEventListener("resize", mesure); addEventListener("load", mesure); setTimeout(mesure, 600);
       requestAnimationFrame(boucle);
