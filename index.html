@@ -1086,6 +1086,32 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 }
 /* « Elle se voit déjà chez vous » : à la ligne, aussi sur ordinateur */
 .build .leg em.chez{display:block;margin-top:8px;font-style:italic}
+
+/* ===== 15/11 (Marie, 3e retour téléphone) ===== */
+@media (max-width:999px){
+  /* les charms : on les attrape au doigt sans faire défiler la page */
+  .pluie2 .c2 img{touch-action:none}
+  /* Classe ou baddie : on fait glisser au doigt */
+  .gal{touch-action:pan-y}
+  .gal .q .q-aide{margin-top:8px;font:500 10px Jost;letter-spacing:.2em;text-transform:uppercase;color:#1E1C1B;opacity:.65}
+  /* le prix : fond noir, écrit au milieu, la carte en beige */
+  #prix{background:#131112!important;color:#F6F3EF!important;text-align:center}
+  #prix .prix-colle{text-align:center}
+  #prix .k{color:rgba(246,243,239,.65)!important}
+  #prix .t2{color:#F6F3EF!important}#prix .t2 em{color:#E9D9C4!important}
+  #prix .tl{text-align:left;max-width:330px;margin-left:auto;margin-right:auto}
+  #prix .tl li b{color:#F6F3EF!important}#prix .tl li span{color:rgba(246,243,239,.72)!important}
+  #prix .tl:before{background:rgba(246,243,239,.25)!important}
+  #prix .prix{background:#EFE6DA!important;color:#1E1C1B!important;box-shadow:0 30px 60px -34px rgba(0,0,0,.8)!important}
+  #prix .prix *{color:#1E1C1B}
+  #prix .prix .k{color:#6b625c!important}
+  #prix .prix input{background:#fff!important;color:#1E1C1B!important}
+  #prix .prix .btn{background:#1E1C1B!important;color:#fff!important}
+  #prix .zero{color:rgba(246,243,239,.7)!important}
+}
+/* « Créer mon site gratuitement » : un petit boing, pour qu'on le voie bien (ordinateur et téléphone) */
+.fin-pub .fp-carte .btn{animation:boing 3.2s ease-in-out infinite}
+@keyframes boing{0%,72%,100%{transform:none}78%{transform:translateY(-7px) scale(1.06,.95)}84%{transform:translateY(0) scale(.97,1.04)}90%{transform:translateY(-3px)}95%{transform:none}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1230,7 +1256,7 @@ const url=q=>"loginail-creer/pret.html?public&nouveau&exemple=dilerna&"+q;
 void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div class="ph"><img src="loginail-site/apercus-mini/${t[2]}.webp" alt="" loading="lazy"></div><b>${t[0]}</b><small>${t[3]}</small></a>`).join("");
 
 /* le mot « briller » change d'écriture avec son charm : tout est chargé à l'avance, le mot et le charm s'effacent et reviennent ensemble */
-{const F=[["'Cherry Bomb One'","fraisegelee",0],["'Yeseva One'","oeilbleu",0],["'Righteous'","fleursixties",0],["'Playfair Display'","couronnestrass",0],["'Silkscreen'","consoleviolette",0],["'Italiana'","perle",0],["'Corben'","canard",0],["'Sedgwick Ave Display'","levresgrillz",0],["'Bebas Neue'","boule8",0],["'Allura'","etoiledemerperles",0],["'Cinzel'","cristal",0],["'Rubik Bubbles'","chocolat",0],["'Playball'","hibiscus",0],["'Monoton'","minaudiere",0],["'Cinzel Decorative'","cerisesor",0],["'Fascinate'","bouledisco",0]];
+{const F=[["'Cinzel'","perle",0],["'Bagel Fat One'","cerisedisco",0],["'Playfair Display'","papillondore",0],["'Rubik Bubbles'","boule8or",0],["'Pinyon Script'","noeudgelee",0],["Shrikhand","bouledisco",0]];
  let i=0;const m=document.getElementById("mot"),c=document.getElementById("motCh"),base=parseFloat(getComputedStyle(m).fontSize);let largeur=0;
  const t=m.querySelector(".mt");
  const cv=document.createElement("canvas").getContext("2d");
@@ -1261,7 +1287,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
  if(false){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
  else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
-  const DUR=matchMedia("(min-width: 1000px)").matches?15000:7500,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
+  const DUR=matchMedia("(min-width: 1000px)").matches?15000:10000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
   const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
    if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
    const au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
@@ -1596,23 +1622,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         pose3(c); return true; };
       /* on relance un charm tout seul (lâché, ou poussé par la souris) */
       const relance = c => { cancelAnimationFrame(c.raf2); c.t0 = 0; const pas1 = now => { if (c.tenu) return; if (!c.t0) c.t0 = now; c.sol = c.solFixe; if (anime(c, now)) c.raf2 = requestAnimationFrame(pas1); }; c.raf2 = requestAnimationFrame(pas1); };
-      /* téléphone (15/11) : on penche le téléphone → les charms roulent de ce côté ; on le secoue → ils sautent */
-      if (!ORDI) { let gx = 0, lt = 0, rafT = 0, autorise = false, dernierSaut = 0;
-        const roule = now => { rafT = 0; const dt = Math.min(.04, (now - (lt || now)) / 1000); lt = now; if (etat !== "tombe" || Math.abs(gx) < 60) { lt = 0; return; }
-          const W = pc.clientWidth; items.forEach(c => { if (!c.posee || c.tenu) return; c.vx = (c.vx || 0) * Math.pow(.2, dt) + gx * dt; c.x += c.vx * dt;
-            if (c.x < 2) { c.x = 2; c.vx = Math.abs(c.vx) * .3; } if (c.x > W - c.t - 2) { c.x = W - c.t - 2; c.vx = -Math.abs(c.vx) * .3; }
-            c.a += c.vx / (c.t / 2) * 57.3 * dt; c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`; });
-          rafT = requestAnimationFrame(roule); };
-        addEventListener("deviceorientation", e => { if (e.gamma == null) return; gx = Math.max(-1, Math.min(1, e.gamma / 35)) * 900; if (!rafT && Math.abs(gx) >= 60) rafT = requestAnimationFrame(roule); });
-        addEventListener("devicemotion", e => { const a = e.acceleration || {}; const f = Math.hypot(a.x || 0, a.y || 0, a.z || 0), now = performance.now();
-          if (f < 14 || etat !== "tombe" || now - dernierSaut < 600) return; dernierSaut = now;
-          items.forEach(c => { if (c.tenu) return; c.posee = false; c.wob = 0; c.vy = -hasard(380, 820) * Math.min(1.6, f / 18); c.vx = hasard(-160, 160); c.va = hasard(-520, 520); if (!c.solFixe) c.solFixe = c.sol || pc.clientHeight - c.t; relance(c); }); });
-        /* iPhone : il faut demander la permission, au premier toucher */
-        const demande = () => { if (autorise) return; autorise = true; try { if (window.DeviceOrientationEvent && DeviceOrientationEvent.requestPermission) DeviceOrientationEvent.requestPermission().catch(() => {}); } catch (x) {}
-          try { if (window.DeviceMotionEvent && DeviceMotionEvent.requestPermission) DeviceMotionEvent.requestPermission().catch(() => {}); } catch (x) {} };
-        sec.addEventListener("click", demande); sec.addEventListener("touchend", demande, { passive: true });
-        /* une petite phrase, une fois les charms tombés */
-        const astuce = document.createElement("div"); astuce.className = "ch-astuce"; astuce.textContent = "Penchez ou secouez votre téléphone"; pc.appendChild(astuce);
+      /* téléphone : une petite phrase, une fois les charms tombés */
+      if (!ORDI) { const astuce = document.createElement("div"); astuce.className = "ch-astuce"; astuce.textContent = "Attrapez-les, lancez-les"; pc.appendChild(astuce);
         addEventListener("scroll", () => astuce.classList.toggle("on", etat === "tombe"), { passive: true }); }
       /* ordinateur : quand la souris passe sur le tas, les charms sautent et culbutent */
       if (ORDI) { let dern = 0;
@@ -1640,22 +1651,22 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         if (etat === "haut" && p > .04 && r.top < 1) chute();
         else if (etat === "tombe" && (r.bottom < 0 || r.top > innerHeight)) remonte(); }, { passive: true });
       /* ordinateur : on attrape un charm au clic gauche, on le soulève ; on le lâche : il retombe tout droit, simplement */
-      if (ORDI) { let tenu = null, dx = 0, dy = 0;
+      { let tenu = null, dx = 0, dy = 0, vx = 0, vy = 0, lx = 0, ly = 0, lt = 0, bouge = false;
         lay.addEventListener("pointerdown", e => { if (e.button !== 0) return; const w = e.target.closest(".c2"); if (!w) return; const c = items.find(x => x.w === w); if (!c) return; e.preventDefault();
           c.tenu = true; cancelAnimationFrame(c.raf2); if (etat === "haut") { chute(); } const b = pc.getBoundingClientRect(); tenu = c; dx = e.clientX - b.left - c.x; dy = e.clientY - b.top - c.y;
-          w.classList.add("tenu"); w.style.transition = ""; try { w.setPointerCapture(e.pointerId); } catch (x) {} });
-        lay.addEventListener("pointermove", e => { if (!tenu) return; const b = pc.getBoundingClientRect(), c = tenu;
+          w.classList.add("tenu"); w.style.transition = ""; vx = vy = 0; lx = e.clientX; ly = e.clientY; lt = performance.now(); bouge = false; try { w.setPointerCapture(e.pointerId); } catch (x) {} });
+        lay.addEventListener("pointermove", e => { if (!tenu) return; const b = pc.getBoundingClientRect(), c = tenu, now = performance.now(), d = Math.max(8, now - lt) / 1000;
+          vx = vx * .4 + .6 * (e.clientX - lx) / d; vy = vy * .4 + .6 * (e.clientY - ly) / d; if (Math.hypot(e.clientX - lx, e.clientY - ly) > 2) bouge = true; lx = e.clientX; ly = e.clientY; lt = now;
           c.x = Math.max(2, Math.min(pc.clientWidth - c.t - 2, e.clientX - b.left - dx)); c.y = Math.max(0, Math.min(c.sol || pc.clientHeight - c.t, e.clientY - b.top - dy)); c.vx = 0; c.vy = 0;
           c.w.style.transform = `translate3d(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px,0) rotate(${c.a.toFixed(1)}deg)`; });
         /* on le lâche (15/11) : il tombe sur le tas, petit rebond, petit écrasement, il se pose */
         const lache = () => { if (!tenu) return; const c = tenu; tenu = null; c.w.classList.remove("tenu"); c.w.style.transition = "";
-          c.posee = false; c.bonds = 0; c.vx = hasard(-30, 30); c.vy = 0; c.va = hasard(-60, 60); c.t0 = 0;
+          c.posee = false; c.bonds = 0; c.t0 = 0;
+          if (bouge) { c.vx = Math.max(-1600, Math.min(1600, vx)); c.vy = Math.max(-2200, Math.min(1600, vy)); c.va = c.vx * .6; }   // on le lance
+          else { c.vx = hasard(-120, 120); c.vy = -hasard(520, 760); c.va = hasard(-480, 480); }   // on le touche juste : il saute
           if (!tas.length) tas = new Array(Math.ceil(pc.clientWidth / COL) + 2).fill(0);
           c.sol = sol(c); c.solFixe = c.sol; c.tenu = false; c.wob = 0; relance(c); };
         lay.addEventListener("pointerup", lache); lay.addEventListener("pointercancel", lache); }
-      /* téléphone : on touche un charm, il saute et culbute */
-      lay.addEventListener("click", e => { const w = e.target.closest(".c2"); if (ORDI || !w || etat !== "tombe") return; const c = items.find(x => x.w === w); if (!c) return;
-        c.posee = false; c.wob = 0; c.vy = -hasard(520, 760); c.vx = hasard(-150, 150); c.va = hasard(-480, 480); if (!c.solFixe) c.solFixe = c.sol || pc.clientHeight - c.t; relance(c); });
       addEventListener("load", () => setTimeout(pose, 300)); setTimeout(pose, 1200); addEventListener("resize", () => setTimeout(pose, 200));
     } }
 })();
@@ -1870,8 +1881,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         chs.innerHTML = PL.map((p, j) => `<img src="loginail-site/charms-mini/${x[2][j % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); };
       pose();
       /* quand « briller » change d'écriture, tout l'univers change avec */
-      if (mot) { let dern = mot.style.fontFamily; new MutationObserver(() => { const f = mot.style.fontFamily || (mot.querySelector(".mt") || mot).style.fontFamily; if (f && f !== dern) { dern = f; u++; pose(); } })
-        .observe(mot, { attributes: true, attributeFilter: ["style"], subtree: true }); }
+      /* « briller » et le site montré vont ensemble : l'écriture dit quel univers montrer */
+      const FON = ["Cinzel", "Bagel Fat One", "Playfair Display", "Rubik Bubbles", "Pinyon Script", "Shrikhand"];
+      const suit = () => { const t = mot && (mot.querySelector(".mt") || mot), f = ((mot && mot.style.fontFamily) || (t && t.style.fontFamily) || ""); const k = FON.findIndex(x => f.includes(x) && !(x === "Cinzel" && f.includes("Decorative")));
+        if (k >= 0 && k !== u % U.length) { u = k; pose(); } };
+      if (mot) { new MutationObserver(suit).observe(mot, { attributes: true, attributeFilter: ["style"], subtree: true }); suit(); }
     } }
 
   /* ---- téléphone : le prix (49,99 €) arrive tout de suite sous « Le premier mois, c'est cadeau » ---- */
@@ -1965,7 +1979,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const L = []; const n = Math.max(TPL.length, UNI.length);
       for (let i = 0; i < n; i++) { if (TPL[i]) L.push([TPL[i][2], "Classe", TPL[i][1]]); if (UNI[i]) L.push([UNI[i][2], "Baddie", UNI[i][1]]); }
       const g = document.createElement("section"); g.className = "gal"; g.id = "styles-gal";
-      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2>Classe <em>ou baddie ?</em></h2></div><div class="piste"></div>';
+      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2>Classe <em>ou baddie ?</em></h2><div class="q-aide">' + (ORDI ? "Cliquez sur un site pour le voir en grand" : "Glissez, puis touchez un site pour le voir en grand") + '</div></div><div class="piste"></div>';
       pin.after(g);
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
@@ -1985,6 +1999,14 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       IT.forEach(i => { i.addEventListener("mouseenter", () => { if (!ORDI) return; survol = i; choisis(i); }); i.addEventListener("mouseleave", () => { if (ORDI && survol === i) survol = null; });
         i.addEventListener("click", () => { if (!ORDI && focus !== i) { survol = i; choisis(i); clearTimeout(tm); tm = setTimeout(() => { survol = null; }, 3500); return; }
           open("loginail-creer/pret.html?public&nouveau&exemple=dilerna&" + i.dataset.q, "_blank"); }); });
+      /* téléphone : on fait glisser le carrousel au doigt (il repart tout seul après) */
+      { let x0 = null, xs = 0, gl = false, tr = 0;
+        g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; xs = x; gl = false; survol = g; clearTimeout(tr); }, { passive: true });
+        g.addEventListener("touchmove", e => { if (x0 === null) return; const d = e.touches[0].clientX - x0; if (Math.abs(d) > 6) gl = true; x = xs + d * 1.15;
+          if (larg) { while (-x >= larg) x += larg; while (x > 0) x -= larg; } }, { passive: true });
+        g.addEventListener("touchend", () => { x0 = null; const c = innerWidth / 2; let best = null, bd = 1e9; IT.forEach(i => { const r = i.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - c); if (d < bd) { bd = d; best = i; } });
+          if (gl) choisis(best); tr = setTimeout(() => { if (survol === g) survol = null; }, gl ? 2500 : 0); }, { passive: true });
+        IT.forEach(i => i.addEventListener("click", e => { if (gl) { e.stopImmediatePropagation(); gl = false; } }, true)); }
       new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !larg) mesure(); }, { threshold: .05 }).observe(g);
       addEventListener("resize", mesure); addEventListener("load", mesure); setTimeout(mesure, 600);
       requestAnimationFrame(boucle);
