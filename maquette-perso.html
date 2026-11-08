@@ -87,7 +87,7 @@ const F = $("site");
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 const ETAPES = [
   { t: "Votre en-tête", a: "" }, { t: "Votre fond", a: "" }, { t: "Vos couleurs", a: "" }, { t: "Votre écriture", a: "" }, { t: "Vos charms", a: "" }];
-const NB_FORMES = 6;
+const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
 const ENCRES = [["", "Comme le site", "conic-gradient(#E8C4B0,#C6B4E6,#B9D7EE,#A9B59C,#E8C4B0)"], ["#1E1C1B", "Noir"], ["#FFFFFF", "Blanc"], ["#B8B8C0", "Argent"], ["#C9A45C", "Doré"], ["#5B3A2E", "Chocolat"], ["#C8102E", "Rouge"], ["#6E0F31", "Bordeaux"], ["#B4587A", "Vieux rose"], ["#E5197E", "Fuchsia"], ["#7B62A8", "Lilas"], ["#2E4A8A", "Bleu"], ["#3E6A4A", "Vert"]];
 let encre = "";
 const FAM = [["Populaires", null], ["Cœurs", /coeur/], ["Fruits", /fraise|cerise|citron|peche|orange|ananas|pomme|framboise|kiwi|banane|myrtille|pasteque|raisin|poire|fruit/],
@@ -128,7 +128,7 @@ function taille() {
 function ambiance() {
   try { const a = $("ambiance"), t = D.querySelector(".ecran .tuile");
     if (!t || !W.__pzEtat?.().fond) { a.innerHTML = ""; return; }
-    const h = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); if (a._h !== h) { a._h = h; a.innerHTML = h; } } catch (e) {}
+    const h = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); if (a._h !== h) { a._h = h; a.innerHTML = `<div class="f100 fond-site" style="position:absolute;inset:0">${h}</div>`; } } catch (e) {}
 }
 function rend() {
   $("hautT").textContent = `Personnalisez · ${etape + 1} sur 5`;
@@ -138,8 +138,8 @@ function rend() {
   $("suivant").textContent = etape === 4 ? "C’EST PARFAIT" : "SUIVANT";
   const c = $("contenu");
   if (etape === 0) {
-    c.innerHTML = `<div class="pts">${Array.from({ length: NB_FORMES }, (_, k) => `<i class="${k + 1 === forme ? "on" : ""}"></i>`).join("")}</div>
-`;
+    c.innerHTML = `<div class="ligneH" id="formes">${NOMS_FORMES.map((n, k) => `<button class="puce verre ${k + 1 === forme ? "on" : ""}" data-forme="${k + 1}">${n}</button>`).join("")}</div>`;
+    requestAnimationFrame(() => $("formes")?.querySelector(".on")?.scrollIntoView({ inline: "center", block: "nearest" }));
   } else if (etape === 1) {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     c.innerHTML = `<div class="ligneH"><button class="puce verre" id="de" type="button">🎲 Surprenez-moi</button>${cats.map(b => `<button class="puce verre ${b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>
@@ -209,6 +209,7 @@ $("contenu").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
   if (b.id === "styleLien") { const s = $("styles"); s.hidden = !s.hidden; s.innerHTML = [...D.querySelectorAll("#pzUni [data-u]")].map(x => `<button class="puce verre" data-u="${x.dataset.u}">${x.textContent}</button>`).join(""); return; }
   if (b.dataset.u) { enFondu(() => clique(`#pzUni [data-u="${b.dataset.u}"]`)); $("styles").querySelectorAll(".puce").forEach(x => x.classList.toggle("on", x === b)); return; }
+  if (b.dataset.forme) { changeForme(+b.dataset.forme - forme); return; }
   if (b.dataset.cat) { clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(rend, 60); return; }
   if (b.id === "de") { const l = [...D.querySelectorAll("#pzFonds [data-f]")].filter(x => x.dataset.f); const x = l[Math.floor(Math.random() * l.length)];
     if (x) { x.click(); setTimeout(ambiance, 120); setTimeout(() => { ajusteFonds(); $("grilleF").querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`)?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" }); }, 500); } return; }

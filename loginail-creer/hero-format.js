@@ -117,6 +117,9 @@
   .ecran.btn-c .sec .pk-t b,.ecran.s3c .sec .pk-t b,.ecran.btn-c .sec .pk-t .pp,.ecran.s3c .sec .pk-t .pp{color:var(--encre0,#1E1C1B)!important}.ecran.btn-c .sec .pk-t small,.ecran.s3c .sec .pk-t small{color:#8a8076!important}
   .ecran.btn-pastel button[data-res],.ecran.btn-pastel a[data-res]:not(.pk-c),.ecran.btn-pastel .hf-res,.ecran.btn-pastel .cta,.ecran.btn-pastel .bouton,.ecran.btn-pastel .cof-barre a.res,.ecran.btn-pastel .mcb-res,.ecran.btn-pastel .mcb-res2{background:var(--btn)!important;color:#1E1C1B!important;border-color:var(--btn)!important}`;
   const vif = () => { try { return new URLSearchParams(location.search).get("vif") || (typeof BR !== "undefined" && BR && BR.vif) || ""; } catch (e) { return ""; } };
+  /* 08/11 : les écritures, connues aussi en dehors de pose() (pour changer l’écriture du nom sans tout refaire) */
+  const HF_POLF = { elegante: "Italiana", manuscrite: "'Great Vibes'", ronde: "'Bagel Fat One'", retro: "'Abril Fatface'", calligraphie: "'Pinyon Script'", parisienne: "Parisienne", chic: "'Playfair Display'", luxe: "Cinzel", surf: "Pacifico", seventies: "Shrikhand", bulle: "'Rubik Bubbles'", bonbon: "'Cherry Bomb One'", y2k: "Monoton", gothique: "UnifrakturMaguntia", feutre: "'Permanent Marker'", moderne: "Jost", mystique: "'Cormorant Garamond'", romantique: "Allura", astres: "'Cinzel Decorative'", danse: "'Dancing Script'", vintage: "'Lobster'", satin: "'Satisfy'", doudou: "'Fredoka'", mode: "'Bodoni Moda'", magazine: "'DM Serif Display'", affiche: "'Bebas Neue'", guimauve: "'Sniglet'", relief: "'Bungee Shade'", pixel: "Silkscreen", artdeco: "Fascinate", graffiti: "'Sedgwick Ave Display'", fondue: "'Climate Crisis'", cinema: "Limelight", feminine: "'Yeseva One'", pinup: "'Lily Script One'", couture: "Gloock", arrondie: "Righteous", douce: "Corben", gala: "Playball" };
+  const policeChoisie = () => { try { return (window.__pzEtat && window.__pzEtat().police) || ""; } catch (e) { return ""; } };
   function pose(e) {
     const v = VIF[vif()], pa = PAST[vif()];
     if (!e.style.getPropertyValue("--encre0")) { const cc = (typeof BR !== "undefined" && BR && BR.couleur) || new URLSearchParams(location.search).get("couleur"); const ec = (window.INKJ && INKJ[cc]) || "#1E1C1B"; e.style.setProperty("--encre0", ec); }
@@ -126,14 +129,16 @@
     const f = fmt(); const d = e.querySelector(".defile"); if (!d) return;
     const vieux = d.querySelector(":scope>.hf");
     if (!["A", "C", "E", "F", "G"].includes(f)) {   /* 06/11 (Marie) : l’arche (B) est retirée */ if (vieux) vieux.remove(); d.querySelectorAll(".hf-cache").forEach(x => x.classList.remove("hf-cache")); return; }
-    if (vieux && vieux.dataset.f.charAt(0) === f) return; if (vieux) vieux.remove();
+    /* 08/11 (Marie) : « l’écriture ne change pas » — le nom en grand garde l’écriture choisie dans Personnaliser */
+    if (vieux && vieux.dataset.f.charAt(0) === f) { const pz = HF_POLF[policeChoisie()], n = vieux.querySelector(".hf-nom"); if (pz && n && !n.style.fontFamily.includes(pz.replace(/'/g, ""))) n.style.setProperty("font-family", pz + ", serif", "important"); return; }
+    if (vieux) vieux.remove();
     const h = [...d.children].find(x => !x.classList.contains("hf")); if (!h) return;
     const b = typeof BR !== "undefined" && BR ? BR : {}; const nom = b.nom || "";
     /* l'écriture du nom : celle du site */
     const cible = null;
     const gros = [...h.querySelectorAll("*")].filter(x => x.offsetWidth && x.childElementCount <= 1 && (x.textContent || "").trim()).sort((p, q) => parseFloat(getComputedStyle(q).fontSize) - parseFloat(getComputedStyle(p).fontSize))[0];
     const POLF = { elegante: "Italiana", manuscrite: "'Great Vibes'", ronde: "'Bagel Fat One'", retro: "'Abril Fatface'", calligraphie: "'Pinyon Script'", parisienne: "Parisienne", chic: "'Playfair Display'", luxe: "Cinzel", surf: "Pacifico", seventies: "Shrikhand", bulle: "'Rubik Bubbles'", bonbon: "'Cherry Bomb One'", y2k: "Monoton", gothique: "UnifrakturMaguntia", feutre: "'Permanent Marker'", moderne: "Jost", mystique: "'Cormorant Garamond'", romantique: "Allura", astres: "'Cinzel Decorative'", danse: "'Dancing Script'", vintage: "'Lobster'", satin: "'Satisfy'", doudou: "'Fredoka'", mode: "'Bodoni Moda'", magazine: "'DM Serif Display'", affiche: "'Bebas Neue'", guimauve: "'Sniglet'", relief: "'Bungee Shade'", pixel: "Silkscreen", artdeco: "Fascinate", graffiti: "'Sedgwick Ave Display'", fondue: "'Climate Crisis'", cinema: "Limelight", feminine: "'Yeseva One'", pinup: "'Lily Script One'", couture: "Gloock", arrondie: "Righteous", douce: "Corben", gala: "Playball" };
-    const pc = (new URLSearchParams(location.search).get("police") || b.police || "").toLowerCase();
+    const pc = (policeChoisie() || new URLSearchParams(location.search).get("police") || b.police || "").toLowerCase();
     const police = (POLF[pc] && POLF[pc] + ", serif") || (cible && getComputedStyle(cible).fontFamily) || (gros && getComputedStyle(gros).fontFamily) || "Italiana, serif";
     const ph = (b.photos || [])[b.principale != null ? b.principale : (b.salon || 0)];   /* 06/11 : la photo choisie « En haut du site » d’abord */ const src = (ph && (ph.url || ph)) || (h.querySelector("img") || {}).src || "";
     const dispo = h.querySelector(".dispo-t,.dispo-p"); const note = typeof D !== "undefined" && D && D.note ? `★★★★★ ${D.note}${D.nb ? ` · ${D.nb} avis` : ""}${/exemple/i.test(h.innerText) ? " (exemple)" : ""}` : "";
@@ -179,6 +184,7 @@
     if (b.dataset.vif) BR.vif = BR.vif === b.dataset.vif ? "" : b.dataset.vif; else BR.vif = "";
     marque(); setTimeout(tout, 30); }, true);
   setTimeout(marque, 600);
+  document.addEventListener("click", ev => { if (ev.target.closest("#pzPol [data-p], #pzUni [data-u]")) [60, 250].forEach(t => setTimeout(tout, t)); }, true);   // 08/11 : une nouvelle écriture → le nom en grand suit
   new MutationObserver(() => { clearTimeout(tout.t); tout.t = setTimeout(tout, 80); }).observe(document.body, { childList: true, subtree: true });
   setTimeout(tout, 350);
 })();
