@@ -1790,7 +1790,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 </script>
 <script id="ordi4">/* 15/11 (Marie) : les choix de la planche « avis d'expert » — C+, K, G — version ORDINATEUR */
 (() => {
-  const ORDI = matchMedia("(min-width: 1000px)").matches, QA = new URLSearchParams(location.search).get("accueil");
+  const ORDI = matchMedia("(min-width: 1000px)").matches, QA = new URLSearchParams(location.search).get("accueil") || (ORDI ? null : "mix");   // 15/11 : sur téléphone, le mélange 1 + 3 est l'accueil officiel
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const hasard = (a, b) => a + Math.random() * (b - a);
 
