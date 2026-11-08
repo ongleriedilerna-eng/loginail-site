@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loginail · Tout ce que j’ai fait</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#F4F1EC;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;color:#1E1C1B}
+.tout{display:flex;gap:28px;justify-content:center;align-items:flex-start;padding:24px 16px;flex-wrap:wrap}
+.gauche{width:300px;max-width:100%}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:.01em}
+.s{color:#6a625b;font-size:14px;margin:0 0 18px;line-height:1.4}
+.liste{display:flex;flex-direction:column;gap:8px}
+.liste button{display:flex;align-items:center;gap:12px;text-align:left;border:0;background:#fff;border-radius:16px;padding:12px 14px;font:inherit;color:inherit;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.liste button.on{background:#1E1C1B;color:#fff}
+.liste i{flex:none;width:28px;height:28px;border-radius:50%;background:#F4F1EC;color:#1E1C1B;font:700 13px/28px sans-serif;text-align:center;font-style:normal}
+.liste button.on i{background:#fff}
+.liste b{display:block;font-size:15px}
+.liste small{display:block;font-size:12px;opacity:.7;margin-top:2px;line-height:1.3}
+.droite{display:flex;flex-direction:column;align-items:center;gap:10px}
+.tel{width:330px;height:660px;border-radius:44px;background:#1E1C1B;padding:10px;box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.ecran{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;background:#fff}
+.ecran iframe{position:absolute;left:0;top:0;width:390px;height:780px;border:0;transform:scale(.7949);transform-origin:0 0}
+.ouvrir{font-size:13px;color:#6a625b}
+.ouvrir a{color:#1E1C1B}
+</style></head><body>
+<div class="tout">
+  <div class="gauche">
+    <h1>Loginail</h1>
+    <p class="s">Un site et une appli pour les prothésistes ongulaires. Touchez une étape : elle s’affiche dans le téléphone, et on peut s’en servir pour de vrai.</p>
+    <div class="liste" id="liste"></div>
+  </div>
+  <div class="droite">
+    <div class="tel"><div class="ecran"><iframe id="f" title="Aperçu"></iframe></div></div>
+    <div class="ouvrir"><a id="grand" href="#" target="_blank" rel="noopener">Ouvrir en grand</a></div>
+  </div>
+</div>
+<script>
+const E = [
+  ["La page d’accueil", "loginail.fr, ce que voient les prothésistes en arrivant", "index.html"],
+  ["Créer mon site", "Elle colle le lien de sa fiche Google, Planity, Booksy ou de son site", "loginail-creer/index.html"],
+  ["Un site terminé", "L’exemple : les Ongles de Cerise", "loginail-creer/pret.html?public&exemple=dilerna&style=1&couleur=cerise&mode=jour&police=bonbon&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"],
+  ["Choisir son style", "Des sites à glisser, comme des cartes : ♥ ou ✕", "coups-de-coeur.html"],
+  ["Personnaliser son site", "La forme, le fond, les couleurs, l’écriture", "maquette-perso.html"],
+  ["Poser ses charms", "Plus de 1 000 charms à poser sur son site", "charms-presentoir.html"],
+  ["L’appli de la prothésiste", "Son agenda, ses clientes, sa caisse", "demo/loginail-pro.html"],
+];
+const liste = document.getElementById("liste"), f = document.getElementById("f"), grand = document.getElementById("grand");
+liste.innerHTML = E.map(([t, s], i) => `<button data-i="${i}"><i>${i + 1}</i><span><b>${t}</b><small>${s}</small></span></button>`).join("");
+const montre = i => { liste.querySelectorAll("button").forEach(b => b.classList.toggle("on", +b.dataset.i === i)); f.src = E[i][2]; grand.href = E[i][2]; };
+liste.onclick = e => { const b = e.target.closest("button"); if (b) montre(+b.dataset.i); };
+montre(0);
+</script>
+</body></html>
