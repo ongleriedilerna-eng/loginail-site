@@ -1716,6 +1716,10 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 @media (prefers-reduced-motion:reduce){.ch-corps,.ch-ombre i{animation:none}}
 </style>
 <style id="cremePlus">/* 09/11 (Marie) : la couleur du site, la même qu’avant mais plus visible (fond derrière les Prestations…) */.c-choco{--creme:#E7D7D0}.c-marine{--creme:#CED8E9}.c-taupe{--creme:#E7D9D0}.c-greige{--creme:#E7DCD0}.c-sable{--creme:#EADDCD}.c-peche{--creme:#ECD8CB}.c-sauge{--creme:#DDE7D0}.c-lin{--creme:#E7DED0}.c-nude{--creme:#E9D6CD}.c-rose{--creme:#EDC9D1}.c-bleup{--creme:#CEDBE9}.c-lilas{--creme:#D6CAED}.c-jaune{--creme:#F1E8C6}.c-menthe{--creme:#CDE9DE}.c-abricot{--creme:#F1D6C6}.c-ciel{--creme:#C6E2F1}.c-rosep{--creme:#F1C6D2}.c-poudre{--creme:#ECCFCB}.c-framboise{--creme:#F1C6D3}.c-lavande{--creme:#D3C6F1}.c-pechep{--creme:#F1D6C6}.c-corail{--creme:#F1CDC6}.c-cerise{--creme:#F1C6CC}.c-bordeaux{--creme:#F1C6CF}.c-prune{--creme:#E7D0E1}.c-terracotta{--creme:#EED3C9}.c-caramel{--creme:#EEDBC9}.c-vanille{--creme:#F1E6C6}.c-olive{--creme:#E6E7D0}.c-emeraude{--creme:#C6F1DF}.c-turquoise{--creme:#CBECEB}.c-perle{--creme:#DADADD}.c-verttendre{--creme:#DCE7D0}.c-vertdeau{--creme:#D0E7DD}.c-glycine{--creme:#DED0E7}.c-lilaspoudre{--creme:#E7D0E4}.c-nacre{--creme:#EBCECC}.c-cremedoree{--creme:#EFE3C8}.c-miel{--creme:#F1E1C6}.c-feuillage{--creme:#E5E7D0}.c-mousse{--creme:#DAE7D0}</style>
+<style>/* 15/11 (Marie) : la couleur du site sur les cartes (Prestations, Réalisations, Avis…), même avec un fond */
+.ecran:not(.v1):has(>.fond-site){--fond-carte:var(--creme)}
+.ecran:not(.v1):has(>.fond-site) .defile>.sec .tir,.ecran:not(.v1):has(>.fond-site) .defile>.sec .carte{background:color-mix(in srgb,var(--creme) 45%,#fff)}
+</style>
 </head>
 <body>
 <div class="bandeau"><b>Votre site est prêt</b>Essayez tout ce que vous voulez : univers, couleur, fond, détails. Puis « C’est parfait ».</div>
