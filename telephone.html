@@ -1329,6 +1329,33 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 #prix .pastille-se.scint i{color:#1E1C1B!important}
 @media (min-width:1000px){#prix .pastille-se.scint i{color:#F6F3EF!important}}
 .h-pan .nt2 span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== 16/11 (7) ===== */
+/* le lien : l'exemple glisse en changeant */
+form.creer input::placeholder{transition:opacity .25s,transform .25s}
+form.creer input.ph-sort::placeholder{opacity:0}
+/* téléphone : le titre remonte un peu, on voit mieux « Site · Réservation · Rappels SMS · Caisse » */
+@media (max-width:999px){.hero{padding-top:62px!important}.hero h1{margin-top:20px!important}.hero .h-lig{margin-top:12px!important}}
+/* Classe ou baddie : un petit bond en avant, l'un après l'autre */
+.gal .q h2 .bd1,.gal .q h2 .bd2{display:inline-block;transform-origin:50% 70%}
+.gal .q h2.bond .bd1{animation:bondAvant .7s cubic-bezier(.3,1.6,.5,1) .15s both}
+.gal .q h2.bond .bd2{animation:bondAvant .7s cubic-bezier(.3,1.6,.5,1) .75s both}
+@keyframes bondAvant{0%{transform:scale(1)}45%{transform:scale(1.16)}100%{transform:scale(1)}}
+/* appli · Accueil : la carte « Cette semaine » */
+.a-anim .a-carte{position:absolute;box-sizing:border-box;background:#EFE8DF;border-radius:3.2cqw;padding:2.6cqw 3.4cqw;display:flex;flex-direction:column;justify-content:center;gap:.6cqw;font:400 2.5cqw/1.3 Jost,sans-serif;color:#6b625c}
+.a-anim .a-carte small{font:500 1.9cqw Jost;letter-spacing:.2em;text-transform:uppercase;color:#8a8079}
+.a-anim .a-carte b{font:400 3.6cqw/1.15 'Cormorant Garamond',serif;color:#1E1C1B}.a-anim .a-carte b em{font-style:italic}
+/* appli · Réglages : la pastille sur « Nuit » (dessinée en jour, l'écran l'inverse) */
+.a-anim .z.seg{background:none!important;clip-path:none!important}
+.a-anim .z.seg i{position:absolute;top:27.66%;height:3.39%;display:grid;place-items:center;border-radius:99px;font:400 2.75cqw Jost,sans-serif;font-style:normal}
+.a-anim .z.seg .s-jour{left:52.6%;width:11.9%;background:#E9E5DF;color:#8a8079}
+.a-anim .z.seg .s-nuit{left:64.8%;width:11.6%;background:#1F1D1B;color:#fff}
+
+.a-anim .a-carte{padding:2.2cqw 3.6cqw!important;gap:.4cqw!important;font-size:3cqw!important}
+.a-anim .a-carte small{font-size:2.3cqw!important}
+.a-anim .a-carte b{font-size:4.8cqw!important}
+.gal .q h2 .bd1{margin-right:.28em}
+.a-anim .z.bt{transform-origin:50% 26.15%!important}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -2163,8 +2190,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794184608`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794184608`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794184608`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794220176`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794220176`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794220176`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2204,6 +2231,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   /* ---- 16/11 (Marie) : « tout compris » surligné ; « Sans engagement » qui scintille ---- */
   { const k = document.querySelector("#prix .prix > .k"); if (k && k.textContent.includes("tout compris")) k.innerHTML = k.textContent.replace("tout compris", '<mark class="surl">tout compris</mark>');
     const se = document.querySelector("#prix .pastille-se"); if (se) { se.classList.add("scint"); se.insertAdjacentHTML("beforeend", '<i class="sc1">✦</i><i class="sc2">✦</i><i class="sc3">✦</i>'); } }
+  /* ---- 16/11 (Marie) : dans la case du lien, les exemples défilent (Maps, Planity, Booksy…) ---- */
+  { const EX = ["Votre lien Google Maps…", "Votre lien Planity…", "Votre lien Booksy…", "Votre lien Treatwell…", "Votre lien Instagram…"];
+    const IN = [...document.querySelectorAll('form.creer input[name="lien"]')]; let k = 0;
+    if (IN.length) { IN.forEach(i => i.placeholder = EX[0]); setInterval(() => { if (document.hidden) return; k = (k + 1) % EX.length;
+      IN.forEach(i => { if (i.value || document.activeElement === i) return; i.classList.add("ph-sort"); setTimeout(() => { i.placeholder = EX[k]; i.classList.remove("ph-sort"); }, 260); }); }, 2000); } }
   /* ---- les charms : une phrase plus légère ---- */
   { const t = document.querySelector("#charms .bloc .t2");
     if (t) { const petit = document.createElement("p"); petit.className = "ch-petit"; petit.textContent = "On colle des charms sur les ongles de nos clientes,"; t.before(petit);
@@ -2224,7 +2256,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const tape = (el, txt, d0, v) => { [...txt].forEach((c, i) => att(() => { el.textContent = [...txt].slice(0, i + 1).join(""); }, d0 + i * v)); };
       const S = [
         /* 0 · Accueil : le 10:00 sonne */
-        () => { A.append(cache(10.5, 44.3, 36, 49.8, "#1E1C1B"), morceau("app-accueil", 10.5, 44.3, 36, 49.8, "dix"));
+        () => { { const c = document.createElement("div"); c.className = "a-carte"; Object.assign(c.style, { left: "5.67%", top: "16.8%", width: "88.5%", height: "11.1%" });
+            c.innerHTML = '<small>Cette semaine</small><b>Votre site a été vu <em>128 fois</em></b><span>9 réservations en ligne · 0 % de commission</span>'; A.appendChild(c); }
+          A.append(cache(10.5, 44.3, 36, 49.8, "#1E1C1B"), morceau("app-accueil", 10.5, 44.3, 36, 49.8, "dix"));
           const r = document.createElement("div"); r.className = "reveil"; r.innerHTML = '<i class="onde"></i><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.4 1.6M5 4.5 2.8 6.6M19 4.5l2.2 2.1M7.5 20 6 22M16.5 20l1.5 2"/></svg>'; A.appendChild(r);
           const go = () => { A.classList.remove("sonne"); void A.offsetWidth; A.classList.add("sonne"); att(go, 4200); }; att(go, 600); },
         /* 1 · Agenda : les rendez-vous se placent un par un */
@@ -2238,7 +2272,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           j.innerHTML = '<b>13:00 – 14:30</b> Jade<span class="r">✓ rappel</span><small>Pose américaine · acompte payé</small>'; A.appendChild(j); Z.splice(2, 0, j);
           const go = () => { Z.forEach(z => z.classList.remove("ok")); Z.forEach((z, i) => att(() => z.classList.add("ok"), 400 + i * 420)); att(go, 5600); }; go(); },
         /* 2 · Clientes : on ajoute Chloé */
-        () => { const bt = morceau("app-clientes", 5.5, 23.2, 94.5, 29, "bt"); A.appendChild(bt);
+        () => { { const cc = cache(1, 23, 99, 29.4, "#F7F2EF"); cc.style.borderRadius = "0"; A.appendChild(cc); } const bt = morceau("app-clientes", 5.67, 23.5, 94.17, 28.81, "bt"); A.appendChild(bt);
           const f = document.createElement("div"); f.className = "fiche";
           f.innerHTML = '<h4>Nouvelle cliente</h4><div class="ch"><small>Prénom et nom</small><span class="n"></span></div><div class="ch"><small>Téléphone</small><span class="t"></span></div><div class="ch"><small>Anniversaire</small><span class="a"></span></div><div class="ok2">Enregistrer</div>';
           A.appendChild(f); const n = f.querySelector(".n"), t = f.querySelector(".t"), a = f.querySelector(".a"), ok = f.querySelector(".ok2");
@@ -2259,7 +2293,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         ,
         /* 4 · Réglages : l'apparence, jour / nuit */
         () => { const z = morceau("app-reglages", 0, 0, 100, 100, "nuit"); A.appendChild(z);
-          const go = () => { z.classList.remove("on"); att(() => z.classList.add("on"), 1600); att(() => z.classList.remove("on"), 4400); att(go, 6200); }; go(); }
+          const zn = document.createElement("div"); zn.className = "z nuit seg"; zn.innerHTML = '<i class="s-jour">Jour</i><i class="s-nuit">Nuit</i>'; A.appendChild(zn);
+          const go = () => { z.classList.remove("on"); zn.classList.remove("on"); att(() => { z.classList.add("on"); zn.classList.add("on"); }, 1600); att(() => { z.classList.remove("on"); zn.classList.remove("on"); }, 4400); att(go, 6200); }; go(); }
       ];
       const lance = () => { efface(); if (vu && S[ongl]) S[ongl](); };
       barre.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; ongl = +b.dataset.i; efface(); setTimeout(lance, 380); });
@@ -2329,12 +2364,12 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         for (let i = reste.length - 1; i > 0; i--) { const k = Math.floor(Math.random() * (i + 1)); [reste[i], reste[k]] = [reste[k], reste[i]]; }
         L.length = 0; L.push(...tete, ...reste); }
       const g = document.createElement("section"); g.className = "gal"; g.id = "styles-gal";
-      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2>Classe <em>ou baddie ?</em></h2><div class="q-aide">' + (ORDI ? "Cliquez sur un site pour le voir en grand" : "Glissez, puis touchez le site") + '</div></div><div class="piste"></div>';
+      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2><span class="bd1">Classe</span> <em class="bd2">ou baddie ?</em></h2><div class="q-aide">' + (ORDI ? "Cliquez sur un site pour le voir en grand" : "Glissez, puis touchez le site") + '</div></div><div class="piste"></div>';
       pin.after(g);
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794184608" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794220176" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2342,7 +2377,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794184608)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794220176)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2380,6 +2415,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         let rw = 0; g.addEventListener("wheel", e => { if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; e.preventDefault(); touche = true; tire = true; x -= e.deltaX; xT = x; clearTimeout(rw); rw = setTimeout(() => { tire = false; repos = Date.now() + 1500; }, 140); }, { passive: false });
       }
       new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu) mesure(); }, { threshold: .05 }).observe(g);
+      { const h2 = g.querySelector(".q h2"); new IntersectionObserver(es => { if (es[0].isIntersecting) { h2.classList.remove("bond"); void h2.offsetWidth; h2.classList.add("bond"); } }, { threshold: .6 }).observe(g); }
       { let lw = innerWidth; addEventListener("resize", () => { if (Math.abs(innerWidth - lw) < 2) return; lw = innerWidth; const k = focus ? IT.indexOf(focus) : L.length; mesure(); vise(k); x = xT; }); }
       addEventListener("load", mesure); setTimeout(mesure, 600);
       requestAnimationFrame(boucle);
