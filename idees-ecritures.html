@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Écritures et photo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="loginail-site/polices-sites.css" rel="stylesheet">
+<style>
+:root{--creme:#F6F3EF;--noir:#1E1C1B;--gris:#8a8076;--ligne:rgba(30,28,27,.12)}
+*{box-sizing:border-box}body{margin:0;background:var(--creme);color:var(--noir);font:400 15px/1.5 Jost,sans-serif}
+header{text-align:center;padding:30px 16px 6px}h1{margin:0;font:400 clamp(30px,4vw,46px)/1.05 'Cormorant Garamond',serif;letter-spacing:.06em;text-transform:uppercase}
+header p{max-width:640px;margin:10px auto 0;color:#6b625c}
+section{max-width:1260px;margin:0 auto;padding:34px 16px 10px}
+h2{margin:0 0 4px;font:400 clamp(26px,3vw,36px)/1.1 'Cormorant Garamond',serif}h2 small{display:block;font:500 11px Jost;letter-spacing:.24em;text-transform:uppercase;color:var(--gris);margin-bottom:6px}
+.aide{color:#6b625c;margin:0 0 16px;font-size:14px}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:18px}
+.grille.p{grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr))}
+.c{background:#fff;border-radius:22px;padding:16px;box-shadow:0 0 0 1px var(--ligne);cursor:pointer;display:flex;flex-direction:column;gap:10px}
+.c.on{box-shadow:0 0 0 3px var(--noir)}
+.c .lab{display:flex;align-items:center;gap:10px;font:500 13px Jost}.c .lab i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--noir);color:#fff;display:grid;place-items:center;font-style:normal;font-size:12px}
+.c .lab span{color:var(--gris);font-weight:400}.c.on .lab::after{content:"✓ choisi";margin-left:auto;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+/* ---- A · les titres ---- */
+.pan{border-radius:14px;padding:22px 14px;text-align:center;display:grid;place-items:center;min-height:118px;position:relative;overflow:hidden}
+.pan.ch{background:#F1ECE6}.pan.bio{background:#F7F2EF}.pan.fin{background:radial-gradient(ellipse at 50% 40%,#FBF6F0,#E9DDD0)}
+.pan img{position:absolute;width:30px;height:30px;object-fit:contain}
+.pan .t{position:relative;z-index:2;max-width:300px;margin:0 auto;text-wrap:balance}
+.pan .t .l1,.pan .t .l2{display:block}
+.pan .lb{position:absolute;left:10px;top:8px;font:500 9px Jost;letter-spacing:.22em;text-transform:uppercase;color:var(--gris)}
+/* styles */
+.s1 .l1{font:500 25px/1.02 'Bodoni Moda',serif;text-transform:uppercase;letter-spacing:.02em}.s1 .l2{font:italic 400 25px/1.05 'Bodoni Moda',serif;text-transform:uppercase;letter-spacing:.02em;margin-top:2px}
+.s2 .l1{font:500 19px/1.2 Jost,sans-serif;text-transform:uppercase;letter-spacing:.2em}.s2 .l2{font:600 19px/1.2 Jost,sans-serif;text-transform:uppercase;letter-spacing:.2em;margin-top:4px}
+.s3 .l1{font:700 24px/1.04 'Playfair Display',serif;text-transform:uppercase}.s3 .l2{font:italic 400 24px/1.08 'Playfair Display',serif;text-transform:uppercase;margin-top:2px}
+.s4 .l1,.s4 .l2{font:400 27px/1 'DM Serif Display',serif;text-transform:uppercase}.s4 .l2{font-style:italic}
+.s5 .l1,.s5 .l2{font:400 25px/1.04 Gloock,serif;text-transform:uppercase;letter-spacing:.01em}.s5 .l2{opacity:.8}
+.s6 .l1{font:500 21px/1.1 Cinzel,serif;letter-spacing:.06em}.s6 .l2{font:italic 400 26px/1.05 'Cormorant Garamond',serif;text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+/* ---- B · la case photo ---- */
+.tel{width:100%;max-width:230px;margin:0 auto;aspect-ratio:9/17;border-radius:30px;padding:8px;background:linear-gradient(150deg,#3a3a3c,#0d0d0e 45%,#1f1f21)}
+.ec{width:100%;height:100%;border-radius:23px;overflow:hidden;background:#F7F2EF;display:flex;flex-direction:column;align-items:center;padding:10% 6% 6%;gap:4%;container-type:inline-size}
+.ec .pill{background:#fff;border-radius:99px;padding:1.6cqw 5cqw;font:500 3.4cqw Jost;letter-spacing:.24em;text-transform:uppercase}
+.ec .ph{position:relative;width:100%;flex:1;border-radius:7cqw;overflow:hidden;display:grid;place-items:center;text-align:center}
+.ec .nom{width:100%;background:#fff;border-radius:7cqw;padding:5cqw 4cqw;text-align:center}
+.ec .nom small{display:block;font:500 2.3cqw Jost;letter-spacing:.2em;text-transform:uppercase;color:#6b625c}
+.ec .nom b{display:block;font:400 11cqw/1 Italiana,serif;margin:2cqw 0}
+.ec .nom u{display:inline-block;text-decoration:none;background:#1E1C1B;color:#fff;border-radius:99px;padding:3cqw 8cqw;font:500 3cqw Jost;letter-spacing:.16em;text-transform:uppercase}
+.q1{background:#F2ECE4}.q1 div{font:500 3.6cqw Jost;letter-spacing:.3em;text-transform:uppercase;color:#6b625c}.q1 svg{display:block;width:12cqw;margin:0 auto 3cqw;stroke:#8a8076;fill:none;stroke-width:1.3}
+.q2{background:linear-gradient(180deg,#F5EFE7,#ECE3D8)}.q2 div{font:italic 400 7cqw/1.15 'Bodoni Moda',serif;color:#3b332e}
+.q3{background:center/cover}.q3::before{content:"";position:absolute;inset:0;background:rgba(247,242,239,.86)}.q3 div{position:relative;font:500 3.8cqw/1.5 Jost;letter-spacing:.28em;text-transform:uppercase;color:#1E1C1B}
+.q4{background:#EEE7DE}.q4 svg{width:34cqw;stroke:#9c8f84;fill:none;stroke-width:1.2}
+.q5{background:#F4EEE6}.q5 div{font:500 3.4cqw Jost;letter-spacing:.28em;text-transform:uppercase;color:#6b625c}.q5 div b{display:block;font:400 22cqw/1 'Bodoni Moda',serif;letter-spacing:0;color:#1E1C1B;margin-bottom:3cqw}
+.q6{background:#EFE8DF}.q6 div{font:400 4.2cqw/1.4 Jost;color:#6b625c}.q6 div b{display:block;font:600 4.4cqw Jost;letter-spacing:.14em;text-transform:uppercase;color:#1E1C1B;margin-bottom:1.5cqw}
+.envoi{position:sticky;bottom:0;z-index:5;background:rgba(246,243,239,.95);backdrop-filter:blur(8px);border-top:1px solid var(--ligne);padding:12px 16px;display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:30px}
+.envoi span{font-size:13px;color:#6b625c}
+.btn{border:0;border-radius:99px;background:var(--noir);color:#fff;font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase;padding:13px 22px;cursor:pointer}
+.ok{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--noir);color:#fff;padding:12px 20px;border-radius:99px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:9}.ok.on{opacity:1}
+</style></head><body>
+<header><h1>Écritures et photo</h1><p>Chaque carte montre une écriture sur les trois titres à la fois (pour que tout aille ensemble). Touchez votre préférée, puis en bas « Copier mes choix ».</p></header>
+<section data-s="titres"><h2><small>1 · Les grands titres</small>Quelle écriture pour les titres ?</h2>
+<p class="aide">Charms, bio et « Tout ça », en grand et en majuscules, bien centrés.</p><div class="grille" id="grT"></div></section>
+<section data-s="photo"><h2><small>2 · Personnalisez votre site</small>La case photo, en plus sobre</h2>
+<p class="aide">Sans cadre, écriture plus épaisse et moins grande.</p><div class="grille p" id="grP"></div></section>
+<div class="envoi"><span id="resume">Rien de choisi pour l’instant</span><button class="btn" id="copier">Copier mes choix</button></div>
+<div class="ok" id="ok">Copié ! Collez-le dans la discussion.</div>
+<script>
+const ST=[["s1","Magazine","Bodoni, comme Vogue"],["s2","Épuré","sans fioritures, très luxe"],["s3","Élégant gras","Playfair, plus de caractère"],["s4","Affiche chic","DM Serif, grand et doux"],["s5","Moderne","Gloock, net et sûr de lui"],["s6","Gravé","Cinzel + italique fine"]];
+const TX=[["ch","Les charms","Des charms sur les ongles.","Et maintenant, sur votre site."],["bio","Votre lien","Dans votre bio Instagram,","votresalon.fr"],["fin","Votre tour","Tout ça, rien que pour vous.","Alors, qu’attendez-vous ?"]];
+const CHI=[["cerisedisco",6,10],["noeudgelee",84,12],["perle",8,70],["papillondore",86,66]];
+document.getElementById("grT").innerHTML=ST.map((s,k)=>`<div class="c" data-v="${k+1}"><div class="lab"><i>${k+1}</i>${s[1]} <span>· ${s[2]}</span></div>`+TX.map(t=>`<div class="pan ${t[0]} ${s[0]}"><span class="lb">${t[1]}</span>${t[0]==="ch"?CHI.map(c=>`<img src="loginail-site/charms-mini/${c[0]}.webp" style="left:${c[1]}%;top:${c[2]}%" alt="">`).join(""):""}<div class="t"><span class="l1">${t[2]}</span><span class="l2">${t[3]}</span></div></div>`).join("")+`</div>`).join("");
+const PH=[["q1","L’appareil photo","tout petit, très sobre",'<div><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.5 7l1.4-2.5h4.2L15.5 7"/></svg>Votre photo</div>'],
+ ["q2","Une phrase douce","italique, taille moyenne",'<div>Votre plus<br>belle pose</div>'],
+ ["q3","Photo en filigrane","on devine des ongles",'<div>Votre plus<br>belle pose</div>'],
+ ["q4","Un ongle dessiné","sans texte",'<svg viewBox="0 0 60 90"><path d="M18 88V40c0-14 5-30 12-34 7 4 12 20 12 34v48"/><path d="M22 40c0-10 3-20 8-23 5 3 8 13 8 23"/></svg>'],
+ ["q5","L’initiale","comme un logo",'<div><b>C</b>Votre photo ici</div>'],
+ ["q6","Juste une info","« ajoutez votre photo »",'<div><b>Votre photo</b>Ajoutez votre plus<br>belle pose</div>']];
+document.getElementById("grP").innerHTML=PH.map((p,k)=>`<div class="c" data-v="${k+1}"><div class="lab"><i>${k+1}</i>${p[1]} <span>· ${p[2]}</span></div><div class="tel"><div class="ec"><div class="pill">les Ongles de Cerise</div><div class="ph ${p[0]}" ${p[0]==="q3"?'style="background-image:url(loginail-site/univers-photos/moka/1.webp)"':""}>${p[3]}</div><div class="nom"><small>Prothésiste ongulaire · Marseille</small><b>les Ongles de Cerise</b><u>Réserver</u></div></div></div></div>`).join("");
+const NOMS={titres:"Écriture des titres",photo:"Case photo"},choix={};
+try{Object.assign(choix,JSON.parse(localStorage.getItem("idees-ecritures")||"{}"))}catch(_){}
+const maj=()=>{document.querySelectorAll("section[data-s]").forEach(s=>s.querySelectorAll(".c").forEach(c=>c.classList.toggle("on",choix[s.dataset.s]===c.dataset.v)));
+ const t=Object.keys(NOMS).filter(k=>choix[k]).map(k=>NOMS[k]+" "+choix[k]);document.getElementById("resume").textContent=t.length?t.join(" · "):"Rien de choisi pour l’instant";try{localStorage.setItem("idees-ecritures",JSON.stringify(choix))}catch(_){}};
+document.addEventListener("click",e=>{const c=e.target.closest(".c");if(!c)return;const s=c.closest("section").dataset.s;choix[s]=choix[s]===c.dataset.v?undefined:c.dataset.v;maj()});
+document.getElementById("copier").onclick=async()=>{const t="Mes choix (écritures et photo) : "+(Object.keys(NOMS).filter(k=>choix[k]).map(k=>NOMS[k]+" → "+choix[k]).join(" ; ")||"aucun");
+ try{await navigator.clipboard.writeText(t)}catch(_){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}
+ const o=document.getElementById("ok");o.classList.add("on");setTimeout(()=>o.classList.remove("on"),2200)};
+maj();
+</script></body></html>

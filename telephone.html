@@ -1367,6 +1367,9 @@ form.creer input.ph-sort::placeholder{opacity:0}
 .p-ch .bloc .ch-petit{font:400 clamp(40px,3.8vw,60px)/1.04 'Cormorant Garamond',serif!important;font-style:normal!important;color:#1E1C1B!important;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 4px!important}
 .p-ch .bloc .t2{font-size:clamp(40px,3.8vw,60px)!important;line-height:1.04!important;text-transform:uppercase;letter-spacing:.06em}
 @media (max-width:999px){.p-ch .bloc .ch-petit,.p-ch .bloc .t2{font-size:30px!important}}
+
+/* ===== 16/11 (10) : le carrousel garde le geste de côté pour lui ===== */
+.gal{overscroll-behavior-x:contain}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -2201,8 +2204,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794221934`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794221934`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794221934`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794222447`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794222447`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794222447`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2243,7 +2246,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   { const k = document.querySelector("#prix .prix > .k"); if (k && k.textContent.includes("tout compris")) k.innerHTML = k.textContent.replace("tout compris", '<mark class="surl">tout compris</mark>');
     const se = document.querySelector("#prix .pastille-se"); if (se) { se.classList.add("scint"); se.insertAdjacentHTML("beforeend", '<i class="sc1">✦</i><i class="sc2">✦</i><i class="sc3">✦</i>'); } }
   /* ---- 16/11 (Marie) : dans la case du lien, les exemples défilent (Maps, Planity, Booksy…) ---- */
-  { const EX = ["Votre lien Google Maps…", "Votre lien Planity…", "Votre lien Booksy…", "Votre lien Treatwell…", "Votre lien Instagram…"];
+  { const EX = ["Votre lien Google…", "Votre lien Planity…", "Votre lien Booksy…", "Votre site…"];   /* 16/11 : seulement les liens que la création sait lire (Instagram est refusé) */
     const IN = [...document.querySelectorAll('form.creer input[name="lien"]')]; let k = 0;
     if (IN.length) { IN.forEach(i => i.placeholder = EX[0]); setInterval(() => { if (document.hidden) return; k = (k + 1) % EX.length;
       IN.forEach(i => { if (i.value || document.activeElement === i) return; i.classList.add("ph-sort"); setTimeout(() => { i.placeholder = EX[k]; i.classList.remove("ph-sort"); }, 260); }); }, 2000); } }
@@ -2388,7 +2391,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794221934" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794222447" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2396,7 +2399,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794221934)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794222447)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2430,6 +2433,12 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         addEventListener("pointerup", fin);
         addEventListener("pointercancel", () => { if (x0 !== null) { x0 = null; tire = false; xT = x; repos = Date.now() + 1500; } });
         g.addEventListener("dragstart", e => e.preventDefault());
+        /* 16/11 (Marie) : au pouce, si le geste part de côté, la page ne bouge plus ; s'il part vers le bas, la page descend normalement */
+        { let tx = 0, ty = 0, sens = "";
+          g.addEventListener("touchstart", e => { const t = e.touches[0]; tx = t.clientX; ty = t.clientY; sens = ""; }, { passive: true });
+          g.addEventListener("touchmove", e => { const t = e.touches[0], dx = Math.abs(t.clientX - tx), dy = Math.abs(t.clientY - ty);
+            if (!sens && dx + dy > 2) sens = dx > dy * .8 ? "cote" : "bas";
+            if (sens === "cote") e.preventDefault(); }, { passive: false }); }
         /* molette de côté (pavé tactile) : on tourne ; molette normale : la page descend comme d'habitude */
         let rw = 0; g.addEventListener("wheel", e => { if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; e.preventDefault(); touche = true; tire = true; x -= e.deltaX; xT = x; clearTimeout(rw); rw = setTimeout(() => { tire = false; repos = Date.now() + 1500; }, 140); }, { passive: false });
       }
