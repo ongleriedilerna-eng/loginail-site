@@ -1357,6 +1357,12 @@ form.creer input.ph-sort::placeholder{opacity:0}
 .a-anim .a-carte b{font-size:4.8cqw!important}
 .gal .q h2 .bd1{margin-right:.28em}
 .a-anim .z.bt{transform-origin:50% 26.15%!important}
+
+/* ===== 16/11 (8) : la bio — le mot bascule comme une carte ===== */
+.bio-k h2 .scr.flip{display:inline-block;position:relative;height:1.1em;line-height:1.1;vertical-align:-.2em;perspective:320px;white-space:nowrap;transition:width .45s cubic-bezier(.5,0,.2,1)}
+.bio-k h2 .scr.flip b{position:absolute;left:0;top:0;font-weight:inherit;white-space:nowrap;transform-origin:50% 50% -.3em;backface-visibility:hidden;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .55s}
+.bio-k h2 .scr.flip b.out{transform:rotateX(90deg);opacity:0}
+.bio-k h2 .scr.flip b.in{transform:rotateX(-90deg);opacity:0}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -2191,8 +2197,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794220176`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794220176`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794220176`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794221285`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794221285`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794221285`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2336,10 +2342,18 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const ecrit = (el, fin) => { if (!el) return; clearInterval(el._ec); let s = el.textContent, ef = true;
         el._ec = setInterval(() => { if (ef) { s = s.slice(0, -1); el.textContent = s || "\u200b"; if (!s) ef = false; return; }
           s = fin.slice(0, s.length + 1); el.textContent = s; if (s === fin) clearInterval(el._ec); }, 95); };
+      /* 16/11 (Marie, idée 3) : le nom du réseau bascule d'un coup, comme une carte qui tourne ; la place s'ajuste au mot */
+      const flip = (el, fin) => { if (!el) return;
+        if (!el._fl) { el._fl = 1; el.classList.add("flip"); el.innerHTML = "<b>" + el.textContent + "</b>"; }
+        const larg = t => { const s2 = document.createElement("span"); s2.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap"; s2.textContent = t; el.parentNode.appendChild(s2); const w = s2.offsetWidth; s2.remove(); return w; };
+        if (!el.style.width) el.style.width = larg(el.textContent) + "px";
+        const old = [...el.querySelectorAll("b")].pop(), n = document.createElement("b"); n.textContent = fin; n.className = "in"; el.appendChild(n); el.style.width = larg(fin) + "px";
+        requestAnimationFrame(() => requestAnimationFrame(() => { n.className = ""; if (old) old.classList.add("out"); }));
+        setTimeout(() => { if (old) old.remove(); }, 650); };
       /* les deux téléphones : le site sort de derrière le profil, passe devant, puis revient derrière */
       const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;
         const nom = NOMS[kN++ % NOMS.length];
-        t.push(setTimeout(() => { ecrit(sc, nom); }, 300));   /* 15/11 : le lien et l’étiquette restent « votresalon.fr » */
+        t.push(setTimeout(() => { flip(sc, nom); }, 300));   /* 15/11 : le lien et l’étiquette restent « votresalon.fr » */
         t.push(setTimeout(() => s.classList.add("clic"), 1500)); t.push(setTimeout(() => s.classList.add("ouvre"), 2900));
         t.push(setTimeout(() => { s.classList.remove("clic"); }, 5600));
         t.push(setTimeout(() => s.classList.remove("ouvre"), 6000));
@@ -2365,12 +2379,12 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         for (let i = reste.length - 1; i > 0; i--) { const k = Math.floor(Math.random() * (i + 1)); [reste[i], reste[k]] = [reste[k], reste[i]]; }
         L.length = 0; L.push(...tete, ...reste); }
       const g = document.createElement("section"); g.className = "gal"; g.id = "styles-gal";
-      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2><span class="bd1">Classe</span> <em class="bd2">ou baddie ?</em></h2><div class="q-aide">' + (ORDI ? "Cliquez sur un site pour le voir en grand" : "Glissez, puis touchez le site") + '</div></div><div class="piste"></div>';
+      g.innerHTML = '<div class="bg a"></div><div class="bg b"></div><div class="q"><div class="k">Votre style</div><h2><span class="bd1">Classe</span> <em>ou <span class="bd2">baddie ?</span></em></h2><div class="q-aide">' + (ORDI ? "Cliquez sur un site pour le voir en grand" : "Glissez, puis touchez le site") + '</div></div><div class="piste"></div>';
       pin.after(g);
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794220176" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794221285" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2378,7 +2392,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794220176)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794221285)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
