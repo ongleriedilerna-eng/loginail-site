@@ -1363,6 +1363,11 @@ form.creer input.ph-sort::placeholder{opacity:0}
 .bio-k h2 .scr.flip b{position:absolute;left:0;top:0;font-weight:inherit;white-space:nowrap;transform-origin:50% 50% -.3em;backface-visibility:hidden;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .55s}
 .bio-k h2 .scr.flip b.out{transform:rotateX(90deg);opacity:0}
 .bio-k h2 .scr.flip b.in{transform:rotateX(-90deg);opacity:0}
+
+/* ===== 16/11 (9) : la phrase des charms, en grand et en majuscules (comme « Classe ou baddie ? ») ===== */
+.p-ch .bloc .ch-petit{font:400 clamp(40px,3.8vw,60px)/1.04 'Cormorant Garamond',serif!important;font-style:normal!important;color:#1E1C1B!important;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 4px!important}
+.p-ch .bloc .t2{font-size:clamp(40px,3.8vw,60px)!important;line-height:1.04!important;text-transform:uppercase;letter-spacing:.06em}
+@media (max-width:999px){.p-ch .bloc .ch-petit,.p-ch .bloc .t2{font-size:30px!important}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1384,7 +1389,7 @@ form.creer input.ph-sort::placeholder{opacity:0}
   <div class="b-tete"><div class="k" id="bNum">1 / 6 · votre site</div><div class="b-barre"><i id="bBarre"></i></div></div>
   <div class="b-fond" id="bFond"><i style="left:6%;animation-duration:9s"></i><i style="left:24%;animation-duration:12s;animation-delay:-5s;width:18px;height:20px"></i><i style="left:80%;animation-duration:10s;animation-delay:-2s"></i><i style="left:92%;animation-duration:13s;animation-delay:-8s;width:18px;height:20px"></i><i style="left:12%;animation-duration:11s;animation-delay:-7s;width:20px;height:22px"></i><i style="left:70%;animation-duration:14s;animation-delay:-10s;width:20px;height:22px"></i></div>
   <div class="b-telw"><div class="b-tel"><div class="b-ecr" id="bEcr">
-    <img class="c" data-c="1" src="loginail-site/apercus-univers/s1.webp?v=25" alt="" style="opacity:1">
+    <img class="c" data-c="1" src="loginail-site/apercus-univers/s1.webp?v=26" alt="" style="opacity:1">
     <img class="c" data-c="2" src="loginail-site/apercus-univers/o2.webp" alt="">
     <img class="c" data-c="3" src="loginail-site/apercus-univers/o3.webp" alt="">
     <img class="c" data-c="5" src="loginail-site/apercus-univers/s5.webp" alt="">
@@ -2197,8 +2202,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794221285`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794221285`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794221285`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794221934`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794221934`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794221934`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2245,8 +2250,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       IN.forEach(i => { if (i.value || document.activeElement === i) return; i.classList.add("ph-sort"); setTimeout(() => { i.placeholder = EX[k]; i.classList.remove("ph-sort"); }, 260); }); }, 2000); } }
   /* ---- les charms : une phrase plus légère ---- */
   { const t = document.querySelector("#charms .bloc .t2");
-    if (t) { const petit = document.createElement("p"); petit.className = "ch-petit"; petit.textContent = "On colle des charms sur les ongles de nos clientes,"; t.before(petit);
-      t.innerHTML = "Pourquoi pas<br><em>sur notre site ?</em>";
+    if (t) { const petit = document.createElement("p"); petit.className = "ch-petit"; petit.textContent = "Des charms sur les ongles."; t.before(petit);   /* 16/11 (Marie) : phrase n° 1, en grand */
+      t.innerHTML = "<em>Et maintenant,<br>sur votre site.</em>";
       const pp = t.parentElement.querySelector(".p"); if (pp) { pp.innerHTML = "Touchez-en un.<br>Sur votre site, vos clientes font pareil."; pp.classList.add("ch-p2"); } } }
 
   /* ---- L'appli s'anime : chaque onglet a sa petite scène, en boucle ---- */
@@ -2384,7 +2389,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794221285" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794221934" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2392,7 +2397,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794221285)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794221934)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
