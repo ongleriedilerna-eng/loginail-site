@@ -1304,6 +1304,31 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 /* ===== 16/11 (5) ===== */
 .chif.trois div b::after{content:"+"}
 @media (max-width:999px){.build{height:calc(100svh + 4400px)!important}}
+
+/* ===== 16/11 (6) ===== */
+/* la phrase du haut : une ligne sur ordinateur, deux sur téléphone */
+.hero .k .k-br{display:none}
+@media (max-width:999px){.hero .k .k-sep{display:none}.hero .k .k-br{display:inline}.hero>.k{line-height:1.7}}
+/* la petite notif de rdv sur l'agenda */
+.h-pan .tel.t2 .e{position:relative}
+.h-pan .nt2{position:absolute;z-index:3;left:8%;right:8%;top:20%;display:flex;align-items:center;gap:5px;padding:5px 7px;border-radius:9px;background:var(--nc,#1E1C1B);color:#fff;
+  font:500 clamp(6.5px,.62vw,9px)/1.2 Jost,sans-serif;letter-spacing:.02em;box-shadow:0 6px 14px -6px rgba(0,0,0,.45);opacity:0;transform:translateY(-6px) scale(.92);transition:opacity .45s,transform .55s cubic-bezier(.3,1.5,.5,1)}
+.h-pan .nt2 i{flex:none;width:6px;height:6px;border-radius:50%;background:#fff;opacity:.9}
+.h-pan .nt2.on{opacity:1;transform:none}
+@media (max-width:999px){.h-pan .nt2{font-size:7.5px;padding:4px 6px}}
+/* « Touchez une icône » : un léger néon, élégant */
+.app-h .a-ong-bloc::after{color:#FBF3E6!important;animation:neonDoux 2.6s ease-in-out infinite}
+@keyframes neonDoux{0%,100%{opacity:.5;text-shadow:0 0 0 rgba(255,226,180,0)}50%{opacity:1;text-shadow:0 0 4px rgba(255,240,215,.95),0 0 10px rgba(255,214,160,.75),0 0 20px rgba(255,200,140,.45)}}
+/* le lien du profil Instagram : un peu plus visible */
+.ig .ig-lien{font-size:4.1cqw!important;margin-top:1.4cqw!important}
+.ig .ig-lien b{font-weight:700!important;background-image:linear-gradient(100deg,#B9CFFF 0,#B9CFFF 38%,#fff6dc 50%,#B9CFFF 62%,#B9CFFF 100%)!important}
+/* « tout compris » : souligné d'un petit trait noir (plus surligné) */
+#prix .prix .k mark.surl{background:none!important;color:inherit!important;padding:0 0 2px!important;margin:0!important;border-radius:0!important;border-bottom:1.5px solid #1E1C1B}
+@media (min-width:1000px){#prix .prix .k mark.surl{border-bottom-color:currentColor}}
+/* les petites étoiles de « Sans engagement » : noires sur la carte claire, blanches sur la carte noire */
+#prix .pastille-se.scint i{color:#1E1C1B!important}
+@media (min-width:1000px){#prix .pastille-se.scint i{color:#F6F3EF!important}}
+.h-pan .nt2 span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1395,7 +1420,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <div class="why">
     <div><b>À votre nom.</b><p>Votre site porte votre nom, votre ville, vos prestations. Google sait qui vous êtes, vos clientes vous retrouvent.</p></div>
     <div><b>Il n’y a que vous.</b><p>Pas de « salons à proximité » à côté de vous. Elle vient pour vous, elle réserve chez vous. 0 % de commission.</p></div>
-    <div><b>Dans votre bio.</b><p>votre-salon.fr dans votre bio Instagram, sur votre QR code, sur vos cartes. Un clic, et elle réserve.</p></div>
+    <div><b>Dans votre bio.</b><p>votresalon.fr dans votre bio Instagram, sur votre QR code, sur vos cartes. Un clic, et elle réserve.</p></div>
   </div>
 </section>
 
@@ -1431,7 +1456,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
   <details><summary>Et si je n’aime pas ?</summary><p>Vous ne payez rien pour créer votre site et le voir. Le premier mois est offert. Vous arrêtez en 1 clic, sans engagement.</p></details>
   <details><summary>Je peux tout changer après ?</summary><p>Oui. Le fond, les charms, les photos, les prix, l’écriture&nbsp;: tout se change avec le doigt, dans l’appli, autant de fois que vous voulez.</p></details>
   <details><summary>Les SMS sont payants ?</summary><p>Non. Les SMS de confirmation et de rappel sont compris dans les 49,99 €, sans limite.</p></details>
-  <details><summary>Le nom de domaine est à moi ?</summary><p>Oui. votre-salon.fr est à votre nom, il vous appartient.</p></details>
+  <details><summary>Le nom de domaine est à moi ?</summary><p>Oui. votresalon.fr est à votre nom, il vous appartient.</p></details>
   <details><summary>Mes clientes doivent télécharger quelque chose ?</summary><p>Non. Elles ouvrent votre site et réservent. L’appli, c’est pour vous.</p></details>
 </section>
 
@@ -1448,7 +1473,7 @@ const url=q=>"loginail-creer/pret.html?public&nouveau&exemple=dilerna&"+q;
 void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div class="ph"><img src="loginail-site/apercus-mini/${t[2]}.webp" alt="" loading="lazy"></div><b>${t[0]}</b><small>${t[3]}</small></a>`).join("");
 
 /* le mot « briller » change d'écriture avec son charm : tout est chargé à l'avance, le mot et le charm s'effacent et reviennent ensemble */
-{const F=[["Italiana", "perle", 0], ["'Cinzel Decorative'", "perle", 0], ["Cinzel", "perle", 0], ["'Playfair Display'", "perle", 0], ["'Bebas Neue'", "perle", 0], ["'Bagel Fat One'", "noeudcerise", 0], ["'Cherry Bomb One'", "guimauve", 0], ["'Cinzel Decorative'", "saturne", 0], ["Shrikhand", "chat", 0], ["'Cherry Bomb One'", "ceriseruban", 0], ["Monoton", "coeurlilas", 0]];
+{const F=[["'Playfair Display'", "perle", 0], ["'Cinzel Decorative'", "saturne", 0], ["'Bagel Fat One'", "noeudcerise", 0], ["Italiana", "perle", 0], ["'Cherry Bomb One'", "ceriseruban", 0], ["'Cherry Bomb One'", "guimauve", 0], ["Shrikhand", "chat", 0], ["Monoton", "coeurlilas", 0], ["'Bebas Neue'", "perle", 0], ["UnifrakturMaguntia", "araignee", 0], ["Cinzel", "perle", 0], ["Parisienne", "citron3d", 0], ["'Permanent Marker'", "spray", 0]];
  let i=0;const m=document.getElementById("mot"),c=document.getElementById("motCh"),base=parseFloat(getComputedStyle(m).fontSize);let largeur=0;
  const t=m.querySelector(".mt");
  const cv=document.createElement("canvas").getContext("2d");
@@ -2109,10 +2134,10 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   if (QA === "ligne" && !ORDI) { const h1 = document.querySelector(".hero h1"); if (h1) { const lig = document.createElement("div"); lig.className = "h-lig m"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig); } }
   if (ORDI || (QA && QA !== "ligne")) { if (!ORDI) { document.documentElement.classList.add("m-cplus"); if (QA !== "cplus") document.documentElement.classList.add("m-v-" + QA); } const h = document.querySelector(".hero"), k = h && h.querySelector(":scope>.k"), h1 = h && h.querySelector("h1"), mot = document.getElementById("mot");
     if (h && k && h1) {
-      k.textContent = "Pour les prothésistes ongulaires · prêt en une minute";
+      k.innerHTML = 'Pour les prothésistes ongulaires<span class="k-sep"> · </span><br class="k-br">prêt en une minute';
       const lig = document.createElement("div"); lig.className = "h-lig"; lig.innerHTML = "Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse"; h1.after(lig);
       /* un univers = son fond, ses charms, son site, son appli aux mêmes couleurs */
-      const U = [["tpl-maisonmoka", "app-choco", ["perle", "noeudgelee", "papillondore", "coeurchrome"]], ["tpl-maisonnoire", "app-noir", ["perle", "noeudgelee", "papillondore", "coeurchrome"]], ["tpl-maisonsauge", "app-abricot", ["perle", "noeudgelee", "papillondore", "coeurchrome"]], ["tpl-studiopoudre", "app-choco", ["perle", "noeudgelee", "papillondore", "coeurchrome"]], ["tpl-onglesdemma", "app-poudre", ["perle", "noeudgelee", "papillondore", "coeurchrome"]], ["cerise", "app-choco", ["noeudcerise", "framboise", "cerisedisco", "cerisecoeur"]], ["pastel", "app-rose", ["guimauve", "fleurlilas", "noeudgelee", "marguerite"]], ["chrome", "app-noir", ["saturne", "tribal", "etoile4", "papilloncyber"]], ["pop", "app-abricot", ["chat", "champignon", "fleur", "boule8"]], ["mignon", "app-rose", ["ceriseruban", "fraiseperle", "noeudgelee", "fleurgelee"]], ["y2k", "app-rose", ["coeurlilas", "planete", "oursonlilas", "etoilelilas"]]];   /* 16/11 : les sites du haut choisis par Marie, dans son ordre (haut-ordre.json) */
+      const U = [["tpl-studiopoudre", "app-choco", ["perle", "noeudgelee", "papillondore", "coeurchrome"], "#4A3226"], ["chrome", "app-noir", ["saturne", "tribal", "etoile4", "papilloncyber"], "#5F574F"], ["cerise", "app-choco", ["noeudcerise", "framboise", "cerisedisco", "cerisecoeur"], "#4A3226"], ["tpl-maisonmoka", "app-choco", ["perle", "noeudgelee", "papillondore", "coeurchrome"], "#4A3226"], ["mignon", "app-rose", ["ceriseruban", "fraiseperle", "noeudgelee", "fleurgelee"], "#9A5D6B"], ["pastel", "app-rose", ["guimauve", "fleurlilas", "noeudgelee", "marguerite"], "#7B62A8"], ["pop", "app-abricot", ["chat", "champignon", "fleur", "boule8"], "#6A4E1C"], ["y2k", "app-rose", ["coeurlilas", "planete", "oursonlilas", "etoilelilas"], "#7B62A8"], ["tpl-onglesdemma", "app-poudre", ["perle", "noeudgelee", "papillondore", "coeurchrome"], "#8A6656"], ["gothique", "app-noir", ["araignee", "croixgothique", "lunegothique", "vitrail"], "#1E1C1B"], ["tpl-maisonsauge", "app-abricot", ["perle", "noeudgelee", "papillondore", "coeurchrome"], "#6A4E1C"], ["riviera", "app-abricot", ["citron3d", "tranchecitron", "fleurmajolique", "marguerite"], "#6A4E1C"], ["street", "app-abricot", ["spray", "etoiledrip", "eclair", "couronnebleue"], "#6A4E1C"]];   /* 16/11 : les sites du haut choisis par Marie, dans son ordre (haut-ordre.json) */
       /* 16/11 : ?haut=<image> — un seul site dans le cadre (planche « choisir les sites du haut ») */
       { const QH = new URLSearchParams(location.search).get("haut");
         if (QH && typeof TPL !== "undefined") { const t = [...TPL, ...(typeof UNI !== "undefined" ? UNI : [])].find(x => x[2] === QH);
@@ -2124,9 +2149,11 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       pan.innerHTML = '<div class="f a"></div><div class="f b"></div><div class="chs"></div>' +
         '<div class="tel t1"><div class="e"><img alt=""></div></div><div class="tel t2"><div class="e"><img alt=""></div></div>' +
         '<div class="lab l1">Votre site</div><div class="lab l2">Votre appli</div>' +
+        '<div class="nt2"><i></i><span>Nouveau rdv · Léa</span></div>' +
         '<div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div></div>';
       h.appendChild(pan); if (!ORDI) { if (QA === "bas") k.after(pan); else if (QA === "mix") lig.after(pan); else if (QA === "plein") h.prepend(pan); else lig.after(pan); }
-      const [fa, fb] = pan.querySelectorAll(".f"), chs = pan.querySelector(".chs"), [is, ia] = pan.querySelectorAll(".tel img");
+      const [fa, fb] = pan.querySelectorAll(".f"), chs = pan.querySelector(".chs"), [is, ia] = pan.querySelectorAll(".tel img"), nt2 = pan.querySelector(".nt2");
+      pan.querySelector(".tel.t2 .e").appendChild(nt2);
       /* mélange 1 + 3 (téléphone) : le fond du site, très adouci, derrière tout l'accueil, avec des charms qui flottent */
       let fpl = null;
       if (!ORDI && QA === "mix") { fpl = document.createElement("div"); fpl.className = "h-fondpl"; fpl.setAttribute("aria-hidden", "true");
@@ -2135,8 +2162,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const PL = [[6, 10], [86, 8], [4, 70], [90, 72], [46, 4], [48, 88], [12, 40], [88, 40]];
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp`;
+        if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794184608`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794184608`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794184608`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2243,9 +2271,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     if (pq) {
       const s = document.createElement("section"); s.className = "bio-k"; s.id = "bio";
       const E = "loginail-site/univers-photos/emma/";
-      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio <span class="scr-l"><span class="scr">Instagram</span>,</span><br><em>votre salon.fr</em></h2>
+      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio <span class="scr-l"><span class="scr">Instagram</span>,</span><br><em>votresalon.fr</em></h2>
         <p>Elle voit vos ongles, elle clique sur votre lien, elle réserve. Pas de page d’annuaire avec vos concurrentes à côté : juste vous.</p>
-        <div class="pts"><div><b>votre-salon.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div>
+        <div class="pts"><div><b>votresalon.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div>
         <div class="ex">Exemple · personnes et photos créées par IA</div></div>
         <div class="scene" aria-hidden="true">
           ${tel3d(`<div class="ig"><div class="ig-haut"><div class="ig-barre"><span>ateliermercure.nails <i>⌄</i></span><span><i>＋</i><i>≡</i></span></div>
@@ -2306,7 +2334,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794184608" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2314,7 +2342,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img})` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794184608)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
