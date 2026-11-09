@@ -1300,13 +1300,17 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 /* ===== 16/11 (4) : Tout ça — le texte en 3 petites lignes ===== */
 .fin-pub .p.fp-3l{display:flex;flex-direction:column;gap:4px;align-items:center}
 .fin-pub .p.fp-3l b{font-weight:500}
+
+/* ===== 16/11 (5) ===== */
+.chif.trois div b::after{content:"+"}
+@media (max-width:999px){.build{height:calc(100svh + 4400px)!important}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
 
 <section class="hero">
   <div class="k">Pour les prothésistes ongulaires</div>
-  <h1>Un site pour <span style="white-space:nowrap"><span class="mot" id="mot"><span class="mt">briller</span><img src="loginail-site/charms-mini/fraisegelee.webp" alt="" id="motCh"></span>.</span><br>Une appli pour<br>tout gérer.</h1>
+  <h1>Un site pour <span style="white-space:nowrap"><span class="mot" id="mot"><span class="mt">briller</span><img src="loginail-site/charms-mini/fraisegelee.webp" alt="" id="motCh"></span></span><br>Une appli pour<br>tout gérer.</h1>
   <div class="duo" id="duo" style="touch-action:pan-y">
     <div class="mini"><div class="ecr"><div class="bande" id="bandeSite"><img src="loginail-site/apercus-mini/chrome.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt=""><img src="loginail-site/apercus-mini/cerise.webp" alt=""><img src="loginail-site/apercus-mini/pop.webp" alt=""><img src="loginail-site/apercus-mini/y2k.webp" alt=""><img src="loginail-site/apercus-mini/clean.webp" alt=""><img src="loginail-site/apercus-mini/sixties.webp" alt=""><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt=""><img src="loginail-site/apercus-mini/pastel.webp" alt=""><img src="loginail-site/apercus-mini/baddie.webp" alt=""><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt=""></div></div><b>Votre site</b><span>à votre image</span></div>
     <div class="fleche" aria-hidden="true"><svg viewBox="0 0 40 14"><path d="M1 7h36M31 2l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
@@ -1472,13 +1476,13 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
    lg.style.transform=`translate3d(0,${dy}px,0)`;bch.style.transform=pail.style.transform=`translate3d(0,${dy}px,0)`;
    barre.style.width=(P*100).toFixed(1)+"%";if(k!==vu){vu=k;num.textContent=(k+1)+" / 6 · "+NOMS[k]}};
  const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
- const lit=()=>{const r=b.getBoundingClientRect();cible=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));if(!raf)raf=requestAnimationFrame(pas)};
+ const lit=()=>{const r=b.getBoundingClientRect(),px=-r.top;cible=matchMedia("(min-width: 1000px)").matches?Math.min(1,Math.max(0,px/(r.height-innerHeight))):Math.min(1,Math.max(0,px<2600?px/2600*.8:.8+(px-2600)/1800*.2));if(!raf)raf=requestAnimationFrame(pas)};
  if(!matchMedia("(min-width: 1000px)").matches){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
  else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
-  const DUR=matchMedia("(min-width: 1000px)").matches?15000:20000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
+  const DUR=matchMedia("(min-width: 1000px)").matches?21000:20000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
   const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
    if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
-   let au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;if(!matchMedia("(min-width: 1000px)").matches)au=au<.55?au/.55*.8:.8+(au-.55)/.45*.2;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
+   let au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;if(!matchMedia("(min-width: 1000px)").matches)au=au<.55?au/.55*.8:.8+(au-.55)/.45*.2;else au=au<.6?au/.6*.8:.8+(au-.6)/.4*.2;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
    if(!raf)raf=requestAnimationFrame(pas);
    if(actif)bo=requestAnimationFrame(boucle)};
   new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!bo)bo=requestAnimationFrame(boucle)},{rootMargin:"300px"}).observe(b);
