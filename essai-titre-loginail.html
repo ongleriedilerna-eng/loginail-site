@@ -2479,6 +2479,14 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   const T={"5":"Le site et l’appli<br>des prothésistes","1":"Votre site internet<br>et votre application<br>pour tout gérer","2":"Votre site<br>et votre appli","3":"Le site et l’appli<br>des prothésistes","4":"Votre site · votre appli"};
   if(so)so.innerHTML=T[M]||T[1];
   /* 5 = la 3 + les 3 ajouts : prix après le mois offert (obligatoire), « créé par une prothésiste », « exemple » sur les sites */
+  /* 6 et 7 (Marie, 10/11) : c'est le logo tout en haut à gauche qui change d'écriture, UNE seule fois à l'arrivée ; le grand titre dit ce que c'est */
+  if(M==="6"||M==="7"){const h1=h.querySelector("h1");if(h1){h1.className="h-phrase p"+M;h1.innerHTML=M==="6"?"Votre site<br>à votre image.<br>Votre appli<br>pour tout gérer.":"Votre propre site<br>personnalisable<br>et votre appli<br>pour tout gérer"}
+   if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";const sv=h.querySelector(".sous");if(sv)sv.innerHTML="<b>1 mois offert</b>, puis 49,99 €/mois · <b>sans engagement</b>";
+   const d=h.querySelector(".h-pan");if(d&&!d.querySelector(".ex-tag")){if(getComputedStyle(d).position==="static")d.style.position="relative";d.insertAdjacentHTML("beforeend",'<span class="ex-tag">Exemple</span>')}
+   const lb=document.querySelector("header.top b");if(lb){const FF=[["'Playfair Display'","perle"],["'Bagel Fat One'","noeudcerise"],["'Cherry Bomb One'","ceriseruban"],["Monoton","coeurlilas"],["Shrikhand","chat"],["Parisienne","citron3d"],["'Cinzel Decorative'","saturne"],["'Rubik Bubbles'","fraisegelee"]];
+    lb.classList.add("lb-anim");lb.innerHTML='<span class="lb-t">Loginail</span><img class="lb-c" alt="">';const t=lb.querySelector(".lb-t"),c=lb.querySelector(".lb-c");
+    FF.forEach(f=>{const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp"});
+    Promise.all(FF.map(f=>document.fonts.load("24px "+f[0]).catch(()=>0))).then(()=>{let i=0;const pas=()=>{if(i<FF.length){lb.classList.add("fun");t.style.fontFamily=FF[i][0];c.src="loginail-site/charms-mini/"+FF[i][1]+".webp";i++;setTimeout(pas,420)}else{lb.classList.remove("fun");t.style.fontFamily="";c.removeAttribute("src")}};setTimeout(pas,350)})}}
   if(M==="5"){if(so)so.innerHTML=T[3];if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";
    const sv=h.querySelector(".sous");if(sv)sv.innerHTML="<b>1 mois offert</b>, puis 49,99 €/mois · <b>sans engagement</b>";
    const d=h.querySelector(".h-pan")||h.querySelector(".duo .mini");if(d&&!d.querySelector(".ex-tag")){if(getComputedStyle(d).position==="static")d.style.position="relative";d.insertAdjacentHTML("beforeend",'<span class="ex-tag">Exemple</span>')}}};
@@ -2491,7 +2499,15 @@ html[class*="mise-"] .hero h1.h-logi .h-sous{font-family:Jost,sans-serif;font-we
 .mise-3 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 .mise-5 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 .mise-5 .hero .h-lig{font-weight:500}
-@media (max-height:720px){html.mise-5 .hero .h-pan{zoom:.84}html.mise-5 .hero h1.h-logi .h-sous{margin-top:6px}}
+@media (max-height:720px){html.mise-6 .hero h1.p6{font-size:35px}html.mise-5 .hero .h-pan,html.mise-6 .hero .h-pan,html.mise-7 .hero .h-pan{zoom:.84}html.mise-5 .hero h1.h-logi .h-sous{margin-top:6px}}
+html.mise-6 .hero h1.h-phrase,html.mise-7 .hero h1.h-phrase{margin:6px 0 10px}
+html.mise-6 .hero h1.p6{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:42px;line-height:1.05}
+html.mise-7 .hero h1.p7{font-family:Jost,sans-serif;font-weight:500;font-size:23px;line-height:1.4;letter-spacing:.14em;text-transform:uppercase}
+html.mise-6 .hero .h-lig,html.mise-7 .hero .h-lig{font-weight:500}
+header.top b.lb-anim{position:relative;display:inline-flex;align-items:center;min-width:120px;height:30px}
+header.top b.lb-anim.fun{text-transform:none;letter-spacing:0;font-size:24px;font-weight:400}
+header.top b.lb-anim .lb-c{width:22px;height:22px;margin-left:4px;transform:rotate(12deg)}
+header.top b.lb-anim:not(.fun) .lb-c{display:none}
 .ex-tag{position:absolute;left:12px;top:12px;z-index:9;background:rgba(255,255,255,.88);color:#1E1C1B;font:500 9px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:99px}
 .mise-4 .hero h1.h-logi .h-sous{font-size:16px;letter-spacing:.22em;margin-top:10px}
 html[class*="mise-"] .hero .h-lig{font-weight:400}
