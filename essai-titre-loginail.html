@@ -2513,7 +2513,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     <div class="il-plus">+</div>
     <div class="il-b"><div class="il-ic rose"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></div><b>L’appli Loginail</b><span>Sur votre téléphone : votre planning, vos clientes, vos rendez-vous et votre caisse.</span></div>
    </div>
-   <div class="il-tel">S’installe sur iPhone et Android</div>
+   <div class="il-stores"><span class="il-bientot">Bientôt sur</span><span class="il-st"><small>Télécharger dans</small>l’App Store</span><span class="il-st"><small>Disponible sur</small>Google Play</span></div>
    <div class="il-pied">✦ Créé par une prothésiste, pour les prothésistes ✦</div>
   </div></section>`)}
   if(M==="10"&&so){so.textContent="Le site et l’appli des prothésistes";so.classList.add("une");const fit=()=>{so.style.fontSize="17px";const W=so.parentElement.clientWidth||innerWidth-32;let f=17;while(so.scrollWidth>W&&f>10){f-=.25;so.style.fontSize=f+"px"}};fit();document.fonts&&document.fonts.ready.then(fit);addEventListener("resize",fit)}
@@ -2579,6 +2579,10 @@ html.claire .h-sous .pills b{font-size:20px;font-weight:500}
 .il-ic svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .il-plus{font:500 24px Jost;margin-top:12px;color:#E0628C}
 .il-tel{display:inline-block;margin-top:16px;background:#FBF4F3;border-radius:99px;padding:8px 14px;font:500 11px Jost;letter-spacing:.14em;text-transform:uppercase}
+.il-stores{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin-top:16px}
+.il-bientot{width:100%;font:500 10.5px Jost;letter-spacing:.2em;text-transform:uppercase;color:#E0628C}
+.il-st{display:inline-flex;flex-direction:column;align-items:flex-start;background:#1E1C1B;color:#fff;border-radius:10px;padding:6px 14px 7px;font:500 15px/1.05 Jost,sans-serif;text-align:left}
+.il-st small{font-size:9px;letter-spacing:.04em;opacity:.8}
 .il-pied{margin-top:14px;font:500 10.5px Jost;letter-spacing:.16em;text-transform:uppercase;color:#B4778A}
 @media (min-width:1000px){.il-carte{max-width:620px;padding:30px 34px 24px}.il-b span{font-size:14px}}
 </style>
