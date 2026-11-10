@@ -1,0 +1,88 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Avant · après</title>
+<style>
+@font-face{font-family:Jost;font-weight:400;src:url(loginail-site/polices/Jost-400-latin.woff2) format('woff2')}
+@font-face{font-family:Jost;font-weight:500;src:url(loginail-site/polices/Jost-500-latin.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-weight:500;src:url(loginail-site/polices/CormorantGaramond-500-latin.woff2) format('woff2')}
+:root{--creme:#F6F3EF;--noir:#1E1C1B;--doux:#7A716A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.top{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid rgba(30,28,27,.08)}
+.top b{font-weight:500;letter-spacing:.3em;font-size:14px}.top a{background:var(--noir);color:#fff;border-radius:99px;padding:11px 16px;font:500 11px Jost;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.sec{padding:26px 16px 30px;display:flex;flex-direction:column;align-items:center;text-align:center;background:repeating-linear-gradient(0deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),repeating-linear-gradient(90deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),#FBF4F3}
+.k{font:500 11px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--doux)}
+h2{font:500 34px/1.05 'Cormorant Garamond',serif;margin:8px 0 18px}
+.tel{position:relative;width:min(64vw,250px);aspect-ratio:780/1688;border-radius:30px;border:7px solid #1E1C1B;overflow:hidden;background:#fff;box-shadow:0 26px 50px -24px rgba(0,0,0,.45);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.tel img.l{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ch{position:absolute;inset:0;pointer-events:none}
+.ch img{position:absolute;aspect-ratio:1;opacity:0;transform:translateY(-40px) rotate(-20deg) scale(.6);transition:opacity .25s,transform .55s cubic-bezier(.3,1.5,.5,1)}
+.ch.on img{opacity:1;transform:none}
+.ch.on img:nth-child(2){transition-delay:.06s}.ch.on img:nth-child(3){transition-delay:.12s}.ch.on img:nth-child(4){transition-delay:.18s}.ch.on img:nth-child(5){transition-delay:.24s}.ch.on img:nth-child(6){transition-delay:.3s}.ch.on img:nth-child(7){transition-delay:.36s}
+.pa{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}.pa.on{opacity:1}
+.pa i{position:absolute;color:#fff;font-style:normal;font-size:14px;text-shadow:0 0 6px rgba(255,160,200,.9);animation:sc 1.6s ease-in-out infinite}
+@keyframes sc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+.leg{margin-top:16px;font-size:15px;line-height:1.4;max-width:300px}.leg b{font-weight:500}
+.cta{margin-top:18px;background:var(--noir);color:#fff;border:0;border-radius:99px;padding:15px 26px;font:500 13px Jost;letter-spacing:.14em;text-transform:uppercase}
+/* A : curseur */
+.av{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poi{position:absolute;top:0;bottom:0;left:var(--x,50%);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.poi b{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -6px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font:500 16px Jost;color:var(--noir);animation:pouls 1.4s ease-in-out infinite}
+@keyframes pouls{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.eti{position:absolute;top:12px;z-index:3;background:rgba(30,28,27,.82);color:#fff;font:500 10px Jost;letter-spacing:.16em;text-transform:uppercase;padding:5px 9px;border-radius:99px}
+.eti.g{left:10px}.eti.d{right:10px;background:#F2A7BF;color:#1E1C1B}
+.indice{margin-top:12px;font:500 12px Jost;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.indice i{font-style:normal;display:inline-block;animation:gd 1.2s ease-in-out infinite}.indice i:last-child{animation-direction:reverse}
+@keyframes gd{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}
+/* B : pastilles */
+.pas{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;max-width:340px}
+.pas button{border:1.5px solid var(--noir);background:#fff;color:var(--noir);border-radius:99px;padding:10px 14px;font:500 12px Jost;letter-spacing:.1em;text-transform:uppercase}
+.pas button.on{background:var(--noir);color:#fff}
+.tel img.l.f{opacity:0;transition:opacity .45s}.tel img.l.f.on{opacity:1}
+/* C : bouton magique */
+.mag{margin-top:18px;border:0;border-radius:99px;padding:16px 28px;font:500 14px Jost;letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(90deg,#F2A7BF,#F6C9AE,#F2A7BF);background-size:200%;color:var(--noir);box-shadow:0 12px 26px -12px rgba(242,120,160,.8);animation:bril 2.4s linear infinite,pouls 1.4s ease-in-out infinite}
+@keyframes bril{to{background-position:200%}}
+.doigt{position:absolute;width:38px;height:38px;pointer-events:none;z-index:5;animation:tape .8s ease-in-out infinite}
+@keyframes tape{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+</style></head><body>
+<div class="top"><b>LOGINAIL</b><a href="#">Créer mon site</a></div>
+<section class="sec" id="s"></section>
+<script>
+const V=new URLSearchParams(location.search).get("v")||"a",s=document.getElementById("s");
+const P="loginail-site/apercus-univers/",CH=[["noeudcerise",72.7,65.1],["framboise",78.8,9.5],["cerisedisco",2.8,23.5],["cerisecoeur",80.8,39.5],["ceriseruban",1.8,57.5],["cerises-roses",78.8,73.5],["noeudgelee",38.8,4.5]];
+const charms=()=>'<div class="ch">'+CH.map(c=>`<img src="loginail-site/charms-mini/${c[0]}.webp" alt="" style="left:${c[1]}%;top:${c[2]}%;width:17.2%">`).join("")+'</div>';
+const pail=()=>'<div class="pa">'+[[12,14],[86,30],[20,47],[70,52],[45,10],[90,62],[8,70],[55,36]].map((p,i)=>`<i style="left:${p[0]}%;top:${p[1]}%;animation-delay:${i*.2}s">✦</i>`).join("")+'</div>';
+const DOIGT='<svg class="doigt" viewBox="0 0 24 24"><path d="M9 11V4.5a1.5 1.5 0 0 1 3 0V10m0-.5V8a1.5 1.5 0 0 1 3 0v2m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-4-2L4.3 16a1.6 1.6 0 0 1 2.4-2.1L9 16" fill="#fff" stroke="#1E1C1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+if(V==="a"){ /* A — avant / après : on fait glisser le rond */
+ s.innerHTML=`<div class="k">Avant · Après</div><h2>Votre site,<br>transformé en une minute.</h2>
+ <div class="tel" id="t"><img class="l" src="${P}s5.webp" alt="">${charms()}${pail()}<div class="av"><img src="${P}s1.webp" alt=""></div><span class="eti g">Avant</span><span class="eti d">Après</span><div class="poi"><b>‹ ›</b></div></div>
+ <div class="indice"><i>‹</i> Glissez pour voir <i>›</i></div><p class="leg">Un fond, vos photos, votre écriture, vos charms… <b>Votre site vous ressemble.</b></p><button class="cta">Créer mon site · 1 mois offert</button>`;
+ const t=document.getElementById("t");t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on");
+ const pose=x=>t.style.setProperty("--x",Math.max(0,Math.min(100,x))+"%");pose(92);let touche=false;
+ const de=e=>{const r=t.getBoundingClientRect();pose((e.clientX-r.left)/r.width*100)};
+ t.addEventListener("pointerdown",e=>{touche=true;t.setPointerCapture(e.pointerId);de(e)});t.addEventListener("pointermove",e=>{if(t.hasPointerCapture&&t.hasPointerCapture(e.pointerId))de(e)});
+ /* il glisse tout seul au début, pour montrer qu'on peut le faire */
+ const balaie=(de0,a0,ms,cb)=>{const t0=performance.now();const f=n=>{if(touche)return;const k=Math.min(1,(n-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;pose(de0+(a0-de0)*e);k<1?requestAnimationFrame(f):cb&&cb()};requestAnimationFrame(f)};
+ new IntersectionObserver(es=>{if(es[0].isIntersecting&&!touche)setTimeout(()=>balaie(92,8,1100,()=>setTimeout(()=>balaie(8,50,700),350)),400)},{threshold:.5}).observe(t)}
+if(V==="b"){ /* B — on touche les étapes */
+ const E=[["Avant","s1"],["Un fond","o2"],["Votre écriture","o3"],["Vos photos","s5"],["Vos charms","s5"]];
+ s.innerHTML=`<div class="k">Touchez les étapes</div><h2>Votre site,<br>en une minute.</h2>
+ <div class="tel" id="t">${E.slice(0,4).map((e,i)=>`<img class="l f${i?"":" on"}" src="${P}${e[1]}.webp" alt="">`).join("")}${charms()}${pail()}</div>
+ <div class="pas" id="pas">${E.map((e,i)=>`<button${i?"":' class="on"'}>${e[0]}</button>`).join("")}</div>
+ <p class="leg"><b>Votre site vous ressemble.</b> Et vous le changez quand vous voulez.</p><button class="cta">Créer mon site · 1 mois offert</button>`;
+ const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],B=[...document.querySelectorAll("#pas button")];let k=0,auto=true;
+ const va=i=>{k=i;L.forEach((l,j)=>l.classList.toggle("on",j<=Math.min(i,3)));t.querySelector(".ch").classList.toggle("on",i>=4);t.querySelector(".pa").classList.toggle("on",i>=4);B.forEach((b,j)=>b.classList.toggle("on",j===i))};
+ B.forEach((b,i)=>b.onclick=()=>{auto=false;va(i)});
+ let tm=0;new IntersectionObserver(es=>{if(es[0].isIntersecting&&!tm)tm=setInterval(()=>{if(auto)va((k+1)%E.length)},1300)},{threshold:.5}).observe(t)}
+if(V==="c"){ /* C — un bouton qui transforme */
+ s.innerHTML=`<div class="k">Avant · Après</div><h2>Votre site,<br>en une minute.</h2>
+ <div class="tel" id="t"><img class="l f on" src="${P}s1.webp" alt=""><img class="l f" src="${P}o2.webp" alt=""><img class="l f" src="${P}o3.webp" alt=""><img class="l f" src="${P}s5.webp" alt="">${charms()}${pail()}</div>
+ <div style="position:relative"><button class="mag" id="m">✦ Transformer ✦</button></div>
+ <p class="leg">Un fond, vos photos, votre écriture, vos charms… <b>Votre site vous ressemble.</b></p><button class="cta">Créer mon site · 1 mois offert</button>`;
+ const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],m=document.getElementById("m");let fait=false,court=false;
+ m.parentElement.insertAdjacentHTML("beforeend",DOIGT);const d=m.parentElement.querySelector(".doigt");d.style.right="-14px";d.style.top="30px";
+ const transforme=()=>{if(court)return;court=true;d.remove();if(!fait){[1,2,3].forEach((i,j)=>setTimeout(()=>L[i].classList.add("on"),j*380));setTimeout(()=>{t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on")},1250);setTimeout(()=>{fait=true;court=false;m.textContent="Revoir l’avant"},1700)}
+  else{L.slice(1).forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");fait=false;court=false;m.textContent="✦ Transformer ✦"}};
+ m.onclick=transforme;t.onclick=transforme;
+ let vu=false;new IntersectionObserver(es=>{if(es[0].isIntersecting&&!vu){vu=true;setTimeout(()=>{if(!fait)transforme()},2500)}},{threshold:.6}).observe(t)}
+</script></body></html>
