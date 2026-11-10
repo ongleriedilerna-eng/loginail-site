@@ -2497,7 +2497,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     Promise.all(FF.map(f=>document.fonts.load("40px "+f[0]).catch(()=>0))).then(()=>{let mx=0;FF.forEach(f=>{t.style.fontFamily=f[0];mx=Math.max(mx,t.offsetWidth)});t.style.fontFamily=FF[0][0];w.style.minWidth=mx+"px";let i=0;
      setInterval(()=>{if(document.hidden)return;w.classList.add("chg");setTimeout(()=>{i=(i+1)%FF.length;t.style.fontFamily=FF[i][0];if(FF[i][1]){c.src="loginail-site/charms-mini/"+FF[i][1]+".webp";c.style.display=""}else c.style.display="none";w.classList.remove("chg")},200)},1600)})}}
   if(M==="8"||M==="9"){if(M==="9"&&k)k.innerHTML="Prêt en une minute · créé par une prothésiste";}
-  if(M==="5"||M==="8"||M==="9"){if(so)so.innerHTML=T[3];if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";
+  /* 10 (Marie, 10/11) : la A, « Loginail » en haut à gauche gardé, et la phrase sur UNE seule ligne, aussi grande que possible */
+  if(M==="10"&&so){so.textContent="Le site et l’appli des prothésistes";so.classList.add("une");const fit=()=>{so.style.fontSize="17px";const W=so.parentElement.clientWidth||innerWidth-32;let f=17;while(so.scrollWidth>W&&f>10){f-=.25;so.style.fontSize=f+"px"}};fit();document.fonts&&document.fonts.ready.then(fit);addEventListener("resize",fit)}
+  if(M==="5"||M==="8"||M==="9"||M==="10"){if(so&&M!=="10")so.innerHTML=T[3];if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";
    const sv=h.querySelector(".sous");if(sv)sv.innerHTML="<b>1 mois offert</b>, puis 49,99 €/mois · <b>sans engagement</b>";
    const d=h.querySelector(".h-pan")||h.querySelector(".duo .mini");if(d&&!d.querySelector(".ex-tag")){if(getComputedStyle(d).position==="static")d.style.position="relative";d.insertAdjacentHTML("beforeend",'<span class="ex-tag">Exemple</span>')}}};
  if(document.readyState==="loading")addEventListener("DOMContentLoaded",()=>setTimeout(go,0));else setTimeout(go,0)})();
@@ -2509,7 +2511,7 @@ html[class*="mise-"] .hero h1.h-logi .h-sous{font-family:Jost,sans-serif;font-we
 .mise-3 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 .mise-5 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 .mise-5 .hero .h-lig{font-weight:500}
-@media (max-height:720px){html.mise-6 .hero h1.p6,html.mise-9 .hero h1.p9{font-size:34px!important}html.mise-8 .hero .h-pan,html.mise-9 .hero .h-pan,html.mise-5 .hero .h-pan,html.mise-6 .hero .h-pan,html.mise-7 .hero .h-pan{zoom:.84}html.mise-5 .hero h1.h-logi .h-sous{margin-top:6px}}
+@media (max-height:720px){html.mise-6 .hero h1.p6,html.mise-9 .hero h1.p9{font-size:34px!important}html.mise-10 .hero .h-pan,html.mise-8 .hero .h-pan,html.mise-9 .hero .h-pan,html.mise-5 .hero .h-pan,html.mise-6 .hero .h-pan,html.mise-7 .hero .h-pan{zoom:.84}html.mise-5 .hero h1.h-logi .h-sous{margin-top:6px}}
 html.mise-6 .hero h1.h-phrase,html.mise-7 .hero h1.h-phrase{margin:6px 0 10px}
 html.mise-6 .hero h1.p6{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:42px;line-height:1.05}
 html.mise-7 .hero h1.p7{font-family:Jost,sans-serif;font-weight:500;font-size:23px;line-height:1.4;letter-spacing:.14em;text-transform:uppercase}
@@ -2518,6 +2520,9 @@ header.top b.lb-anim{position:relative;display:inline-flex;align-items:center;mi
 header.top b.lb-anim.fun{text-transform:none;letter-spacing:0;font-size:24px;font-weight:400}
 header.top b.lb-anim .lb-c{width:22px;height:22px;margin-left:4px;transform:rotate(12deg)}
 header.top b.lb-anim:not(.fun) .lb-c{display:none}
+html.mise-10 .hero h1.h-logi .h-sous{letter-spacing:.14em;line-height:1.3;margin-top:-4px}
+html.mise-10 .hero h1.h-logi .h-sous.une{display:block;white-space:nowrap;margin-top:14px}
+html.mise-10 .hero .h-lig{font-weight:500}
 html.mise-8 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 html.mise-8 .hero .h-lig,html.mise-9 .hero .h-lig{font-weight:500}
 html.mise-8 header.top b{opacity:0;transition:opacity .35s}html.mise-8.lb-vu header.top b{opacity:1}
