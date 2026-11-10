@@ -1401,6 +1401,51 @@ form.creer input.ph-sort::placeholder{opacity:0}
 @keyframes tapPill2{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 #charms .p-ch .tap-pill.dans.off{opacity:0}
 @media (min-width:1000px){.build{height:250vh!important}}
+
+/* 10/11 (Marie) : « le mélange » — à la place de la construction qui bloquait : la 5 très fluide (3 s), puis « Attrapez-les ! » */
+.jeu-acc{position:relative;overflow:hidden;padding:84px 16px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;background:repeating-linear-gradient(0deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),repeating-linear-gradient(90deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),#FBF4F3}
+.jeu-acc .ja-lien{width:min(86vw,340px);display:flex;align-items:center;background:#fff;border-radius:99px;padding:6px;box-shadow:0 8px 20px -12px rgba(0,0,0,.4);margin-bottom:12px}
+.jeu-acc .ja-lien span{flex:1;text-align:left;padding:10px 12px;font-size:14px;color:#1E1C1B;white-space:nowrap;overflow:hidden}
+.jeu-acc .ja-lien b{background:#1E1C1B;color:#fff;border-radius:99px;padding:10px 14px;font:500 11px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.jeu-acc .ja-barre{width:min(58vw,232px);height:3px;border-radius:3px;background:rgba(30,28,27,.12);margin-bottom:14px;overflow:hidden}.jeu-acc .ja-barre i{display:block;height:100%;width:0;background:#1E1C1B}
+.jeu-acc .ja-zone{position:relative}
+.jeu-acc .ja-tel{position:relative;width:min(58vw,232px);aspect-ratio:780/1688;border-radius:28px;border:7px solid #1E1C1B;overflow:hidden;background:#fff;box-shadow:0 26px 50px -24px rgba(0,0,0,.45);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.jeu-acc .ja-tel>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.jeu-acc .ja-ch,.jeu-acc .ja-mes,.jeu-acc .ja-ec{position:absolute;inset:0;pointer-events:none}
+.jeu-acc .ja-ch img{position:absolute;width:17.2%;aspect-ratio:1;opacity:0}
+.jeu-acc .ja-pa{position:absolute;inset:0;pointer-events:none;opacity:0}
+.jeu-acc .ja-pa i{position:absolute;color:#fff;font-style:normal;font-size:14px;text-shadow:0 0 6px rgba(255,140,190,1);animation:jaSc 1.6s ease-in-out infinite}
+@keyframes jaSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+.jeu-acc .ja-ec{z-index:6}.jeu-acc .ja-ec i{position:absolute;font-style:normal;color:#fff;font-size:16px;text-shadow:0 0 8px rgba(255,140,190,1)}
+.jeu-acc .ja-hors{position:absolute;inset:-40px -54px;pointer-events:none;z-index:9}
+.jeu-acc .ja-hors img{position:absolute;width:62px;aspect-ratio:1;opacity:0}
+.jeu-acc .ja-lg{position:relative;width:min(88vw,340px);height:78px;margin-top:14px}
+.jeu-acc .ja-lg>div{position:absolute;inset:0;opacity:0;filter:blur(6px);transform:translateY(10px);transition:opacity .45s ease,filter .45s ease,transform .45s ease}
+.jeu-acc .ja-lg>div.on{opacity:1;filter:none;transform:none}
+.jeu-acc .ja-lg b{display:block;font:500 26px/1.05 'Cormorant Garamond',serif;font-weight:500}.jeu-acc .ja-lg span{display:block;margin-top:6px;font-size:13.5px;color:#7A716A}
+.jeu-acc .ja-lg b.ja-attr{font:500 15px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;margin-top:6px;animation:jaPouls 1.4s ease-in-out infinite}
+@keyframes jaPouls{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.jeu-acc .ja-sans{margin:4px 0 0;white-space:nowrap;font-size:clamp(11.5px,3.5vw,15px)}.jeu-acc .ja-sans b{font-weight:500}
+.jeu-acc .ja-cta{display:inline-block;margin-top:16px;background:#1E1C1B;color:#fff;border-radius:99px;padding:15px 24px;font:500 13px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.jeu-acc .ja-rej{margin-top:10px;background:none;border:0;font:500 12px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#7A716A;text-decoration:underline;cursor:pointer}
+.jeu-acc .ja-pluie{position:absolute;inset:0;z-index:12;pointer-events:none;overflow:hidden}
+.jeu-acc .ja-pluie img{position:absolute;top:0;width:52px;aspect-ratio:1;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2));touch-action:manipulation}
+.ja-vole{position:fixed;z-index:9999;pointer-events:none}
+.jeu-acc .ja-tel.brille{animation:jaBrille 1.2s ease-in-out 2}
+@keyframes jaBrille{0%,100%{box-shadow:0 26px 50px -24px rgba(0,0,0,.45)}50%{box-shadow:0 0 0 6px rgba(242,167,191,.6),0 0 60px 10px rgba(242,167,191,.8)}}
+@media (min-width:1000px){
+ .jeu-acc{display:grid;grid-template-columns:auto 520px;grid-template-areas:"zone lien" "zone barre" "zone lg" "zone sans" "zone cta" "zone rej";grid-template-rows:auto auto auto auto auto 1fr;justify-content:center;align-content:center;column-gap:110px;min-height:100vh;padding:80px 40px 50px;text-align:left}
+ .jeu-acc .ja-zone{grid-area:zone;align-self:center}
+ .jeu-acc .ja-lien{grid-area:lien;width:440px;margin:0 0 16px}
+ .jeu-acc .ja-barre{grid-area:barre;width:440px;margin:0 0 6px}
+ .jeu-acc .ja-lg{grid-area:lg;width:520px;height:120px;margin-top:22px}.jeu-acc .ja-lg b{font-size:44px}.jeu-acc .ja-lg span{font-size:17px;margin-top:10px}.jeu-acc .ja-lg b.ja-attr{font-size:20px;transform-origin:left center}
+ .jeu-acc .ja-sans{grid-area:sans;font-size:16px;margin-top:10px}
+ .jeu-acc .ja-cta{grid-area:cta;justify-self:start}
+ .jeu-acc .ja-rej{grid-area:rej;justify-self:start;align-self:start;padding:0}
+ .jeu-acc .ja-tel{width:min(270px,calc((100vh - 130px) * 780 / 1688))}
+ .jeu-acc .ja-hors img{width:78px}
+ .jeu-acc .ja-pluie img{width:64px}
+}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1418,28 +1463,35 @@ form.creer input.ph-sort::placeholder{opacity:0}
   <div class="sous"><b>1 mois offert</b> · <b>sans engagement</b> · 0 % de commission</div>
 </section>
 
-<section class="build" id="build"><div class="colle">
-  <div class="b-tete"><div class="k" id="bNum">1 / 6 · votre site</div><div class="b-barre"><i id="bBarre"></i></div></div>
-  <div class="b-fond" id="bFond"><i style="left:6%;animation-duration:9s"></i><i style="left:24%;animation-duration:12s;animation-delay:-5s;width:18px;height:20px"></i><i style="left:80%;animation-duration:10s;animation-delay:-2s"></i><i style="left:92%;animation-duration:13s;animation-delay:-8s;width:18px;height:20px"></i><i style="left:12%;animation-duration:11s;animation-delay:-7s;width:20px;height:22px"></i><i style="left:70%;animation-duration:14s;animation-delay:-10s;width:20px;height:22px"></i></div>
-  <div class="b-telw"><div class="b-tel"><div class="b-ecr" id="bEcr">
-    <img class="c" data-c="1" src="loginail-site/apercus-univers/s1.webp?v=27" alt="" style="opacity:1">
-    <img class="c" data-c="2" src="loginail-site/apercus-univers/o2.webp" alt="">
-    <img class="c" data-c="3" src="loginail-site/apercus-univers/o3.webp" alt="">
-    <img class="c" data-c="5" src="loginail-site/apercus-univers/s5.webp" alt="">
-    <img class="c long" data-c="6" src="loginail-site/apercus-univers/s5-long2.webp" alt="" loading="lazy">
-    <div class="b-ch" id="bCh"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="left:72.7%;top:65.1%;width:17.2%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="left:78.8%;top:9.5%;width:17.2%"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:2.8%;top:23.5%;width:17.2%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:80.8%;top:39.5%;width:17.2%"><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="left:1.8%;top:57.5%;width:17.2%"><img src="loginail-site/charms-mini/cerises-roses.webp" alt="" style="left:78.8%;top:73.5%;width:17.2%"><img src="loginail-site/charms-mini/noeudgelee.webp" alt="" style="left:38.8%;top:4.5%;width:17.2%"></div>
-    <div class="b-pail" id="bPail"><i style="left:16%;top:18%"></i><i style="left:74%;top:30%;animation-delay:.5s"></i><i style="left:40%;top:52%;animation-delay:1s"></i><i style="left:84%;top:58%;animation-delay:1.4s"></i><i style="left:10%;top:76%;animation-delay:.3s"></i><i style="left:60%;top:86%;animation-delay:.8s"></i></div>
-  </div></div>
-  <div class="b-hors" id="bHors"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:-30px;top:14%"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="right:-32px;top:30%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:-26px;top:66%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="right:-28px;top:78%"></div></div>
-  <div class="legs" id="bLegs">
-    <div class="leg"><b>Personnalisez votre site en 15 secondes chrono.</b><span>Un site classique, élégant, à votre nom. Déjà en ligne.</span></div>
-    <div class="leg"><b>Un fond.</b><span>Des cerises, du léopard, de la lavande… Plus de 300 fonds.</span></div>
-    <div class="leg"><b>Votre écriture. Vos couleurs.</b><span>Et voilà : votre univers. Le même site, que personne n’a.</span></div>
-    <div class="leg"><b>Vos photos.</b><span>Vos plus belles poses, en grand. Vous les changez en 2 secondes.</span></div>
-    <div class="leg"><b>Vos charms.</b><span>Plus de 1 000 charms. Sur votre site, vos clientes les attrapent.</span></div>
-    <div class="leg"><b>Et tout le reste.</b><span>Vos prestations, vos prix, vos réalisations, vos avis.<br><em class="chez">Elle se voit déjà chez vous.</em></span></div>
+<section class="jeu-acc" id="build">
+  <div class="ja-lien" aria-hidden="true"><span id="jaLn">Votre lien…</span><b>Créer</b></div>
+  <div class="ja-barre"><i id="jaBr"></i></div>
+  <div class="ja-zone">
+    <div class="ja-tel" id="jaTel">
+      <img src="loginail-site/apercus-univers/s1.webp" alt="">
+      <img class="ja-l" src="loginail-site/apercus-univers/o2.webp" alt="" style="opacity:0">
+      <img class="ja-l" src="loginail-site/apercus-univers/o3.webp" alt="" style="opacity:0">
+      <img class="ja-l" src="loginail-site/apercus-univers/s5.webp" alt="Exemple : le site « les Ongles de Cerise »" style="opacity:0">
+      <div class="ja-ch"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="left:72.7%;top:65.1%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="left:78.8%;top:9.5%"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:2.8%;top:23.5%"><img src="loginail-site/charms-mini/cerisecoeur.webp" alt="" style="left:80.8%;top:39.5%"><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="left:1.8%;top:57.5%"><img src="loginail-site/charms-mini/cerises-roses.webp" alt="" style="left:78.8%;top:73.5%"><img src="loginail-site/charms-mini/noeudgelee.webp" alt="" style="left:38.8%;top:4.5%"></div>
+      <div class="ja-pa"><i style="left:12%;top:14%">✦</i><i style="left:86%;top:30%;animation-delay:.2s">✦</i><i style="left:20%;top:47%;animation-delay:.4s">✦</i><i style="left:70%;top:52%;animation-delay:.6s">✦</i><i style="left:45%;top:10%;animation-delay:.8s">✦</i><i style="left:90%;top:62%;animation-delay:1s">✦</i><i style="left:8%;top:70%;animation-delay:1.2s">✦</i><i style="left:55%;top:36%;animation-delay:1.4s">✦</i></div>
+      <div class="ja-mes" id="jaMes"></div><div class="ja-ec" id="jaEc"></div>
+    </div>
+    <div class="ja-hors"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:-4%;top:12%"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="left:86%;top:26%"><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="left:-6%;top:58%"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="left:88%;top:70%"></div>
   </div>
-</div></section>
+  <div class="ja-lg" id="jaLg">
+    <div class="on"><b>Votre lien.</b><span>Google, Planity, Booksy… ou rien du tout.</span></div>
+    <div><b>Un fond.</b><span>Plus de 300 fonds.</span></div>
+    <div><b>Votre écriture. Vos couleurs.</b><span>Le même site, que personne n’a.</span></div>
+    <div><b>Vos photos.</b><span>Vos plus belles poses, en grand.</span></div>
+    <div><b>Vos charms.</b><span>Plus de 1 000 charms. ✦</span></div>
+    <div><b class="ja-attr">✦ Attrapez-les ! ✦</b><span id="jaCp">Touchez les charms qui tombent pour les mettre sur le site.</span></div>
+  </div>
+  <p class="ja-sans"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>
+  <a class="ja-cta" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a>
+  <button class="ja-rej" id="jaRej" type="button">↻ Revoir</button>
+  <div class="ja-pluie" id="jaPl"></div>
+</section>
+
 
 <section class="app-h" id="appli"><div class="colle">
   <div class="a-titre"><div class="k">Et derrière le site</div><h2 class="t2">L’appli qui gère <em>tout</em>.</h2></div>
@@ -1556,40 +1608,6 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const prets=Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0)));
  prets.then(()=>{m.style.fontFamily="'Cormorant Garamond'";m.style.width="auto";largeur=t.offsetWidth;m.style.fontFamily=F[0][0];cale();
    setInterval(()=>{if(document.hidden)return;m.classList.add("chg");setTimeout(()=>{i=(i+1)%F.length;m.dataset.i=i;m.style.fontFamily=F[i][0];c.src=IM[i].src;cale();requestAnimationFrame(()=>requestAnimationFrame(()=>m.classList.remove("chg")))},210)},1800)})}
-/* la construction : tout est lié au défilement, en continu (rien ne « saute ») */
-(()=>{const b=document.getElementById("build"),C={},L=[...b.querySelectorAll(".leg")],CH=[...b.querySelectorAll(".b-ch img")],HO=[...b.querySelectorAll(".b-hors img")],fond=document.getElementById("bFond"),pail=document.getElementById("bPail"),barre=document.getElementById("bBarre"),num=document.getElementById("bNum"),top=document.getElementById("top");
- b.querySelectorAll("img.c").forEach(x=>C[x.dataset.c]=x);
- const NOMS=["votre site","un fond","votre univers","vos photos","vos charms","tout le reste"],ecr=document.getElementById("bEcr"),bch=document.getElementById("bCh");
- const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);
- let cible=0,p=0,raf=0,vu=-1;
- const pose=P=>{const p=Math.min(1,P/.8),sc=cl(P,.825,.995);C[2].style.opacity=doux(cl(p,.08,.17)).toFixed(3);C[3].style.opacity=doux(cl(p,.28,.37)).toFixed(3);
-   CH.forEach((c,i)=>{const t=doux(cl(p,.76+i*.02,.86+i*.02));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-140).toFixed(1)}%,0) rotate(${((1-t)*(i%2?40:-40)).toFixed(1)}deg)`});
-   fond.style.opacity=(doux(cl(p,.08,.17))*(1-.6*doux(cl(p,.76,.9)))).toFixed(3);HO.forEach((c,i)=>{const t=doux(cl(p,.80+i*.03,.92+i*.03));c.style.opacity=Math.min(1,t*1.6).toFixed(3);c.style.transform=`translate3d(0,${((1-t)*-260).toFixed(1)}%,0) scale(${(.6+.4*t).toFixed(3)}) rotate(${((1-t)*(i%2?50:-50)+(i%2?12:-12)).toFixed(1)}deg)`});
-   C[5].style.opacity=doux(cl(p,.1,.5)).toFixed(3);pail.style.opacity=doux(cl(p,.80,.92)).toFixed(3);
-   const seg=[0,.10,.30,.50,.76,1.01];let k=0;for(let i=0;i<5;i++)if(p>=seg[i])k=i;
-   if(P>=.82)k=5;
-   L.forEach((l,i)=>{const entre=i===0?1:i===5?cl(P,.79,.81):cl(p,seg[i]-.005,seg[i]+.025),sort=i===5?0:i===4?cl(P,.77,.79):cl(p,seg[i+1]-.04,seg[i+1]-.01),o=entre*(1-sort);l.style.opacity=o.toFixed(3);l.style.transform="none"});
-   const lg=C[6];lg.style.opacity=doux(cl(P,.80,.83)).toFixed(3);const max=Math.max(0,ecr.clientWidth*(lg.naturalHeight||9355)/(lg.naturalWidth||600)-ecr.clientHeight),dy=(-sc*max).toFixed(1);
-   lg.style.transform=`translate3d(0,${dy}px,0)`;bch.style.transform=pail.style.transform=`translate3d(0,${dy}px,0)`;
-   barre.style.width=(P*100).toFixed(1)+"%";if(k!==vu){vu=k;num.textContent=(k+1)+" / 6 · "+NOMS[k]}};
- const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
- let tpT=0,t0T=0,trT=0,rejT=false;
- const lit=()=>{const r=b.getBoundingClientRect(),px=-r.top,sc=Math.min(1,Math.max(0,px/(r.height-innerHeight)));cible=matchMedia("(min-width: 1000px)").matches?sc:(rejT?tpT:Math.max(tpT,sc));if(!raf)raf=requestAnimationFrame(pas)};
- if(!matchMedia("(min-width: 1000px)").matches){const DURT=6000;
-  const tick=()=>{tpT=Math.min(1,(performance.now()-t0T)/DURT);lit();if(tpT<1)trT=requestAnimationFrame(tick);else{trT=0;rejT=false}};
-  const go=()=>{const r=b.getBoundingClientRect();if(!t0T&&r.top<innerHeight*.5&&r.bottom>innerHeight*.5){t0T=performance.now();trT=requestAnimationFrame(tick)}};
-  const tw=b.querySelector(".b-telw");if(tw)tw.addEventListener("click",()=>{if(!t0T||tpT<1)return;rejT=true;p=0;tpT=0;pose(0);t0T=performance.now();if(!trT)trT=requestAnimationFrame(tick)});
-  addEventListener("scroll",()=>{go();lit()},{passive:true});addEventListener("resize",lit);pose(0);lit();go()}
- else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
-  const DUR=matchMedia("(min-width: 1000px)").matches?8000:20000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
-  const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
-   if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
-   let au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;if(!matchMedia("(min-width: 1000px)").matches)au=au<.55?au/.55*.8:.8+(au-.55)/.45*.2;else au=au<.6?au/.6*.8:.8+(au-.6)/.4*.2;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
-   if(!raf)raf=requestAnimationFrame(pas);
-   if(actif)bo=requestAnimationFrame(boucle)};
-  new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!bo)bo=requestAnimationFrame(boucle)},{rootMargin:"300px"}).observe(b);
-  addEventListener("resize",lit);pose(P0)}
-})();
 /* l'appli : même principe, lié au défilement */
 (()=>{const b=document.getElementById("appli"),A=[...b.querySelectorAll("img.a")],N=[...b.querySelectorAll(".nt")],L=[...b.querySelectorAll(".a-legs .leg")];
  const cl=(x,a,c)=>Math.min(1,Math.max(0,(x-a)/(c-a))),doux=t=>t*t*(3-2*t);let cible=0,p=0,raf=0;
@@ -2240,8 +2258,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794319847`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794319847`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794319847`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794335053`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794335053`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794335053`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2442,7 +2460,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794319847" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794335053" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2450,7 +2468,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794319847)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794335053)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2499,6 +2517,40 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       addEventListener("load", mesure); setTimeout(mesure, 600);
       requestAnimationFrame(boucle);
     } }
+})();
+</script>
+<script id="jeu-acc">
+/* 10/11 (Marie) : « le mélange » — la 5 très fluide (3 s) puis « Attrapez-les ! » ; ne bloque jamais la page */
+(()=>{const s=document.getElementById("build");if(!s||!s.classList.contains("jeu-acc"))return;
+ const t=document.getElementById("jaTel"),IM=[...t.querySelectorAll("img.ja-l")],CI=[...t.querySelectorAll(".ja-ch img")],HO=[...s.querySelectorAll(".ja-hors img")],LGd=[...s.querySelectorAll("#jaLg>div")],ln=document.getElementById("jaLn"),br=document.getElementById("jaBr"),pa=t.querySelector(".ja-pa"),pl=document.getElementById("jaPl"),mes=document.getElementById("jaMes"),ec=document.getElementById("jaEc"),cp0=document.getElementById("jaCp").textContent;
+ const PL=["cerisedisco","framboise","ceriseruban","noeudcerise","cerisecoeur","cerises-roses","noeudgelee","cerises","cerisesrouges","fraise","fraisegelee","fraiseperle","macaronframboise","sucettecoeur","noeudrose","coeurgeleerose","etoilecerise","groseilles"];
+ const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0,actif=false;
+ const eclate=(nb)=>{for(let i=0;i<nb;i++){const e=document.createElement("i");e.textContent="✦";const an=Math.random()*Math.PI*2,r=40+Math.random()*90;e.style.left="50%";e.style.top="42%";ec.appendChild(e);e.animate([{transform:"translate(-50%,-50%) scale(.3)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(an)*r}px),calc(-50% + ${Math.sin(an)*r}px)) scale(1.2)`,opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=()=>e.remove()}};
+ const lgOn=e=>{if(e!==vu2){vu2=e;LGd.forEach((d,i)=>d.classList.toggle("on",i===e))}};
+ const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.14)))||"Votre lien…";
+  IM[0].style.opacity=seg(x,.14,.34);IM[1].style.opacity=seg(x,.34,.54);IM[2].style.opacity=seg(x,.52,.72);
+  t.style.transform=`scale(${.96+.04*seg(x,0,.75)})`;br.style.width=(seg(x,0,1)*100)+"%";
+  CI.forEach((c,i)=>{const q=seg(x,.72+i*.025,.86+i*.025);c.style.opacity=q;c.style.transform=`translateY(${(1-q)*-50}px) rotate(${(1-q)*(i%2?30:-30)}deg) scale(${.6+.4*q})`});
+  HO.forEach((h,i)=>{const q=seg(x,.76+i*.03,.92+i*.03);h.style.opacity=q;h.style.transform=`translate(${(1-q)*(i%2?-60:60)}px,0) scale(${.3+.7*q}) rotate(${(1-q)*-40}deg)`});
+  pa.style.opacity=seg(x,.8,.95);lgOn(x<.14?0:x<.34?1:x<.54?2:x<.72?3:4)};
+ const SPOTS=[[6,8],[70,6],[4,40],[78,48],[8,86],[74,90],[40,2],[20,22],[60,30],[30,60],[66,64],[12,66]];
+ const tombe=()=>{if(document.hidden||!actif)return;const im=document.createElement("img");im.alt="";im.src="loginail-site/charms-mini/"+PL[k++%PL.length]+".webp";const W=s.clientWidth,H=s.clientHeight;im.style.left=(Math.random()*(W-60))+"px";pl.appendChild(im);
+  const rz=(Math.random()<.5?-1:1)*(90+Math.random()*200),a=im.animate([{transform:"translateY(-70px) rotate(0deg)"},{transform:`translateY(${H+40}px) rotate(${rz}deg)`}],{duration:4600+Math.random()*2400,easing:"linear"});a.onfinish=()=>im.remove();
+  im.addEventListener("pointerdown",e=>{e.preventDefault();attrape(im,a,e.isTrusted)},{once:true})};
+ const attrape=(im,a,vrai)=>{if(vrai)touche=true;const r0=im.getBoundingClientRect();a.pause();im.remove();
+  const sp=SPOTS[n%SPOTS.length],dst=document.createElement("img");dst.alt="";dst.src=im.src;dst.style.cssText=`position:absolute;width:17.2%;aspect-ratio:1;left:${sp[0]}%;top:${sp[1]}%;opacity:0`;mes.appendChild(dst);const r1=dst.getBoundingClientRect();
+  const v=document.createElement("img");v.className="ja-vole";v.alt="";v.src=im.src;v.style.cssText=`left:${r0.left}px;top:${r0.top}px;width:${r0.width}px;height:${r0.height}px`;document.body.appendChild(v);
+  v.animate([{transform:"none"},{transform:`translate(${(r1.left-r0.left)/2}px,${(r1.top-r0.top)/2-40}px) scale(1.3) rotate(20deg)`,offset:.5},{transform:`translate(${r1.left-r0.left}px,${r1.top-r0.top}px) scale(${r1.width/r0.width})`}],{duration:460,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{v.remove();dst.style.opacity=1;dst.animate([{transform:"scale(1.5)"},{transform:"scale(1)"}],{duration:320,easing:"cubic-bezier(.3,1.6,.5,1)"});eclate(8);n++;
+   document.getElementById("jaCp").textContent=n+(n>1?" charms attrapés":" charm attrapé")+" ✦";
+   if(n===5){eclate(40);t.classList.add("brille");setTimeout(()=>t.classList.remove("brille"),2400)}}};
+ const jeu=()=>{lgOn(5);eclate(20);HO.forEach((h,i)=>h.animate([{transform:"translateY(0)"},{transform:"translateY(-7px)"},{transform:"translateY(0)"}],{duration:2200+i*200,iterations:Infinity}));
+  clearInterval(pluie);pluie=setInterval(tombe,850);tombe();
+  clearTimeout(demo);demo=setTimeout(()=>{if(touche||n)return;const R=t.getBoundingClientRect(),c=[...pl.querySelectorAll("img")].find(i=>{const b=i.getBoundingClientRect();return b.top>R.top+40&&b.bottom<R.bottom-40});if(c)c.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))},2800)};
+ const tic=nw=>{const x=Math.min(1,(nw-t0)/DUR);pose(x);if(x<1)raf=requestAnimationFrame(tic);else if(!fini){fini=true;jeu()}};
+ const joue=()=>{cancelAnimationFrame(raf);clearInterval(pluie);clearTimeout(demo);pl.innerHTML="";mes.innerHTML="";n=0;fini=false;vu2=-1;HO.forEach(h=>h.getAnimations().forEach(a=>a.cancel()));
+  document.getElementById("jaCp").textContent=cp0;pose(0);t0=performance.now();raf=requestAnimationFrame(tic)};
+ CI.forEach(c=>{c.style.transition="none"});pose(0);document.getElementById("jaRej").onclick=joue;
+ let lance=false;new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!lance){lance=true;setTimeout(joue,250)}},{threshold:.35}).observe(t);
 })();
 </script>
 </body></html>
