@@ -1,0 +1,93 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Entrée Loginail</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#F4F1EC;font-family:Jost,sans-serif;overflow:hidden}
+#site{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:#1E1C1B}
+#site b{font:500 13px Jost;letter-spacing:.2em;text-transform:uppercase}
+#site button{border:0;border-radius:99px;padding:12px 22px;background:#1E1C1B;color:#fff;font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+#intro{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;transition:opacity .45s ease,transform .45s ease}
+#intro.part{opacity:0;transform:scale(1.06);pointer-events:none}
+.logo{position:relative;width:min(34vw,132px);display:flex;flex-direction:column;align-items:center;gap:16px}
+.logo svg{width:100%;overflow:visible;display:block}
+.mot{font:500 11px Jost;letter-spacing:.2em;text-transform:uppercase;color:#F3EEE8;opacity:0;transform:translateY(5px);transition:opacity .45s,letter-spacing .8s cubic-bezier(.2,.8,.2,1),transform .45s;white-space:nowrap}
+.mot.on{opacity:1;letter-spacing:.46em;transform:none}
+.mini{position:absolute;left:50%;top:50%;width:58px;margin:-13px 0 0 -29px;pointer-events:none;will-change:transform,opacity}
+.bande{position:absolute;left:50%;top:50%;width:min(34vw,132px);transform:translate(-50%,-50%);height:0}
+.piste{position:absolute;left:0;right:0;top:0;will-change:transform}
+.piste svg{display:block;width:100%;height:auto}
+.voile{position:absolute;left:0;right:0;height:38%;pointer-events:none;z-index:2}
+.voile.h{top:0;background:linear-gradient(#000 35%,transparent)}.voile.b{bottom:0;background:linear-gradient(transparent,#000 65%)}
+</style></head><body>
+<div id="site"><b>Le site Loginail</b><button id="rejoue" type="button">↻ Rejouer</button></div>
+<div id="intro" aria-hidden="true"></div>
+<script>
+/* 10/11 (Marie) : écran d'entrée — petit, centré, très rapide, plein de formes d'ongles, son logo (doigt + ongle ovale) à la fin */
+const NS="http://www.w3.org/2000/svg",VB="0 0 420 192",CREME="#F3EEE8";
+const DOIGT='M84,22 H300 A74,74 0 0 1 300,170 H84 A74,74 0 0 1 84,22 Z';
+const B='M215,50 ',F=' L215,142 A46,46 0 0 1 215,50 Z';
+// les formes d'ongles (même départ, même sens, pour pouvoir passer de l'une à l'autre en douceur)
+const FORMES={
+ ronde:B+'L292,50 A46,46 0 0 1 292,142'+F,
+ carre:B+'L334,50 Q340,50 340,56 L340,136 Q340,142 334,142'+F,
+ squoval:B+'L320,50 Q344,50 344,74 L344,118 Q344,142 320,142'+F,
+ amande:B+'L300,50 C350,52 382,80 394,96 C382,112 350,140 300,142'+F,
+ stiletto:B+'L285,50 C340,56 386,84 412,96 C386,108 340,136 285,142'+F,
+ coffin:B+'L292,50 L384,68 L384,124 L292,142'+F,
+ ballerine:B+'L292,50 L398,76 L398,116 L292,142'+F,
+ lipstick:B+'L372,50 Q392,52 388,64 L344,142'+F,
+ edge:B+'L300,50 L402,96 L300,142'+F,
+ flare:B+'L300,50 L386,32 L386,160 L300,142'+F,
+ courte:B+'L262,50 Q276,50 276,64 L276,128 Q276,142 262,142'+F,
+ pointe:B+'L346,50 L390,96 L346,142'+F,
+ ovale:B+'L318,50 C368,50 386,78 386,96 C386,114 368,142 318,142'+F   // = le logo
+};
+const SUITE=["ronde","carre","amande","coffin","stiletto","squoval","lipstick","ballerine","edge","flare","courte","pointe","amande","coffin","stiletto","ovale"];
+const COUL=["#E8C4B0","#F2A7BF","#C8243A","#C9A7F2","url(#chrome)","#9CC2F5","#F6C9AE","url(#holo)","#B3125F","#8FE0D6","#F2D23C","#7E4FC9","#F28BA8","url(#chrome)","#E3A9B0","#000"];
+const N=140,ech={};
+{const s=document.createElementNS(NS,"svg"),p=document.createElementNS(NS,"path");s.style.cssText="position:absolute;width:0;height:0";s.appendChild(p);document.body.appendChild(s);
+ for(const k in FORMES){p.setAttribute("d",FORMES[k]);const L=p.getTotalLength(),a=[];for(let i=0;i<N;i++){const q=p.getPointAtLength(L*i/N);a.push([q.x,q.y])}ech[k]=a}s.remove()}
+const enD=a=>"M"+a.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join("L")+"Z";
+const DEFS=`<defs><linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#9a9ca3"/><stop offset=".55" stop-color="#f5f5f7"/><stop offset="1" stop-color="#5d5f66"/></linearGradient>
+<linearGradient id="holo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6A9BD"/><stop offset=".33" stop-color="#C9A7F2"/><stop offset=".66" stop-color="#9CC2F5"/><stop offset="1" stop-color="#8FE0D6"/></linearGradient></defs>`;
+function dessin(forme,coul){return `<svg viewBox="${VB}" xmlns="${NS}">${DEFS}<path d="${DOIGT}" fill="${CREME}"/><path class="ongle" d="${FORMES[forme]}" fill="${coul}" stroke="${CREME}" stroke-width="7" stroke-linejoin="round"/></svg>`}
+// centré pour de vrai : le milieu du dessin final (doigt + ongle ovale = 10 → 386) au milieu de l'écran
+const DEC=(420/2-(10+386)/2)/420*100;
+const V=(new URLSearchParams(location.search).get("v")||"a");
+const intro=document.getElementById("intro");let T=[],fini=0;
+const fin=()=>{if(fini)return;fini=1;T.forEach(clearTimeout);intro.classList.add("part")};
+intro.onclick=fin;
+function logo(){const d=document.createElement("div");d.className="logo";d.style.transform=`translateX(${DEC}%)`;d.innerHTML=dessin("ronde",COUL[0])+'<span class="mot">Loginail</span>';intro.appendChild(d);
+ d.querySelector(".mot").style.transform="translateX("+(-DEC)+"%)";return d}
+function morph(path,de,a,ms){const t0=performance.now();const f=t=>{let x=Math.min(1,(t-t0)/ms);x=1-Math.pow(1-x,3);path.setAttribute("d",enD(de.map((p,i)=>[p[0]+(a[i][0]-p[0])*x,p[1]+(a[i][1]-p[1])*x])));if(x<1&&!fini)requestAnimationFrame(f)};requestAnimationFrame(f)}
+function finale(d,t){const svg=d.querySelector("svg"),m=d.querySelector(".mot");
+ T.push(setTimeout(()=>{svg.animate([{transform:"scale(1)"},{transform:"scale(1.12)"},{transform:"scale(1)"}],{duration:380,easing:"cubic-bezier(.3,1.6,.5,1)"});m.classList.add("on")},t));
+ T.push(setTimeout(fin,t+1050))}
+/* A — l'ongle change de forme et de couleur à toute vitesse, en douceur (morphing), puis devient le logo */
+function versionA(){const d=logo(),svg=d.querySelector("svg"),o=svg.querySelector(".ongle");
+ svg.animate([{transform:"scale(.4)",opacity:0,filter:"blur(6px)"},{transform:"scale(1)",opacity:1,filter:"blur(0)"}],{duration:260,easing:"cubic-bezier(.2,.9,.3,1.2)"});
+ let t=180;const pas=105;
+ SUITE.forEach((k,i)=>{if(!i)return;T.push(setTimeout(()=>{morph(o,ech[SUITE[i-1]],ech[k],pas-10);o.setAttribute("fill",COUL[i])},t));t+=i>SUITE.length-4?pas+40:pas});
+ finale(d,t+80)}
+/* B — pareil, et à chaque forme une gerbe de petits ongles qui jaillit tout autour */
+function gerbe(forme,coul,n){for(let j=0;j<n;j++){const m=document.createElement("div");m.className="mini";m.innerHTML=dessin(forme,coul);intro.appendChild(m);
+ const an=Math.random()*Math.PI*2,r=110+Math.random()*190,rot=(an*180/Math.PI)+(Math.random()*60-30),s=.5+Math.random()*.7;
+ m.animate([{transform:`translate(0,0) rotate(${rot}deg) scale(.2)`,opacity:1},{transform:`translate(${Math.cos(an)*r*.8}px,${Math.sin(an)*r*.8}px) rotate(${rot+90}deg) scale(${s})`,opacity:1,offset:.7},{transform:`translate(${Math.cos(an)*r}px,${Math.sin(an)*r}px) rotate(${rot+120}deg) scale(${s})`,opacity:0}],{duration:620+Math.random()*300,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=()=>m.remove()}}
+function versionB(){const d=logo(),svg=d.querySelector("svg"),o=svg.querySelector(".ongle");d.style.zIndex=3;
+ svg.animate([{transform:"scale(.4)",opacity:0},{transform:"scale(1)",opacity:1}],{duration:240,easing:"cubic-bezier(.2,.9,.3,1.2)"});
+ let t=160;const pas=112;
+ SUITE.forEach((k,i)=>{if(!i)return;T.push(setTimeout(()=>{morph(o,ech[SUITE[i-1]],ech[k],pas-12);o.setAttribute("fill",COUL[i]);if(k!=="ovale")gerbe(k,COUL[i],i<4?5:8)},t));t+=pas});
+ finale(d,t+60)}
+/* C — machine à sous : une colonne de doigts (toutes les formes, toutes les couleurs) défile très vite et s'arrête pile sur le logo */
+function versionC(){const b=document.createElement("div");b.className="bande";b.style.transform=`translate(-50%,-50%) translateX(${DEC}%)`;
+ const p=document.createElement("div");p.className="piste";const tours=[];for(let r=0;r<3;r++)SUITE.slice(0,-1).forEach((k,i)=>tours.push([k,COUL[i]]));tours.push(["ovale","#000"]);
+ p.innerHTML=tours.map(x=>`<div style="padding:14px 0">${dessin(x[0],x[1])}</div>`).join("");b.appendChild(p);intro.appendChild(b);
+ intro.insertAdjacentHTML("beforeend",'<div class="voile h"></div><div class="voile b"></div>');
+ requestAnimationFrame(()=>{const kids=p.children,last=kids[kids.length-1],h=last.offsetHeight,y=last.offsetTop+h/2;
+  p.animate([{transform:"translateY(0)",filter:"blur(3px)"},{transform:`translateY(${-y*.8}px)`,filter:"blur(2px)",offset:.6},{transform:`translateY(${-y}px)`,filter:"blur(0)"}],{duration:1500,easing:"cubic-bezier(.25,.6,.2,1)",fill:"forwards"});
+  const m=document.createElement("span");m.className="mot";m.textContent="Loginail";m.style.cssText="position:absolute;left:50%;top:calc(50% + "+(h/2+6)+"px);transform:translateX(-50%);z-index:3";intro.appendChild(m);
+  T.push(setTimeout(()=>{last.firstChild.animate([{transform:"scale(1)"},{transform:"scale(1.14)"},{transform:"scale(1)"}],{duration:380,easing:"cubic-bezier(.3,1.6,.5,1)"});m.style.transition="opacity .45s,letter-spacing .8s";m.style.opacity=1;m.style.letterSpacing=".46em"},1480));
+  T.push(setTimeout(fin,2500))})}
+({a:versionA,b:versionB,c:versionC}[V]||versionA)();
+document.getElementById("rejoue").onclick=()=>location.reload();
+</script></body></html>

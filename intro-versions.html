@@ -1,0 +1,24 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Choisir l'entrée</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F1EC;font-family:Jost,sans-serif;color:#1E1C1B;padding:0 16px 40px}
+h1{font-weight:500;font-size:22px;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin:26px 0 6px}
+p.s{text-align:center;margin:0 0 22px;font-size:15px;color:#6b6460}
+.g{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.c{display:flex;flex-direction:column;align-items:center;gap:10px}
+.c b{font-weight:500;font-size:16px;letter-spacing:.14em;text-transform:uppercase}
+.c i{font-style:normal;font-size:13px;color:#6b6460;max-width:250px;text-align:center;min-height:36px}
+.tel{width:250px;height:541px;border-radius:30px;overflow:hidden;background:#000;box-shadow:0 18px 40px -20px rgba(0,0,0,.6);border:6px solid #1E1C1B}
+.tel iframe{width:390px;height:844px;border:0;transform:scale(.641);transform-origin:0 0}
+.bt{display:flex;gap:8px}.bt button,.bt a{border:0;border-radius:99px;padding:10px 16px;background:#1E1C1B;color:#fff;font:500 12px Jost;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none}
+.bt a{background:#E6E0D8;color:#1E1C1B}
+</style></head><body>
+<h1>L'entrée du site</h1><p class="s">Trois versions. Touche « Rejouer » pour la revoir.</p>
+<div class="g">
+ <div class="c"><b>A · Morphing</b><i>L'ongle change de forme et de couleur à toute vitesse, puis devient ton logo.</i><div class="tel"><iframe src="intro-entree.html?v=a"></iframe></div><div class="bt"><button data-v="a">↻ Rejouer</button><a href="intro-entree.html?v=a" target="_blank">En grand</a></div></div>
+ <div class="c"><b>B · Explosion</b><i>Pareil, avec plein de petits ongles qui jaillissent tout autour.</i><div class="tel"><iframe src="intro-entree.html?v=b"></iframe></div><div class="bt"><button data-v="b">↻ Rejouer</button><a href="intro-entree.html?v=b" target="_blank">En grand</a></div></div>
+ <div class="c"><b>C · Machine à sous</b><i>Plein de doigts défilent très vite et s'arrêtent pile sur ton logo.</i><div class="tel"><iframe src="intro-entree.html?v=c"></iframe></div><div class="bt"><button data-v="c">↻ Rejouer</button><a href="intro-entree.html?v=c" target="_blank">En grand</a></div></div>
+</div>
+<script>document.querySelectorAll("button[data-v]").forEach(b=>b.onclick=()=>{const f=b.closest(".c").querySelector("iframe");f.src="intro-entree.html?v="+b.dataset.v+"&t="+Date.now()})</script>
+</body></html>
