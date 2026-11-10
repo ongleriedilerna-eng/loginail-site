@@ -1433,6 +1433,17 @@ html body .app-h{background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.
 /* les chiffres, avant « Votre semaine » */
 .chif-acc{background:#FBF4F3;padding:34px 16px 6px;display:flex;justify-content:center}
 .chif-acc .chif{margin:0!important}
+
+/* 10/11 (Marie) : chiffres sur le zèbre rose ; appli plus grande ; charms dans une carte */
+.chif-acc{background:url(loginail-site/fonds-img/n20.webp) center/cover #F6D9E0!important;padding:38px 16px!important}
+.chif-acc .chif>div{background:rgba(255,255,255,.92)!important;box-shadow:0 14px 30px -18px rgba(0,0,0,.45)}
+@media (max-width:999px){html body .app-h .a-tel{height:min(70svh,640px)!important}}
+@media (min-width:1000px){html body .app-h .a-tel{height:calc(100vh - 90px)!important;max-height:820px!important}}
+html body #charms .bloc.carte-ch{background:rgba(255,255,255,.93)!important;border-radius:30px!important;padding:24px 20px 20px!important;max-width:360px;margin:0 auto;box-shadow:0 24px 50px -30px rgba(0,0,0,.4)!important;position:relative;z-index:5}
+#charms .bloc.carte-ch .ch-petit{margin-top:0!important}
+#charms .ch-bas.dans{position:static!important;transform:none!important;margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:6px}
+#charms .ch-bas.dans .btn{white-space:nowrap}
+@media (min-width:1000px){#charms .bloc.carte-ch{max-width:560px;padding:34px 34px 26px}}
 @media (min-width:1000px){.build{height:250vh!important}}
 
 /* 10/11 (Marie) : « le mélange » — à la place de la construction qui bloquait : la 5 très fluide (3 s), puis « Attrapez-les ! » */
@@ -1545,6 +1556,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .il-st small{font-size:9px;letter-spacing:.04em;opacity:.8}
 .il-pied{margin-top:14px;font:500 10.5px Jost;letter-spacing:.16em;text-transform:uppercase;color:#B4778A}
 @media (min-width:1000px){.intro-l{padding:20px 40px 60px}.il-carte{max-width:640px;padding:30px 34px 24px}.il-b span{font-size:14px}}
+.il-b span b.g{font:inherit;font-weight:600;letter-spacing:0;text-transform:none;color:#1E1C1B}
 @font-face{font-family:'Bagel Fat One';src:url(loginail-site/polices/BagelFatOne-400-latin.woff2) format('woff2')}@font-face{font-family:'Fascinate';src:url(loginail-site/polices/Fascinate-400-latin.woff2) format('woff2')}@font-face{font-family:'Fredoka';src:url(loginail-site/polices/Fredoka-600-latin.woff2) format('woff2')}@font-face{font-family:'Permanent Marker';src:url(loginail-site/polices/PermanentMarker-400-latin.woff2) format('woff2')}@font-face{font-family:'Sniglet';src:url(loginail-site/polices/Sniglet-800-latin.woff2) format('woff2')}</style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1566,7 +1578,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
  <div class="il-deux">
   <div class="il-b"><div class="il-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></div><b>Votre site internet</b><span>À votre image : vos photos, vos prix, et vos clientes réservent en ligne.</span></div>
   <div class="il-plus">+</div>
-  <div class="il-b"><div class="il-ic rose"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></div><b>L’appli Loginail</b><span>Sur votre téléphone : votre planning, vos clientes, vos rendez-vous et votre caisse.</span></div>
+  <div class="il-b"><div class="il-ic rose"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></div><b>L’appli Loginail</b><span>Sur votre téléphone : <b class="g">votre planning, vos clientes, vos rendez-vous et votre caisse</b>.</span></div>
  </div>
  <div class="il-stores"><span class="il-bientot">Bientôt sur</span><span class="il-st"><small>Télécharger dans</small>l’App Store</span><span class="il-st"><small>Disponible sur</small>Google Play</span></div>
  <div class="il-pied">✦ Créé par une prothésiste, pour les prothésistes ✦</div>
@@ -1578,7 +1590,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
   <div class="ja-barre"><i id="jaBr"></i></div>
   <div class="ja-zone">
     <div class="ja-tel" id="jaTel">
-      <img src="loginail-site/apercus-univers/s1.webp" alt="">
+      <img src="loginail-site/apercus-univers/ja-s1.webp" alt="">
       <img class="ja-l" src="loginail-site/apercus-univers/o2.webp" alt="" style="opacity:0">
       <img class="ja-l" src="loginail-site/apercus-univers/o3.webp" alt="" style="opacity:0">
       <img class="ja-l" src="loginail-site/apercus-univers/s5.webp" alt="Exemple : le site « les Ongles de Cerise »" style="opacity:0">
@@ -1621,7 +1633,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
     <div class="leg"><b>Votre site, depuis le canapé.</b><span>Un fond, un prix&nbsp;: c’est changé.</span></div>
   </div>
   <div class="a-tel"><div class="a-ecr">
-    <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite7.webp" alt="">
+    <img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt="" style="opacity:1"><img class="a" src="loginail-site/apercus-univers/app-agenda.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-clientes.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-accueil.webp" alt=""><img class="a" src="loginail-site/apercus-univers/app-monsite7.webp?v=1011" alt="">
     <div class="notifs" id="notifs">
       <div class="nt"><i></i><div><b>Nouvelle réservation</b><span>Léa · Pose gel · samedi 10 h</span></div><small>maintenant</small></div>
       <div class="nt"><i></i><div><b>Réservé cette nuit</b><span>Sarah · Remplissage · mardi 14 h</span></div><small>2 h 14</small></div>
@@ -1720,7 +1732,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const t=m.querySelector(".mt");
  const cv=document.createElement("canvas").getContext("2d");
  /* le charm se pose sur la dernière lettre (le r), au même endroit pour toutes les écritures : on mesure où l’encre commence vraiment */
- const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("Loginail"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft-cw*.42).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-ia)-cw*.97).toFixed(1)+"px"};
+ const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("Loginail"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft-cw*.25).toFixed(1)+"px";c.style.top=(t.offsetTop-cw*.55).toFixed(1)+"px";c.style.zIndex=3;c.style.top=(t.offsetTop+(fa-ia)-cw*.97).toFixed(1)+"px"};
  const cale=()=>{m.style.width="auto";m.style.fontSize=base+"px";const w=t.offsetWidth||1;m.style.fontSize=Math.min(base*1.05,base*largeur/w).toFixed(1)+"px";m.style.width=largeur+"px";m.style.height=m.style.lineHeight=(base*1.02).toFixed(1)+"px";accroche()};
  const IM=F.map(f=>{const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp";return im});
  const prets=Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0)));
@@ -2376,8 +2388,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794345120`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794345120`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794345120`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794345977`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794345977`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794345977`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2557,7 +2569,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794345120" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794345977" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2565,7 +2577,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794345120)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794345977)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2624,6 +2636,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 
 /* 10/11 (Marie) : les chiffres juste au-dessus de « Votre semaine avec Loginail » */
 (() => { const c = document.querySelector(".chif"), sm = document.getElementById("semaine"); if (c && sm) { const w = document.createElement("section"); w.className = "chif-acc"; w.appendChild(c); sm.before(w); } })();
+
+/* 10/11 (Marie) : les charms — le texte rangé dans une carte au centre, le bouton dedans */
+(() => { const b = document.querySelector("#charms .bloc"), bas = document.querySelector("#charms .ch-bas"); if (!b) return; const cp = b.querySelector(".compte"); if (cp) cp.remove(); if (bas) { b.appendChild(bas); bas.classList.add("dans"); } b.classList.add("carte-ch"); })();
 </script>
 <script id="jeu-acc">
 /* 10/11 (Marie) : « le mélange » — la 5 très fluide (3 s) puis « Attrapez-les ! » ; ne bloque jamais la page */
@@ -2680,7 +2695,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
  BT.forEach((b,i)=>b.onclick=()=>{touche=true;avec=i===0;rend()});
  {let x0=null;s.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});s.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>40){touche=true;avec=dx>0;rend()}},{passive:true})}rend();
  new IntersectionObserver(es=>{const v=es[0].isIntersecting;if(v&&!vu)pop();vu=v},{threshold:.3}).observe(s);
- setInterval(()=>{if(!touche&&vu&&!document.hidden){avec=!avec;rend()}},4200)})();
+ /* 10/11 (Marie) : ça reste sur AVEC ; c'est la cliente qui touche SANS */})();
 </script>
 <script id="haut-final">
 /* 10/11 (Marie) : le haut — « Prêt en une minute · créé par une prothésiste » juste au-dessus du lien */
