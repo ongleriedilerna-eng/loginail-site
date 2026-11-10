@@ -1421,6 +1421,17 @@ html body .app-h .a-ong-bloc::after{color:rgba(30,28,27,.55)!important}
 .a-anim .z.nuit.on~.seg2 i:nth-of-type(2){color:#1E1C1B}
 html body .app-h .a-onglets button{border-color:rgba(30,28,27,.14)!important;background:rgba(255,255,255,.72)!important;color:rgba(30,28,27,.72)!important}
 html body .app-h .a-onglets button.on{background:#1E1C1B!important;color:#fff!important;border-color:#1E1C1B!important;box-shadow:0 14px 30px -14px rgba(0,0,0,.45)!important}
+
+/* 10/11 (Marie) : l'appli sur un fond bleu doux (comme « Bulles qui montent ») */
+html body .app-h{background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.7) 0 6px,transparent 7px),radial-gradient(circle at 80% 30%,rgba(255,255,255,.55) 0 4px,transparent 5px),radial-gradient(circle at 35% 70%,rgba(255,255,255,.5) 0 5px,transparent 6px),radial-gradient(circle at 70% 85%,rgba(255,255,255,.6) 0 8px,transparent 9px),linear-gradient(180deg,#EAF3F8,#D6E7F1)!important;background-size:220px 260px,180px 200px,260px 240px,300px 280px,auto!important}
+.a-anim .ms-cache{position:absolute;inset:0;z-index:4;background:linear-gradient(180deg,#EEF3F6,#E3EEF4)}
+/* les charms : la phrase plus grande */
+@media (max-width:999px){html body .p-ch .bloc .ch-petit,html body .p-ch .bloc .t2{font-size:24px!important;letter-spacing:.12em!important}}
+@media (min-width:1000px){html body .p-ch .bloc .ch-petit{font-size:clamp(34px,3vw,48px)!important}html body .p-ch .bloc .t2{font-size:clamp(34px,3vw,48px)!important}}
+#charms .tap-pill,#charms .tap-ring,#charms .tap-doigt{display:none!important}
+/* les chiffres, avant « Votre semaine » */
+.chif-acc{background:#FBF4F3;padding:34px 16px 6px;display:flex;justify-content:center}
+.chif-acc .chif{margin:0!important}
 @media (min-width:1000px){.build{height:250vh!important}}
 
 /* 10/11 (Marie) : « le mélange » — à la place de la construction qui bloquait : la 5 très fluide (3 s), puis « Attrapez-les ! » */
@@ -2364,8 +2375,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794344413`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794344413`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794344413`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794344758`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794344758`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794344758`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2401,21 +2412,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           { transform: `translate3d(${x + (Math.random() * 60 - 30)}px,${H + 160}px,0) rotate(${rz}deg)` }], { duration: 520 + Math.max(0, H - y) * .25, easing: "cubic-bezier(.55,0,1,.6)", fill: "forwards" });
         a.onfinish = () => w.remove(); };
       pc.addEventListener("pointerdown", tombe, true); pc.addEventListener("click", e => { if (e.target.closest && e.target.closest(".pluie2 .c2")) e.stopPropagation(); }, true);
-      /* 10/11 (Marie) : « elle ne lit pas forcément » — on MONTRE qu'on peut toucher : un doigt tapote un charm, il tombe tout seul, et « Touchez les charms » reste affiché tant qu'elle n'a pas essayé */
-      if (getComputedStyle(pc).position === "static") pc.style.position = "relative";
-      let essaye = false, demos = 0; const pill = document.createElement("div"); pill.className = "tap-pill off"; pill.textContent = "Touchez les charms"; { const tx = [...pc.querySelectorAll("p,div,span")].find(e => e.children.length < 3 && /^\s*Touchez-en un/.test(e.textContent)); if (tx) { pill.classList.add("dans"); tx.after(pill); } else pc.appendChild(pill); }
-      pc.addEventListener("pointerdown", e => { if (e.isTrusted && e.target.closest && e.target.closest(".pluie2 .c2")) { essaye = true; pill.classList.add("off"); } }, true);
-      const demo = () => { if (essaye || demos >= 3) return; const R = pc.getBoundingClientRect(); if (R.bottom < innerHeight * .3 || R.top > innerHeight * .7) return;
-        const cs = [...pc.querySelectorAll(".pluie2 .c2")].filter(c => !c.dataset.parti).filter(c => { const b = c.getBoundingClientRect(); return b.width > 10 && b.top > R.top + 60 && b.bottom < R.bottom - 90 && b.left > R.left + 10 && b.right < R.right - 10; });
-        if (!cs.length) return; demos++; const c = cs[Math.floor(Math.random() * Math.min(4, cs.length))], b = c.getBoundingClientRect(), x = b.left + b.width / 2 - R.left, y = b.top + b.height / 2 - R.top;
-        const ring = document.createElement("i"); ring.className = "tap-ring"; ring.style.left = x + "px"; ring.style.top = y + "px";
-        const d = document.createElementNS("http://www.w3.org/2000/svg", "svg"); d.setAttribute("viewBox", "0 0 24 24"); d.setAttribute("class", "tap-doigt"); d.style.left = x + "px"; d.style.top = y + "px";
-        d.innerHTML = '<path d="M9 11V4.5a1.5 1.5 0 0 1 3 0V10m0-.5V8a1.5 1.5 0 0 1 3 0v2m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-4-2L4.3 16a1.6 1.6 0 0 1 2.4-2.1L9 16" fill="#fff" stroke="#1E1C1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
-        pc.appendChild(ring); pc.appendChild(d); pill.classList.remove("off");
-        setTimeout(() => { c.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true })); }, 1500);
-        setTimeout(() => { ring.remove(); d.remove(); }, 1850); };
-      let tDemo = 0; new IntersectionObserver(es => { clearTimeout(tDemo); if (es[0].isIntersecting) { tDemo = setTimeout(demo, 700); } }, { threshold: .45 }).observe(pc);
-      setInterval(() => { if (!essaye && !document.hidden) demo(); }, 7000); } }
+      } }   /* 10/11 (Marie) : « Touchez les charms » et le doigt retirés */
 
   /* ---- 16/11 (Marie) : « tout compris » surligné ; « Sans engagement » qui scintille ---- */
   { const k = document.querySelector("#prix .prix > .k"); if (k && k.textContent.includes("tout compris")) k.innerHTML = k.textContent.replace("tout compris", '<mark class="surl">tout compris</mark>');
@@ -2448,7 +2445,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         () => { { const c = document.createElement("div"); c.className = "a-carte"; Object.assign(c.style, { left: "5.67%", top: "16.8%", width: "88.5%", height: "11.1%" });
             c.innerHTML = '<small>Cette semaine</small><b>Votre site a été vu <em>128 fois</em></b><span>9 réservations en ligne · 0 % de commission</span>'; A.appendChild(c); }
           A.append(cache(10.5, 44.3, 36, 49.8, "#1E1C1B"), morceau("app-accueil", 10.5, 44.3, 36, 49.8, "dix"));
-          const r = document.createElement("div"); r.className = "reveil"; r.innerHTML = '<i class="onde"></i><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.4 1.6M5 4.5 2.8 6.6M19 4.5l2.2 2.1M7.5 20 6 22M16.5 20l1.5 2"/></svg>'; A.appendChild(r);
+          /* 10/11 (Marie) : le rond sur le réveil faisait bug — retiré */
           const go = () => { A.classList.remove("sonne"); void A.offsetWidth; A.classList.add("sonne"); att(go, 4200); }; att(go, 600); },
         /* 1 · Agenda : les rendez-vous se placent un par un */
         () => { const B = [[39.6, 50.6], [53.8, 61.2], [75.6, 80.4]];
@@ -2459,7 +2456,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
           /* à la place de la pause : un vrai rendez-vous, le planning est plein */
           const j = document.createElement("div"); j.className = "z rdv rdv-html"; Object.assign(j.style, { left: "20.6%", top: "62%", width: "75%", height: "12.8%" });
           j.innerHTML = '<b>13:00 – 14:30</b> Jade<span class="r">✓ rappel</span><small>Pose américaine · acompte payé</small>'; A.appendChild(j); Z.splice(2, 0, j);
-          const go = () => { Z.forEach(z => z.classList.remove("ok")); Z.forEach((z, i) => att(() => z.classList.add("ok"), 400 + i * 420)); att(go, 5600); }; go(); },
+          Z.forEach((z, i) => att(() => z.classList.add("ok"), 250 + i * 380)); },   /* 10/11 (Marie) : l'agenda ne se vide plus en boucle (ça faisait bug) */
         /* 2 · Clientes : on ajoute Chloé */
         () => { { const cc = cache(1, 23, 99, 29.4, "#F7F2EF"); cc.style.borderRadius = "0"; A.appendChild(cc); } const bt = morceau("app-clientes", 5.67, 23.5, 94.17, 28.81, "bt"); A.appendChild(bt);
           const f = document.createElement("div"); f.className = "fiche";
@@ -2471,7 +2468,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
             att(() => { ok.classList.add("fait"); ok.textContent = "Cliente ajoutée ✓"; }, 4300); att(() => f.classList.remove("on"), 5400); att(go, 6600); }; go(); },
         /* 3 · Mon site : « Personnaliser », on choisit un fond, le site change */
         () => { /* 10/11 (Marie) : Sabine personnalise son site, ça change d'un coup avec plein d'étoiles */
-          const f = document.createElement("iframe"); f.className = "ms-anim"; f.src = "monsite-anim.html?embed=1&t=1"; f.setAttribute("tabindex", "-1"); f.setAttribute("aria-hidden", "true"); f.setAttribute("loading", "lazy"); A.appendChild(f); }
+          const cv = document.createElement("div"); cv.className = "ms-cache"; A.appendChild(cv); const f = document.createElement("iframe"); f.className = "ms-anim"; f.src = "monsite-anim.html?embed=1&t=1"; f.setAttribute("tabindex", "-1"); f.setAttribute("aria-hidden", "true");  A.appendChild(f); }
         ,
         /* 4 · Réglages : l'apparence, jour / nuit */
         () => { const z = morceau("app-reglages", 0, 0, 100, 100, "nuit"); A.appendChild(z);
@@ -2488,7 +2485,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     if (pq) {
       const s = document.createElement("section"); s.className = "bio-k"; s.id = "bio";
       const E = "loginail-site/univers-photos/emma/";
-      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio <span class="scr-l"><span class="scr">Instagram</span>,</span><br><em>votresalon.fr</em></h2>
+      s.innerHTML = `<div><div class="k">Votre lien à vous</div><h2>Dans votre bio <span class="scr-l"><span class="scr">Instagram</span></span><br><em>votresalon.fr</em></h2>
         <p>Elle voit vos ongles, elle clique sur votre lien, elle réserve. Pas de page d’annuaire avec vos concurrentes à côté : juste vous.</p>
         <div class="pts"><div><b>votresalon.fr</b>à votre nom</div><div><b>0 %</b>de commission</div></div>
         <div class="ex">Exemple · personnes et photos créées par IA</div></div>
@@ -2559,7 +2556,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794344413" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794344758" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2567,7 +2564,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794344413)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794344758)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2623,6 +2620,9 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; o.disconnect(); const t0 = performance.now(), D = 1700;
     const pas = t => { const u = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - u, 3); if (u < 1) { b.textContent = Math.round(1000000 * e).toLocaleString("fr-FR"); requestAnimationFrame(pas); } else { b.textContent = fin; b.animate([{ transform: "scale(1.12)" }, { transform: "scale(1)" }], { duration: 400, easing: "cubic-bezier(.3,1.6,.5,1)" }); } };
     requestAnimationFrame(pas); }, { threshold: .5 }).observe(b); }); })();
+
+/* 10/11 (Marie) : les chiffres juste au-dessus de « Votre semaine avec Loginail » */
+(() => { const c = document.querySelector(".chif"), sm = document.getElementById("semaine"); if (c && sm) { const w = document.createElement("section"); w.className = "chif-acc"; w.appendChild(c); sm.before(w); } })();
 </script>
 <script id="jeu-acc">
 /* 10/11 (Marie) : « le mélange » — la 5 très fluide (3 s) puis « Attrapez-les ! » ; ne bloque jamais la page */
