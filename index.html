@@ -1400,6 +1400,27 @@ form.creer input.ph-sort::placeholder{opacity:0}
 #charms .p-ch .tap-pill.dans{position:relative;left:auto;bottom:auto;display:table;margin:16px auto 0;transform:none;animation:tapPill2 1.6s ease-in-out infinite}
 @keyframes tapPill2{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 #charms .p-ch .tap-pill.dans.off{opacity:0}
+
+/* 10/11 (Marie) : « L'appli qui gère tout » — le même fond que la création du site (vichy rose) */
+html body .app-h{background:repeating-linear-gradient(0deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),repeating-linear-gradient(90deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),#FBF4F3!important;color:#1E1C1B!important}
+html body .app-h .a-titre .k{color:#7A716A!important;opacity:1!important}
+html body .app-h .a-titre .t2,html body .app-h h2{color:#1E1C1B!important}
+html body .app-h .a-titre .t2 em{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;color:#1E1C1B!important}
+html body .app-h .a-sous{color:rgba(30,28,27,.7)!important}
+html body .app-h .a-ong-bloc::after{color:rgba(30,28,27,.55)!important}
+/* l'animation « Mon site » dans le téléphone */
+.a-anim .ms-anim{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:5;pointer-events:none;background:transparent}
+/* Réglages : le bouton Jour / Nuit / Auto redessiné (posé pile sur celui de la capture) */
+.a-anim .seg2{position:absolute;left:52.8%;top:27.27%;width:36.7%;height:4.24%;z-index:4;border-radius:99px;background:#E9E5DF;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;transition:background .5s}
+.a-anim .seg2 i{position:relative;z-index:1;text-align:center;font:400 2.6cqw Jost,sans-serif;font-style:normal;color:#8a8079;transition:color .5s}
+.a-anim .seg2 i:nth-of-type(1){color:#fff}
+.a-anim .seg2 u{position:absolute;left:1.6%;top:9%;bottom:9%;width:30.6%;border-radius:99px;background:#1F1D1B;transition:transform .5s cubic-bezier(.3,1.2,.5,1),background .5s}
+.a-anim .z.nuit.on~.seg2{background:#2B2826}
+.a-anim .z.nuit.on~.seg2 u{transform:translateX(105%);background:#F6F3EF}
+.a-anim .z.nuit.on~.seg2 i{color:#8f8780}
+.a-anim .z.nuit.on~.seg2 i:nth-of-type(2){color:#1E1C1B}
+html body .app-h .a-onglets button{border-color:rgba(30,28,27,.14)!important;background:rgba(255,255,255,.72)!important;color:rgba(30,28,27,.72)!important}
+html body .app-h .a-onglets button.on{background:#1E1C1B!important;color:#fff!important;border-color:#1E1C1B!important;box-shadow:0 14px 30px -14px rgba(0,0,0,.45)!important}
 @media (min-width:1000px){.build{height:250vh!important}}
 
 /* 10/11 (Marie) : « le mélange » — à la place de la construction qui bloquait : la 5 très fluide (3 s), puis « Attrapez-les ! » */
@@ -2268,8 +2289,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794335792`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794335792`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794335792`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794341399`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794341399`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794341399`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2374,19 +2395,12 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
             tape(n, "Chloé Bernard", 1500, 70); tape(t, "06 39 98 12 34", 2500, 55); tape(a, "12 mai 🎂", 3400, 80);
             att(() => { ok.classList.add("fait"); ok.textContent = "Cliente ajoutée ✓"; }, 4300); att(() => f.classList.remove("on"), 5400); att(go, 6600); }; go(); },
         /* 3 · Mon site : « Personnaliser », on choisit un fond, le site change */
-        () => { const ap = morceau("app-monsite7b", 0, 0, 100, 100, "apres"); A.appendChild(ap);
-          const bt = morceau("app-monsite7", 5.5, 52.8, 94.5, 58.4, "bt"); A.appendChild(bt);
-          const p = document.createElement("div"); p.className = "perso";
-          p.innerHTML = '<small>Le fond de votre site</small><div class="ronds">' + ["tpl-maisonnoire", "tpl-maisonmoka", "tpl-atelierronce", "tpl-studiopoudre", "tpl-onglesdemma"].map(x => `<i style="background-image:url(loginail-site/fonds-classe/${x}.webp)"></i>`).join("") + "</div>";
-          A.appendChild(p); const R = [...p.querySelectorAll("i")];
-          const go = () => { ap.classList.remove("on"); R.forEach((r, i) => r.classList.toggle("on", i === 0));
-            att(() => bt.classList.add("appui"), 600); att(() => bt.classList.remove("appui"), 800); att(() => p.classList.add("on"), 900);
-            att(() => { R[0].classList.remove("on"); R[1].classList.add("on"); }, 2100);
-            att(() => p.classList.remove("on"), 2900); att(() => ap.classList.add("on"), 3200); att(go, 6800); }; go(); }
+        () => { /* 10/11 (Marie) : Sabine personnalise son site, ça change d'un coup avec plein d'étoiles */
+          const f = document.createElement("iframe"); f.className = "ms-anim"; f.src = "monsite-anim.html?embed=1&t=1"; f.setAttribute("tabindex", "-1"); f.setAttribute("aria-hidden", "true"); f.setAttribute("loading", "lazy"); A.appendChild(f); }
         ,
         /* 4 · Réglages : l'apparence, jour / nuit */
         () => { const z = morceau("app-reglages", 0, 0, 100, 100, "nuit"); A.appendChild(z);
-          const zn = document.createElement("div"); zn.className = "z nuit seg"; zn.innerHTML = '<i class="s-jour">Jour</i><i class="s-nuit">Nuit</i>'; A.appendChild(zn);
+          const zn = document.createElement("div"); zn.className = "seg2"; zn.innerHTML = '<u></u><i>Jour</i><i>Nuit</i><i>Auto</i>'; A.appendChild(zn);   /* 10/11 (Marie) : le bouton est redessiné, il glisse de Jour à Nuit */
           const go = () => { z.classList.remove("on"); zn.classList.remove("on"); att(() => { z.classList.add("on"); zn.classList.add("on"); }, 1600); att(() => { z.classList.remove("on"); zn.classList.remove("on"); }, 4400); att(go, 6200); }; go(); }
       ];
       const lance = () => { efface(); if (vu && S[ongl]) S[ongl](); };
@@ -2437,13 +2451,13 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         requestAnimationFrame(() => requestAnimationFrame(() => { n.className = ""; if (old) old.classList.add("out"); }));
         setTimeout(() => { if (old) old.remove(); }, 650); };
       /* les deux téléphones : le site sort de derrière le profil, passe devant, puis revient derrière */
+      /* 10/11 (Marie) : rien d'autre ne bouge — seul le nom du réseau change, plus vite, à une place FIXE (la largeur du plus long) */
+      { const m = document.createElement("span"); m.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap"; sc.parentNode.appendChild(m);
+        let W = 0; NOMS.concat(["Instagram"]).forEach(n => { m.textContent = n; W = Math.max(W, m.offsetWidth); }); m.remove(); sc.dataset.fixe = W; sc.style.width = W + "px"; sc.style.display = "inline-block"; sc.style.textAlign = "center"; }
       const tour = () => { t.forEach(clearTimeout); t = []; s.classList.remove("clic", "ouvre"); if (!vu) return;
         const nom = NOMS[kN++ % NOMS.length];
-        t.push(setTimeout(() => { flip(sc, nom); }, 300));   /* 15/11 : le lien et l’étiquette restent « votresalon.fr » */
-        t.push(setTimeout(() => s.classList.add("clic"), 1500)); t.push(setTimeout(() => s.classList.add("ouvre"), 2900));
-        t.push(setTimeout(() => { s.classList.remove("clic"); }, 5600));
-        t.push(setTimeout(() => s.classList.remove("ouvre"), 6000));
-        t.push(setTimeout(() => { t = []; tour(); }, 8400)); };
+        t.push(setTimeout(() => { flip(sc, nom); sc.style.width = sc.dataset.fixe + "px"; }, 200));
+        t.push(setTimeout(() => { t = []; tour(); }, 1500)); };
       /* le lien sort du téléphone : une étiquette « votresalon.fr » qui jaillit du profil et file vers le site */
       const scn = s.querySelector(".scene"), bul = document.createElement("div"); bul.className = "ig-bulle"; bul.innerHTML = '<i class="bl-i">🔗</i> <b><span class="scr3">votresalon</span>.fr</b>'; scn.appendChild(bul);
       const sc3 = bul.querySelector(".scr3");
@@ -2461,7 +2475,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const L = []; const n = Math.max(TPL.length, UNI.length);
       for (let i = 0; i < n; i++) { if (TPL[i]) L.push([TPL[i][2], "Classe", TPL[i][1]]); if (UNI[i]) L.push([UNI[i][2], "Baddie", UNI[i][1]]); }
       /* 16/11 (Marie) : d'abord ces sites-là, dans cet ordre ; le reste au hasard */
-      { const D = ["tpl-maisonmoka", "mignon", "chrome", "pastel", "pop", "y2k"]   /* 16/11 (Marie) : Moka, Petite Cerise, puis Sy’lver salon suivi de Nails by Guimauve */, tete = D.map(d => L.find(l => l[0] === d)).filter(Boolean), reste = L.filter(l => !D.includes(l[0]));
+      { const D = ["pop", "chrome", "celeste", "baddie", "street"]   /* 10/11 (Marie) : Atelier Sorbet, Sy’lver salon, L’astre des ongles, le site « Baddie », Studio Tag ; puis tous les autres */, tete = D.map(d => L.find(l => l[0] === d)).filter(Boolean), reste = L.filter(l => !D.includes(l[0]));
         for (let i = reste.length - 1; i > 0; i--) { const k = Math.floor(Math.random() * (i + 1)); [reste[i], reste[k]] = [reste[k], reste[i]]; }
         L.length = 0; L.push(...tete, ...reste); }
       const g = document.createElement("section"); g.className = "gal"; g.id = "styles-gal";
@@ -2470,7 +2484,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794335792" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794341399" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2478,7 +2492,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794335792)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794341399)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2528,6 +2542,12 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       requestAnimationFrame(boucle);
     } }
 })();
+
+/* 10/11 (Marie) : « 1 million+ » — les chiffres défilent aussi, puis on lit « 1 million » */
+(() => { document.querySelectorAll(".chif b.mio").forEach(b => { const fin = b.textContent;
+  new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; o.disconnect(); const t0 = performance.now(), D = 1700;
+    const pas = t => { const u = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - u, 3); if (u < 1) { b.textContent = Math.round(1000000 * e).toLocaleString("fr-FR"); requestAnimationFrame(pas); } else { b.textContent = fin; b.animate([{ transform: "scale(1.12)" }, { transform: "scale(1)" }], { duration: 400, easing: "cubic-bezier(.3,1.6,.5,1)" }); } };
+    requestAnimationFrame(pas); }, { threshold: .5 }).observe(b); }); })();
 </script>
 <script id="jeu-acc">
 /* 10/11 (Marie) : « le mélange » — la 5 très fluide (3 s) puis « Attrapez-les ! » ; ne bloque jamais la page */
