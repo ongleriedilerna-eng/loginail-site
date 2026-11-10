@@ -1496,7 +1496,6 @@ form.creer input.ph-sort::placeholder{opacity:0}
     <div><b>Vos photos.</b><span>Vos plus belles poses, en grand.</span></div>
     <div><b>Vos charms.</b><span>Plus de 1 000 charms. ✦</span></div>
     <div><b class="ja-attr">✦ Attrapez-les ! ✦</b><span id="jaCp">Touchez les charms qui tombent pour les mettre sur le site.</span></div>
-    <div class="ja-fin"><b>Maintenant, imaginez le vôtre.</b><span>Vos photos, vos charms, vos étoiles. Prêt en une minute, le premier mois offert.</span></div>
   </div>
   <p class="ja-sans"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>
   <a class="ja-cta" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a>
@@ -2270,8 +2269,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794335472`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794335472`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794335472`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794335792`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794335792`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794335792`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2472,7 +2471,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794335472" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794335792" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2480,7 +2479,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794335472)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794335792)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2536,7 +2535,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 (()=>{const s=document.getElementById("build");if(!s||!s.classList.contains("jeu-acc"))return;
  const t=document.getElementById("jaTel"),IM=[...t.querySelectorAll("img.ja-l")],CI=[...t.querySelectorAll(".ja-ch img")],HO=[...s.querySelectorAll(".ja-hors img")],LGd=[...s.querySelectorAll("#jaLg>div")],ln=document.getElementById("jaLn"),br=document.getElementById("jaBr"),pa=t.querySelector(".ja-pa"),pl=document.getElementById("jaPl"),mes=document.getElementById("jaMes"),ec=document.getElementById("jaEc"),cp0=document.getElementById("jaCp").textContent;
  const VG=[["cerisedisco", "framboise", "ceriseruban", "noeudcerise", "cerisecoeur", "cerises-roses", "noeudgelee", "cerises", "fraise", "fraisegelee", "macaronframboise", "sucettecoeur"], ["saturne", "tribal", "etoile4", "papilloncyber"], ["ceriseruban", "fraiseperle", "noeudgelee", "fleurgelee", "axolotl", "framboise", "pottulipes", "macaron"], ["coeurlilas", "planete", "oursonlilas", "etoilelilas", "martien", "coeurchrome", "casque", "consoleviolette"], ["coquillage", "saintjacques", "perle", "huitreperle", "hippocampe", "meduse", "axolotl", "cristaux"], ["sakura", "koi", "eventail", "manekineko", "sushi", "ramen", "bonsai", "theiere"]];   /* 10/11 (la table) : une vague par style, 10 charms chacune */
- const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0,actif=false;
+ const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0,actif=false,attendCta=0;
  const eclate=(nb)=>{for(let i=0;i<nb;i++){const e=document.createElement("i");e.textContent="✦";const an=Math.random()*Math.PI*2,r=40+Math.random()*90;e.style.left="50%";e.style.top="42%";ec.appendChild(e);e.animate([{transform:"translate(-50%,-50%) scale(.3)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(an)*r}px),calc(-50% + ${Math.sin(an)*r}px)) scale(1.2)`,opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=()=>e.remove()}};
  const lgOn=e=>{if(e!==vu2){vu2=e;LGd.forEach((d,i)=>d.classList.toggle("on",i===e))}};
  const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.14)))||"Votre lien…";
@@ -2546,7 +2545,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   HO.forEach((h,i)=>{const q=seg(x,.76+i*.03,.92+i*.03);h.style.opacity=q;h.style.transform=`translate(${(1-q)*(i%2?-60:60)}px,0) scale(${.3+.7*q}) rotate(${(1-q)*-40}deg)`});
   pa.style.opacity=seg(x,.8,.95);lgOn(x<.14?0:x<.34?1:x<.54?2:x<.72?3:4)};
  const SPOTS=[[6,8],[70,6],[4,40],[78,48],[8,86],[74,90],[40,2],[20,22],[60,30],[30,60],[66,64],[12,66]];
- const tombe=()=>{if(document.hidden||!actif||n>=4)return;const etoile=k%4===3,vg=VG[Math.floor(k/10)%VG.length];let im;
+ const tombe=()=>{if(document.hidden||!actif)return;const etoile=k%4===3,vg=VG[Math.floor(k/10)%VG.length];let im;
   if(etoile){im=document.createElement("span");im.className="ja-et";im.textContent="✦"}else{im=document.createElement("img");im.alt="";im.src="loginail-site/charms-mini/"+vg[k%vg.length]+".webp"}k++;const W=s.clientWidth,H=s.clientHeight;im.style.left=(Math.random()*(W-60))+"px";pl.appendChild(im);
   const rz=(Math.random()<.5?-1:1)*(90+Math.random()*200),a=im.animate([{transform:"translateY(-70px) rotate(0deg)"},{transform:`translateY(${H+40}px) rotate(${rz}deg)`}],{duration:4600+Math.random()*2400,easing:"linear"});a.onfinish=()=>im.remove();
   im.addEventListener("pointerdown",e=>{e.preventDefault();attrape(im,a,e.isTrusted)},{once:true})};
@@ -2559,14 +2558,15 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   if(vrai&&navigator.vibrate)try{navigator.vibrate(18)}catch(_){}
   v.animate([{transform:"none"},{transform:`translate(${(r1.left-r0.left)/2}px,${(r1.top-r0.top)/2-40}px) scale(1.3) rotate(20deg)`,offset:.5},{transform:`translate(${r1.left-r0.left}px,${r1.top-r0.top}px) scale(${r1.width/r0.width})`}],{duration:460,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{v.remove();dst.style.opacity=1;if(!et)dst.animate([{transform:"scale(1.5)"},{transform:"scale(1)"}],{duration:320,easing:"cubic-bezier(.3,1.6,.5,1)"});eclate(8);n++;
    document.getElementById("jaCp").textContent=n+(n>1?" attrapés":" attrapé")+" ✦";
-   if(n===4){clearInterval(pluie);clearTimeout(demo);[...pl.children].forEach(x=>{x.getAnimations().forEach(a=>a.pause());x.style.pointerEvents="none";x.animate([{opacity:1},{opacity:0}],{duration:450,fill:"forwards"}).onfinish=()=>x.remove()});
-    eclate(40);t.classList.add("brille");setTimeout(()=>t.classList.remove("brille"),2400);lgOn(6);const c=s.querySelector(".ja-cta");if(c)c.classList.add("ja-go")}}};
+   if(n===5){eclate(40);t.classList.add("brille");setTimeout(()=>t.classList.remove("brille"),2400)}
+   /* 10/11 (Marie) : « Créer mon site » bouge seulement quand elle a FINI d'attraper (rien touché pendant 2,5 s), jamais pendant qu'elle joue */
+   if(vrai){const c=s.querySelector(".ja-cta");if(c){c.classList.remove("ja-go");clearTimeout(attendCta);attendCta=setTimeout(()=>c.classList.add("ja-go"),2500)}}}};
  const jeu=()=>{lgOn(5);eclate(20);HO.forEach((h,i)=>h.animate([{transform:"translateY(0)"},{transform:"translateY(-7px)"},{transform:"translateY(0)"}],{duration:2200+i*200,iterations:Infinity}));
   clearInterval(pluie);pluie=setInterval(tombe,850);tombe();
   clearTimeout(demo);demo=setTimeout(()=>{if(touche||n)return;const R=t.getBoundingClientRect(),c=[...pl.querySelectorAll("img")].find(i=>{const b=i.getBoundingClientRect();return b.top>R.top+40&&b.bottom<R.bottom-40});if(c)c.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))},2800)};
  const tic=nw=>{const x=Math.min(1,(nw-t0)/DUR);pose(x);if(x<1)raf=requestAnimationFrame(tic);else if(!fini){fini=true;jeu()}};
  const joue=()=>{cancelAnimationFrame(raf);clearInterval(pluie);clearTimeout(demo);pl.innerHTML="";mes.innerHTML="";n=0;fini=false;vu2=-1;HO.forEach(h=>h.getAnimations().forEach(a=>a.cancel()));
-  document.getElementById("jaCp").textContent=cp0;const c0=s.querySelector(".ja-cta");if(c0)c0.classList.remove("ja-go");pose(0);t0=performance.now();raf=requestAnimationFrame(tic)};
+  document.getElementById("jaCp").textContent=cp0;const c0=s.querySelector(".ja-cta");if(c0)c0.classList.remove("ja-go");clearTimeout(attendCta);pose(0);t0=performance.now();raf=requestAnimationFrame(tic)};
  CI.forEach(c=>{c.style.transition="none"});pose(0);document.getElementById("jaRej").onclick=joue;
  let lance=false;new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!lance){lance=true;setTimeout(joue,250)}},{threshold:.35}).observe(t);
 })();
