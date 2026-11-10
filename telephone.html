@@ -1303,7 +1303,7 @@ details p{margin:10px 0 0;font-size:14px;color:#4a4440;line-height:1.55}
 
 /* ===== 16/11 (5) ===== */
 .chif.trois div b::after{content:"+"}
-@media (max-width:999px){.build{height:calc(100svh + 4400px)!important}}
+@media (max-width:999px){.build{height:calc(100svh + 900px)!important}}
 
 /* ===== 16/11 (6) ===== */
 /* la phrase du haut : une ligne sur ordinateur, deux sur téléphone */
@@ -1387,6 +1387,20 @@ form.creer input.ph-sort::placeholder{opacity:0}
   .bio-k h2{font-size:20px!important;letter-spacing:.16em!important}
   .fin-pub .t2{font-size:19px!important;letter-spacing:.15em!important}
 }
+
+/* 10/11 (Marie) : charms — on montre qu'on peut les toucher */
+#charms .p-ch .tap-ring{position:absolute;z-index:20;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px rgba(30,28,27,.35);pointer-events:none;animation:tapRing .9s ease-out 2}
+@keyframes tapRing{0%{transform:scale(.4);opacity:0}30%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+#charms .p-ch .tap-doigt{position:absolute;z-index:21;width:34px;height:34px;margin:6px 0 0 -4px;pointer-events:none;animation:tapDoigt .9s ease-in-out 2}
+@keyframes tapDoigt{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+#charms .p-ch .tap-pill{position:absolute;z-index:22;left:50%;bottom:18px;transform:translateX(-50%);background:#1E1C1B;color:#fff;font:500 12px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:11px 18px;border-radius:99px;white-space:nowrap;box-shadow:0 10px 24px -12px rgba(0,0,0,.6);transition:opacity .4s;pointer-events:none;animation:tapPill 1.6s ease-in-out infinite}
+@keyframes tapPill{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06)}}
+#charms .p-ch .tap-pill.off{opacity:0}
+#build .b-telw{-webkit-tap-highlight-color:transparent}
+#charms .p-ch .tap-pill.dans{position:relative;left:auto;bottom:auto;display:table;margin:16px auto 0;transform:none;animation:tapPill2 1.6s ease-in-out infinite}
+@keyframes tapPill2{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+#charms .p-ch .tap-pill.dans.off{opacity:0}
+@media (min-width:1000px){.build{height:250vh!important}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1559,10 +1573,15 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
    lg.style.transform=`translate3d(0,${dy}px,0)`;bch.style.transform=pail.style.transform=`translate3d(0,${dy}px,0)`;
    barre.style.width=(P*100).toFixed(1)+"%";if(k!==vu){vu=k;num.textContent=(k+1)+" / 6 · "+NOMS[k]}};
  const pas=()=>{p+=(cible-p)*.18;if(Math.abs(cible-p)<.0005)p=cible;pose(p);raf=Math.abs(cible-p)>0?requestAnimationFrame(pas):0};
- const lit=()=>{const r=b.getBoundingClientRect(),px=-r.top;cible=matchMedia("(min-width: 1000px)").matches?Math.min(1,Math.max(0,px/(r.height-innerHeight))):Math.min(1,Math.max(0,px<2600?px/2600*.8:.8+(px-2600)/1800*.2));if(!raf)raf=requestAnimationFrame(pas)};
- if(!matchMedia("(min-width: 1000px)").matches){addEventListener("scroll",lit,{passive:true});addEventListener("resize",lit);pose(0);lit()}
+ let tpT=0,t0T=0,trT=0,rejT=false;
+ const lit=()=>{const r=b.getBoundingClientRect(),px=-r.top,sc=Math.min(1,Math.max(0,px/(r.height-innerHeight)));cible=matchMedia("(min-width: 1000px)").matches?sc:(rejT?tpT:Math.max(tpT,sc));if(!raf)raf=requestAnimationFrame(pas)};
+ if(!matchMedia("(min-width: 1000px)").matches){const DURT=6000;
+  const tick=()=>{tpT=Math.min(1,(performance.now()-t0T)/DURT);lit();if(tpT<1)trT=requestAnimationFrame(tick);else{trT=0;rejT=false}};
+  const go=()=>{const r=b.getBoundingClientRect();if(!t0T&&r.top<innerHeight*.5&&r.bottom>innerHeight*.5){t0T=performance.now();trT=requestAnimationFrame(tick)}};
+  const tw=b.querySelector(".b-telw");if(tw)tw.addEventListener("click",()=>{if(!t0T||tpT<1)return;rejT=true;p=0;tpT=0;pose(0);t0T=performance.now();if(!trT)trT=requestAnimationFrame(tick)});
+  addEventListener("scroll",()=>{go();lit()},{passive:true});addEventListener("resize",lit);pose(0);lit();go()}
  else{/* 09/11 (Marie) : l'ecran se bloque, les 6 etapes se jouent toutes seules */
-  const DUR=matchMedia("(min-width: 1000px)").matches?21000:20000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
+  const DUR=matchMedia("(min-width: 1000px)").matches?8000:20000,P0=.055;let t0=0,dedans=false,bo=0,actif=false;const ch=document.createElement("div");ch.className="b-chrono";ch.innerHTML="<span>0:00</span><i><b></b></i>";(b.querySelector(".b-tete")||b).appendChild(ch);const chT=ch.querySelector("span"),chB=ch.querySelector("b");
   const boucle=()=>{bo=0;const r=b.getBoundingClientRect(),d=r.top<=2&&r.bottom>=innerHeight-2,sc=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
    if(d&&!dedans){dedans=true;t0=performance.now()-sc*DUR}else if(!d)dedans=false;
    let au=dedans?Math.min(1,(performance.now()-t0)/DUR):0;if(!matchMedia("(min-width: 1000px)").matches)au=au<.55?au/.55*.8:.8+(au-.55)/.45*.2;else au=au<.6?au/.6*.8:.8+(au-.6)/.4*.2;cible=Math.max(sc,P0+(1-P0)*au);const sec=Math.min(15,Math.floor(au*15));chT.textContent="0:"+String(sec).padStart(2,"0");chB.style.width=(au*100).toFixed(1)+"%";ch.classList.toggle("fini",au>=1);
@@ -2221,8 +2240,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794228462`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794228462`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794228462`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794319847`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794319847`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794319847`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2257,7 +2276,22 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         const a = w.animate([{ transform: `translate3d(${x}px,${y}px,0) rotate(0deg)` }, { transform: `translate3d(${x}px,${y - 18}px,0) rotate(${rz * .08}deg)`, offset: .12 },
           { transform: `translate3d(${x + (Math.random() * 60 - 30)}px,${H + 160}px,0) rotate(${rz}deg)` }], { duration: 520 + Math.max(0, H - y) * .25, easing: "cubic-bezier(.55,0,1,.6)", fill: "forwards" });
         a.onfinish = () => w.remove(); };
-      pc.addEventListener("pointerdown", tombe, true); pc.addEventListener("click", e => { if (e.target.closest && e.target.closest(".pluie2 .c2")) e.stopPropagation(); }, true); } }
+      pc.addEventListener("pointerdown", tombe, true); pc.addEventListener("click", e => { if (e.target.closest && e.target.closest(".pluie2 .c2")) e.stopPropagation(); }, true);
+      /* 10/11 (Marie) : « elle ne lit pas forcément » — on MONTRE qu'on peut toucher : un doigt tapote un charm, il tombe tout seul, et « Touchez les charms » reste affiché tant qu'elle n'a pas essayé */
+      if (getComputedStyle(pc).position === "static") pc.style.position = "relative";
+      let essaye = false, demos = 0; const pill = document.createElement("div"); pill.className = "tap-pill off"; pill.textContent = "Touchez les charms"; { const tx = [...pc.querySelectorAll("p,div,span")].find(e => e.children.length < 3 && /^\s*Touchez-en un/.test(e.textContent)); if (tx) { pill.classList.add("dans"); tx.after(pill); } else pc.appendChild(pill); }
+      pc.addEventListener("pointerdown", e => { if (e.isTrusted && e.target.closest && e.target.closest(".pluie2 .c2")) { essaye = true; pill.classList.add("off"); } }, true);
+      const demo = () => { if (essaye || demos >= 3) return; const R = pc.getBoundingClientRect(); if (R.bottom < innerHeight * .3 || R.top > innerHeight * .7) return;
+        const cs = [...pc.querySelectorAll(".pluie2 .c2")].filter(c => !c.dataset.parti).filter(c => { const b = c.getBoundingClientRect(); return b.width > 10 && b.top > R.top + 60 && b.bottom < R.bottom - 90 && b.left > R.left + 10 && b.right < R.right - 10; });
+        if (!cs.length) return; demos++; const c = cs[Math.floor(Math.random() * Math.min(4, cs.length))], b = c.getBoundingClientRect(), x = b.left + b.width / 2 - R.left, y = b.top + b.height / 2 - R.top;
+        const ring = document.createElement("i"); ring.className = "tap-ring"; ring.style.left = x + "px"; ring.style.top = y + "px";
+        const d = document.createElementNS("http://www.w3.org/2000/svg", "svg"); d.setAttribute("viewBox", "0 0 24 24"); d.setAttribute("class", "tap-doigt"); d.style.left = x + "px"; d.style.top = y + "px";
+        d.innerHTML = '<path d="M9 11V4.5a1.5 1.5 0 0 1 3 0V10m0-.5V8a1.5 1.5 0 0 1 3 0v2m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-4-2L4.3 16a1.6 1.6 0 0 1 2.4-2.1L9 16" fill="#fff" stroke="#1E1C1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+        pc.appendChild(ring); pc.appendChild(d); pill.classList.remove("off");
+        setTimeout(() => { c.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true })); }, 1500);
+        setTimeout(() => { ring.remove(); d.remove(); }, 1850); };
+      let tDemo = 0; new IntersectionObserver(es => { clearTimeout(tDemo); if (es[0].isIntersecting) { tDemo = setTimeout(demo, 700); } }, { threshold: .45 }).observe(pc);
+      setInterval(() => { if (!essaye && !document.hidden) demo(); }, 7000); } }
 
   /* ---- 16/11 (Marie) : « tout compris » surligné ; « Sans engagement » qui scintille ---- */
   { const k = document.querySelector("#prix .prix > .k"); if (k && k.textContent.includes("tout compris")) k.innerHTML = k.textContent.replace("tout compris", '<mark class="surl">tout compris</mark>');
@@ -2356,7 +2390,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
       /* les lettres qui défilent : « site » bascule, l'alphabet défile très vite, et un nom de salon apparaît */
-      const NOMS = ["TikTok", "Facebook", "Pinterest", "Snapchat", "Google", "Instagram"], AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";   /* 16/11 : le réseau change, le .fr reste */
+      const NOMS = ["Facebook", "Pinterest", "TikTok", "Snapchat", "Google", "Instagram"]   /* 10/11 (Marie) : Instagram (au départ), puis Facebook, Pinterest, TikTok, Snapchat */, AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";   /* 16/11 : le réseau change, le .fr reste */
       const sc = s.querySelector(".scr"), sc2 = s.querySelector(".scr2"); let kN = 0;
       const melange = (el, fin, ms, cb) => { if (!el) return cb && cb(); el.classList.add("bouge"); const t0 = performance.now(), n = fin.length, pasL = 115, deb = 260;
         let dern = 0; const pas = now => { const t = now - t0; if (t >= deb + n * pasL + 80) { el.textContent = fin; el.classList.remove("bouge"); return cb && cb(); }
@@ -2408,7 +2442,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794228462" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794319847" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2416,7 +2450,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794228462)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794319847)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
