@@ -1,0 +1,206 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Idées personnalisation</title>
+<style>
+@font-face{font-family:Jost;font-weight:400;src:url(loginail-site/polices/Jost-400-latin.woff2) format('woff2')}
+@font-face{font-family:Jost;font-weight:500;src:url(loginail-site/polices/Jost-500-latin.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-weight:500;src:url(loginail-site/polices/CormorantGaramond-500-latin.woff2) format('woff2')}
+@font-face{font-family:'Cherry Bomb One';src:url(loginail-site/polices/CherryBombOne-400-latin.woff2) format('woff2')}
+:root{--creme:#F6F3EF;--noir:#1E1C1B;--doux:#7A716A;--rose:#F2A7BF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.top{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid rgba(30,28,27,.08);background:var(--creme)}
+.top b{font-weight:500;letter-spacing:.3em;font-size:14px}.top a{background:var(--noir);color:#fff;border-radius:99px;padding:11px 16px;font:500 11px Jost;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.sec{position:relative;min-height:calc(100vh - 62px);padding:24px 16px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;background:repeating-linear-gradient(0deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),repeating-linear-gradient(90deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),#FBF4F3;overflow:hidden}
+.k{font:500 11px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--doux)}
+h2{font:500 32px/1.05 'Cormorant Garamond',serif;margin:8px 0 16px}
+.tel{position:relative;width:min(58vw,232px);aspect-ratio:780/1688;border-radius:28px;border:7px solid #1E1C1B;overflow:hidden;background:#fff;box-shadow:0 26px 50px -24px rgba(0,0,0,.45);touch-action:pan-y;user-select:none;-webkit-user-select:none;flex:none}
+.tel>img.l{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:opacity .45s}
+.f{opacity:0}.f.on{opacity:1!important}
+.ch{position:absolute;inset:0;pointer-events:none}
+.ch img{position:absolute;width:17.2%;aspect-ratio:1;opacity:0;transform:translateY(-40px) rotate(-20deg) scale(.6);transition:opacity .25s,transform .55s cubic-bezier(.3,1.5,.5,1)}
+.ch.on img,.ch img.on{opacity:1;transform:none}
+.pa{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}.pa.on{opacity:1}
+.pa i{position:absolute;color:#fff;font-style:normal;font-size:14px;text-shadow:0 0 6px rgba(255,140,190,1);animation:sc 1.6s ease-in-out infinite}
+@keyframes sc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+.leg{margin:14px 0 0;font-size:15px;line-height:1.4;max-width:310px}.leg b{font-weight:500}
+.cta{margin-top:16px;background:var(--noir);color:#fff;border:0;border-radius:99px;padding:15px 24px;font:500 13px Jost;letter-spacing:.14em;text-transform:uppercase}
+.btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;max-width:340px}
+.btns button{border:1.5px solid var(--noir);background:#fff;color:var(--noir);border-radius:99px;padding:10px 14px;font:500 12px Jost;letter-spacing:.1em;text-transform:uppercase}
+.btns button.on{background:var(--noir);color:#fff}
+.av{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poi{position:absolute;top:0;bottom:0;left:var(--x,50%);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);z-index:4}
+.poi b{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -6px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font:500 15px Jost;animation:pouls 1.4s ease-in-out infinite}
+@keyframes pouls{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.eti{position:absolute;top:10px;z-index:5;background:rgba(30,28,27,.82);color:#fff;font:500 9.5px Jost;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;border-radius:99px}
+.eti.g{left:8px}.eti.d{right:8px;background:var(--rose);color:var(--noir)}
+.indice{margin-top:12px;font:500 12px Jost;letter-spacing:.16em;text-transform:uppercase}
+.eclat{position:absolute;inset:0;pointer-events:none;z-index:6}.eclat i{position:absolute;font-style:normal;color:#fff;font-size:16px;text-shadow:0 0 8px rgba(255,140,190,1)}
+/* jeu */
+.jeu{display:flex;align-items:center;gap:8px}
+.bac{display:flex;flex-direction:column;gap:10px}
+.bac button{width:50px;height:50px;border-radius:50%;border:0;background:#fff;box-shadow:0 6px 14px -8px rgba(0,0,0,.4);padding:6px;animation:pouls 1.6s ease-in-out infinite}
+.bac button img{width:100%;height:100%;object-fit:contain}
+.bac button.pris{opacity:.25;animation:none}
+.bravo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:7;pointer-events:none;opacity:0;transition:opacity .4s}
+.bravo span{background:#fff;border-radius:16px;padding:10px 14px;font:500 12px Jost;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
+.bravo.on{opacity:1}
+/* carrousel */
+.car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;width:100vw;padding:6px calc(50vw - min(29vw,116px)) 10px;scrollbar-width:none}
+.car::-webkit-scrollbar{display:none}.car .tel{scroll-snap-align:center}
+.pts{display:flex;gap:6px;margin-top:6px}.pts i{width:7px;height:7px;border-radius:50%;background:rgba(30,28,27,.2)}.pts i.on{background:var(--noir)}
+/* lien */
+.lien{width:min(86vw,330px);display:flex;background:#fff;border-radius:99px;padding:6px;box-shadow:0 8px 20px -12px rgba(0,0,0,.4);margin-bottom:14px}
+.lien span{flex:1;text-align:left;padding:10px 12px;font-size:14px;color:var(--doux);white-space:nowrap;overflow:hidden}
+.lien b{background:var(--noir);color:#fff;border-radius:99px;padding:10px 14px;font:500 11px Jost;letter-spacing:.12em;text-transform:uppercase}
+/* stories */
+.sto{position:relative;width:min(70vw,280px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#1E1C1B;color:#fff}
+.sto .barres{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:4px;z-index:3}.sto .barres i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.35);overflow:hidden}.sto .barres i b{display:block;height:100%;width:0;background:#fff}
+.sto .pg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 18px;opacity:0;transition:opacity .3s}.sto .pg.on{opacity:1}
+.sto .pg img{width:62%;border-radius:14px;margin-top:12px;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
+.sto .pg h3{font:500 26px/1.05 'Cormorant Garamond',serif;margin:0}
+.sto .pg small{font:500 10px Jost;letter-spacing:.2em;text-transform:uppercase;opacity:.7;margin-bottom:6px}
+/* grille */
+.gr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:min(90vw,340px)}
+.gr img{width:100%;aspect-ratio:780/1300;object-fit:cover;object-position:top;border-radius:10px;border:3px solid #fff;box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
+.zoom{position:fixed;inset:0;background:rgba(30,28,27,.6);display:none;align-items:center;justify-content:center;z-index:20}.zoom.on{display:flex}
+/* quiz */
+.q{display:flex;flex-direction:column;gap:10px;width:min(86vw,320px)}
+.q button{border:0;border-radius:16px;padding:16px;background:#fff;font:500 15px Jost;box-shadow:0 6px 14px -8px rgba(0,0,0,.35)}
+/* notifs */
+.nt{position:absolute;left:6%;right:6%;z-index:5;background:rgba(255,255,255,.96);border-radius:14px;padding:8px 10px;text-align:left;font-size:11px;box-shadow:0 10px 24px -10px rgba(0,0,0,.5);transform:translateY(-120%);opacity:0;transition:transform .5s cubic-bezier(.3,1.3,.5,1),opacity .3s}
+.nt.on{transform:none;opacity:1}.nt b{display:block;font-weight:500;font-size:12px}
+/* grattage */
+.gratte{position:absolute;inset:0;z-index:5;touch-action:none}
+.doigt{position:absolute;width:38px;height:38px;pointer-events:none;z-index:8;animation:tape .8s ease-in-out infinite}
+@keyframes tape{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ex{position:absolute;bottom:6px;left:0;right:0;font-size:9px;color:var(--doux);z-index:9}
+</style></head><body>
+<div class="top"><b>LOGINAIL</b><a href="#">Créer mon site</a></div>
+<section class="sec" id="s"></section>
+<script>
+const V=new URLSearchParams(location.search).get("v")||"1",s=document.getElementById("s");
+const P="loginail-site/apercus-univers/",CH=[["noeudcerise",72.7,65.1],["framboise",78.8,9.5],["cerisedisco",2.8,23.5],["cerisecoeur",80.8,39.5],["ceriseruban",1.8,57.5],["cerises-roses",78.8,73.5],["noeudgelee",38.8,4.5]];
+const charms=(on)=>'<div class="ch'+(on?" on":"")+'">'+CH.map(c=>`<img src="loginail-site/charms-mini/${c[0]}.webp" alt="" style="left:${c[1]}%;top:${c[2]}%">`).join("")+'</div>';
+const pail=(on)=>'<div class="pa'+(on?" on":"")+'">'+[[12,14],[86,30],[20,47],[70,52],[45,10],[90,62],[8,70],[55,36]].map((p,i)=>`<i style="left:${p[0]}%;top:${p[1]}%;animation-delay:${i*.2}s">✦</i>`).join("")+'</div>';
+const DOIGT='<svg class="doigt" viewBox="0 0 24 24"><path d="M9 11V4.5a1.5 1.5 0 0 1 3 0V10m0-.5V8a1.5 1.5 0 0 1 3 0v2m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-4-2L4.3 16a1.6 1.6 0 0 1 2.4-2.1L9 16" fill="#fff" stroke="#1E1C1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CTA='<button class="cta">Créer mon site · 1 mois offert</button>';
+const eclate=(box,n=16)=>{for(let i=0;i<n;i++){const e=document.createElement("i");e.textContent="✦";const an=Math.random()*Math.PI*2,r=40+Math.random()*90;e.style.left="50%";e.style.top="42%";box.appendChild(e);e.animate([{transform:"translate(-50%,-50%) scale(.3)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(an)*r}px),calc(-50% + ${Math.sin(an)*r}px)) scale(1.2)`,opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=()=>e.remove()}};
+const vu=(el,f,th=.5)=>{let ok=false;new IntersectionObserver(es=>{if(es[0].isIntersecting&&!ok){ok=true;f()}},{threshold:th}).observe(el)};
+const curseur=(t,cb)=>{let x=92,touche=false;const pose=v=>{x=Math.max(0,Math.min(100,v));t.style.setProperty("--x",x+"%");cb&&cb(x)};pose(92);
+ const de=e=>{const r=t.getBoundingClientRect();pose((e.clientX-r.left)/r.width*100)};
+ t.addEventListener("pointerdown",e=>{touche=true;t.setPointerCapture(e.pointerId);de(e)});t.addEventListener("pointermove",e=>{if(t.hasPointerCapture(e.pointerId))de(e)});
+ const balaie=(a,b,ms,fin)=>{const t0=performance.now();const f=n=>{if(touche)return;const k=Math.min(1,(n-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;pose(a+(b-a)*e);k<1?requestAnimationFrame(f):fin&&fin()};requestAnimationFrame(f)};
+ vu(t,()=>setTimeout(()=>balaie(92,6,1200,()=>setTimeout(()=>balaie(6,50,700),900)),400))};
+
+/* 1 — « Un site banal » / « Le vôtre » à glisser */
+if(V==="1"){s.innerHTML=`<div class="k">Glissez</div><h2>Pas un site de plus.<br>Le vôtre.</h2>
+ <div class="tel" id="t"><img class="l" src="${P}s5.webp">${charms()}${pail()}<div class="eclat" id="ec"></div><div class="av"><img src="${P}s1.webp"></div><span class="eti g">Un site banal</span><span class="eti d">Le vôtre</span><div class="poi"><b>‹ ›</b></div></div>
+ <div class="indice">‹ Glissez pour voir ›</div>${CTA}`;
+ const t=document.getElementById("t"),ch=t.querySelector(".ch"),pa=t.querySelector(".pa");let tombe=false;
+ curseur(t,x=>{if(!tombe&&x<35){tombe=true;ch.classList.add("on");pa.classList.add("on");eclate(document.getElementById("ec"))}else if(tombe&&x>80){tombe=false;ch.classList.remove("on");pa.classList.remove("on")}})}
+
+/* 2 — le jeu : « À vous de le créer » — on touche les charms des côtés, ils se posent sur le site */
+if(V==="2"){const G=CH.slice(0,3),D=CH.slice(3,6);
+ s.innerHTML=`<div class="k">Petit jeu</div><h2>À vous de le créer.</h2>
+ <div class="jeu"><div class="bac" id="bg">${G.map((c,i)=>`<button data-i="${i}"><img src="loginail-site/charms-mini/${c[0]}.webp"></button>`).join("")}</div>
+ <div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" src="${P}o2.webp"><img class="l f" src="${P}o3.webp"><img class="l f" src="${P}s5.webp">${charms()}${pail()}<div class="eclat" id="ec"></div><div class="bravo" id="br"><span>Bravo, c’est votre site !</span></div></div>
+ <div class="bac" id="bd">${D.map((c,i)=>`<button data-i="${i+3}"><img src="loginail-site/charms-mini/${c[0]}.webp"></button>`).join("")}</div></div>
+ <p class="leg">Touchez les charms, ils se posent sur le site.</p>${CTA}`;
+ const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],CI=[...t.querySelectorAll(".ch img")];let n=0;
+ document.querySelectorAll(".bac button").forEach(b=>b.onclick=()=>{if(b.classList.contains("pris"))return;b.classList.add("pris");CI[+b.dataset.i].classList.add("on");n++;if(L[n-1])L[n-1].classList.add("on");eclate(document.getElementById("ec"),8);
+  if(n===6){CI[6].classList.add("on");t.querySelector(".pa").classList.add("on");eclate(document.getElementById("ec"),24);document.getElementById("br").classList.add("on");setTimeout(()=>document.getElementById("br").classList.remove("on"),2200)}});
+ /* un doigt montre le premier */
+ const b0=document.querySelector("#bg button");b0.style.position="relative";b0.insertAdjacentHTML("beforeend",DOIGT);const d=b0.querySelector(".doigt");d.style.left="26px";d.style.top="22px";
+ vu(t,()=>setTimeout(()=>{if(n===0)b0.click()},1800))}
+
+/* 3 — à la carte : on allume / éteint chaque chose */
+if(V==="3"){const O=[["Un fond","o2"],["Votre écriture","o3"],["Vos photos","s5"],["Vos charms","ch"],["Des étoiles","pa"]];
+ s.innerHTML=`<div class="k">À la carte</div><h2>Choisissez.<br>C’est votre site.</h2>
+ <div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" id="o2" src="${P}o2.webp"><img class="l f" id="o3" src="${P}o3.webp"><img class="l f" id="s5" src="${P}s5.webp">${charms()}${pail()}</div>
+ <div class="btns" id="b">${O.map(o=>`<button data-k="${o[1]}">+ ${o[0]}</button>`).join("")}</div>${CTA}`;
+ const t=document.getElementById("t");const B=[...document.querySelectorAll("#b button")];
+ const maj=()=>{const on=k=>B.find(b=>b.dataset.k===k).classList.contains("on");document.getElementById("o2").classList.toggle("on",on("o2")||on("o3")||on("s5"));document.getElementById("o3").classList.toggle("on",on("o3")||on("s5"));document.getElementById("s5").classList.toggle("on",on("s5"));t.querySelector(".ch").classList.toggle("on",on("ch"));t.querySelector(".pa").classList.toggle("on",on("pa"))};
+ let auto=true;B.forEach(b=>b.onclick=()=>{auto=false;b.classList.toggle("on");b.textContent=(b.classList.contains("on")?"✓ ":"+ ")+b.textContent.slice(2);maj()});
+ vu(t,()=>{let i=0;const go=()=>{if(!auto||i>=B.length)return;B[i].classList.add("on");B[i].textContent="✓ "+B[i].textContent.slice(2);maj();i++;setTimeout(go,900)};setTimeout(go,600)})}
+
+/* 4 — on glisse de côté : plein de styles */
+if(V==="4"){const U=["cerise","chrome","mignon","y2k","tpl-maisonmoka","pop","sirene","japon","tpl-maisonnoire","feerique"];
+ s.innerHTML=`<div class="k">Glissez de côté</div><h2>Un lien.<br>Mille styles.</h2>
+ <div class="car" id="c">${U.map(u=>`<div class="tel"><img class="l" src="${P}${u}.webp"></div>`).join("")}</div><div class="pts" id="p">${U.map((u,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>
+ <p class="leg">Classe, baddie, mignonne, chrome… <b>Il y en a pour toutes.</b> <small style="color:#7A716A">(exemples)</small></p>${CTA}`;
+ const c=document.getElementById("c"),PT=[...document.querySelectorAll("#p i")];let auto=true;
+ c.addEventListener("scroll",()=>{const w=c.firstElementChild.offsetWidth+14,k=Math.round(c.scrollLeft/w);PT.forEach((p,i)=>p.classList.toggle("on",i===k))},{passive:true});
+ c.addEventListener("pointerdown",()=>auto=false);c.addEventListener("touchstart",()=>auto=false,{passive:true});
+ vu(c,()=>{const w=c.firstElementChild.offsetWidth+14;let k=0;const go=()=>{if(!auto)return;k=(k+1)%U.length;c.scrollTo({left:k*w,behavior:"smooth"});setTimeout(go,1800)};setTimeout(go,1200)})}
+
+/* 5 — « Grâce à votre lien » : on colle un lien, le site se fait tout seul ; pas de lien ? on part de zéro */
+if(V==="5"){s.innerHTML=`<div class="k">Avec votre lien</div><h2>Collez votre lien.<br>Votre site se crée.</h2>
+ <div class="lien"><span id="ln"></span><b>Créer</b></div>
+ <div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" src="${P}o2.webp"><img class="l f" src="${P}o3.webp"><img class="l f" src="${P}s5.webp">${charms()}${pail()}<div class="eclat" id="ec"></div></div>
+ <p class="leg">Google, Planity, Booksy… <b>Pas de lien ? On part de zéro, c’est aussi simple.</b></p>${CTA}`;
+ const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],ln=document.getElementById("ln");
+ const tour=()=>{L.forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");ln.textContent="";const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;
+  const tape=setInterval(()=>{ln.textContent=txt.slice(0,++i);ln.style.color="#1E1C1B";if(i>=txt.length){clearInterval(tape);L.forEach((l,j)=>setTimeout(()=>l.classList.add("on"),400+j*450));setTimeout(()=>{t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on");eclate(document.getElementById("ec"))},1900);setTimeout(tour,6000)}},45)};
+ vu(t,()=>setTimeout(tour,300))}
+
+/* 6 — machine à sous : « Tournez » et un style tombe */
+if(V==="6"){const U=["cerise","chrome","mignon","y2k","tpl-maisonmoka","pop","sirene","japon","tpl-maisonnoire","feerique","bling","pastel"];
+ s.innerHTML=`<div class="k">Tentez votre chance</div><h2>Et vous,<br>vous seriez laquelle ?</h2>
+ <div class="tel" id="t"><div id="bd" style="position:absolute;left:0;right:0;top:0">${U.concat(U).map(u=>`<img src="${P}${u}.webp" style="display:block;width:100%">`).join("")}</div><div class="eclat" id="ec"></div></div>
+ <button class="cta" id="go" style="background:linear-gradient(90deg,#F2A7BF,#F6C9AE);color:#1E1C1B">🎰 Tourner</button>`;
+ const bd=document.getElementById("bd"),t=document.getElementById("t");let k=0,court=false;
+ const tourne=()=>{if(court)return;court=true;const h=bd.firstElementChild.offsetHeight,c=U.length+Math.floor(Math.random()*U.length);k=c;bd.animate([{transform:"translateY(0)",filter:"blur(0)"},{transform:`translateY(${-h*c*.85}px)`,filter:"blur(3px)",offset:.7},{transform:`translateY(${-h*c}px)`,filter:"blur(0)"}],{duration:1600,easing:"cubic-bezier(.2,.7,.2,1)",fill:"forwards"}).onfinish=()=>{court=false;eclate(document.getElementById("ec"))}};
+ document.getElementById("go").onclick=tourne;vu(t,()=>setTimeout(tourne,700))}
+
+/* 7 — comme une story Instagram : on touche pour passer */
+if(V==="7"){const S=[["1","Collez votre lien","s1"],["2","Choisissez votre style","o3"],["3","Vos photos, vos charms","s5"],["4","C’est en ligne !","cerise"]];
+ s.innerHTML=`<div class="k">Touchez pour passer</div><h2>Votre site<br>en 4 étapes.</h2>
+ <div class="sto" id="st"><div class="barres">${S.map(()=>"<i><b></b></i>").join("")}</div>${S.map((x,i)=>`<div class="pg${i?"":" on"}"><small>Étape ${x[0]}</small><h3>${x[1]}</h3><img src="${P}${x[2]}.webp"></div>`).join("")}</div>${CTA}`;
+ const st=document.getElementById("st"),PG=[...st.querySelectorAll(".pg")],BR=[...st.querySelectorAll(".barres b")];let k=0,t0=performance.now();
+ const va=i=>{k=(i+S.length)%S.length;PG.forEach((p,j)=>p.classList.toggle("on",j===k));t0=performance.now()};
+ st.onclick=e=>{const r=st.getBoundingClientRect();va(k+(e.clientX-r.left<r.width/3?-1:1))};
+ const f=n=>{const p=Math.min(1,(n-t0)/2600);BR.forEach((b,j)=>b.style.width=(j<k?100:j===k?p*100:0)+"%");if(p>=1)va(k+1);requestAnimationFrame(f)};requestAnimationFrame(f)}
+
+/* 8 — la grille : lequel est le vôtre ? on touche, il s'ouvre */
+if(V==="8"){const U=["cerise","chrome","mignon","y2k","tpl-maisonmoka","pop","sirene","tpl-maisonnoire","feerique"];
+ s.innerHTML=`<div class="k">Touchez celui qui vous ressemble</div><h2>Lequel est<br>le vôtre ?</h2>
+ <div class="gr">${U.map(u=>`<img src="${P}${u}.webp" data-u="${u}">`).join("")}</div><p class="leg"><small style="color:#7A716A">(exemples)</small></p>${CTA}<div class="zoom" id="z"><div class="tel"><img class="l" id="zi"></div></div>`;
+ const z=document.getElementById("z");document.querySelectorAll(".gr img").forEach(im=>im.onclick=()=>{document.getElementById("zi").src=im.src;z.classList.add("on")});z.onclick=()=>z.classList.remove("on");
+ const IM=[...document.querySelectorAll(".gr img")];let i=0;setInterval(()=>{IM.forEach((m,j)=>m.style.transform=j===i?"scale(1.07)":"");i=(i+1)%IM.length},700)}
+
+/* 9 — rien à voir : le quiz « plutôt… ? » */
+if(V==="9"){const Q=[["Plutôt…","Classe ✨","Baddie 🔥"],["Plutôt…","Rose 🎀","Noir 🖤"],["Plutôt…","Cerises 🍒","Étoiles ⭐"]],R={"000":"tpl-studiopoudre","001":"celeste","010":"tpl-maisonnoire","011":"tpl-ateliermercure","100":"cerise","101":"mignon","110":"chrome","111":"y2k"};
+ s.innerHTML=`<div class="k">3 questions</div><h2>Quel site<br>est fait pour vous ?</h2><div id="z"></div>`;
+ const z=document.getElementById("z");let rep="";
+ const pose=()=>{if(rep.length<3){const q=Q[rep.length];z.innerHTML=`<div class="q"><div class="k">${rep.length+1} / 3</div><button data-r="0">${q[1]}</button><button data-r="1">${q[2]}</button></div>`;z.querySelectorAll("button").forEach(b=>b.onclick=()=>{rep+=b.dataset.r;pose()})}
+  else{z.innerHTML=`<div class="k">Votre style</div><div class="tel" style="margin:10px auto 0"><img class="l" src="${P}${R[rep]}.webp"><div class="eclat" id="ec"></div></div><button class="cta" id="re" style="background:#fff;color:#1E1C1B;border:1.5px solid #1E1C1B">Recommencer</button>${CTA}`;eclate(document.getElementById("ec"),20);document.getElementById("re").onclick=()=>{rep="";pose()}}};pose()}
+
+/* 10 — rien à voir : pendant que vous posez, les clientes réservent */
+if(V==="10"){const N=[["Nouvelle réservation","Léa · Pose gel · sam. 10 h"],["Rappel SMS envoyé","Inès · demain 9 h"],["Réservé cette nuit","Mia · Semi-permanent · 23 h 40"],["55 € encaissés","Sarah · Remplissage"],["Nouvelle cliente","Chloé · ajoutée à vos fiches"]];
+ s.innerHTML=`<div class="k">Pendant ce temps…</div><h2>Vous posez.<br>Elles réservent.</h2>
+ <div class="tel" id="t"><img class="l" src="${P}cerise.webp">${N.map((n,i)=>`<div class="nt" style="top:${8+i*14}%"><b>${n[0]}</b>${n[1]}</div>`).join("")}</div>
+ <p class="leg">Votre site prend les rendez-vous <b>même la nuit</b>. Vous, vous faites des ongles.</p>${CTA}`;
+ const NT=[...document.querySelectorAll(".nt")];vu(document.getElementById("t"),()=>{let i=0;const go=()=>{if(i<NT.length){NT[i++].classList.add("on");setTimeout(go,900)}else setTimeout(()=>{NT.forEach(n=>n.classList.remove("on"));i=0;setTimeout(go,700)},2500)};setTimeout(go,500)})}
+
+/* 11 — rien à voir : la carte à gratter */
+if(V==="11"){s.innerHTML=`<div class="k">Grattez !</div><h2>Grattez pour<br>découvrir votre site.</h2>
+ <div class="tel" id="t"><img class="l" src="${P}cerise.webp"><canvas class="gratte" id="g"></canvas><div class="eclat" id="ec"></div></div>
+ <p class="leg">Avec le doigt, comme un ticket à gratter.</p>${CTA}`;
+ const t=document.getElementById("t"),g=document.getElementById("g"),x=g.getContext("2d");
+ const prep=()=>{const r=t.getBoundingClientRect();g.width=r.width;g.height=r.height;const gr=x.createLinearGradient(0,0,g.width,g.height);gr.addColorStop(0,"#d9d9de");gr.addColorStop(.5,"#f5f5f7");gr.addColorStop(1,"#a9abb2");x.fillStyle=gr;x.fillRect(0,0,g.width,g.height);
+  x.fillStyle="#1E1C1B";x.font="500 13px Jost";x.textAlign="center";x.fillText("GRATTEZ ICI",g.width/2,g.height/2);x.font="22px Jost";x.fillText("✦ ✦ ✦",g.width/2,g.height/2+30);x.globalCompositeOperation="destination-out"};prep();
+ let fini=false;const efface=(cx,cy)=>{x.beginPath();x.arc(cx,cy,22,0,7);x.fill()};
+ const pct=()=>{const d=x.getImageData(0,0,g.width,g.height).data;let n=0;for(let i=3;i<d.length;i+=64)if(d[i]===0)n++;return n/(d.length/64)};
+ const mv=e=>{if(!(e.buttons||e.pointerType==="touch"))return;const r=g.getBoundingClientRect();efface(e.clientX-r.left,e.clientY-r.top);if(!fini&&pct()>.45){fini=true;g.style.transition="opacity .5s";g.style.opacity=0;eclate(document.getElementById("ec"),24)}};
+ g.addEventListener("pointerdown",e=>{g.setPointerCapture(e.pointerId);mv(e)});g.addEventListener("pointermove",mv);
+ /* il gratte un peu tout seul pour montrer */
+ vu(t,()=>{let i=0;const auto=setInterval(()=>{const w=g.width,h=g.height;efface(w*.2+i*w*.04,h*.35+Math.sin(i/2)*30);if(++i>15)clearInterval(auto)},40)})}
+
+/* 12 — rien à voir : votre nom, en direct */
+if(V==="12"){s.innerHTML=`<div class="k">Essayez</div><h2>Écrivez le nom<br>de votre salon.</h2>
+ <div class="lien"><span id="ln" contenteditable="true" style="color:#1E1C1B;outline:none">les Ongles de Cerise</span></div>
+ <div class="tel" id="t"><img class="l" src="${P}o2.webp"><div id="nom" style="position:absolute;left:8%;right:8%;top:68%;height:14%;display:flex;align-items:center;justify-content:center;background:#fff;font:400 21px/1.02 'Cherry Bomb One',Jost,sans-serif;color:#F2A7BF;text-align:center;overflow:hidden">les Ongles de Cerise</div>${charms(1)}${pail(1)}</div>
+ <p class="leg">Votre nom, vos couleurs, vos charms. <b>Votre site.</b></p>${CTA}`;
+ const ln=document.getElementById("ln"),nom=document.getElementById("nom");ln.oninput=()=>nom.textContent=ln.textContent||"Votre salon";
+ const NOMS=["Studio Lila","Chez Inès","Nail Bar Sofia","les Ongles de Cerise"];let i=0,touche=false;ln.addEventListener("focus",()=>touche=true);setInterval(()=>{if(touche)return;i=(i+1)%NOMS.length;ln.textContent=nom.textContent=NOMS[i]},1800)}
+</script></body></html>
