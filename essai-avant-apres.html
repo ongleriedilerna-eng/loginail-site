@@ -21,6 +21,7 @@ h2{font:500 34px/1.05 'Cormorant Garamond',serif;margin:8px 0 18px}
 .pa{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}.pa.on{opacity:1}
 .pa i{position:absolute;color:#fff;font-style:normal;font-size:14px;text-shadow:0 0 6px rgba(255,160,200,.9);animation:sc 1.6s ease-in-out infinite}
 @keyframes sc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+.eclat{position:absolute;inset:0;pointer-events:none;z-index:2}.eclat i{position:absolute;font-style:normal;color:#fff;font-size:16px;text-shadow:0 0 8px rgba(255,140,190,1)}
 .leg{margin-top:16px;font-size:15px;line-height:1.4;max-width:300px}.leg b{font-weight:500}
 .cta{margin-top:18px;background:var(--noir);color:#fff;border:0;border-radius:99px;padding:15px 26px;font:500 13px Jost;letter-spacing:.14em;text-transform:uppercase}
 /* A : curseur */
@@ -53,6 +54,19 @@ const P="loginail-site/apercus-univers/",CH=[["noeudcerise",72.7,65.1],["framboi
 const charms=()=>'<div class="ch">'+CH.map(c=>`<img src="loginail-site/charms-mini/${c[0]}.webp" alt="" style="left:${c[1]}%;top:${c[2]}%;width:17.2%">`).join("")+'</div>';
 const pail=()=>'<div class="pa">'+[[12,14],[86,30],[20,47],[70,52],[45,10],[90,62],[8,70],[55,36]].map((p,i)=>`<i style="left:${p[0]}%;top:${p[1]}%;animation-delay:${i*.2}s">✦</i>`).join("")+'</div>';
 const DOIGT='<svg class="doigt" viewBox="0 0 24 24"><path d="M9 11V4.5a1.5 1.5 0 0 1 3 0V10m0-.5V8a1.5 1.5 0 0 1 3 0v2m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-4-2L4.3 16a1.6 1.6 0 0 1 2.4-2.1L9 16" fill="#fff" stroke="#1E1C1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+if(V==="d"){ /* D — la A + le waouh de la C : quand on glisse vers « après », les charms tombent et les étoiles brillent */
+ s.innerHTML=`<div class="k">Avant · Après</div><h2>Votre site,<br>transformé en une minute.</h2>
+ <div class="tel" id="t"><img class="l" src="${P}s5.webp" alt="">${charms()}${pail()}<div class="eclat" id="ec"></div><div class="av"><img src="${P}s1.webp" alt=""></div><span class="eti g">Avant</span><span class="eti d">Après</span><div class="poi"><b>‹ ›</b></div></div>
+ <div class="indice"><i>‹</i> Glissez pour voir <i>›</i></div><button class="cta">Créer mon site · 1 mois offert</button><p class="leg">Un fond, vos photos, votre écriture, vos charms… <b>Votre site vous ressemble.</b></p>`;
+ const t=document.getElementById("t"),ch=t.querySelector(".ch"),pa=t.querySelector(".pa"),ec=document.getElementById("ec");let x=92,touche=false,tombe=false;
+ const eclate=()=>{for(let i=0;i<16;i++){const e=document.createElement("i");e.textContent="✦";const an=Math.random()*Math.PI*2,r=40+Math.random()*90;e.style.left="50%";e.style.top="42%";ec.appendChild(e);
+   e.animate([{transform:"translate(-50%,-50%) scale(.3)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(an)*r}px),calc(-50% + ${Math.sin(an)*r}px)) scale(1.2)`,opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=()=>e.remove()}};
+ const etat=()=>{if(!tombe&&x<35){tombe=true;ch.classList.add("on");pa.classList.add("on");eclate();navigator.vibrate&&touche&&navigator.vibrate(15)}else if(tombe&&x>80){tombe=false;ch.classList.remove("on");pa.classList.remove("on")}};
+ const pose=v=>{x=Math.max(0,Math.min(100,v));t.style.setProperty("--x",x+"%");etat()};pose(92);
+ const de=e=>{const r=t.getBoundingClientRect();pose((e.clientX-r.left)/r.width*100)};
+ t.addEventListener("pointerdown",e=>{touche=true;t.setPointerCapture(e.pointerId);de(e)});t.addEventListener("pointermove",e=>{if(t.hasPointerCapture&&t.hasPointerCapture(e.pointerId))de(e)});
+ const balaie=(de0,a0,ms,cb)=>{const t0=performance.now();const f=n=>{if(touche)return;const k=Math.min(1,(n-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;pose(de0+(a0-de0)*e);k<1?requestAnimationFrame(f):cb&&cb()};requestAnimationFrame(f)};
+ new IntersectionObserver(es=>{if(es[0].isIntersecting&&!touche)setTimeout(()=>balaie(92,6,1200,()=>setTimeout(()=>balaie(6,50,700),900)),400)},{threshold:.5}).observe(t)}
 if(V==="a"){ /* A — avant / après : on fait glisser le rond */
  s.innerHTML=`<div class="k">Avant · Après</div><h2>Votre site,<br>transformé en une minute.</h2>
  <div class="tel" id="t"><img class="l" src="${P}s5.webp" alt="">${charms()}${pail()}<div class="av"><img src="${P}s1.webp" alt=""></div><span class="eti g">Avant</span><span class="eti d">Après</span><div class="poi"><b>‹ ›</b></div></div>
