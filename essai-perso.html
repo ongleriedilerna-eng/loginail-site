@@ -74,6 +74,18 @@ h2{font:500 32px/1.05 'Cormorant Garamond',serif;margin:8px 0 16px}
 .doigt{position:absolute;width:38px;height:38px;pointer-events:none;z-index:8;animation:tape .8s ease-in-out infinite}
 @keyframes tape{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .ex{position:absolute;bottom:6px;left:0;right:0;font-size:9px;color:var(--doux);z-index:9}
+
+/* 13 : la construction de base, sans bloquer */
+.b13{position:relative;display:flex;flex-direction:column;align-items:center}
+.cpt{font:500 11px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--doux);margin-bottom:6px}
+.barre{width:min(58vw,232px);height:3px;border-radius:3px;background:rgba(30,28,27,.12);margin-bottom:12px;overflow:hidden}.barre i{display:block;height:100%;width:0;background:var(--noir);transition:width .4s}
+.lg{position:relative;width:min(88vw,340px);height:84px;margin-top:12px}
+.lg div{position:absolute;inset:0;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}.lg div.on{opacity:1;transform:none}
+.lg b{display:block;font:500 26px/1.05 'Cormorant Garamond',serif}.lg span{display:block;margin-top:6px;font-size:13.5px;color:var(--doux)}
+.long{position:absolute;left:0;top:0;width:100%;opacity:0;transition:opacity .4s}
+.hors{position:absolute;inset:-40px -54px;pointer-events:none;z-index:9}
+.hors img{position:absolute;width:62px;aspect-ratio:1;opacity:0}
+.rej{margin-top:12px;background:none;border:0;font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase;color:var(--doux);text-decoration:underline}
 </style></head><body>
 <div class="top"><b>LOGINAIL</b><a href="#">Créer mon site</a></div>
 <section class="sec" id="s"></section>
@@ -203,4 +215,42 @@ if(V==="12"){s.innerHTML=`<div class="k">Essayez</div><h2>Écrivez le nom<br>de 
  <p class="leg">Votre nom, vos couleurs, vos charms. <b>Votre site.</b></p>${CTA}`;
  const ln=document.getElementById("ln"),nom=document.getElementById("nom");ln.oninput=()=>nom.textContent=ln.textContent||"Votre salon";
  const NOMS=["Studio Lila","Chez Inès","Nail Bar Sofia","les Ongles de Cerise"];let i=0,touche=false;ln.addEventListener("focus",()=>touche=true);setInterval(()=>{if(touche)return;i=(i+1)%NOMS.length;ln.textContent=nom.textContent=NOMS[i]},1800)}
+
+/* 13 — l'idée 5 avec la construction « de base » : le lien s'écrit, puis les 6 étapes avec leurs textes ; rien ne bloque */
+if(V==="13"){const LG=[["Personnalisez votre site en 15 secondes chrono.","Un site classique, élégant, à votre nom. Déjà en ligne."],["Un fond.","Des cerises, du léopard, de la lavande… Plus de 300 fonds."],["Votre écriture. Vos couleurs.","Et voilà : votre univers. Le même site, que personne n’a."],["Vos photos.","Vos plus belles poses, en grand. Vous les changez en 2 secondes."],["Vos charms.","Plus de 1 000 charms. Sur votre site, vos clientes les attrapent."],["Et tout le reste.","Vos prestations, vos prix, vos réalisations, vos avis. <em>Elle se voit déjà chez vous.</em>"]],NO=["votre site","un fond","votre univers","vos photos","vos charms","tout le reste"];
+ s.innerHTML=`<div class="lien"><span id="ln">Votre lien Google, Planity…</span><b>Créer</b></div>
+ <div class="b13"><div class="cpt" id="cpt">1 / 6 · votre site</div><div class="barre"><i id="br"></i></div>
+ <div style="position:relative"><div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" src="${P}o2.webp"><img class="l f" src="${P}o3.webp"><img class="l f" src="${P}s5.webp"><img class="long" id="lo" src="${P}s5-long2.webp">${charms()}${pail()}<div class="eclat" id="ec"></div></div>
+ <div class="hors" id="ho">${["cerisedisco","framboise","ceriseruban","noeudcerise"].map(c=>`<img src="loginail-site/charms-mini/${c}.webp">`).join("")}</div></div>
+ <div class="lg" id="lg">${LG.map((l,i)=>`<div${i?"":' class="on"'}><b>${l[0]}</b><span>${l[1]}</span></div>`).join("")}</div>
+ <p class="leg" style="margin-top:4px"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>${CTA}<button class="rej" id="rj">↻ Revoir</button></div>`;
+ const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],lo=document.getElementById("lo"),LGd=[...document.querySelectorAll("#lg div")],HO=[...document.querySelectorAll("#ho img")],ln=document.getElementById("ln");let T=[],tp=0;
+ const etape=k=>{document.getElementById("cpt").textContent=(k+1)+" / 6 · "+NO[k];document.getElementById("br").style.width=((k+1)/6*100)+"%";LGd.forEach((d,i)=>d.classList.toggle("on",i===k))};
+ const raz=()=>{clearInterval(tp);T.forEach(clearTimeout);T=[];L.forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");lo.style.transition="opacity .4s";lo.style.opacity=0;lo.style.transform="";HO.forEach(h=>{h.getAnimations().forEach(a=>a.cancel());h.style.opacity=0});etape(0);ln.textContent="Votre lien Google, Planity…";ln.style.color=""};
+ const POS=[[2,10],[84,30],[-2,62],[86,78]];
+ const joue=()=>{raz();const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;ln.style.color="#1E1C1B";
+  tp=setInterval(()=>{ln.textContent=txt.slice(0,++i);if(i>=txt.length){clearInterval(tp);
+   const at=(ms,f)=>T.push(setTimeout(f,ms));
+   at(900,()=>{etape(1);L[0].classList.add("on")});
+   at(2300,()=>{etape(2);L[1].classList.add("on")});
+   at(3700,()=>{etape(3);L[2].classList.add("on")});
+   at(5100,()=>{etape(4);t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on");eclate(document.getElementById("ec"));
+     HO.forEach((h,j)=>{h.style.left=POS[j][0]+"%";h.style.top=POS[j][1]+"%";h.animate([{transform:"translate(60px,0) scale(.2) rotate(-40deg)",opacity:0},{transform:"none",opacity:1}],{duration:650,delay:j*120,easing:"cubic-bezier(.3,1.5,.5,1)",fill:"forwards"}).finished.then(()=>h.animate([{transform:"translateY(0)",opacity:1},{transform:"translateY(-8px)",opacity:1},{transform:"translateY(0)",opacity:1}],{duration:2400,iterations:Infinity})).catch(()=>{})})});
+   at(6800,()=>{etape(5);lo.style.opacity=1;const H=lo.offsetHeight-t.clientHeight;lo.style.transition="opacity .4s, transform 3.2s cubic-bezier(.45,0,.3,1)";requestAnimationFrame(()=>lo.style.transform=`translateY(${-H}px)`)});
+  }},40)};
+ document.getElementById("rj").onclick=joue;vu(t,()=>setTimeout(joue,300),.4)}
+
+/* 14 — la machine à sous, et les charms du style sortent du téléphone tout autour */
+if(V==="14"){const CU={"cerise": ["noeudcerise", "framboise", "cerisedisco", "cerisecoeur", "ceriseruban", "cerises-roses", "noeudgelee"], "chrome": ["saturne", "tribal", "etoile4", "papilloncyber"], "mignon": ["ceriseruban", "fraiseperle", "noeudgelee", "fleurgelee", "axolotl", "framboise", "pottulipes"], "y2k": ["coeurlilas", "planete", "oursonlilas", "etoilelilas", "martien", "coeurchrome", "casque"], "pop": ["chat", "champignon", "fleur", "boule8", "cerises", "canard", "monsterapot"], "sirene": ["coquillage", "saintjacques", "perle", "huitreperle", "hippocampe", "meduse", "axolotl"], "japon": ["sakura", "koi", "eventail", "manekineko", "sushi", "ramen", "bonsai"], "feerique": ["angelot", "perle", "papillondore", "coquillage", "coquespirale", "coeurperles", "pechefruit"], "bling": ["boule8or", "levresgrillz", "cerisesor", "etoilestrass", "gourmette", "hamsa", "spray"], "pastel": ["guimauve", "fleurlilas", "noeudgelee", "marguerite", "consoleviolette", "axolotl", "raisin"]},U=Object.keys(CU);
+ s.innerHTML=`<div class="k">Tentez votre chance</div><h2>Et vous,<br>vous seriez laquelle ?</h2>
+ <div style="position:relative"><div class="tel" id="t"><div id="bd" style="position:absolute;left:0;right:0;top:0">${U.concat(U).concat(U).map(u=>`<img src="${P}${u}.webp" style="display:block;width:100%">`).join("")}</div><div class="eclat" id="ec"></div></div><div class="hors" id="ho" style="inset:-60px -70px"></div></div>
+ <button class="cta" id="go" style="margin-top:22px;background:linear-gradient(90deg,#F2A7BF,#F6C9AE);color:#1E1C1B">✦ Tourner ✦</button><p class="leg">Fond, écriture, charms : <b>tout va ensemble.</b> <small style="color:#7A716A">(exemples)</small></p>${CTA}`;
+ const bd=document.getElementById("bd"),t=document.getElementById("t"),ho=document.getElementById("ho");let court=false,k=0;
+ const POS=[[-2,4],[84,8],[-4,34],[88,40],[-2,66],[86,72],[40,-6],[42,96]];
+ const sortent=u=>{ho.innerHTML="";CU[u].slice(0,8).forEach((c,j)=>{const im=document.createElement("img");im.src="loginail-site/charms-mini/"+c+".webp";const p=POS[j%POS.length];im.style.left=p[0]+"%";im.style.top=p[1]+"%";ho.appendChild(im);
+   im.animate([{transform:`translate(${(50-p[0])*2.2}px,${(50-p[1])*3}px) scale(.1) rotate(${j%2?60:-60}deg)`,opacity:0},{transform:"none",opacity:1}],{duration:700,delay:j*70,easing:"cubic-bezier(.3,1.6,.5,1)",fill:"forwards"}).finished.then(()=>im.animate([{transform:"translateY(0) rotate(0)",opacity:1},{transform:`translateY(-7px) rotate(${j%2?6:-6}deg)`,opacity:1},{transform:"translateY(0) rotate(0)",opacity:1}],{duration:2200+j*150,iterations:Infinity})).catch(()=>{})})};
+ const partent=()=>[...ho.children].forEach((im,j)=>{im.getAnimations().forEach(a=>a.cancel());im.animate([{transform:"none",opacity:1},{transform:`translateY(${300+j*20}px) rotate(${j%2?200:-200}deg)`,opacity:0}],{duration:600,easing:"cubic-bezier(.5,0,1,.6)",fill:"forwards"})});
+ const tourne=()=>{if(court)return;court=true;partent();const h=bd.firstElementChild.offsetHeight,c=U.length+((k+1+Math.floor(Math.random()*(U.length-1)))%U.length);k=c%U.length;
+  bd.animate([{transform:"translateY(0)",filter:"blur(0)"},{transform:`translateY(${-h*c*.85}px)`,filter:"blur(3px)",offset:.7},{transform:`translateY(${-h*c}px)`,filter:"blur(0)"}],{duration:1700,easing:"cubic-bezier(.2,.7,.2,1)",fill:"forwards"}).onfinish=()=>{court=false;eclate(document.getElementById("ec"));sortent(U[k])}};
+ document.getElementById("go").onclick=tourne;vu(t,()=>setTimeout(tourne,600))}
 </script></body></html>
