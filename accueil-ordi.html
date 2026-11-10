@@ -1494,6 +1494,45 @@ html body .gal .q h2{font-family:'Corben',serif!important;letter-spacing:.02em!i
 .chif-acc .chif b.mio{font-size:clamp(17px,5.4vw,25px)!important;line-height:1.25!important}}
 .chif-acc .chif b{white-space:nowrap;font-variant-numeric:tabular-nums}
 .chif-acc{background-image:url(loginail-site/fonds-img/zebre-peint.webp)!important;background-color:#F6EEDF!important}
+
+/* 10/11 (Marie) : ORDINATEUR SEULEMENT — 2e passe */
+@media (min-width:1000px){
+ .intro-l{background:url(loginail-site/fonds-img/zebre-peint.webp) center/cover #F6EEDF!important;padding:60px 40px!important}
+ .il-carte{background:rgba(255,255,255,.96)!important}
+ .chif-acc{padding:54px 40px!important;min-height:0!important}
+ .chif-acc .chif{width:min(1000px,86vw)!important;gap:20px!important}
+ .chif-acc .chif>div{padding:30px 16px 26px!important;border-radius:28px!important}
+ .chif-acc .chif b{font-size:clamp(46px,4.8vw,74px)!important}
+ .chif-acc .chif span{font-size:13px!important;margin-top:10px!important}
+ html body .sem-acc{grid-template-columns:minmax(0,500px) minmax(0,500px)!important;column-gap:44px!important}
+ html body .sem-acc h2{font:500 clamp(30px,2.8vw,44px)/1.14 Jost,sans-serif!important}
+ .sem-bascule button{padding:13px 30px!important;font-size:14px!important}
+ .sem-bulle{padding:12px 18px!important;border-radius:22px!important}
+ .sem-bulle .ic{width:46px!important;height:46px!important;font-size:13px!important}
+ .sem-bulle b{font-size:17px!important}.sem-bulle span{font-size:14.5px!important}.sem-bulle small{font-size:12.5px!important}
+ .sem-liste p{padding:12px 0!important;font-size:16.5px!important}
+ .sem-cta{padding:17px 30px!important;font-size:14px!important}
+ .sem-deco img{width:74px!important}
+ /* le prix : fond noir, écritures claires, la carte en clair */
+ html body #prix{background:#141114!important;color:#F6F3EF!important}
+ html body #prix .prix-colle .k{color:rgba(246,243,239,.6)!important}
+ html body #prix .t2,html body #prix .tl li b{color:#F6F3EF!important}
+ html body #prix .tl li span{color:rgba(246,243,239,.72)!important}
+ html body #prix .tl{--noir:#F6F3EF;--ligne:rgba(246,243,239,.25)}
+ html body #prix .prix{background:#F6F3EF!important;color:#1E1C1B!important}
+ html body #prix .prix *{border-color:rgba(30,28,27,.14)!important}
+ html body #prix .prix .k,html body #prix .prix .k mark{color:rgba(30,28,27,.6)!important}
+ html body #prix .prix .gros,html body #prix .prix .gros small,html body #prix .prix>div,html body #prix .prix li{color:#1E1C1B!important}
+ html body #prix .prix .pastille-se{background:#1E1C1B!important;color:#F6F3EF!important}
+ html body #prix .prix form.creer input{border:1.5px solid rgba(30,28,27,.2)!important}
+ html body #prix .prix form.creer .btn{background:#1E1C1B!important;color:#fff!important}
+ html body #prix .zero{color:rgba(246,243,239,.6)!important}
+}
+@media (min-width:1000px){
+ html body #prix{box-shadow:0 0 0 100vmax #141114!important;clip-path:inset(0 -100vmax)!important}
+ #charms .ch-bas.dans{margin-left:auto!important;margin-right:auto!important;max-width:100%}
+}
+@media (min-width:1000px){html body #prix .prix ul li{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='%23E0628C' stroke-width='2.4'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:0 10px!important;background-size:16px!important}}
 @media (min-width:1000px){.build{height:250vh!important}}
 
 /* 10/11 (Marie) : « le mélange » — à la place de la construction qui bloquait : la 5 très fluide (3 s), puis « Attrapez-les ! » */
@@ -1742,7 +1781,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
     <div class="k">Site + appli · tout compris</div>
     <div class="gros">49,99<small> € / mois</small></div>
     <div style="font-size:13px;color:rgba(246,243,239,.7)">après le mois offert</div><div class="pastille-se">Sans engagement · vous arrêtez en 1 clic</div>
-    <ul><li>Votre site à votre nom, en ligne tout de suite</li><li>Réservation en ligne jour et nuit, 0 % de commission</li><li>Agenda, fiches clientes, caisse</li><li>SMS de confirmation et de rappel, sans limite</li><li>Votre nom de domaine, qui vous appartient</li><li>Votre site en 5 langues</li></ul>
+    <ul><li>Votre site à votre nom, en ligne tout de suite</li><li>Réservation en ligne jour et nuit, 0 % de commission</li><li>Agenda, fiches clientes, caisse</li><li>SMS de confirmation et de rappel, sans limite</li><li>Votre adresse en .fr, incluse</li><li>Votre site en 5 langues</li></ul>
     <form class="creer" action="loginail-creer/index.html" method="get"><input name="lien" placeholder="Votre lien Maps, Planity, Booksy…" aria-label="Le lien de votre salon"><button class="btn" type="submit">Créer</button></form>
   </div>
   <div class="zero vu">Un site sur mesure coûte des centaines d’euros. Ici, il est fait en 1 minute, et il est compris.</div>
@@ -2149,7 +2188,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         items.forEach(c => { c.x = c.x0; c.y = c.y0; c.a = 0; c.w.style.transition = ""; c.w.style.transform = `translate3d(${c.x0}px,${c.y0}px,0)`; }); };
       addEventListener("scroll", () => { const r = sec.getBoundingClientRect(), p = -r.top / Math.max(1, r.height - innerHeight);
         if (!ORDI) return;
-        if (etat === "haut" && p > .04 && r.top < 1) chute();
+        if (etat === "haut" && p > .04 && r.top < 1) { if (!window.__attCh) window.__attCh = setTimeout(() => { window.__attCh = 0; if (etat === "haut") chute(); }, 1300); }   /* 10/11 (Marie) : le temps de lire */
         else if (etat === "tombe" && (r.bottom < 0 || r.top > innerHeight)) remonte(); }, { passive: true });
       /* ordinateur : on attrape un charm au clic gauche, on le soulève ; on le lâche : il retombe tout droit, simplement */
       if (ORDI) { let tenu = null, dx = 0, dy = 0, vx = 0, vy = 0, lx = 0, ly = 0, lt = 0, bouge = false;
@@ -2438,8 +2477,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794346704`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794346704`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794346704`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794347466`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794347466`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794347466`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2618,7 +2657,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794346704" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794347466" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2626,7 +2665,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794346704)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794347466)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2705,7 +2744,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
   pa.style.opacity=seg(x,.8,.95);lgOn(x<.14?0:x<.34?1:x<.54?2:x<.72?3:4)};
  const SPOTS=[[6,8],[70,6],[4,40],[78,48],[8,86],[74,90],[40,2],[20,22],[60,30],[30,60],[66,64],[12,66]];
  const tombe=()=>{if(document.hidden||!actif)return;const etoile=k%4===3,vg=VG[Math.floor(k/10)%VG.length];let im;
-  if(etoile){im=document.createElement("span");im.className="ja-et";im.textContent="✦"}else{im=document.createElement("img");im.alt="";im.src="loginail-site/charms-mini/"+vg[k%vg.length]+".webp"}k++;const W=s.clientWidth,H=s.clientHeight;im.style.left=(Math.random()*(W-60))+"px";pl.appendChild(im);
+  if(etoile){im=document.createElement("span");im.className="ja-et";im.textContent="✦"}else{im=document.createElement("img");im.alt="";im.src="loginail-site/charms-mini/"+vg[k%vg.length]+".webp"}k++;const W=s.clientWidth,H=s.clientHeight;im.style.left=((matchMedia("(min-width:1000px)").matches&&Math.random()<.55?.64+Math.random()*.35:Math.random())*(W-70))+"px";   /* ordinateur : plus de la moitié tombent tout à droite */pl.appendChild(im);
   const rz=(Math.random()<.5?-1:1)*(90+Math.random()*200),a=im.animate([{transform:"translateY(-70px) rotate(0deg)"},{transform:`translateY(${H+40}px) rotate(${rz}deg)`}],{duration:4600+Math.random()*2400,easing:"linear"});a.onfinish=()=>im.remove();
   im.addEventListener("pointerdown",e=>{e.preventDefault();attrape(im,a,e.isTrusted)},{once:true})};
  const attrape=(im,a,vrai)=>{if(vrai)touche=true;const r0=im.getBoundingClientRect();a.pause();im.remove();
@@ -2721,7 +2760,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
    /* 10/11 (Marie) : « Créer mon site » bouge seulement quand elle a FINI d'attraper (rien touché pendant 2,5 s), jamais pendant qu'elle joue */
    if(vrai){const c=s.querySelector(".ja-cta");if(c){c.classList.remove("ja-go");clearTimeout(attendCta);attendCta=setTimeout(()=>c.classList.add("ja-go"),2500)}}}};
  const jeu=()=>{lgOn(5);eclate(20);HO.forEach((h,i)=>h.animate([{transform:"translateY(0)"},{transform:"translateY(-7px)"},{transform:"translateY(0)"}],{duration:2200+i*200,iterations:Infinity}));
-  clearInterval(pluie);pluie=setInterval(tombe,matchMedia("(min-width:1000px)").matches?230:850);tombe();   /* 10/11 : ordinateur = beaucoup plus de charms */
+  clearInterval(pluie);pluie=setInterval(tombe,matchMedia("(min-width:1000px)").matches?430:850);tombe();   /* 10/11 : ordinateur = beaucoup plus de charms */
   clearTimeout(demo);demo=setTimeout(()=>{if(touche||n)return;const R=t.getBoundingClientRect(),c=[...pl.querySelectorAll("img")].find(i=>{const b=i.getBoundingClientRect();return b.top>R.top+40&&b.bottom<R.bottom-40});if(c)c.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))},2800)};
  const tic=nw=>{const x=Math.min(1,(nw-t0)/DUR);pose(x);if(x<1)raf=requestAnimationFrame(tic);else if(!fini){fini=true;jeu()}};
  const joue=()=>{cancelAnimationFrame(raf);clearInterval(pluie);clearTimeout(demo);pl.innerHTML="";mes.innerHTML="";n=0;fini=false;vu2=-1;HO.forEach(h=>h.getAnimations().forEach(a=>a.cancel()));
