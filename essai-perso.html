@@ -15,7 +15,7 @@ body{margin:0;background:var(--creme);color:var(--noir);font-family:Jost,sans-se
 h2{font:500 32px/1.05 'Cormorant Garamond',serif;margin:8px 0 16px}
 .tel{position:relative;width:min(58vw,232px);aspect-ratio:780/1688;border-radius:28px;border:7px solid #1E1C1B;overflow:hidden;background:#fff;box-shadow:0 26px 50px -24px rgba(0,0,0,.45);touch-action:pan-y;user-select:none;-webkit-user-select:none;flex:none}
 .tel>img.l{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:opacity .45s}
-.f{opacity:0}.f.on{opacity:1!important}
+.f{opacity:0;transition:opacity .3s!important}.f.on{opacity:1!important}
 .ch{position:absolute;inset:0;pointer-events:none}
 .ch img{position:absolute;width:17.2%;aspect-ratio:1;opacity:0;transform:translateY(-40px) rotate(-20deg) scale(.6);transition:opacity .25s,transform .55s cubic-bezier(.3,1.5,.5,1)}
 .ch.on img,.ch img.on{opacity:1;transform:none}
@@ -86,6 +86,21 @@ h2{font:500 32px/1.05 'Cormorant Garamond',serif;margin:8px 0 16px}
 .hors{position:absolute;inset:-40px -54px;pointer-events:none;z-index:9}
 .hors img{position:absolute;width:62px;aspect-ratio:1;opacity:0}
 .rej{margin-top:12px;background:none;border:0;font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase;color:var(--doux);text-decoration:underline}
+
+/* 15 : à vous de le créer, avec le waouh */
+.jeu15{position:relative;display:flex;align-items:center;gap:10px}
+.bac15{display:flex;flex-direction:column;gap:12px;z-index:3}
+.bac15 button{position:relative;width:54px;height:54px;border-radius:50%;border:0;background:#fff;box-shadow:0 8px 18px -8px rgba(0,0,0,.45);padding:5px;animation:pouls 1.5s ease-in-out infinite}
+.bac15 button:nth-child(2){animation-delay:.25s}.bac15 button:nth-child(3){animation-delay:.5s}.bac15 button:nth-child(4){animation-delay:.75s}
+.bac15 button img{width:100%;height:100%;object-fit:contain}
+.bac15 button.pris{visibility:hidden}
+.vole{position:fixed;z-index:30;pointer-events:none}
+.cpt15{font:500 12px Jost;letter-spacing:.16em;text-transform:uppercase;margin-top:12px}
+.waouh{position:absolute;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.waouh span{background:#fff;border-radius:18px;padding:12px 16px;font:500 13px Jost;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);transform:scale(.4);opacity:0;transition:transform .45s cubic-bezier(.3,1.6,.5,1),opacity .3s}
+.waouh.on span{transform:none;opacity:1}
+.tel.brille{animation:brille 1.2s ease-in-out 2}
+@keyframes brille{0%,100%{box-shadow:0 26px 50px -24px rgba(0,0,0,.45)}50%{box-shadow:0 0 0 6px rgba(242,167,191,.6),0 0 60px 10px rgba(242,167,191,.8)}}
 </style></head><body>
 <div class="top"><b>LOGINAIL</b><a href="#">Créer mon site</a></div>
 <section class="sec" id="s"></section>
@@ -219,25 +234,25 @@ if(V==="12"){s.innerHTML=`<div class="k">Essayez</div><h2>Écrivez le nom<br>de 
 /* 13 — l'idée 5 avec la construction « de base » : le lien s'écrit, puis les 6 étapes avec leurs textes ; rien ne bloque */
 if(V==="13"){const LG=[["Personnalisez votre site en 15 secondes chrono.","Un site classique, élégant, à votre nom. Déjà en ligne."],["Un fond.","Des cerises, du léopard, de la lavande… Plus de 300 fonds."],["Votre écriture. Vos couleurs.","Et voilà : votre univers. Le même site, que personne n’a."],["Vos photos.","Vos plus belles poses, en grand. Vous les changez en 2 secondes."],["Vos charms.","Plus de 1 000 charms. Sur votre site, vos clientes les attrapent."],["Et tout le reste.","Vos prestations, vos prix, vos réalisations, vos avis. <em>Elle se voit déjà chez vous.</em>"]],NO=["votre site","un fond","votre univers","vos photos","vos charms","tout le reste"];
  s.innerHTML=`<div class="lien"><span id="ln">Votre lien Google, Planity…</span><b>Créer</b></div>
- <div class="b13"><div class="cpt" id="cpt">1 / 6 · votre site</div><div class="barre"><i id="br"></i></div>
+ <div class="b13"><div class="cpt" id="cpt">1 / 5 · votre site</div><div class="barre"><i id="br"></i></div>
  <div style="position:relative"><div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" src="${P}o2.webp"><img class="l f" src="${P}o3.webp"><img class="l f" src="${P}s5.webp"><img class="long" id="lo" src="${P}s5-long2.webp">${charms()}${pail()}<div class="eclat" id="ec"></div></div>
  <div class="hors" id="ho">${["cerisedisco","framboise","ceriseruban","noeudcerise"].map(c=>`<img src="loginail-site/charms-mini/${c}.webp">`).join("")}</div></div>
  <div class="lg" id="lg">${LG.map((l,i)=>`<div${i?"":' class="on"'}><b>${l[0]}</b><span>${l[1]}</span></div>`).join("")}</div>
  <p class="leg" style="margin-top:4px"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>${CTA}<button class="rej" id="rj">↻ Revoir</button></div>`;
  const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],lo=document.getElementById("lo"),LGd=[...document.querySelectorAll("#lg div")],HO=[...document.querySelectorAll("#ho img")],ln=document.getElementById("ln");let T=[],tp=0;
- const etape=k=>{document.getElementById("cpt").textContent=(k+1)+" / 6 · "+NO[k];document.getElementById("br").style.width=((k+1)/6*100)+"%";LGd.forEach((d,i)=>d.classList.toggle("on",i===k))};
+ const etape=k=>{document.getElementById("cpt").textContent=(k+1)+" / 5 · "+NO[k];document.getElementById("br").style.width=((k+1)/5*100)+"%";LGd.forEach((d,i)=>d.classList.toggle("on",i===k))};
  const raz=()=>{clearInterval(tp);T.forEach(clearTimeout);T=[];L.forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");lo.style.transition="opacity .4s";lo.style.opacity=0;lo.style.transform="";HO.forEach(h=>{h.getAnimations().forEach(a=>a.cancel());h.style.opacity=0});etape(0);ln.textContent="Votre lien Google, Planity…";ln.style.color=""};
  const POS=[[2,10],[84,30],[-2,62],[86,78]];
  const joue=()=>{raz();const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;ln.style.color="#1E1C1B";
-  tp=setInterval(()=>{ln.textContent=txt.slice(0,++i);if(i>=txt.length){clearInterval(tp);
+  tp=setInterval(()=>{i+=4;ln.textContent=txt.slice(0,i);if(i>=txt.length){clearInterval(tp);
    const at=(ms,f)=>T.push(setTimeout(f,ms));
-   at(900,()=>{etape(1);L[0].classList.add("on")});
-   at(2300,()=>{etape(2);L[1].classList.add("on")});
-   at(3700,()=>{etape(3);L[2].classList.add("on")});
-   at(5100,()=>{etape(4);t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on");eclate(document.getElementById("ec"));
+   at(250,()=>{etape(1);L[0].classList.add("on")});
+   at(750,()=>{etape(2);L[1].classList.add("on")});
+   at(1250,()=>{etape(3);L[2].classList.add("on")});
+   at(1800,()=>{etape(4);t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on");eclate(document.getElementById("ec"));
      HO.forEach((h,j)=>{h.style.left=POS[j][0]+"%";h.style.top=POS[j][1]+"%";h.animate([{transform:"translate(60px,0) scale(.2) rotate(-40deg)",opacity:0},{transform:"none",opacity:1}],{duration:650,delay:j*120,easing:"cubic-bezier(.3,1.5,.5,1)",fill:"forwards"}).finished.then(()=>h.animate([{transform:"translateY(0)",opacity:1},{transform:"translateY(-8px)",opacity:1},{transform:"translateY(0)",opacity:1}],{duration:2400,iterations:Infinity})).catch(()=>{})})});
-   at(6800,()=>{etape(5);lo.style.opacity=1;const H=lo.offsetHeight-t.clientHeight;lo.style.transition="opacity .4s, transform 3.2s cubic-bezier(.45,0,.3,1)";requestAnimationFrame(()=>lo.style.transform=`translateY(${-H}px)`)});
-  }},40)};
+   /* 10/11 (Marie) : 3 secondes en tout, et le site ne défile plus */
+  }},25)};
  document.getElementById("rj").onclick=joue;vu(t,()=>setTimeout(joue,300),.4)}
 
 /* 14 — la machine à sous, et les charms du style sortent du téléphone tout autour */
@@ -253,4 +268,24 @@ if(V==="14"){const CU={"cerise": ["noeudcerise", "framboise", "cerisedisco", "ce
  const tourne=()=>{if(court)return;court=true;partent();const h=bd.firstElementChild.offsetHeight,c=U.length+((k+1+Math.floor(Math.random()*(U.length-1)))%U.length);k=c%U.length;
   bd.animate([{transform:"translateY(0)",filter:"blur(0)"},{transform:`translateY(${-h*c*.85}px)`,filter:"blur(3px)",offset:.7},{transform:`translateY(${-h*c}px)`,filter:"blur(0)"}],{duration:1700,easing:"cubic-bezier(.2,.7,.2,1)",fill:"forwards"}).onfinish=()=>{court=false;eclate(document.getElementById("ec"));sortent(U[k])}};
  document.getElementById("go").onclick=tourne;vu(t,()=>setTimeout(tourne,600))}
+
+/* 15 — « À vous de le créer » (Marie, 10/11) : le site les Ongles de Cerise est prêt ; les charms sont sur les côtés et c'est ELLE qui les pose ; au dernier, le waouh (étoiles, paillettes, « C'est votre site ! ») */
+if(V==="15"){const G=[0,2,4,6],D=[1,3,5];
+ s.innerHTML=`<div class="k">Petit jeu</div><h2>À vous de le créer.</h2>
+ <div class="jeu15"><div class="bac15" id="bg">${G.map(i=>`<button data-i="${i}"><img src="loginail-site/charms-mini/${CH[i][0]}.webp"></button>`).join("")}</div>
+ <div class="tel" id="t"><img class="l" src="${P}s5.webp">${charms()}${pail()}<div class="eclat" id="ec"></div><div class="waouh" id="wa"><span>✦ C’est votre site ! ✦</span></div></div>
+ <div class="bac15" id="bd">${D.map(i=>`<button data-i="${i}"><img src="loginail-site/charms-mini/${CH[i][0]}.webp"></button>`).join("")}</div></div>
+ <div class="cpt15" id="cp">Touchez les charms : 0 / 7</div>${CTA}`;
+ const t=document.getElementById("t"),CI=[...t.querySelectorAll(".ch img")],ec=document.getElementById("ec");let n=0,touche=false;
+ CI.forEach(c=>c.style.transition="none");
+ const pose=(b,auto)=>{if(b.classList.contains("pris"))return;if(!auto)touche=true;const i=+b.dataset.i,dst=CI[i],r0=b.getBoundingClientRect();b.classList.add("pris");
+  dst.style.opacity=0;dst.style.transform="none";const r1=dst.getBoundingClientRect(),v=document.createElement("img");v.className="vole";v.src=b.querySelector("img").src;
+  v.style.cssText+=`left:${r0.left}px;top:${r0.top}px;width:${r0.width}px;height:${r0.height}px`;document.body.appendChild(v);
+  v.animate([{transform:"none"},{transform:`translate(${(r1.left-r0.left)/2}px,${(r1.top-r0.top)/2-60}px) scale(1.3) rotate(20deg)`,offset:.5},{transform:`translate(${r1.left-r0.left}px,${r1.top-r0.top}px) scale(${r1.width/r0.width})`}],{duration:520,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{v.remove();dst.style.opacity=1;
+   dst.animate([{transform:"scale(1.4)"},{transform:"scale(1)"}],{duration:300,easing:"cubic-bezier(.3,1.6,.5,1)"});eclate(ec,6);n++;document.getElementById("cp").textContent=n<7?"Touchez les charms : "+n+" / 7":"Bravo !";
+   if(n===7){t.querySelector(".pa").classList.add("on");eclate(ec,40);t.classList.add("brille");document.getElementById("wa").classList.add("on");setTimeout(()=>document.getElementById("wa").classList.remove("on"),2400)}}};
+ document.querySelectorAll(".bac15 button").forEach(b=>b.onclick=()=>pose(b));
+ /* pour montrer : un doigt sur le premier charm, et il se pose tout seul si elle ne touche pas */
+ const b0=document.querySelector("#bg button");b0.insertAdjacentHTML("beforeend",DOIGT);const d=b0.querySelector(".doigt");d.style.left="30px";d.style.top="26px";
+ vu(t,()=>setTimeout(()=>{if(!touche){d.remove();pose(b0,true)}},1600))}
 </script></body></html>
