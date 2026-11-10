@@ -1544,7 +1544,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .il-st small{font-size:9px;letter-spacing:.04em;opacity:.8}
 .il-pied{margin-top:14px;font:500 10.5px Jost;letter-spacing:.16em;text-transform:uppercase;color:#B4778A}
 @media (min-width:1000px){.intro-l{padding:20px 40px 60px}.il-carte{max-width:640px;padding:30px 34px 24px}.il-b span{font-size:14px}}
-</style>
+@font-face{font-family:'Bagel Fat One';src:url(loginail-site/polices/BagelFatOne-400-latin.woff2) format('woff2')}@font-face{font-family:'Fascinate';src:url(loginail-site/polices/Fascinate-400-latin.woff2) format('woff2')}@font-face{font-family:'Fredoka';src:url(loginail-site/polices/Fredoka-600-latin.woff2) format('woff2')}@font-face{font-family:'Permanent Marker';src:url(loginail-site/polices/PermanentMarker-400-latin.woff2) format('woff2')}@font-face{font-family:'Sniglet';src:url(loginail-site/polices/Sniglet-800-latin.woff2) format('woff2')}</style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
 
@@ -1714,12 +1714,12 @@ const url=q=>"loginail-creer/pret.html?public&nouveau&exemple=dilerna&"+q;
 void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div class="ph"><img src="loginail-site/apercus-mini/${t[2]}.webp" alt="" loading="lazy"></div><b>${t[0]}</b><small>${t[3]}</small></a>`).join("");
 
 /* le mot « briller » change d'écriture avec son charm : tout est chargé à l'avance, le mot et le charm s'effacent et reviennent ensemble */
-{const F=[["'Playfair Display'", "perle", 0], ["'Cinzel Decorative'", "saturne", 0], ["'Bagel Fat One'", "noeudcerise", 0], ["Italiana", "perle", 0], ["'Cherry Bomb One'", "ceriseruban", 0], ["'Cherry Bomb One'", "guimauve", 0], ["Shrikhand", "chat", 0], ["Monoton", "coeurlilas", 0], ["Monoton", "perle", 0], ["UnifrakturMaguntia", "araignee", 0], ["Cinzel", "perle", 0], ["Parisienne", "citron3d", 0], ["'Permanent Marker'", "spray", 0]];
+{const F=[["'Abril Fatface'","noeudcerise",0],["'Bagel Fat One'","cerisedisco",0],["'Cherry Bomb One'","ceriseruban",0],["Fascinate","etoilecerise",0],["Fredoka","fraisegelee",0],["Monoton","coeurlilas",0],["'Permanent Marker'","spray",0],["'Rubik Bubbles'","guimauve",0],["Sniglet","oursongelee",0],["UnifrakturMaguntia","araignee",0]];
  let i=0;const m=document.getElementById("mot"),c=document.getElementById("motCh"),base=parseFloat(getComputedStyle(m).fontSize);let largeur=0;
  const t=m.querySelector(".mt");
  const cv=document.createElement("canvas").getContext("2d");
  /* le charm se pose sur la dernière lettre (le r), au même endroit pour toutes les écritures : on mesure où l’encre commence vraiment */
- const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("Loginail"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft+Math.min(t.offsetWidth,mt.actualBoundingBoxRight||t.offsetWidth)-cw*.62+cw*(F[i][2]||0)).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-ia)-cw*.97).toFixed(1)+"px"};
+ const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("Loginail"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft-cw*.42).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-ia)-cw*.97).toFixed(1)+"px"};
  const cale=()=>{m.style.width="auto";m.style.fontSize=base+"px";const w=t.offsetWidth||1;m.style.fontSize=Math.min(base*1.05,base*largeur/w).toFixed(1)+"px";m.style.width=largeur+"px";m.style.height=m.style.lineHeight=(base*1.02).toFixed(1)+"px";accroche()};
  const IM=F.map(f=>{const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp";return im});
  const prets=Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0)));
@@ -2375,8 +2375,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794344758`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794344758`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794344758`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794345120`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794345120`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794345120`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2556,7 +2556,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794344758" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794345120" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2564,7 +2564,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794344758)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794345120)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
