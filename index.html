@@ -1477,6 +1477,33 @@ html body .app-h .a-onglets button.on{background:#1E1C1B!important;color:#fff!im
 
 .jeu-acc .ja-lg>div.ja-fin b{font-size:28px}
 @media (min-width:1000px){.jeu-acc .ja-lg{height:150px!important}.jeu-acc .ja-lg>div.ja-fin b{font-size:40px;white-space:nowrap}}
+
+/* 10/11 (Marie) : « Votre semaine avec Loginail » */
+.sem-acc{position:relative;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:70px 16px 26px;background:repeating-linear-gradient(0deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),repeating-linear-gradient(90deg,rgba(242,167,191,.10) 0 14px,transparent 14px 28px),#FBF4F3;color:#1E1C1B}
+.sem-acc>*{position:relative;z-index:2}
+.sem-acc .sem-deco{position:absolute;inset:0;z-index:1;pointer-events:none}
+.sem-deco img{position:absolute;width:56px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18));animation:semFlot 4s ease-in-out infinite}
+@keyframes semFlot{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-10px) rotate(var(--r,0deg))}}
+.sem-acc .k{font:500 11px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B4778A}
+.sem-acc h2{font:500 clamp(26px,7.4vw,44px)/1.15 Jost,sans-serif!important;letter-spacing:.14em;text-transform:uppercase;margin:10px 0 12px;color:#1E1C1B}
+.sem-acc h2 em{font-style:normal;color:#E0628C}
+.sem-bascule{display:inline-flex;background:#fff;border-radius:99px;padding:5px;box-shadow:0 10px 24px -16px rgba(0,0,0,.4);margin:0 auto 12px}
+.sem-bascule button{border:0;border-radius:99px;padding:12px 26px;font:500 13px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:none;color:#8a817a;cursor:pointer;transition:all .3s}
+.sem-bascule button.on{background:#E0628C;color:#fff;box-shadow:0 8px 20px -8px rgba(224,98,140,.9)}
+.sem-bulles{display:flex;flex-direction:column;gap:8px;width:100%;max-width:380px;min-height:198px;text-align:left}
+.sem-bulle{background:rgba(255,255,255,.96);border-radius:20px;padding:10px 12px;box-shadow:0 14px 30px -20px rgba(200,80,120,.7);display:flex;gap:12px;align-items:center;opacity:0;transform:translateY(16px) scale(.96);transition:all .5s cubic-bezier(.3,1.3,.5,1)}
+.sem-bulle.on{opacity:1;transform:none}
+.sem-bulle .ic{width:40px;height:40px;border-radius:12px;background:linear-gradient(160deg,#F7B6CB,#E0628C);color:#fff;display:grid;place-items:center;font:500 11px Jost,sans-serif;flex:none}
+.sem-bulle b{display:block;font-weight:500;font-size:14px}.sem-bulle span{font-size:12.5px;color:#7A716A}.sem-bulle small{margin-left:auto;align-self:flex-start;font-size:11px;color:#a59d97;white-space:nowrap}
+.sem-bulles.sans .sem-bulle{background:rgba(255,255,255,.7)}.sem-bulles.sans .ic{background:#B9B0AA}.sem-bulles.sans b{color:#6f6862}
+.sem-bas{margin-top:auto;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:14px}
+.sem-liste{width:100%;max-width:380px;text-align:left;background:rgba(255,255,255,.92);border-radius:24px;padding:6px 16px}
+.sem-liste p{margin:0;padding:8px 0;border-bottom:1px solid #F3E7EA;font-size:14px;display:flex;gap:10px}.sem-liste p:last-child{border:0}
+.sem-liste i{font-style:normal;color:#E0628C}.sem-liste.sans i{color:#b9b0aa}
+.sem-cta{display:inline-block;margin-top:14px;background:#1E1C1B;color:#fff;border-radius:99px;padding:16px 26px;font:500 13px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;box-shadow:0 12px 26px -12px rgba(0,0,0,.5)}
+@media (max-height:720px){.sem-acc{padding-top:56px}.sem-bulles{min-height:180px}.sem-bulle{padding:7px 10px}.sem-liste p{padding:5px 0;font-size:13px}.sem-acc h2{font-size:24px!important}}
+@media (min-width:1000px){.sem-acc{display:grid;grid-template-columns:420px 420px;grid-template-areas:"k k" "h h" "b b" "n l";justify-content:center;column-gap:40px;align-items:start;align-content:center;padding:80px 40px}
+ .sem-acc>.k{grid-area:k}.sem-acc>h2{grid-area:h}.sem-bascule{grid-area:b;justify-self:center}.sem-bulles{grid-area:n}.sem-bas{grid-area:l;margin:0;padding:0}.sem-deco img{width:64px}}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1522,6 +1549,14 @@ html body .app-h .a-onglets button.on{background:#1E1C1B!important;color:#fff!im
   <button class="ja-rej" id="jaRej" type="button">↻ Revoir</button>
   <div class="ja-pluie" id="jaPl"></div>
 </section>
+<section class="sem-acc" id="semaine">
+  <div class="sem-deco" aria-hidden="true"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:3%;top:6%;--r:-12deg"><img src="loginail-site/charms-mini/framboise.webp" alt="" style="left:86%;top:10%;--r:10deg;animation-delay:.4s"><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="left:86%;top:56%;--r:-8deg;animation-delay:.8s"><img src="loginail-site/charms-mini/fraisegelee.webp" alt="" style="left:3%;top:52%;--r:6deg;animation-delay:1.2s"></div>
+  <div class="k">La différence</div><h2>Votre semaine<br><em>avec Loginail</em></h2>
+  <div class="sem-bascule" id="semBs"><button type="button" class="on">Avec ✦</button><button type="button">Sans</button></div>
+  <div class="sem-bulles" id="semBl"></div>
+  <div class="sem-bas"><div class="sem-liste" id="semL"></div><a class="sem-cta" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a></div>
+</section>
+
 
 
 <section class="app-h" id="appli"><div class="colle">
@@ -2289,8 +2324,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794341399`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794341399`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794341399`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794343007`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794343007`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794343007`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2484,7 +2519,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794341399" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794343007" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2492,7 +2527,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794341399)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794343007)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2589,5 +2624,21 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
  CI.forEach(c=>{c.style.transition="none"});pose(0);document.getElementById("jaRej").onclick=joue;
  let lance=false;new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!lance){lance=true;setTimeout(joue,250)}},{threshold:.35}).observe(t);
 })();
+</script>
+<script id="semaine-acc">
+/* 10/11 (Marie) : « Votre semaine avec Loginail » — SANS / AVEC, les notifications qui popent */
+(()=>{const s=document.getElementById("semaine");if(!s)return;
+ const AV=[["23:12","Nouvelle réservation","Léa · Pose gel · samedi 10 h","la nuit"],["SMS","Rappel envoyé","Inès · demain 9 h · confirmé ✓","la veille"],["0 %","55 € encaissés","Sarah · Remplissage · tout est pour vous","à l’instant"]];
+ const SA=[["23:12","3 messages non lus","« Tu as une place samedi ? »","la nuit"],["✕","Léa n’est pas venue","Rendez-vous oublié · 1 h perdue","ce matin"],["%","Commission prélevée","Sur une cliente que vous aviez déjà","hier"]];
+ const LA=["Elles réservent seules, même la nuit","Un rappel SMS part la veille","Votre site à votre image, à votre nom","Un petit mot pour leur anniversaire","Agenda, clientes et caisse dans une appli","0 % de commission, tout est pour vous"];
+ const LS=["Vous répondez aux messages le soir","Des clientes oublient leur rendez-vous","Juste un Instagram, pas de vrai site","Les anniversaires, on les oublie","L’agenda est dans votre tête","Certaines plateformes prennent une commission"];
+ const bl=document.getElementById("semBl"),l2=document.getElementById("semL"),BT=[...s.querySelectorAll("#semBs button")];let avec=true,touche=false,T=[],vu=false;
+ const pop=()=>{T.forEach(clearTimeout);T=[];const N=avec?AV:SA;bl.className="sem-bulles"+(avec?"":" sans");bl.innerHTML=N.map(n=>`<div class="sem-bulle"><div class="ic">${n[0]}</div><div><b>${n[1]}</b><span>${n[2]}</span></div><small>${n[3]}</small></div>`).join("");
+  [...bl.children].forEach((b,i)=>T.push(setTimeout(()=>b.classList.add("on"),250+i*550)))};
+ const rend=()=>{l2.className="sem-liste"+(avec?"":" sans");l2.innerHTML=(avec?LA:LS).map(t=>`<p><i>${avec?"✦":"✕"}</i>${t}</p>`).join("");BT.forEach((b,i)=>b.classList.toggle("on",(i===0)===avec));pop()};
+ BT.forEach((b,i)=>b.onclick=()=>{touche=true;avec=i===0;rend()});
+ {let x0=null;s.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});s.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>40){touche=true;avec=dx>0;rend()}},{passive:true})}rend();
+ new IntersectionObserver(es=>{const v=es[0].isIntersecting;if(v&&!vu)pop();vu=v},{threshold:.3}).observe(s);
+ setInterval(()=>{if(!touche&&vu&&!document.hidden){avec=!avec;rend()}},4200)})();
 </script>
 </body></html>
