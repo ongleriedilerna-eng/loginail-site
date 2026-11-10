@@ -6,7 +6,7 @@ html,body{margin:0;height:100%;background:#F4F1EC;font-family:Jost,sans-serif;ov
 #site{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:#1E1C1B}
 #site b{font:500 13px Jost;letter-spacing:.2em;text-transform:uppercase}
 #site button{border:0;border-radius:99px;padding:12px 22px;background:#1E1C1B;color:#fff;font:500 12px Jost;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
-#intro{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;transition:opacity .45s ease,transform .45s ease}
+#intro{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;transition:opacity .3s ease,transform .3s ease}
 #intro.part{opacity:0;transform:scale(1.06);pointer-events:none}
 .logo{position:relative;width:min(34vw,132px);display:flex;flex-direction:column;align-items:center;gap:16px}
 .logo svg{width:100%;overflow:visible;display:block}
@@ -60,15 +60,16 @@ intro.onclick=fin;
 function logo(){const d=document.createElement("div");d.className="logo";d.style.transform=`translateX(${DEC}%)`;d.innerHTML=dessin("ronde",COUL[0])+'<span class="mot">Loginail</span>';intro.appendChild(d);
  d.querySelector(".mot").style.transform="translateX("+(-DEC)+"%)";return d}
 function morph(path,de,a,ms){const t0=performance.now();const f=t=>{let x=Math.min(1,(t-t0)/ms);x=1-Math.pow(1-x,3);path.setAttribute("d",enD(de.map((p,i)=>[p[0]+(a[i][0]-p[0])*x,p[1]+(a[i][1]-p[1])*x])));if(x<1&&!fini)requestAnimationFrame(f)};requestAnimationFrame(f)}
-function finale(d,t){const svg=d.querySelector("svg"),m=d.querySelector(".mot");
+function finale(d,t,reste){reste=reste||1050;const svg=d.querySelector("svg"),m=d.querySelector(".mot");
  T.push(setTimeout(()=>{svg.animate([{transform:"scale(1)"},{transform:"scale(1.12)"},{transform:"scale(1)"}],{duration:380,easing:"cubic-bezier(.3,1.6,.5,1)"});m.classList.add("on")},t));
- T.push(setTimeout(fin,t+1050))}
+ T.push(setTimeout(fin,t+reste))}
 /* A — l'ongle change de forme et de couleur à toute vitesse, en douceur (morphing), puis devient le logo */
 function versionA(){const d=logo(),svg=d.querySelector("svg"),o=svg.querySelector(".ongle");
- svg.animate([{transform:"scale(.4)",opacity:0,filter:"blur(6px)"},{transform:"scale(1)",opacity:1,filter:"blur(0)"}],{duration:260,easing:"cubic-bezier(.2,.9,.3,1.2)"});
- let t=180;const pas=105;
- SUITE.forEach((k,i)=>{if(!i)return;T.push(setTimeout(()=>{morph(o,ech[SUITE[i-1]],ech[k],pas-10);o.setAttribute("fill",COUL[i])},t));t+=i>SUITE.length-4?pas+40:pas});
- finale(d,t+80)}
+ svg.animate([{transform:"scale(.4)",opacity:0,filter:"blur(6px)"},{transform:"scale(1)",opacity:1,filter:"blur(0)"}],{duration:200,easing:"cubic-bezier(.2,.9,.3,1.2)"});
+ /* 10/11 (Marie) : un chouïa plus rapide — 2 secondes en tout */
+ let t=110;const pas=72;
+ SUITE.forEach((k,i)=>{if(!i)return;T.push(setTimeout(()=>{morph(o,ech[SUITE[i-1]],ech[k],pas-6);o.setAttribute("fill",COUL[i])},t));t+=i>SUITE.length-3?pas+18:pas});
+ finale(d,t+40,850)}
 /* B — pareil, et à chaque forme une gerbe de petits ongles qui jaillit tout autour */
 function gerbe(forme,coul,n){for(let j=0;j<n;j++){const m=document.createElement("div");m.className="mini";m.innerHTML=dessin(forme,coul);intro.appendChild(m);
  const an=Math.random()*Math.PI*2,r=110+Math.random()*190,rot=(an*180/Math.PI)+(Math.random()*60-30),s=.5+Math.random()*.7;
