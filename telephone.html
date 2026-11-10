@@ -1443,6 +1443,44 @@ html body #charms .bloc.carte-ch{background:rgba(255,255,255,.93)!important;bord
 #charms .ch-bas.dans{position:static!important;transform:none!important;margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:6px}
 #charms .ch-bas.dans .btn{white-space:nowrap}
 @media (min-width:1000px){#charms .bloc.carte-ch{max-width:560px;padding:34px 34px 26px}}
+
+/* 10/11 (Marie) : « Classe ou baddie ? » en Corben (téléphone + ordinateur) */
+@font-face{font-family:'Corben';src:url(loginail-site/polices/Corben-400-latin.woff2) format('woff2')}
+html body .gal .q h2{font-family:'Corben',serif!important;letter-spacing:.02em!important}
+/* 10/11 (Marie) : ORDINATEUR SEULEMENT */
+@media (min-width:1000px){
+ /* « Qu'est-ce que Loginail ? » : en ligne, plus grand */
+ .intro-l{padding:10px 40px 70px!important}
+ .il-carte{max-width:1180px!important;padding:34px 44px!important;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"k deux stores" "pied pied pied";align-items:center;column-gap:44px;row-gap:22px;text-align:left!important}
+ .il-k{grid-area:k;margin:0!important;font-size:22px!important;line-height:1.3;max-width:230px}
+ .il-deux{grid-area:deux;column-gap:26px!important}
+ .il-b{flex-direction:row!important;align-items:flex-start!important;gap:14px!important;text-align:left;display:grid!important;grid-template-columns:auto 1fr}
+ .il-b .il-ic{grid-row:span 2;width:64px;height:64px;border-radius:20px}.il-ic svg{width:32px;height:32px}
+ .il-b b{font-size:15px!important;align-self:end}.il-b span{font-size:15px!important}
+ .il-plus{font-size:34px!important;margin-top:14px!important}
+ .il-stores{grid-area:stores;margin:0!important;flex-direction:column;align-items:stretch!important}
+ .il-st{font-size:17px!important;padding:8px 18px 9px!important}
+ .il-pied{grid-area:pied;margin:0!important;text-align:center;font-size:12.5px!important}
+ /* les chiffres : en très grand, sur toute la largeur */
+ .chif-acc{padding:70px 40px!important;min-height:62vh;align-items:center}
+ .chif-acc .chif{width:min(1280px,92vw)!important;max-width:none!important;display:grid!important;grid-template-columns:1fr 1.5fr 1fr;gap:26px!important}
+ .chif-acc .chif>div{padding:46px 20px 40px!important;border-radius:34px!important}
+ .chif-acc .chif b{font-size:clamp(70px,7.5vw,118px)!important;line-height:1!important}
+ .chif-acc .chif span{font-size:16px!important;letter-spacing:.2em!important;margin-top:14px!important}
+ /* « Votre semaine » : sur tout l'écran */
+ html body .sem-acc{grid-template-columns:minmax(0,640px) minmax(0,640px)!important;column-gap:60px!important;min-height:100vh;padding:34px 40px!important}
+ html body .sem-acc h2{font:500 clamp(34px,3.4vw,52px)/1.12 Jost,sans-serif!important;margin:6px 0 16px!important}
+ .sem-acc .k{font-size:14px!important}
+ .sem-bascule{margin-bottom:22px!important}.sem-bascule button{padding:16px 40px!important;font-size:16px!important}
+ .sem-bulles{max-width:none!important;gap:12px!important;min-height:0!important}
+ .sem-bulle{padding:14px 20px!important;border-radius:26px!important;gap:18px!important}
+ .sem-bulle .ic{width:52px!important;height:52px!important;border-radius:18px!important;font-size:15px!important}
+ .sem-bulle b{font-size:21px!important}.sem-bulle span{font-size:17px!important}.sem-bulle small{font-size:14px!important}
+ .sem-liste{max-width:none!important;padding:12px 28px!important;border-radius:30px!important}
+ .sem-liste p{padding:14px 0!important;font-size:20px!important;gap:14px!important}
+ .sem-cta{margin-top:18px!important;padding:20px 38px!important;font-size:15px!important}
+ .sem-deco img{width:92px!important}
+}
 @media (min-width:1000px){.build{height:250vh!important}}
 
 /* 10/11 (Marie) : « le mélange » — à la place de la construction qui bloquait : la 5 très fluide (3 s), puis « Attrapez-les ! » */
@@ -2387,8 +2425,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794345977`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794345977`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794345977`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794346274`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794346274`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794346274`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2511,8 +2549,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
             <div class="ig-ronds">${["SETS","STUDIO","PRICE","REVIEWS"].map(r => `<div><i class="txt">${r}</i>${r}</div>`).join("")}</div>
             <div class="ig-onglets"><span>▦</span><span>▷</span><span>⟳</span><span>◎</span></div></div>
             <div class="ig-grille-w"><div class="ig-grille">${Array.from({ length: 36 }, (_, k) => `<i style="background-image:url(loginail-site/insta/${k % 18 + 1}.webp)"></i>`).join("")}</div></div>
-            <div class="ig-ex">Profil d’exemple</div></div>`, { cl: "insta", w: ORDI ? "min(11.5vw, 27vh)" : "38vw", ry: 26, rx: 6, rz: -2 })}
-          ${tel3d(`<img src="loginail-site/apercus-univers/tpl-ateliermercure.webp?v=2" alt="">`, { cl: "site", w: "min(11.5vw, 27vh)", ry: -26, rx: 6, rz: 2 })}</div>`;
+            <div class="ig-ex">Profil d’exemple</div></div>`, { cl: "insta", w: ORDI ? "min(17vw, 42vh)" : "38vw", ry: 26, rx: 6, rz: -2 })}
+          ${tel3d(`<img src="loginail-site/apercus-univers/tpl-ateliermercure.webp?v=2" alt="">`, { cl: "site", w: ORDI ? "min(17vw, 42vh)" : "min(11.5vw, 27vh)", ry: -26, rx: 6, rz: 2 })}</div>`;
       pq.after(s);
       let vu = false, t = []; new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu && !t.length) tour(); }, { threshold: .3 }).observe(s);
       /* les lettres qui défilent : « site » bascule, l'alphabet défile très vite, et un nom de salon apparaît */
@@ -2568,7 +2606,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794345977" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794346274" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2576,7 +2614,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794345977)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794346274)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
@@ -2671,7 +2709,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
    /* 10/11 (Marie) : « Créer mon site » bouge seulement quand elle a FINI d'attraper (rien touché pendant 2,5 s), jamais pendant qu'elle joue */
    if(vrai){const c=s.querySelector(".ja-cta");if(c){c.classList.remove("ja-go");clearTimeout(attendCta);attendCta=setTimeout(()=>c.classList.add("ja-go"),2500)}}}};
  const jeu=()=>{lgOn(5);eclate(20);HO.forEach((h,i)=>h.animate([{transform:"translateY(0)"},{transform:"translateY(-7px)"},{transform:"translateY(0)"}],{duration:2200+i*200,iterations:Infinity}));
-  clearInterval(pluie);pluie=setInterval(tombe,850);tombe();
+  clearInterval(pluie);pluie=setInterval(tombe,matchMedia("(min-width:1000px)").matches?230:850);tombe();   /* 10/11 : ordinateur = beaucoup plus de charms */
   clearTimeout(demo);demo=setTimeout(()=>{if(touche||n)return;const R=t.getBoundingClientRect(),c=[...pl.querySelectorAll("img")].find(i=>{const b=i.getBoundingClientRect();return b.top>R.top+40&&b.bottom<R.bottom-40});if(c)c.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))},2800)};
  const tic=nw=>{const x=Math.min(1,(nw-t0)/DUR);pose(x);if(x<1)raf=requestAnimationFrame(tic);else if(!fini){fini=true;jeu()}};
  const joue=()=>{cancelAnimationFrame(raf);clearInterval(pluie);clearTimeout(demo);pl.innerHTML="";mes.innerHTML="";n=0;fini=false;vu2=-1;HO.forEach(h=>h.getAnimations().forEach(a=>a.cancel()));
