@@ -2476,7 +2476,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 (()=>{const M=new URLSearchParams(location.search).get("mise")||"1";document.documentElement.classList.add("mise-"+M);
  const go=()=>{const h=document.querySelector(".hero"),k=h.querySelector(":scope>.k"),f=h.querySelector("form.creer"),so=h.querySelector(".h-sous"),lig=h.querySelector(".h-lig");
   if(k&&f){k.classList.add("k-bas");k.innerHTML="Pour les prothésistes ongulaires<br>prêt en une minute";f.before(k)}
-  const T={"5":"Le site et l’appli<br>des prothésistes","1":"Votre site internet<br>et votre application<br>pour tout gérer","2":"Votre site<br>et votre appli","3":"Le site et l’appli<br>des prothésistes","4":"Votre site · votre appli"};
+  const T={"5":"Le site et l’appli<br>des prothésistes","8":"Le site et l’appli<br>des prothésistes","1":"Votre site internet<br>et votre application<br>pour tout gérer","2":"Votre site<br>et votre appli","3":"Le site et l’appli<br>des prothésistes","4":"Votre site · votre appli"};
   if(so)so.innerHTML=T[M]||T[1];
   /* 5 = la 3 + les 3 ajouts : prix après le mois offert (obligatoire), « créé par une prothésiste », « exemple » sur les sites */
   /* 6 et 7 (Marie, 10/11) : c'est le logo tout en haut à gauche qui change d'écriture, UNE seule fois à l'arrivée ; le grand titre dit ce que c'est */
@@ -2487,7 +2487,17 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     lb.classList.add("lb-anim");lb.innerHTML='<span class="lb-t">Loginail</span><img class="lb-c" alt="">';const t=lb.querySelector(".lb-t"),c=lb.querySelector(".lb-c");
     FF.forEach(f=>{const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp"});
     Promise.all(FF.map(f=>document.fonts.load("24px "+f[0]).catch(()=>0))).then(()=>{let i=0;const pas=()=>{if(i<FF.length){lb.classList.add("fun");t.style.fontFamily=FF[i][0];c.src="loginail-site/charms-mini/"+FF[i][1]+".webp";i++;setTimeout(pas,420)}else{lb.classList.remove("fun");t.style.fontFamily="";c.removeAttribute("src")}};setTimeout(pas,350)})}}
-  if(M==="5"){if(so)so.innerHTML=T[3];if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";
+  /* 8 (Marie, 10/11) : la A, sans « Loginail » en double : le petit logo du haut n'apparaît qu'une fois qu'on a descendu */
+  if(M==="8"){const m5=()=>{document.documentElement.classList.toggle("lb-vu",scrollY>140)};addEventListener("scroll",m5,{passive:true});m5()}
+  /* 9 (Marie, 10/11) : c'est le mot « site » qui change d'écriture */
+  if(M==="9"){const h1=h.querySelector("h1");if(h1){h1.className="h-phrase p6 p9";h1.innerHTML='Votre <span class="ms"><span class="ms-t">site</span><img class="ms-c" alt=""></span><br>à votre image.<br>Votre appli<br>pour tout gérer.';
+    const w=h1.querySelector(".ms"),t=w.querySelector(".ms-t"),c=w.querySelector(".ms-c");
+    const FF=[["'Cormorant Garamond'",""],["'Bagel Fat One'","noeudcerise"],["'Playfair Display'","perle"],["'Cherry Bomb One'","ceriseruban"],["Monoton","coeurlilas"],["Shrikhand","chat"],["Parisienne","citron3d"],["'Cinzel Decorative'","saturne"],["'Rubik Bubbles'","fraisegelee"],["UnifrakturMaguntia","araignee"],["'Permanent Marker'","spray"]];
+    FF.forEach(f=>{if(f[1]){const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp"}});
+    Promise.all(FF.map(f=>document.fonts.load("40px "+f[0]).catch(()=>0))).then(()=>{let mx=0;FF.forEach(f=>{t.style.fontFamily=f[0];mx=Math.max(mx,t.offsetWidth)});t.style.fontFamily=FF[0][0];w.style.minWidth=mx+"px";let i=0;
+     setInterval(()=>{if(document.hidden)return;w.classList.add("chg");setTimeout(()=>{i=(i+1)%FF.length;t.style.fontFamily=FF[i][0];if(FF[i][1]){c.src="loginail-site/charms-mini/"+FF[i][1]+".webp";c.style.display=""}else c.style.display="none";w.classList.remove("chg")},200)},1600)})}}
+  if(M==="8"||M==="9"){if(M==="9"&&k)k.innerHTML="Prêt en une minute · créé par une prothésiste";}
+  if(M==="5"||M==="8"||M==="9"){if(so)so.innerHTML=T[3];if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";
    const sv=h.querySelector(".sous");if(sv)sv.innerHTML="<b>1 mois offert</b>, puis 49,99 €/mois · <b>sans engagement</b>";
    const d=h.querySelector(".h-pan")||h.querySelector(".duo .mini");if(d&&!d.querySelector(".ex-tag")){if(getComputedStyle(d).position==="static")d.style.position="relative";d.insertAdjacentHTML("beforeend",'<span class="ex-tag">Exemple</span>')}}};
  if(document.readyState==="loading")addEventListener("DOMContentLoaded",()=>setTimeout(go,0));else setTimeout(go,0)})();
@@ -2499,7 +2509,7 @@ html[class*="mise-"] .hero h1.h-logi .h-sous{font-family:Jost,sans-serif;font-we
 .mise-3 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 .mise-5 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
 .mise-5 .hero .h-lig{font-weight:500}
-@media (max-height:720px){html.mise-6 .hero h1.p6{font-size:35px}html.mise-5 .hero .h-pan,html.mise-6 .hero .h-pan,html.mise-7 .hero .h-pan{zoom:.84}html.mise-5 .hero h1.h-logi .h-sous{margin-top:6px}}
+@media (max-height:720px){html.mise-6 .hero h1.p6,html.mise-9 .hero h1.p9{font-size:34px!important}html.mise-8 .hero .h-pan,html.mise-9 .hero .h-pan,html.mise-5 .hero .h-pan,html.mise-6 .hero .h-pan,html.mise-7 .hero .h-pan{zoom:.84}html.mise-5 .hero h1.h-logi .h-sous{margin-top:6px}}
 html.mise-6 .hero h1.h-phrase,html.mise-7 .hero h1.h-phrase{margin:6px 0 10px}
 html.mise-6 .hero h1.p6{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:42px;line-height:1.05}
 html.mise-7 .hero h1.p7{font-family:Jost,sans-serif;font-weight:500;font-size:23px;line-height:1.4;letter-spacing:.14em;text-transform:uppercase}
@@ -2508,6 +2518,12 @@ header.top b.lb-anim{position:relative;display:inline-flex;align-items:center;mi
 header.top b.lb-anim.fun{text-transform:none;letter-spacing:0;font-size:24px;font-weight:400}
 header.top b.lb-anim .lb-c{width:22px;height:22px;margin-left:4px;transform:rotate(12deg)}
 header.top b.lb-anim:not(.fun) .lb-c{display:none}
+html.mise-8 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
+html.mise-8 .hero .h-lig,html.mise-9 .hero .h-lig{font-weight:500}
+html.mise-8 header.top b{opacity:0;transition:opacity .35s}html.mise-8.lb-vu header.top b{opacity:1}
+html.mise-9 .hero h1.p9{margin:6px 0 10px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:42px;line-height:1.08}
+.p9 .ms{display:inline-block;position:relative;text-align:center;transition:opacity .2s}.p9 .ms.chg{opacity:0}
+.p9 .ms-t{white-space:nowrap}.p9 .ms-c{position:absolute;right:-14px;top:-12px;width:28px;height:28px;transform:rotate(12deg)}
 .ex-tag{position:absolute;left:12px;top:12px;z-index:9;background:rgba(255,255,255,.88);color:#1E1C1B;font:500 9px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:99px}
 .mise-4 .hero h1.h-logi .h-sous{font-size:16px;letter-spacing:.22em;margin-top:10px}
 html[class*="mise-"] .hero .h-lig{font-weight:400}
