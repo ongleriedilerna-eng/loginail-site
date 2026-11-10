@@ -1693,7 +1693,7 @@ document.querySelectorAll(".rail.vif").forEach(r=>{let t=0,vis=false,cur=null;co
 .resa-x{position:absolute;top:14px;right:16px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;font-size:21px}
 
 /* 10/11 (Marie) : essai — « Loginail » en grand qui change d'écriture, et en dessous ce que c'est */
-.hero h1.h-logi{font-size:84px!important;line-height:1!important}
+.hero h1.h-logi{font-size:84px!important;line-height:1!important;margin-bottom:0}
 .hero h1.h-logi .h-sous{display:block;font-size:27px;line-height:1.15;margin-top:14px;font-family:'Cormorant Garamond',serif}
 .hero h1.h-logi .mot img{width:40px;height:40px}
 </style>
@@ -2472,4 +2472,22 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
     } }
 })();
 </script>
+<script>/* 10/11 (Marie) : essais de mise en page du haut (téléphone) — ?mise=1…4 */
+(()=>{const M=new URLSearchParams(location.search).get("mise")||"1";document.documentElement.classList.add("mise-"+M);
+ const go=()=>{const h=document.querySelector(".hero"),k=h.querySelector(":scope>.k"),f=h.querySelector("form.creer"),so=h.querySelector(".h-sous"),lig=h.querySelector(".h-lig");
+  if(k&&f){k.classList.add("k-bas");k.innerHTML="Pour les prothésistes ongulaires<br>prêt en une minute";f.before(k)}
+  const T={"1":"Votre site internet<br>et votre application<br>pour tout gérer","2":"Votre site<br>et votre appli","3":"Le site et l’appli<br>des prothésistes","4":"Votre site · votre appli"};
+  if(so)so.innerHTML=T[M]||T[1]};
+ if(document.readyState==="loading")addEventListener("DOMContentLoaded",()=>setTimeout(go,0));else setTimeout(go,0)})();
+</script>
+<style>
+html[class*="mise-"] .hero h1.h-logi .h-sous{font-family:Jost,sans-serif;font-weight:500;text-transform:uppercase;color:var(--noir)}
+.mise-1 .hero h1.h-logi .h-sous{font-size:15px;letter-spacing:.18em;line-height:1.7;margin-top:14px}
+.mise-2 .hero h1.h-logi .h-sous{font-size:21px;letter-spacing:.16em;line-height:1.35;margin-top:12px}
+.mise-3 .hero h1.h-logi .h-sous{font-size:17px;letter-spacing:.2em;line-height:1.5;margin-top:12px}
+.mise-4 .hero h1.h-logi .h-sous{font-size:16px;letter-spacing:.22em;margin-top:10px}
+html[class*="mise-"] .hero .h-lig{font-weight:400}
+.mise-3 .hero .h-lig,.mise-4 .hero .h-lig{font-weight:500}
+.hero .k.k-bas{margin:4px 0 10px!important;font-size:10.5px!important;letter-spacing:.16em!important;text-align:center;opacity:.75}
+</style>
 </body></html>
