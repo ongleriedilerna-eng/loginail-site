@@ -101,6 +101,11 @@ h2{font:500 32px/1.05 'Cormorant Garamond',serif;margin:8px 0 16px}
 .waouh.on span{transform:none;opacity:1}
 .tel.brille{animation:brille 1.2s ease-in-out 2}
 @keyframes brille{0%,100%{box-shadow:0 26px 50px -24px rgba(0,0,0,.45)}50%{box-shadow:0 0 0 6px rgba(242,167,191,.6),0 0 60px 10px rgba(242,167,191,.8)}}
+
+/* 16 : la 5 + le jeu */
+.hors.jouer img{pointer-events:auto;cursor:pointer;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.hors .rond{position:absolute;width:74px;height:74px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px rgba(242,167,191,.8);animation:tapRing 1.2s ease-out infinite;pointer-events:none}
+@keyframes tapRing{0%{transform:scale(.6);opacity:0}30%{opacity:1}100%{transform:scale(1.25);opacity:0}}
 </style></head><body>
 <div class="top"><b>LOGINAIL</b><a href="#">Créer mon site</a></div>
 <section class="sec" id="s"></section>
@@ -288,4 +293,39 @@ if(V==="15"){const G=[0,2,4,6],D=[1,3,5];
  /* pour montrer : un doigt sur le premier charm, et il se pose tout seul si elle ne touche pas */
  const b0=document.querySelector("#bg button");b0.insertAdjacentHTML("beforeend",DOIGT);const d=b0.querySelector(".doigt");d.style.left="30px";d.style.top="26px";
  vu(t,()=>setTimeout(()=>{if(!touche){d.remove();pose(b0,true)}},1600))}
+
+/* 16 — (Marie, 10/11) la 5 au début : le lien, et tout se crée en 2 secondes ; puis À ELLE : les 4 charms autour du téléphone, elle les touche et ils se posent sur le site ; au dernier, le waouh */
+if(V==="16"){const LG=[["Votre lien, et c’est parti.","Un site classique, élégant, à votre nom."],["Un fond.","Des cerises, du léopard, de la lavande… Plus de 300 fonds."],["Votre écriture. Vos couleurs.","Le même site, que personne n’a."],["Vos photos.","Vos plus belles poses, en grand."],["À vous !","Touchez les charms pour les poser sur votre site."],["✦ C’est votre site ! ✦","Plus de 1 000 charms vous attendent."]],NO=["votre site","un fond","votre univers","vos photos","vos charms","c’est prêt"];
+ const HC=[["cerisedisco",2],["framboise",1],["ceriseruban",4],["noeudcerise",0]],POS=[[-4,12],[86,26],[-6,58],[88,70]];
+ s.innerHTML=`<div class="lien"><span id="ln">Votre lien Google, Planity…</span><b>Créer</b></div>
+ <div class="b13"><div class="cpt" id="cpt">1 / 5 · votre site</div><div class="barre"><i id="br"></i></div>
+ <div style="position:relative"><div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" src="${P}o2.webp"><img class="l f" src="${P}o3.webp"><img class="l f" src="${P}s5.webp">${charms()}${pail()}<div class="eclat" id="ec"></div><div class="waouh" id="wa"><span>✦ C’est votre site ! ✦</span></div></div>
+ <div class="hors" id="ho">${HC.map((c,j)=>`<img data-i="${c[1]}" src="loginail-site/charms-mini/${c[0]}.webp" style="left:${POS[j][0]}%;top:${POS[j][1]}%">`).join("")}</div></div>
+ <div class="lg" id="lg">${LG.map((l,i)=>`<div${i?"":' class="on"'}><b>${l[0]}</b><span>${l[1]}</span></div>`).join("")}</div>
+ <p class="leg" style="margin-top:4px"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>${CTA}<button class="rej" id="rj">↻ Revoir</button></div>`;
+ const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],CI=[...t.querySelectorAll(".ch img")],ho=document.getElementById("ho"),HO=[...ho.querySelectorAll("img")],LGd=[...document.querySelectorAll("#lg div")],ln=document.getElementById("ln"),ec=document.getElementById("ec");
+ CI.forEach(c=>c.style.transition="none");let T=[],tp=0,n=0,touche=false,jeu=false;
+ const etape=k=>{document.getElementById("cpt").textContent=k<5?(Math.min(k,4)+1)+" / 5 · "+NO[k]:"✦ "+NO[k];document.getElementById("br").style.width=(Math.min(k+1,5)/5*100)+"%";LGd.forEach((d,i)=>d.classList.toggle("on",i===k))};
+ const raz=()=>{clearInterval(tp);T.forEach(clearTimeout);T=[];n=0;jeu=false;touche=false;ho.classList.remove("jouer");ho.querySelectorAll(".rond,.doigt").forEach(x=>x.remove());
+  L.forEach(l=>l.classList.remove("on"));CI.forEach(c=>{c.style.opacity=0});t.querySelector(".pa").classList.remove("on");t.classList.remove("brille");document.getElementById("wa").classList.remove("on");
+  HO.forEach(h=>{h.getAnimations().forEach(a=>a.cancel());h.style.opacity=0;h.style.visibility=""});etape(0);ln.textContent="Votre lien Google, Planity…";ln.style.color=""};
+ const pose=(h,auto)=>{if(!jeu||h.style.visibility==="hidden")return;if(!auto)touche=true;ho.querySelectorAll(".doigt").forEach(x=>x.remove());const r=h.parentElement.querySelector('.rond[data-i="'+h.dataset.i+'"]');if(r)r.remove();
+  const dst=CI[+h.dataset.i],r0=h.getBoundingClientRect();dst.style.transform="none";const r1=dst.getBoundingClientRect();h.getAnimations().forEach(a=>a.cancel());h.style.visibility="hidden";
+  const v=document.createElement("img");v.className="vole";v.src=h.src;v.style.cssText=`left:${r0.left}px;top:${r0.top}px;width:${r0.width}px;height:${r0.height}px`;document.body.appendChild(v);
+  v.animate([{transform:"none"},{transform:`translate(${(r1.left-r0.left)/2}px,${(r1.top-r0.top)/2-50}px) scale(1.25) rotate(18deg)`,offset:.5},{transform:`translate(${r1.left-r0.left}px,${r1.top-r0.top}px) scale(${r1.width/r0.width})`}],{duration:480,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{v.remove();dst.style.opacity=1;
+   dst.animate([{transform:"scale(1.4)"},{transform:"scale(1)"}],{duration:300,easing:"cubic-bezier(.3,1.6,.5,1)"});eclate(ec,6);n++;
+   if(n===HC.length){jeu=false;etape(5);t.querySelector(".pa").classList.add("on");CI.forEach((c,i)=>{if(c.style.opacity!=="1"){c.style.transition="opacity .25s,transform .55s cubic-bezier(.3,1.5,.5,1)";c.style.transform="translateY(-40px) rotate(-20deg) scale(.6)";requestAnimationFrame(()=>{c.style.opacity=1;c.style.transform="none"})}});
+    eclate(ec,40);t.classList.add("brille");document.getElementById("wa").classList.add("on");T.push(setTimeout(()=>document.getElementById("wa").classList.remove("on"),2200))}}};
+ HO.forEach(h=>h.addEventListener("click",()=>pose(h)));
+ const joue=()=>{raz();const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;ln.style.color="#1E1C1B";
+  tp=setInterval(()=>{i+=4;ln.textContent=txt.slice(0,i);if(i>=txt.length){clearInterval(tp);const at=(ms,f)=>T.push(setTimeout(f,ms));
+   at(250,()=>{etape(1);L[0].classList.add("on")});at(700,()=>{etape(2);L[1].classList.add("on")});at(1150,()=>{etape(3);L[2].classList.add("on")});
+   at(1650,()=>{etape(4);jeu=true;ho.classList.add("jouer");
+     HO.forEach((h,j)=>{h.animate([{transform:"translate(0,40px) scale(.2) rotate(-40deg)",opacity:0},{transform:"none",opacity:1}],{duration:550,delay:j*90,easing:"cubic-bezier(.3,1.5,.5,1)",fill:"forwards"}).finished.then(()=>{if(h.style.visibility!=="hidden"){h.style.opacity=1;h.animate([{transform:"translateY(0) scale(1)"},{transform:"translateY(-6px) scale(1.08)"},{transform:"translateY(0) scale(1)"}],{duration:1100,iterations:Infinity})}}).catch(()=>{});
+       const rd=document.createElement("i");rd.className="rond";rd.dataset.i=h.dataset.i;rd.style.left=h.style.left;rd.style.top=h.style.top;ho.appendChild(rd)});
+     ho.insertAdjacentHTML("beforeend",DOIGT);const d=ho.querySelector(".doigt");d.style.left="calc("+POS[0][0]+"% + 34px)";d.style.top="calc("+POS[0][1]+"% + 34px)"});
+   /* si elle ne touche rien, le premier se pose tout seul pour montrer */
+   at(3600,()=>{if(!touche&&n===0)pose(HO[0],true)});
+  }},25)};
+ document.getElementById("rj").onclick=joue;vu(t,()=>setTimeout(joue,300),.4)}
 </script></body></html>
