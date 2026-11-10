@@ -106,6 +106,18 @@ h2{font:500 32px/1.05 'Cormorant Garamond',serif;margin:8px 0 16px}
 .hors.jouer img{pointer-events:auto;cursor:pointer;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
 .hors .rond{position:absolute;width:74px;height:74px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px rgba(242,167,191,.8);animation:tapRing 1.2s ease-out infinite;pointer-events:none}
 @keyframes tapRing{0%{transform:scale(.6);opacity:0}30%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+
+/* 17 : la 5, très fluide */
+.lg17{position:relative;width:min(88vw,340px);height:80px;margin-top:12px}
+.lg17 div{position:absolute;inset:0;opacity:0;filter:blur(6px);transform:translateY(10px);transition:opacity .45s ease,filter .45s ease,transform .45s ease}
+.lg17 div.on{opacity:1;filter:none;transform:none}
+.lg17 b{display:block;font:500 26px/1.05 'Cormorant Garamond',serif}.lg17 span{display:block;margin-top:6px;font-size:13.5px;color:var(--doux)}
+.tel17 img.l{transition:none}
+/* 18 : attrapez-les */
+.pluie18{position:absolute;inset:0;z-index:12;pointer-events:none;overflow:hidden}
+.pluie18 img{position:absolute;top:0;width:52px;aspect-ratio:1;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2));touch-action:manipulation}
+.attr{font:500 14px Jost;letter-spacing:.16em;text-transform:uppercase;margin:0 0 12px;animation:pouls 1.4s ease-in-out infinite}
+.cpt18{font:500 12px Jost;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;color:var(--doux)}
 </style></head><body>
 <div class="top"><b>LOGINAIL</b><a href="#">Créer mon site</a></div>
 <section class="sec" id="s"></section>
@@ -328,4 +340,48 @@ if(V==="16"){const LG=[["Votre lien, et c’est parti.","Un site classique, él�
    at(3600,()=>{if(!touche&&n===0)pose(HO[0],true)});
   }},25)};
  document.getElementById("rj").onclick=joue;vu(t,()=>setTimeout(joue,300),.4)}
+
+/* 17 — la 5 en très fluide (Marie, 10/11) : tout s'enchaîne en un seul mouvement doux, 3 secondes */
+if(V==="17"){const LG=[["Votre lien.","Google, Planity, Booksy… ou rien du tout."],["Un fond.","Plus de 300 fonds."],["Votre écriture. Vos couleurs.","Le même site, que personne n’a."],["Vos photos.","Vos plus belles poses, en grand."],["Vos charms.","Plus de 1 000 charms. ✦"]];
+ s.innerHTML=`<div class="lien"><span id="ln" style="color:#1E1C1B"></span><b>Créer</b></div>
+ <div class="b13"><div class="barre"><i id="br" style="transition:none"></i></div>
+ <div style="position:relative"><div class="tel tel17" id="t"><img class="l" src="${P}s1.webp"><img class="l" src="${P}o2.webp" style="opacity:0"><img class="l" src="${P}o3.webp" style="opacity:0"><img class="l" src="${P}s5.webp" style="opacity:0">${charms()}${pail()}<div class="eclat" id="ec"></div></div>
+ <div class="hors" id="ho">${["cerisedisco","framboise","ceriseruban","noeudcerise"].map((c,j)=>`<img src="loginail-site/charms-mini/${c}.webp" style="left:${[-4,86,-6,88][j]}%;top:${[12,26,58,70][j]}%">`).join("")}</div></div>
+ <div class="lg17" id="lg">${LG.map((l,i)=>`<div${i?"":' class="on"'}><b>${l[0]}</b><span>${l[1]}</span></div>`).join("")}</div>
+ <p class="leg" style="margin-top:2px"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>${CTA}<button class="rej" id="rj">↻ Revoir</button></div>`;
+ const t=document.getElementById("t"),IM=[...t.querySelectorAll("img.l")].slice(1),CI=[...t.querySelectorAll(".ch img")],HO=[...document.querySelectorAll("#ho img")],LGd=[...document.querySelectorAll("#lg div")],ln=document.getElementById("ln"),br=document.getElementById("br"),pa=t.querySelector(".pa");
+ const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false;
+ CI.forEach(c=>{c.style.transition="none"});
+ const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.14)))||"Votre lien…";
+  IM[0].style.opacity=seg(x,.14,.34);IM[1].style.opacity=seg(x,.34,.54);IM[2].style.opacity=seg(x,.52,.72);
+  t.style.transform=`scale(${.96+.04*seg(x,0,.75)})`;br.style.width=(seg(x,0,1)*100)+"%";
+  CI.forEach((c,i)=>{const k=seg(x,.72+i*.025,.86+i*.025);c.style.opacity=k;c.style.transform=`translateY(${(1-k)*-50}px) rotate(${(1-k)*(i%2?30:-30)}deg) scale(${.6+.4*k})`});
+  HO.forEach((h,i)=>{const k=seg(x,.76+i*.03,.92+i*.03);h.style.opacity=k;h.style.transform=`translate(${(1-k)*(i%2?-60:60)}px,0) scale(${.3+.7*k}) rotate(${(1-k)*-40}deg)`});
+  pa.style.opacity=seg(x,.8,.95);
+  const e=x<.14?0:x<.34?1:x<.54?2:x<.72?3:4;if(e!==vu2){vu2=e;LGd.forEach((d,i)=>d.classList.toggle("on",i===e))}
+  if(x>=1&&!fini){fini=true;eclate(document.getElementById("ec"),24);HO.forEach((h,i)=>h.animate([{transform:"translateY(0)"},{transform:"translateY(-7px)"},{transform:"translateY(0)"}],{duration:2200+i*200,iterations:Infinity}))}};
+ const tic=n=>{const x=Math.min(1,(n-t0)/DUR);pose(x);if(x<1)raf=requestAnimationFrame(tic)};
+ const joue=()=>{cancelAnimationFrame(raf);fini=false;vu2=-1;HO.forEach(h=>h.getAnimations().forEach(a=>a.cancel()));pa.classList.add("on");pose(0);t0=performance.now();raf=requestAnimationFrame(tic)};
+ pose(0);pa.classList.add("on");pa.style.opacity=0;document.getElementById("rj").onclick=joue;vu(t,()=>setTimeout(joue,250),.4)}
+
+/* 18 — (Marie, 10/11) le site Cerise est déjà fini, avec ses charms et ses étoiles qui scintillent ; des charms TOMBENT tout autour : « Attrapez-les » ; celui qu'on touche se pose sur le site */
+if(V==="18"){const PL=["cerisedisco","framboise","ceriseruban","noeudcerise","cerisecoeur","cerises-roses","noeudgelee","cerises","cerisesrouges","fraise","fraisegelee","fraiseperle","macaronframboise","sucettecoeur","noeudrose","coeurgeleerose","etoilecerise","groseilles"];
+ s.innerHTML=`<div class="k">Petit jeu</div><h2>À vous de le créer.</h2><div class="attr" id="at">✦ Attrapez-les ! ✦</div>
+ <div class="tel" id="t"><img class="l" src="${P}s5.webp">${charms(1)}${pail(1)}<div class="mes" id="mes" style="position:absolute;inset:0;pointer-events:none"></div><div class="eclat" id="ec"></div><div class="waouh" id="wa"><span>✦ C’est votre site ! ✦</span></div></div>
+ <div class="cpt18" id="cp">Touchez les charms qui tombent pour les mettre sur le site</div>${CTA}<div class="pluie18" id="pl"></div>`;
+ const sec=s,t=document.getElementById("t"),pl=document.getElementById("pl"),mes=document.getElementById("mes"),ec=document.getElementById("ec");let n=0,touche=false,k=0;
+ const SPOTS=[[6,8],[70,6],[4,40],[78,48],[8,86],[74,90],[40,2],[20,22],[60,30],[30,60],[66,64],[12,66]];
+ const tombe=()=>{if(document.hidden)return;const im=document.createElement("img");im.src="loginail-site/charms-mini/"+PL[k++%PL.length]+".webp";const W=sec.clientWidth,H=sec.clientHeight,x=Math.random()*(W-60);im.style.left=x+"px";pl.appendChild(im);
+  const rz=(Math.random()<.5?-1:1)*(90+Math.random()*200),d=4200+Math.random()*2200;
+  const a=im.animate([{transform:"translateY(-70px) rotate(0deg)"},{transform:`translateY(${H+40}px) rotate(${rz}deg)`}],{duration:d,easing:"linear"});a.onfinish=()=>im.remove();
+  im.addEventListener("pointerdown",e=>{e.preventDefault();attrape(im,a,e.isTrusted)},{once:true})};
+ const attrape=(im,a,vrai)=>{if(vrai){touche=true}const r0=im.getBoundingClientRect();a.pause();im.remove();
+  const sp=SPOTS[n%SPOTS.length],dst=document.createElement("img");dst.src=im.src;dst.style.cssText=`position:absolute;width:17.2%;aspect-ratio:1;left:${sp[0]}%;top:${sp[1]}%;opacity:0`;mes.appendChild(dst);const r1=dst.getBoundingClientRect();
+  const v=document.createElement("img");v.className="vole";v.src=im.src;v.style.cssText=`left:${r0.left}px;top:${r0.top}px;width:${r0.width}px;height:${r0.height}px`;document.body.appendChild(v);
+  v.animate([{transform:"none"},{transform:`translate(${(r1.left-r0.left)/2}px,${(r1.top-r0.top)/2-40}px) scale(1.3) rotate(20deg)`,offset:.5},{transform:`translate(${r1.left-r0.left}px,${r1.top-r0.top}px) scale(${r1.width/r0.width})`}],{duration:460,easing:"cubic-bezier(.4,0,.2,1)"}).onfinish=()=>{v.remove();dst.style.opacity=1;dst.animate([{transform:"scale(1.5)"},{transform:"scale(1)"}],{duration:320,easing:"cubic-bezier(.3,1.6,.5,1)"});eclate(ec,8);n++;
+   document.getElementById("cp").textContent=n+(n>1?" charms attrapés":" charm attrapé")+" ✦";
+   if(n===5){eclate(ec,40);t.classList.add("brille");document.getElementById("wa").classList.add("on");setTimeout(()=>{document.getElementById("wa").classList.remove("on");t.classList.remove("brille")},2200)}}};
+ let pluie=0;vu(t,()=>{pluie=setInterval(tombe,520);tombe();
+  /* si elle ne touche rien, on en attrape un pour montrer */
+  setTimeout(()=>{if(touche)return;const R=t.getBoundingClientRect(),c=[...pl.querySelectorAll("img")].find(i=>{const b=i.getBoundingClientRect();return b.top>R.top+40&&b.bottom<R.bottom-40});if(c){c.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}))}},2600)},.3)}
 </script></body></html>
