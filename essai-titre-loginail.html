@@ -2473,7 +2473,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 })();
 </script>
 <script>/* 10/11 (Marie) : essais de mise en page du haut (téléphone) — ?mise=1…4 */
-(()=>{const M=new URLSearchParams(location.search).get("mise")||"1";document.documentElement.classList.add("mise-"+M);
+(()=>{const M=new URLSearchParams(location.search).get("mise")||"1";document.documentElement.classList.add("mise-"+M);if(+M>=11)document.documentElement.classList.add("mise-10","claire");
  const go=()=>{const h=document.querySelector(".hero"),k=h.querySelector(":scope>.k"),f=h.querySelector("form.creer"),so=h.querySelector(".h-sous"),lig=h.querySelector(".h-lig");
   if(k&&f){k.classList.add("k-bas");k.innerHTML="Pour les prothésistes ongulaires<br>prêt en une minute";f.before(k)}
   const T={"5":"Le site et l’appli<br>des prothésistes","8":"Le site et l’appli<br>des prothésistes","1":"Votre site internet<br>et votre application<br>pour tout gérer","2":"Votre site<br>et votre appli","3":"Le site et l’appli<br>des prothésistes","4":"Votre site · votre appli"};
@@ -2498,6 +2498,13 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
      setInterval(()=>{if(document.hidden)return;w.classList.add("chg");setTimeout(()=>{i=(i+1)%FF.length;t.style.fontFamily=FF[i][0];if(FF[i][1]){c.src="loginail-site/charms-mini/"+FF[i][1]+".webp";c.style.display=""}else c.style.display="none";w.classList.remove("chg")},200)},1600)})}}
   if(M==="8"||M==="9"){if(M==="9"&&k)k.innerHTML="Prêt en une minute · créé par une prothésiste";}
   /* 10 (Marie, 10/11) : la A, « Loginail » en haut à gauche gardé, et la phrase sur UNE seule ligne, aussi grande que possible */
+  /* 11…14 : on comprend tout de suite ce que c'est */
+  if(+M>=11&&so){const X={
+   "11":'<span class="c1">Votre site internet</span><span class="c2">+ votre appli de rendez-vous</span><span class="c3">pour prothésistes ongulaires</span>',
+   "12":'<span class="pills"><i>Site internet</i><b>+</b><i>Appli</i></span><span class="c3">pour les prothésistes ongulaires</span>',
+   "13":'<span class="c1">Le site et l’appli</span><span class="c2">des prothésistes ongulaires</span>',
+   "14":'<span class="c3 haut">Pour les prothésistes ongulaires</span><span class="c1">Votre site.<br>Vos réservations.</span><span class="c2">Dans une seule appli.</span>'};
+   so.innerHTML=X[M]||X["11"];so.classList.remove("une");if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste"}
   if(M==="10"&&so){so.textContent="Le site et l’appli des prothésistes";so.classList.add("une");const fit=()=>{so.style.fontSize="17px";const W=so.parentElement.clientWidth||innerWidth-32;let f=17;while(so.scrollWidth>W&&f>10){f-=.25;so.style.fontSize=f+"px"}};fit();document.fonts&&document.fonts.ready.then(fit);addEventListener("resize",fit)}
   if(M==="5"||M==="8"||M==="9"||M==="10"){if(so&&M!=="10")so.innerHTML=T[3];if(k)k.innerHTML="Prêt en une minute · créé par une prothésiste";
    const sv=h.querySelector(".sous");if(sv)sv.innerHTML="<b>1 mois offert</b>, puis 49,99 €/mois · <b>sans engagement</b>";
@@ -2534,5 +2541,18 @@ html.mise-9 .hero h1.p9{margin:6px 0 10px;font-family:'Cormorant Garamond',serif
 html[class*="mise-"] .hero .h-lig{font-weight:400}
 .mise-3 .hero .h-lig,.mise-4 .hero .h-lig{font-weight:500}
 .hero .k.k-bas{margin:4px 0 10px!important;font-size:10.5px!important;letter-spacing:.16em!important;text-align:center;opacity:.75}
+
+/* 11…14 : la phrase qui explique, sur plusieurs lignes, GRAND et en majuscules */
+html.claire .hero h1.h-logi .h-sous{display:block!important;white-space:normal!important;margin-top:12px!important;font:500 15px/1.35 Jost,sans-serif!important;letter-spacing:.14em;text-transform:uppercase;color:#1E1C1B}
+html.claire .h-sous .c1{display:block;font-size:clamp(17px,5vw,22px);letter-spacing:.12em}
+html.claire .h-sous .c2{display:block;font-size:clamp(15px,4.4vw,19px);color:#E0628C;margin-top:2px}
+html.claire .h-sous .c3{display:block;font-size:12px;letter-spacing:.22em;color:#7A716A;margin-top:8px}
+html.claire .h-sous .c3.haut{margin:0 0 6px}
+html.claire .hero h1.h-logi{font-size:72px!important}
+html.claire .h-sous .pills{display:flex;align-items:center;justify-content:center;gap:8px}
+html.claire .h-sous .pills i{font-style:normal;background:#1E1C1B;color:#fff;border-radius:99px;padding:9px 14px;font-size:13px;letter-spacing:.14em}
+html.claire .h-sous .pills i:last-child{background:#E0628C}
+html.claire .h-sous .pills b{font-size:20px;font-weight:500}
+@media (max-height:720px){html.claire .hero .h-pan{zoom:.8}}
 </style>
 </body></html>
