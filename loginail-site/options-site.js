@@ -71,7 +71,14 @@ var PAIL={
  chrome:{nom:"Chrome",d:["#FFFFFF","#EEF2F7","#C3CCD8","#FFFFFF","#AEB9C8"]},   /* 06/11 : chrome miroir clair (le foncé n'était pas beau) */
  holo:{nom:"Holographiques",d:["#FFB3E6","#B3D4FF","#B9FFE0","#FFF3B0"]},
  rose:{nom:"Roses",d:["#FFE1EA","#F7A8C0","#E26E92"]},
- cuivre:{nom:"Cuivrées",d:["#FBE0C8","#E2A06A","#A8582E"]}};
+ cuivre:{nom:"Cuivrées",d:["#FBE0C8","#E2A06A","#A8582E"]},
+ rosegold:{nom:"Or rose",d:["#FFF0EA", "#F2C1AE", "#C98A74"]},
+ noir:{nom:"Noires",d:["#8A8A8A", "#3A3A3A", "#0E0E0E", "#5A5A5A"]},
+ rouge:{nom:"Rouges",d:["#FFE6E6", "#F28B8B", "#C8243A"]},
+ violet:{nom:"Violettes",d:["#F4EAFF", "#C9A7F2", "#7E4FC9"]},
+ vert:{nom:"Vertes",d:["#ECFBE8", "#9FDB9A", "#3E9E5A"]},
+ turquoise:{nom:"Turquoise",d:["#E6FFFB", "#8FE0D6", "#2BB3A8"]},
+ bleu:{nom:"Bleues",d:["#E8F1FF", "#9CC2F5", "#3E6FD8"]}};
 var FORMES=["M10 0Q10.6 9.4 20 10Q10.6 10.6 10 20Q9.4 10.6 0 10Q9.4 9.4 10 0Z","M10 0Q10.6 9.4 20 10Q10.6 10.6 10 20Q9.4 10.6 0 10Q9.4 9.4 10 0Z","CERCLE"];   /* 06/11 : épuré, élégant (Marie) */
 var n=0;
 function svgPail(sorte){var P=PAIL[sorte]||PAIL.or,id="pg"+(n++),f=FORMES[Math.floor(Math.random()*FORMES.length)];
