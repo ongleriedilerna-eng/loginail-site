@@ -1663,6 +1663,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
  /* la bio : votresalon.fr sur sa ligne à lui, bien visible */
  html body #bio h2 em{display:inline-block;margin-top:14px;padding:10px 22px;border-radius:99px;background:#1E1C1B;color:#fff;font-size:22px;letter-spacing:.1em;text-transform:lowercase;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
 }
+.pied-legal{margin-top:10px;font-size:12px;line-height:2}.pied-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 </style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
@@ -1816,11 +1817,11 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
   <details><summary>Et si je n’aime pas ?</summary><p>Vous ne payez rien pour créer votre site et le voir. Le premier mois est offert. Vous arrêtez en 1 clic, sans engagement.</p></details>
   <details><summary>Je peux tout changer après ?</summary><p>Oui. Le fond, les charms, les photos, les prix, l’écriture&nbsp;: tout se change avec le doigt, dans l’appli, autant de fois que vous voulez.</p></details>
   <details><summary>Les SMS sont payants ?</summary><p>Non. Les SMS de confirmation et de rappel sont compris dans les 49,99 €, sans limite.</p></details>
-  <details><summary>Le nom de domaine est à moi ?</summary><p>Oui. votresalon.fr est à votre nom, il vous appartient.</p></details>
+  <details><summary>J’ai mon adresse en .fr ?</summary><p>Oui, dès le 2e mois, incluse : votresalon.fr. Le premier mois, votre site est sur votresalon.loginail.fr, puis il passe tout seul sur votre .fr (vos liens continuent de marcher). L’adresse est enregistrée par Loginail et reste active tant que vous êtes abonnée.</p></details>
   <details><summary>Mes clientes doivent télécharger quelque chose ?</summary><p>Non. Elles ouvrent votre site et réservent. L’appli, c’est pour vous.</p></details>
 </section>
 
-<footer class="pied">Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.</footer>
+<footer class="pied">Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
 <div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
 
 <script>
@@ -2494,8 +2495,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794412595`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794412595`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794412595`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794413119`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794413119`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794413119`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2674,7 +2675,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794412595" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794413119" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2682,7 +2683,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794412595)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794413119)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
