@@ -111,6 +111,10 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 #tel.mc .mcUI{display:grid}
 #voileC{position:absolute;inset:0;z-index:6;background:rgba(30,28,27,.18);opacity:0;pointer-events:none;transition:opacity .3s}
 #tel.mc #voileC.on{opacity:1;pointer-events:auto}
+/* 12/11 (Marie) : des étoiles qui brillent, à côté des charms (même rendu que l'essai avant/après) */
+#etoC{position:absolute;right:88px;bottom:calc(env(safe-area-inset-bottom) + 27px);z-index:5;height:48px;border-radius:30px;border:0;background:#fff;color:var(--noir);grid-auto-flow:column;gap:6px;place-items:center;font:500 13px/1 Jost,sans-serif;letter-spacing:.04em;padding:0 16px 0 13px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35)}
+#etoC b{font-size:19px;font-weight:400}
+#etoX{display:grid;place-items:center;width:26px;height:26px;margin:0 -8px 0 4px;border-radius:50%;background:#f0ebe5;font-size:12px}#etoX[hidden]{display:none}
 #plusC{position:absolute;right:18px;bottom:calc(env(safe-area-inset-bottom) + 22px);z-index:5;width:58px;height:58px;border-radius:50%;border:0;background:var(--noir);color:#fff;place-items:center;font:300 32px/1 Jost,sans-serif;padding:0 0 4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.45)}
 #okC{position:absolute;left:18px;bottom:calc(env(safe-area-inset-bottom) + 28px);z-index:5;height:46px;padding:0 22px;border-radius:999px;place-items:center;font:500 12px Jost,sans-serif;letter-spacing:.18em}
 #retC{position:absolute;left:14px;top:calc(env(safe-area-inset-top) + 12px);z-index:5;width:40px;height:40px;border-radius:50%;place-items:center;font:300 22px/1 Jost,sans-serif;padding:0 0 3px}
@@ -171,6 +175,7 @@ html.vrai .maquette{display:none}
   <div id="rechF"><div class="ligne1"><label><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="rechFin" placeholder="Chercher un fond : cerises, léopard…" autocomplete="off"></label><button class="annuler" id="rechFx" type="button">Annuler</button></div><div class="grilleF" id="rechFg"></div></div>
   <button class="mcUI verre" id="retC" type="button" aria-label="Retour">‹</button>
   <button class="mcUI verre" id="okC" type="button">C’EST BON</button>
+  <button class="mcUI" id="etoC" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button>
   <button class="mcUI" id="plusC" type="button" aria-label="Ajouter un charm">+</button>
   <div class="bas" id="bas"><div class="choix" id="contenu"></div>
     <div class="pied"><button class="retour verre" id="retour" type="button" aria-label="Retour">‹</button><button class="suivant verre" id="suivant" type="button">SUIVANT</button><button class="cherche-rond verre" id="cherche" type="button" aria-label="Rechercher" hidden><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div></div>
@@ -350,7 +355,7 @@ function poseEncre() { if (!D) return; D.querySelectorAll(".ecran h1, .ecran h1 
 /* ---------- les charms : posés DANS le site, ils flottent doucement ; glisser, deux doigts = taille et rotation ---------- */
 const majS = im => { im.style.width = im.style.height = im._s + "px"; im.style.rotate = im._r + "deg"; };
 function poseSticker(n) {
-  if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; }
+  if (D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length >= MAX_CHARMS) { bulle(`${MAX_CHARMS} charms maximum`); return; }
   const box = defile(), im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".png"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
   im._s = 80; im._r = Math.round(Math.random() * 30 - 15);
   const k = F.getBoundingClientRect().width / 390 || 1, libre = box.clientHeight - ($("bas").classList.contains("ouvre") ? $("bas").offsetHeight / k : 0);   // au-dessus du clavier
@@ -358,8 +363,30 @@ function poseSticker(n) {
   im.style.cssText = `position:absolute;z-index:9000;left:${x}px;top:${y}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte ${3 + Math.random() * 1.5}s ease-in-out ${-Math.random() * 3}s infinite`;
   majS(im); box.appendChild(im); marquePoses(); majCompte();
 }
+/* le halo des étoiles prend la couleur principale du fond choisi (sinon la couleur du bouton du site) */
+function haloEtoiles() { try {
+  const nom = W.__pzEtat?.().fond || "", f = nom && (W.FONDS100?.f || []).find(x => x[0] === nom); let c = f && f[4];
+  if (!c) { const b = D.querySelector(".appel"); c = b ? W.getComputedStyle(b).backgroundColor : ""; }
+  if (c && !/rgba?\(0, 0, 0, 0\)|transparent/.test(c)) D.documentElement.style.setProperty("--lgn-halo", c); else D.documentElement.style.removeProperty("--lgn-halo");
+} catch (e) {} }
+function majEtoiles() { const n = D ? D.querySelectorAll(".lgn-etoile").length : 0; $("etoX").hidden = !n; }
+/* la croix enlève le dernier bouquet posé (3 étoiles) */
+function enleveEtoiles() { const l = [...D.querySelectorAll(".lgn-etoile")]; if (!l.length) return; const g = l[l.length - 1].dataset.g; l.filter(e => e.dataset.g === g).forEach(e => e.remove()); majEtoiles(); bulle("Étoiles enlevées"); }
+const MAX_ETOILES = 12;   /* 12/11 (Marie) : pas 30, c'est trop */
+function poseEtoiles() {
+  if (D.querySelectorAll(".lgn-etoile").length >= MAX_ETOILES) { bulle(MAX_ETOILES + " étoiles maximum : glissez-en une tout en bas pour l’enlever"); return; }
+  haloEtoiles(); const groupe = "g" + Date.now();
+  const box = defile(), cx = box.clientWidth / 2 + (Math.random() * 160 - 80), cy = box.scrollTop + box.clientHeight * (.25 + Math.random() * .4);
+  [[0, 0, 34], [38, -26, 20], [-30, 30, 15]].forEach(([dx, dy, t], i) => {
+    const e = D.createElement("div"); e.className = "lgn-sticker lgn-etoile"; e.dataset.n = "__etoile"; e.dataset.g = groupe; e.innerHTML = `<i style="animation-delay:${(-Math.random() * 1.6).toFixed(2)}s">✦</i>`;
+    e._s = t; e._r = 0;
+    e.style.cssText = `position:absolute;z-index:9000;left:${cx + dx - t / 2}px;top:${cy + dy - t / 2}px;touch-action:none;cursor:grab;user-select:none`;
+    majS(e); box.appendChild(e);
+  });
+  majEtoiles(); navigator.vibrate?.(12);
+}
 function brancheStickers() {
-  const st = D.createElement("style"); st.textContent = "@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}.lgn-sticker.tenu{animation-play-state:paused!important}"; D.head.appendChild(st);
+  const st = D.createElement("style"); st.textContent = "@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}.lgn-sticker.tenu{animation-play-state:paused!important}@keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}.lgn-etoile{container-type:size;display:grid;place-items:center;filter:none!important}.lgn-etoile i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite;pointer-events:none}"; D.head.appendChild(st);
   const doigts = new Map(); let cible = null, depart = null;
   const deux = () => { const p = [...doigts.values()]; if (p.length < 2) return null; const dx = p[1].x - p[0].x, dy = p[1].y - p[0].y; return { d: Math.hypot(dx, dy) || 1, a: Math.atan2(dy, dx) * 180 / Math.PI }; };
   const repart = (x, y) => { depart = { l: parseFloat(cible.style.left), t: parseFloat(cible.style.top), x, y, s: cible._s, r: cible._r, g: deux() }; };
@@ -416,14 +443,14 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
 ["pointerup", "pointerleave", "pointercancel"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("[data-ch]"); if (b) clearTimeout(b._t); }));
 $("contenu").addEventListener("contextmenu", e => { if (e.target.closest("[data-ch]")) e.preventDefault(); });
 /* le rond « + » ouvre la boîte à charms ; elle se ferme dès qu'un charm est posé (ou si on touche à côté) */
-const ouvreBoite = () => { remplitCharms(); $("bas").classList.add("ouvre"); if (D.querySelectorAll(".lgn-sticker").length >= MAX_CHARMS) bulle("21 charms maximum : touchez un charm coché pour l’enlever"); };
+const ouvreBoite = () => { remplitCharms(); $("bas").classList.add("ouvre"); if (D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length >= MAX_CHARMS) bulle("21 charms maximum : touchez un charm coché pour l’enlever"); };
 const fermeBoite = () => { $("bas").classList.remove("ouvre"); $("voileC").classList.remove("on"); $("chercheC")?.blur(); };
 /* glisser le haut du clavier vers le bas = le fermer */
 document.addEventListener("pointerdown", e => { const h = e.target.closest?.("#clHaut"); if (!h || e.target.closest("input,button")) return; const y0 = e.clientY;
   const mv = ev => { const d = ev.clientY - y0; if (d > 0) $("bas").style.transform = `translateY(${d}px)`; };
   const up = ev => { document.removeEventListener("pointermove", mv); document.removeEventListener("pointerup", up); $("bas").style.transform = ""; if (ev.clientY - y0 > 60) fermeBoite(); };
   document.addEventListener("pointermove", mv); document.addEventListener("pointerup", up); });
-$("plusC").onclick = ouvreBoite; $("voileC").onclick = fermeBoite;
+$("plusC").onclick = ouvreBoite; $("etoC").onclick = e => { if (e.target.closest("#etoX")) enleveEtoiles(); else poseEtoiles(); }; setInterval(() => { if (D) { haloEtoiles(); majEtoiles(); } }, 1200); $("voileC").onclick = fermeBoite;
 $("okC").onclick = () => $("fin").classList.add("on");
 $("retC").onclick = () => $("retour").click();
 /* la recherche d'un fond : en haut de l'écran, le clavier du téléphone s'ouvre tout de suite */
@@ -438,7 +465,7 @@ function ajusteFondsDans(g) { g.querySelectorAll("[data-f]").forEach(b => b.clas
 $("cherche").dataset.x = "1";
 /* « 21 charms maximum », écrit en petit au-dessus du téléphone pendant l'étape des charms */
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
-  const n = D ? D.querySelectorAll(".lgn-sticker").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
+  const n = D ? D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
 $("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };

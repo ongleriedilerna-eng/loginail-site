@@ -49,6 +49,12 @@ input{-webkit-user-select:text;user-select:text}
 .fini .lien{border:0;background:none;padding:10px;font:400 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 @keyframes flotte{0%,100%{translate:-50% -50%}50%{translate:-50% calc(-50% - 7px)}}
 .st.flotte{animation:flotte 3.2s ease-in-out infinite}
+/* 12/11 (Marie) : des étoiles qui brillent, à côté des charms (12 au plus, on les glisse comme les charms, la poubelle les enlève) */
+@keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+.st.eto{display:grid;place-items:center;container-type:size;filter:none}.st.eto.flotte{animation:none}
+.st.eto i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite;pointer-events:none}
+#etoP{pointer-events:auto;cursor:pointer;border:0;display:inline-flex;align-items:center;gap:6px}#etoP b{font-size:14px;font-weight:400}
+#etoPX{display:inline-grid;place-items:center;width:18px;height:18px;margin:-2px -5px -2px 2px;border-radius:50%;background:rgba(30,28,27,.1);font-size:10px}#etoPX[hidden]{display:none}
 .ecr.finie .btnBas,.ecr.finie .panneau,.ecr.finie .poubelle{display:none}
 .bulle{position:fixed;left:50%;top:38%;max-width:90vw;white-space:normal!important;text-align:center;translate:-50% 0;z-index:95;border-radius:999px;background:rgba(30,28,27,.88);color:#fff;padding:9px 15px;font:400 13px Jost,sans-serif;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
 .bulle.on{opacity:1}
@@ -90,7 +96,7 @@ input{-webkit-user-select:text;user-select:text}
 .pageP .ch{padding:var(--pad,7px)}
 .ptsP{flex:none;display:flex;justify-content:center;gap:5px;padding:8px 0 6px}.ptsP i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.18)}.ptsP i.on{background:var(--noir)}
 </style></head><body>
-<div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
+<div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
 <p class="explique" id="explique">21 charms maximum · touchez-en un, puis deux doigts pour l’agrandir ou le tourner</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
 <div class="fini" id="fini" hidden><div><h3>Votre site est prêt à briller ✦</h3><p>Vos charms sont posés. Ils bougent tout doucement, comme sur votre site.</p><button type="button" class="noir" data-activer>ACTIVER MON SITE</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
@@ -128,7 +134,7 @@ const bulle = t => { const b = document.getElementById("bulle"); b.textContent =
 /* ---------- le moteur : poser / enlever (jamais deux fois le même), glisser, deux doigts, poubelle ---------- */
 function moteur(ecr) {
   const calque = ecr.querySelector(".calque"), poub = ecr.querySelector(".poubelle");
-  const M = { n: () => calque.children.length, a: n => calque.querySelector(`[data-n="${n}"]`), poses: () => [...calque.children].map(s => s.dataset.n).filter(Boolean) };
+  const M = { n: () => calque.querySelectorAll(".st:not(.eto)").length, a: n => calque.querySelector(`[data-n="${n}"]`), poses: () => [...calque.children].map(s => s.dataset.n).filter(n => n && n !== "__etoile") };
   M.maj = () => { const c = document.getElementById("compte"); c.textContent = `${M.n()} / ${MAX}`; c.style.background = M.n() > MAX ? "#1E1C1B" : ""; c.style.color = M.n() > MAX ? "#fff" : ""; const pris = new Set([...calque.children].map(s => s.dataset.n)); ecr.querySelectorAll(".ch").forEach(c => c.classList.toggle("pris", pris.has(c.dataset.n))); };
   const maj = im => { im.style.width = im.style.height = im._s + "px"; im.style.transform = `rotate(${im._r}deg)`; };
   const defile = ecr.querySelector(".defileSite");
@@ -138,6 +144,23 @@ function moteur(ecr) {
     im.style.left = x + "px"; im.style.top = (y + defile.scrollTop) + "px"; im.style.visibility = "hidden"; maj(im);
     im.onload = () => { im.style.visibility = ""; im.animate([{ scale: .2, opacity: 0 }, { scale: 1.15, opacity: 1, offset: .7 }, { scale: 1 }], { duration: 360, easing: "cubic-bezier(.3,1.2,.5,1)" }); };
     im.src = grand(n); calque.appendChild(im); M.maj(); return im; };
+  const MAX_ETOILES = 12;
+  const halo = () => { try { const W = document.getElementById("vrai")?.contentWindow, D = W && W.document; let c = "";
+    const fond = (JSON.parse(localStorage.getItem("loginail-brouillon") || "{}") || {}).fond, f = fond && W && W.FONDS100 && (W.FONDS100.f || []).find(x => x[0] === fond); c = f && f[4];
+    if (!c && D) { const b = D.querySelector(".ecran .appel"); c = b ? W.getComputedStyle(b).backgroundColor : ""; }
+    if (c && !/rgba?\(0, 0, 0, 0\)|transparent/.test(c)) calque.style.setProperty("--lgn-halo", c); } catch (x) {} };
+  M.majEto = () => { const x = document.getElementById("etoPX"); if (x) x.hidden = !calque.querySelector(".eto"); };
+  M.etoiles = () => {
+    if (calque.querySelectorAll(".eto").length >= MAX_ETOILES) { bulle(MAX_ETOILES + " étoiles maximum : glissez-en une dans la poubelle pour l’enlever"); return; }
+    halo(); const g = "g" + Date.now(), w = calque.clientWidth, cx = w / 2 + (Math.random() * 160 - 80), cy = defile.scrollTop + defile.clientHeight * (.22 + Math.random() * .3);
+    [[0, 0, 34], [38, -26, 20], [-30, 30, 15]].forEach(([dx, dy, t]) => {
+      const el = document.createElement("div"); el.className = "st eto"; el.dataset.n = "__etoile"; el.dataset.g = g; el._s = t; el._r = 0;
+      el.innerHTML = `<i style="animation-delay:${(-Math.random() * 1.6).toFixed(2)}s">✦</i>`;
+      el.style.left = Math.max(12, Math.min(w - 12, cx + dx)) + "px"; el.style.top = (cy + dy) + "px"; maj(el); calque.appendChild(el);
+    });
+    M.maj(); M.majEto(); navigator.vibrate?.(12);
+  };
+  M.enleveEtoiles = () => { const l = [...calque.querySelectorAll(".eto")]; if (!l.length) return; const g = l[l.length - 1].dataset.g; l.filter(x => x.dataset.g === g).forEach(x => x.remove()); M.maj(); M.majEto(); bulle("Étoiles enlevées"); };
   M.efface = () => { [...calque.children].forEach(s => s.remove()); M.maj(); };
   M.enleve = n => { const s = M.a(n); if (!s) return; s.removeAttribute("data-n"); s.style.pointerEvents = "none"; s.animate([{ scale: 1 }, { scale: 0, opacity: 0 }], { duration: 200, fill: "forwards" }); setTimeout(() => { s.remove(); M.maj(); }, 210); M.maj(); };
   /* toucher = ajouter ; retoucher = enlever */
@@ -257,7 +280,9 @@ if (VRAI) { const f = document.getElementById("vrai"), dz = e.querySelector(".de
   dz.addEventListener("scroll", () => { const d = boite(); if (d) d.scrollTop = dz.scrollTop; }, { passive: true });
   addEventListener("resize", mesure); }
 /* tout effacer (avec une question avant) */
-document.getElementById("toutEffacer").onclick = () => { if (M.n()) document.getElementById("confirme").hidden = false; };
+document.getElementById("toutEffacer").onclick = () => { if (M.n() || e.querySelector(".calque .eto")) document.getElementById("confirme").hidden = false; };
+document.getElementById("etoP").onclick = ev => { if (ev.target.closest("#etoPX")) M.enleveEtoiles(); else M.etoiles(); };
+setInterval(() => M.majEto(), 1000);
 document.querySelector("#confirme [data-non]").onclick = () => document.getElementById("confirme").hidden = true;
 document.querySelector("#confirme [data-oui]").onclick = () => { M.efface(); document.getElementById("confirme").hidden = true; bulle("Tous vos charms sont enlevés"); };
 </script>
