@@ -1646,7 +1646,25 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .il-pied{margin-top:14px;font:500 10.5px Jost;letter-spacing:.16em;text-transform:uppercase;color:#B4778A}
 @media (min-width:1000px){.intro-l{padding:20px 40px 60px}.il-carte{max-width:640px;padding:30px 34px 24px}.il-b span{font-size:14px}}
 .il-b span b.g{font:inherit;font-weight:600;letter-spacing:0;text-transform:none;color:#1E1C1B}
-@font-face{font-family:'Bagel Fat One';src:url(loginail-site/polices/BagelFatOne-400-latin.woff2) format('woff2')}@font-face{font-family:'Fascinate';src:url(loginail-site/polices/Fascinate-400-latin.woff2) format('woff2')}@font-face{font-family:'Fredoka';src:url(loginail-site/polices/Fredoka-600-latin.woff2) format('woff2')}@font-face{font-family:'Permanent Marker';src:url(loginail-site/polices/PermanentMarker-400-latin.woff2) format('woff2')}@font-face{font-family:'Sniglet';src:url(loginail-site/polices/Sniglet-800-latin.woff2) format('woff2')}</style>
+@font-face{font-family:'Bagel Fat One';src:url(loginail-site/polices/BagelFatOne-400-latin.woff2) format('woff2')}@font-face{font-family:'Fascinate';src:url(loginail-site/polices/Fascinate-400-latin.woff2) format('woff2')}@font-face{font-family:'Fredoka';src:url(loginail-site/polices/Fredoka-600-latin.woff2) format('woff2')}@font-face{font-family:'Permanent Marker';src:url(loginail-site/polices/PermanentMarker-400-latin.woff2) format('woff2')}@font-face{font-family:'Sniglet';src:url(loginail-site/polices/Sniglet-800-latin.woff2) format('woff2')}
+/* 11/11 (Marie) : format téléphone */
+@media (max-width:999px){
+ /* le jeu : les textes (votre lien, un fond, votre écriture, vos photos, vos charms, attrapez-les) EN HAUT, au-dessus du téléphone */
+ html body .jeu-acc{padding-top:64px}
+ html body .jeu-acc .ja-lg{order:-1;margin:0 0 12px;height:84px}
+ html body .jeu-acc .ja-lg b{font-size:30px}
+ html body .jeu-acc .ja-lg span{font-size:15px}
+ html body .jeu-acc .ja-lg b.ja-attr{font-size:18px}
+ /* votre semaine : la liste plus grande et juste sous les notifications */
+ html body .sem-bas{margin-top:6px}
+ html body .sem-liste{padding:8px 18px}
+ html body .sem-liste p{font-size:16.5px;padding:11px 0;line-height:1.3}
+ /* l'appli : le téléphone prend la place qui reste, les icônes Accueil, Agenda, Clientes… restent toujours visibles */
+ html body .app-h .a-tel{height:min(calc(100svh - 262px),640px)!important}
+ /* la bio : votresalon.fr sur sa ligne à lui, bien visible */
+ html body #bio h2 em{display:inline-block;margin-top:14px;padding:10px 22px;border-radius:99px;background:#1E1C1B;color:#fff;font-size:22px;letter-spacing:.1em;text-transform:lowercase;box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}
+}
+</style>
 </head><body>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
 
@@ -1691,7 +1709,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
   </div>
   <div class="ja-lg" id="jaLg">
     <div class="on"><b>Votre lien.</b><span>Google, Planity, Booksy… ou rien du tout.</span></div>
-    <div><b>Un fond.</b><span>Plus de 300 fonds.</span></div>
+    <div><b>Un fond.</b><span>Plus de 500 fonds.</span></div>
     <div><b>Votre écriture. Vos couleurs.</b><span>Le même site, que personne n’a.</span></div>
     <div><b>Vos photos.</b><span>Vos plus belles poses, en grand.</span></div>
     <div><b>Vos charms.</b><span>Plus de 1 000 charms. ✦</span></div>
@@ -1787,7 +1805,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
   <div class="zero vu">Un site sur mesure coûte des centaines d’euros. Ici, il est fait en 1 minute, et il est compris.</div>
 </section>
 
-<div class="chif vu trois"><div><b>1000</b><span>charms</span></div><div><b class="mio">1 million</b><span>de combinaisons pour votre site</span></div><div><b>300</b><span>fonds</span></div></div>
+<div class="chif vu trois"><div><b>1000</b><span>charms</span></div><div><b class="mio">1 million</b><span>de combinaisons pour votre site</span></div><div><b>500</b><span>fonds</span></div></div>
 <div class="fin-pub"><div class="k">Votre tour</div><h2 class="t2">Tout ça, rien que pour vous.<br><em>Alors, qu’est-ce que vous attendez&nbsp;?</em></h2><p class="p fp-3l"><span>Créer votre site&nbsp;: <b>gratuit</b>.</span><span>Le premier mois&nbsp;: <b>offert</b>.</span><span>Ensuite&nbsp;: c’est vous qui voyez.</span></p><a class="btn" href="loginail-creer/index.html">Créer mon site gratuitement</a></div>
 <div class="marq-sec"><div class="marq"><div class="piste"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonmoka.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonnoire.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-atelierronce.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonsauge.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-maisonlin.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tpl-studiopoudre.webp" alt="" loading="lazy"></div><div class="piste r"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/cerise.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pastel.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/chrome.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/bling.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/emo.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/riviera.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sixties.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baroque.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/street.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/japon.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/tropical.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/sirene.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/feerique.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/celeste.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/pop.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/baddie.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/y2k.webp" alt="" loading="lazy"><img src="loginail-site/apercus-mini/gothique.webp" alt="" loading="lazy"></div></div>
   <p class="marq-l">Des sites faits avec Loginail · salons d’exemple</p></div>
@@ -1821,7 +1839,7 @@ void UNI.map(t=>`<a class="carte" href="${url(t[1])}" data-u="${url(t[1])}"><div
  const t=m.querySelector(".mt");
  const cv=document.createElement("canvas").getContext("2d");
  /* le charm se pose sur la dernière lettre (le r), au même endroit pour toutes les écritures : on mesure où l’encre commence vraiment */
- const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("Loginail"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft-cw*.95).toFixed(1)+"px";c.style.top=(t.offsetTop+t.offsetHeight-cw*.8).toFixed(1)+"px";c.style.zIndex=3;c.style.top=(t.offsetTop+(fa-ia)-cw*.97).toFixed(1)+"px"};
+ const accroche=()=>{const cw=c.offsetWidth||32,cs=getComputedStyle(m);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("Loginail"),mr=cv.measureText("r");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9,ra=mr.actualBoundingBoxAscent;const ia=mt.actualBoundingBoxAscent;c.style.left=(t.offsetLeft-cw*.95).toFixed(1)+"px";c.style.top=(t.offsetTop+t.offsetHeight-cw*.8).toFixed(1)+"px";c.style.zIndex=3;c.style.top=(t.offsetTop+(fa-ia)-cw*(innerWidth<1000?.62:.97)).toFixed(1)+"px"};
  const cale=()=>{m.style.width="auto";m.style.fontSize=base+"px";const w=t.offsetWidth||1;m.style.fontSize=Math.min(base*1.05,base*largeur/w).toFixed(1)+"px";m.style.width=largeur+"px";m.style.height=m.style.lineHeight=(base*1.02).toFixed(1)+"px";accroche()};
  const IM=F.map(f=>{const im=new Image();im.src="loginail-site/charms-mini/"+f[1]+".webp";return im});
  const prets=Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0)));
@@ -2477,8 +2495,8 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       let u = 0;
       const pose = () => { const x = U[u % U.length], cache = fa.classList.contains("b") ? fa : fb, mont = cache === fa ? fb : fa;
         if (nt2) { nt2.style.setProperty("--nc", x[3] || "#1E1C1B"); nt2.classList.remove("on"); clearTimeout(nt2._t); nt2._t = setTimeout(() => nt2.classList.add("on"), 650); }
-        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794347466`;
-        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794347466`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794347466`;
+        const im = new Image(); im.onload = () => { cache.style.backgroundImage = `url(${im.src})`; cache.classList.remove("b"); mont.classList.add("b"); }; im.src = `loginail-site/fonds-classe/${x[0]}.webp?v=1794412595`;
+        is.src = `loginail-site/apercus-univers/${x[0]}.webp?v=1794412595`; ia.src = `loginail-site/apercus-mini/${x[1]}.webp?v=1794412595`;
         if (fpl) { const [pa, pb] = fpl.querySelectorAll("i"), c2 = pa.classList.contains("on") ? pb : pa, m2 = c2 === pa ? pb : pa;
           const im2 = new Image(); im2.onload = () => { c2.style.backgroundImage = `url(${im2.src})`; c2.classList.add("on"); m2.classList.remove("on"); }; im2.src = `loginail-site/fonds-classe/${x[0]}.webp`;
           fpl.querySelector(".chs2").innerHTML = PL2.map((p, k) => `<img src="loginail-site/charms-mini/${x[2][k % x[2].length]}.webp" alt="" style="left:${p[0]}%;top:${p[1]}%;--a:${Math.round(hasard(-22, 22))}deg;--d:${hasard(4, 6.5).toFixed(1)}s;--r:${(-hasard(0, 4)).toFixed(1)}s">`).join(""); }
@@ -2657,7 +2675,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       if (!ORDI) { const gp = document.createElement("div"); gp.className = "gal-pin"; g.before(gp); gp.appendChild(g); }
       { const ap = document.getElementById("appli"); if (ap) ap.before(ORDI ? g : g.parentElement); }   /* 15/11 : le style avant l’appli */
       const piste = g.querySelector(".piste"), [ba, bb] = g.querySelectorAll(".bg");
-      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794347466" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
+      piste.innerHTML = [0, 1, 2].map(() => L.map(l => `<div class="it" data-q="${esc(l[2])}" data-im="${l[0]}"><div class="tel"><div class="e"><img src="loginail-site/apercus-mini/${l[0]}.webp?v=1794412595" alt="" loading="lazy"></div></div><small>${l[1]}</small></div>`).join("")).join("");
       const IT = [...piste.children];
       /* 15/11 (Marie) : tout est calculé à chaque image — la taille suit la distance au centre (fluide), le carrousel se cale toujours sur un site */
       let x = 0, xT = 0, larg = 0, focus = null, dern = 0, vu = false, touche = false, tire = false, prets = false;
@@ -2665,14 +2683,14 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
       const mesure = () => { IT.forEach((i, k) => { OFF[k] = i.offsetLeft; LW[k] = i.offsetWidth; }); larg = OFF[L.length] - OFF[0];
         if (!prets && larg) { prets = true; x = xT = innerWidth / 2 - OFF[L.length] - LW[L.length] / 2; repos = Date.now() + 2500; } };
       const fond = im => { const cache = ba.classList.contains("b") ? ba : bb, mont = cache === ba ? bb : ba; const f = FC[im];
-        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794347466)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
+        cache.style.backgroundImage = f && f.img ? `url(${f.img}?v=1794412595)` : "none"; cache.style.backgroundColor = (f && f.couleur) || "#EFE7DF"; cache.classList.remove("b"); mont.classList.add("b"); };
       const choisis = el => { if (el === focus) return; if (focus) focus.classList.remove("on"); focus = el; if (el) { el.classList.add("on"); fond(el.dataset.im); } };
       const proche = px => { const c = innerWidth / 2; let k0 = 0, bd = 1e9; for (let k = 0; k < IT.length; k++) { const d = Math.abs(px + OFF[k] + LW[k] / 2 - c); if (d < bd) { bd = d; k0 = k; } } return k0; };
       const vise = k => { k = Math.max(0, Math.min(IT.length - 1, k)); xT = innerWidth / 2 - OFF[k] - LW[k] / 2; };
       const pas = s => { touche = true; vise(proche(xT) + s); };
       const boucle = now => { const dt = Math.min(.05, (now - (dern || now)) / 1000); dern = now;
         if (vu && prets) {
-          if (!tire) { if (Date.now() > repos) xT -= VIT * dt; x += (xT - x) * Math.min(1, dt * 7.5); }   /* 16/11 : il tourne tout seul, doucement, tout le temps */
+          if (!tire) { if (Date.now() > repos) { if (ORDI) xT -= VIT * dt; else { vise(proche(xT) + 1); repos = Date.now() + 2600; } } x += (xT - x) * Math.min(1, dt * 7.5); }   /* 16/11 : il tourne tout seul, doucement, tout le temps */
           /* on reste au milieu des 3 copies : le carrousel est sans fin, sans saut visible */
           if (x < -OFF[L.length * 2]) { x += larg; xT += larg; } else if (x > -OFF[L.length] + innerWidth) { x -= larg; xT -= larg; }
           piste.style.transform = `translate3d(${x.toFixed(2)}px,-50%,0)`;
@@ -2690,14 +2708,14 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
         addEventListener("pointermove", e => { if (x0 === null) return; const d = e.clientX - x0; if (!gl && Math.abs(d) > 8) { gl = true; tire = true; }
           if (gl) { x = xs + d; xT = x; const n = performance.now(); if (n > tp) { vx = .7 * vx + .3 * (e.clientX - xp) / (n - tp) * 1000; tp = n; xp = e.clientX; } } });
         const fin = e => { if (x0 === null) return; x0 = null; tire = false;
-          if (gl) { xT = x + Math.max(-900, Math.min(900, vx)) * .28; repos = Date.now() + 1500; return; }
+          if (gl) { vise(proche(x + Math.max(-900, Math.min(900, vx)) * .28)); repos = Date.now() + 2600; return; }
           /* un simple toucher : sur le site du milieu, on l'ouvre ; ailleurs, on va dessus */
           const k = cible ? IT.indexOf(cible) : -1;
           if (k >= 0 && cible === focus) open("loginail-creer/pret.html?public&nouveau&exemple=dilerna&cta=1&" + cible.dataset.q, "_blank");
           else if (k >= 0) { vise(k); repos = Date.now() + 2500; }
           };
         addEventListener("pointerup", fin);
-        addEventListener("pointercancel", () => { if (x0 !== null) { x0 = null; tire = false; xT = x; repos = Date.now() + 1500; } });
+        addEventListener("pointercancel", () => { if (x0 !== null) { x0 = null; tire = false; vise(proche(x)); repos = Date.now() + 2600; } });
         g.addEventListener("dragstart", e => e.preventDefault());
         /* 16/11 (Marie) : au pouce, si le geste part de côté, la page ne bouge plus ; s'il part vers le bas, la page descend normalement */
         { let tx = 0, ty = 0, sens = "";
@@ -2706,7 +2724,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
             if (!sens && dx + dy > 2) sens = dx > dy * .8 ? "cote" : "bas";
             if (sens === "cote") e.preventDefault(); }, { passive: false }); }
         /* molette de côté (pavé tactile) : on tourne ; molette normale : la page descend comme d'habitude */
-        let rw = 0; g.addEventListener("wheel", e => { if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; e.preventDefault(); touche = true; tire = true; x -= e.deltaX; xT = x; clearTimeout(rw); rw = setTimeout(() => { tire = false; repos = Date.now() + 1500; }, 140); }, { passive: false });
+        let rw = 0; g.addEventListener("wheel", e => { if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; e.preventDefault(); touche = true; tire = true; x -= e.deltaX; xT = x; clearTimeout(rw); rw = setTimeout(() => { tire = false; vise(proche(x)); repos = Date.now() + 2600; }, 140); }, { passive: false });
       }
       new IntersectionObserver(es => { vu = es[0].isIntersecting; if (vu) mesure(); }, { threshold: .05 }).observe(g);
       { const h2 = g.querySelector(".q h2"); new IntersectionObserver(es => { if (es[0].isIntersecting) { h2.classList.remove("bond"); void h2.offsetWidth; h2.classList.add("bond"); } }, { threshold: .6 }).observe(g); }
@@ -2733,15 +2751,15 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 (()=>{const s=document.getElementById("build");if(!s||!s.classList.contains("jeu-acc"))return;
  const t=document.getElementById("jaTel"),IM=[...t.querySelectorAll("img.ja-l")],CI=[...t.querySelectorAll(".ja-ch img")],HO=[...s.querySelectorAll(".ja-hors img")],LGd=[...s.querySelectorAll("#jaLg>div")],ln=document.getElementById("jaLn"),br=document.getElementById("jaBr"),pa=t.querySelector(".ja-pa"),pl=document.getElementById("jaPl"),mes=document.getElementById("jaMes"),ec=document.getElementById("jaEc"),cp0=document.getElementById("jaCp").textContent;
  const VG=[["cerisedisco", "framboise", "ceriseruban", "noeudcerise", "cerisecoeur", "cerises-roses", "noeudgelee", "cerises", "fraise", "fraisegelee", "macaronframboise", "sucettecoeur"], ["saturne", "tribal", "etoile4", "papilloncyber"], ["ceriseruban", "fraiseperle", "noeudgelee", "fleurgelee", "axolotl", "framboise", "pottulipes", "macaron"], ["coeurlilas", "planete", "oursonlilas", "etoilelilas", "martien", "coeurchrome", "casque", "consoleviolette"], ["coquillage", "saintjacques", "perle", "huitreperle", "hippocampe", "meduse", "axolotl", "cristaux"], ["sakura", "koi", "eventail", "manekineko", "sushi", "ramen", "bonsai", "theiere"]];   /* 10/11 (la table) : une vague par style, 10 charms chacune */
- const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0,actif=false,attendCta=0;
+ const txt="maps.app.goo.gl/lesonglesdecerise",DUR=2400,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0,actif=false,attendCta=0;
  const eclate=(nb)=>{for(let i=0;i<nb;i++){const e=document.createElement("i");e.textContent="✦";const an=Math.random()*Math.PI*2,r=40+Math.random()*90;e.style.left="50%";e.style.top="42%";ec.appendChild(e);e.animate([{transform:"translate(-50%,-50%) scale(.3)",opacity:1},{transform:`translate(calc(-50% + ${Math.cos(an)*r}px),calc(-50% + ${Math.sin(an)*r}px)) scale(1.2)`,opacity:0}],{duration:800+Math.random()*400,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=()=>e.remove()}};
  const lgOn=e=>{if(e!==vu2){vu2=e;LGd.forEach((d,i)=>d.classList.toggle("on",i===e))}};
- const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.14)))||"Votre lien…";
-  IM[0].style.opacity=seg(x,.14,.34);IM[1].style.opacity=seg(x,.34,.54);IM[2].style.opacity=seg(x,.52,.72);
+ const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.1)))||"Votre lien…";
+  IM[0].style.opacity=seg(x,.08,.2);IM[1].style.opacity=seg(x,.22,.34);IM[2].style.opacity=seg(x,.34,.48);
   t.style.transform=`scale(${.96+.04*seg(x,0,.75)})`;br.style.width=(seg(x,0,1)*100)+"%";
-  CI.forEach((c,i)=>{const q=seg(x,.72+i*.025,.86+i*.025);c.style.opacity=q;c.style.transform=`translateY(${(1-q)*-50}px) rotate(${(1-q)*(i%2?30:-30)}deg) scale(${.6+.4*q})`});
-  HO.forEach((h,i)=>{const q=seg(x,.76+i*.03,.92+i*.03);h.style.opacity=q;h.style.transform=`translate(${(1-q)*(i%2?-60:60)}px,0) scale(${.3+.7*q}) rotate(${(1-q)*-40}deg)`});
-  pa.style.opacity=seg(x,.8,.95);lgOn(x<.14?0:x<.34?1:x<.54?2:x<.72?3:4)};
+  CI.forEach((c,i)=>{const q=seg(x,.5+i*.03,.64+i*.03);c.style.opacity=q;c.style.transform=`translateY(${(1-q)*-50}px) rotate(${(1-q)*(i%2?30:-30)}deg) scale(${.6+.4*q})`});
+  HO.forEach((h,i)=>{const q=seg(x,.56+i*.04,.74+i*.04);h.style.opacity=q;h.style.transform=`translate(${(1-q)*(i%2?-60:60)}px,0) scale(${.3+.7*q}) rotate(${(1-q)*-40}deg)`});
+  pa.style.opacity=seg(x,.62,.8);lgOn(x<.1?0:x<.22?1:x<.34?2:x<.5?3:4)};
  const SPOTS=[[6,8],[70,6],[4,40],[78,48],[8,86],[74,90],[40,2],[20,22],[60,30],[30,60],[66,64],[12,66]];
  const tombe=()=>{if(document.hidden||!actif)return;const etoile=k%4===3,vg=VG[Math.floor(k/10)%VG.length];let im;
   if(etoile){im=document.createElement("span");im.className="ja-et";im.textContent="✦"}else{im=document.createElement("img");im.alt="";im.src="loginail-site/charms-mini/"+vg[k%vg.length]+".webp"}k++;const W=s.clientWidth,H=s.clientHeight;im.style.left=((matchMedia("(min-width:1000px)").matches&&Math.random()<.55?.64+Math.random()*.35:Math.random())*(W-70))+"px";   /* ordinateur : plus de la moitié tombent tout à droite */pl.appendChild(im);
@@ -2766,7 +2784,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
  const joue=()=>{cancelAnimationFrame(raf);clearInterval(pluie);clearTimeout(demo);pl.innerHTML="";mes.innerHTML="";n=0;fini=false;vu2=-1;HO.forEach(h=>h.getAnimations().forEach(a=>a.cancel()));
   document.getElementById("jaCp").textContent=cp0;const c0=s.querySelector(".ja-cta");if(c0)c0.classList.remove("ja-go");clearTimeout(attendCta);pose(0);t0=performance.now();raf=requestAnimationFrame(tic)};
  CI.forEach(c=>{c.style.transition="none"});pose(0);document.getElementById("jaRej").onclick=joue;
- let lance=false;new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!lance){lance=true;setTimeout(joue,250)}},{threshold:.35}).observe(t);
+ let lance=false;new IntersectionObserver(es=>{actif=es[0].isIntersecting;if(actif&&!lance){lance=true;joue()}},{threshold:.15}).observe(t);
 })();
 </script>
 <script id="semaine-acc">
