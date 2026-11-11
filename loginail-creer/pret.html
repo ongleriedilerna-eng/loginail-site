@@ -1280,6 +1280,7 @@ html.dansappli .bandeau,html.dansappli .code,html.dansappli .pf-defile{display:n
 .pz-ch{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .pz-ch button{aspect-ratio:1;border:0;border-radius:14px;background:#fff center/78% no-repeat;box-shadow:0 0 0 1px rgba(30,28,27,.1);cursor:pointer;padding:0}
 .pz-ch button.on{box-shadow:0 0 0 2px #1E1C1B}
+.pz-ch button img{display:block;width:78%;height:78%;margin:11%;object-fit:contain;pointer-events:none}
 /* curseur qui coulisse */
 .pf-slide{padding:6px 10px 2px}
 .ps-rail{position:relative;height:30px;margin:0 6px;cursor:pointer;touch-action:none}
@@ -2784,7 +2785,7 @@ document.querySelectorAll("[data-pf]").forEach(box=>{
   $("pzPol").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;S.police=b.dataset.p;S.univers="";pose();marque()};
   $("pzPail").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;S.paillettes=b.dataset.a;S.univers="";pose();marque()};
   const remplitCh=()=>{remplitDet();const CHI=window.CH_IMG||{},CHN=Object.keys(CHI);if($("pzCh").children.length>1&&$("pzCh").children.length===CHN.length+1)return;
-    $("pzCh").innerHTML='<button data-ch="" class="sans">Aucun</button>'+CHN.map(n=>`<button data-ch="${n}" style="background-image:url(${CHI[n].replace("/charms/","/charms-mini/").replace(/\.png$/,".webp")})" aria-label="${n}"></button>`).join("");marque()};
+    $("pzCh").innerHTML='<button data-ch="" class="sans">Aucun</button>'+CHN.map(n=>`<button data-ch="${n}" aria-label="${n}"><img src="${CHI[n].replace("/charms/","/charms-mini/").replace(/\.png$/,".webp")}" loading="lazy" decoding="async" alt=""></button>`).join("");marque()};
   $("pzCh").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;const n=b.dataset.ch;if(!n)S.charms=[];else{const i=S.charms.indexOf(n);if(i>=0)S.charms.splice(i,1);else{S.charms.push(n);if(S.charms.length>7)S.charms.shift()}}S.univers="";pose();marque()};
   const marque=()=>{box.querySelectorAll("[data-u]").forEach(b=>b.classList.toggle("on",UNIV[+b.dataset.u][0]===S.univers));
     box.querySelectorAll("#pzFonds [data-f]").forEach(b=>b.classList.toggle("on",b.dataset.f===S.fond));
