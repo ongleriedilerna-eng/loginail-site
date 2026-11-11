@@ -3193,5 +3193,37 @@ if(new URLSearchParams(location.search).has("activer"))setTimeout(()=>{try{ouvre
  const st=document.createElement("style");st.textContent=".cta-style{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:10px;background:#1E1C1B;color:#fff;font:500 12.5px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:15px 24px;border-radius:99px;box-shadow:0 18px 40px -14px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.85);white-space:nowrap;animation:ctaB 3s ease-in-out infinite}@keyframes ctaB{0%,80%,100%{transform:translateX(-50%)}86%{transform:translateX(-50%) translateY(-5px)}92%{transform:translateX(-50%)}}";document.head.appendChild(st);
  const a=document.createElement("a");a.className="cta-style";a.href="index.html?modele=1";a.textContent="Créer mon site avec ce style";
  a.addEventListener("click",()=>{try{localStorage.setItem("loginail-modele",m)}catch(_){}});document.body.appendChild(a)})();</script>
+<script id="credit-loginail">
+/* 11/11 (Marie) : « Créé avec Loginail » bien visible sur le site de chaque prothésiste = de la pub pour Loginail.
+   ?credit=A (en bas, avec « Vous êtes prothésiste ? ») · B (petit badge en haut) · C (bandeau en haut) ; sans ?credit : version CHOISIE */
+(function(){
+  const Q=new URLSearchParams(location.search); const V=(Q.get("credit")||"A").toUpperCase();
+  const ref=encodeURIComponent((Q.get("site")||location.hostname.split(".")[0]||"site").slice(0,40));
+  const URL_L="https://loginail.fr/?ref="+ref;
+  const css=document.createElement("style"); css.textContent=`
+  .cr-a{display:block;margin:26px auto 4px;text-align:center;text-decoration:none;color:inherit}
+  .cr-a .l1{display:block;font-size:11px;letter-spacing:.08em;opacity:.75}
+  .cr-a .l1 b{font-weight:600;letter-spacing:.32em;margin-left:4px;opacity:1}
+  .cr-a .l2{display:inline-block;margin-top:10px;padding:9px 16px;border-radius:30px;background:rgba(30,28,27,.88);color:#fff;font-size:11.5px;letter-spacing:.03em}
+  .nuit1 .cr-a .l2{background:rgba(255,255,255,.94);color:#1E1C1B}
+  .cr-b{position:fixed;top:12px;left:12px;z-index:60;display:flex;align-items:center;gap:6px;padding:6px 11px 6px 9px;border-radius:30px;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#1E1C1B;font:500 9.5px/1 Jost,system-ui,sans-serif;letter-spacing:.06em;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+  .cr-b b{font-weight:600;letter-spacing:.28em}
+  .cr-c{position:fixed;top:0;left:0;right:0;z-index:60;display:block;padding:8px 12px;background:#1E1C1B;color:#fff;text-align:center;font:400 11px/1.3 Jost,system-ui,sans-serif;letter-spacing:.04em;text-decoration:none}
+  .cr-c b{font-weight:600;letter-spacing:.28em}
+  `; document.head.appendChild(css);
+  function pose(){
+    document.querySelectorAll("a.cree").forEach(a=>{
+      if(a.dataset.cr) return; a.dataset.cr=1;
+      if(V==="A"){ a.className="cr-a"; a.removeAttribute("data-leg"); a.href=URL_L; a.target="_blank"; a.rel="noopener";
+        a.innerHTML='<span class="l1">Site créé avec <b>LOGINAIL</b></span><span class="l2">Vous êtes prothésiste ? Créez votre site ›</span>'; }
+    });
+    if(V==="B" && !document.querySelector(".cr-b")){ const b=document.createElement("a"); b.className="cr-b"; b.href=URL_L; b.target="_blank"; b.rel="noopener";
+      b.innerHTML='Créé avec <b>LOGINAIL</b>'; document.body.appendChild(b); }
+    if(V==="C" && !document.querySelector(".cr-c")){ const c=document.createElement("a"); c.className="cr-c"; c.href=URL_L; c.target="_blank"; c.rel="noopener";
+      c.innerHTML='Site créé avec <b>LOGINAIL</b> · Créez le vôtre ›'; document.body.appendChild(c); }
+  }
+  new MutationObserver(pose).observe(document.documentElement,{childList:true,subtree:true}); addEventListener("load",pose);
+})();
+</script>
 </body>
 </html>
