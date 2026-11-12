@@ -436,7 +436,7 @@ async function lance(lien) {
   ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
   ph[5].classList.add("on"); og.classList.add("e5"); $("charge").classList.add("lu");
 }
-$("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311q"); return; } prepareManque(); montre("manque"); };
+$("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311r"); return; } prepareManque(); montre("manque"); };
 
 /* ---------- 3 · il manque (une ligne par chose ; touchée, elle s'ouvre ; « Ajouter » allume l'interrupteur) ---------- */
 const SUGG = ["Pose gel", "Remplissage", "Semi-permanent mains", "Semi-permanent pieds", "Manucure", "Beauté des pieds", "Dépose", "Nail art"];
