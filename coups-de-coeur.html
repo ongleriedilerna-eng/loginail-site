@@ -77,7 +77,20 @@ button{font:inherit;color:inherit;cursor:pointer}
 .go{flex:1;border:0;border-radius:999px;background:var(--noir);color:var(--fond);padding:16px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:300;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.5}
 html.vrai .maquette{display:none}
-</style></head><body>
+</style><style id="plein-1311">
+/* 13/11 (Marie) : les cartes à glisser prennent TOUT l'écran ; « ‹ LOGINAIL » et le cœur 0 / 5 se posent par-dessus */
+#paquet{padding:0!important}
+#paquet .barreT{position:absolute;top:calc(env(safe-area-inset-top) + 8px);left:8px;right:8px;z-index:210;height:auto;padding:0;pointer-events:none}
+#paquet .barreT>*{pointer-events:auto;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:999px;padding:8px 13px!important;box-shadow:0 4px 14px -6px rgba(30,28,27,.35)}
+#paquet .zoneW{margin:0!important;padding-bottom:0!important}
+#paquet .zone{bottom:0!important}
+#paquet .carte{left:0!important;translate:none!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;max-width:none!important;border-radius:0!important;box-shadow:none!important}
+#paquet .consigne{inset:0!important;left:0!important;translate:none!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;max-width:none!important;border-radius:0!important}
+#paquet .vote{bottom:calc(env(safe-area-inset-bottom) + 16px)}
+/* pas de zoom de l'écran au double appui */
+html,body{touch-action:manipulation}
+</style>
+</head><body>
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Prototype</span>
@@ -271,7 +284,8 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
   pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
-$("perso").onclick = () => { const p = coeurs[courant()]; if (p) location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+$("perso").onclick = () => { const p = coeurs[courant()]; try { sessionStorage.setItem("cdc-fonds", JSON.stringify([p].concat(coeurs).filter(Boolean).map(x => decodeURIComponent(((x.q || "").match(/[?&]fond=([^&]*)/) || [])[1] || "")).filter(Boolean))); } catch (e) {}   /* 13/11 : ses coups de cœur donnent les fonds « Pour vous » */
+  if (p) location.href = "maquette-perso.html?genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>

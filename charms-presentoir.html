@@ -49,6 +49,18 @@ input{-webkit-user-select:text;user-select:text}
 .fini .lien{border:0;background:none;padding:10px;font:400 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 @keyframes flotte{0%,100%{translate:-50% -50%}50%{translate:-50% calc(-50% - 7px)}}
 .st.flotte{animation:flotte 3.2s ease-in-out infinite}
+/* 13/11 (Marie) : la consigne en GRAND — une testeuse n'avait pas vu qu'on peut agrandir un charm */
+.astuceC{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 50px);translate:-50% 0;z-index:95;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 20px);padding:12px 16px 12px 14px;border-radius:18px;background:rgba(30,28,27,.9);color:#fff;font:500 14.5px/1.3 Jost,Helvetica,sans-serif;box-shadow:0 10px 28px -10px rgba(0,0,0,.5);pointer-events:none;opacity:0;transition:opacity .35s}
+.astuceC.on{opacity:1}.astuceC small{display:block;font-weight:300;font-size:12.5px;opacity:.85;margin-top:2px}
+.astuceC .dg{flex:none;position:relative;width:44px;height:44px}
+.astuceC .dg i{position:absolute;left:50%;top:50%;width:13px;height:13px;margin:-6.5px;border-radius:50%;background:#fff;animation:dgA 1.5s ease-in-out infinite}
+.astuceC .dg i+i{animation-name:dgB}
+@keyframes dgA{0%,100%{transform:translate(-4px,4px)}55%{transform:translate(-15px,15px)}}
+@keyframes dgB{0%,100%{transform:translate(4px,-4px)}55%{transform:translate(15px,-15px)}}
+.astuceC .fl{flex:none;width:44px;height:44px;display:grid;place-items:center;animation:flA 1.3s ease-in-out infinite}
+@keyframes flA{0%,100%{transform:translateY(-4px)}50%{transform:translateY(5px)}}
+html,body{touch-action:manipulation}
+#explique{font:500 13.5px/1.35 Jost,Helvetica,sans-serif!important;max-width:300px;border-radius:16px!important;padding:7px 15px!important}
 /* 12/11 (Marie) : des étoiles qui brillent, à côté des charms (12 au plus, on les glisse comme les charms, la poubelle les enlève) */
 @keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
 .st.eto{display:grid;place-items:center;container-type:size;filter:none}.st.eto.flotte{animation:none}
@@ -97,7 +109,7 @@ input{-webkit-user-select:text;user-select:text}
 .ptsP{flex:none;display:flex;justify-content:center;gap:5px;padding:8px 0 6px}.ptsP i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.18)}.ptsP i.on{background:var(--noir)}
 </style></head><body>
 <div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
-<p class="explique" id="explique">21 charms maximum · touchez-en un, puis deux doigts pour l’agrandir ou le tourner</p>
+<p class="explique" id="explique">Touchez un charm pour le poser<br>21 au maximum</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
 <div class="fini" id="fini" hidden><div><h3>Votre site est prêt à briller ✦</h3><p>Vos charms sont posés. Ils bougent tout doucement, comme sur votre site.</p><button type="button" class="noir" data-activer>ACTIVER MON SITE</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
 <div class="bulle" id="bulle"></div>
@@ -281,6 +293,14 @@ if (VRAI) { const f = document.getElementById("vrai"), dz = e.querySelector(".de
   addEventListener("resize", mesure); }
 /* tout effacer (avec une question avant) */
 document.getElementById("toutEffacer").onclick = () => { if (M.n() || e.querySelector(".calque .eto")) document.getElementById("confirme").hidden = false; };
+/* 13/11 (Marie) : après le 1er charm, on montre EN GRAND le geste pour l'agrandir ; puis qu'on peut en poser partout dans le site */
+function astuceCharm(quoi) { let a = document.getElementById("astuceC"); if (!a) { a = document.createElement("div"); a.id = "astuceC"; a.className = "astuceC"; document.body.appendChild(a); }
+  a.innerHTML = quoi === "taille" ? '<span class="dg"><i></i><i></i></span><span>Écartez deux doigts pour l’agrandir<small>ou tournez-les pour le pencher</small></span>'
+    : '<span class="fl"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 4v16M6 14l6 6 6-6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Descendez dans votre site<small>vous pouvez poser des charms partout</small></span>';
+  const ex = document.getElementById("explique"); if (ex) ex.style.opacity = 0;
+  a.classList.add("on"); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove("on"), 5200); }
+document.addEventListener("dblclick", e => e.preventDefault(), { passive: false });
+{ const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 1) setTimeout(() => astuceCharm("taille"), 500); if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
 document.getElementById("etoP").onclick = ev => { if (ev.target.closest("#etoPX")) M.enleveEtoiles(); else M.etoiles(); };
 setInterval(() => M.majEto(), 1000);
 document.querySelector("#confirme [data-non]").onclick = () => document.getElementById("confirme").hidden = true;
