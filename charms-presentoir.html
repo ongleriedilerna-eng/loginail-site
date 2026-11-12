@@ -46,6 +46,7 @@ input{-webkit-user-select:text;user-select:text}
 .fini>div{pointer-events:auto;width:100%;max-width:480px;border-radius:24px 24px 0 0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:22px 20px calc(env(safe-area-inset-bottom) + 14px);text-align:center;box-shadow:0 -12px 30px -16px rgba(0,0,0,.35)}
 .fini h3{margin:0;font:400 22px Jost,sans-serif}.fini p{margin:6px 0 14px;font:300 13.5px/1.5 Jost,sans-serif;color:var(--muted)}
 .fini .noir{width:100%;border:0;border-radius:999px;background:#1E1C1B;color:#fff;padding:15px;font:500 12px Jost,sans-serif;letter-spacing:.16em}
+.etapesF{list-style:none;counter-reset:e;margin:12px 0 16px;padding:0;text-align:left;display:grid;gap:10px}.etapesF li{counter-increment:e;position:relative;padding-left:40px;font:300 13px/1.4 Jost,sans-serif;color:#6B625C}.etapesF li b{display:block;font:500 14px/1.3 Jost,sans-serif;color:#1E1C1B}.etapesF li:before{content:counter(e);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:rgba(30,28,27,.07);display:grid;place-items:center;font:500 13px Jost,sans-serif;color:#1E1C1B}
 .fini .clair{width:100%;margin-top:8px;border:0;border-radius:999px;background:rgba(30,28,27,.07);color:#1E1C1B;padding:14px;font:500 12px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase}.fini .clair[hidden]{display:none}
 .fini .lien{border:0;background:none;padding:10px;font:400 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 @keyframes flotte{0%,100%{translate:-50% -50%}50%{translate:-50% calc(-50% - 7px)}}
@@ -116,7 +117,7 @@ html,body{touch-action:manipulation}
 <div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
 <p class="explique" id="explique">Touchez un charm pour le poser · 21 au maximum</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
-<div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><p id="finiP">Il ne reste qu’à le mettre en ligne.<br>1 mois offert, puis 49,99 € par mois.</p><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie">Envoyer à une amie</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
+<div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><div id="finiP"><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Gérez tout dans l’appli Loginail</b>Votre agenda, vos clientes et votre site, au même endroit.</li></ol></div><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie">Envoyer à une amie</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
 <div class="bulle" id="bulle"></div>
 <div id="ecrans"></div>
 <script>
@@ -267,7 +268,7 @@ function panneau(e, M, opts) {
 
 /* ---------- le présentoir 6×3 (choisi par Marie) ---------- */
 const VERSIONS = [{ cols: 6, rows: 3, h: "48px", pad: "4px" }];   // 09/11 : 6×3 CHOISI (si les tests ne vont pas : 5×4, rows 4, h 46px)
-document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?v=1311s&nouveau&public&charms=0"></iframe><div class="attente"></div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
+document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?v=1311t&nouveau&public&charms=0"></iframe><div class="attente"></div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
   <div class="poubelle verre"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="#1E1C1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   <button class="btnBas verre" data-ouvre hidden style="left:30%">＋ CHARMS</button><button class="btnBas" data-valider hidden style="left:72%;background:#fff;color:#1E1C1B;border:0;box-shadow:0 10px 24px -8px rgba(0,0,0,.35)">VALIDER</button><div class="panneau blanc presentoir"></div></div>`).join("");
 const e = document.getElementById("e0"), M = moteur(e), b = e.querySelector("[data-ouvre]"), val = e.querySelector("[data-valider]"); POSES = () => M.poses();
@@ -289,7 +290,7 @@ document.querySelector("[data-activer]").onclick = () => {
   if (APPLI) { renvoieAppli(); return; }
   try { localStorage.removeItem("loginail-reprise"); } catch (x) {}
   location.href = "loginail-creer/pret.html?activer"; };
-if (APPLI) { const ba = document.querySelector("[data-activer]"); if (ba) ba.textContent = "ENREGISTRER MES CHARMS"; document.getElementById("amie").hidden = true; document.getElementById("finiP").textContent = "Vos charms sont posés. Ils bougent tout doucement, comme sur votre site."; }   /* dans l'appli : jamais de prix ni d'achat (règle Apple) */
+if (APPLI) { const ba = document.querySelector("[data-activer]"); if (ba) ba.textContent = "ENREGISTRER MES CHARMS"; document.getElementById("amie").hidden = true; document.getElementById("finiP").innerHTML = '<p style="margin:6px 0 14px">Vos charms sont posés. Ils bougent tout doucement, comme sur votre site.</p>'; }   /* dans l'appli : jamais de prix ni d'achat (règle Apple) */
 const noteReprise = p => { try { localStorage.setItem("loginail-reprise", JSON.stringify({ p, g: new URLSearchParams(location.search).get("genre") || "", t: Date.now() })); } catch (x) {} };
 if (VRAI && !APPLI) noteReprise("charms");
 document.getElementById("amie").onclick = async () => { const d = { title: "Loginail", text: "Regarde, je viens de créer le site de mon salon avec Loginail ✦", url: "https://loginail.fr" };

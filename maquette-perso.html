@@ -50,6 +50,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .choix{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
 .ligneH{display:flex;gap:9px;overflow-x:auto;padding:4px 22px 6px;scroll-snap-type:x proximity;scrollbar-width:none}.ligneH::-webkit-scrollbar{display:none}
 .ligneH>*{flex:none;scroll-snap-align:center}
+.etapesF{list-style:none;counter-reset:e;margin:12px 0 16px;padding:0;text-align:left;display:grid;gap:10px}.etapesF li{counter-increment:e;position:relative;padding-left:40px;font:300 13px/1.4 Jost,sans-serif;color:#6B625C}.etapesF li b{display:block;font:500 14px/1.3 Jost,sans-serif;color:#1E1C1B}.etapesF li:before{content:counter(e);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:rgba(30,28,27,.07);display:grid;place-items:center;font:500 13px Jost,sans-serif;color:#1E1C1B}
 #termine{flex:none;align-self:center;border:0;background:none;padding:4px 10px 0;font:400 11.5px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px}#termine[hidden]{display:none}
 #tel.mc #termine{display:none}
 .pied{position:relative;display:flex;justify-content:center;align-items:center;padding:8px 22px 0;height:62px}
@@ -252,7 +253,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311s&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311t&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -266,7 +267,7 @@ html.vrai .maquette{display:none}
   <button class="mcUI" id="plusC" type="button" aria-label="Ajouter un charm">+</button>
   <div class="bas" id="bas"><div class="poi" id="poi" role="button" aria-label="Voir les fonds en grand"><i></i></div><b class="titreBas" id="titre"></b><div class="choix" id="contenu"></div>
     <div class="pied"><button class="retour verre" id="retour" type="button" aria-label="Retour">‹</button><button class="suivant verre" id="suivant" type="button">SUIVANT</button><button class="cherche-rond verre" id="cherche" type="button" aria-label="Rechercher" hidden><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div></div>
-  <div class="fin" id="fin"><div><h3>Votre site est prêt</h3><p>Personnalisé par vous, jusqu’au moindre charm.<br>1 mois offert, puis 49,99 € par mois.</p>
+  <div class="fin" id="fin"><div><h3>Votre site est prêt</h3><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Gérez tout dans l’appli Loginail</b>Votre agenda, vos clientes et votre site, au même endroit.</li></ol>
     <button class="noir" type="button">METTRE MON SITE EN LIGNE</button><small>Sans engagement · (maquette : rien n’est payé)</small>
     <button id="amieM" type="button" style="display:block;width:100%;margin:10px 0 0;border:0;border-radius:999px;background:rgba(30,28,27,.07);color:#1E1C1B;padding:14px;font:500 12px Jost,sans-serif;letter-spacing:.14em">ENVOYER À UNE AMIE</button>
     <button class="lien" id="finRetour" type="button">Continuer à personnaliser</button></div></div>
@@ -275,7 +276,7 @@ html.vrai .maquette{display:none}
 const $ = id => document.getElementById(id);
 const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
-{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311s"; }   // le coup de cœur choisi
+{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311t"; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
@@ -727,7 +728,7 @@ const noteReprise = p => { try { localStorage.setItem("loginail-reprise", JSON.s
 if (VRAI && !APPLI) noteReprise("perso");
 $("amieM").onclick = async () => { const d = { title: "Loginail", text: "Regarde, je viens de créer le site de mon salon avec Loginail ✦", url: "https://loginail.fr" };
   try { if (navigator.share) { await navigator.share(d); return; } await navigator.clipboard.writeText(d.text + " " + d.url); bulle("Le lien est copié : collez-le dans un message"); } catch (x) {} };
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311s"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311t"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };

@@ -262,7 +262,7 @@ $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311s&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311t&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -296,13 +296,13 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
 $("perso").onclick = () => { const p = coeurs[courant()]; try { sessionStorage.setItem("cdc-fonds", JSON.stringify([p].concat(coeurs).filter(Boolean).map(x => decodeURIComponent(((x.q || "").match(/[?&]fond=([^&]*)/) || [])[1] || "")).filter(Boolean))); } catch (e) {}   /* 13/11 : ses coups de cœur donnent les fonds « Pour vous » */
-  if (p) location.href = "maquette-perso.html?v=1311s&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+  if (p) location.href = "maquette-perso.html?v=1311t&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
 /* 13/11 (Marie) : « si je ferme, je perds tout ? » — elle retrouve son site là où elle l'avait laissé */
 if (VRAI && !APPLI) { let r = null; try { r = JSON.parse(localStorage.getItem("loginail-reprise") || "null"); } catch (e) {}
   if (r && Date.now() - r.t < 30 * 864e5 && (r.p === "perso" || r.p === "charms")) { const o = document.createElement("div"); o.id = "retourB";
     o.innerHTML = `<div><h3>Bon retour</h3><p>Votre site vous attend,<br>là où vous l’aviez laissé.</p><button type="button" class="noirB" id="reprendre">REPRENDRE MON SITE</button><button type="button" class="lienB" id="zero">Recommencer de zéro</button></div>`;
     document.body.appendChild(o);
-    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1311s" : "maquette-perso.html?v=1311s&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
+    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1311t" : "maquette-perso.html?v=1311t&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
     $("zero").onclick = () => { try { localStorage.removeItem("loginail-reprise"); } catch (e) {} if (new URLSearchParams(location.search).has("retour")) location.href = "loginail-creer/index.html?neuf"; else o.remove(); }; } }
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
