@@ -80,10 +80,19 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .nu{flex:none;width:46px;height:34px;border-radius:11px;border:0;padding:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .15s;cursor:pointer}
 .nu.on{transform:scale(1.06);box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
 /* 13/11 nuit (Marie) : des carrés qui défilent ; celui du milieu avance (plus grand, bien net), les autres sont un peu effacés ; aucun contour */
-.choix>.ligneH,#teintes>.ligneH,#teintes>.roue{flex:none}#teintes{display:flex;flex-direction:column;gap:2px}.roue.carres{height:52px}.roue.carres .ro-piste{gap:10px;padding:0 calc(50% - 11px);align-items:center}
+.choix>.ligneH,#teintes>.ligneH,#teintes>.roue{flex:none}#teintes{display:flex;flex-direction:column;gap:2px}.roue.carres{height:58px}.roue.carres .ro-piste{gap:10px;padding:0 calc(50% - 11px);align-items:center}
 .roue.carres .ro-c{width:22px;height:34px;border-radius:999px;box-shadow:none;opacity:.72}
 .roue.carres .ro-c.pres{opacity:.9;transform:scale(1.1)}
-.roue.carres .ro-c.mil{opacity:1;transform:scale(1.36);box-shadow:0 7px 14px -3px rgba(0,0,0,.32)}
+.roue.carres .ro-c.mil{opacity:1;transform:scale(1.36);box-shadow:none}
+.deuxB{flex:none;display:flex;justify-content:center;gap:12px;padding:0 22px}
+.pasB{flex:1;max-width:150px;border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;opacity:.6;transition:opacity .15s,transform .15s}
+.pasB.on{opacity:1;transform:scale(1.04)}
+.pasB b{font:500 10.5px Jost,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--noir)}
+.apB{display:block;width:100%;height:44px;border-radius:14px;padding:8px 12px;background:linear-gradient(120deg,#e8b8c8,#b9c6ee 55%,#f0d9a8);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.pasB.on .apB{box-shadow:0 0 0 2px var(--noir)}
+.apB i{display:block;height:100%;border-radius:8px;background:#fff}
+.apB.verre2 i{background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85)}
+.sousT{flex:none;margin:6px 0 0;text-align:center;font:400 9.5px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .trait{position:relative;margin:8px 30px 0;height:48px;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none}
 .tr-piste{position:absolute;left:0;right:0;top:17px;height:14px;border-radius:999px;overflow:hidden;display:flex;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}.tr-piste i{flex:1}
 .tr-pouce{position:absolute;top:5px;width:38px;height:38px;border-radius:50%;translate:-50% 0;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);pointer-events:none}.tr-pouce.vide{opacity:.55}
@@ -105,7 +114,7 @@ html,body{touch-action:manipulation}
 #assortir{position:absolute;z-index:5;transform:translate(-50%,-50%);white-space:nowrap;border-radius:999px;padding:9px 15px;font:500 11.5px Jost,sans-serif;letter-spacing:.06em;display:flex;align-items:center;gap:6px;box-shadow:0 6px 18px -8px rgba(0,0,0,.4)}#assortir[hidden]{display:none}#assortir b{font-weight:400;font-size:14px}
 .defileF{scroll-snap-type:x mandatory;padding-left:calc(50% - 26px)!important;padding-right:calc(50% - 26px)!important;align-items:center}
 .defileF{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.defileF .vg{scroll-snap-align:center;opacity:.62;transition:transform .16s ease-out,opacity .16s;will-change:transform}
-.defileF .vg.mil{opacity:1;transform:scale(1.16);z-index:1}
+.defileF{padding-top:8px!important;padding-bottom:8px!important}.defileF .vg.mil{opacity:1;transform:scale(1.13);z-index:1}
 .grilleF .vg{position:relative}.grilleF .vg.fav:after{content:"♡";position:absolute;right:3px;top:2px;font-size:11px;line-height:1;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.7)}
 .pastille{width:40px;height:40px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .2s}
 .pastille.on{transform:scale(1.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 3px var(--fond),0 0 0 4.5px var(--noir)}
@@ -221,7 +230,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311g&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311h&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -243,7 +252,7 @@ html.vrai .maquette{display:none}
 const $ = id => document.getElementById(id);
 const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
-{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311g"; }   // le coup de cœur choisi
+{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311h"; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
@@ -356,7 +365,7 @@ function rend() {
     if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.map(b => ({ k: b.dataset.co, bg: vraiFond(b.dataset.co) || b.style.background })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
     items = familles(items).flatMap(f => f[1]);   /* rangées par famille puis du clair au foncé : la bande fait un bel arc-en-ciel */
     TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
-    l = (sousCouleur === "site" ? `<div class="ligneH" style="justify-content:center"><button class="puce verre ${bl !== "verre" ? "on" : ""}" data-blocs="blanc">Blocs blancs</button><button class="puce verre ${bl === "verre" ? "on" : ""}" data-blocs="verre">Blocs en verre</button></div>` : "")
+    l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i></i></span><b>Blocs blancs</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i></i></span><b>Blocs en verre</b></button></div><p class="sousT">La couleur du site</p>` : "")
       + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
     c.innerHTML = (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
     brancheRoue(choisi ? ki : -1);
@@ -612,7 +621,7 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.f != null) { if (b._long) { b._long = false; return; } const g = b.closest(".defileF"); if (g) g.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - g.clientWidth / 2, behavior: "smooth" }); poseFond(b.dataset.f); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
   if (b.dataset.fam) { famC[sousCouleur] = b.dataset.fam; const x = $("teintes").querySelector(".fams").scrollLeft; rend(); requestAnimationFrame(() => { const f = $("teintes") && $("teintes").querySelector(".fams"); if (f) f.scrollLeft = x; }); return; }
-  if (b.dataset.blocs) { poseBlocs(b.dataset.blocs); b.parentElement.querySelectorAll("[data-blocs]").forEach(x => x.classList.toggle("on", x === b)); return; }
+  if (b.dataset.blocs) { poseBlocs(b.dataset.blocs); b.parentElement.querySelectorAll("[data-blocs]").forEach(x => x.classList.toggle("on", x === b)); navigator.vibrate?.(6); return; }
   if (b.dataset.teinte) { appliqueTeinte(b.dataset.teinte); $("nuances").querySelectorAll(".nu").forEach(x => x.classList.toggle("on", x === b)); navigator.vibrate?.(5); return; }
   if (b.dataset.nomc) { nomc = b.dataset.nomc; marque(b); try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); return; }   // l'éditeur repeint le nom lui-même
   if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }
@@ -660,7 +669,7 @@ $("cherche").dataset.x = "1";
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311g"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311h"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };

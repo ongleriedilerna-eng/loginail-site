@@ -52,6 +52,11 @@
   .hf.G .hf-haut{display:inline-block;padding:6px 14px;border-radius:99px;background:color-mix(in srgb,var(--carte,#fff) 88%,transparent);opacity:1}
   .hf.G .hf-carte{margin-top:16px;padding:18px 16px 22px;border-radius:24px;background:color-mix(in srgb,var(--carte,#fff) 92%,transparent);box-shadow:0 14px 34px -22px rgba(0,0,0,.4)}
   .hf.G .hf-carte .hf-k{margin-top:0}
+  /* 13/11 nuit (Marie) : blocs en verre sur un fond FONCÉ → seule l'écriture change (claire) ; les petites cartes blanches gardent leur écriture foncée */
+  .ecran{--lgn-encre0:var(--noir);--lgn-gris0:var(--gris)}
+  .ecran.blocs-verre.fond-sombre:not(.v1) .defile>:is(.sec,.pied),.ecran.blocs-verre.fond-sombre:not(.v1) .hf.G .hf-carte{--noir:#fff;--gris:rgba(255,255,255,.8);--encre0:#fff;color:#fff}
+  .ecran.blocs-verre.fond-sombre:not(.v1) .defile>.sec :is(.tir,.carte){--noir:var(--lgn-encre0);--gris:var(--lgn-gris0);--encre0:initial;color:var(--lgn-encre0)}
+  .ecran.blocs-verre.fond-sombre:not(.v1) .defile>.sec :is(.guide,.astuce):not(.tir *):not(.carte *){color:rgba(255,255,255,.82)}
   /* 13/11 nuit (Marie ne voyait aucune différence) : le bloc du nom suit aussi le choix « blocs blancs / en verre » */
   .ecran.blocs-blanc:not(.v1) .hf.G .hf-carte{background:#fff}
   .ecran.blocs-verre:not(.v1) .hf.G .hf-carte{background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(9px) saturate(1.3);backdrop-filter:blur(9px) saturate(1.3);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 10px 26px -14px rgba(0,0,0,.35)}
@@ -132,7 +137,8 @@
     if (!e.style.getPropertyValue("--encre0")) { const cc = (typeof BR !== "undefined" && BR && BR.couleur) || new URLSearchParams(location.search).get("couleur"); const ec = (window.INKJ && INKJ[cc]) || "#1E1C1B"; e.style.setProperty("--encre0", ec); }
     if (v) { if (e.style.getPropertyValue("--encre") !== v) e.style.setProperty("--encre", v); e.dataset.vif = 1; } else if (e.dataset.vif) { e.style.removeProperty("--encre"); delete e.dataset.vif; }
     /* 06/11 (Marie) : la couleur du bouton (vive ou pastel) teinte aussi, très très clair, les parties du site (À propos, Le salon…) */
-    { let bl = "blanc"; try { bl = (window.__lgnChoix && window.__lgnChoix.blocs) || new URLSearchParams(location.search).get("blocs") || (typeof BR !== "undefined" && BR && BR.blocs) || "blanc"; } catch (x) {} e.classList.toggle("blocs-blanc", bl !== "verre"); e.classList.toggle("blocs-verre", bl === "verre"); }
+    { let bl = "blanc"; try { bl = (window.__lgnChoix && window.__lgnChoix.blocs) || new URLSearchParams(location.search).get("blocs") || (typeof BR !== "undefined" && BR && BR.blocs) || "blanc"; } catch (x) {} e.classList.toggle("blocs-blanc", bl !== "verre"); e.classList.toggle("blocs-verre", bl === "verre");
+      let so = false; try { const nf = (window.__pzEtat && window.__pzEtat().fond) || (typeof BR !== "undefined" && BR && BR.fond) || new URLSearchParams(location.search).get("fond") || "", f = nf && window.FONDS100 && window.FONDS100.f.find(x => x[0] === nf); so = !!(f && f[2]); } catch (x) {} e.classList.toggle("fond-sombre", so); }
     const btn = v || pa; if (btn) { e.style.setProperty("--btn", btn); e.classList.add("btn-c"); e.classList.toggle("btn-pastel", !!pa); } else { e.style.removeProperty("--btn"); e.classList.remove("btn-c", "btn-pastel"); }
     const f = fmt(); const d = e.querySelector(".defile"); if (!d) return;
     const vieux = d.querySelector(":scope>.hf");
