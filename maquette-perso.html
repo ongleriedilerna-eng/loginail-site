@@ -73,6 +73,12 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .ro-c{flex:none;width:28px;height:28px;border-radius:50%;border:0;padding:0;scroll-snap-align:center;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);transition:transform .18s cubic-bezier(.3,1.3,.5,1),box-shadow .18s;cursor:pointer}
 .ro-c.pres{transform:scale(1.22)}
 .ro-c.mil{transform:scale(1.7);box-shadow:0 0 0 2.5px #fff,0 5px 16px rgba(0,0,0,.28)}
+.fams{gap:6px!important;padding-top:0!important;padding-bottom:2px!important}#teintes{display:flex;flex-direction:column;gap:2px}
+.puce.mini{flex:none;padding:5px 11px!important;font-size:12px!important;display:flex;align-items:center;gap:6px}.puce.mini i{width:11px;height:11px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.sepF{flex:none;width:1px;height:20px;align-self:center;background:rgba(30,28,27,.16);margin:0 3px}
+.nuances{gap:7px!important;padding-top:3px!important;padding-bottom:3px!important}
+.nu{flex:none;width:46px;height:34px;border-radius:11px;border:0;padding:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .15s;cursor:pointer}
+.nu.on{transform:scale(1.06);box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
 .trait{position:relative;margin:8px 30px 0;height:48px;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none}
 .tr-piste{position:absolute;left:0;right:0;top:17px;height:14px;border-radius:999px;overflow:hidden;display:flex;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}.tr-piste i{flex:1}
 .tr-pouce{position:absolute;top:5px;width:38px;height:38px;border-radius:50%;translate:-50% 0;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);pointer-events:none}.tr-pouce.vide{opacity:.55}
@@ -331,11 +337,13 @@ function rend() {
     let items = [], choisi = "";
     if (sousCouleur === "nom") { items = Object.entries(NOMC).map(([k, v]) => ({ k, bg: v })); choisi = nomc; }
     if (sousCouleur === "boutons") { items = range([...D.querySelectorAll(".pf-vifs [data-vif]")]).map(b => ({ k: b.dataset.vif, bg: b.style.background })); choisi = vifChoisi; }
-    if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.map(b => ({ k: b.dataset.co, bg: b.style.background })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
-    TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi));
-    l = `<div class="roue" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
-    c.innerHTML = `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div><div id="teintes">${l}</div><p class="tr-aide">Faites glisser les couleurs</p>`;
-    brancheRoue(choisi ? ki : -1);
+    if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.map(b => ({ k: b.dataset.co, bg: vraiFond(b.dataset.co) || b.style.background })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
+    TRAIT = items; const fams = familles(items);
+    if (!fams.some(f => f[0] === famC[sousCouleur])) famC[sousCouleur] = (fams.find(f => f[1].some(x => x.k === choisi)) || fams[0] || [""])[0];
+    const cur = fams.find(f => f[0] === famC[sousCouleur]) || ["", []], bl = blocsChoisis();
+    l = `<div class="ligneH fams">${sousCouleur === "site" ? `<button class="puce verre mini ${bl !== "verre" ? "on" : ""}" data-blocs="blanc">Blocs blancs</button><button class="puce verre mini ${bl === "verre" ? "on" : ""}" data-blocs="verre">Blocs en verre</button><span class="sepF"></span>` : ""}${fams.map(([n, li]) => `<button class="puce verre mini ${n === cur[0] ? "on" : ""}" data-fam="${n}"><i style="background:${li[Math.floor(li.length / 2)].bg}"></i>${n}</button>`).join("")}</div>`
+      + `<div class="ligneH nuances" id="nuances">${cur[1].map(x => `<button class="nu ${x.k === choisi ? "on" : ""}" data-teinte="${x.k}" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")}</div>`;
+    c.innerHTML = `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div><div id="teintes">${l}</div>`;
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
     let pols = [...D.querySelectorAll("#pzPol [data-p]")].sort((a, b) => ((ELEG.includes(a.dataset.p) ? 0 : 1) - (ELEG.includes(b.dataset.p) ? 0 : 1)) * (fun ? -1 : 1));
@@ -387,7 +395,7 @@ function fondVoisin(d) { const g = $("grilleF"); if (!g) return; const l = [...g
   const v = g.querySelector(`[data-f="${CSS.escape(l[i])}"]`); if (v) g.scrollTo({ left: v.offsetLeft - g.clientWidth / 2 + 22, behavior: "smooth" }); bulle(l[i]); navigator.vibrate?.(6); }
 /* « Assortir mes couleurs » : le nom et les boutons prennent la couleur principale du fond */
 function majAssortir() { const a = $("assortir"); if (a) a.hidden = true; }   /* 13/11 : le gros bouton gênait → une petite étoile ✦ dans la ligne, après « Pour vous » */
-const coul = v => { const h = (String(v).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(v).match(/\d+(\.\d+)?/g); return m && m.length >= 3 ? m.slice(0, 3).map(Number) : [0, 0, 0]; };
+function coul(v) { const h = (String(v).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(v).match(/\d+(\.\d+)?/g); return m && m.length >= 3 ? m.slice(0, 3).map(Number) : [0, 0, 0]; }
 function assortir() { const n = fondActuel(), f = n && (W.FONDS100?.f || []).find(x => x[0] === n); if (!f) { bulle("Choisissez d’abord un fond"); return; }
   const sat = c => { const [r, g, b] = coul(c).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b); return mx ? (mx - mn) / mx : 0; }, lum = c => { const [r, g, b] = coul(c); return (.299 * r + .587 * g + .114 * b) / 255; };
   const fonce = (c, k) => "rgb(" + coul(c).map(v => Math.round(v * k)).join(",") + ")", dist = (v, cible) => { const a = coul(v), t = coul(cible); return (a[0] - t[0]) ** 2 + (a[1] - t[1]) ** 2 + (a[2] - t[2]) ** 2; };
@@ -520,6 +528,22 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
     bulle(i < 0 ? "Ajouté à vos favoris ♥" : "Retiré de vos favoris"); navigator.vibrate?.(15); if (catPerso === "favoris" || favF.length < 2) rend(); else marqueFavoris(); }, 480); });
 ["pointerup", "pointerleave", "pointercancel", "pointermove"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("#grilleF .vg"); if (b && (t !== "pointermove" || Math.abs(e.movementX) > 3)) clearTimeout(b._tf); }));
 let TRAIT = [], traitK = -1, traitTenu = false;
+/* ───── 13/11 (Marie) : les couleurs par FAMILLE (Roses, Rouges, Nudes…), puis toutes les nuances de la famille ───── */
+const famC = {}, FONDV = {};
+function famDe(bg) { if (/gradient/.test(bg)) return "Brillants"; const [r, g, b] = coul(bg).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+  const sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1)); let h = 0; if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360;
+  if (sat < .13 || l < .1 || l > .95) return "Noirs et blancs";
+  if (h >= 345 || h < 12) return l > .68 ? "Roses" : "Rouges";
+  if (h < 45) return (sat < .55 || l < .42 || l > .72) ? "Nudes et bruns" : "Oranges";
+  if (h < 68) return (sat < .45) ? "Nudes et bruns" : "Jaunes";
+  if (h < 165) return "Verts"; if (h < 255) return "Bleus"; if (h < 295) return "Violets"; return "Roses"; }
+const lumi = bg => { const [r, g, b] = coul(bg); return .299 * r + .587 * g + .114 * b; };
+function familles(items) { const ordre = ["Roses", "Rouges", "Nudes et bruns", "Oranges", "Jaunes", "Verts", "Bleus", "Violets", "Noirs et blancs", "Brillants"], m = {};
+  items.forEach(x => { const f = famDe(x.bg); (m[f] = m[f] || []).push(x); });
+  return ordre.filter(f => m[f]).map(f => [f, f === "Brillants" ? m[f] : m[f].sort((a, b) => lumi(b.bg) - lumi(a.bg))]); }   /* du plus clair au plus foncé */
+function vraiFond(k) { if (k in FONDV) return FONDV[k]; let v = ""; try { const e = D.querySelector(".ecran"), t = D.createElement("div"); t.className = e.className.replace(/\bc-[a-z]+\b/g, "") + " c-" + k; t.style.display = "none"; e.parentNode.appendChild(t); v = W.getComputedStyle(t).getPropertyValue("--creme").trim(); t.remove(); } catch (x) {} return FONDV[k] = v; }
+const blocsChoisis = () => { try { return W.eval('(window.__lgnChoix&&window.__lgnChoix.blocs)||(typeof BR!=="undefined"&&BR&&BR.blocs)||"blanc"'); } catch (x) { return "blanc"; } };
+function poseBlocs(v) { try { W.eval(`if(typeof BR!=="undefined"&&BR)BR.blocs=${JSON.stringify(v)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{blocs:${JSON.stringify(v)}})`); const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); } catch (x) {} }
 function brancheRoue(depart) { const P = $("roP"); if (!P) return; const B = [...P.children], N = B.length / 3; let k = -1, t = 0, pret = false;
   const tour = () => B[N].offsetLeft - B[0].offsetLeft;   /* la largeur d'un tour complet de couleurs */
   const milieu = () => { const c = P.scrollLeft + P.clientWidth / 2; let m = 0, d = 1e9; B.forEach((b, i) => { const x = Math.abs(b.offsetLeft + b.offsetWidth / 2 - c); if (x < d) { d = x; m = i; } }); return m; };
@@ -552,6 +576,9 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.cat) { catPerso = ""; clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(rend, 60); return; }
   if (b.dataset.f != null) { if (b._long) { b._long = false; return; } poseFond(b.dataset.f); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
+  if (b.dataset.fam) { famC[sousCouleur] = b.dataset.fam; const x = $("teintes").querySelector(".fams").scrollLeft; rend(); requestAnimationFrame(() => { const f = $("teintes") && $("teintes").querySelector(".fams"); if (f) f.scrollLeft = x; }); return; }
+  if (b.dataset.blocs) { poseBlocs(b.dataset.blocs); b.parentElement.querySelectorAll("[data-blocs]").forEach(x => x.classList.toggle("on", x === b)); return; }
+  if (b.dataset.teinte) { appliqueTeinte(b.dataset.teinte); $("nuances").querySelectorAll(".nu").forEach(x => x.classList.toggle("on", x === b)); navigator.vibrate?.(5); return; }
   if (b.dataset.nomc) { nomc = b.dataset.nomc; marque(b); try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); return; }   // l'éditeur repeint le nom lui-même
   if (b.dataset.vif) { vifChoisi = b.dataset.vif; marque(b); clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }
   if (b.dataset.co) { marque(b); clique(`.pf-dots [data-co="${b.dataset.co}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); return; }   // la couleur du site garde celle des boutons
