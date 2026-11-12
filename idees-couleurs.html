@@ -1,0 +1,79 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Idées · couleurs et site</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#f6f1ea;font-family:Jost,Helvetica,Arial,sans-serif;color:#1e1b19;padding:0 12px 60px}
+h1{font-family:Georgia,serif;font-weight:normal;font-size:24px;text-align:center;margin:20px 0 4px}
+.i{text-align:center;color:#7a6e64;font-size:13.5px;line-height:1.5;margin:0 auto 14px;max-width:400px}
+.c{background:#fff;border-radius:18px;padding:14px;margin:0 auto 14px;max-width:440px}
+.c h2{font-size:16px;margin:0 0 3px;display:flex;align-items:center;gap:8px}.c h2 span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#1e1b19;color:#fff;font-size:13px}
+.c h2 em{font-style:normal;font-size:10.5px;letter-spacing:.05em;background:#e2f1e4;color:#2c6b3a;border-radius:20px;padding:3px 8px;font-weight:500}
+.c p{font-size:13.5px;line-height:1.45;color:#5f5852;margin:0 0 10px}
+/* le faux téléphone */
+.tel{width:230px;margin:0 auto;border:5px solid #161514;border-radius:30px;overflow:hidden;background:#f3c9d3;position:relative}
+.site{height:150px;padding:14px 12px 0;background:repeating-linear-gradient(135deg,#f7d3dc 0 9px,#fbe4ea 9px 18px)}
+.carte{background:#fff;border-radius:14px;padding:12px 10px;text-align:center}
+.carte small{display:block;font-size:6.5px;letter-spacing:.2em;color:#9a8f85}
+.nom{font-family:"Cherry Bomb One",Jost,sans-serif;font-size:21px;line-height:1.05;margin:4px 0 6px;transition:color .2s}
+.bt{display:inline-block;border-radius:30px;padding:6px 12px;font-size:7px;letter-spacing:.16em;color:#fff;transition:background .2s}
+.bas{background:#f6f3ef;padding:9px 0 12px}.bas b{display:block;text-align:center;font-size:7.5px;letter-spacing:.26em;font-weight:500;margin-bottom:7px}
+.onglets{display:flex;justify-content:center;gap:5px;margin-bottom:8px}.onglets i{font-style:normal;font-size:9px;border-radius:30px;padding:5px 9px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}.onglets i.on{background:#1e1b19;color:#fff}
+/* A · la roue */
+.roue{display:flex;align-items:center;gap:9px;height:44px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 calc(50% - 10px);-webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)}.roue::-webkit-scrollbar{display:none}
+.roue u{flex:none;width:20px;height:20px;border-radius:50%;scroll-snap-align:center;transition:transform .18s;cursor:pointer}.roue u.on{transform:scale(1.7);box-shadow:0 0 0 2px #fff,0 3px 10px rgba(0,0,0,.3)}
+/* B · les ongles */
+.ongles{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:6px 12px 8px;align-items:flex-end}.ongles::-webkit-scrollbar{display:none}
+.ongles u{flex:none;width:22px;height:40px;border-radius:50% 50% 8px 8px / 62% 62% 8px 8px;cursor:pointer;transition:transform .18s;box-shadow:inset -3px 0 5px rgba(255,255,255,.35),inset 2px -2px 4px rgba(0,0,0,.12)}
+.ongles u.on{transform:translateY(-6px) scale(1.12);box-shadow:inset -3px 0 5px rgba(255,255,255,.35),0 5px 10px rgba(0,0,0,.25)}
+/* C · familles puis nuances */
+.fam{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:0 10px 8px}.fam::-webkit-scrollbar{display:none}
+.fam i{flex:none;font-style:normal;font-size:9px;border-radius:30px;padding:5px 9px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer;display:flex;align-items:center;gap:4px}.fam i u{width:9px;height:9px;border-radius:50%}.fam i.on{background:#1e1b19;color:#fff}
+.nuances{display:flex;gap:5px;padding:0 12px}.nuances u{flex:1;height:34px;border-radius:9px;cursor:pointer;transition:transform .15s}.nuances u.on{transform:scale(1.06);box-shadow:0 0 0 2px #fff,0 0 0 3.5px #1e1b19}
+/* D · 3 propositions */
+.prop{display:flex;gap:6px;padding:0 12px 7px}.prop div{flex:1;border-radius:11px;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.09);padding:7px 4px 6px;text-align:center;cursor:pointer;font-size:7.5px;color:#7a6e64}.prop div.on{box-shadow:0 0 0 2px #1e1b19}
+.prop div span{display:flex;justify-content:center;gap:3px;margin-bottom:4px}.prop div u{width:15px;height:15px;border-radius:50%}
+.plus{display:block;text-align:center;font-size:8.5px;text-decoration:underline;color:#5f5852}
+/* le site */
+.site2{padding:12px 10px 14px;min-height:205px}
+.sec{font-size:7px;letter-spacing:.24em;margin:0 0 7px 2px}
+.bloc{border-radius:13px;padding:2px 10px}
+.li{display:flex;justify-content:space-between;font-size:8px;letter-spacing:.14em;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.09)}.li:last-child{border-bottom:0}.li small{letter-spacing:0;opacity:.6}
+.amb{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 12px 0}.amb::-webkit-scrollbar{display:none}
+.amb i{flex:none;font-style:normal;text-align:center;font-size:7.5px;color:#5f5852;cursor:pointer}.amb i u{display:block;width:34px;height:44px;border-radius:9px;margin:0 auto 3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);position:relative}.amb i u:after{content:"";position:absolute;left:5px;right:5px;bottom:5px;height:16px;border-radius:5px;background:rgba(255,255,255,.92)}.amb i.on u{box-shadow:0 0 0 2px #1e1b19}
+h3{font-family:Georgia,serif;font-weight:normal;font-size:20px;text-align:center;margin:26px 0 4px}
+</style></head><body>
+<h1>Choisir les couleurs</h1>
+<p class="i">4 façons de choisir la couleur du nom et des boutons. Touche les couleurs pour essayer, puis dis-moi la lettre que tu préfères.</p>
+<div id="pickers"></div>
+<h3>« Le site »</h3>
+<p class="i">Ton idée : les blocs (prestations…) plus clairs que le fond, pour qu'ils ressortent. Voici 3 façons, et une nouvelle manière de choisir la couleur : des « ambiances » qui montrent la vraie couleur.</p>
+<div id="sites"></div>
+<script>
+const C = [["Framboise","#C2185B"],["Rose","#E08AA5"],["Corail","#F0806C"],["Rouge","#B3202E"],["Bordeaux","#7A1F33"],["Choco","#4A3226"],["Caramel","#C68A4E"],["Sauge","#8D9B7E"],["Sapin","#2F5A45"],["Turquoise","#2BB3B1"],["Bleu nuit","#1F2E5C"],["Lilas","#9B7FC9"],["Prune","#6E3A62"],["Noir","#1E1C1B"]];
+const FAM = { "Roses": ["#F4C6D3","#E08AA5","#D9668A","#C2185B","#8E1245"], "Rouges": ["#F0806C","#D8452F","#B3202E","#8A1A1E","#7A1F33"], "Nudes": ["#E8D5C4","#D9B8A9","#C68A4E","#8A5A3C","#4A3226"], "Verts": ["#CFE6DC","#8D9B7E","#5E7454","#2F5A45","#1F3D30"], "Bleus": ["#BCDDEE","#5BC2C0","#2F57E8","#24344F","#1F2E5C"], "Violets": ["#D5C8EC","#9B7FC9","#7B62A8","#6E3A62","#3F2440"], "Noirs": ["#9A9A9E","#5E5149","#3A3D42","#1E1C1B","#000000"] };
+const tel = (id, bas) => `<div class="tel"><div class="site"><div class="carte"><small>PROTHÉSISTE ONGULAIRE</small><div class="nom" id="n${id}" style="color:#C2185B">les Ongles<br>de Cerise</div><span class="bt" id="b${id}" style="background:#C2185B">RÉSERVER UN CRÉNEAU</span></div></div><div class="bas"><b>VOS COULEURS</b><div class="onglets"><i class="on">Le nom</i><i>Les boutons</i></div>${bas}</div></div>`;
+const P = [
+ ["A", "La roue (celle d'aujourd'hui)", "", "Les couleurs défilent, celle du milieu est en grand.", `<div class="roue" data-p="A">${C.concat(C).map(([n, c]) => `<u data-c="${c}" style="background:${c}"></u>`).join("")}</div>`],
+ ["B", "Les petits ongles", "Conseillé", "Chaque couleur est un petit ongle verni. Celui qu'on choisit se soulève. C'est l'univers de Loginail, et on voit bien la couleur.", `<div class="ongles" data-p="B">${C.map(([n, c], i) => `<u data-c="${c}" class="${i ? "" : "on"}" style="background:${c}"></u>`).join("")}</div>`],
+ ["C", "La famille, puis la nuance", "", "D'abord « Roses », « Rouges », « Nudes »… puis 5 nuances en grand. Moins de choix d'un coup, plus facile.", `<div class="fam" data-p="C">${Object.entries(FAM).map(([f, l], i) => `<i data-f="${f}" class="${i ? "" : "on"}"><u style="background:${l[2]}"></u>${f}</i>`).join("")}</div><div class="nuances" data-p="C" id="nuC"></div>`],
+ ["D", "3 propositions toutes prêtes", "", "L'appli propose 3 duos (nom + boutons) qui vont avec son fond. Un appui et c'est fait. « Plus de couleurs » ouvre le reste.", `<div class="prop" data-p="D">${[["#C2185B","#E08AA5","Assorti"],["#7A1F33","#C68A4E","Chic"],["#1E1C1B","#C2185B","Contraste"]].map(([a, b, t], i) => `<div data-a="${a}" data-b="${b}" class="${i ? "" : "on"}"><span><u style="background:${a}"></u><u style="background:${b}"></u></span>${t}</div>`).join("")}</div><span class="plus">Plus de couleurs</span>`]];
+document.getElementById("pickers").innerHTML = P.map(([l, t, tag, d, bas]) => `<div class="c"><h2><span>${l}</span>${t}${tag ? `<em>${tag.toUpperCase()}</em>` : ""}</h2><p>${d}</p>${tel(l, bas)}</div>`).join("");
+const pose = (l, a, b) => { document.getElementById("n" + l).style.color = a; document.getElementById("b" + l).style.background = b || a; };
+const nuances = f => { document.getElementById("nuC").innerHTML = FAM[f].map((c, i) => `<u data-c="${c}" class="${i === 3 ? "on" : ""}" style="background:${c}"></u>`).join(""); pose("C", FAM[f][3]); }; nuances("Roses");
+document.getElementById("pickers").addEventListener("click", e => { const u = e.target.closest("[data-c]"), f = e.target.closest("[data-f]"), d = e.target.closest("[data-a]");
+  if (f) { f.parentElement.querySelectorAll("i").forEach(x => x.classList.toggle("on", x === f)); nuances(f.dataset.f); return; }
+  if (d) { d.parentElement.querySelectorAll("div").forEach(x => x.classList.toggle("on", x === d)); pose("D", d.dataset.a, d.dataset.b); return; }
+  if (!u) return; const p = u.parentElement, l = p.dataset.p; if (l === "A") { p.scrollTo({ left: u.offsetLeft + 10 - p.clientWidth / 2, behavior: "smooth" }); return; }
+  p.querySelectorAll("u").forEach(x => x.classList.toggle("on", x === u)); pose(l, u.dataset.c); });
+{ const r = document.querySelector('.roue'); const maj = () => { const c = r.scrollLeft + r.clientWidth / 2; let m = null, d = 1e9; r.querySelectorAll("u").forEach(u => { const x = Math.abs(u.offsetLeft + 10 - c); if (x < d) { d = x; m = u; } }); r.querySelectorAll("u").forEach(u => u.classList.toggle("on", u === m)); if (m) pose("A", m.dataset.c); }; r.onscroll = maj; requestAnimationFrame(() => { r.scrollLeft = 200; maj(); }); }
+
+/* ── le site ── */
+const AMB = [["Rosé","#F3C9D3","#8E3B55"],["Nude","#E8D5C4","#5A3E30"],["Sauge","#C9D4BE","#33443A"],["Ciel","#C6DDEE","#24344F"],["Lilas","#D6CAED","#4B3A78"],["Crème","#F3ECE2","#1E1C1B"],["Nuit","#1B1A1E","#F3ECE2"]];
+const S = [["1", "Blocs blancs", "Conseillé", "Chaque partie est sur un bloc blanc aux coins ronds. C'est le plus lisible, quelle que soit la couleur ou le fond.", (bg, ink) => `background:#fff;color:${ink === "#F3ECE2" ? "#1E1C1B" : ink}`],
+ ["2", "Blocs en verre", "", "Les blocs sont blancs mais un peu transparents : on devine le fond derrière. Plus doux, un peu moins lisible sur un fond chargé.", (bg, ink) => `background:rgba(255,255,255,.72);backdrop-filter:blur(6px);color:${ink === "#F3ECE2" ? "#1E1C1B" : ink}`],
+ ["3", "Blocs de la couleur, en plus clair", "", "Les blocs prennent la couleur du site, très éclaircie. Tout reste dans le même ton.", (bg, ink) => `background:color-mix(in srgb,${bg} 35%,#fff);color:${ink === "#F3ECE2" ? "#1E1C1B" : ink}`]];
+const site = (k, st, a) => { const [n, bg, ink] = AMB[a]; return `<div class="tel" style="background:${bg}"><div class="site2" style="background:${bg};color:${ink}"><div class="sec">— PRESTATIONS</div><div class="bloc" style="${st(bg, ink)}">${[["POSES","dès 55 €"],["REMPLISSAGES","dès 45 €"],["SEMI-PERMANENT","dès 30 €"],["NAIL ART","dès 3 €"]].map(([t, p]) => `<div class="li">${t}<small>${p}</small></div>`).join("")}</div></div><div class="bas"><b>LA COULEUR DE VOTRE SITE</b><div class="amb" data-s="${k}">${AMB.map(([n, bg], i) => `<i data-a="${i}" class="${i === a ? "on" : ""}"><u style="background:${bg}"></u>${n}</i>`).join("")}</div></div></div>`; };
+const rendS = (etat) => { document.getElementById("sites").innerHTML = S.map(([k, t, tag, d, st], i) => `<div class="c"><h2><span>${k}</span>${t}${tag ? `<em>${tag.toUpperCase()}</em>` : ""}</h2><p>${d}</p>${site(i, st, etat[i])}</div>`).join(""); };
+const etat = [0, 0, 0]; rendS(etat);
+document.getElementById("sites").addEventListener("click", e => { const a = e.target.closest("[data-a]"); if (!a) return; etat[+a.parentElement.dataset.s] = +a.dataset.a; const y = scrollY; rendS(etat); scrollTo(0, y); });
+</script></body></html>
