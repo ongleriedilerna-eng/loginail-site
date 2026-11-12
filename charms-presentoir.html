@@ -50,10 +50,10 @@ input{-webkit-user-select:text;user-select:text}
 @keyframes flotte{0%,100%{translate:-50% -50%}50%{translate:-50% calc(-50% - 7px)}}
 .st.flotte{animation:flotte 3.2s ease-in-out infinite}
 /* 13/11 (Marie) : la consigne en GRAND — une testeuse n'avait pas vu qu'on peut agrandir un charm */
-.astuceC{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 50px);translate:-50% 0;z-index:95;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 20px);padding:12px 16px 12px 14px;border-radius:18px;background:rgba(30,28,27,.9);color:#fff;font:500 14.5px/1.3 Jost,Helvetica,sans-serif;box-shadow:0 10px 28px -10px rgba(0,0,0,.5);pointer-events:none;opacity:0;transition:opacity .35s}
+.astuceC{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 50px);translate:-50% 0;z-index:95;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 20px);padding:12px 16px 12px 14px;border-radius:18px;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.95);color:#1E1C1B;font:500 14.5px/1.3 Jost,Helvetica,sans-serif;box-shadow:0 10px 28px -12px rgba(0,0,0,.35);pointer-events:none;opacity:0;transition:opacity .35s}
 .astuceC.on{opacity:1}.astuceC small{display:block;font-weight:300;font-size:12.5px;opacity:.85;margin-top:2px}
 .astuceC .dg{flex:none;position:relative;width:44px;height:44px}
-.astuceC .dg i{position:absolute;left:50%;top:50%;width:13px;height:13px;margin:-6.5px;border-radius:50%;background:#fff;animation:dgA 1.5s ease-in-out infinite}
+.astuceC .dg i{position:absolute;left:50%;top:50%;width:13px;height:13px;margin:-6.5px;border-radius:50%;background:#1E1C1B;animation:dgA 1.5s ease-in-out infinite}
 .astuceC .dg i+i{animation-name:dgB}
 @keyframes dgA{0%,100%{transform:translate(-4px,4px)}55%{transform:translate(-15px,15px)}}
 @keyframes dgB{0%,100%{transform:translate(4px,-4px)}55%{transform:translate(15px,-15px)}}
@@ -66,9 +66,13 @@ html,body{touch-action:manipulation}
 .st.eto{display:grid;place-items:center;container-type:size;filter:none}.st.eto.flotte{animation:none}
 .st.eto i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite;pointer-events:none}
 #etoP{pointer-events:auto;cursor:pointer;border:0;display:inline-flex;align-items:center;gap:6px;position:absolute;left:12px;top:-48px;z-index:44;padding:8px 13px}#etoP b{font-size:14px;font-weight:400}
+.st.eto[data-c] i{color:color-mix(in srgb,var(--lgn-halo) 38%,#fff)}
+#etoB{position:absolute;left:0;right:0;top:-96px;z-index:44;display:flex;gap:9px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:6px 14px;touch-action:pan-x}#etoB::-webkit-scrollbar{display:none}#etoB[hidden]{display:none}
+#etoB button{flex:none;width:22px;height:34px;border-radius:999px;border:0;padding:0;opacity:.6;transition:transform .15s,opacity .15s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}#etoB button.on{opacity:1;transform:scale(1.3)}
+.ecr.tient #etoB,.ecr.finie #etoB,.panneau.ferme #etoB,.panneau.ferme #etoP{opacity:0;pointer-events:none}
 #etoPX{display:inline-grid;place-items:center;width:18px;height:18px;margin:-2px -5px -2px 2px;border-radius:50%;background:rgba(30,28,27,.1);font-size:10px}#etoPX[hidden]{display:none}
 .ecr.finie .btnBas,.ecr.finie .panneau,.ecr.finie .poubelle{display:none}
-.bulle{position:fixed;left:50%;top:38%;max-width:90vw;white-space:normal!important;text-align:center;translate:-50% 0;z-index:95;border-radius:999px;background:rgba(30,28,27,.88);color:#fff;padding:9px 15px;font:400 13px Jost,sans-serif;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.bulle{position:fixed;left:50%;top:38%;max-width:90vw;white-space:normal!important;text-align:center;translate:-50% 0;z-index:95;border-radius:999px;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.95);color:#1E1C1B;box-shadow:0 8px 22px -12px rgba(0,0,0,.35);padding:9px 15px;font:400 13px Jost,sans-serif;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
 .bulle.on{opacity:1}
 .poubelle{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 22px);translate:-50% 0;z-index:65;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none}
 .poubelle.on{opacity:1}
@@ -147,7 +151,7 @@ const bulle = t => { const b = document.getElementById("bulle"); b.textContent =
 function moteur(ecr) {
   const calque = ecr.querySelector(".calque"), poub = ecr.querySelector(".poubelle");
   const M = { n: () => calque.querySelectorAll(".st:not(.eto)").length, a: n => calque.querySelector(`[data-n="${n}"]`), poses: () => [...calque.children].map(s => s.dataset.n).filter(n => n && n !== "__etoile") };
-  M.maj = () => { const c = document.getElementById("compte"); c.textContent = `${M.n()} / ${MAX}`; c.style.background = M.n() > MAX ? "#1E1C1B" : ""; c.style.color = M.n() > MAX ? "#fff" : ""; const pris = new Set([...calque.children].map(s => s.dataset.n)); ecr.querySelectorAll(".ch").forEach(c => c.classList.toggle("pris", pris.has(c.dataset.n))); };
+  M.maj = () => { const c = document.getElementById("compte"); c.textContent = `${M.n()} / ${MAX}`; c.style.color = M.n() > MAX ? "#C0392B" : ""; const pris = new Set([...calque.children].map(s => s.dataset.n)); ecr.querySelectorAll(".ch").forEach(c => c.classList.toggle("pris", pris.has(c.dataset.n))); };
   const maj = im => { im.style.width = im.style.height = im._s + "px"; im.style.transform = `rotate(${im._r}deg)`; };
   const defile = ecr.querySelector(".defileSite");
   /* le charm apparaît seulement quand son image est chargée (plus de petit carré vide) */
@@ -161,14 +165,16 @@ function moteur(ecr) {
     const fond = (JSON.parse(localStorage.getItem("loginail-brouillon") || "{}") || {}).fond, f = fond && W && W.FONDS100 && (W.FONDS100.f || []).find(x => x[0] === fond); c = f && f[4];
     if (!c && D) { const b = D.querySelector(".ecran .appel"); c = b ? W.getComputedStyle(b).backgroundColor : ""; }
     if (c && !/rgba?\(0, 0, 0, 0\)|transparent/.test(c)) calque.style.setProperty("--lgn-halo", c); } catch (x) {} };
-  M.majEto = () => { const x = document.getElementById("etoPX"); if (x) x.hidden = !calque.querySelector(".eto"); };
+  M.majEto = () => { const x = document.getElementById("etoPX"), y = !!calque.querySelector(".eto"); if (x) x.hidden = !y; const b = document.getElementById("etoB"); if (b) b.hidden = !y; };
+  M.teinteEto = (el, c) => { if (c) { el.dataset.c = c; el.style.setProperty("--lgn-halo", c); } else { delete el.dataset.c; el.style.removeProperty("--lgn-halo"); } };
+  M.couleurEto = c => { M.etoC = c; calque.querySelectorAll(".eto").forEach(el => M.teinteEto(el, c)); document.querySelectorAll("#etoB button").forEach(b => b.classList.toggle("on", (b.dataset.c || "") === c)); navigator.vibrate?.(5); };
   M.etoiles = () => {
     if (calque.querySelectorAll(".eto").length >= MAX_ETOILES) { bulle(MAX_ETOILES + " étoiles maximum : glissez-en une dans la poubelle pour l’enlever"); return; }
     halo(); const g = "g" + Date.now(), w = calque.clientWidth, cx = w / 2 + (Math.random() * 160 - 80), cy = defile.scrollTop + defile.clientHeight * (.22 + Math.random() * .3);
     [[0, 0, 34], [38, -26, 20], [-30, 30, 15]].forEach(([dx, dy, t]) => {
       const el = document.createElement("div"); el.className = "st eto"; el.dataset.n = "__etoile"; el.dataset.g = g; el._s = t; el._r = 0;
       el.innerHTML = `<i style="animation-delay:${(-Math.random() * 1.6).toFixed(2)}s">✦</i>`;
-      el.style.left = Math.max(12, Math.min(w - 12, cx + dx)) + "px"; el.style.top = (cy + dy) + "px"; maj(el); calque.appendChild(el);
+      el.style.left = Math.max(12, Math.min(w - 12, cx + dx)) + "px"; el.style.top = (cy + dy) + "px"; maj(el); M.teinteEto(el, M.etoC || ""); calque.appendChild(el);
     });
     M.maj(); M.majEto(); navigator.vibrate?.(12);
   };
@@ -260,7 +266,7 @@ function panneau(e, M, opts) {
 
 /* ---------- le présentoir 6×3 (choisi par Marie) ---------- */
 const VERSIONS = [{ cols: 6, rows: 3, h: "48px", pad: "4px" }];   // 09/11 : 6×3 CHOISI (si les tests ne vont pas : 5×4, rows 4, h 46px)
-document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?v=1311j&nouveau&public&charms=0"></iframe><div class="attente"></div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
+document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?v=1311k&nouveau&public&charms=0"></iframe><div class="attente"></div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
   <div class="poubelle verre"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="#1E1C1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   <button class="btnBas verre" data-ouvre hidden style="left:30%">＋ CHARMS</button><button class="btnBas" data-valider hidden style="left:72%;background:#1E1C1B;color:#fff;border:0">VALIDER</button><div class="panneau blanc presentoir"></div></div>`).join("");
 const e = document.getElementById("e0"), M = moteur(e), b = e.querySelector("[data-ouvre]"), val = e.querySelector("[data-valider]"); POSES = () => M.poses();
@@ -277,7 +283,7 @@ document.querySelector("[data-activer]").onclick = () => {
   /* ses charms sont enregistrés dans son brouillon, puis « Activer mon site » */
   const cq = e.querySelector(".calque"), w = cq.clientWidth;
   try { const b = JSON.parse(localStorage.getItem("loginail-brouillon"));
-    b.stickers = [...cq.querySelectorAll(".st")].filter(x => x.dataset.n).map(x => ({ n: x.dataset.n, x: +(parseFloat(x.style.left) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top)), s: Math.round(x._s), r: Math.round(x._r || 0), w }));
+    b.stickers = [...cq.querySelectorAll(".st")].filter(x => x.dataset.n).map(x => Object.assign({ n: x.dataset.n, x: +(parseFloat(x.style.left) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top)), s: Math.round(x._s), r: Math.round(x._r || 0), w }, x.dataset.c ? { c: x.dataset.c } : {}));
     b.charms = []; localStorage.setItem("loginail-brouillon", JSON.stringify(b)); } catch (x) {}
   if (APPLI) { renvoieAppli(); return; }
   location.href = "loginail-creer/pret.html?activer"; };
@@ -298,12 +304,16 @@ document.getElementById("toutEffacer").onclick = () => { if (M.n() || e.querySel
 /* 13/11 (Marie) : après le 1er charm, on montre EN GRAND le geste pour l'agrandir ; puis qu'on peut en poser partout dans le site */
 function astuceCharm(quoi) { let a = document.getElementById("astuceC"); if (!a) { a = document.createElement("div"); a.id = "astuceC"; a.className = "astuceC"; document.body.appendChild(a); }
   a.innerHTML = quoi === "taille" ? '<span class="dg"><i></i><i></i></span><span>Écartez deux doigts pour l’agrandir<small>ou tournez-les pour le pencher</small></span>'
-    : '<span class="fl"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 4v16M6 14l6 6 6-6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Descendez dans votre site<small>vous pouvez poser des charms partout</small></span>';
+    : '<span class="fl"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 4v16M6 14l6 6 6-6" fill="none" stroke="#1E1C1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Descendez dans votre site<small>vous pouvez poser des charms partout</small></span>';
   const ex = document.getElementById("explique"); if (ex) ex.style.opacity = 0;
   a.classList.add("on"); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove("on"), 5200); }
 document.addEventListener("dblclick", e => e.preventDefault(), { passive: false });
 { const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 1) setTimeout(() => astuceCharm("taille"), 500); if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
 { const pn = document.querySelector(".ecr.on .panneau") || document.querySelector(".panneau"); if (pn) pn.appendChild(document.getElementById("etoP")); }   /* 13/11 nuit : Étoiles en bas à gauche, juste au-dessus des charms */
+{ const pn = document.getElementById("etoP").parentElement, b = document.createElement("div"); b.id = "etoB"; b.hidden = true;
+  const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#FF4FA3", "#E3122C", "#FF8A3D", "#FFD23F", "#7BD389", "#2EC4B6", "#5BA8FF", "#2F57E8", "#9B6BFF", "#D9A6FF", "#8A5A3C"];
+  b.innerHTML = C.map((c, i) => `<button type="button" data-c="${c}" class="${i ? "" : "on"}" aria-label="Couleur des étoiles" style="background:${c || "#fff"}"></button>`).join("");
+  b.onclick = ev => { const x = ev.target.closest("button"); if (x) M.couleurEto(x.dataset.c || ""); }; pn.appendChild(b); }
 document.getElementById("etoP").onclick = ev => { if (ev.target.closest("#etoPX")) M.enleveEtoiles(); else M.etoiles(); };
 setInterval(() => M.majEto(), 1000);
 document.querySelector("#confirme [data-non]").onclick = () => document.getElementById("confirme").hidden = true;

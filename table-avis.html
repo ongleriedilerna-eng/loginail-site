@@ -1,0 +1,128 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>La table · avis sur la personnalisation</title>
+<link href="loginail-creer/polices.css" rel="stylesheet">
+<style>
+:root{--noir:#1E1C1B;--fond:#F6F3EF;--gris:#6B625C;--trait:rgba(30,28,27,.1);--ton:#C9A27E;--doux:#EADFD3}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,Helvetica,sans-serif;overflow-x:hidden}
+main{max-width:480px;margin:0 auto;padding:22px 16px 60px}
+h1{font:500 24px/1.15 Jost,sans-serif;margin:0 0 6px;text-align:center}
+.chapo{margin:0 auto 18px;text-align:center;font:300 14px/1.5 Jost,sans-serif;color:var(--gris);max-width:330px}
+.qui{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+.qui span{border-radius:999px;background:#fff;padding:6px 11px;font:500 10.5px Jost,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.pt{background:#fff;border-radius:22px;padding:16px 14px 16px;margin-bottom:14px;box-shadow:0 10px 26px -20px rgba(0,0,0,.35)}
+.tete{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--doux);display:grid;place-items:center;font:500 12px Jost,sans-serif}
+.par{font:500 10px Jost,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--gris)}
+.imp{margin-left:auto;border-radius:999px;padding:4px 9px;font:500 9.5px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:var(--doux)}
+.imp.fort{background:var(--noir);color:#fff}
+.pt h2{margin:0 0 4px;font:500 17px/1.25 Jost,sans-serif}
+.pt p{margin:0 0 12px;font:300 13.5px/1.5 Jost,sans-serif;color:var(--gris)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.duo figure{margin:0;text-align:center}
+.duo figcaption{font:500 9.5px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);margin-bottom:6px}
+.duo figure+figure figcaption{color:var(--noir)}
+/* le faux téléphone */
+.tel{position:relative;margin:0 auto;width:100%;max-width:150px;aspect-ratio:150/270;border-radius:22px;background:#fff;box-shadow:0 0 0 4px #1E1C1B,0 12px 22px -14px rgba(0,0,0,.5);overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:9px 8px 8px;gap:5px;font-size:7px;text-align:center}
+.tel.fondC{background:repeating-radial-gradient(circle at 20% 20%,#E9B7C0 0 5px,#F7E7E4 5px 13px)}
+.tel .et{font:500 6px Jost;letter-spacing:.14em;text-transform:uppercase;color:var(--gris)}
+.tel .site{width:62%;flex:none;aspect-ratio:9/15;border-radius:9px;box-shadow:0 0 0 2px #1E1C1B;background:linear-gradient(160deg,#D9C2AE,#8C6F5B);display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:5px;color:#fff;text-align:left}
+.tel .site b{font:500 9px/1 "Playfair Display",Georgia,serif}
+.tel .site i{margin-top:3px;height:6px;width:60%;border-radius:4px;background:#fff;opacity:.85}
+.tel .tit{font:500 6.5px Jost;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+.tel .rg{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;width:100%}
+.tel .pu{border-radius:999px;background:var(--doux);padding:3px 6px;font:500 6px Jost;white-space:nowrap}
+.tel .pu.on{background:var(--noir);color:#fff}
+.tel .bt{margin-top:auto;width:86%;border-radius:999px;background:var(--noir);color:#fff;padding:5px 0;font:500 6.5px Jost;letter-spacing:.14em}
+.tel .bt.cl{background:var(--doux);color:var(--noir);margin-top:0}
+.tel .ln{font:400 6px Jost;color:var(--gris);text-decoration:underline}
+.tel .ch{width:86%;border-radius:7px;border:1px solid var(--trait);padding:5px 6px;font:400 6.5px Jost;color:var(--gris);text-align:left;background:#fff}
+.tel .gd{font:500 11px/1.15 Jost;margin-top:6px}
+.tel .pt2{font:300 6.5px/1.4 Jost;color:var(--gris);max-width:92%}
+.tel .cs{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;width:100%}
+.tel .cs i{width:9px;height:14px;border-radius:9px}
+.tel .gr{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;width:100%}
+.tel .gr i{aspect-ratio:1;border-radius:3px;background:var(--doux)}
+.tel .gr3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:92%}
+.tel .gr3 i{aspect-ratio:1;border-radius:6px;background:var(--doux)}
+.tel .pan{width:calc(100% + 16px);margin:auto -8px -8px;background:rgba(255,255,255,.92);border-radius:14px 14px 0 0;padding:7px 8px 8px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.tel .pan .bt{margin-top:2px}
+.tel .ba{display:flex;gap:2px;width:70%}.tel .ba i{flex:1;height:2px;border-radius:2px;background:var(--noir)}.tel .ba i.n{opacity:.18}
+.tel .ico{width:16px;height:16px;border-radius:50%;background:var(--doux);display:grid;place-items:center;font-size:8px}
+.plus{background:#fff;border-radius:22px;padding:16px 14px;margin-top:20px}
+.plus h2{margin:0 0 8px;font:500 16px Jost}
+.plus li{font:300 13.5px/1.5 Jost;color:var(--gris);margin-bottom:4px}.plus ul{margin:0;padding-left:18px}
+.note{margin-top:16px;font:300 12px/1.5 Jost;color:var(--gris);text-align:center}
+</style></head><body><main>
+<h1>Ce que la table va vous dire</h1>
+<p class="chapo">La personnalisation, vue par les nouvelles personnes autour de la table. À gauche : aujourd’hui. À droite : ce qu’ils demanderaient à la place.</p>
+<div class="qui"><span>Prothésiste · 23 ans</span><span>Expert marketing</span><span>10 as de l’informatique</span></div>
+<div id="liste"></div>
+<div class="plus"><h2>Ce qu’ils vont aimer (à garder)</h2><ul>
+<li>Les cartes à glisser pour choisir son style : c’est amusant et rapide.</li>
+<li>Le site qui change en direct dans le téléphone.</li>
+<li>Les charms et les étoiles : personne d’autre ne le propose.</li>
+<li>Les fonds qui défilent tout seuls.</li></ul></div>
+<p class="note">Ces avis sont mon estimation de ce qu’ils diront : ce ne sont pas leurs vraies paroles. Les dessins sont des schémas, pas l’écran final.</p>
+</main>
+<script>
+const S = n => `<div class="site"><b>${n}</b><i></i></div>`;
+const BA = k => `<div class="ba">${[1,2,3,4,5,6].map(i => `<i class="${i > k ? "n" : ""}"></i>`).join("")}</div>`;
+const C = l => `<div class="cs">${l.map(c => `<i style="background:${c}"></i>`).join("")}</div>`;
+const P = [
+ { par: "Expert marketing", imp: "Fait perdre des clientes", fort: 1,
+   t: "« C’est trop long avant d’avoir son site »",
+   d: "Six étapes obligatoires, puis les charms. Beaucoup vont partir au milieu. Il faut pouvoir finir dès la première étape : le reste devient un plus.",
+   av: `${BA(1)}<div class="et">Personnalisez · 1 sur 6</div>${S("Atelier")}<div class="tit">Votre en-tête</div><div class="rg"><span class="pu on">Amande</span><span class="pu">Stiletto</span></div><div class="bt">SUIVANT</div>`,
+   ap: `${BA(1)}<div class="et">Personnalisez · 1 sur 6</div>${S("Atelier")}<div class="tit">Votre en-tête</div><div class="rg"><span class="pu on">Amande</span><span class="pu">Stiletto</span></div><div class="bt">SUIVANT</div><span class="ln">Il me plaît déjà, je termine</span>` },
+ { par: "Prothésiste · 23 ans", imp: "Fait perdre des clientes", fort: 1,
+   t: "« Ce n’est pas mon nom, je ne me vois pas »",
+   d: "Elle règle un site qui porte le nom d’un salon d’exemple. Une seule question au début (le nom du salon) et tout l’aperçu devient le sien.",
+   av: `${BA(1)}<div class="et">Personnalisez · 1 sur 6</div>${S("Atelier Ronce")}<div class="tit">Votre en-tête</div><div class="bt">SUIVANT</div>`,
+   ap: `<div class="gd">Comment s’appelle votre salon ?</div><div class="ch">Les ongles de Léa</div>${S("Les ongles de Léa")}<div class="bt">VOIR MON SITE</div>` },
+ { par: "Expert marketing", imp: "Fait perdre des clientes", fort: 1,
+   t: "« À la fin, dites le prix et quoi faire »",
+   d: "Le dernier écran doit vendre : le site est prêt, un mois offert, puis le prix, et un seul gros bouton.",
+   av: `${S("Atelier")}<div class="gd">C’est fini</div><div class="pt2">Vos charms sont posés.</div><div class="bt">CONTINUER</div>`,
+   ap: `${S("Atelier")}<div class="gd">Votre site est prêt</div><div class="pt2">1 mois offert, puis 49,99 € par mois. Sans engagement.</div><div class="bt">METTRE MON SITE EN LIGNE</div>` },
+ { par: "Les as de l’informatique", imp: "Fait perdre des clientes", fort: 1,
+   t: "« Si je ferme la page, je perds tout ? »",
+   d: "Elles commencent souvent entre deux clientes. Il faut retrouver son site en revenant, et pouvoir se l’envoyer.",
+   av: `<div class="gd">Bienvenue</div><div class="pt2">Choisissez votre style.</div><div class="gr3"><i></i><i></i><i></i></div><div class="bt">COMMENCER</div>`,
+   ap: `<div class="gd">Bon retour</div>${S("Atelier")}<div class="bt">REPRENDRE MON SITE</div><span class="ln">Recommencer de zéro</span>` },
+ { par: "Prothésiste · 23 ans", imp: "Gêne",
+   t: "« Il y a trop de choix, je ne sais pas quoi prendre »",
+   d: "500 fonds, 51 couleurs, plus de 1 300 charms. Montrer d’abord une douzaine de valeurs sûres, et « Tout voir » pour celles qui veulent.",
+   av: `<div class="tit">Votre fond</div><div class="gr">${"<i></i>".repeat(48)}</div><div class="bt">SUIVANT</div>`,
+   ap: `<div class="tit">Votre fond</div><div class="rg"><span class="pu on">Les plus choisis</span></div><div class="gr3">${"<i></i>".repeat(9)}</div><span class="ln">Tout voir (500)</span><div class="bt">SUIVANT</div>` },
+ { par: "Les as de l’informatique", imp: "Gêne",
+   t: "« Les étapes 4 et 5 font doublon »",
+   d: "« Vos couleurs » puis « Votre site » : deux écrans de couleurs à la suite. Un seul écran avec trois onglets, et on passe à 5 étapes.",
+   av: `${BA(5)}<div class="et">5 sur 6</div>${S("Atelier")}<div class="tit">Votre site</div><div class="rg"><span class="pu on">Blocs blancs</span><span class="pu">De couleur</span></div>${C(["#F7A8C4","#E3122C","#E9C46A","#7BD389","#5BA8FF"])}<div class="bt">SUIVANT</div>`,
+   ap: `${BA(4)}<div class="et">4 sur 5</div>${S("Atelier")}<div class="tit">Vos couleurs</div><div class="rg"><span class="pu">Le nom</span><span class="pu">Les boutons</span><span class="pu on">Le site</span></div>${C(["#F7A8C4","#E3122C","#E9C46A","#7BD389","#5BA8FF"])}<div class="bt">SUIVANT</div>` },
+ { par: "Les as de l’informatique", imp: "Gêne",
+   t: "« On lit mal les réglages sur un fond chargé »",
+   d: "Avec un fond plein de motifs, les pastilles de couleur et les textes se noient dedans. Un panneau blanc derrière les réglages règle tout.",
+   av: `<div class="et">5 sur 6</div>${S("Dilerna")}<div class="tit">Votre site</div>${C(["#F3C3DA","#F1C6CC","#EFC3C4","#F1D6C6","#F1E6C6"])}<div class="bt">SUIVANT</div>`, avC: "fondC",
+   ap: `<div class="et">5 sur 6</div>${S("Dilerna")}<div class="pan"><div class="tit">Votre site</div>${C(["#F7A8C4","#E3122C","#E9C46A","#7BD389","#5BA8FF"])}<div class="bt">SUIVANT</div></div>`, apC: "fondC" },
+ { par: "Prothésiste · 23 ans", imp: "Détail",
+   t: "« “Blocs”, je ne comprends pas ce que c’est »",
+   d: "C’est un mot de technicien. Dire ce que ça change pour elle : ses prestations sur blanc ou sur couleur.",
+   av: `<div class="tit">Votre site</div><div class="rg"><span class="pu on">Blocs blancs</span><span class="pu">Blocs de couleur</span></div>`,
+   ap: `<div class="tit">Vos prestations</div><div class="rg"><span class="pu on">Sur blanc</span><span class="pu">Sur couleur</span></div>` },
+ { par: "Toute la table", imp: "Gêne",
+   t: "« Les gestes cachés, personne ne les trouve »",
+   d: "Rester appuyée pour mettre en favori, écarter deux doigts pour agrandir un charm : il faut le deviner. Des boutons visibles font la même chose.",
+   av: `${S("Atelier")}<div class="pt2">Écartez deux doigts pour l’agrandir</div><div class="gr3"><i></i><i></i><i></i></div>`,
+   ap: `${S("Atelier")}<div class="rg"><span class="ico">−</span><span class="ico">+</span><span class="ico">↻</span><span class="ico">♡</span></div><div class="gr3"><i></i><i></i><i></i></div>` },
+ { par: "Expert marketing", imp: "Fait gagner des clientes",
+   t: "« Rien à partager : vous ratez de la publicité gratuite »",
+   d: "Une prothésiste fière de son site le montre à ses collègues. Un bouton pour envoyer l’aperçu, et chaque cliente en amène d’autres.",
+   av: `${S("Atelier")}<div class="gd">C’est fini</div><div class="bt">CONTINUER</div>`,
+   ap: `${S("Atelier")}<div class="gd">Votre site est prêt</div><div class="bt">METTRE EN LIGNE</div><div class="bt cl">ENVOYER À UNE AMIE</div>` },
+];
+document.getElementById("liste").innerHTML = P.map((p, i) => `<section class="pt"><div class="tete"><span class="num">${i + 1}</span><span class="par">${p.par}</span><span class="imp ${p.fort ? "fort" : ""}">${p.imp}</span></div><h2>${p.t}</h2><p>${p.d}</p>
+<div class="duo"><figure><figcaption>Aujourd’hui</figcaption><div class="tel ${p.avC || ""}">${p.av}</div></figure><figure><figcaption>À la place</figcaption><div class="tel ${p.apC || ""}">${p.ap}</div></figure></div></section>`).join("");
+</script></body></html>
