@@ -124,6 +124,9 @@ html,body{touch-action:manipulation}
 .pol.on{background:#fff;box-shadow:inset 0 0 0 1.5px var(--noir)}
 .pages{display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;touch-action:pan-x;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0}
 .choix,.bas{overscroll-behavior:contain}
+/* 13/11 (la table) : sur un fond chargé on lisait mal les réglages → un panneau de verre blanc derrière */
+#tel:not(.mc):not(.plein) .bas::before{content:"";position:absolute;left:0;right:0;bottom:0;top:-14px;z-index:-1;background:rgba(255,255,255,.8);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border-radius:26px 26px 0 0;box-shadow:0 -10px 28px -18px rgba(0,0,0,.3);pointer-events:none}
+.deuxB .apB{height:38px!important;padding:5px 12px!important}.deuxB .apB u{height:7px}
 .ligneH,.grilleF{overflow-y:hidden;touch-action:pan-x}.grilleF .vg{content-visibility:auto}.pages::-webkit-scrollbar{display:none}
 .page6{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:44px;gap:8px;padding:4px 22px 4px}
 .page6 .pol{min-width:0;padding:0 4px;font-size:16px;line-height:1.3;border-radius:14px;white-space:nowrap;overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -231,8 +234,8 @@ html.vrai .maquette{display:none}
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
-  <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311k&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311l&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -254,7 +257,7 @@ html.vrai .maquette{display:none}
 const $ = id => document.getElementById(id);
 const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
-{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311k"; }   // le coup de cœur choisi
+{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311l"; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
@@ -263,7 +266,8 @@ const APPLI = new URLSearchParams(location.search).has("appli");
 /* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
 const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); parent.postMessage({ loginail: "enregistre", br }, location.hostname === "loginail.fr" ? "https://app.loginail.fr" : location.origin); } catch (e) {} };
 
-const ORDRE = VRAI ? ["entete", "ecriture", "fond", "couleurs", "site"] : ["entete", "ecriture", "fond", "couleurs", "site", "charms"];   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
+const ORDRE = VRAI ? ["entete", "ecriture", "fond", "couleurs"] : ["entete", "ecriture", "fond", "couleurs", "charms"];   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
+const NB = 5;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
 /* ses choix sont enregistrés dans son brouillon (comme « C'est parfait » de l'éditeur) */
 function enregistre() { try { W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box||!BR)return;Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m},window.__pzEtat?__pzEtat():{});localStorage.setItem("loginail-brouillon",JSON.stringify(BR))})()`); return true; } catch (e) { return false; } }
 const TITRES = { entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
@@ -331,7 +335,7 @@ function ambiance() {
     const h = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); if (a._h !== h) { a._h = h; a.innerHTML = `<div class="f100 fond-site" style="position:absolute;inset:0">${h}</div>`; } } catch (e) {}
 }
 function rend() {
-  $("hautT").textContent = `Personnalisez · ${etape + 1} sur 6`; document.querySelectorAll("#barre i").forEach((x, k) => x.classList.toggle("on", k <= etape));
+  $("hautT").textContent = `Personnalisez · ${etape + 1} sur ${NB}`; document.querySelectorAll("#barre i").forEach((x, k) => x.classList.toggle("on", k <= etape));
   [...$("barre").children].forEach((i, k) => i.classList.toggle("on", k <= etape));
   $("titre").textContent = TITRES[cle()]; $("aide").textContent = "";
   $("retour").style.visibility = etape ? "visible" : "hidden";
@@ -358,8 +362,7 @@ function rend() {
     brancheRecherche();
     ajusteFonds();
   } else if (cle() === "couleurs" || cle() === "site") {
-    const SC = cle() === "site" ? [] : [["nom", "Le nom"], ["boutons", "Les boutons"]];
-    if (cle() === "site") sousCouleur = "site"; else if (sousCouleur === "site") sousCouleur = "nom";
+    const SC = [["nom", "Le nom"], ["boutons", "Les boutons"], ["site", "Le site"]];
     let l = "";
     let items = [], choisi = "";
     if (sousCouleur === "nom") { items = Object.entries(NOMC).map(([k, v]) => ({ k, bg: v })); choisi = nomc; }
@@ -367,7 +370,7 @@ function rend() {
     if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.map(b => ({ k: b.dataset.co, bg: b.style.background || vraiFond(b.dataset.co) })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
     items = familles(items).flatMap(f => f[1]);   /* rangées par famille puis du clair au foncé : la bande fait un bel arc-en-ciel */
     TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
-    l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i><u></u><u></u></i></span><b>Blocs blancs</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i><u></u><u></u></i></span><b>Blocs de couleur</b></button></div><p class="sousT">La couleur du site</p>` : "")
+    l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i><u></u><u></u></i></span><b>Sur blanc</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i><u></u><u></u></i></span><b>Sur couleur</b></button></div>` : "")
       + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
     c.innerHTML = (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
     brancheRoue(choisi ? ki : -1); teinteBlocs();
@@ -672,7 +675,7 @@ $("cherche").dataset.x = "1";
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311k"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311l"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };

@@ -43,7 +43,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .consigne{position:absolute;inset:0 0 86px;z-index:150;display:flex;align-items:center;justify-content:center;gap:10px;flex-direction:column;border-radius:6px;background:var(--fond);font:400 30px/1.15 Jost,sans-serif;text-align:center;letter-spacing:-.01em;pointer-events:none;transition:opacity .6s}
 .consigne svg{width:34px!important;height:34px!important}
 .consigne.part{opacity:0}
-.glisse{position:absolute;left:50%;top:44%;z-index:160;translate:-50% 0;display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 18px;background:rgba(30,28,27,.82);color:#fff;font:400 13px Jost,sans-serif;letter-spacing:.06em;opacity:0;transition:opacity .4s;pointer-events:none}
+.glisse{position:absolute;left:50%;top:44%;z-index:160;translate:-50% 0;display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 18px;background:rgba(255,255,255,.8);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 22px -12px rgba(0,0,0,.35);color:#1E1C1B;font:400 13px Jost,sans-serif;letter-spacing:.06em;opacity:0;transition:opacity .4s;pointer-events:none}
 .glisse.on{opacity:1}
 .verre{border:1px solid rgba(255,255,255,.9);border-radius:999px;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 14px;font:400 13px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
 .compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.18)}}
@@ -201,7 +201,7 @@ function ambiance(fr) { const a = $("ambiance");
     a.classList.add("on"); } catch (e) { a.classList.remove("on"); }
 }
 const ambianceCarte = () => { const c = [...$("zone").children].find(x => x._n === i); ambiance(c && c.querySelector("iframe")); };
-function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html,body{background:#fff!important;scrollbar-width:none}::-webkit-scrollbar{display:none}.ecran{border-radius:0!important;box-shadow:none!important}*:focus{outline:none!important}"; d.head.appendChild(st); } catch (e) {} }
+function cache(fr) { try { const d = fr.contentDocument, st = d.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html,body{background:#fff!important;scrollbar-width:none}::-webkit-scrollbar{display:none}.ecran{border-radius:0!important;box-shadow:none!important}*:focus{outline:none!important}.defile,html{scroll-behavior:auto!important}"; d.head.appendChild(st); } catch (e) {} }
 const boiteDe = fr => { try { const d = fr.contentDocument; return d.querySelector(".defile") || d.scrollingElement; } catch (e) { return null; } };
 function carteHtml(p) {
   const c = document.createElement("div"); c.className = "carte";
@@ -234,15 +234,21 @@ function vote(oui) {
   i++; setTimeout(place, 240);
   if (oui && coeurs.length >= OBJECTIF) setTimeout(montreCoeurs, 650);
 }
+/* 13/11 (Marie) : « beaucoup plus fluide » — le site suit le doigt tout de suite, et continue sur son élan quand on lâche */
+let tElan = 0;
+function elan(b, v) { cancelAnimationFrame(tElan); if (!b || Math.abs(v) < .08) return; let t0 = performance.now();
+  const pas = t => { const dt = Math.min(34, t - t0); t0 = t; const a = b.scrollTop; b.scrollTop = a + v * dt; v *= Math.pow(.9972, dt); if (Math.abs(v) > .03 && b.scrollTop !== a) tElan = requestAnimationFrame(pas); };
+  tElan = requestAnimationFrame(pas); }
+const suivi = () => { let y = 0, t = 0, v = 0; return { debut(e) { cancelAnimationFrame(tElan); y = e.clientY; t = e.timeStamp; v = 0; }, bouge(e, k) { const dt = Math.max(1, e.timeStamp - t); v = .7 * ((y - e.clientY) / k / dt) + .3 * v; y = e.clientY; t = e.timeStamp; }, fin(e) { return e.timeStamp - t > 90 ? 0 : v; } }; };
 function branche(c) {
-  if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"), fr = c.querySelector("iframe"); let x0 = null, y0 = 0, dx = 0, sens = null, top0 = 0;
-  pr.onpointerdown = e => { if (c._n !== i) return; x0 = e.clientX; y0 = e.clientY; dx = 0; sens = null; top0 = boiteDe(fr)?.scrollTop || 0; pr.setPointerCapture(e.pointerId); c.style.transition = "none"; };
+  if (!c || c._b) return; c._b = 1; const pr = c.querySelector(".prise"), fr = c.querySelector("iframe"); let x0 = null, y0 = 0, dx = 0, sens = null, top0 = 0; const sv = suivi();
+  pr.onpointerdown = e => { if (c._n !== i) return; sv.debut(e); x0 = e.clientX; y0 = e.clientY; dx = 0; sens = null; top0 = boiteDe(fr)?.scrollTop || 0; pr.setPointerCapture(e.pointerId); c.style.transition = "none"; };
   pr.onpointermove = e => { if (x0 == null) return; dx = e.clientX - x0; const dy = e.clientY - y0;
-    if (!sens && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sens = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-    if (sens === "y") { const b = boiteDe(fr); if (b) b.scrollTop = top0 - dy / (c.clientWidth / 390); return; }
+    if (!sens && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) { sens = Math.abs(dx) > Math.abs(dy) ? "x" : "y"; if (sens === "y") { y0 = e.clientY; sv.debut(e); return; } }
+    if (sens === "y") { const b = boiteDe(fr), k = c.clientWidth / 390; sv.bouge(e, k); if (b) b.scrollTop = top0 - (e.clientY - y0) / k; return; }
     if (sens !== "x") return;
     c.style.transform = `translateX(${dx}px) rotate(${dx / 20}deg)`; c.querySelector(".tampon.oui").style.opacity = Math.max(0, dx / 110); c.querySelector(".tampon.non").style.opacity = Math.max(0, -dx / 110); };
-  pr.onpointerup = pr.onpointercancel = () => { if (x0 == null) return; x0 = null; c.style.transition = "";
+  pr.onpointerup = pr.onpointercancel = e => { if (x0 == null) return; x0 = null; c.style.transition = ""; if (sens === "y") elan(boiteDe(fr), sv.fin(e));
     if (sens === "x" && dx > 90) return vote(true); if (sens === "x" && dx < -90) return vote(false);
     c.style.transform = ""; c.querySelectorAll(".tampon").forEach(t => t.style.opacity = 0); };
   pr.onwheel = e => { const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } };
@@ -251,7 +257,7 @@ $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311k&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311l&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -275,17 +281,17 @@ function effet() { const z = $("carrou"), p = pas(), k0 = courant();
   const fc = z.children[k0]?.querySelector("iframe"); if (fc) { ambiance(fc); if (!fc._amb) { fc._amb = 1; fc.addEventListener("load", () => setTimeout(() => { if (courant() === k0) ambiance(fc); }, 300)); } } }
 $("carrou").addEventListener("scroll", () => { cancelAnimationFrame(tEffet); tEffet = requestAnimationFrame(effet); }, { passive: true });
 function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySelector("iframe"), z = $("carrou");
-  let y0 = null, x0 = 0, top0 = 0, sens = null, sl0 = 0;
-  pr.onpointerdown = e => { y0 = e.clientY; x0 = e.clientX; sens = null; top0 = boiteDe(fr)?.scrollTop || 0; sl0 = z.scrollLeft; if (e.pointerType === "mouse") pr.setPointerCapture(e.pointerId); };
+  let y0 = null, x0 = 0, top0 = 0, sens = null, sl0 = 0; const sv = suivi();
+  pr.onpointerdown = e => { sv.debut(e); y0 = e.clientY; x0 = e.clientX; sens = null; top0 = boiteDe(fr)?.scrollTop || 0; sl0 = z.scrollLeft; if (e.pointerType === "mouse") pr.setPointerCapture(e.pointerId); };
   pr.onpointermove = e => { if (y0 == null) return; const dy = e.clientY - y0, dx = e.clientX - x0; if (!sens && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sens = Math.abs(dy) > Math.abs(dx) ? "y" : "x";
-    if (sens === "y") { const b = boiteDe(fr); if (b) b.scrollTop = top0 - dy / (sl.clientWidth / 390); }
+    if (sens === "y") { const b = boiteDe(fr), k = sl.clientWidth / 390; sv.bouge(e, k); if (b) b.scrollTop = top0 - dy / k; }
     if (sens === "x" && e.pointerType === "mouse") { z.style.scrollSnapType = "none"; z.scrollLeft = sl0 - dx; } };
-  pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 450); } y0 = null; };
+  pr.onpointerup = pr.onpointercancel = e => { if (sens === "x" && e.pointerType === "mouse") { const dx = e.clientX - x0, k = Math.max(0, Math.min(coeurs.length - 1, Math.round(sl0 / pas()) + (dx < -40 ? 1 : dx > 40 ? -1 : 0))); z.scrollTo({ left: k * pas(), behavior: "smooth" }); setTimeout(() => z.style.scrollSnapType = "", 450); } if (sens === "y") elan(boiteDe(fr), sv.fin(e)); y0 = null; };
   pr.onwheel = e => { if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; const b = boiteDe(fr); if (b) { e.preventDefault(); b.scrollTop += e.deltaY; } }; }
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
 $("perso").onclick = () => { const p = coeurs[courant()]; try { sessionStorage.setItem("cdc-fonds", JSON.stringify([p].concat(coeurs).filter(Boolean).map(x => decodeURIComponent(((x.q || "").match(/[?&]fond=([^&]*)/) || [])[1] || "")).filter(Boolean))); } catch (e) {}   /* 13/11 : ses coups de cœur donnent les fonds « Pour vous » */
-  if (p) location.href = "maquette-perso.html?v=1311k&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+  if (p) location.href = "maquette-perso.html?v=1311l&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>
