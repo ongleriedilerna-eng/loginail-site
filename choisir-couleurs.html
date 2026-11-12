@@ -1,0 +1,54 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Trier les couleurs du site</title>
+<link href="loginail-creer/polices.css" rel="stylesheet">
+<style>
+:root{--noir:#1E1C1B;--fond:#F6F3EF;--gris:#6B625C}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,Helvetica,sans-serif;overflow-x:hidden}
+main{max-width:480px;margin:0 auto;padding:20px 14px 150px}
+h1{margin:0 0 4px;text-align:center;font:500 22px/1.2 Jost,sans-serif}
+.chapo{margin:0 auto 16px;max-width:330px;text-align:center;font:300 13.5px/1.5 Jost,sans-serif;color:var(--gris)}
+.chapo b{font-weight:500;color:var(--noir)}
+.gr{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.co{position:relative;border:0;padding:8px 8px 7px;border-radius:16px;background:#fff;cursor:pointer;text-align:center;transition:opacity .15s,transform .15s;box-shadow:0 8px 18px -14px rgba(0,0,0,.35)}
+.co .pil{display:block;width:26px;height:40px;border-radius:999px;margin:0 auto 7px}
+.co .bloc{display:flex;flex-direction:column;gap:4px;border-radius:10px;padding:7px 8px}
+.co .bloc i{display:block;height:9px;border-radius:5px;background:#fff}
+.co .bloc u{display:block;height:5px;width:58%;border-radius:3px;text-decoration:none}
+.co small{display:block;margin-top:6px;font:400 11px Jost,sans-serif;color:var(--gris);text-transform:capitalize}
+.co.non{opacity:.3;transform:scale(.93)}
+.co.non:after{content:"enlevée";position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);border-radius:999px;background:#fff;padding:4px 10px;font:500 10.5px Jost,sans-serif;letter-spacing:.06em;color:var(--noir);box-shadow:0 4px 12px -6px rgba(0,0,0,.5)}
+.bas{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:12px 14px calc(env(safe-area-inset-bottom) + 12px);background:rgba(255,255,255,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:22px 22px 0 0;box-shadow:0 -10px 26px -18px rgba(0,0,0,.35)}
+.bas>div{max-width:452px;margin:0 auto;display:flex;align-items:center;gap:10px}
+#nb{flex:none;font:500 14px Jost,sans-serif;min-width:92px}
+#ok{flex:1;border:0;border-radius:999px;background:var(--noir);color:#fff;padding:15px;font:500 12px Jost,sans-serif;letter-spacing:.16em}
+#tout{flex:none;border:0;background:none;font:400 12.5px Jost,sans-serif;color:var(--gris);text-decoration:underline;text-underline-offset:3px;padding:6px}
+#msg{max-width:452px;margin:8px auto 0;text-align:center;font:400 12.5px/1.4 Jost,sans-serif;color:var(--gris)}
+</style></head><body><main>
+<h1>Les couleurs du site</h1>
+<p class="chapo">Touchez une couleur pour l’enlever (ou la remettre). En haut : la couleur dans la bande. Dessous : ce qu’elle donne sur le site.<br><b>J’ai déjà grisé 14 couleurs presque jumelles d’une autre : remettez celles que vous aimez.</b></p>
+<div class="gr" id="liste"></div>
+</main>
+<div class="bas"><div><b id="nb"></b><button id="ok" type="button">C’EST TRIÉ</button><button id="tout" type="button">Tout remettre</button></div><p id="msg"></p></div>
+<script>
+/* nom, couleur de la pastille, couleur douce du site (blocs), couleur du texte */
+const D = [["noir","#1E1C1B","#F6F3EF","#1E1C1B"],["choco","#4A3226","#E7D7D0","#4A3226"],["marine","#24344F","#CED8E9","#24344F"],["taupe","#5E5149","#E7D9D0","#5E5149"],["greige","#BDB3A8","#E7DCD0","#5F574F"],["sable","#C9A97E","#EADDCD","#80633F"],["peche","#E2C3AF","#ECD8CB","#7A5444"],["sauge","#9EA791","#DDE7D0","#4F5A45"],["lin","#CFC4B3","#E7DED0","#6E6253"],["nude","#D9B8A9","#E9D6CD","#8A6656"],["rose","#EBC3CC","#EDC9D1","#9A5D6B"],["bleup","#B9CCE0","#CEDBE9","#4F6F93"],["lilas","#D5C8EC","#D6CAED","#7B62A8"],["jaune","#F3E3A0","#F1E8C6","#6A4E1C"],["menthe","#BFE3D4","#CDE9DE","#3D7A66"],["abricot","#F6C9AE","#F1D6C6","#B05E3A"],["ciel","#BCDDEE","#C6E2F1","#2F7BA0"],["rosep","#F4C6D3","#F1C6D2","#B4587A"],["poudre","#E9C9C4","#ECCFCB","#9C6B66"],["framboise","#D9668A","#F1C6D3","#A8325A"],["lavande","#CDBDF0","#D3C6F1","#6A50B0"],["pechep","#F9CDB3","#F1D6C6","#B8673E"],["corail","#F2A08F","#F1CDC6","#C0503A"],["cerise","#C8243A","#F1C6CC","#A01C2E"],["bordeaux","#7A1F33","#F1C6CF","#6E1A2C"],["rougefonce","#7C1218","#EFC3C4","#6A1016"],["rouille","#B5532E","#EBC8B6","#8E3B1E"],["moutarde","#C9971F","#EDD9A6","#8A6512"],["fuchsia","#E5197E","#F3C3DA","#B3125F"],["kaki","#7A7A4E","#D9D6BE","#5E5E3A"],["sapin","#2F5A45","#C8D9CE","#2F5A45"],["anthracite","#3A3D42","#D3D4D6","#3A3D42"],["cobalt","#2F57E8","#C5D1F4","#2F4FC0"],["bleunuit","#1F2E5C","#C9D1E6","#1F2E5C"],["prune","#6E3A62","#E7D0E1","#5E2E54"],["terracotta","#C66B4A","#EED3C9","#A24E2E"],["caramel","#C68A4E","#EEDBC9","#8E5A26"],["vanille","#F4E6BE","#F1E6C6","#8A7230"],["olive","#8A8B4A","#E6E7D0","#5C5E2A"],["emeraude","#1F7A55","#C6F1DF","#1A6648"],["turquoise","#5BC2C0","#CBECEB","#237A78"],["perle","#D6D6DA","#DADADD","#55565E"],["verttendre","#D3DEC6","#DCE7D0","#6B8560"],["vertdeau","#CFE6DC","#D0E7DD","#4F8574"],["glycine","#C9B3D6","#DED0E7","#7A5A8C"],["lilaspoudre","#DCC8DA","#E7D0E4","#8A6A86"],["nacre","#EED6D4","#EBCECC","#9A6E70"],["cremedoree","#E9D9B5","#EFE3C8","#8A6B3E"],["miel","#E3C38A","#F1E1C6","#8E6420"],["feuillage","#B9BC94","#E5E7D0","#6A6E45"],["mousse","#B7C7AA","#DAE7D0","#5E7454"]];
+const CONSEIL = ["peche","pechep","rose","poudre","nacre","greige","cremedoree","mousse","feuillage","verttendre","vertdeau","lavande","lilaspoudre","bleup"];
+const NOMS = { rosep: "rose pastel", pechep: "pêche pastel", peche: "pêche", bleup: "bleu pastel", rougefonce: "rouge foncé", bleunuit: "bleu nuit", verttendre: "vert tendre", vertdeau: "vert d’eau", lilaspoudre: "lilas poudré", cremedoree: "crème dorée", emeraude: "émeraude" };
+const $ = i => document.getElementById(i);
+const hsl = h => { const [r, g, b] = [1, 3, 5].map(k => parseInt(h.substr(k, 2), 16) / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn; let t = 0;
+  if (d) t = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [(t * 60 + 360) % 360, d ? d / (1 - Math.abs(2 * l - 1)) : 0, l]; };
+/* l'arc-en-ciel : rose → rouge → orange → jaune → vert → bleu → violet, puis les neutres du clair au foncé */
+const cle = c => { const [h, s, l] = hsl(c[1]); return s < .2 ? [1, -l] : [0, (h + 40) % 360 + (1 - l) * .01]; };
+D.sort((a, b) => { const x = cle(a), y = cle(b); return x[0] - y[0] || x[1] - y[1]; });
+let NON = null; try { NON = JSON.parse(localStorage.getItem("couleurs-enlevees-marie") || "null"); } catch (e) {} if (!Array.isArray(NON)) NON = CONSEIL.slice();
+function maj() { $("liste").innerHTML = D.map(([n, p, c, t]) => `<button class="co ${NON.includes(n) ? "non" : ""}" type="button" data-n="${n}"><span class="pil" style="background:${p}"></span><span class="bloc" style="background:color-mix(in srgb,${c} 86%,${t})"><i></i><u style="background:${t}"></u></span><small>${NOMS[n] || n}</small></button>`).join("");
+  $("nb").textContent = `${D.length - NON.length} gardées`; try { localStorage.setItem("couleurs-enlevees-marie", JSON.stringify(NON)); } catch (e) {} }
+$("liste").onclick = e => { const b = e.target.closest(".co"); if (!b) return; const n = b.dataset.n, k = NON.indexOf(n); if (k >= 0) NON.splice(k, 1); else NON.push(n); const y = scrollY; maj(); scrollTo(0, y); $("msg").textContent = ""; };
+$("tout").onclick = () => { NON = []; maj(); };
+$("ok").onclick = async () => { const t = "Couleurs à enlever : " + (NON.length ? NON.join(" | ") : "aucune");
+  try { await navigator.clipboard.writeText(t); $("msg").textContent = "C’est noté et copié. Collez la liste dans votre message à Claude."; } catch (e) { $("msg").textContent = "C’est noté. Dites à Claude que c’est trié."; } };
+maj();
+</script></body></html>
