@@ -281,6 +281,9 @@ const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classLis
 /* ---------- ce qu'on sait d'elle (rien n'est inventé : vide tant qu'on ne l'a pas lu ou qu'elle ne l'a pas écrit) ---------- */
 const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 const DEMO = new URLSearchParams(location.search).has("demo");
+/* 13/11 (Marie) : elle revient après avoir fermé la page → « Bon retour · Reprendre mon site » (sur la page des cartes) */
+try { const r = JSON.parse(localStorage.getItem("loginail-reprise") || "null"), q = new URLSearchParams(location.search);
+  if (r && Date.now() - r.t < 30 * 864e5 && localStorage.getItem("loginail-brouillon") && !DEMO && ![...q.keys()].length) location.replace("../coups-de-coeur.html?vrai&retour"); } catch (e) {}
 let B = { source: "main", nom: "", prenom: "", rue: "", cp: "", ville: "", telephone: "", position: null, placeId: "", lienGoogle: "",
   horaires: null, note: null, nbAvis: 0, avis: [], photos: [], prestations: [] };
 
@@ -433,7 +436,7 @@ async function lance(lien) {
   ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
   ph[5].classList.add("on"); og.classList.add("e5"); $("charge").classList.add("lu");
 }
-$("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311m"); return; } prepareManque(); montre("manque"); };
+$("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311n"); return; } prepareManque(); montre("manque"); };
 
 /* ---------- 3 · il manque (une ligne par chose ; touchée, elle s'ouvre ; « Ajouter » allume l'interrupteur) ---------- */
 const SUGG = ["Pose gel", "Remplissage", "Semi-permanent mains", "Semi-permanent pieds", "Manucure", "Beauté des pieds", "Dépose", "Nail art"];

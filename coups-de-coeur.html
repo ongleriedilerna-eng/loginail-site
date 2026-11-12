@@ -45,6 +45,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .consigne.part{opacity:0}
 .glisse{position:absolute;left:50%;top:44%;z-index:160;translate:-50% 0;display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 18px;background:rgba(255,255,255,.8);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 22px -12px rgba(0,0,0,.35);color:#1E1C1B;font:400 13px Jost,sans-serif;letter-spacing:.06em;opacity:0;transition:opacity .4s;pointer-events:none}
 .glisse.on{opacity:1}
+#retourB{position:fixed;inset:0;z-index:900;display:grid;place-items:center;background:rgba(246,243,239,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#retourB>div{width:min(310px,86vw);border-radius:26px;background:rgba(255,255,255,.94);padding:28px 22px 16px;text-align:center;box-shadow:0 24px 50px -26px rgba(0,0,0,.45)}
+#retourB h3{margin:0;font:400 26px Jost,sans-serif}#retourB p{margin:8px 0 20px;font:300 14px/1.5 Jost,sans-serif;color:var(--muted)}
+#retourB .noirB{width:100%;border:0;border-radius:999px;background:#1E1C1B;color:#fff;padding:16px;font:500 12px Jost,sans-serif;letter-spacing:.16em}
+#retourB .lienB{border:0;background:none;padding:14px 10px 6px;font:400 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 .verre{border:1px solid rgba(255,255,255,.9);border-radius:999px;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 14px;font:400 13px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
 .compte.hop{animation:hop .45s cubic-bezier(.3,1.8,.5,1)}@keyframes hop{50%{transform:scale(1.18)}}
 .zoneW{position:relative;flex:1;margin:4px 0 0;min-height:0;padding-bottom:86px}.zone{bottom:86px!important}
@@ -257,7 +262,7 @@ $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311m&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311n&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -291,7 +296,14 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
 $("perso").onclick = () => { const p = coeurs[courant()]; try { sessionStorage.setItem("cdc-fonds", JSON.stringify([p].concat(coeurs).filter(Boolean).map(x => decodeURIComponent(((x.q || "").match(/[?&]fond=([^&]*)/) || [])[1] || "")).filter(Boolean))); } catch (e) {}   /* 13/11 : ses coups de cœur donnent les fonds « Pour vous » */
-  if (p) location.href = "maquette-perso.html?v=1311m&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+  if (p) location.href = "maquette-perso.html?v=1311n&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+/* 13/11 (Marie) : « si je ferme, je perds tout ? » — elle retrouve son site là où elle l'avait laissé */
+if (VRAI && !APPLI) { let r = null; try { r = JSON.parse(localStorage.getItem("loginail-reprise") || "null"); } catch (e) {}
+  if (r && Date.now() - r.t < 30 * 864e5 && (r.p === "perso" || r.p === "charms")) { const o = document.createElement("div"); o.id = "retourB";
+    o.innerHTML = `<div><h3>Bon retour</h3><p>Votre site vous attend,<br>là où vous l’aviez laissé.</p><button type="button" class="noirB" id="reprendre">REPRENDRE MON SITE</button><button type="button" class="lienB" id="zero">Recommencer de zéro</button></div>`;
+    document.body.appendChild(o);
+    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1311n" : "maquette-perso.html?v=1311n&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
+    $("zero").onclick = () => { try { localStorage.removeItem("loginail-reprise"); } catch (e) {} if (new URLSearchParams(location.search).has("retour")) location.href = "loginail-creer/index.html?neuf"; else o.remove(); }; } }
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
 </body></html>
