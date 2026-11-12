@@ -60,12 +60,12 @@ input{-webkit-user-select:text;user-select:text}
 .astuceC .fl{flex:none;width:44px;height:44px;display:grid;place-items:center;animation:flA 1.3s ease-in-out infinite}
 @keyframes flA{0%,100%{transform:translateY(-4px)}50%{transform:translateY(5px)}}
 html,body{touch-action:manipulation}
-#explique{font:500 13.5px/1.35 Jost,Helvetica,sans-serif!important;max-width:300px;border-radius:16px!important;padding:7px 15px!important}
+#explique{font:500 9.5px/1.3 Jost,Helvetica,sans-serif!important;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;max-width:none!important;border-radius:999px!important;padding:7px 13px!important}
 /* 12/11 (Marie) : des étoiles qui brillent, à côté des charms (12 au plus, on les glisse comme les charms, la poubelle les enlève) */
 @keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
 .st.eto{display:grid;place-items:center;container-type:size;filter:none}.st.eto.flotte{animation:none}
 .st.eto i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite;pointer-events:none}
-#etoP{pointer-events:auto;cursor:pointer;border:0;display:inline-flex;align-items:center;gap:6px}#etoP b{font-size:14px;font-weight:400}
+#etoP{pointer-events:auto;cursor:pointer;border:0;display:inline-flex;align-items:center;gap:6px;position:absolute;left:12px;top:-48px;z-index:44;padding:8px 13px}#etoP b{font-size:14px;font-weight:400}
 #etoPX{display:inline-grid;place-items:center;width:18px;height:18px;margin:-2px -5px -2px 2px;border-radius:50%;background:rgba(30,28,27,.1);font-size:10px}#etoPX[hidden]{display:none}
 .ecr.finie .btnBas,.ecr.finie .panneau,.ecr.finie .poubelle{display:none}
 .bulle{position:fixed;left:50%;top:38%;max-width:90vw;white-space:normal!important;text-align:center;translate:-50% 0;z-index:95;border-radius:999px;background:rgba(30,28,27,.88);color:#fff;padding:9px 15px;font:400 13px Jost,sans-serif;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
@@ -109,7 +109,7 @@ html,body{touch-action:manipulation}
 .ptsP{flex:none;display:flex;justify-content:center;gap:5px;padding:8px 0 6px}.ptsP i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.18)}.ptsP i.on{background:var(--noir)}
 </style></head><body>
 <div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
-<p class="explique" id="explique">Touchez un charm pour le poser<br>21 au maximum</p>
+<p class="explique" id="explique">Touchez un charm pour le poser · 21 au maximum</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
 <div class="fini" id="fini" hidden><div><h3>Votre site est prêt à briller ✦</h3><p>Vos charms sont posés. Ils bougent tout doucement, comme sur votre site.</p><button type="button" class="noir" data-activer>ACTIVER MON SITE</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
 <div class="bulle" id="bulle"></div>
@@ -260,7 +260,7 @@ function panneau(e, M, opts) {
 
 /* ---------- le présentoir 6×3 (choisi par Marie) ---------- */
 const VERSIONS = [{ cols: 6, rows: 3, h: "48px", pad: "4px" }];   // 09/11 : 6×3 CHOISI (si les tests ne vont pas : 5×4, rows 4, h 46px)
-document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?nouveau&public&charms=0"></iframe><div class="attente">Votre site arrive…</div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
+document.getElementById("ecrans").innerHTML = VERSIONS.map((v, k) => `<div class="ecr on" id="e${k}" style="--cols:${v.cols};--rows:${v.rows};--h:${v.h};--pad:${v.pad}"><div class="defileSite"><div class="pageSite">${VRAI ? `<div class="vraiSite"><iframe id="vrai" title="Votre site" src="loginail-creer/pret.html?v=1311f&nouveau&public&charms=0"></iframe><div class="attente"></div></div><div class="espace"></div>` : `<img src="${SITE}" alt="">`}<div class="calque"></div></div></div>
   <div class="poubelle verre"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="#1E1C1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   <button class="btnBas verre" data-ouvre hidden style="left:30%">＋ CHARMS</button><button class="btnBas" data-valider hidden style="left:72%;background:#1E1C1B;color:#fff;border:0">VALIDER</button><div class="panneau blanc presentoir"></div></div>`).join("");
 const e = document.getElementById("e0"), M = moteur(e), b = e.querySelector("[data-ouvre]"), val = e.querySelector("[data-valider]"); POSES = () => M.poses();
@@ -286,9 +286,11 @@ if (APPLI) { const ba = document.querySelector("[data-activer]"); if (ba) ba.tex
 if (VRAI) { const f = document.getElementById("vrai"), dz = e.querySelector(".defileSite"), es = e.querySelector(".espace"), vs = e.querySelector(".vraiSite");
   const boite = () => { try { return f.contentDocument.querySelector(".ecran .defile"); } catch (x) { return null; } };
   const mesure = () => { const d = boite(); if (!d) return; vs.style.setProperty("--hEcr", dz.clientHeight + "px"); es.style.height = Math.max(0, d.scrollHeight - d.clientHeight) + "px"; };
-  f.onload = () => { try { const D = f.contentDocument, st = D.createElement("style");
-      st.textContent = ".pret,.langues,.lgn-st,.ch-couche{display:none!important}.defile{scroll-behavior:auto!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; D.head.appendChild(st); } catch (x) {}
-    [300, 1200, 3000, 6000].forEach(t => setTimeout(mesure, t)); setTimeout(() => vs.classList.add("pret"), 900); };
+  const habille = () => { try { const D = f.contentDocument; if (!D || !D.head || D.getElementById("lgnPres")) return; const st = D.createElement("style"); st.id = "lgnPres";
+      st.textContent = ".pret,.langues,.lgn-st,.ch-couche{display:none!important}.defile{scroll-behavior:auto!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; D.head.appendChild(st); } catch (x) {} };
+  /* 13/11 nuit (Marie : « Votre site arrive », c'est long) : on montre le site dès qu'il est dessiné, sans attendre toutes ses images */
+  const guette = setInterval(() => { if (!boite()) return; clearInterval(guette); habille(); mesure(); setTimeout(() => vs.classList.add("pret"), 150); }, 80);
+  f.onload = () => { habille(); [300, 1200, 3000, 6000].forEach(t => setTimeout(mesure, t)); setTimeout(() => vs.classList.add("pret"), 200); };
   dz.addEventListener("scroll", () => { const d = boite(); if (d) d.scrollTop = dz.scrollTop; }, { passive: true });
   addEventListener("resize", mesure); }
 /* tout effacer (avec une question avant) */
@@ -301,6 +303,7 @@ function astuceCharm(quoi) { let a = document.getElementById("astuceC"); if (!a)
   a.classList.add("on"); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove("on"), 5200); }
 document.addEventListener("dblclick", e => e.preventDefault(), { passive: false });
 { const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 1) setTimeout(() => astuceCharm("taille"), 500); if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
+{ const pn = document.querySelector(".ecr.on .panneau") || document.querySelector(".panneau"); if (pn) pn.appendChild(document.getElementById("etoP")); }   /* 13/11 nuit : Étoiles en bas à gauche, juste au-dessus des charms */
 document.getElementById("etoP").onclick = ev => { if (ev.target.closest("#etoPX")) M.enleveEtoiles(); else M.etoiles(); };
 setInterval(() => M.majEto(), 1000);
 document.querySelector("#confirme [data-non]").onclick = () => document.getElementById("confirme").hidden = true;

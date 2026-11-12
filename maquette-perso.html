@@ -80,10 +80,10 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .nu{flex:none;width:46px;height:34px;border-radius:11px;border:0;padding:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .15s;cursor:pointer}
 .nu.on{transform:scale(1.06);box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
 /* 13/11 nuit (Marie) : des carrés qui défilent ; celui du milieu avance (plus grand, bien net), les autres sont un peu effacés ; aucun contour */
-.choix>.ligneH,#teintes>.ligneH,#teintes>.roue{flex:none}#teintes{display:flex;flex-direction:column;gap:2px}.roue.carres{height:52px}.roue.carres .ro-piste{gap:11px;padding:0 calc(50% - 15px)}
-.roue.carres .ro-c{width:30px;height:30px;border-radius:9px;box-shadow:none;opacity:.72}
-.roue.carres .ro-c.pres{opacity:.9;transform:scale(1.14)}
-.roue.carres .ro-c.mil{opacity:1;transform:scale(1.5) translateY(-1px);box-shadow:0 7px 14px -3px rgba(0,0,0,.32)}
+.choix>.ligneH,#teintes>.ligneH,#teintes>.roue{flex:none}#teintes{display:flex;flex-direction:column;gap:2px}.roue.carres{height:52px}.roue.carres .ro-piste{gap:10px;padding:0 calc(50% - 11px);align-items:center}
+.roue.carres .ro-c{width:22px;height:34px;border-radius:999px;box-shadow:none;opacity:.72}
+.roue.carres .ro-c.pres{opacity:.9;transform:scale(1.1)}
+.roue.carres .ro-c.mil{opacity:1;transform:scale(1.36);box-shadow:0 7px 14px -3px rgba(0,0,0,.32)}
 .trait{position:relative;margin:8px 30px 0;height:48px;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none}
 .tr-piste{position:absolute;left:0;right:0;top:17px;height:14px;border-radius:999px;overflow:hidden;display:flex;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}.tr-piste i{flex:1}
 .tr-pouce{position:absolute;top:5px;width:38px;height:38px;border-radius:50%;translate:-50% 0;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);pointer-events:none}.tr-pouce.vide{opacity:.55}
@@ -221,7 +221,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311f&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -243,7 +243,7 @@ html.vrai .maquette{display:none}
 const $ = id => document.getElementById(id);
 const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
-{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q; }   // le coup de cœur choisi
+{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311f"; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
@@ -397,7 +397,7 @@ function listePerso(k) { const F = W.FONDS100?.f || [], existe = n => F.some(x =
 function vgNom(n) { const i = (W.FONDS100?.f || []).findIndex(x => x[0] === n); if (i < 0 || !W.F100) return ""; const t = document.createElement("div"); t.innerHTML = W.F100.rond(i);
   const c = t.querySelector(".f100"); if (!c) return ""; c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k));
   return `<button class="vg" data-f="${n.replace(/"/g, "&quot;")}" title="${n.replace(/"/g, "&quot;")}">${c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/").replace(/fonds-img\//g, "fonds-mini/")}</button>`; }
-const vgListe = l => l.length || catPerso !== "favoris" ? `<button class="vg sans" data-f="">Aucun</button>` + l.map(vgNom).join("") : `<p class="videF">Restez appuyée sur un fond<br>pour le garder dans vos favoris</p>`;
+const vgListe = l => l.length || catPerso !== "favoris" ? l.map(vgNom).join("") : `<p class="videF">Restez appuyée sur un fond<br>pour le garder dans vos favoris</p>`;
 const marqueFavoris = () => document.querySelectorAll("#grilleF .vg").forEach(b => b.classList.toggle("fav", !!b.dataset.f && favF.includes(b.dataset.f)));
 /* poser n'importe quel fond par son nom (même s'il n'est pas dans la catégorie ouverte du site) */
 function poseFond(n) { const P = D.getElementById("pzFonds"); if (!P) return; let b = [...P.querySelectorAll("[data-f]")].find(x => x.dataset.f === n), tmp = null;
@@ -421,15 +421,24 @@ function assortir() { const n = fondActuel(), f = n && (W.FONDS100?.f || []).fin
   const ks = Object.entries(NOMC).filter(([k, v]) => /^#/.test(v) && lum(v) < .62); if (ks.length) { nomc = ks.reduce((m, x) => dist(x[1], cn) < dist(m[1], cn) ? x : m)[0]; try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); }
   setTimeout(poseEncre, 80); bulle("Couleurs assorties ✦"); navigator.vibrate?.(10); }
 /* 13/11 nuit (Marie) : les fonds défilent comme les couleurs — celui du milieu est en grand et se pose tout seul sur le site */
-function brancheFonds() { const g = $("grilleF"); if (!g) return; const B = [...g.querySelectorAll(".vg")]; if (!B.length) return; let t = 0, pret = false;
+function gardeLigne(x) { const l = $("contenu").querySelector(".ligneH"); if (l) { l.style.scrollBehavior = "auto"; l.scrollLeft = x; } }
+function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); if (!t || !c || !m || plein) return; t.style.transform = "";
+  let haut = 1e9; c.querySelectorAll("button,.roue,.pages").forEach(x => { const r = x.getBoundingClientRect(); if (r.height > 4 && r.top < haut) haut = r.top; }); if (haut > 1e8) return;
+  const r = t.getBoundingClientRect(), d = (m.getBoundingClientRect().bottom + haut) / 2 - (r.top + r.height / 2); if (Math.abs(d) < 60) t.style.transform = `translateY(${d.toFixed(1)}px)`; }
+new MutationObserver(() => requestAnimationFrame(centreTitre)).observe(document.getElementById("contenu"), { childList: true }); addEventListener("resize", () => setTimeout(centreTitre, 80)); [300, 1200, 2500].forEach(x => setTimeout(centreTitre, x));
+function brancheFonds() { const g = $("grilleF"); if (!g) return; let n = g.querySelectorAll(".vg").length; if (!n) return;
+  const N = n >= 6 && n <= 170 ? n : 0; if (N) g.innerHTML = g.innerHTML.repeat(3);   /* sans fin : la liste trois fois, on reste sur celle du milieu */
+  const B = [...g.querySelectorAll(".vg")]; let t = 0, pret = false; marqueFavoris();
+  const tour = () => B[N].offsetLeft - B[0].offsetLeft;
   const milieu = () => { const c = g.scrollLeft + g.clientWidth / 2; let m = B[0], d = 1e9; B.forEach(b => { const x = Math.abs(b.offsetLeft + b.offsetWidth / 2 - c); if (x < d) { d = x; m = b; } }); return m; };
   const peint = m => B.forEach(b => b.classList.toggle("mil", b === m));
-  g.onscroll = () => { const m = milieu(); peint(m); if (!pret) return; clearTimeout(t); t = setTimeout(() => { if (m.isConnected && m.dataset.f !== fondActuel()) { poseFond(m.dataset.f); navigator.vibrate?.(5); } }, 240); };
-  requestAnimationFrame(() => { const a = B.find(b => b.dataset.f === fondActuel() && b.dataset.f) || B[Math.min(1, B.length - 1)]; g.scrollLeft = a.offsetLeft + a.offsetWidth / 2 - g.clientWidth / 2; peint(a); setTimeout(() => { pret = true; }, 300); }); }
+  g.onscroll = () => { if (N) { const w = tour(); if (g.scrollLeft < w * .5) g.scrollLeft += w; else if (g.scrollLeft > w * 1.5) g.scrollLeft -= w; }
+    const m = milieu(); peint(m); if (!pret) return; clearTimeout(t); t = setTimeout(() => { if (m.isConnected && m.dataset.f && m.dataset.f !== fondActuel()) { poseFond(m.dataset.f); navigator.vibrate?.(5); } }, 240); };
+  requestAnimationFrame(() => { const l = N ? B.slice(N, 2 * N) : B, a = l.find(b => b.dataset.f === fondActuel()) || l[0]; g.scrollLeft = a.offsetLeft + a.offsetWidth / 2 - g.clientWidth / 2; peint(a); setTimeout(() => { pret = true; }, 300); }); }
 function vignettes() {
   return [...D.querySelectorAll("#pzFonds [data-f]")].map(b => { const t = b.querySelector(".f100"); let h = "";
     if (t) { const c = t.cloneNode(true); c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k)); h = c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/").replace(/fonds-img\//g, "fonds-mini/"); }
-    return b.dataset.f ? `<button class="vg" data-f="${b.dataset.f.replace(/"/g, "&quot;")}" title="${b.title || ""}">${h}</button>` : `<button class="vg sans" data-f="">Aucun</button>`; }).join("");
+    return b.dataset.f ? `<button class="vg" data-f="${b.dataset.f.replace(/"/g, "&quot;")}" title="${b.title || ""}">${h}</button>` : ""; }).join("");
 }
 function ajusteFonds() { const g = $("grilleF"); if (!g) return; g.querySelectorAll("[data-f]").forEach(b => b.classList.toggle("on", b.dataset.f === (W.__pzEtat?.().fond || ""))); }
 /* le clavier : une section par famille (Favoris, Aléatoire, Populaires, Cœurs…, puis tous les autres) */
@@ -593,8 +602,8 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.hasard) { $("de").onclick(); return; }
   if (b.dataset.forme) { changeForme(+b.dataset.forme - forme); return; }
   if (b.dataset.assortir) { assortir(); return; }
-  if (b.dataset.perso) { catPerso = b.dataset.perso; rend(); return; }
-  if (b.dataset.cat) { catPerso = ""; clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(rend, 60); return; }
+  if (b.dataset.perso) { const x = b.parentElement.scrollLeft; catPerso = b.dataset.perso; rend(); gardeLigne(x); return; }
+  if (b.dataset.cat) { const x = b.parentElement.scrollLeft; catPerso = ""; clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(() => { rend(); gardeLigne(x); }, 60); return; }
   if (b.dataset.f != null) { if (b._long) { b._long = false; return; } const g = b.closest(".defileF"); if (g) g.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - g.clientWidth / 2, behavior: "smooth" }); poseFond(b.dataset.f); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
   if (b.dataset.fam) { famC[sousCouleur] = b.dataset.fam; const x = $("teintes").querySelector(".fams").scrollLeft; rend(); requestAnimationFrame(() => { const f = $("teintes") && $("teintes").querySelector(".fams"); if (f) f.scrollLeft = x; }); return; }
@@ -646,7 +655,7 @@ $("cherche").dataset.x = "1";
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311f"; return; } $("fin").classList.add("on"); return; } etape++; chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
