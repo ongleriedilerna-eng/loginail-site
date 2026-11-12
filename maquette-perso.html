@@ -252,7 +252,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311p&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311q&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -275,7 +275,7 @@ html.vrai .maquette{display:none}
 const $ = id => document.getElementById(id);
 const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
-{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311p"; }   // le coup de cœur choisi
+{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311q"; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
@@ -376,6 +376,7 @@ function rend() {
     c.innerHTML = (`<div class="ligneH"><button class="puce verre avecIc ${catPerso === "favoris" ? "on" : ""}" data-perso="favoris">${COEUR}Favoris</button>`
       + `<button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>`
       + `<button class="puce verre surprise seul" data-assortir="1" type="button" aria-label="Assortir mes couleurs au fond" title="Assortir mes couleurs au fond"><span style="font-size:17px;line-height:1">✦</span></button>`
+      + (choisisG().length ? `<button class="puce verre ${catPerso === "choisis" ? "on" : ""}" data-perso="choisis">Les plus choisis</button>` : "")
       + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
       + (essayes.length > 1 ? `<button class="puce verre ${catPerso === "essayes" ? "on" : ""}" data-perso="essayes">Déjà essayés</button>` : "")
       + `${cats.map(b => `<button class="puce verre ${!catPerso && b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
@@ -417,11 +418,15 @@ function rend() {
 }
 /* les vignettes : le vrai fond (celui du site), en petit format téléphone */
 /* ───── 13/11 (Marie) : « Pour vous », favoris, déjà essayés, glisser, assortir ───── */
-let catPerso = "pourvous", POURVOUS = null, essayes = [], favF = [];
+/* 13/11 (Marie) : ses 12 fonds « les plus choisis », par style — montrés en premier */
+const CHOISIS = { classique: ["Soie", "Marbre", "Losanges rayés", "Damier lin", "Cachemire khaki et champagne à chevrons", "Cachemire taupe, lumière douce", "Bulles qui montent", "Nœuds qui flottent", "Mosaïque nacrée ivoire et or champagne", "Boules disco beige", "Uni beige", "Pois beige"], ouf: [] };
+const choisisG = () => CHOISIS[new URLSearchParams(location.search).get("genre") === "ouf" ? "ouf" : "classique"] || [];
+let catPerso = choisisG().length ? "choisis" : "pourvous", POURVOUS = null, essayes = [], favF = [];
 try { favF = JSON.parse(localStorage.getItem("fondsFavoris") || "[]"); } catch (e) {}
 const persos = () => [["pourvous", "Pour vous"], ["favoris", "♥ Favoris"]].concat(essayes.length > 1 ? [["essayes", "Déjà essayés"]] : []);
 const fondActuel = () => W.__pzEtat?.().fond || "";
 function listePerso(k) { const F = W.FONDS100?.f || [], existe = n => F.some(x => x[0] === n);
+  if (k === "choisis") return choisisG().filter(existe);
   if (k === "favoris") return favF.filter(existe);
   if (k === "essayes") return essayes.filter(existe);
   if (!POURVOUS) { const noms = new Set(); let cdc = []; try { cdc = JSON.parse(sessionStorage.getItem("cdc-fonds") || "[]"); } catch (e) {}
@@ -717,7 +722,7 @@ const noteReprise = p => { try { localStorage.setItem("loginail-reprise", JSON.s
 if (VRAI && !APPLI) noteReprise("perso");
 $("amieM").onclick = async () => { const d = { title: "Loginail", text: "Regarde, je viens de créer le site de mon salon avec Loginail ✦", url: "https://loginail.fr" };
   try { if (navigator.share) { await navigator.share(d); return; } await navigator.clipboard.writeText(d.text + " " + d.url); bulle("Le lien est copié : collez-le dans un message"); } catch (x) {} };
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311p"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311q"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
