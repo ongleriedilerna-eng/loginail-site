@@ -54,7 +54,7 @@
   .hf.G .hf-carte .hf-k{margin-top:0}
   /* 13/11 nuit (Marie) : deux choix. « Blocs blancs » = le bloc est blanc, les lignes (poses, semi-permanent…) sont en couleur.
      « Blocs de couleur » (valeur gardée : "verre") = le bloc est en couleur, les lignes sont blanches. La couleur = celle des boutons, très adoucie. */
-  .ecran{--lgn-bloc:color-mix(in srgb,var(--btn,var(--noir)) 20%,#fff)}
+  .ecran{--lgn-bloc:color-mix(in srgb,var(--creme) 86%,var(--noir))}
   .ecran.blocs-blanc:not(.v1) .hf.G .hf-carte{background:#fff}
   .ecran.blocs-verre:not(.v1) .hf.G .hf-carte{background:var(--lgn-bloc)}
   .ecran:is(.blocs-blanc,.blocs-verre):not(.v1):not(.ep) .defile>.sec .tir{border-radius:14px;padding:0 14px;margin-bottom:8px;border:0}
