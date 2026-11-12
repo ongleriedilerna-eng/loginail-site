@@ -252,7 +252,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311r&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311s&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -275,7 +275,7 @@ html.vrai .maquette{display:none}
 const $ = id => document.getElementById(id);
 const F = $("site");
 ["gesturestart", "gesturechange"].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));   // pas de zoom à deux doigts (iPhone)
-{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311r"; }   // le coup de cœur choisi
+{ const q = new URLSearchParams(location.search).get("src"); if (q && /^loginail-creer\/pret\.html\?/.test(q)) F.src = q + "&v=1311s"; }   // le coup de cœur choisi
 let W = null, D = null, etape = 0, forme = 1, plein = false, sousCouleur = "nom", vifChoisi = "";
 /* 09/11 (Marie) : ?vrai — son vrai site ; les charms se posent ensuite avec le présentoir (charms-presentoir.html?vrai) */
 const VRAI = new URLSearchParams(location.search).has("vrai");
@@ -390,8 +390,8 @@ function rend() {
     let items = [], choisi = "";
     if (sousCouleur === "nom") { items = Object.entries(NOMC).map(([k, v]) => ({ k, bg: v })); choisi = nomc; }
     if (sousCouleur === "boutons") { items = range([...D.querySelectorAll(".pf-vifs [data-vif]")]).map(b => ({ k: b.dataset.vif, bg: b.style.background })); choisi = vifChoisi; }
-    if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.map(b => ({ k: b.dataset.co, bg: b.style.background || vraiFond(b.dataset.co) })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
-    items = familles(items).flatMap(f => f[1]);   /* rangées par famille puis du clair au foncé : la bande fait un bel arc-en-ciel */
+    if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.filter(b => !ENLEVEES.includes(b.dataset.co) || b.classList.contains("on")).map(b => ({ k: b.dataset.co, bg: b.style.background || vraiFond(b.dataset.co) })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
+    items = sousCouleur === "site" ? arcEnCiel(items) : familles(items).flatMap(f => f[1]);   /* rangées par famille puis du clair au foncé : la bande fait un bel arc-en-ciel */
     TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
     l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i><u></u><u></u></i></span><b>Sur blanc</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i><u></u><u></u></i></span><b>Sur couleur</b></button></div>` : "")
       + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
@@ -607,6 +607,11 @@ $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("
 let TRAIT = [], traitK = -1, traitTenu = false;
 /* ───── 13/11 (Marie) : les couleurs par FAMILLE (Roses, Rouges, Nudes…), puis toutes les nuances de la famille ───── */
 const famC = {}, FONDV = {};
+/* 13/11 (Marie) : 14 couleurs du site presque jumelles d'une autre, enlevées ; la bande va du rose au violet, puis les neutres du clair au foncé */
+const ENLEVEES = ["peche", "pechep", "poudre", "nacre", "cremedoree", "mousse", "feuillage", "verttendre", "vertdeau", "lavande", "lilaspoudre", "bleup", "greige", "rose"];
+function arcEnCiel(items) { const cl = x => { const [r, g, b] = coul(x.bg).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn; let h = 0;
+    if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360; const s = d ? d / (1 - Math.abs(2 * l - 1)) : 0; return s < .2 ? [1, -l] : [0, (h + 40) % 360 + (1 - l) * .01]; };
+  return items.map(x => [cl(x), x]).sort((a, b) => a[0][0] - b[0][0] || a[0][1] - b[0][1]).map(x => x[1]); }
 function famDe(bg) { if (/gradient/.test(bg)) return "Brillants"; const [r, g, b] = coul(bg).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
   const sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1)); let h = 0; if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360;
   if (sat < .13 || l < .1 || l > .95) return "Noirs et blancs";
@@ -722,7 +727,7 @@ const noteReprise = p => { try { localStorage.setItem("loginail-reprise", JSON.s
 if (VRAI && !APPLI) noteReprise("perso");
 $("amieM").onclick = async () => { const d = { title: "Loginail", text: "Regarde, je viens de créer le site de mon salon avec Loginail ✦", url: "https://loginail.fr" };
   try { if (navigator.share) { await navigator.share(d); return; } await navigator.clipboard.writeText(d.text + " " + d.url); bulle("Le lien est copié : collez-le dans un message"); } catch (x) {} };
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311r"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311s"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
