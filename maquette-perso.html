@@ -9,7 +9,7 @@
    Derrière : son fond en transparence (il bouge aussi s'il bouge). Boutons en « verre » (pilules blanches transparentes), « Suivant » au milieu.
    Ordre : 1 En-tête (flèches) → 2 Fond → 3 Couleurs (le nom, puis les boutons, puis le site ; rangées par teinte) → 4 Écriture → 5 Charms.
    Chaque changement se fait en fondu (pas de carré blanc). */
-:root{--noir:#1E1C1B;--fond:#F6F3EF;--muted:#6B625C;--basH:232px}
+:root{--noir:#1E1C1B;--fond:#F6F3EF;--muted:#6B625C;--basH:246px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 button:focus,button:focus-visible,input:focus{outline:none}
@@ -24,10 +24,10 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .barre{display:flex;gap:4px}.barre i{width:24px;height:3px;border-radius:2px;background:rgba(30,28,27,.15);transition:background .3s}.barre i.on{background:var(--noir)}
 .haut h2{margin:4px 0 0;font:400 20px/1.1 Jost,sans-serif;text-align:center;letter-spacing:-.01em}
 .titreBas{display:block;text-align:center;font:500 10px Jost,sans-serif;letter-spacing:.26em;padding-left:.26em;text-transform:uppercase;margin:3px 0 11px}.bas.charms .titreBas{display:none}
-.indiceD{position:absolute;left:50%;bottom:12%;translate:-50% 0;z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;padding:13px 16px 11px;border-radius:20px;background:rgba(30,28,27,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px -8px rgba(0,0,0,.4);pointer-events:none;transition:opacity .35s}.indiceD.part{opacity:0}
-.indiceD .gl{width:26px;height:42px;border-radius:999px;border:1.5px solid rgba(255,255,255,.95);position:relative}
-.indiceD .gl:after{content:"";position:absolute;left:50%;top:8px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff;animation:indD 1.5s cubic-bezier(.4,0,.2,1) infinite}
-.indiceD b{font:500 9.5px Jost,sans-serif;letter-spacing:.24em;padding-left:.24em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.indiceD{position:absolute;left:50%;bottom:12%;translate:-50% 0;z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;padding:13px 16px 11px;border-radius:20px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);box-shadow:0 8px 24px -10px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.7);pointer-events:none;transition:opacity .35s}.indiceD.part{opacity:0}
+.indiceD .gl{width:26px;height:42px;border-radius:999px;border:1.5px solid var(--noir);position:relative}
+.indiceD .gl:after{content:"";position:absolute;left:50%;top:8px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--noir);animation:indD 1.5s cubic-bezier(.4,0,.2,1) infinite}
+.indiceD b{font:500 9.5px Jost,sans-serif;letter-spacing:.24em;padding-left:.24em;text-transform:uppercase;color:var(--noir);white-space:nowrap}
 @keyframes indD{0%{transform:translateY(0);opacity:0}25%{opacity:1}75%{opacity:1}100%{transform:translateY(20px);opacity:0}}
 .haut p{margin:0;font:300 12px Jost,sans-serif;color:var(--muted);text-align:center}
 #mini{position:absolute;left:50%;transform:translateX(-50%);border-radius:30px;border:6px solid #111;background:#fff;overflow:hidden;box-shadow:0 22px 40px -22px rgba(0,0,0,.6);z-index:2}
@@ -38,12 +38,12 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 #oeil svg{width:18px;height:18px}
 .plein #mini{border-radius:0;border-width:0}
 .plein .fl,.plein .haut,.plein .bas{opacity:0;pointer-events:none}
-#fermerPlein{position:absolute;top:calc(env(safe-area-inset-top) + 26px);right:26px;left:auto;z-index:6;width:42px;height:42px;border-radius:50%;padding:0;display:grid;place-items:center}#fermerPlein[hidden]{display:none}
+#fermerPlein{position:absolute;top:auto;bottom:calc(env(safe-area-inset-bottom) + 22px);right:18px;left:auto;z-index:6;width:42px;height:42px;border-radius:50%;padding:0;display:grid;place-items:center}#fermerPlein[hidden]{display:none}
 /* 13/11 (Marie) : le mot écrit en rond autour du bouton, il tourne tout doucement */
 #oeil,#fermerPlein{overflow:visible}
 .tour{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px;pointer-events:none}
 .tour text{font:500 6.4px Jost,sans-serif;letter-spacing:.17em;fill:var(--noir)}
-#oeil>svg:not(.tour){position:relative}#oeil svg.tour,#fermerPlein svg.tour{width:64px;height:64px}#oeil,#fermerPlein{width:34px!important;height:34px!important}#oeil>svg:not(.tour),#fermerPlein>svg:not(.tour){width:15px;height:15px}
+#oeil>svg:not(.tour){position:relative}#oeil svg.tour,#fermerPlein svg.tour{width:64px;height:64px}#oeil,#fermerPlein{width:34px!important;height:34px!important}#oeil>svg:not(.tour),#fermerPlein>svg:not(.tour){width:15px;height:15px}#oeil{overflow:visible}#oeil .lib{position:absolute;left:50%;top:calc(100% + 5px);transform:translateX(-50%);font:500 7.5px/1.35 Jost,sans-serif;letter-spacing:.14em;color:var(--noir);text-align:center;white-space:nowrap;pointer-events:none}#fermerPlein{width:auto!important;height:46px!important;padding:0 18px 0 14px;border-radius:999px;display:flex;align-items:center;gap:9px;font:500 12px Jost,sans-serif;letter-spacing:.16em;color:var(--noir);background:rgba(255,255,255,.94)!important;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}#fermerPlein[hidden]{display:none}#fermerPlein>svg{width:18px;height:18px;flex:none}
 @keyframes tourne{to{transform:rotate(360deg)}}
 .bas{position:absolute;left:0;right:0;bottom:0;height:calc(var(--basH) + env(safe-area-inset-bottom));padding:0 0 calc(env(safe-area-inset-bottom) + 12px);z-index:3;display:flex;flex-direction:column}
 .choix{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
@@ -79,10 +79,16 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .nuances{gap:7px!important;padding-top:3px!important;padding-bottom:3px!important}
 .nu{flex:none;width:46px;height:34px;border-radius:11px;border:0;padding:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .15s;cursor:pointer}
 .nu.on{transform:scale(1.06);box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
+/* 13/11 nuit (Marie) : des carrés qui défilent ; celui du milieu avance (plus grand, bien net), les autres sont un peu effacés ; aucun contour */
+.choix>.ligneH,#teintes>.ligneH,#teintes>.roue{flex:none}#teintes{display:flex;flex-direction:column;gap:2px}.roue.carres{height:52px}.roue.carres .ro-piste{gap:11px;padding:0 calc(50% - 15px)}
+.roue.carres .ro-c{width:30px;height:30px;border-radius:9px;box-shadow:none;opacity:.72}
+.roue.carres .ro-c.pres{opacity:.9;transform:scale(1.14)}
+.roue.carres .ro-c.mil{opacity:1;transform:scale(1.5) translateY(-1px);box-shadow:0 7px 14px -3px rgba(0,0,0,.32)}
 .trait{position:relative;margin:8px 30px 0;height:48px;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none}
 .tr-piste{position:absolute;left:0;right:0;top:17px;height:14px;border-radius:999px;overflow:hidden;display:flex;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}.tr-piste i{flex:1}
 .tr-pouce{position:absolute;top:5px;width:38px;height:38px;border-radius:50%;translate:-50% 0;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);pointer-events:none}.tr-pouce.vide{opacity:.55}
 .tr-aide{margin:0 0 2px;text-align:center;font:300 11.5px Jost,sans-serif;color:var(--muted)}
+.puce.avecIc{display:flex;align-items:center;gap:6px}
 .surprise.seul{flex:none;width:38px;height:38px;padding:0!important;display:grid;place-items:center;border-radius:50%}.surprise.seul svg{width:17px;height:17px;margin:0}
 /* 13/11 (Marie) : la consigne en GRAND — une testeuse n'avait pas vu qu'on peut agrandir un charm */
 .astuceC{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 50px);translate:-50% 0;z-index:95;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 20px);padding:12px 16px 12px 14px;border-radius:18px;background:rgba(30,28,27,.9);color:#fff;font:500 14.5px/1.3 Jost,Helvetica,sans-serif;box-shadow:0 10px 28px -10px rgba(0,0,0,.5);pointer-events:none;opacity:0;transition:opacity .35s}
@@ -97,7 +103,10 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 html,body{touch-action:manipulation}
 .videF{margin:0 auto;align-self:center;text-align:center;font:300 13px/1.45 Jost,sans-serif;color:var(--muted)}
 #assortir{position:absolute;z-index:5;transform:translate(-50%,-50%);white-space:nowrap;border-radius:999px;padding:9px 15px;font:500 11.5px Jost,sans-serif;letter-spacing:.06em;display:flex;align-items:center;gap:6px;box-shadow:0 6px 18px -8px rgba(0,0,0,.4)}#assortir[hidden]{display:none}#assortir b{font-weight:400;font-size:14px}
-.grilleF .vg{position:relative}.grilleF .vg.fav:after{content:"♥";position:absolute;right:3px;top:2px;font-size:11px;line-height:1;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.7)}
+.defileF{scroll-snap-type:x mandatory;padding-left:calc(50% - 26px)!important;padding-right:calc(50% - 26px)!important;align-items:center}
+.defileF .vg{scroll-snap-align:center;opacity:.62;transition:transform .18s cubic-bezier(.3,1.3,.5,1),opacity .18s,box-shadow .18s}
+.defileF .vg.mil{opacity:1;transform:scale(1.16);box-shadow:0 8px 16px -6px rgba(0,0,0,.35);z-index:1}
+.grilleF .vg{position:relative}.grilleF .vg.fav:after{content:"♡";position:absolute;right:3px;top:2px;font-size:11px;line-height:1;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.7)}
 .pastille{width:40px;height:40px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .2s}
 .pastille.on{transform:scale(1.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 3px var(--fond),0 0 0 4.5px var(--noir)}
 .pol{border-radius:16px;padding:10px 15px;font-size:20px;white-space:nowrap;min-width:80px}
@@ -214,10 +223,10 @@ html.vrai .maquette{display:none}
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
   <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
-  <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><svg class="tour" viewBox="0 0 64 64" aria-hidden="true"><defs><path id="ct1" d="M32 32m-23 0a23 23 0 1 1 46 0a23 23 0 1 1-46 0"/></defs><text text-anchor="middle"><textPath href="#ct1" startOffset="25%">VOIR EN GRAND</textPath></text></svg><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <button class="verre" id="assortir" type="button" hidden><b>✦</b> Assortir mes couleurs</button>
-  <button class="verre" id="fermerPlein" type="button" aria-label="Revenir à la personnalisation" hidden><svg class="tour" viewBox="0 0 64 64" aria-hidden="true"><defs><path id="ct2" d="M32 32m-23 0a23 23 0 1 1 46 0a23 23 0 1 1-46 0"/></defs><text text-anchor="middle"><textPath href="#ct2" startOffset="25%">REVENIR</textPath></text></svg><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <button class="verre" id="fermerPlein" type="button" aria-label="Revenir à la personnalisation" hidden><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>REVENIR</span></button>
   <div id="voileC"></div>
   <div id="rechF"><div class="ligne1"><label><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="rechFin" placeholder="Chercher un fond : cerises, léopard…" autocomplete="off"></label><button class="annuler" id="rechFx" type="button">Annuler</button></div><div class="grilleF" id="rechFg"></div></div>
   <button class="mcUI verre" id="retC" type="button" aria-label="Retour">‹</button>
@@ -300,8 +309,8 @@ function taille() {
   const cx = T.clientWidth / 2, cy = hautH + h / 2;
   Object.assign($("avant").style, { left: Math.max(26, cx - w / 2 - 30) + "px", top: cy + "px" }); Object.assign($("apres").style, { left: Math.min(T.clientWidth - 26, cx + w / 2 + 30) + "px", top: cy + "px" });
   Object.assign($("de").style, { left: (cx + w / 2 - 4) + "px", top: (hautH + 26) + "px" });
-  Object.assign($("oeil").style, { left: (cx + w / 2) + "px", top: (hautH + h - 30) + "px" });
-  $("avant").hidden = $("apres").hidden = cle() !== "fond" || plein;   // 13/11 : ‹ › seulement pour passer d'un fond à l'autre
+  Object.assign($("oeil").style, { left: Math.min(T.clientWidth - 36, cx + w / 2 + 32) + "px", top: (hautH + h - 34) + "px" });   // 13/11 nuit : à droite du téléphone, plus dessus
+  $("avant").hidden = $("apres").hidden = true;   // 13/11 nuit : Marie n'aime pas les flèches (on glisse, ou on fait défiler les fonds)
   Object.assign($("assortir").style, { left: cx + "px", top: (hautH + h - 2) + "px" }); majAssortir();
 }
 /* son fond derrière le téléphone, en transparence (s'il bouge, il bouge aussi) */
@@ -326,9 +335,15 @@ function rend() {
   } else if (cle() === "fond") {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     const SURPRISE = `<svg viewBox="0 0 24 24"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    c.innerHTML = (`<div class="ligneH"><button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>${persos().map(([k, t]) => `<button class="puce verre ${catPerso === k ? "on" : ""}" data-perso="${k}">${t}</button>` + (k === "pourvous" ? `<button class="puce verre surprise seul" data-assortir="1" type="button" aria-label="Assortir mes couleurs au fond" title="Assortir mes couleurs au fond"><span style="font-size:17px;line-height:1">✦</span></button>` : "")).join("")}${cats.map(b => `<button class="puce verre ${!catPerso && b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
-      + `<div class="grilleF" id="grilleF">${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
-    marqueFavoris();
+    const COEUR = `<svg viewBox="0 0 24 24" width="15" height="15" style="flex:none"><path d="M12 20s-7-4.4-9-8.6C1.6 8.3 3.4 5 6.6 5c2 0 3.6 1.1 5.4 3.2C13.8 6.1 15.4 5 17.4 5c3.2 0 5 3.3 3.6 6.4-2 4.2-9 8.6-9 8.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
+    c.innerHTML = (`<div class="ligneH"><button class="puce verre avecIc ${catPerso === "favoris" ? "on" : ""}" data-perso="favoris">${COEUR}Favoris</button>`
+      + `<button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>`
+      + `<button class="puce verre surprise seul" data-assortir="1" type="button" aria-label="Assortir mes couleurs au fond" title="Assortir mes couleurs au fond"><span style="font-size:17px;line-height:1">✦</span></button>`
+      + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
+      + (essayes.length > 1 ? `<button class="puce verre ${catPerso === "essayes" ? "on" : ""}" data-perso="essayes">Déjà essayés</button>` : "")
+      + `${cats.map(b => `<button class="puce verre ${!catPerso && b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
+      + `<div class="grilleF defileF" id="grilleF">${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
+    marqueFavoris(); brancheFonds();
     brancheRecherche();
     ajusteFonds();
   } else if (cle() === "couleurs") {
@@ -338,12 +353,12 @@ function rend() {
     if (sousCouleur === "nom") { items = Object.entries(NOMC).map(([k, v]) => ({ k, bg: v })); choisi = nomc; }
     if (sousCouleur === "boutons") { items = range([...D.querySelectorAll(".pf-vifs [data-vif]")]).map(b => ({ k: b.dataset.vif, bg: b.style.background })); choisi = vifChoisi; }
     if (sousCouleur === "site") { const bs = range([...D.querySelectorAll(".pf-dots [data-co]")]); items = bs.map(b => ({ k: b.dataset.co, bg: vraiFond(b.dataset.co) || b.style.background })); choisi = (bs.find(b => b.classList.contains("on")) || { dataset: {} }).dataset.co || ""; }
-    TRAIT = items; const fams = familles(items);
-    if (!fams.some(f => f[0] === famC[sousCouleur])) famC[sousCouleur] = (fams.find(f => f[1].some(x => x.k === choisi)) || fams[0] || [""])[0];
-    const cur = fams.find(f => f[0] === famC[sousCouleur]) || ["", []], bl = blocsChoisis();
-    l = `<div class="ligneH fams">${sousCouleur === "site" ? `<button class="puce verre mini ${bl !== "verre" ? "on" : ""}" data-blocs="blanc">Blocs blancs</button><button class="puce verre mini ${bl === "verre" ? "on" : ""}" data-blocs="verre">Blocs en verre</button><span class="sepF"></span>` : ""}${fams.map(([n, li]) => `<button class="puce verre mini ${n === cur[0] ? "on" : ""}" data-fam="${n}"><i style="background:${li[Math.floor(li.length / 2)].bg}"></i>${n}</button>`).join("")}</div>`
-      + `<div class="ligneH nuances" id="nuances">${cur[1].map(x => `<button class="nu ${x.k === choisi ? "on" : ""}" data-teinte="${x.k}" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")}</div>`;
+    items = familles(items).flatMap(f => f[1]);   /* rangées par famille puis du clair au foncé : la bande fait un bel arc-en-ciel */
+    TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
+    l = (sousCouleur === "site" ? `<div class="ligneH fams" style="justify-content:center"><button class="puce verre mini ${bl !== "verre" ? "on" : ""}" data-blocs="blanc">Blocs blancs</button><button class="puce verre mini ${bl === "verre" ? "on" : ""}" data-blocs="verre">Blocs en verre</button></div>` : "")
+      + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
     c.innerHTML = `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div><div id="teintes">${l}</div>`;
+    brancheRoue(choisi ? ki : -1);
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
     let pols = [...D.querySelectorAll("#pzPol [data-p]")].sort((a, b) => ((ELEG.includes(a.dataset.p) ? 0 : 1) - (ELEG.includes(b.dataset.p) ? 0 : 1)) * (fun ? -1 : 1));
@@ -382,12 +397,12 @@ function listePerso(k) { const F = W.FONDS100?.f || [], existe = n => F.some(x =
 function vgNom(n) { const i = (W.FONDS100?.f || []).findIndex(x => x[0] === n); if (i < 0 || !W.F100) return ""; const t = document.createElement("div"); t.innerHTML = W.F100.rond(i);
   const c = t.querySelector(".f100"); if (!c) return ""; c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k));
   return `<button class="vg" data-f="${n.replace(/"/g, "&quot;")}" title="${n.replace(/"/g, "&quot;")}">${c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/").replace(/fonds-img\//g, "fonds-mini/")}</button>`; }
-const vgListe = l => l.length || catPerso !== "favoris" ? `<button class="vg sans" data-f="">Aucun</button>` + l.map(vgNom).join("") : `<p class="videF">Restez appuyée sur un fond<br>pour le garder dans vos favoris ♥</p>`;
+const vgListe = l => l.length || catPerso !== "favoris" ? `<button class="vg sans" data-f="">Aucun</button>` + l.map(vgNom).join("") : `<p class="videF">Restez appuyée sur un fond<br>pour le garder dans vos favoris</p>`;
 const marqueFavoris = () => document.querySelectorAll("#grilleF .vg").forEach(b => b.classList.toggle("fav", !!b.dataset.f && favF.includes(b.dataset.f)));
 /* poser n'importe quel fond par son nom (même s'il n'est pas dans la catégorie ouverte du site) */
 function poseFond(n) { const P = D.getElementById("pzFonds"); if (!P) return; let b = [...P.querySelectorAll("[data-f]")].find(x => x.dataset.f === n), tmp = null;
   if (!b) { tmp = b = D.createElement("button"); b.dataset.f = n; b.style.display = "none"; P.appendChild(b); } b.click(); if (tmp) tmp.remove();
-  if (n) { essayes = [n, ...essayes.filter(x => x !== n)].slice(0, 12); try { if (essayes.length === 2 && !localStorage.getItem("astuceFavF")) { localStorage.setItem("astuceFavF", "1"); setTimeout(() => bulle("Astuce : restez appuyée sur un fond pour le garder ♥"), 900); } } catch (e) {} }
+  if (n) { essayes = [n, ...essayes.filter(x => x !== n)].slice(0, 12); try { if (essayes.length === 2 && !localStorage.getItem("astuceFavF")) { localStorage.setItem("astuceFavF", "1"); setTimeout(() => bulle("Astuce : restez appuyée sur un fond pour le garder"), 900); } } catch (e) {} }
   ambiance(); ajusteFonds(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); majAssortir(); }
 /* ‹ › ou un glissé sur le téléphone : le fond d'avant / d'après, dans la liste affichée */
 function fondVoisin(d) { const g = $("grilleF"); if (!g) return; const l = [...g.querySelectorAll("[data-f]")].map(b => b.dataset.f).filter(Boolean); if (!l.length) return;
@@ -405,6 +420,12 @@ function assortir() { const n = fondActuel(), f = n && (W.FONDS100?.f || []).fin
   const vs = [...D.querySelectorAll(".pf-vifs [data-vif]")]; if (vs.length) { const b = vs.reduce((m, x) => dist(x.style.background, cb) < dist(m.style.background, cb) ? x : m); if (vifChoisi !== b.dataset.vif) { vifChoisi = b.dataset.vif; b.click(); noteVif(); } }
   const ks = Object.entries(NOMC).filter(([k, v]) => /^#/.test(v) && lum(v) < .62); if (ks.length) { nomc = ks.reduce((m, x) => dist(x[1], cn) < dist(m[1], cn) ? x : m)[0]; try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); }
   setTimeout(poseEncre, 80); bulle("Couleurs assorties ✦"); navigator.vibrate?.(10); }
+/* 13/11 nuit (Marie) : les fonds défilent comme les couleurs — celui du milieu est en grand et se pose tout seul sur le site */
+function brancheFonds() { const g = $("grilleF"); if (!g) return; const B = [...g.querySelectorAll(".vg")]; if (!B.length) return; let t = 0, pret = false;
+  const milieu = () => { const c = g.scrollLeft + g.clientWidth / 2; let m = B[0], d = 1e9; B.forEach(b => { const x = Math.abs(b.offsetLeft + b.offsetWidth / 2 - c); if (x < d) { d = x; m = b; } }); return m; };
+  const peint = m => B.forEach(b => b.classList.toggle("mil", b === m));
+  g.onscroll = () => { const m = milieu(); peint(m); if (!pret) return; clearTimeout(t); t = setTimeout(() => { if (m.isConnected && m.dataset.f !== fondActuel()) { poseFond(m.dataset.f); navigator.vibrate?.(5); } }, 240); };
+  requestAnimationFrame(() => { const a = B.find(b => b.dataset.f === fondActuel() && b.dataset.f) || B[Math.min(1, B.length - 1)]; g.scrollLeft = a.offsetLeft + a.offsetWidth / 2 - g.clientWidth / 2; peint(a); setTimeout(() => { pret = true; }, 300); }); }
 function vignettes() {
   return [...D.querySelectorAll("#pzFonds [data-f]")].map(b => { const t = b.querySelector(".f100"); let h = "";
     if (t) { const c = t.cloneNode(true); c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k)); h = c.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/").replace(/fonds-img\//g, "fonds-mini/"); }
@@ -525,7 +546,7 @@ $("assortir").onclick = assortir;
 /* appui long sur un fond : dans les favoris (ou on l'en retire) */
 $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("#grilleF .vg"); if (!b || !b.dataset.f) return; clearTimeout(b._tf);
   b._tf = setTimeout(() => { b._long = true; const n = b.dataset.f, i = favF.indexOf(n); if (i < 0) favF.unshift(n); else favF.splice(i, 1); try { localStorage.setItem("fondsFavoris", JSON.stringify(favF)); } catch (x) {}
-    bulle(i < 0 ? "Ajouté à vos favoris ♥" : "Retiré de vos favoris"); navigator.vibrate?.(15); if (catPerso === "favoris" || favF.length < 2) rend(); else marqueFavoris(); }, 480); });
+    bulle(i < 0 ? "Ajouté à vos favoris" : "Retiré de vos favoris"); navigator.vibrate?.(15); if (catPerso === "favoris" || favF.length < 2) rend(); else marqueFavoris(); }, 480); });
 ["pointerup", "pointerleave", "pointercancel", "pointermove"].forEach(t => $("contenu").addEventListener(t, e => { const b = e.target.closest?.("#grilleF .vg"); if (b && (t !== "pointermove" || Math.abs(e.movementX) > 3)) clearTimeout(b._tf); }));
 let TRAIT = [], traitK = -1, traitTenu = false;
 /* ───── 13/11 (Marie) : les couleurs par FAMILLE (Roses, Rouges, Nudes…), puis toutes les nuances de la famille ───── */
@@ -574,7 +595,7 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.assortir) { assortir(); return; }
   if (b.dataset.perso) { catPerso = b.dataset.perso; rend(); return; }
   if (b.dataset.cat) { catPerso = ""; clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(rend, 60); return; }
-  if (b.dataset.f != null) { if (b._long) { b._long = false; return; } poseFond(b.dataset.f); return; }
+  if (b.dataset.f != null) { if (b._long) { b._long = false; return; } const g = b.closest(".defileF"); if (g) g.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - g.clientWidth / 2, behavior: "smooth" }); poseFond(b.dataset.f); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
   if (b.dataset.fam) { famC[sousCouleur] = b.dataset.fam; const x = $("teintes").querySelector(".fams").scrollLeft; rend(); requestAnimationFrame(() => { const f = $("teintes") && $("teintes").querySelector(".fams"); if (f) f.scrollLeft = x; }); return; }
   if (b.dataset.blocs) { poseBlocs(b.dataset.blocs); b.parentElement.querySelectorAll("[data-blocs]").forEach(x => x.classList.toggle("on", x === b)); return; }
