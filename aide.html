@@ -48,5 +48,5 @@ a{color:inherit}
 <section><h2>Vos données</h2><p>Voir notre <a href="confidentialite.html">politique de confidentialité</a> et les <a href="mentions-legales.html">mentions légales</a>.</p></section>
 <div class="pied">LOGINAIL · l’agenda et le site des prothésistes ongulaires</div>
 </main>
-</body>
+<script>/* 14/11 (Apple) : ouverte depuis l'appli (?appli), la page ne renvoie pas vers le site (où l'on s'abonne) */if(/[?&]appli/.test(location.search))document.querySelectorAll('a[href="./"],a[href="index.html"],a[href="/"]').forEach(function(a){if(a.classList.contains("retour")){a.remove();return}a.removeAttribute("href");a.style.pointerEvents="none";if(/Retour au site/.test(a.textContent))a.remove()});</script></body>
 </html>
