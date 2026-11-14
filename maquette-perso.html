@@ -283,7 +283,7 @@ const VRAI = new URLSearchParams(location.search).has("vrai");
 if (VRAI) document.documentElement.classList.add("vrai");
 const APPLI = new URLSearchParams(location.search).has("appli");
 /* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
-const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); parent.postMessage({ loginail: "enregistre", br }, location.hostname === "loginail.fr" ? "https://app.loginail.fr" : location.origin); } catch (e) {} };
+const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); /* 14/11 : aussi l'appli iPhone (capacitor://localhost) */ (location.hostname === "loginail.fr" ? ["https://app.loginail.fr", "capacitor://localhost"] : [location.origin]).forEach(o => { try { parent.postMessage({ loginail: "enregistre", br }, o); } catch (_) {} }); } catch (e) {} };
 
 const ORDRE = VRAI ? ["entete", "ecriture", "fond", "couleurs"] : ["entete", "ecriture", "fond", "couleurs", "charms"];   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
 const NB = 5;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui

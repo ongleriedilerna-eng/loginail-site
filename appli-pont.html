@@ -8,7 +8,7 @@
 /* 09/11 (Marie) : le pont entre l'appli (app.loginail.fr) et les pages de loginail.fr qui changent son site
    (cartes à glisser, personnalisation, présentoir des charms).
    L'appli envoie son site (son brouillon) ici ; on le range, puis on ouvre la bonne page. À la fin, ces pages renvoient le site modifié à l'appli. */
-const OK = ["https://app.loginail.fr", location.origin];
+const OK = ["https://app.loginail.fr", "capacitor://localhost", location.origin];   /* 14/11 : + l'appli iPhone */
 const PAGES = { style: "coups-de-coeur.html?vrai&appli", perso: "maquette-perso.html", charms: "charms-presentoir.html?vrai&appli" };
 const ou = new URLSearchParams(location.search).get("p") || "perso";
 addEventListener("message", m => {
