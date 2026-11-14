@@ -5,6 +5,7 @@
   /* 06/11 (Marie) : plus de « haut du site » à choisir : c'est la FORME qui décide.
      Stiletto = plein écran (A), Carré = bandeau (F), Ovale = magazine (C), Carré arrondi = titre géant (E), Amande et Coffin = leur haut à eux. */
   const fmt = () => { try { const q = new URLSearchParams(location.search), b = (typeof BR !== "undefined" && BR) || {};
+      if (typeof enteteChoisie === "function" && enteteChoisie()) return "";   /* 14/11 (Marie) : une des 10 en-têtes est choisie : elle passe devant */
       const on = k => q.get(k) === "1" || b[k] === true || b[k] === "1";
       if (on("arrondi")) return "E"; if (on("coffin")) return ""; if (on("epure")) return "C";
       const st = String(q.get("style") || b.style || "1"); return st === "2" ? "A" : st === "3" ? "F" : "G";   /* 07/11 (Marie) : Amande = photo en forme d’amande */ } catch (e) { return ""; } };

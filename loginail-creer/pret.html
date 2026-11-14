@@ -1721,6 +1721,103 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .ecran:not(.v1):has(>.fond-site){--fond-carte:var(--creme)}
 .ecran:not(.v1):has(>.fond-site) .defile>.sec .tir,.ecran:not(.v1):has(>.fond-site) .defile>.sec .carte{background:color-mix(in srgb,var(--creme) 45%,#fff)}
 </style>
+<style id="entetes-1411">
+/* 14/11 (Marie) : les 10 en-têtes choisies (6 bandeau, 10 diagonale, 15 vague, 28 ticket, 40 vitrine, 65 rideau, 66 loge, 76 balcon, 87 devanture, 88 fleurs) */
+.ecran .defile>.hent{order:-3;flex-shrink:0}
+.hent{position:relative;min-height:100%;overflow:hidden;color:var(--noir);background:var(--creme);display:flex;flex-direction:column;align-items:center;text-align:center;--acc:#1E1C1B;--papier:var(--carte,#fff)}
+.hent .he-ph{background-size:cover;background-position:center}
+.hent .kick{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;opacity:.8;color:inherit;margin:0}
+.ecran .defile .hent h1{font-size:44px;line-height:1.02;margin:10px 0 12px;color:inherit;max-width:100%;overflow-wrap:anywhere}
+.hent .note{justify-content:center;color:inherit;opacity:.9;margin:0 0 6px}
+.hent .he-btn{margin-top:16px;height:52px;padding:0 30px;border:0;border-radius:999px;background:var(--acc);color:#fff;font:500 11px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;box-shadow:0 14px 26px -16px rgba(0,0,0,.6)}
+.hent .he-btn small{display:block;font-size:9.5px;letter-spacing:.06em;text-transform:none;opacity:.8;margin-top:2px}
+.hent .he-txt{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;padding:0 24px}
+@keyframes heMonte{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes heFondu{from{opacity:0}to{opacity:1}}
+@keyframes heZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+.hent .he-txt{animation:heMonte 1s .25s both}
+/* 6 bandeau + carte */
+.he-bandeau .he-ph{width:100%;flex:1 1 auto;min-height:420px;animation:heZoom 1.6s both}
+.he-bandeau .he-carte{position:relative;z-index:2;margin:-80px 20px 30px;width:calc(100% - 40px);max-width:560px;background:var(--papier);border-radius:28px;padding:28px 22px 26px;box-shadow:0 22px 44px -26px rgba(0,0,0,.45);animation:heMonte 1s .2s both}
+.he-bandeau .he-carte .he-txt{padding:0;animation:none}
+/* 10 diagonale */
+.he-diagonale{align-items:flex-start;text-align:left;justify-content:flex-end}
+.he-diagonale .he-ph{position:absolute;left:0;right:0;top:0;height:72%;clip-path:polygon(0 0,100% 0,100% 100%,0 70%);animation:heFondu 1.2s both}
+.he-diagonale .he-txt{align-items:flex-start;padding:0 26px 50px;margin-top:auto}
+.he-diagonale .note{justify-content:flex-start}
+.ecran .defile .he-diagonale h1{font-size:52px}
+/* 15 vague */
+.he-vague .he-ph{width:100%;flex:1 1 auto;min-height:420px;-webkit-mask:radial-gradient(46px at 50% calc(100% + 22px),#0000 98%,#000) 50% 0/92px 100%;mask:radial-gradient(46px at 50% calc(100% + 22px),#0000 98%,#000) 50% 0/92px 100%}
+.he-vague .he-txt{padding-top:22px;padding-bottom:40px}
+/* 28 ticket */
+.he-ticket{justify-content:center;padding:110px 20px 50px}
+.he-ticket .he-sur{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;opacity:.7;margin-bottom:16px;animation:heFondu 1s both}
+.he-ticket .tk{display:flex;width:100%;max-width:520px;height:300px;background:var(--papier);border-radius:20px;box-shadow:0 22px 40px -22px rgba(0,0,0,.5);text-align:left;position:relative;animation:heMonte 1s .1s both}
+.he-ticket .tk .he-ph{width:44%;border-radius:20px 0 0 20px}
+.he-ticket .tk .d{flex:1;min-width:0;padding:18px 18px 18px 22px;display:flex;flex-direction:column;justify-content:center;border-left:2px dashed color-mix(in srgb,var(--noir) 22%,transparent);position:relative}
+.he-ticket .tk .d:before,.he-ticket .tk .d:after{content:"";position:absolute;left:-13px;width:24px;height:24px;border-radius:50%;background:var(--creme)}
+.he-ticket .tk .d:before{top:-12px}.he-ticket .tk .d:after{bottom:-12px}
+.he-ticket .tk .d small{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;opacity:.65}
+.ecran .defile .he-ticket .tk h1{font-size:32px;margin:8px 0}
+.he-ticket .he-txt{padding-top:22px}
+/* 40 vitrine de boutique */
+.he-vitrine{padding-bottom:50px}
+.he-vitrine .auvent{width:100%;height:104px;flex:none;position:relative;background:repeating-linear-gradient(90deg,var(--acc) 0 34px,#fff 34px 68px);box-shadow:0 10px 16px -12px rgba(0,0,0,.4);transform-origin:top;animation:heAuvent .9s both}
+.he-vitrine .auvent:after{content:"";position:absolute;left:0;right:0;bottom:-20px;height:22px;background:radial-gradient(circle at 17px 0,var(--acc) 16px,transparent 17px) 0 0/68px 22px,radial-gradient(circle at 51px 0,#fff 16px,transparent 17px) 0 0/68px 22px}
+@keyframes heAuvent{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.he-vitrine .vit{position:relative;width:calc(100% - 44px);max-width:560px;flex:1 1 auto;min-height:330px;max-height:520px;margin-top:44px;border:9px solid var(--papier);border-radius:8px;box-shadow:0 20px 36px -22px rgba(0,0,0,.5);overflow:hidden;animation:heMonte 1s .3s both}
+.he-vitrine .vit .he-ph{position:absolute;inset:0}
+.he-vitrine .vit h1{position:absolute;left:10px;right:10px;top:16px;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.6);font-size:36px!important}
+.he-vitrine .he-txt{padding-top:22px}
+/* 65 lever de rideau */
+.he-rideau{justify-content:flex-end;padding-bottom:40px}
+.he-rideau .scene{position:absolute;left:0;right:0;top:0;height:66%;overflow:hidden}
+.he-rideau .scene .he-ph{position:absolute;inset:60px 30px 0;border-radius:8px 8px 0 0}
+.he-rideau .tr{position:absolute;left:0;right:0;top:0;height:60px;z-index:3;background:var(--acc);border-bottom:5px solid #E6C995;box-shadow:0 6px 12px -6px rgba(0,0,0,.5)}
+.he-rideau .tr:after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:14px;background:radial-gradient(circle at 15px 0,var(--acc) 13px,transparent 14px) 0 0/30px 14px}
+.he-rideau .rd{position:absolute;top:0;bottom:0;width:52%;z-index:2;background:repeating-linear-gradient(90deg,var(--acc) 0 14px,color-mix(in srgb,var(--acc) 78%,#fff) 14px 28px);box-shadow:inset 0 -30px 40px -20px rgba(0,0,0,.35)}
+.he-rideau .rd.g{left:0;border-radius:0 0 100% 0;animation:heRidG 1.8s .3s cubic-bezier(.6,0,.2,1) both}
+.he-rideau .rd.d{right:0;border-radius:0 0 0 100%;animation:heRidD 1.8s .3s cubic-bezier(.6,0,.2,1) both}
+@keyframes heRidG{from{width:52%;border-radius:0}to{width:22%}}
+@keyframes heRidD{from{width:52%;border-radius:0}to{width:22%}}
+.he-rideau .he-txt{animation-delay:1.2s}
+/* 66 loge de star */
+.he-loge{background:color-mix(in srgb,var(--acc) 35%,#140c0f);color:#F6EBDD;justify-content:center;padding:96px 0 44px}
+.he-loge .lo{position:relative;width:min(300px,76%);padding:22px;border-radius:14px;background:#F3E9DD;box-shadow:0 26px 50px -24px rgba(0,0,0,.8);animation:heMonte 1s both}
+.he-loge .lo .he-ph{height:330px;border-radius:6px}
+.he-loge .am{position:absolute;width:16px;height:16px;border-radius:50%;background:#FFF6D8;box-shadow:0 0 14px 6px rgba(255,220,140,.75);animation:heAmp 2.4s infinite}
+.he-loge .am:nth-child(2n){animation-delay:.6s}.he-loge .am:nth-child(3n){animation-delay:1.2s}
+@keyframes heAmp{0%,100%{opacity:1}50%{opacity:.55}}
+.he-loge h1{color:#F0D9B0!important}
+.he-loge .he-txt{padding-top:24px}
+/* 76 balcon parisien */
+.he-balcon{background:color-mix(in srgb,var(--creme) 80%,#d8c6b0);padding:96px 0 40px;justify-content:center}
+.he-balcon .fen{position:relative;width:min(290px,72%);height:330px;border-radius:150px 150px 0 0;overflow:hidden;border:8px solid #fff;box-shadow:0 18px 30px -20px rgba(0,0,0,.5);animation:heMonte 1s both}
+.he-balcon .fen .he-ph{position:absolute;inset:0}
+.he-balcon .fen:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;background:#fff}
+.he-balcon .balc{position:relative;width:min(340px,86%);height:64px;margin-top:-50px;z-index:2;border-top:6px solid #2a2a2a;border-bottom:4px solid #2a2a2a;background:radial-gradient(circle at 50% 50%,transparent 9px,#2a2a2a 9px 11px,transparent 11px) 0 0/26px 64px,repeating-linear-gradient(90deg,transparent 0 11px,#2a2a2a 11px 14px)}
+.he-balcon .pot{position:absolute;top:-26px;width:44px;height:26px;border-radius:0 0 10px 10px;background:var(--acc)}
+.he-balcon .pot:before{content:"";position:absolute;left:-6px;right:-6px;top:-18px;height:24px;border-radius:50%;background:radial-gradient(circle at 25% 50%,#F2C6CF 6px,transparent 7px),radial-gradient(circle at 60% 35%,#fff 5px,transparent 6px),radial-gradient(circle at 80% 60%,#E8A9B8 6px,transparent 7px),#6E8B5A}
+.he-balcon .pot.g{left:14px}.he-balcon .pot.d{right:14px}
+.he-balcon .he-txt{padding-top:24px}
+/* 87 devanture (couleur du salon) */
+.he-devanture{padding:96px 0 40px}
+.he-devanture .fac{width:calc(100% - 40px);max-width:540px;background:var(--acc);border-radius:16px 16px 0 0;padding:16px 12px;color:#F0D9B0;animation:heMonte .9s both}
+.ecran .defile .he-devanture .fac h1{color:#F0D9B0;font-size:36px;margin:0}
+.he-devanture .store{width:calc(100% - 64px);max-width:510px;height:44px;background:repeating-linear-gradient(90deg,#fff 0 26px,var(--acc) 26px 52px);border-radius:0 0 50% 50%/0 0 100% 100%;box-shadow:0 8px 12px -8px rgba(0,0,0,.4);transform-origin:top;animation:heAuvent .8s .4s both}
+.he-devanture .vit{position:relative;width:calc(100% - 80px);max-width:480px;height:280px;margin-top:10px;border:9px solid var(--acc);overflow:hidden;animation:heFondu 1s .6s both}
+.he-devanture .vit .he-ph{position:absolute;inset:0}
+.he-devanture .he-txt{padding-top:22px}
+/* 88 mur de fleurs */
+.he-fleurs{justify-content:center;padding:96px 0 44px;background:radial-gradient(circle at 20% 20%,color-mix(in srgb,var(--acc) 18%,#fff) 0 26px,transparent 27px) 0 0/90px 90px,radial-gradient(circle at 65% 70%,color-mix(in srgb,var(--acc) 30%,#fff) 0 20px,transparent 21px) 0 0/90px 90px,radial-gradient(circle at 70% 18%,#fff 0 8px,transparent 9px) 0 0/90px 90px,color-mix(in srgb,var(--acc) 8%,#fff)}
+.he-fleurs .pol{width:min(270px,70%);background:#fff;padding:12px 12px 14px;transform:rotate(-3deg);box-shadow:0 22px 36px -20px rgba(0,0,0,.5);animation:hePol 1s both;color:#1E1C1B}
+.he-fleurs .pol .he-ph{height:300px}
+.he-fleurs .pol span{display:block;font-family:"Great Vibes",cursive;font-size:28px;margin-top:6px}
+@keyframes hePol{from{opacity:0;transform:rotate(-12deg) translateY(30px)}to{opacity:1;transform:rotate(-3deg)}}
+.he-fleurs .he-txt{margin-top:24px;background:var(--papier);color:var(--noir);border-radius:24px;padding:18px 22px 22px;box-shadow:0 16px 30px -22px rgba(0,0,0,.4);width:calc(100% - 40px);max-width:520px}
+/* nuit : le texte posé sur une couleur fixe reste lisible */
+.hent.he-loge,.hent.he-loge .kick,.hent.he-loge .note{color:#F6EBDD}
+</style>
 </head>
 <body>
 <div class="bandeau"><b>Votre site est prêt</b>Essayez tout ce que vous voulez : univers, couleur, fond, détails. Puis « C’est parfait ».</div>
@@ -2401,6 +2498,34 @@ function haut(t,lettres){
     <div class="bas"><div class="kick">${t.type} · ${D.ville}</div><h1>${lettres}</h1>${note}</div><div class="fil"></div></div>`;
 }
 
+/* 14/11 (Marie) : les 10 en-têtes au choix (BR.entete, ou &entete= dans l'adresse) */
+const ENTETES=[["bandeau","Bandeau"],["diagonale","Diagonale"],["vague","Vague"],["ticket","Ticket"],["vitrine","Vitrine"],["rideau","Rideau"],["loge","Loge de star"],["balcon","Balcon"],["devanture","Devanture"],["fleurs","Fleurs"]];
+window.ENTETES=ENTETES;
+function enteteChoisie(){try{const q=new URLSearchParams(location.search).get("entete");const k=q||(typeof BR!=="undefined"&&BR&&BR.entete)||window.__entete||"";return ENTETES.some(e=>e[0]===k)?k:""}catch(e){return ""}}
+function entete(k,t,lang){
+  const ph=x=>`<div class="he-ph" style="background-image:url('${P(x)}')"></div>`,N=D.nails&&D.nails.length?D.nails:[D.hero];
+  const kick=`<div class="kick">${t.type} · ${D.ville}</div>`,note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";
+  const btn=`<button class="he-btn" data-res>${t.creneau}${creneau(t)?`<small>${t.dispo} : ${creneau(t)}</small>`:""}</button>`;
+  const nom=`<h1>${D.nom}</h1>`,txt=(h=true)=>`<div class="he-txt">${kick}${h?nom:""}${note}${btn}</div>`;
+  const TX={fr:["Votre prochain rendez-vous","Entrée"],en:["Your next appointment","Admit one"],it:["Il tuo prossimo appuntamento","Ingresso"]}[lang]||["Votre prochain rendez-vous","Entrée"];
+  const am=[[-8,"20px"],[-8,"40%"],[-8,"76%"]].flatMap(([o,y])=>[`left:${o}px;top:${y}`,`right:${o}px;top:${y}`]).concat(["left:28%;top:-8px","right:28%;top:-8px","left:28%;bottom:-8px","right:28%;bottom:-8px"]);
+  const c=`hent he-${k}`;
+  if(k==="bandeau")return `<div class="${c}" data-s="accueil">${ph(D.hero)}<div class="he-carte">${txt()}</div></div>`;
+  if(k==="diagonale")return `<div class="${c}" data-s="accueil">${ph(D.hero)}${txt()}</div>`;
+  if(k==="vague")return `<div class="${c}" data-s="accueil">${ph(D.hero2||D.hero)}${txt()}</div>`;
+  if(k==="ticket")return `<div class="${c}" data-s="accueil"><div class="he-sur">${TX[0]}</div><div class="tk">${ph(N[0])}<div class="d"><small>${TX[1]} ✦</small>${nom}<small>${D.ville}</small></div></div>${txt(false)}</div>`;
+  if(k==="vitrine")return `<div class="${c}" data-s="accueil"><div class="auvent"></div><div class="vit">${ph(D.hero)}${nom}</div>${txt(false)}</div>`;
+  if(k==="rideau")return `<div class="${c}" data-s="accueil"><div class="scene">${ph(D.hero2||D.hero)}<div class="rd g"></div><div class="rd d"></div><div class="tr"></div></div>${txt()}</div>`;
+  if(k==="loge")return `<div class="${c}" data-s="accueil"><div class="lo">${ph(D.hero3||D.hero)}${am.map(s=>`<span class="am" style="${s}"></span>`).join("")}</div>${txt()}</div>`;
+  if(k==="balcon")return `<div class="${c}" data-s="accueil"><div class="fen">${ph(D.hero)}</div><div class="balc"><span class="pot g"></span><span class="pot d"></span></div>${txt()}</div>`;
+  if(k==="devanture")return `<div class="${c}" data-s="accueil"><div class="fac">${nom}</div><div class="store"></div><div class="vit">${ph(D.hero)}</div>${txt(false)}</div>`;
+  if(k==="fleurs")return `<div class="${c}" data-s="accueil"><div class="pol">${ph(D.hero2||D.hero)}<span>${D.nom.split(" ").slice(-1)[0]}</span></div>${txt()}</div>`;
+  return "";
+}
+function poseEntete(ecran,d,t,lang){try{const k=enteteChoisie();if(!k)return;const h=d.querySelector('[data-s="accueil"]'),html=entete(k,t,lang);if(!html)return;
+  const tmp=document.createElement("div");tmp.innerHTML=html;const n=tmp.firstElementChild;
+  const co=([...ecran.classList].find(c=>/^[cn]-/.test(c))||"c-noir").slice(2);n.style.setProperty("--acc",(typeof INKJ!=="undefined"&&INKJ[co])||"#1E1C1B");
+  if(h)h.replaceWith(n);else d.prepend(n);ecran.classList.add("a-entete")}catch(e){console.warn(e)}}
 function site(t,v,lang){
   const lettres=[...D.nom].map((c,i)=>c===" "?"<br>":`<span style="animation-delay:${.3+i*.05}s">${c}</span>`).join("");
   const onglets=D.presta.map((p,i)=>`<button class="${i?"":"on"}">${t[p.cat]}</button>`).join("");
@@ -2492,7 +2617,7 @@ function monte(ecran,lang){
   ecran._lang=lang;D=ecran.dataset.d==="peu"?DPEU:DPLEIN;D={...D,presta:D.presta.filter(c=>c.items&&c.items.length)};VAR=[...ecran.classList].find(c=>/^(v\d|n1|s[abc]|s3[abc])$/.test(c))||"v1";ecran.classList.remove("touche");
   const $=s=>ecran.querySelector(s),$$=s=>[...ecran.querySelectorAll(s)];
   const d=$(".defile"),cta=$(".cta"),mot=$(".mot"),burger=$(".burger"),menu=$(".menu");
-  d.innerHTML=(/^s3[abc]$/.test(VAR)?site3:/^s[abc]$/.test(VAR)?site2:site)(t,v,lang);
+  ecran.classList.remove("a-entete");d.innerHTML=(/^s3[abc]$/.test(VAR)?site3:/^s[abc]$/.test(VAR)?site2:site)(t,v,lang);poseEntete(ecran,d,t,lang);
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("vu");io.unobserve(e.target)}}),{root:d,threshold:.15});
   d.querySelectorAll(".r").forEach(el=>io.observe(el));
   const ioL=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){d.querySelectorAll(".liste").forEach(l=>l.classList.add("go"));ioL.disconnect()}}),{root:d,threshold:.1});
@@ -3173,7 +3298,7 @@ document.addEventListener("scroll",e=>{if(e.target.classList?.contains("defile")
 document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){}});
 </script>
 <script src="../loginail-site/options-site.js?v=2"></script><script src="resa-simu.js"></script><script src="legal-site.js"></script><script src="menu-carre.js?v=3"></script><script src="menu-coffin.js?v=3"></script>
-<script src="hero-format.js?v=60"></script>
+<script src="hero-format.js?v=61"></script>
 <script>
 /* 09/11 (Marie) : les charms posés avec le présentoir (BR.stickers : n, x en % de la largeur, y en px, taille s, rotation r, largeur w du téléphone) ; ils flottent doucement */
 (function(){try{if(typeof BR==="undefined"||!BR||!Array.isArray(BR.stickers)||!BR.stickers.length)return;

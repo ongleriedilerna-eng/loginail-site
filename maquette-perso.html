@@ -58,8 +58,8 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .suivant{width:62%;border-radius:999px;padding:16px;font:500 12.5px Jost,sans-serif;letter-spacing:.2em;color:var(--noir)}
 .puce{border-radius:999px;padding:8px 14px;font:400 13.5px Jost,sans-serif;white-space:nowrap}
 .puce.on{background:var(--noir);color:var(--fond);border-color:var(--noir)}
-.formes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 22px}
-.formes .puce{padding:11px 4px;text-align:center;transition:background .25s,color .25s,border-color .25s}
+.formes{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);grid-auto-columns:max-content;gap:8px;padding:4px 22px 6px;overflow-x:auto;scrollbar-width:none}.formes::-webkit-scrollbar{display:none}
+.formes .puce{padding:11px 20px;white-space:nowrap;text-align:center;transition:background .25s,color .25s,border-color .25s}
 .formes .puce.on{background:#fff;color:var(--noir);border:1.5px solid var(--noir)}
 .pts{display:flex;gap:6px;justify-content:center;padding:8px 0 4px}.pts i{width:7px;height:7px;border-radius:50%;background:rgba(30,28,27,.2);transition:all .25s}.pts i.on{width:20px;border-radius:4px;background:var(--noir)}
 .style-lien{display:block;margin:6px auto 0;border:0;background:none;padding:4px;font:400 12.5px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;color:var(--muted)}
@@ -253,7 +253,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1311t&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1411e&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -293,6 +293,11 @@ const TITRES = { entete: "Votre en-tête", ecriture: "Votre écriture", fond: "V
 const ONGLET = { entete: 1, ecriture: 4, fond: 3, couleurs: 2, site: 2, charms: 4 };
 const cle = () => ORDRE[etape];
 const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
+/* 14/11 (Marie) : les 10 en-têtes choisies remplacent les formes d'ongles */
+const ENT = [["bandeau", "Bandeau"], ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"], ["balcon", "Balcon"], ["devanture", "Devanture"], ["fleurs", "Fleurs"]];
+let ent = "";
+const poseEnt = k => { ent = k; try { W.eval(`window.__entete=${JSON.stringify(k)};if(typeof BR!=="undefined"&&BR)BR.entete=${JSON.stringify(k)};{const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)}`); } catch (e) {} setTimeout(() => { poseEncre(); ambiance(); }, 120); document.querySelectorAll("#formes .puce").forEach(x => x.classList.toggle("on", x.dataset.ent === ent)); const o = document.querySelector("#formes .puce.on"), f = $("formes"); if (o && f) f.scrollTo({ left: o.offsetLeft - f.clientWidth / 2 + o.offsetWidth / 2, behavior: "smooth" }); };
+const changeEnt = d => { const i = ENT.findIndex(e => e[0] === ent); poseEnt(ENT[((i < 0 ? (d > 0 ? -1 : 0) : i) + d + ENT.length) % ENT.length][0]); };
 const NOMC = {"noir": "#1E1C1B", "blanc": "#FFFFFF", "or": "linear-gradient(170deg,#FFF3C4 0%,#E8C66A 38%,#B8862E 62%,#F6DE92 100%)", "argent": "linear-gradient(170deg,#FFFFFF 0%,#D9DCE2 35%,#8C9098 60%,#F2F3F6 100%)", "rosegold": "linear-gradient(170deg,#FCE3DA 0%,#E8A99A 40%,#B9706A 65%,#F6CFC4 100%)", "champagne": "linear-gradient(170deg,#FFF8EA 0%,#E9D3A8 40%,#B8975E 65%,#F6E7C6 100%)", "cuivre": "linear-gradient(170deg,#FBE0C8 0%,#D98B5A 40%,#9A5530 65%,#F2C29E 100%)", "holo": "linear-gradient(100deg,#FFB3E6 0%,#B3D4FF 30%,#B9FFE0 60%,#FFF3B0 100%)", "pastel": "linear-gradient(100deg,#F7B9CF 0%,#D9C2F2 35%,#B9DAF5 65%,#BDEBD7 100%)", "coucher": "linear-gradient(100deg,#F9C49A 0%,#F6A99B 45%,#F4B6C8 100%)", "glace": "linear-gradient(100deg,#B7D3F0 0%,#CDB8EE 50%,#F4B6C8 100%)", "citron": "linear-gradient(100deg,#F6E3A1 0%,#B9E6D3 100%)", "rosep": "#F4B6C8", "lilasp": "#CDB8EE", "bleup": "#B7D3F0", "mentep": "#B9E6D3", "peche": "#F7C6A8", "orangep": "#F9C49A", "jaunep": "#F6E3A1", "corailp": "#F6A99B", "lavande": "#B9A6E8", "sauge": "#A9C3A2", "ciel": "#9FCBEB", "creme": "#F4EADB", "beige": "#D9C4A8", "corail": "#F07A65", "rouge": "#C8243A", "bordeaux": "#7A1F33", "fuchsia": "#E0368C", "violet": "#7B3FB5", "turquoise": "#2BB3B1", "vert": "#1F7A55", "bleunuit": "#1F2E5C", "choco": "#5A3A28", "bleuroi": "#2F57E8", "bleuneon": "linear-gradient(100deg,#6FA8FF 0%,#2F57E8 50%,#7B5CFF 100%)"};   // les couleurs du nom de l'éditeur (hero-format.js)
 let nomc = "";
 let encre = "";
@@ -369,7 +374,7 @@ function rend() {
   $("cherche").hidden = cle() !== "fond"; $("de").hidden = true;   /* 13/11 : le logo « au hasard » est revenu dans la ligne, tout petit, sans le mot */
   majCompte();
   if (cle() === "entete") {
-    c.innerHTML = `<div class="formes" id="formes">${NOMS_FORMES.map((n, k) => `<button class="puce verre ${k + 1 === forme ? "on" : ""}" data-forme="${k + 1}">${n}</button>`).join("")}</div>`;
+    c.innerHTML = `<div class="formes" id="formes">${ENT.map(([k, n]) => `<button class="puce verre ${k === ent ? "on" : ""}" data-ent="${k}">${n}</button>`).join("")}</div>`;
   } else if (cle() === "fond") {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     const SURPRISE = `<svg viewBox="0 0 24 24"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -598,7 +603,7 @@ const changeForme = d => { forme = (forme - 1 + d + NB_FORMES) % NB_FORMES + 1; 
 /* 13/11 (Marie) : « Surprise » = le logo seul, en haut à droite du téléphone (plus dans la ligne des catégories) */
 $("de").onclick = () => { const l = [...D.querySelectorAll("#pzFonds [data-f]")].filter(x => x.dataset.f); const x = l[Math.floor(Math.random() * l.length)]; if (!x) return;
   x.click(); ambiance(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); setTimeout(() => { ajusteFonds(); const g = $("grilleF"), v = g && g.querySelector(`[data-f="${CSS.escape(x.dataset.f)}"]`); if (v) g.scrollTo({ left: v.offsetLeft - g.clientWidth / 2 + 22, behavior: "smooth" }); }, 500); };
-$("avant").onclick = () => cle() === "fond" ? fondVoisin(-1) : changeForme(-1); $("apres").onclick = () => cle() === "fond" ? fondVoisin(1) : changeForme(1);
+$("avant").onclick = () => cle() === "fond" ? fondVoisin(-1) : changeEnt(-1); $("apres").onclick = () => cle() === "fond" ? fondVoisin(1) : changeEnt(1);
 $("assortir").onclick = assortir;
 /* appui long sur un fond : dans les favoris (ou on l'en retire) */
 $("contenu").addEventListener("pointerdown", e => { const b = e.target.closest("#grilleF .vg"); if (!b || !b.dataset.f) return; clearTimeout(b._tf);
@@ -656,6 +661,7 @@ $("contenu").addEventListener("click", e => {
   if (b.id === "styleLien") { const s = $("styles"); s.hidden = !s.hidden; s.innerHTML = [...D.querySelectorAll("#pzUni [data-u]")].map(x => `<button class="puce verre" data-u="${x.dataset.u}">${x.textContent}</button>`).join(""); return; }
   if (b.dataset.u) { enFondu(() => clique(`#pzUni [data-u="${b.dataset.u}"]`)); $("styles").querySelectorAll(".puce").forEach(x => x.classList.toggle("on", x === b)); return; }
   if (b.dataset.hasard) { $("de").onclick(); return; }
+  if (b.dataset.ent) { poseEnt(b.dataset.ent); return; }
   if (b.dataset.forme) { changeForme(+b.dataset.forme - forme); return; }
   if (b.dataset.assortir) { assortir(); return; }
   if (b.dataset.perso) { const x = b.parentElement.scrollLeft; catPerso = b.dataset.perso; rend(); gardeLigne(x); return; }
@@ -747,7 +753,7 @@ F.onload = () => {
       let t = ""; try { [...s.sheet.cssRules].forEach(r => { if ((r.selectorText && /rond-f|\.f100|\.tuile|pz-ronds/.test(r.selectorText)) || r.type === 7) t += r.cssText + "\n"; }); } catch (e) {}
       if (t) { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = t; document.head.appendChild(c); } }); };
   copie(); W.addEventListener("f100", () => setTimeout(() => { copie(); ambiance(); if (cle() === "fond") rend(); }, 150));
-  const pf = D.querySelector("[data-pf]"); forme = pf?._st || 1;
+  const pf = D.querySelector("[data-pf]"); forme = pf?._st || 1; try { ent = W.enteteChoisie ? W.enteteChoisie() : ""; } catch (e) {}
   brancheStickers();
   { let sx = 0, sy = 0, st = 0;   /* glisser à gauche / à droite sur le téléphone = le fond suivant / d'avant */
     D.addEventListener("touchstart", e => { if (cle() !== "fond" || e.touches.length !== 1) { st = 0; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; st = Date.now(); }, { passive: true });
