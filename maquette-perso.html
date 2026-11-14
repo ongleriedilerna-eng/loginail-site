@@ -268,12 +268,18 @@ html.vrai .maquette{display:none}
 .ficheC.on{opacity:1;pointer-events:auto;transform:none}
 .ficheC div{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(30,28,27,.07)}.ficheC div:first-child{border-top:0}
 .ficheC svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--noir);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+/* 15/11 (Marie, idée B) : étape photo = un grand cadre photo, sans téléphone ; le téléphone revient à l'étape 2 */
+#cadreP{position:absolute;left:50%;transform:translateX(-50%);z-index:3;display:none;flex-direction:column;align-items:center;gap:14px}
+#tel.etP #cadreP{display:flex}#tel.etP #mini,#tel.etP #oeil{visibility:hidden}
+#cadreP .img{border-radius:16px;background:#eee center/cover no-repeat;box-shadow:0 18px 38px -16px rgba(0,0,0,.4);transition:background-image .2s}
+#cadreP span{font:400 9.5px Jost,sans-serif;letter-spacing:.16em;padding-left:.16em;white-space:nowrap;text-transform:uppercase;color:var(--muted);text-align:center}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
   <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1411h&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -375,7 +381,9 @@ function taille() {
   Object.assign($("oeil").style, { left: Math.min(T.clientWidth - 36, cx + w / 2 + 32) + "px", top: (hautH + h - 34) + "px" });   // 13/11 nuit : à droite du téléphone, plus dessus
   $("avant").hidden = $("apres").hidden = true;   // 13/11 nuit : Marie n'aime pas les flèches (on glisse, ou on fait défiler les fonds)
   Object.assign($("assortir").style, { left: cx + "px", top: (hautH + h - 2) + "px" }); majAssortir();
+  const ch = h - 34, cw = Math.min(T.clientWidth - 64, ch * .8); Object.assign($("cadreP").style, { top: (hautH + 4) + "px" }); Object.assign($("cadreImg").style, { width: cw + "px", height: ch + "px" }); majCadre();
 }
+function majCadre() { const on = !plein && cle() === "photo"; $("tel").classList.toggle("etP", on); if (on) { const u = photoUne(); if (u) $("cadreImg").style.backgroundImage = `url("${vu(u)}")`; } if (!on && cle() === "entete") indiceDefile(); }
 /* son fond derrière le téléphone, en transparence (s'il bouge, il bouge aussi) */
 function ambiance() {
   try { const a = $("ambiance"), t = D.querySelector(".ecran .tuile");
@@ -399,7 +407,7 @@ function rend() {
   majCompte();
   if (cle() === "photo") {
     const l = photosSite(), une = photoUne();
-    c.innerHTML = `<p class="aideP">Votre salon ou votre plus belle création :<br>c’est ce que vos clientes verront en premier.</p>
+    c.innerHTML = `<p class="aideP">Votre salon ou votre plus belle création.</p>
       <div class="photosU" id="photosU"><label class="ajoutU"><input type="file" accept="image/*" id="fichierU" hidden><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Ajouter<br>ma photo</span></label>${l.map((u, i) => `<button class="phU ${u === une ? "on" : ""}" data-ph="${i}" type="button" style="background-image:url('${vu(u).replace(/'/g, "%27")}')" aria-label="Choisir cette photo"></button>`).join("")}</div>`;
     $("fichierU").onchange = e => { const fi = e.target.files && e.target.files[0]; if (fi) litPhoto(fi); };
   } else if (cle() === "entete") {
@@ -758,7 +766,7 @@ function photosSite() { try { return W.eval("(BR.photos||[]).map(p=>p.url)"); } 
 function photoUne() { try { return W.eval("(BR.photos||[])[BR.principale||0]?.url||''"); } catch (e) { return ""; } }
 function choisitPhoto(u) { if (!u) return; try { W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>p.url===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
   BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
-  setTimeout(() => { poseEncre(); ambiance(); enHaut(); }, 150); if (VRAI && !APPLI) enregistre(); rend(); }
+  majCadre(); setTimeout(() => { poseEncre(); ambiance(); enHaut(); majCadre(); }, 150); if (VRAI && !APPLI) enregistre(); rend(); }
 function litPhoto(fi) { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
   cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); choisitPhoto(cv.toDataURL("image/jpeg", .85)); }; im.onerror = () => bulle("Cette photo ne s’ouvre pas"); im.src = r.result; }; r.readAsDataURL(fi); }
 /* 14/11 (Marie) : charms — une fiche sobre avec les 3 gestes, ouverte une fois après le 1er charm ; le « ? » la rouvre */
@@ -788,7 +796,7 @@ $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtr
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
-function prepare() { if (cle() === "couleurs" && assorti && fondActuel()) setTimeout(() => { assortir(true); rend(); }, 200); ouvreOnglet(ONGLET[cle()]); enHaut(); [80, 300].forEach(t => setTimeout(enHaut, t)); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
+function prepare() { majCadre(); if (cle() === "couleurs" && assorti && fondActuel()) setTimeout(() => { assortir(true); rend(); }, 200); ouvreOnglet(ONGLET[cle()]); enHaut(); [80, 300].forEach(t => setTimeout(enHaut, t)); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
 addEventListener("scroll", () => { if ((scrollX || scrollY) && !document.activeElement?.matches?.("input")) scrollTo(0, 0); });
 F.classList.add("fondu");
@@ -809,12 +817,13 @@ F.onload = () => {
     D.addEventListener("touchend", e => { if (cle() !== "fond" || !st) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
       if (Date.now() - st < 700 && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.8) fondVoisin(dx < 0 ? 1 : -1); st = 0; }, { passive: true }); }
   /* 13/11 (Marie) : dès l'arrivée, elle doit comprendre que le téléphone défile (ses prestations, ses photos…) */
-  setTimeout(() => { try { if (etape !== 0 || W.__indice) return; W.__indice = 1; const b = defile(); if (!b || b.scrollTop > 5) return;
+  W.__indicePret = 1; setTimeout(() => { if (cle() !== "photo") indiceDefile(); }, 1200);
+  ouvreOnglet(3); setTimeout(prepare, 120); setTimeout(() => { enHaut(); ambiance(); F.classList.remove("fondu"); }, 700);
+};
+function indiceDefile() { if (!W || !W.__indicePret) return; try { if (W.__indice) return; W.__indice = 1; const b = defile(); if (!b || b.scrollTop > 5) return;
     const i = document.createElement("div"); i.className = "indiceD"; i.innerHTML = '<span class="gl"></span><b>Faites défiler</b>'; $("mini").appendChild(i);
     const fin = () => { i.classList.add("part"); setTimeout(() => i.remove(), 400); };
     b.scrollTo({ top: 300, behavior: "smooth" }); setTimeout(() => b.scrollTo({ top: 0, behavior: "smooth" }), 1300); setTimeout(fin, 4200);
-    D.addEventListener("pointerdown", fin, { once: true }); } catch (x) {} }, 1200);
-  ouvreOnglet(3); setTimeout(prepare, 120); setTimeout(() => { enHaut(); ambiance(); F.classList.remove("fondu"); }, 700);
-};
+    D.addEventListener("pointerdown", fin, { once: true }); } catch (x) {} }
 </script>
 </body></html>
