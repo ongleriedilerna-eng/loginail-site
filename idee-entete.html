@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Choisir l'en-tête · 3 versions</title>
+<link rel="stylesheet" href="polices.css">
+<style>
+:root{--f:#F4EFE9;--n:#1E1C1B;--g:#8A817B}
+*{box-sizing:border-box}
+body{margin:0;background:#E9E3DC;color:var(--n);font-family:Jost,system-ui,sans-serif;font-weight:300}
+h1{font-weight:400;letter-spacing:.18em;text-transform:uppercase;font-size:13px;text-align:center;margin:26px 16px 6px}
+.sous{text-align:center;color:var(--g);font-size:14px;margin:0 16px 22px}
+.idees{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;padding:0 0 50px}
+.idee{width:min(375px,100vw);display:flex;flex-direction:column;align-items:center}
+.lettre{font-size:30px}
+.nom{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:400;margin:2px 16px 12px;text-align:center}
+.ecr{width:min(375px,100vw);height:740px;background:var(--f);position:relative;overflow:hidden;border-radius:0}
+@media(min-width:420px){.ecr{border-radius:34px;box-shadow:0 14px 40px rgba(0,0,0,.1)}}
+.hh{text-align:center;padding-top:16px;font:400 11px Jost;letter-spacing:.2em}
+.barre{display:flex;gap:4px;justify-content:center;margin-top:7px}.barre i{width:22px;height:3px;border-radius:2px;background:#ddd5ce}.barre i.on{background:var(--n)}
+.tel{position:absolute;left:50%;top:58px;transform:translateX(-50%);width:200px;height:433px;border:6px solid #111;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 22px 40px -22px rgba(0,0,0,.6)}
+.tel img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:opacity .2s}
+.bas{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.9);border-radius:26px 26px 0 0;padding:16px 0 18px;box-shadow:0 -10px 28px -18px rgba(0,0,0,.3)}
+.t{text-align:center;font:400 11px Jost;letter-spacing:.2em;text-transform:uppercase}
+.suiv{margin:14px auto 0;width:200px;text-align:center;border:1px solid #e6e0da;background:#fff;border-radius:30px;padding:13px;font:400 12px Jost;letter-spacing:.22em}
+.txt{font-size:14px;line-height:1.55;margin:16px 18px 0;max-width:375px;color:#3b3734}
+.txt b{font-weight:500}
+.rang{display:flex;gap:12px;overflow-x:auto;padding:14px 20px 4px;scrollbar-width:none}.rang::-webkit-scrollbar{display:none}
+/* A : vignettes */
+.vg{flex:0 0 62px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-size:11px;color:var(--g)}
+.vg div{width:62px;height:108px;border-radius:10px;background-size:cover;background-position:top;outline:1px solid transparent;outline-offset:3px;transition:outline-color .2s}
+.vg.on div{outline-color:var(--n)}.vg.on{color:var(--n)}
+/* B : mots fins */
+.mots{display:flex;gap:26px;overflow-x:auto;padding:22px 30px 10px;scrollbar-width:none;white-space:nowrap}.mots::-webkit-scrollbar{display:none}
+.mots span{font-size:17px;color:#b3aaa3;cursor:pointer;position:relative;padding-bottom:9px;transition:color .2s}
+.mots span.on{color:var(--n)}.mots span.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--n)}
+/* C : glisser */
+.gl{display:flex;align-items:center;justify-content:center;gap:22px;padding:18px 0 6px}
+.gl button{border:0;background:none;font:200 30px/1 Jost;color:var(--n);cursor:pointer;padding:0 8px}
+.gl b{font:300 21px Jost;min-width:150px;text-align:center}
+.pts{display:flex;gap:7px;justify-content:center;margin-top:8px}.pts i{width:5px;height:5px;border-radius:50%;background:#d8d0c9}.pts i.on{background:var(--n)}
+.aide{text-align:center;color:var(--g);font-size:12px;margin-top:10px}
+</style></head><body>
+<h1>Étape 2 · Votre en-tête</h1>
+<p class="sous">3 façons de choisir, sans pilules. Touchez pour essayer.</p>
+<div class="idees">
+
+<div class="idee"><div class="lettre">A</div><div class="nom">Des petites images</div>
+<div class="ecr"><div class="hh">PERSONNALISEZ · 2 SUR 6<div class="barre"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+<div class="tel"><img data-ecran="a" src="idees-perso/ent-bandeau.jpg" alt=""></div>
+<div class="bas"><div class="t">Votre en-tête</div><div class="rang" data-l="a"></div><div class="suiv">SUIVANT</div></div></div>
+<div class="txt">Elle voit chaque en-tête <b>avant</b> de toucher, avec sa photo dedans. Le nom en petit dessous.</div></div>
+
+<div class="idee"><div class="lettre">B</div><div class="nom">Des mots fins</div>
+<div class="ecr"><div class="hh">PERSONNALISEZ · 2 SUR 6<div class="barre"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+<div class="tel"><img data-ecran="b" src="idees-perso/ent-bandeau.jpg" alt=""></div>
+<div class="bas"><div class="t">Votre en-tête</div><div class="mots" data-l="b"></div><div class="suiv">SUIVANT</div></div></div>
+<div class="txt">Comme un menu de magazine : juste les noms, en lettres fines, un trait sous celui choisi. Le plus sobre.</div></div>
+
+<div class="idee"><div class="lettre">C</div><div class="nom">Une à la fois</div>
+<div class="ecr"><div class="hh">PERSONNALISEZ · 2 SUR 6<div class="barre"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+<div class="tel"><img data-ecran="c" src="idees-perso/ent-bandeau.jpg" alt=""></div>
+<div class="bas"><div class="t">Votre en-tête</div><div class="gl"><button data-c="-1">‹</button><b id="nomC">Bandeau</b><button data-c="1">›</button></div><div class="pts" id="ptsC"></div><div class="aide">ou glissez le téléphone</div><div class="suiv">SUIVANT</div></div></div>
+<div class="txt">Une seule en-tête à l'écran, on passe à la suivante avec les flèches ou en glissant. Très calme, mais il faut aller jusqu'au bout pour tout voir.</div></div>
+
+</div>
+<script>
+const E=[["bandeau","Bandeau"],["diagonale","Diagonale"],["vague","Vague"],["ticket","Ticket"],["vitrine","Vitrine"],["rideau","Rideau"],["loge","Loge de star"],["balcon","Balcon"],["devanture","Devanture"],["fleurs","Fleurs"]];
+const img=k=>`idees-perso/ent-${k}.jpg`;
+const met=(l,k)=>document.querySelector(`[data-ecran="${l}"]`).src=img(k);
+const A=document.querySelector('[data-l="a"]');
+A.innerHTML=E.map(([k,n],i)=>`<span class="vg${i?"":" on"}" data-k="${k}"><div style="background-image:url(${img(k)})"></div>${n}</span>`).join("");
+A.onclick=e=>{const v=e.target.closest(".vg");if(!v)return;A.querySelectorAll(".vg").forEach(x=>x.classList.toggle("on",x===v));met("a",v.dataset.k)};
+const B=document.querySelector('[data-l="b"]');
+B.innerHTML=E.map(([k,n],i)=>`<span class="${i?"":"on"}" data-k="${k}">${n}</span>`).join("");
+B.onclick=e=>{const v=e.target.closest("span");if(!v)return;B.querySelectorAll("span").forEach(x=>x.classList.toggle("on",x===v));met("b",v.dataset.k)};
+let c=0;const P=document.getElementById("ptsC");P.innerHTML=E.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("");
+const vaC=d=>{c=(c+d+E.length)%E.length;document.getElementById("nomC").textContent=E[c][1];met("c",E[c][0]);P.querySelectorAll("i").forEach((x,i)=>x.classList.toggle("on",i===c))};
+document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>vaC(+b.dataset.c));
+let sx=0;const tc=document.querySelector('[data-ecran="c"]').parentElement;
+tc.addEventListener("touchstart",e=>sx=e.touches[0].clientX,{passive:true});
+tc.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)vaC(dx<0?1:-1)},{passive:true});
+E.forEach(([k])=>{const i=new Image();i.src=img(k)});
+</script>
+</body></html>
