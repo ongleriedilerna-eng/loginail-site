@@ -248,12 +248,32 @@ html,body{touch-action:manipulation}
 #rechF .vide{font:300 13px Jost,sans-serif;color:var(--muted);padding:10px 16px}
 .maquette{position:absolute;top:calc(env(safe-area-inset-top) + 4px);right:10px;z-index:8;font:400 9px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--noir);color:#fff;padding:3px 7px;border-radius:999px;opacity:.45}
 html.vrai .maquette{display:none}
+/* 14/11 (Marie) : version sobre */
+.titreBas.titreLien{cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.chevT{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bas.fondE .poi i{animation:none}
+.aideP{margin:0 24px 12px;text-align:center;font:300 12.5px/1.4 Jost,sans-serif;color:var(--muted)}
+.photosU{display:flex;gap:9px;overflow-x:auto;padding:5px 20px 10px;scrollbar-width:none}.photosU::-webkit-scrollbar{display:none}
+.ajoutU{flex:none;width:76px;height:96px;border-radius:14px;border:1px dashed rgba(30,28,27,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font:400 11.5px/1.2 Jost,sans-serif;text-align:center;cursor:pointer;background:rgba(255,255,255,.6)}
+.ajoutU svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round}
+.phU{flex:none;width:72px;height:96px;border-radius:14px;border:0;padding:0;background-size:cover;background-position:center;cursor:pointer;opacity:.82;transition:opacity .2s}
+.phU.on{opacity:1;outline:2px solid var(--noir);outline-offset:2px}
+.interA{display:flex;align-items:center;justify-content:space-between;gap:12px;width:calc(100% - 44px);margin:0 22px 10px;border:0;background:none;padding:2px 0;font:400 13.5px Jost,sans-serif;color:var(--noir);text-align:left;cursor:pointer}
+.interA small{display:block;color:var(--muted);font-size:11.5px;font-weight:300}
+.sw{flex:none;width:40px;height:24px;border-radius:999px;background:rgba(30,28,27,.18);position:relative;transition:background .2s}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw.on{background:var(--noir)}.sw.on::after{left:19px}
+#questC{position:absolute;right:16px;top:calc(env(safe-area-inset-top) + 12px);z-index:6;width:36px;height:36px;border-radius:50%;place-items:center;font:300 17px/1 Jost,sans-serif;color:var(--noir);padding:0}
+.ficheC{position:absolute;left:14px;right:14px;top:calc(env(safe-area-inset-top) + 58px);z-index:7;background:rgba(255,255,255,.97);border-radius:20px;padding:4px 18px;box-shadow:0 14px 34px -10px rgba(0,0,0,.25);font:300 14px Jost,sans-serif;color:var(--noir);opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .25s,transform .25s}
+.ficheC.on{opacity:1;pointer-events:auto;transform:none}
+.ficheC div{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(30,28,27,.07)}.ficheC div:first-child{border-top:0}
+.ficheC svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--noir);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
-  <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 5</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1411g&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1411h&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   <button class="fl verre" id="de" type="button" aria-label="Un fond au hasard" title="Un fond au hasard" hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -265,6 +285,7 @@ html.vrai .maquette{display:none}
   <button class="mcUI verre" id="okC" type="button">VALIDER</button>
   <button class="mcUI" id="etoC" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button>
   <button class="mcUI" id="plusC" type="button" aria-label="Ajouter un charm">+</button>
+  <button class="mcUI verre" id="questC" type="button" aria-label="Comment bouger un charm">?</button>
   <div class="bas" id="bas"><div class="poi" id="poi" role="button" aria-label="Voir les fonds en grand"><i></i></div><b class="titreBas" id="titre"></b><div class="choix" id="contenu"></div>
     <div class="pied"><button class="retour verre" id="retour" type="button" aria-label="Retour">‹</button><button class="suivant verre" id="suivant" type="button">SUIVANT</button><button class="cherche-rond verre" id="cherche" type="button" aria-label="Rechercher" hidden><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div></div>
   <div class="fin" id="fin"><div><h3>Votre site est prêt</h3><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Gérez tout dans l’appli Loginail</b>Votre agenda, vos clientes et votre site, au même endroit.</li></ol>
@@ -285,12 +306,12 @@ const APPLI = new URLSearchParams(location.search).has("appli");
 /* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
 const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); /* 14/11 : aussi l'appli iPhone (capacitor://localhost) */ (location.hostname === "loginail.fr" ? ["https://app.loginail.fr", "capacitor://localhost"] : [location.origin]).forEach(o => { try { parent.postMessage({ loginail: "enregistre", br }, o); } catch (_) {} }); } catch (e) {} };
 
-const ORDRE = VRAI ? ["entete", "ecriture", "fond", "couleurs"] : ["entete", "ecriture", "fond", "couleurs", "charms"];   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
-const NB = 5;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
+const ORDRE = VRAI ? ["photo", "entete", "ecriture", "fond", "couleurs"] : ["photo", "entete", "ecriture", "fond", "couleurs", "charms"];   /* 14/11 (Marie) : sa plus belle photo en premier */   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
+const NB = 6;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
 /* ses choix sont enregistrés dans son brouillon (comme « C'est parfait » de l'éditeur) */
 function enregistre() { try { W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box||!BR)return;Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m},window.__pzEtat?__pzEtat():{});localStorage.setItem("loginail-brouillon",JSON.stringify(BR))})()`); return true; } catch (e) { return false; } }
-const TITRES = { entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
-const ONGLET = { entete: 1, ecriture: 4, fond: 3, couleurs: 2, site: 2, charms: 4 };
+const TITRES = { photo: "Votre plus belle photo", entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
+const ONGLET = { photo: 1, entete: 1, ecriture: 4, fond: 3, couleurs: 2, site: 2, charms: 4 };
 const cle = () => ORDRE[etape];
 const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
 /* 14/11 (Marie) : les 10 en-têtes choisies remplacent les formes d'ongles */
@@ -365,6 +386,9 @@ function rend() {
   $("hautT").textContent = `Personnalisez · ${etape + 1} sur ${NB}`; document.querySelectorAll("#barre i").forEach((x, k) => x.classList.toggle("on", k <= etape));
   [...$("barre").children].forEach((i, k) => i.classList.toggle("on", k <= etape));
   $("titre").textContent = TITRES[cle()]; $("aide").textContent = "";
+  /* 14/11 (Marie) : le titre du fond dit qu'on peut l'ouvrir */
+  if (cle() === "fond") { const lv = $("bas").classList.contains("leve"); $("titre").innerHTML = (lv ? "Moins de fonds" : "Voir tous les fonds") + `<svg viewBox="0 0 14 14" class="chevT"><path d="${lv ? "M3 5l4 4 4-4" : "M3 9l4-4 4 4"}"/></svg>`; }
+  $("titre").classList.toggle("titreLien", cle() === "fond");
   $("retour").style.visibility = etape ? "visible" : "hidden";
   $("bas").classList.toggle("fondE", cle() === "fond"); if (cle() !== "fond") $("bas").classList.remove("leve");
   $("suivant").textContent = etape === ORDRE.length - 1 ? (APPLI ? "ENREGISTRER" : VRAI ? "MES CHARMS" : "C’EST PARFAIT") : "SUIVANT";
@@ -373,7 +397,12 @@ function rend() {
   const mc = cle() === "charms"; if (mc !== $("tel").classList.contains("mc")) { $("tel").classList.toggle("mc", mc); metPlein(mc); $("fermerPlein").hidden = true; }
   $("cherche").hidden = cle() !== "fond"; $("de").hidden = true;   /* 13/11 : le logo « au hasard » est revenu dans la ligne, tout petit, sans le mot */
   majCompte();
-  if (cle() === "entete") {
+  if (cle() === "photo") {
+    const l = photosSite(), une = photoUne();
+    c.innerHTML = `<p class="aideP">Votre salon ou votre plus belle création :<br>c’est ce que vos clientes verront en premier.</p>
+      <div class="photosU" id="photosU"><label class="ajoutU"><input type="file" accept="image/*" id="fichierU" hidden><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Ajouter<br>ma photo</span></label>${l.map((u, i) => `<button class="phU ${u === une ? "on" : ""}" data-ph="${i}" type="button" style="background-image:url('${vu(u).replace(/'/g, "%27")}')" aria-label="Choisir cette photo"></button>`).join("")}</div>`;
+    $("fichierU").onchange = e => { const fi = e.target.files && e.target.files[0]; if (fi) litPhoto(fi); };
+  } else if (cle() === "entete") {
     c.innerHTML = `<div class="formes" id="formes">${ENT.map(([k, n]) => `<button class="puce verre ${k === ent ? "on" : ""}" data-ent="${k}">${n}</button>`).join("")}</div>`;
   } else if (cle() === "fond") {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
@@ -381,7 +410,6 @@ function rend() {
     const COEUR = `<svg viewBox="0 0 24 24" width="15" height="15" style="flex:none"><path d="M12 20s-7-4.4-9-8.6C1.6 8.3 3.4 5 6.6 5c2 0 3.6 1.1 5.4 3.2C13.8 6.1 15.4 5 17.4 5c3.2 0 5 3.3 3.6 6.4-2 4.2-9 8.6-9 8.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
     c.innerHTML = (`<div class="ligneH"><button class="puce verre avecIc ${catPerso === "favoris" ? "on" : ""}" data-perso="favoris">${COEUR}Favoris</button>`
       + `<button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>`
-      + `<button class="puce verre surprise seul" data-assortir="1" type="button" aria-label="Assortir mes couleurs au fond" title="Assortir mes couleurs au fond"><span style="font-size:17px;line-height:1">✦</span></button>`
       + (choisisG().length ? `<button class="puce verre ${catPerso === "choisis" ? "on" : ""}" data-perso="choisis">Les plus choisis</button>` : "")
       + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
       + (essayes.length > 1 ? `<button class="puce verre ${catPerso === "essayes" ? "on" : ""}" data-perso="essayes">Déjà essayés</button>` : "")
@@ -401,7 +429,8 @@ function rend() {
     TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
     l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i><u></u><u></u></i></span><b>Sur blanc</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i><u></u><u></u></i></span><b>Sur couleur</b></button></div>` : "")
       + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
-    c.innerHTML = (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
+    const aFond = !!fondActuel(); if (!aFond) assorti = false;
+    c.innerHTML = (aFond ? `<button class="interA" data-assorti type="button"><span>Assorties à mon fond<small>${assorti ? "Les couleurs vont avec votre fond" : "Touchez pour les assortir à votre fond"}</small></span><i class="sw ${assorti ? "on" : ""}"></i></button>` : "") + (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
     brancheRoue(choisi ? ki : -1); teinteBlocs();
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
@@ -459,7 +488,7 @@ function fondVoisin(d) { const g = $("grilleF"); if (!g) return; const l = [...g
 /* « Assortir mes couleurs » : le nom et les boutons prennent la couleur principale du fond */
 function majAssortir() { const a = $("assortir"); if (a) a.hidden = true; }   /* 13/11 : le gros bouton gênait → une petite étoile ✦ dans la ligne, après « Pour vous » */
 function coul(v) { const h = (String(v).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(v).match(/\d+(\.\d+)?/g); return m && m.length >= 3 ? m.slice(0, 3).map(Number) : [0, 0, 0]; }
-function assortir() { const n = fondActuel(), f = n && (W.FONDS100?.f || []).find(x => x[0] === n); if (!f) { bulle("Choisissez d’abord un fond"); return; }
+function assortir(muet) { const n = fondActuel(), f = n && (W.FONDS100?.f || []).find(x => x[0] === n); if (!f) { if (!muet) bulle("Choisissez d’abord un fond"); return; }
   const sat = c => { const [r, g, b] = coul(c).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b); return mx ? (mx - mn) / mx : 0; }, lum = c => { const [r, g, b] = coul(c); return (.299 * r + .587 * g + .114 * b) / 255; };
   const fonce = (c, k) => "rgb(" + coul(c).map(v => Math.round(v * k)).join(",") + ")", dist = (v, cible) => { const a = coul(v), t = coul(cible); return (a[0] - t[0]) ** 2 + (a[1] - t[1]) ** 2 + (a[2] - t[2]) ** 2; };
   /* la couleur du fond : la plus colorée entre son encre et sa couleur de base */
@@ -467,11 +496,11 @@ function assortir() { const n = fondActuel(), f = n && (W.FONDS100?.f || []).fin
   const cb = lum(c) > .8 ? fonce(c, .72) : c, cn = lum(c) > .5 ? fonce(c, .5) : c;   /* boutons : pas trop pâles ; nom : assez foncé pour se lire */
   const vs = [...D.querySelectorAll(".pf-vifs [data-vif]")]; if (vs.length) { const b = vs.reduce((m, x) => dist(x.style.background, cb) < dist(m.style.background, cb) ? x : m); if (vifChoisi !== b.dataset.vif) { vifChoisi = b.dataset.vif; b.click(); noteVif(); } }
   const ks = Object.entries(NOMC).filter(([k, v]) => /^#/.test(v) && lum(v) < .62); if (ks.length) { nomc = ks.reduce((m, x) => dist(x[1], cn) < dist(m[1], cn) ? x : m)[0]; try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); }
-  setTimeout(poseEncre, 80); bulle("Couleurs assorties ✦"); navigator.vibrate?.(10); }
+  setTimeout(poseEncre, 80); if (!muet) { bulle("Couleurs assorties"); navigator.vibrate?.(10); } }
 /* 13/11 nuit (Marie) : les fonds défilent comme les couleurs — celui du milieu est en grand et se pose tout seul sur le site */
 function gardeLigne(x) { const l = $("contenu").querySelector(".ligneH"); if (l) { l.style.scrollBehavior = "auto"; l.scrollLeft = x; } }
 function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); if (!t || !c || !m || plein) return; t.style.transform = ""; if ($("bas").classList.contains("leve")) return;
-  let haut = 1e9; c.querySelectorAll("button,.roue,.pages").forEach(x => { const r = x.getBoundingClientRect(); if (r.height > 4 && r.top < haut) haut = r.top; }); if (haut > 1e8) return;
+  let haut = 1e9; c.querySelectorAll("button,.roue,.pages,.aideP,.ajoutU").forEach(x => { const r = x.getBoundingClientRect(); if (r.height > 4 && r.top < haut) haut = r.top; }); if (haut > 1e8) return;
   const r = t.getBoundingClientRect(), d = ($("bas").getBoundingClientRect().top + 4 + haut) / 2 - (r.top + r.height / 2); if (Math.abs(d) < 60) t.style.transform = `translateY(${d.toFixed(1)}px)`; }
 new MutationObserver(() => requestAnimationFrame(centreTitre)).observe(document.getElementById("contenu"), { childList: true }); addEventListener("resize", () => setTimeout(centreTitre, 80)); [300, 1200, 2500].forEach(x => setTimeout(centreTitre, x));
 function brancheFonds() { const g = $("grilleF"); if (!g) return; const n = g.querySelectorAll(".vg").length; if (!n) return;
@@ -542,7 +571,7 @@ function poseSticker(n) {
   const x = box.clientWidth / 2 - 40 + (Math.random() * 100 - 50), y = box.scrollTop + Math.max(60, libre * .45) + (Math.random() * 50 - 25);
   im.style.cssText = `position:absolute;z-index:9000;left:${x}px;top:${y}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte ${3 + Math.random() * 1.5}s ease-in-out ${-Math.random() * 3}s infinite`;
   majS(im); box.appendChild(im); marquePoses(); majCompte();
-  nbPoses++; if (nbPoses === 1) setTimeout(() => astuceCharm("taille"), 500); if (nbPoses === 3) setTimeout(() => astuceCharm("partout"), 500);
+  nbPoses++; if (nbPoses === 1) setTimeout(() => ficheCharms(true), 500); if (nbPoses === 3) setTimeout(() => astuceCharm("partout"), 500);
 }
 /* le halo des étoiles prend la couleur principale du fond choisi (sinon la couleur du bouton du site) */
 function haloEtoiles() { try {
@@ -579,7 +608,8 @@ function brancheStickers() {
   const doigts = new Map(); let cible = null, depart = null;
   const deux = () => { const p = [...doigts.values()]; if (p.length < 2) return null; const dx = p[1].x - p[0].x, dy = p[1].y - p[0].y; return { d: Math.hypot(dx, dy) || 1, a: Math.atan2(dy, dx) * 180 / Math.PI }; };
   const repart = (x, y) => { depart = { l: parseFloat(cible.style.left), t: parseFloat(cible.style.top), x, y, s: cible._s, r: cible._r, g: deux() }; };
-  D.addEventListener("pointerdown", e => {
+  D.addEventListener("pointerdown", e => { ficheCharms(false);
+    { const t0 = e.target.closest?.(".lgn-sticker"); D.querySelectorAll(".lgn-sticker.choisiC").forEach(x => { if (x !== t0) x.classList.remove("choisiC"); }); if (t0) { t0.classList.add("choisiC"); clearTimeout(t0._cc); t0._cc = setTimeout(() => t0.classList.remove("choisiC"), 2600); } }
     const t = e.target.closest?.(".lgn-sticker"); if (!t && !cible) return; if (t && !cible) cible = t;
     e.preventDefault(); doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); repart(e.clientX, e.clientY); cible.classList.add("tenu"); cible.style.cursor = "grabbing";
   }, { passive: false });
@@ -645,7 +675,7 @@ function brancheRoue(depart) { const P = $("roP"); if (!P) return; const B = [..
   requestAnimationFrame(() => { const i = N + (depart < 0 ? Math.floor(N / 2) : depart); vers(i, false); k = depart < 0 ? -1 : depart; peint(depart < 0 ? -1 : i); setTimeout(() => { pret = true; }, 250); }); }
 /* la couleur des boutons choisie ici passe avant celle de la carte */
 const noteVif = () => { try { W.eval(`window.__lgnChoix=Object.assign(window.__lgnChoix||{},{vif:(typeof BR!=="undefined"&&BR&&BR.vif)||""})`); const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); } catch (x) {} };
-function appliqueTeinte(k) { if (sousCouleur === "nom") { nomc = k; try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); }
+function appliqueTeinte(k) { if (assorti) { assorti = false; const b = document.querySelector(".interA"); if (b) { b.querySelector(".sw").classList.remove("on"); b.querySelector("small").textContent = "Touchez pour les assortir à votre fond"; } } if (sousCouleur === "nom") { nomc = k; try { W.eval(`BR.nomc=${JSON.stringify(nomc)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:BR.nomc})`); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); }
   else if (sousCouleur === "boutons") { vifChoisi = k; clique(`.pf-vifs [data-vif="${k}"]`); noteVif(); setTimeout(poseEncre, 80); }
   else { clique(`.pf-dots [data-co="${k}"]`); if (vifChoisi) clique(`.pf-vifs [data-vif="${vifChoisi}"]`); setTimeout(poseEncre, 80); setTimeout(teinteBlocs, 60); } }
 function teinteBlocs() { try { const e = D.querySelector(".ecran"), t = D.createElement("i"); t.style.cssText = "display:none;color:var(--lgn-bloc)"; e.appendChild(t); const c = W.getComputedStyle(t).color; t.remove(); if (c) $("contenu").style.setProperty("--blocC", c); } catch (x) {} }
@@ -667,6 +697,8 @@ $("contenu").addEventListener("click", e => {
   if (b.dataset.perso) { const x = b.parentElement.scrollLeft; catPerso = b.dataset.perso; rend(); gardeLigne(x); return; }
   if (b.dataset.cat) { const x = b.parentElement.scrollLeft; catPerso = ""; clique(`#pzCats [data-c="${b.dataset.cat}"]`); setTimeout(() => { rend(); gardeLigne(x); }, 60); return; }
   if (b.dataset.f != null) { if (b._long) { b._long = false; return; } const g = b.closest(".defileF"); if (g) g.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - g.clientWidth / 2, behavior: "smooth" }); poseFond(b.dataset.f); return; }
+  if (b.dataset.assorti !== undefined) { assorti = !assorti; if (assorti) assortir(); rend(); return; }
+  if (b.dataset.ph !== undefined) { choisitPhoto(photosSite()[+b.dataset.ph]); return; }
   if (b.dataset.sc) { sousCouleur = b.dataset.sc; rend(); return; }
   if (b.dataset.fam) { famC[sousCouleur] = b.dataset.fam; const x = $("teintes").querySelector(".fams").scrollLeft; rend(); requestAnimationFrame(() => { const f = $("teintes") && $("teintes").querySelector(".fams"); if (f) f.scrollLeft = x; }); return; }
   if (b.dataset.blocs) { poseBlocs(b.dataset.blocs); b.parentElement.querySelectorAll("[data-blocs]").forEach(x => x.classList.toggle("on", x === b)); navigator.vibrate?.(6); return; }
@@ -717,6 +749,23 @@ $("cherche").dataset.x = "1";
 function majCompte() { let c = $("compteC"); if (!c) { c = document.createElement("div"); c.id = "compteC"; c.className = "compteC verre"; $("tel").appendChild(c); }
   const n = D ? D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").length : 0, m = $("mini").getBoundingClientRect(), t = $("tel").getBoundingClientRect();
   c.hidden = cle() !== "charms"; c.textContent = `${n} / ${MAX_CHARMS} charms`; c.style.left = (m.left - t.left + m.width / 2) + "px"; c.style.top = ($("tel").classList.contains("mc") ? 34 : (m.top - t.top + 2)) + "px"; }
+/* 14/11 (Marie) : « Voir tous les fonds » : le titre s'ouvre déjà au toucher (plus bas, avec la poignée) */
+/* 14/11 (Marie) : les couleurs sont assorties au fond dès le départ ; toucher une couleur éteint l'interrupteur */
+let assorti = true;
+/* 14/11 (Marie) : « Votre plus belle photo » — celle de son salon ou de sa plus belle création, en grand tout en haut du site */
+const vu = u => /^(data:|https?:|blob:)/.test(u) ? u : /^\.\.\//.test(u) ? u.slice(3) : "loginail-creer/" + u;
+function photosSite() { try { return W.eval("(BR.photos||[]).map(p=>p.url)"); } catch (e) { return []; } }
+function photoUne() { try { return W.eval("(BR.photos||[])[BR.principale||0]?.url||''"); } catch (e) { return ""; } }
+function choisitPhoto(u) { if (!u) return; try { W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>p.url===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
+  BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
+  setTimeout(() => { poseEncre(); ambiance(); enHaut(); }, 150); if (VRAI && !APPLI) enregistre(); rend(); }
+function litPhoto(fi) { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
+  cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); choisitPhoto(cv.toDataURL("image/jpeg", .85)); }; im.onerror = () => bulle("Cette photo ne s’ouvre pas"); im.src = r.result; }; r.readAsDataURL(fi); }
+/* 14/11 (Marie) : charms — une fiche sobre avec les 3 gestes, ouverte une fois après le 1er charm ; le « ? » la rouvre */
+const FICHE = '<div><svg viewBox="0 0 20 20"><path d="M10 2v16M2 10h16M10 2 7.5 4.5M10 2l2.5 2.5M10 18l-2.5-2.5M10 18l2.5-2.5M2 10l2.5-2.5M2 10l2.5 2.5M18 10l-2.5-2.5M18 10l-2.5 2.5"/></svg>Glissez-le pour le déplacer</div><div><svg viewBox="0 0 20 20"><path d="M3 17 8 12M17 3l-5 5M3 17v-4M3 17h4M17 3v4M17 3h-4"/></svg>Écartez deux doigts pour l’agrandir</div><div><svg viewBox="0 0 20 20"><path d="M16 10a6 6 0 1 1-2-4.5M16 3v3h-3"/></svg>Tournez deux doigts pour le pencher</div>';
+function ficheCharms(on) { let f = $("ficheC"); if (!f) { f = document.createElement("div"); f.id = "ficheC"; f.className = "ficheC"; f.innerHTML = FICHE; $("tel").appendChild(f); } f.classList.toggle("on", on); }
+$("questC").onclick = e => { e.stopPropagation(); ficheCharms(!($("ficheC") && $("ficheC").classList.contains("on"))); };
+document.addEventListener("pointerdown", e => { if (!e.target.closest("#questC,#ficheC")) ficheCharms(false); }, true);
 function leveFonds(on) { if ($("bas").classList.contains("leve") === on) return; $("bas").classList.toggle("leve", on); rend(); setTimeout(() => { if (!on) taille(); centreTitre(); }, 230); }
 { const po = $("poi"); let y0 = null, bouge = false;
   /* le trait ET le titre : un petit glissé ou un simple toucher suffit */
@@ -734,19 +783,19 @@ const noteReprise = p => { try { localStorage.setItem("loginail-reprise", JSON.s
 if (VRAI && !APPLI) noteReprise("perso");
 $("amieM").onclick = async () => { const d = { title: "Loginail", text: "Regarde, je viens de créer le site de mon salon avec Loginail ✦", url: "https://loginail.fr" };
   try { if (navigator.share) { await navigator.share(d); return; } await navigator.clipboard.writeText(d.text + " " + d.url); bulle("Le lien est copié : collez-le dans un message"); } catch (x) {} };
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1311t"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1411h"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fermerPlein").hidden = !v; taille(); setTimeout(majCompte, 50); };
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
-function prepare() { ouvreOnglet(ONGLET[cle()]); enHaut(); [80, 300].forEach(t => setTimeout(enHaut, t)); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
+function prepare() { if (cle() === "couleurs" && assorti && fondActuel()) setTimeout(() => { assortir(true); rend(); }, 200); ouvreOnglet(ONGLET[cle()]); enHaut(); [80, 300].forEach(t => setTimeout(enHaut, t)); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
 addEventListener("scroll", () => { if ((scrollX || scrollY) && !document.activeElement?.matches?.("input")) scrollTo(0, 0); });
 F.classList.add("fondu");
 F.onload = () => {
   W = F.contentWindow; D = F.contentDocument;
   W.F100_AUSSI = 1;   // « Tous » = les 336 fonds
-  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}.ch-couche .charm,.charm{outline:none!important}"; D.head.appendChild(st);
+  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}.lgn-sticker.choisiC:not(.lgn-etoile){outline:1px solid rgba(255,255,255,.95)!important;outline-offset:5px;border-radius:6px}.ch-couche .charm,.charm{outline:none!important}"; D.head.appendChild(st);
   ["gesturestart", "gesturechange"].forEach(t => D.addEventListener(t, e => e.preventDefault(), { passive: false }));
   const copie = () => { D.querySelectorAll("style").forEach(s => { if (s.dataset.copie) return;
       if (s.id === "pzCss") { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = s.textContent.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(c); return; }

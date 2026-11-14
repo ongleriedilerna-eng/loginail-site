@@ -113,8 +113,15 @@ html,body{touch-action:manipulation}
 .pageP{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-columns:repeat(var(--cols,4),1fr);grid-template-rows:repeat(var(--rows,2),var(--h,52px));gap:2px}
 .pageP .ch{padding:var(--pad,7px)}
 .ptsP{flex:none;display:flex;justify-content:center;gap:5px;padding:8px 0 6px}.ptsP i{width:6px;height:6px;border-radius:50%;background:rgba(30,28,27,.18)}.ptsP i.on{background:var(--noir)}
+/* 14/11 (Marie) : version sobre — fiche des gestes, « ? », cadre fin sur le charm touché */
+#questC{width:36px;height:36px;padding:0;border-radius:50%;display:grid;place-items:center;font:300 17px/1 Jost,sans-serif}
+.ficheC{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 58px);translate:-50% 0;z-index:96;width:min(380px,calc(100% - 24px));background:rgba(255,255,255,.97);border-radius:20px;padding:4px 18px;box-shadow:0 14px 34px -10px rgba(0,0,0,.25);font:300 14px Jost,sans-serif;color:#1E1C1B;opacity:0;pointer-events:none;transition:opacity .25s}
+.ficheC.on{opacity:1;pointer-events:auto}
+.ficheC div{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(30,28,27,.07)}.ficheC div:first-child{border-top:0}
+.ficheC svg{width:20px;height:20px;flex:none;fill:none;stroke:#1E1C1B;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.st.choisiC:not(.eto){outline:1px solid rgba(255,255,255,.95);outline-offset:5px;border-radius:6px}
 </style></head><body>
-<div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button></div>
+<div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button><button class="compte verre" id="questC" type="button" aria-label="Comment bouger un charm">?</button></div>
 <p class="explique" id="explique">Touchez un charm pour le poser · 21 au maximum</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
 <div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><div id="finiP"><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Gérez tout dans l’appli Loginail</b>Votre agenda, vos clientes et votre site, au même endroit.</li></ol></div><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie">Envoyer à une amie</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
@@ -190,7 +197,7 @@ function moteur(ecr) {
   const deux = () => { const p = [...doigts.values()]; if (p.length < 2) return null; return { d: Math.hypot(p[1].x - p[0].x, p[1].y - p[0].y) || 1, a: Math.atan2(p[1].y - p[0].y, p[1].x - p[0].x) * 180 / Math.PI }; };
   const base = () => { const p = [...doigts.values()][0]; dep = { l: parseFloat(choisi.style.left), t: parseFloat(choisi.style.top), x: p.x, y: p.y, s: choisi._s, r: choisi._r, g: deux() }; };
   const horsJeu = t => t.closest(".panneau,.btnBas,.haut,.choix");
-  M.prend = (im, e) => { choisi = im; doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); mode = "glisse"; base(); try { ecr.setPointerCapture(e.pointerId); } catch (x) {} poub.classList.add("on"); ecr.classList.add("tient"); };
+  M.prend = (im, e) => { ficheCharms(false); document.querySelectorAll(".st.choisiC").forEach(x => { if (x !== im) x.classList.remove("choisiC"); }); im.classList.add("choisiC"); clearTimeout(im._cc); im._cc = setTimeout(() => im.classList.remove("choisiC"), 2600); choisi = im; doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); mode = "glisse"; base(); try { ecr.setPointerCapture(e.pointerId); } catch (x) {} poub.classList.add("on"); ecr.classList.add("tient"); };
   ecr.addEventListener("pointerdown", e => {
     if (horsJeu(e.target) && !doigts.size) return;
     const t = e.target.closest(".st");
@@ -315,7 +322,12 @@ function astuceCharm(quoi) { let a = document.getElementById("astuceC"); if (!a)
   const ex = document.getElementById("explique"); if (ex) ex.style.opacity = 0;
   a.classList.add("on"); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove("on"), 5200); }
 document.addEventListener("dblclick", e => e.preventDefault(), { passive: false });
-{ const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 1) setTimeout(() => astuceCharm("taille"), 500); if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
+/* 14/11 (Marie) : une fiche sobre avec les 3 gestes, ouverte une fois après le 1er charm ; le « ? » la rouvre */
+const FICHE = '<div><svg viewBox="0 0 20 20"><path d="M10 2v16M2 10h16M10 2 7.5 4.5M10 2l2.5 2.5M10 18l-2.5-2.5M10 18l2.5-2.5M2 10l2.5-2.5M2 10l2.5 2.5M18 10l-2.5-2.5M18 10l-2.5 2.5"/></svg>Glissez-le pour le déplacer</div><div><svg viewBox="0 0 20 20"><path d="M3 17 8 12M17 3l-5 5M3 17v-4M3 17h4M17 3v4M17 3h-4"/></svg>Écartez deux doigts pour l’agrandir</div><div><svg viewBox="0 0 20 20"><path d="M16 10a6 6 0 1 1-2-4.5M16 3v3h-3"/></svg>Tournez deux doigts pour le pencher</div>';
+function ficheCharms(on) { let f = document.getElementById("ficheC"); if (!f) { f = document.createElement("div"); f.id = "ficheC"; f.className = "ficheC"; f.innerHTML = FICHE; document.body.appendChild(f); } f.classList.toggle("on", on); }
+document.getElementById("questC").onclick = e => { e.stopPropagation(); const f = document.getElementById("ficheC"); ficheCharms(!(f && f.classList.contains("on"))); };
+document.addEventListener("pointerdown", e => { if (!e.target.closest("#questC,#ficheC")) ficheCharms(false); }, true);
+{ const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 1) setTimeout(() => ficheCharms(true), 500); if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
 { const pn = document.querySelector(".ecr.on .panneau") || document.querySelector(".panneau"); if (pn) pn.appendChild(document.getElementById("etoP")); }   /* 13/11 nuit : Étoiles en bas à gauche, juste au-dessus des charms */
 { const pn = document.getElementById("etoP").parentElement, b = document.createElement("div"); b.id = "etoB"; b.hidden = true;
   const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#FF4FA3", "#E3122C", "#FF8A3D", "#FFD23F", "#7BD389", "#2EC4B6", "#5BA8FF", "#2F57E8", "#9B6BFF", "#D9A6FF", "#8A5A3C"];

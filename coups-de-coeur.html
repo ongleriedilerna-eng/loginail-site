@@ -310,7 +310,7 @@ if (VRAI && !APPLI) { let r = null; try { r = JSON.parse(localStorage.getItem("l
   if (r && Date.now() - r.t < 30 * 864e5 && (r.p === "perso" || r.p === "charms")) { const o = document.createElement("div"); o.id = "retourB";
     o.innerHTML = `<div><h3>Bon retour</h3><p>Votre site vous attend,<br>là où vous l’aviez laissé.</p><button type="button" class="noirB" id="reprendre">REPRENDRE MON SITE</button><button type="button" class="lienB" id="zero">Recommencer de zéro</button></div>`;
     document.body.appendChild(o);
-    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1311t" : "maquette-perso.html?v=1311t&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
+    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1411h" : "maquette-perso.html?v=1311t&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
     $("zero").onclick = () => { try { localStorage.removeItem("loginail-reprise"); } catch (e) {} if (new URLSearchParams(location.search).has("retour")) location.href = "loginail-creer/index.html?neuf"; else o.remove(); }; } }
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>
