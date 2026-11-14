@@ -1721,7 +1721,13 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .ecran:not(.v1):has(>.fond-site){--fond-carte:var(--creme)}
 .ecran:not(.v1):has(>.fond-site) .defile>.sec .tir,.ecran:not(.v1):has(>.fond-site) .defile>.sec .carte{background:color-mix(in srgb,var(--creme) 45%,#fff)}
 </style>
-<style id="entetes-1411">
+<style id="entetes-1411">/* 14/11 : le fond choisi se voit derrière l'en-tête ; les boutons prennent la couleur choisie */
+.ecran:has(>.fond-site) .hent{background:transparent!important;--papier:var(--fond-carte,#fff)}
+.ecran:has(>.fond-site) .hent:not(.he-bandeau) .he-txt{background:var(--papier);color:var(--noir);border-radius:24px;padding:18px 22px 22px;box-shadow:0 16px 30px -22px rgba(0,0,0,.4);width:calc(100% - 40px);max-width:520px}
+.ecran:has(>.fond-site) .he-diagonale .he-txt{margin:auto 20px 40px}
+.ecran:has(>.fond-site) .he-loge h1{color:var(--noir)!important}.ecran:has(>.fond-site) .hent.he-loge .kick,.ecran:has(>.fond-site) .hent.he-loge .note{color:var(--gris,#8c847d)}
+.ecran.btn-c .hent .he-btn{background:var(--btn)!important}.ecran.btn-pastel .hent .he-btn{color:#1E1C1B!important}
+
 /* 14/11 (Marie) : les 10 en-têtes choisies (6 bandeau, 10 diagonale, 15 vague, 28 ticket, 40 vitrine, 65 rideau, 66 loge, 76 balcon, 87 devanture, 88 fleurs) */
 .ecran .defile>.hent{order:-3;flex-shrink:0}
 .hent{position:relative;min-height:100%;overflow:hidden;color:var(--noir);background:var(--creme);display:flex;flex-direction:column;align-items:center;text-align:center;--acc:#1E1C1B;--papier:var(--carte,#fff)}
@@ -2522,9 +2528,16 @@ function entete(k,t,lang){
   if(k==="fleurs")return `<div class="${c}" data-s="accueil"><div class="pol">${ph(D.hero2||D.hero)}<span>${D.nom.split(" ").slice(-1)[0]}</span></div>${txt()}</div>`;
   return "";
 }
+/* 14/11 (Marie) : les traits, rayures, rideaux… de l'en-tête prennent la couleur du fond qu'elle a choisi */
+function accDuFond(){try{const n=window.__pzEtat&&window.__pzEtat().fond,f=n&&window.FONDS100&&FONDS100.f.find(x=>x[0]===n);if(!f)return "";
+  const rgb=v=>{const h=(String(v).match(/#([0-9a-f]{6})/i)||[])[1];if(h)return[0,2,4].map(k=>parseInt(h.substr(k,2),16));const m=String(v).match(/\d+(\.\d+)?/g);return m&&m.length>=3?m.slice(0,3).map(Number):null};
+  const sat=c=>{const[r,g,b]=rgb(c).map(v=>v/255),mx=Math.max(r,g,b),mn=Math.min(r,g,b);return mx?(mx-mn)/mx:0},lum=c=>{const[r,g,b]=rgb(c);return(.299*r+.587*g+.114*b)/255};
+  const base=(f[1].match(/background-color:\s*([^;"]+)/)||[])[1]||"",c=[f[4],base].filter(x=>x&&rgb(x)).sort((x,y)=>sat(y)-sat(x))[0];if(!c)return "";
+  return lum(c)>.78?"rgb("+rgb(c).map(v=>Math.round(v*.7)).join(",")+")":c}catch(e){return ""}}
+setInterval(()=>{const h=document.querySelector(".ecran .hent");if(!h)return;const e=h.closest(".ecran"),co=([...e.classList].find(c=>/^[cn]-/.test(c))||"c-noir").slice(2),v=accDuFond()||(typeof INKJ!=="undefined"&&INKJ[co])||"#1E1C1B";if(h.style.getPropertyValue("--acc")!==v)h.style.setProperty("--acc",v)},700);
 function poseEntete(ecran,d,t,lang){try{const k=enteteChoisie();if(!k)return;const h=d.querySelector('[data-s="accueil"]'),html=entete(k,t,lang);if(!html)return;
   const tmp=document.createElement("div");tmp.innerHTML=html;const n=tmp.firstElementChild;
-  const co=([...ecran.classList].find(c=>/^[cn]-/.test(c))||"c-noir").slice(2);n.style.setProperty("--acc",(typeof INKJ!=="undefined"&&INKJ[co])||"#1E1C1B");
+  const co=([...ecran.classList].find(c=>/^[cn]-/.test(c))||"c-noir").slice(2);n.style.setProperty("--acc",accDuFond()||(typeof INKJ!=="undefined"&&INKJ[co])||"#1E1C1B");
   if(h)h.replaceWith(n);else d.prepend(n);ecran.classList.add("a-entete")}catch(e){console.warn(e)}}
 function site(t,v,lang){
   const lettres=[...D.nom].map((c,i)=>c===" "?"<br>":`<span style="animation-delay:${.3+i*.05}s">${c}</span>`).join("");
@@ -3298,7 +3311,7 @@ document.addEventListener("scroll",e=>{if(e.target.classList?.contains("defile")
 document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){}});
 </script>
 <script src="../loginail-site/options-site.js?v=2"></script><script src="resa-simu.js"></script><script src="legal-site.js"></script><script src="menu-carre.js?v=3"></script><script src="menu-coffin.js?v=3"></script>
-<script src="hero-format.js?v=61"></script>
+<script src="hero-format.js?v=62"></script>
 <script>
 /* 09/11 (Marie) : les charms posés avec le présentoir (BR.stickers : n, x en % de la largeur, y en px, taille s, rotation r, largeur w du téléphone) ; ils flottent doucement */
 (function(){try{if(typeof BR==="undefined"||!BR||!Array.isArray(BR.stickers)||!BR.stickers.length)return;
