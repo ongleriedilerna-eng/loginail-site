@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Voir tous les fonds · 3 idées</title>
+<link rel="stylesheet" href="polices.css">
+<style>
+:root{--n:#1E1C1B;--g:#8A817B}
+*{box-sizing:border-box}
+body{margin:0;background:#E9E3DC;color:var(--n);font-family:Jost,system-ui,sans-serif;font-weight:300}
+h1{font-weight:400;letter-spacing:.18em;text-transform:uppercase;font-size:13px;text-align:center;margin:26px 16px 6px}
+.sous{text-align:center;color:var(--g);font-size:14px;margin:0 16px 22px;line-height:1.5}
+.idees{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;padding:0 0 50px}
+.idee{width:min(390px,100vw);display:flex;flex-direction:column;align-items:center}
+.lettre{font-size:30px}
+.nom{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:400;margin:2px 16px 12px;text-align:center}
+.ecr{width:min(390px,100vw);aspect-ratio:390/844;position:relative;overflow:hidden;background:#F4EFE9}
+@media(min-width:430px){.ecr{border-radius:34px;box-shadow:0 14px 40px rgba(0,0,0,.1)}}
+.ecr>img.haut{position:absolute;left:0;top:0;width:100%}
+.bas{position:absolute;left:0;right:0;top:69.7%;bottom:0;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -10px 28px -18px rgba(0,0,0,.3);display:flex;flex-direction:column;transition:transform .45s cubic-bezier(.3,1,.4,1)}
+.poi{height:16px;display:grid;place-items:center;margin-top:7px}.poi i{width:40px;height:4px;border-radius:3px;background:#cfc8c2;transition:transform .3s}
+.titre{text-align:center;font:400 11.5px Jost;letter-spacing:.2em;margin:4px 0 6px;transition:opacity .3s}
+.titre svg{width:11px;height:11px;vertical-align:-1px;margin-left:5px;stroke:currentColor;fill:none;stroke-width:1.6;transition:transform .3s}
+.bas img{width:100%;display:block}
+.pied{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 0}
+.pied span{width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.3);display:grid;place-items:center;font-size:22px}
+.pied b{flex:1;margin:0 12px;height:52px;border-radius:30px;background:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.25);display:grid;place-items:center;font:400 13px Jost;letter-spacing:.24em}
+.txt{font-size:14px;line-height:1.55;margin:16px 18px 0;max-width:390px;color:#3b3734}
+.txt b{font-weight:500}
+/* A : le titre clignote doucement */
+.A.go .titre{animation:cli 1.8s ease-in-out}
+@keyframes cli{0%,100%{opacity:1}25%{opacity:.15}50%{opacity:1}75%{opacity:.15}}
+/* B : la poignée et la flèche montent */
+.B.go .poi i,.B.go .titre svg{animation:monte 1.4s ease-in-out}
+@keyframes monte{0%,100%{transform:none}20%{transform:translateY(-6px)}40%{transform:none}60%{transform:translateY(-6px)}80%{transform:none}}
+/* C : le panneau se soulève un peu */
+.C .bas{bottom:-80px}
+.C.go .bas{transform:translateY(-62px)}
+.dem{font-size:11px;color:var(--g);text-align:center;margin-top:8px;letter-spacing:.05em}
+</style></head><body>
+<h1>« Voir tous les fonds »</h1>
+<p class="sous">Toutes les 20 secondes, un petit rappel qu'on peut l'ouvrir.<br>Ici il revient toutes les 5 secondes pour que tu le voies.</p>
+<div class="idees" id="idees"></div>
+<script>
+const I=[["A","Le titre clignote doucement","Le plus simple : « Voir tous les fonds » s'efface et revient 2 fois. Sobre, mais on peut le rater si on regarde le téléphone."],
+["B","La poignée et la flèche montent","La petite barre et la flèche ⌃ sautent 2 fois vers le haut. Ça montre <b>le geste</b> (tirer vers le haut), pas seulement le texte."],
+["C","Le panneau se soulève un peu","Le panneau monte un peu tout seul, on voit une 2e rangée de fonds dessous, puis il redescend. Le plus clair, mais c'est celui qui bouge le plus."]];
+const CH='<svg viewBox="0 0 12 12"><path d="M2 8l4-4 4 4"/></svg>';
+document.getElementById("idees").innerHTML=I.map(([l,n,t])=>`<div class="idee"><div class="lettre">${l}</div><div class="nom">${n}</div>
+<div class="ecr ${l}"><img class="haut" src="idees-perso/vf-haut.jpg" alt=""><div class="bas"><div class="poi"><i></i></div><div class="titre">VOIR TOUS LES FONDS${CH}</div>
+<img src="idees-perso/vf-puces.jpg" alt=""><img src="idees-perso/vf-fonds.jpg" alt=""><div class="pied"><span>‹</span><b>SUIVANT</b><span style="font-size:16px">⌕</span></div>${l==="C"?'<img src="idees-perso/vf-fonds.jpg" alt="" style="margin-top:14px">':""}</div></div>
+<div class="dem">(en vrai : toutes les 20 secondes)</div><div class="txt">${t}</div></div>`).join("");
+const go=()=>document.querySelectorAll(".ecr").forEach(e=>{e.classList.remove("go");void e.offsetWidth;e.classList.add("go");setTimeout(()=>e.classList.remove("go"),1900)});
+setTimeout(go,1200);setInterval(go,5000);
+</script>
+</body></html>

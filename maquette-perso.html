@@ -280,6 +280,7 @@ html.vrai .maquette{display:none}
 .vg.sansF{background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(30,28,27,.14)}
 .vg.sansF span{font:300 9.5px/1.25 Jost,sans-serif;color:var(--noir);text-align:center;letter-spacing:.02em}
 .bas.leve .grilleF .vg.sansF span{font-size:13px}
+.defileF .vg.sansF{box-shadow:inset 0 0 0 1px rgba(30,28,27,.16)!important}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
@@ -452,7 +453,7 @@ function rend() {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     const SURPRISE = `<svg viewBox="0 0 24 24"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const COEUR = `<svg viewBox="0 0 24 24" width="15" height="15" style="flex:none"><path d="M12 20s-7-4.4-9-8.6C1.6 8.3 3.4 5 6.6 5c2 0 3.6 1.1 5.4 3.2C13.8 6.1 15.4 5 17.4 5c3.2 0 5 3.3 3.6 6.4-2 4.2-9 8.6-9 8.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
-    c.innerHTML = (`<div class="ligneH"><button class="puce verre avecIc ${catPerso === "favoris" ? "on" : ""}" data-perso="favoris">${COEUR}Favoris</button>`
+    c.innerHTML = (`<div class="ligneH"><button class="puce verre surprise seul ${catPerso === "favoris" ? "on" : ""}" data-perso="favoris" type="button" aria-label="Favoris" title="Favoris">${COEUR}</button>`
       + `<button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>`
       + (choisisG().length ? `<button class="puce verre ${catPerso === "choisis" ? "on" : ""}" data-perso="choisis">Les plus choisis</button>` : "")
       + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
@@ -461,6 +462,7 @@ function rend() {
       + `<div class="grilleF defileF" id="grilleF">${catPerso === "favoris" ? "" : SANSF}${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
     if ($("bas").classList.contains("leve")) { marqueFavoris(); $("contenu").insertAdjacentHTML("afterbegin", '<p class="aideF">Pour ne pas vous perdre parmi les fonds,<br>restez appuyée sur un fond pour le mettre en favori.</p>'); const mes = () => { const v = $("grilleF") && $("grilleF").querySelector(".vg"); if (v && v.clientWidth) { $("grilleF").style.setProperty("--kF", (v.clientWidth / 170).toFixed(4)); $("grilleF").style.setProperty("--hF", Math.round(v.clientWidth * 78 / 44) + "px"); } }; requestAnimationFrame(mes); setTimeout(mes, 380); } else { marqueFavoris(); brancheFonds(); }
     brancheRecherche();
+    if (!window.__glisseC) { window.__glisseC = 1; setTimeout(() => { const l = $("contenu").querySelector(".ligneH"); if (!l || l.scrollLeft > 4 || cle() !== "fond") return; l.style.scrollBehavior = "smooth"; l.scrollLeft = 180; setTimeout(() => { l.scrollLeft = 0; }, 1100); }, 1500); }   /* 15/11 (Marie) : montrer qu'après « Élégants » il y a d'autres choix */
     ajusteFonds();
   } else if (cle() === "couleurs" || cle() === "site") {
     const SC = [["nom", "Le nom"], ["boutons", "Les boutons"], ["site", "Le site"]];
@@ -479,6 +481,7 @@ function rend() {
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
     let pols = [...D.querySelectorAll("#pzPol [data-p]")].sort((a, b) => ((ELEG.includes(a.dataset.p) ? 0 : 1) - (ELEG.includes(b.dataset.p) ? 0 : 1)) * (fun ? -1 : 1));
+    { const ia = pols.findIndex(b => b.dataset.p === "affiche"); if (ia > 0) pols.unshift(pols.splice(ia, 1)[0]); }   /* 15/11 (Marie) : Affiche en premier */
     const pages = []; for (let k = 0; k < pols.length; k += 6) pages.push(pols.slice(k, k + 6));
     c.innerHTML = `<div class="pages" id="pages">${pages.map(pg => `<div class="page6">${pg.map(b => `<button class="pol verre ${b.classList.contains("on") ? "on" : ""}" data-p="${b.dataset.p}" style="${b.getAttribute("style")}">${b.textContent}</button>`).join("")}</div>`).join("") || `<p class="rien" style="text-align:center;color:var(--muted);font:300 13px Jost">Aucune écriture</p>`}</div>
       ${pages.length > 1 ? `<div class="ptsP" id="ptsP">${pages.map((_, k) => `<i class="${k ? "" : "on"}"></i>`).join("")}</div>` : ""}`;
@@ -550,7 +553,7 @@ function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); 
   const r = t.getBoundingClientRect(), d = ($("bas").getBoundingClientRect().top + 4 + haut) / 2 - (r.top + r.height / 2); if (Math.abs(d) < 60) t.style.transform = `translateY(${d.toFixed(1)}px)`; }
 new MutationObserver(() => requestAnimationFrame(centreTitre)).observe(document.getElementById("contenu"), { childList: true }); addEventListener("resize", () => setTimeout(centreTitre, 80)); [300, 1200, 2500].forEach(x => setTimeout(centreTitre, x));
 function brancheFonds() { const g = $("grilleF"); if (!g) return; const n = g.querySelectorAll(".vg").length; if (!n) return;
-  const K = n < 6 || n > 170 ? 1 : n < 45 ? 7 : 3, N = n, MIL = (K - 1) / 2; if (K > 1) g.innerHTML = g.innerHTML.repeat(K);   /* sans fin : la liste plusieurs fois, on revient sur celle du milieu quand ça s'arrête */
+  const K = 1, N = n, MIL = (K - 1) / 2; if (K > 1) g.innerHTML = g.innerHTML.repeat(K);   /* sans fin : la liste plusieurs fois, on revient sur celle du milieu quand ça s'arrête */
   const B = [...g.querySelectorAll(".vg")]; marqueFavoris(); let pas = 62, c0 = 0, cur = -1, t = 0, img = 0, pret = false;
   const mesure = () => { pas = B.length > 1 ? B[1].offsetLeft - B[0].offsetLeft : 62; c0 = B[0].offsetLeft + B[0].offsetWidth / 2; };
   const milieu = () => Math.max(0, Math.min(B.length - 1, Math.round((g.scrollLeft + g.clientWidth / 2 - c0) / pas)));
