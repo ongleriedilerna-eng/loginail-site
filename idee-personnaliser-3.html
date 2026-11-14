@@ -1,0 +1,96 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Idées sobres · Personnaliser</title>
+<link href="loginail-creer/polices.css" rel="stylesheet">
+<style>
+:root{--noir:#1E1C1B;--muted:#8C847D}
+*{box-sizing:border-box}
+body{margin:0;background:#E9E4DE;font-family:Jost,system-ui,sans-serif;color:var(--noir);padding:22px 16px 50px}
+h1{font-weight:300;font-size:22px;margin:0 0 4px;text-align:center;letter-spacing:.04em}
+.sous{margin:0 0 10px;color:var(--muted);font-size:14px;text-align:center}
+h2.serie{font-weight:400;font-size:13px;letter-spacing:.3em;text-transform:uppercase;text-align:center;margin:40px 0 18px}
+.grille{display:flex;flex-wrap:wrap;gap:26px;justify-content:center}
+.carte{width:312px}
+.carte h3{font-weight:400;font-size:15px;margin:0 0 3px}
+.carte p{margin:0 0 10px;color:var(--muted);font-size:13px;line-height:1.4;min-height:54px}
+.cadre{width:312px;height:675px;border-radius:26px;overflow:hidden;position:relative;box-shadow:0 14px 40px rgba(0,0,0,.12);background:#F6F3EF}
+.ecran{position:absolute;left:0;top:0;width:390px;height:844px;transform:scale(.8);transform-origin:0 0;background-size:390px 844px}
+.e2{background-image:url(idees-perso/et2.jpg)}.e3{background-image:url(idees-perso/et3.jpg)}.e4{background-image:url(idees-perso/et4.jpg)}
+.ab{position:absolute}
+.blanc{position:absolute;background:#FDFDFC}
+.titre{position:absolute;left:0;right:0;text-align:center;font:500 12.5px Jost,sans-serif;letter-spacing:.32em}
+.fin{font:400 10.5px Jost,sans-serif;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
+svg.l{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px}
+/* fond */
+.lienT{position:absolute;left:0;right:0;top:627px;text-align:center}
+.lienT span{border-bottom:1px solid rgba(30,28,27,.25);padding-bottom:2px}
+.monte{animation:monte 2.4s 0.6s ease-in-out 1 both}
+@keyframes monte{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px)}}
+.chev{position:absolute;left:50%;top:592px;width:44px;height:24px;margin-left:-22px;border-radius:999px;background:rgba(255,255,255,.9);box-shadow:0 1px 0 rgba(0,0,0,.06),inset 0 0 0 1px rgba(30,28,27,.1);display:flex;align-items:center;justify-content:center;color:var(--noir)}
+/* assortir */
+.lienA{position:absolute;left:0;right:0;top:760px;text-align:center;color:var(--noir)}
+.lienA span{border-bottom:1px solid rgba(30,28,27,.3);padding-bottom:2px}
+.puce{position:absolute;top:640px;height:36px;padding:0 15px;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1px rgba(30,28,27,.12);display:flex;align-items:center;gap:7px;font:400 13.5px Jost,sans-serif;white-space:nowrap}
+.puce.on{background:var(--noir);color:#fff;box-shadow:none}
+.inter{position:absolute;left:34px;right:34px;top:640px;display:flex;align-items:center;justify-content:space-between;font:400 13.5px Jost,sans-serif}
+.inter small{display:block;color:var(--muted);font-size:11.5px}
+.sw{width:40px;height:24px;border-radius:999px;background:var(--noir);position:relative;flex:none}
+.sw::after{content:"";position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff}
+.rangC{position:absolute;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:9px}
+.rangC i{flex:none;width:24px;height:40px;border-radius:999px}
+/* charms */
+.ligne{position:absolute;left:0;right:0;top:56px;text-align:center;font:300 13px Jost,sans-serif;color:var(--noir)}
+.ligne span{background:rgba(255,255,255,.82);padding:6px 14px;border-radius:999px;backdrop-filter:blur(8px)}
+.charm{position:absolute;width:86px;height:86px}
+.charm img{width:100%;height:100%;object-fit:contain}
+.cadreC::before{content:"";position:absolute;inset:-8px;border:1px solid rgba(255,255,255,.95);border-radius:6px}
+.cadreC b{position:absolute;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(30,28,27,.25)}
+.cadreC b:nth-of-type(1){left:-13px;top:-13px}.cadreC b:nth-of-type(2){right:-13px;top:-13px}.cadreC b:nth-of-type(3){left:-13px;bottom:-13px}.cadreC b:nth-of-type(4){right:-13px;bottom:-13px}
+.cadreC u{position:absolute;left:50%;top:-34px;width:1px;height:22px;background:rgba(255,255,255,.95)}
+.cadreC u::before{content:"";position:absolute;left:-6px;top:-12px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(30,28,27,.25)}
+.q{position:absolute;right:18px;top:44px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.88);box-shadow:inset 0 0 0 1px rgba(30,28,27,.12);display:flex;align-items:center;justify-content:center;font:300 16px Jost,sans-serif}
+.feuille{position:absolute;left:14px;right:14px;top:92px;background:rgba(255,255,255,.96);border-radius:20px;padding:16px 18px 10px;box-shadow:0 14px 34px -10px rgba(0,0,0,.25)}
+.feuille div{display:flex;align-items:center;gap:12px;font:300 13.5px Jost,sans-serif;padding:8px 0;border-top:1px solid rgba(30,28,27,.07)}
+.feuille div:first-of-type{border-top:0}
+.feuille svg{width:20px;height:20px;fill:none;stroke:var(--noir);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+</style></head><body>
+<h1>Personnaliser : la version sobre</h1>
+<p class="sous">Sans émoticônes, sans animation, dans le même style que le reste. Rien n'est encore branché.</p>
+
+<h2 class="serie">Le fond · montrer qu'on peut l'ouvrir</h2>
+<div class="grille">
+<div class="carte"><h3>A · Un lien discret</h3><p>Sous le titre, en petites lettres : « Voir tous les fonds ».</p>
+<div class="cadre"><div class="ecran e2"><div class="blanc" style="left:0;right:0;top:600px;height:42px"></div><div class="titre" style="top:604px">VOTRE FOND</div><div class="lienT fin"><span>Voir tous les fonds</span></div></div></div></div>
+<div class="carte"><h3>B · Une petite flèche</h3><p>À la place de la barre grise, une pastille avec une fine flèche. Le panneau monte une seule fois, doucement, en arrivant.</p>
+<div class="cadre"><div class="ecran e2"><div class="ab monte" style="left:0;right:0;top:0;bottom:0"><div class="blanc" style="left:150px;right:150px;top:590px;height:14px"></div><div class="chev"><svg class="l" viewBox="0 0 14 14"><path d="M3 9l4-4 4 4"/></svg></div></div></div></div></div>
+<div class="carte"><h3>C · Le titre qui s'ouvre</h3><p>Le titre lui-même porte une fine flèche : « Votre fond ⌃ ». On touche le titre pour tout ouvrir.</p>
+<div class="cadre"><div class="ecran e2"><div class="blanc" style="left:0;right:0;top:600px;height:36px"></div><div class="titre" style="top:612px">VOTRE FOND <svg class="l" viewBox="0 0 14 14" style="margin-left:4px"><path d="M3 9l4-4 4 4"/></svg></div></div></div></div>
+</div>
+
+<h2 class="serie">Assortir à son fond</h2>
+<div class="grille">
+<div class="carte"><h3>A · Un 4e bouton dans la ligne</h3><p>À côté de « Le nom · Les boutons · Le site », un bouton du même style : « Assortir ».</p>
+<div class="cadre"><div class="ecran e3"><div class="blanc" style="left:0;right:0;top:630px;height:56px"></div>
+<div class="puce on" style="left:12px">Le nom</div><div class="puce" style="left:98px">Les boutons</div><div class="puce" style="left:204px">Le site</div><div class="puce" style="left:280px"><svg class="l" viewBox="0 0 14 14"><path d="M7 1.5v3M7 9.5v3M1.5 7h3M9.5 7h3"/></svg>Assortir</div></div></div></div>
+<div class="carte"><h3>B · Un lien sous les couleurs</h3><p>Sous la rangée de couleurs, en petites lettres soulignées : « Assortir à mon fond ».</p>
+<div class="cadre"><div class="ecran e3"><div class="blanc" style="left:0;right:0;top:750px;height:30px"></div><div class="lienA fin"><span>Assortir à mon fond</span></div></div></div></div>
+<div class="carte"><h3>C · Assorti tout seul</h3><p>Un petit interrupteur, allumé au départ : les couleurs vont déjà avec son fond. Elle l'éteint si elle veut choisir elle-même.</p>
+<div class="cadre"><div class="ecran e3"><div class="blanc" style="left:0;right:0;top:630px;height:150px"></div>
+<div class="inter"><div>Assorties à mon fond<small>Les couleurs vont avec votre fond</small></div><div class="sw"></div></div>
+<div class="rangC" style="top:704px;opacity:.35"><i style="background:#E7C9C6"></i><i style="background:#C8326A"></i><i style="background:#7A1F33"></i><i style="background:#E6D6BC"></i><i style="background:#B8923A"></i><i style="background:#5E7454"></i><i style="background:#2F57E8"></i><i style="background:#D4C6F0"></i></div></div></div></div>
+</div>
+
+<h2 class="serie">Les charms · dire qu'on peut les bouger</h2>
+<div class="grille">
+<div class="carte"><h3>A · Une phrase en haut</h3><p>Sous le compteur, une seule ligne fine qui reste là : « Touchez un charm pour le déplacer, l'agrandir ou le tourner ».</p>
+<div class="cadre"><div class="ecran e4"><div class="ligne"><span>Touchez un charm pour le déplacer, l'agrandir ou le tourner</span></div><div class="charm" style="left:40px;top:430px"><img src="loginail-site/charms/cerisedisco.png" alt=""></div></div></div></div>
+<div class="carte"><h3>B · Un cadre fin</h3><p>Le charm touché a un cadre blanc très fin, avec 4 petits ronds aux coins pour l'agrandir et 1 au-dessus pour le tourner, comme sur une photo.</p>
+<div class="cadre"><div class="ecran e4"><div class="charm cadreC" style="left:40px;top:430px;transform:rotate(-6deg)"><img src="loginail-site/charms/cerisedisco.png" alt=""><b></b><b></b><b></b><b></b><u></u></div></div></div></div>
+<div class="carte"><h3>C · Un petit « ? »</h3><p>Un rond « ? » discret en haut à droite. En le touchant, une fiche explique les 3 gestes avec de fins dessins.</p>
+<div class="cadre"><div class="ecran e4"><div class="q">?</div><div class="feuille">
+<div><svg viewBox="0 0 20 20"><path d="M10 2v16M2 10h16M10 2l-2.5 2.5M10 2l2.5 2.5M10 18l-2.5-2.5M10 18l2.5-2.5M2 10l2.5-2.5M2 10l2.5 2.5M18 10l-2.5-2.5M18 10l-2.5 2.5"/></svg>Glissez-le pour le déplacer</div>
+<div><svg viewBox="0 0 20 20"><path d="M3 17L8 12M17 3l-5 5M3 17v-4M3 17h4M17 3v4M17 3h-4"/></svg>Écartez deux doigts pour l'agrandir</div>
+<div><svg viewBox="0 0 20 20"><path d="M16 10a6 6 0 1 1-2-4.5M16 3v3h-3"/></svg>Tournez deux doigts pour le pencher</div></div>
+<div class="charm" style="left:40px;top:430px"><img src="loginail-site/charms/cerisedisco.png" alt=""></div></div></div></div>
+</div>
+</body></html>
