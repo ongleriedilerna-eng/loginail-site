@@ -277,12 +277,15 @@ html.vrai .maquette{display:none}
 .formes.vgE .puce{flex:0 0 var(--iw,66px);display:flex;flex-direction:column;align-items:center;gap:7px;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;font:300 11.5px Jost,sans-serif;color:var(--muted);white-space:normal;line-height:1.2}
 .formes.vgE .puce .mi{display:block;width:calc(var(--iw,66px) - 4px);height:calc((var(--iw,66px) - 4px) * 1.8);border-radius:10px;background:#eee center top/cover no-repeat;outline:1px solid transparent;outline-offset:3px;transition:outline-color .2s;margin:4px 2px 0;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
 .formes.vgE .puce.on{background:none;border:0;color:var(--noir)}.formes.vgE .puce.on .mi{outline-color:var(--noir)}
+.vg.sansF{background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(30,28,27,.14)}
+.vg.sansF span{font:300 9.5px/1.25 Jost,sans-serif;color:var(--noir);text-align:center;letter-spacing:.02em}
+.bas.leve .grilleF .vg.sansF span{font-size:13px}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511c&nouveau&exemple=dilerna&style=1&couleur=rose&mode=jour&police=bonbon&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511c&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -455,7 +458,7 @@ function rend() {
       + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
       + (essayes.length > 1 ? `<button class="puce verre ${catPerso === "essayes" ? "on" : ""}" data-perso="essayes">Déjà essayés</button>` : "")
       + `${cats.map(b => `<button class="puce verre ${!catPerso && b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
-      + `<div class="grilleF defileF" id="grilleF">${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
+      + `<div class="grilleF defileF" id="grilleF">${catPerso === "favoris" ? "" : SANSF}${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
     if ($("bas").classList.contains("leve")) { marqueFavoris(); $("contenu").insertAdjacentHTML("afterbegin", '<p class="aideF">Pour ne pas vous perdre parmi les fonds,<br>restez appuyée sur un fond pour le mettre en favori.</p>'); const mes = () => { const v = $("grilleF") && $("grilleF").querySelector(".vg"); if (v && v.clientWidth) { $("grilleF").style.setProperty("--kF", (v.clientWidth / 170).toFixed(4)); $("grilleF").style.setProperty("--hF", Math.round(v.clientWidth * 78 / 44) + "px"); } }; requestAnimationFrame(mes); setTimeout(mes, 380); } else { marqueFavoris(); brancheFonds(); }
     brancheRecherche();
     ajusteFonds();
@@ -518,6 +521,8 @@ function vgNom(n) { const i = (W.FONDS100?.f || []).findIndex(x => x[0] === n); 
 const vgListe = l => l.length || catPerso !== "favoris" ? l.map(vgNom).join("") : `<p class="videF">Restez appuyée sur un fond<br>pour le garder dans vos favoris</p>`;
 const marqueFavoris = () => document.querySelectorAll("#grilleF .vg").forEach(b => b.classList.toggle("fav", !!b.dataset.f && favF.includes(b.dataset.f)));
 /* poser n'importe quel fond par son nom (même s'il n'est pas dans la catégorie ouverte du site) */
+/* 15/11 (Marie) : « Pas de fond », en premier, si elle n'en veut pas */
+const SANSF = `<button class="vg sansF" data-f="" title="Pas de fond" type="button"><span>Pas de<br>fond</span></button>`;
 function poseFond(n) { const P = D.getElementById("pzFonds"); if (!P) return; let b = [...P.querySelectorAll("[data-f]")].find(x => x.dataset.f === n), tmp = null;
   if (!b) { tmp = b = D.createElement("button"); b.dataset.f = n; b.style.display = "none"; P.appendChild(b); } b.click(); if (tmp) tmp.remove();
   if (n) { essayes = [n, ...essayes.filter(x => x !== n)].slice(0, 12); try { if (essayes.length === 2 && !localStorage.getItem("astuceFavF")) { localStorage.setItem("astuceFavF", "1"); setTimeout(() => bulle("Astuce : restez appuyée sur un fond pour le garder"), 900); } } catch (e) {} }
@@ -551,9 +556,9 @@ function brancheFonds() { const g = $("grilleF"); if (!g) return; const n = g.qu
   const milieu = () => Math.max(0, Math.min(B.length - 1, Math.round((g.scrollLeft + g.clientWidth / 2 - c0) / pas)));
   const peint = i => { if (i === cur) return; if (B[cur]) B[cur].classList.remove("mil"); cur = i; B[i].classList.add("mil"); };
   const repos = () => { let i = milieu(); if (K > 1) { const tr = Math.floor(i / N); if (tr !== MIL) { g.scrollLeft += (MIL - tr) * N * pas; i = milieu(); peint(i); } }
-    const f = B[i].dataset.f; if (pret && f && f !== fondActuel()) { poseFond(f); navigator.vibrate?.(5); } };
+    const f = B[i].dataset.f; if (pret && f != null && f !== (fondActuel() || "")) { poseFond(f); navigator.vibrate?.(5); } };
   g.onscroll = () => { if (!img) img = requestAnimationFrame(() => { img = 0; peint(milieu()); }); clearTimeout(t); t = setTimeout(repos, 170); };
-  requestAnimationFrame(() => { mesure(); const d = MIL * N, l = B.slice(d, d + N); let a = l.findIndex(x => x.dataset.f === fondActuel()); if (a < 0) a = 0;
+  requestAnimationFrame(() => { mesure(); const d = MIL * N, l = B.slice(d, d + N); let a = l.findIndex(x => x.dataset.f === (fondActuel() || "")); if (a < 0) a = 0;
     g.scrollLeft = c0 + (d + a) * pas - g.clientWidth / 2; peint(d + a); setTimeout(() => { pret = true; }, 350); }); }
 function vignettes() {
   return [...D.querySelectorAll("#pzFonds [data-f]")].map(b => { const t = b.querySelector(".f100"); let h = "";
@@ -702,6 +707,12 @@ function familles(items) { const ordre = ["Roses", "Rouges", "Nudes et bruns", "
   return ordre.filter(f => m[f]).map(f => [f, f === "Brillants" ? m[f] : m[f].sort((a, b) => lumi(b.bg) - lumi(a.bg))]); }   /* du plus clair au plus foncé */
 function vraiFond(k) { if (k in FONDV) return FONDV[k]; let v = ""; try { const e = D.querySelector(".ecran"), t = D.createElement("div"); t.className = e.className.replace(/\bc-[a-z]+\b/g, "") + " c-" + k; t.style.display = "none"; e.parentNode.appendChild(t); v = W.getComputedStyle(t).getPropertyValue("--creme").trim(); t.remove(); } catch (x) {} return FONDV[k] = v; }
 const blocsChoisis = () => { try { return W.eval('(window.__lgnChoix&&window.__lgnChoix.blocs)||(typeof BR!=="undefined"&&BR&&BR.blocs)||"blanc"'); } catch (x) { return "blanc"; } };
+/* 15/11 (Marie) : avant qu'elle choisisse, le plus sobre — en-tête Bandeau, écriture Affiche, pas de fond, site blanc (« noir »), nom et boutons noirs, blocs « Sur couleur » */
+function departSobre() { try { if (VRAI && W.eval("typeof BR!=='undefined'&&BR&&!!BR.entete")) return; } catch (e) {}
+  poseEnt("bandeau");
+  setTimeout(() => { clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); vifChoisi = "noirb"; clique('.pf-vifs [data-vif="noirb"]');
+    nomc = "noir"; try { W.eval('if(typeof BR!=="undefined"&&BR)BR.nomc="noir";window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:"noir"})'); } catch (x) {}
+    poseBlocs("verre"); setTimeout(() => { poseEncre(); ambiance(); }, 120); }, 250); }
 function poseBlocs(v) { try { W.eval(`if(typeof BR!=="undefined"&&BR)BR.blocs=${JSON.stringify(v)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{blocs:${JSON.stringify(v)}})`); const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30);
     /* si le haut du site n'a pas de bloc, on descend jusqu'au premier bloc pour qu'elle voie le changement */
     const d = D.querySelector(".ecran .defile"), sec = D.querySelector(".ecran .defile>.sec"); if (d && sec && !D.querySelector(".hf-carte") && d.scrollTop < sec.offsetTop - 300) d.scrollTo({ top: sec.offsetTop - 150, behavior: "smooth" }); } catch (x) {} }
@@ -844,7 +855,7 @@ F.onload = () => {
       if (t) { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = t; document.head.appendChild(c); } }); };
   copie(); W.addEventListener("f100", () => setTimeout(() => { copie(); ambiance(); if (cle() === "fond") rend(); }, 150));
   const pf = D.querySelector("[data-pf]"); forme = pf?._st || 1; try { ent = W.enteteChoisie ? W.enteteChoisie() : ""; } catch (e) {}
-  brancheStickers();
+  brancheStickers(); departSobre();
   { let sx = 0, sy = 0, st = 0;   /* glisser à gauche / à droite sur le téléphone = le fond suivant / d'avant */
     D.addEventListener("touchstart", e => { if (cle() !== "fond" || e.touches.length !== 1) { st = 0; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; st = Date.now(); }, { passive: true });
     D.addEventListener("touchend", e => { if (cle() !== "fond" || !st) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
