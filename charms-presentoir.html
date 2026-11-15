@@ -298,7 +298,7 @@ document.querySelector("[data-modifier]").onclick = () => { if (!VRAI || APPLI) 
     b.stickers = [...cq.querySelectorAll(".st")].filter(x => x.dataset.n).map(x => Object.assign({ n: x.dataset.n, x: +(parseFloat(x.style.left) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top)), s: Math.round(x._s), r: Math.round(x._r || 0), w }, x.dataset.c ? { c: x.dataset.c } : {}));
     b.charms = []; localStorage.setItem("loginail-brouillon", JSON.stringify(b)); } catch (x) {}
   let g = "classique"; try { g = (JSON.parse(localStorage.getItem("loginail-reprise") || "{}") || {}).g || g; } catch (x) {}
-  location.href = "maquette-perso.html?v=1511k&genre=" + encodeURIComponent(g) + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511k&nouveau&essai"); };
+  location.href = "maquette-perso.html?v=1511r&genre=" + encodeURIComponent(g) + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511k&nouveau&essai"); };
 const fermeFini = () => { document.getElementById("fini").hidden = true; e.classList.remove("finie"); document.getElementById("explique").style.opacity = 1; e.querySelectorAll(".st").forEach(s => s.classList.remove("flotte")); };
 document.querySelector("[data-activer]").onclick = () => {
   if (!VRAI) { bulle("(maquette) Ici : le paiement, puis son site est en ligne"); return; }
