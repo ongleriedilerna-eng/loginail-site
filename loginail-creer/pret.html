@@ -1721,6 +1721,15 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .ecran:not(.v1):has(>.fond-site){--fond-carte:var(--creme)}
 .ecran:not(.v1):has(>.fond-site) .defile>.sec .tir,.ecran:not(.v1):has(>.fond-site) .defile>.sec .carte{background:color-mix(in srgb,var(--creme) 45%,#fff)}
 </style>
+<style id="entetes-1511">
+/* 15/11 (Marie) : Fleurs sans motif derrière ; Vitrine = nom centré au-dessus d'une photo plus petite ; Devanture = façade claire pour que le nom se lise toujours */
+.ecran .hent.he-fleurs{background:transparent!important}
+.ecran .he-vitrine .vit{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;min-height:0;max-height:none;border:0;border-radius:0;box-shadow:none;overflow:visible;background:none;margin-top:36px}
+.ecran .he-vitrine .vit h1{position:static!important;order:-1;text-align:center;text-shadow:none!important;margin:0 0 18px;padding:0 6px;font-size:36px!important;line-height:1.05}
+.ecran .he-vitrine .vit .he-ph{position:relative!important;inset:auto!important;width:100%;height:clamp(220px,34vh,320px);border:9px solid var(--papier,#fff);border-radius:8px;box-shadow:0 20px 36px -22px rgba(0,0,0,.5)}
+.ecran .he-devanture .fac{background:var(--papier,#fff);border:3px solid var(--acc);border-bottom:0;box-sizing:border-box}
+.ecran .he-devanture .fac h1{text-align:center}
+</style>
 <style id="entetes-1411">/* 14/11 : le fond choisi se voit derrière l'en-tête ; les boutons prennent la couleur choisie */
 .ecran:has(>.fond-site) .hent{background:transparent!important;--papier:var(--fond-carte,#fff)}
 .ecran:has(>.fond-site) .hent:not(.he-bandeau) .he-txt{background:var(--papier);color:var(--noir);border-radius:24px;padding:18px 22px 22px;box-shadow:0 16px 30px -22px rgba(0,0,0,.4);width:calc(100% - 40px);max-width:520px}

@@ -284,12 +284,17 @@ html.vrai .maquette{display:none}
 /* 15/11 (Marie, idée B) : toutes les 20 s, la barre et la flèche sautent 2 fois vers le haut */
 .bas.fondE.monteF .poi i,.bas.monteF .chevT{animation:monteF 1.4s ease-in-out}
 @keyframes monteF{0%,40%,80%,100%{transform:none}20%,60%{transform:translateY(-6px)}}
+/* 15/11 (Marie) : les carrés des fonds ne doivent jamais être coupés ; écritures : on voit le bout de la page suivante ; « Faites défiler » plus petit */
+#tel:not(.mc) .bas:not(.leve) .grilleF.defileF{flex:none;min-height:102px;padding-top:12px!important;padding-bottom:12px!important;overflow-y:visible}
+.page6{width:86%!important;scroll-snap-align:start!important;padding-right:4px!important}.page6:last-child{width:100%!important}
+.indiceD{padding:8px 12px 7px!important;gap:5px!important;border-radius:14px!important}.indiceD .gl{width:16px!important;height:26px!important;border-width:1.2px!important}.indiceD .gl:after{top:5px!important;width:3px!important;height:3px!important;margin-left:-1.5px!important}.indiceD b{font-size:8px!important;letter-spacing:.2em!important}
+.indiceD .gl:after{animation-name:indD2!important}@keyframes indD2{0%{transform:translateY(0);opacity:0}25%{opacity:1}75%{opacity:1}100%{transform:translateY(12px);opacity:0}}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511c&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511g&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -458,14 +463,13 @@ function rend() {
     const COEUR = `<svg viewBox="0 0 24 24" width="15" height="15" style="flex:none"><path d="M12 20s-7-4.4-9-8.6C1.6 8.3 3.4 5 6.6 5c2 0 3.6 1.1 5.4 3.2C13.8 6.1 15.4 5 17.4 5c3.2 0 5 3.3 3.6 6.4-2 4.2-9 8.6-9 8.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
     c.innerHTML = (`<div class="ligneH"><button class="puce verre surprise seul ${catPerso === "favoris" ? "on" : ""}" data-perso="favoris" type="button" aria-label="Favoris" title="Favoris">${COEUR}</button>`
       + `<button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>`
-      + (choisisG().length ? `<button class="puce verre ${catPerso === "choisis" ? "on" : ""}" data-perso="choisis">Les plus choisis</button>` : "")
+      + (choisisG().length ? `<button class="puce verre ${catPerso === "choisis" ? "on" : ""}" data-perso="choisis">Recommandés</button>` : "")
       + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
       + (essayes.length > 1 ? `<button class="puce verre ${catPerso === "essayes" ? "on" : ""}" data-perso="essayes">Déjà essayés</button>` : "")
       + `${cats.map(b => `<button class="puce verre ${!catPerso && b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
       + `<div class="grilleF defileF" id="grilleF">${catPerso === "favoris" ? "" : SANSF}${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
     if ($("bas").classList.contains("leve")) { marqueFavoris(); $("contenu").insertAdjacentHTML("afterbegin", '<p class="aideF">Pour ne pas vous perdre parmi les fonds,<br>restez appuyée sur un fond pour le mettre en favori.</p>'); const mes = () => { const v = $("grilleF") && $("grilleF").querySelector(".vg"); if (v && v.clientWidth) { $("grilleF").style.setProperty("--kF", (v.clientWidth / 170).toFixed(4)); $("grilleF").style.setProperty("--hF", Math.round(v.clientWidth * 78 / 44) + "px"); } }; requestAnimationFrame(mes); setTimeout(mes, 380); } else { marqueFavoris(); brancheFonds(); }
     brancheRecherche();
-    if (!window.__glisseC) { window.__glisseC = 1; setTimeout(() => { const l = $("contenu").querySelector(".ligneH"); if (!l || l.scrollLeft > 4 || cle() !== "fond") return; l.style.scrollBehavior = "smooth"; l.scrollLeft = 180; setTimeout(() => { l.scrollLeft = 0; }, 1100); }, 1500); }   /* 15/11 (Marie) : montrer qu'après « Élégants » il y a d'autres choix */
     ajusteFonds();
   } else if (cle() === "couleurs" || cle() === "site") {
     const SC = [["nom", "Le nom"], ["boutons", "Les boutons"], ["site", "Le site"]];
