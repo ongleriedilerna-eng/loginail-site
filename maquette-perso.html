@@ -303,7 +303,7 @@ html.vrai .maquette{display:none}
 #hautT{cursor:pointer}
 #barre i{cursor:pointer;position:relative}#barre i:after{content:"";position:absolute;left:-2px;right:-2px;top:-10px;bottom:-10px}
 .etapesM{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 58px);translate:-50% 0;z-index:12;min-width:220px;background:rgba(255,255,255,.97);border-radius:18px;padding:6px;box-shadow:0 14px 34px -10px rgba(0,0,0,.28);opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .2s,transform .2s}
-.segS{flex:none;display:flex;margin:2px auto 8px;background:#F1ECE6;border-radius:999px;padding:3px;width:230px}
+.segS{flex:none;display:flex;margin:10px auto 8px;background:#F1ECE6;border-radius:999px;padding:3px;width:230px}
 .segS button{flex:1;border:0;background:none;border-radius:999px;padding:8px 0;font:400 12.5px Jost,sans-serif;letter-spacing:.08em;color:var(--muted)}
 .segS button.on{background:#fff;color:var(--noir);box-shadow:0 2px 8px -4px rgba(0,0,0,.3)}
 .reveil{position:relative;flex:none;height:160px;margin:0 22px;-webkit-mask-image:linear-gradient(transparent,#000 32%,#000 68%,transparent);mask-image:linear-gradient(transparent,#000 32%,#000 68%,transparent)}
@@ -311,6 +311,11 @@ html.vrai .maquette{display:none}
 .rv-piste::-webkit-scrollbar{display:none}
 .rv-piste .rv{display:block;width:100%;height:44px;scroll-snap-align:center;border:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:0 10px;font-size:23px!important;line-height:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--noir);opacity:.28;transition:opacity .15s;border-radius:0!important;outline:0!important}
 .rv-piste .rv.pres{opacity:.55}.rv-piste .rv.mil{opacity:1}
+.rvCoul{height:108px}.rvCoul .rv-piste{padding:36px 0}.rvCoul .rv-cadre{top:36px;height:36px}.rvCoul .rv-piste .rvc{height:36px}.rvCoul .rv-piste .rvc i{height:22px}
+@media (max-height:740px){.interA{padding-top:4px!important;padding-bottom:4px!important;margin-bottom:6px!important}.interA small{display:none}.deuxB .apB{height:30px!important}.rvCoul{height:90px}.rvCoul .rv-piste{padding:27px 0}.rvCoul .rv-cadre{top:27px}.segS{margin-bottom:4px!important}}
+.rv-piste .rvc{display:flex;align-items:center;justify-content:center;width:100%;height:44px;scroll-snap-align:center;border:0;background:none;padding:0;opacity:.3;transition:opacity .15s}
+.rv-piste .rvc i{display:block;width:62%;height:26px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.rv-piste .rvc.pres{opacity:.6}.rv-piste .rvc.mil{opacity:1}
 .rv-cadre{position:absolute;left:0;right:0;top:58px;height:44px;border-radius:14px;background:rgba(30,28,27,.05);pointer-events:none}
 .etapesM.on{opacity:1;pointer-events:auto;transform:none}
 .etapesM button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;padding:11px 14px;border-radius:12px;font:300 14px Jost,sans-serif;color:var(--noir);text-align:left}
@@ -320,12 +325,15 @@ html.vrai .maquette{display:none}
 #tel.mc #etoB{display:flex}#etoB[hidden]{display:none!important}#tel:not(.mc) #etoB{display:none!important}
 #etoB span{flex:none;font:400 10px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 #etoB button{flex:none;width:20px;height:30px;border-radius:999px;border:0;padding:0;opacity:.6;transition:transform .15s,opacity .15s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}#etoB button.on{opacity:1;transform:scale(1.25)}
+#etoB{left:50%!important;right:auto!important;transform:translateX(-50%);overflow:visible!important;gap:11px!important}
+#etoB button{width:24px!important;height:24px!important;border-radius:50%!important;opacity:.75}
+#etoB button.on{box-shadow:0 0 0 2px #fff,0 0 0 3px var(--noir)!important}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT" role="button">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511k&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511m&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -529,12 +537,12 @@ function rend() {
     items = sousCouleur === "site" ? arcEnCiel(items) : familles(items).flatMap(f => f[1]);   /* rangées par famille puis du clair au foncé : la bande fait un bel arc-en-ciel */
     TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
     l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i><u></u><u></u></i></span><b>Sur blanc</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i><u></u><u></u></i></span><b>Sur couleur</b></button></div>` : "")
-      + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
+      + `<div class="reveil rvCoul" id="roue"><div class="rv-cadre"></div><div class="rv-piste" id="rvC">${items.map((x, i) => `<button class="rvc" data-i="${i}" type="button" aria-label="${x.k}"><i style="background:${x.bg}"></i></button>`).join("")}</div></div>`;   /* 15/11 nuit (Marie) : les couleurs en roue de haut en bas, comme les écritures */
     const aFond = !!fondActuel();   /* 15/11 soir : « Assorties » reste allumé même sans fond (il s'applique dès qu'elle en touche un) */
     c.innerHTML = (aFond ? `<button class="interA" data-assorti type="button"><span>Assorties à mon fond<small>${assorti ? "Les couleurs vont avec votre fond" : "Touchez pour les assortir à votre fond"}</small></span><i class="sw ${assorti ? "on" : ""}"></i></button>` : "") + (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
     /* 15/11 (Marie) : « Assorties à mon fond » et « Sur blanc / Sur couleur » ne doivent plus passer sous le bouton du bas */
     { const x = (aFond ? 58 : 0) + (sousCouleur === "site" ? 74 : 0); $("bas").style.setProperty("--basX", x + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(taille, 230); }
-    brancheRoue(choisi ? ki : -1); teinteBlocs();
+    brancheReveilC(choisi ? ki : -1); teinteBlocs();
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
     let pols = [...D.querySelectorAll("#pzPol [data-p]")].sort((a, b) => ((ELEG.includes(a.dataset.p) ? 0 : 1) - (ELEG.includes(b.dataset.p) ? 0 : 1)) * (fun ? -1 : 1));
@@ -701,7 +709,7 @@ function majEtoiles() { const n = D ? D.querySelectorAll(".lgn-etoile").length :
 let etoCoul = "";
 function teinteEto(el, c) { if (c) { el.dataset.c = c; el.style.setProperty("--lgn-halo", c); } else { delete el.dataset.c; el.style.removeProperty("--lgn-halo"); } }
 { const b = document.createElement("div"); b.id = "etoB"; b.className = "mcUI"; b.hidden = true;
-  const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#FF4FA3", "#E3122C", "#FF8A3D", "#FFD23F", "#7BD389", "#2EC4B6", "#5BA8FF", "#2F57E8", "#9B6BFF", "#D9A6FF", "#8A5A3C"];
+  const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#E3122C", "#5BA8FF", "#9B6BFF"];   /* 15/11 nuit (Marie) : 7 couleurs, sans défiler */
   b.innerHTML = `<span>Couleur</span>` + C.map((c, i) => `<button type="button" data-ec="${c}" class="${i ? "" : "on"}" aria-label="${i ? "Couleur des étoiles" : "Assorties au fond"}" style="background:${c || "conic-gradient(#F7A8C4,#5BA8FF,#7BD389,#FFD23F,#F7A8C4)"}"></button>`).join("");
   b.onclick = e => { const x = e.target.closest("[data-ec]"); if (!x) return; etoCoul = x.dataset.ec; D.querySelectorAll(".lgn-etoile").forEach(el => teinteEto(el, etoCoul)); b.querySelectorAll("[data-ec]").forEach(y => y.classList.toggle("on", y === x)); navigator.vibrate?.(5); };
   $("tel").appendChild(b); }
@@ -727,7 +735,11 @@ function poseEtoiles() {
     majS(e); box.appendChild(e);
   });
   majEtoiles(); navigator.vibrate?.(12);
+  /* 15/11 nuit (Marie) : les 2 premières fois, les étoiles font comme si on les glissait, et on le dit */
+  nbEtoPoses++; if (nbEtoPoses <= 2) { const l = [...D.querySelectorAll(`.lgn-etoile[data-g="${groupe}"]`)];
+    setTimeout(() => { l.forEach(x => x.animate([{ margin: "0" }, { margin: "-14px 0 0 22px", offset: .25 }, { margin: "10px 0 0 -16px", offset: .55 }, { margin: "-4px 0 0 6px", offset: .8 }, { margin: "0" }], { duration: 1600, iterations: 2, easing: "ease-in-out" })); bulle("Les étoiles se déplacent aussi : glissez-les avec le doigt ✦"); }, 500); }
 }
+let nbEtoPoses = 0;
 function brancheStickers() {
   const st = D.createElement("style"); st.textContent = "@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}.lgn-sticker.tenu{animation-play-state:paused!important}@keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}.lgn-etoile{container-type:size;display:grid;place-items:center;filter:none!important}.lgn-etoile i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite;pointer-events:none}"; D.head.appendChild(st);
   const doigts = new Map(); let cible = null, depart = null;
@@ -808,6 +820,13 @@ function brancheReveil(depart) { const P = $("rvP"); if (!P) return; let pret = 
   P.onscroll = () => { const m = milieu(); peint(m); if (!pret || !m) return; clearTimeout(t); t = setTimeout(() => { if (m.dataset.p === k) return; k = m.dataset.p; clique(`#pzPol [data-p="${k}"]`); setTimeout(poseEncre, 80); navigator.vibrate?.(4); }, 130); };
   P.onclick = e => { const b = e.target.closest(".rv"); if (b) { e.stopPropagation(); vers(b, true); } };
   requestAnimationFrame(() => { const b = P.children[depart]; vers(b, false); peint(b); k = b?.dataset.p; setTimeout(() => { pret = true; }, 250); }); }
+function brancheReveilC(depart) { const P = $("rvC"); if (!P) return; let pret = false, t = 0, k = depart;
+  const B = [...P.children], milieu = () => { const c = P.scrollTop + P.clientHeight / 2; let m = 0, d = 1e9; B.forEach((b, i) => { const x = Math.abs(b.offsetTop + b.offsetHeight / 2 - c); if (x < d) { d = x; m = i; } }); return m; };
+  const peint = m => B.forEach((b, i) => { b.classList.toggle("mil", i === m); b.classList.toggle("pres", Math.abs(i - m) === 1); });
+  const vers = (i, doux) => { const b = B[i]; if (b) P.scrollTo({ top: b.offsetTop + b.offsetHeight / 2 - P.clientHeight / 2, behavior: doux ? "smooth" : "auto" }); };
+  P.onscroll = () => { const m = milieu(); peint(m); if (!pret) return; clearTimeout(t); t = setTimeout(() => { if (m === k) return; k = m; appliqueTeinte(TRAIT[m].k); navigator.vibrate?.(4); }, 130); };
+  P.onclick = e => { const b = e.target.closest(".rvc"); if (b) { e.stopPropagation(); vers(B.indexOf(b), true); } };
+  requestAnimationFrame(() => { const i = depart < 0 ? 0 : depart; vers(i, false); peint(depart < 0 ? -1 : i); setTimeout(() => { pret = true; }, 250); }); }
 function brancheRoue(depart) { const P = $("roP"); if (!P) return; const B = [...P.children], N = B.length / 3; let k = -1, t = 0, pret = false;
   const tour = () => B[N].offsetLeft - B[0].offsetLeft;   /* la largeur d'un tour complet de couleurs */
   const milieu = () => { const c = P.scrollLeft + P.clientWidth / 2; let m = 0, d = 1e9; B.forEach((b, i) => { const x = Math.abs(b.offsetLeft + b.offsetWidth / 2 - c); if (x < d) { d = x; m = i; } }); return m; };
@@ -931,7 +950,7 @@ const noteReprise = p => { try { localStorage.setItem("loginail-reprise", JSON.s
 if (VRAI && !APPLI) noteReprise("perso");
 $("amieM").onclick = async () => { const d = { title: "Loginail", text: "Regarde, je viens de créer le site de mon salon avec Loginail ✦", url: "https://loginail.fr" };
   try { if (navigator.share) { await navigator.share(d); return; } await navigator.clipboard.writeText(d.text + " " + d.url); bulle("Le lien est copié : collez-le dans un message"); } catch (x) {} };
-$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1411h"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
+$("suivant").onclick = () => { if (etape === ORDRE.length - 1) { if (VRAI) { enregistre(); if (APPLI) { renvoieAppli(); return; } location.href = "charms-presentoir.html?vrai&v=1511s"; return; } $("fin").classList.add("on"); return; } etape++; if (VRAI && !APPLI) { enregistre(); noteReprise("perso"); } chercheOuvert = false; filtre = ""; prepare(); };
 $("retour").onclick = () => { if (etape) { etape--; chercheOuvert = false; filtre = ""; prepare(); } };
 $("finRetour").onclick = () => $("fin").classList.remove("on");
 /* 15/11 (Marie) : toucher à côté de « Votre site est prêt » = continuer à personnaliser */
@@ -950,9 +969,13 @@ function prepare() { majCadre(); if (cle() === "charms") setTimeout(ficheDepart,
 addEventListener("resize", taille);
 /* 15/11 (Marie) : deux onglets en haut du panneau (« En-tête · Fond », « Écriture · Couleurs ») */
 const groupe = () => GROUPES[ORDRE[etape]];
-function ajusteBas() { const c = $("contenu"), o = c.scrollHeight - c.clientHeight; if (o > 2) { const x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0; $("bas").style.setProperty("--basX", (x + o + 6) + "px"); setTimeout(taille, 230); } }
+/* 15/11 nuit : le panneau prend juste la hauteur de ce qu'il contient (ni coupé, ni de vide) */
+function ajusteBas() { const c = $("contenu"); let h = 0; [...c.children].forEach(x => { const st = getComputedStyle(x); if (st.display !== "none" && st.position !== "absolute") h += x.offsetHeight + parseFloat(st.marginTop) + parseFloat(st.marginBottom); });
+  const o = Math.round(h + 8 - c.clientHeight), x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0, nx = Math.max(0, x + o);
+  if (Math.abs(nx - x) > 3) { $("bas").style.setProperty("--basX", nx + "px"); setTimeout(taille, 230); } }
 { const r0 = rend; rend = function () { r0.apply(this, arguments);
-    const g = groupe(); if (!g || $("bas").classList.contains("leve")) return; const k = ORDRE[etape];
+    const g = groupe(); $("titre").style.display = g && SOUS[ORDRE[etape]] !== "fond" && !$("bas").classList.contains("leve") ? "none" : "";   /* 15/11 nuit : les onglets disent déjà où on est */
+    if (!g || $("bas").classList.contains("leve")) return; const k = ORDRE[etape];
     if (g.findIndex(x => x[0] === SOUS[k]) < g.length - 1) $("suivant").textContent = "SUIVANT";
     const c = $("contenu"); if (!c.querySelector(".segS")) c.insertAdjacentHTML("afterbegin", `<div class="segS">${g.map(([s, n]) => `<button type="button" data-ss="${s}" class="${s === SOUS[k] ? "on" : ""}">${n}</button>`).join("")}</div>`);
     const x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0; $("bas").style.setProperty("--basX", (x + 52) + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(() => { taille(); ajusteBas(); }, 260); };
@@ -967,7 +990,7 @@ F.classList.add("fondu");
 F.onload = () => {
   W = F.contentWindow; D = F.contentDocument;
   W.F100_AUSSI = 1;   // « Tous » = les 336 fonds
-  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}.lgn-etoile[data-c] i{color:color-mix(in srgb,var(--lgn-halo) 38%,#fff)!important}.lgn-sticker.choisiC:not(.lgn-etoile){outline:1px solid rgba(255,255,255,.95)!important;outline-offset:5px;border-radius:6px}.ch-couche .charm,.charm{outline:none!important}"; D.head.appendChild(st);
+  const st = D.createElement("style"); st.textContent = ".pret,.langues{display:none!important}html{scrollbar-width:none;touch-action:pan-x pan-y}::-webkit-scrollbar{display:none}*:focus,*:focus-visible{outline:none!important}*{-webkit-tap-highlight-color:transparent}.lgn-sticker{outline:none!important}.lgn-etoile[data-c] i{color:color-mix(in srgb,var(--lgn-halo) 38%,#fff)!important}.lgn-sticker.choisiC:not(.lgn-etoile){outline:0!important}.ch-couche .charm,.charm{outline:none!important}"; D.head.appendChild(st);
   ["gesturestart", "gesturechange"].forEach(t => D.addEventListener(t, e => e.preventDefault(), { passive: false }));
   const copie = () => { D.querySelectorAll("style").forEach(s => { if (s.dataset.copie) return;
       if (s.id === "pzCss") { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = s.textContent.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); document.head.appendChild(c); return; }

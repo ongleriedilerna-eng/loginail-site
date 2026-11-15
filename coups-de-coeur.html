@@ -1,13 +1,13 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><script id="sans-cartes">/* 14/11 (Marie) : plus de cartes à glisser (« Tinder ») : on va directement à la personnalisation */
 (()=>{const q=new URLSearchParams(location.search);let br=null;try{br=JSON.parse(localStorage.getItem("loginail-brouillon")||"null")}catch(e){}
 const vrai=q.has("vrai")&&!!br,appli=q.has("appli");
-if(vrai&&q.has("retour")&&!appli){try{const r=JSON.parse(localStorage.getItem("loginail-reprise")||"null");if(r&&r.p==="charms"){document.documentElement.style.visibility="hidden";location.replace("charms-presentoir.html?vrai&v=1411f");return}}catch(e){}}
+if(vrai&&q.has("retour")&&!appli){try{const r=JSON.parse(localStorage.getItem("loginail-reprise")||"null");if(r&&r.p==="charms"){document.documentElement.style.visibility="hidden";location.replace("charms-presentoir.html?vrai&v=1511s");return}}catch(e){}}
 if(!appli)return;   /* 15/11 (Marie) : on remet les 2 choix (Chic et classique / Fun et ouf) ; seule l'appli va directement à la personnalisation */
 document.documentElement.style.visibility="hidden";
 const b=vrai?br:{},p=new URLSearchParams({style:b.style||1,couleur:b.couleur||"lin",mode:"jour",police:b.police||"elegante",paillettes:b.paillettes||"non"});if(b.fond)p.set("fond",b.fond);
 const f=b.arrondi?"&arrondi=1":b.coffin?"&coffin=1":b.epure?"&epure=1":"";
-const src="loginail-creer/pret.html?v=1511k&"+(vrai?"nouveau&essai&":"nouveau&exemple=dilerna&")+p+f+(vrai?"":"&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise");
-location.replace("maquette-perso.html?v=1511r&genre=classique"+(vrai?"&vrai=1":"")+(appli?"&appli=1":"")+"&src="+encodeURIComponent(src))})();</script>
+const src="loginail-creer/pret.html?v=1511m&"+(vrai?"nouveau&essai&":"nouveau&exemple=dilerna&")+p+f+(vrai?"":"&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise");
+location.replace("maquette-perso.html?v=1511s&genre=classique"+(vrai?"&vrai=1":"")+(appli?"&appli=1":"")+"&src="+encodeURIComponent(src))})();</script>
 <script id="vers-creer">/* 09/11 (Marie) : sur ordinateur, le parcours s'ouvre dans la colonne du milieu (creer.html) */if(window.top===window&&!matchMedia("(max-width: 899px)").matches&&screen.width>=900&&(true))location.replace("creer.html?p="+encodeURIComponent("coups-de-coeur.html"+location.search))</script>
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
@@ -271,8 +271,8 @@ $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
 /* 15/11 (Marie) : elle touche son style, et elle arrive directement dans la personnalisation (plus de cartes à glisser) */
 document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre;
-  location.href = "maquette-perso.html?v=1511r&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511k&" + DEBUT + BASE_STYLE[genre] + "&mode=jour" + SALON); });
-const moiInutile = () => { location.href = "maquette-perso.html?v=1511r&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+  location.href = "maquette-perso.html?v=1511s&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&" + DEBUT + BASE_STYLE[genre] + "&mode=jour" + SALON); });
+const moiInutile = () => { location.href = "maquette-perso.html?v=1511s&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;
@@ -306,13 +306,13 @@ function branche2(sl) { const pr = sl.querySelector(".prise"), fr = sl.querySele
 $("autres").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(() => { echelle(); ambianceCarte(); }); };
 $("enl").onclick = () => { const k = courant(); coeurs.splice(k, 1); montreCoeurs(); setTimeout(() => { $("carrou").scrollLeft = Math.max(0, Math.min(k, coeurs.length - 1)) * pas(); effet(); }, 60); };
 $("perso").onclick = () => { const p = coeurs[courant()]; try { sessionStorage.setItem("cdc-fonds", JSON.stringify([p].concat(coeurs).filter(Boolean).map(x => decodeURIComponent(((x.q || "").match(/[?&]fond=([^&]*)/) || [])[1] || "")).filter(Boolean))); } catch (e) {}   /* 13/11 : ses coups de cœur donnent les fonds « Pour vous » */
-  if (p) location.href = "maquette-perso.html?v=1511r&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
+  if (p) location.href = "maquette-perso.html?v=1511s&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent(src(p, false)); };
 /* 13/11 (Marie) : « si je ferme, je perds tout ? » — elle retrouve son site là où elle l'avait laissé */
 if (VRAI && !APPLI) { let r = null; try { r = JSON.parse(localStorage.getItem("loginail-reprise") || "null"); } catch (e) {}
   if (r && Date.now() - r.t < 30 * 864e5 && (r.p === "perso" || r.p === "charms")) { const o = document.createElement("div"); o.id = "retourB";
     o.innerHTML = `<div><h3>Bon retour</h3><p>Votre site vous attend,<br>là où vous l’aviez laissé.</p><button type="button" class="noirB" id="reprendre">REPRENDRE MON SITE</button><button type="button" class="lienB" id="zero">Recommencer de zéro</button></div>`;
     document.body.appendChild(o);
-    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1411h" : "maquette-perso.html?v=1511r&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
+    $("reprendre").onclick = () => { location.href = r.p === "charms" ? "charms-presentoir.html?vrai&v=1511s" : "maquette-perso.html?v=1511s&genre=" + encodeURIComponent(r.g || "classique") + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?nouveau&essai"); };
     $("zero").onclick = () => { try { localStorage.removeItem("loginail-reprise"); } catch (e) {} if (new URLSearchParams(location.search).has("retour")) location.href = "loginail-creer/index.html?neuf"; else o.remove(); }; } }
 addEventListener("resize", () => { echelle(); if ($("coeurs").classList.contains("on")) { dimCarrou(); effet(); } });
 </script>

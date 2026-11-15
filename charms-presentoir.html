@@ -71,7 +71,13 @@ html,body{touch-action:manipulation}
 .st.eto[data-c] i{color:color-mix(in srgb,var(--lgn-halo) 38%,#fff)}
 #etoB{position:absolute;left:0;right:0;top:-96px;z-index:44;display:flex;gap:9px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:6px 14px;touch-action:pan-x}#etoB::-webkit-scrollbar{display:none}#etoB[hidden]{display:none}
 #etoB button{flex:none;width:22px;height:34px;border-radius:999px;border:0;padding:0;opacity:.6;transition:transform .15s,opacity .15s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}#etoB button.on{opacity:1;transform:scale(1.3)}
-.ecr.tient #etoB,.ecr.finie #etoB,.panneau.ferme #etoB,.panneau.ferme #etoP{opacity:0;pointer-events:none}
+.ecr.tient #etoB,.ecr.finie #etoB{opacity:0;pointer-events:none}
+.haut #etoP{position:relative!important;left:auto!important;top:auto!important;pointer-events:auto}
+#etoB{position:absolute!important;top:calc(100% + 8px)!important;left:50%!important;right:auto!important;transform:translateX(-50%);overflow:visible!important;gap:10px!important;padding:7px 12px!important;border-radius:999px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 6px 18px -10px rgba(0,0,0,.35);pointer-events:auto}
+#etoB button{width:24px!important;height:24px!important;border-radius:50%!important;opacity:.75}
+#etoB button.on{opacity:1;transform:scale(1.25);box-shadow:0 0 0 2px #fff,0 0 0 3px #1E1C1B!important}
+@keyframes etoMontre{0%,100%{margin:0}25%{margin:-14px 0 0 22px}55%{margin:10px 0 0 -16px}80%{margin:-4px 0 0 6px}}
+.st.eto.montre{animation:etoMontre 1.6s ease-in-out 2}
 #etoPX{display:inline-grid;place-items:center;width:18px;height:18px;margin:-2px -5px -2px 2px;border-radius:50%;background:rgba(30,28,27,.1);font-size:10px}#etoPX[hidden]{display:none}
 .ecr.finie .btnBas,.ecr.finie .panneau,.ecr.finie .poubelle{display:none}
 .bulle{position:fixed;left:50%;top:38%;max-width:90vw;white-space:normal!important;text-align:center;translate:-50% 0;z-index:95;border-radius:999px;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.95);color:#1E1C1B;box-shadow:0 8px 22px -12px rgba(0,0,0,.35);padding:9px 15px;font:400 13px Jost,sans-serif;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
@@ -119,7 +125,7 @@ html,body{touch-action:manipulation}
 .ficheC.on{opacity:1;pointer-events:auto}
 .ficheC div{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(30,28,27,.07)}.ficheC div:first-child{border-top:0}
 .ficheC svg{width:20px;height:20px;flex:none;fill:none;stroke:#1E1C1B;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.st.choisiC:not(.eto){outline:1px solid rgba(255,255,255,.95);outline-offset:5px;border-radius:6px}
+.st.choisiC:not(.eto){outline:0}   /* 15/11 nuit (Marie) : plus de fin carré blanc autour du charm */
 #ficheC.lent{transition:opacity .9s,transform .9s}
 #questC.bouge{animation:bougeQ 1.5s ease-in-out}
 @keyframes bougeQ{0%,100%{transform:none}10%,30%,50%,70%{transform:rotate(-14deg) scale(1.08)}20%,40%,60%,80%{transform:rotate(14deg) scale(1.08)}90%{transform:none}}
@@ -190,6 +196,8 @@ function moteur(ecr) {
       el.style.left = Math.max(12, Math.min(w - 12, cx + dx)) + "px"; el.style.top = (cy + dy) + "px"; maj(el); M.teinteEto(el, M.etoC || ""); calque.appendChild(el);
     });
     M.maj(); M.majEto(); navigator.vibrate?.(12);
+    /* 15/11 nuit (Marie) : les 2 premières fois, les étoiles font comme si on les glissait, et on le dit */
+    M.nbEto = (M.nbEto || 0) + 1; if (M.nbEto <= 2) { const l = [...calque.querySelectorAll(`.eto[data-g="${g}"]`)]; setTimeout(() => { l.forEach(x => x.classList.add("montre")); bulle("Les étoiles se déplacent aussi : glissez-les avec le doigt ✦"); }, 500); setTimeout(() => l.forEach(x => x.classList.remove("montre")), 3900); }
   };
   M.enleveEtoiles = () => { const l = [...calque.querySelectorAll(".eto")]; if (!l.length) return; const g = l[l.length - 1].dataset.g; l.filter(x => x.dataset.g === g).forEach(x => x.remove()); M.maj(); M.majEto(); bulle("Étoiles enlevées"); };
   M.efface = () => { [...calque.children].forEach(s => s.remove()); M.maj(); };
@@ -298,7 +306,7 @@ document.querySelector("[data-modifier]").onclick = () => { if (!VRAI || APPLI) 
     b.stickers = [...cq.querySelectorAll(".st")].filter(x => x.dataset.n).map(x => Object.assign({ n: x.dataset.n, x: +(parseFloat(x.style.left) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top)), s: Math.round(x._s), r: Math.round(x._r || 0), w }, x.dataset.c ? { c: x.dataset.c } : {}));
     b.charms = []; localStorage.setItem("loginail-brouillon", JSON.stringify(b)); } catch (x) {}
   let g = "classique"; try { g = (JSON.parse(localStorage.getItem("loginail-reprise") || "{}") || {}).g || g; } catch (x) {}
-  location.href = "maquette-perso.html?v=1511r&genre=" + encodeURIComponent(g) + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511k&nouveau&essai"); };
+  location.href = "maquette-perso.html?v=1511s&genre=" + encodeURIComponent(g) + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai"); };
 const fermeFini = () => { document.getElementById("fini").hidden = true; e.classList.remove("finie"); document.getElementById("explique").style.opacity = 1; e.querySelectorAll(".st").forEach(s => s.classList.remove("flotte")); };
 document.querySelector("[data-activer]").onclick = () => {
   if (!VRAI) { bulle("(maquette) Ici : le paiement, puis son site est en ligne"); return; }
@@ -325,6 +333,9 @@ if (VRAI) { const f = document.getElementById("vrai"), dz = e.querySelector(".de
   const guette = setInterval(() => { if (!boite()) return; clearInterval(guette); habille(); mesure(); setTimeout(() => vs.classList.add("pret"), 150); }, 80);
   f.onload = () => { habille(); [300, 1200, 3000, 6000].forEach(t => setTimeout(mesure, t)); setTimeout(() => vs.classList.add("pret"), 200); };
   dz.addEventListener("scroll", () => { const d = boite(); if (d) d.scrollTop = dz.scrollTop; }, { passive: true });
+  /* 15/11 nuit (Marie : « les charms ne descendent pas avec elle ») : sur iPhone, le site peut suivre le doigt avec du retard ;
+     les charms sont donc accrochés à la position RÉELLE du site, image par image */
+  { const cq = e.querySelector(".calque"); let av = 0; const suit = () => { const d = boite(); if (d) { const off = Math.round(dz.scrollTop - d.scrollTop); if (off !== av) { av = off; cq.style.transform = off ? `translateY(${off}px)` : ""; } } requestAnimationFrame(suit); }; requestAnimationFrame(suit); }
   addEventListener("resize", mesure); }
 /* tout effacer (avec une question avant) */
 document.getElementById("toutEffacer").onclick = () => { if (M.n() || e.querySelector(".calque .eto")) document.getElementById("confirme").hidden = false; };
@@ -345,10 +356,11 @@ let ficheFixe = false;
 setTimeout(() => { ficheCharms(true); ficheFixe = true; setTimeout(() => { ficheFixe = false; const f = document.getElementById("ficheC"); if (f) f.classList.add("lent"); ficheCharms(false);
   setTimeout(() => { const q = document.getElementById("questC"); q.classList.add("bouge"); setTimeout(() => q.classList.remove("bouge"), 1500); }, 900); }, 10000); }, 900);
 { const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
-{ const pn = document.querySelector(".ecr.on .panneau") || document.querySelector(".panneau"); if (pn) pn.appendChild(document.getElementById("etoP")); }   /* 13/11 nuit : Étoiles en bas à gauche, juste au-dessus des charms */
+/* 15/11 nuit (Marie) : « Étoiles » reste TOUT LE TEMPS en haut (plus seulement quand le tiroir des charms est ouvert) */
 { const pn = document.getElementById("etoP").parentElement, b = document.createElement("div"); b.id = "etoB"; b.hidden = true;
-  const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#FF4FA3", "#E3122C", "#FF8A3D", "#FFD23F", "#7BD389", "#2EC4B6", "#5BA8FF", "#2F57E8", "#9B6BFF", "#D9A6FF", "#8A5A3C"];
-  b.innerHTML = C.map((c, i) => `<button type="button" data-c="${c}" class="${i ? "" : "on"}" aria-label="Couleur des étoiles" style="background:${c || "#fff"}"></button>`).join("");
+  /* 15/11 nuit (Marie) : 7 couleurs qui tiennent sur une ligne, sans défiler */
+  const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#E3122C", "#5BA8FF", "#9B6BFF"];
+  b.innerHTML = C.map((c, i) => `<button type="button" data-c="${c}" class="${i ? "" : "on"}" aria-label="${i ? "Couleur des étoiles" : "Assorties au fond"}" style="background:${c || "conic-gradient(#F7A8C4,#5BA8FF,#7BD389,#FFD23F,#F7A8C4)"}"></button>`).join("");
   b.onclick = ev => { const x = ev.target.closest("button"); if (x) M.couleurEto(x.dataset.c || ""); }; pn.appendChild(b); }
 document.getElementById("etoP").onclick = ev => { if (ev.target.closest("#etoPX")) M.enleveEtoiles(); else M.etoiles(); };
 setInterval(() => M.majEto(), 1000);

@@ -20,7 +20,7 @@ addEventListener("message", m => {
     const f = b.arrondi ? "&arrondi=1" : b.coffin ? "&coffin=1" : b.epure ? "&epure=1" : "";
     const q = new URLSearchParams({ style: b.style || 1, couleur: b.couleur || "noir", mode: "jour", police: b.police || "elegante", paillettes: b.paillettes || "non" });
     if (b.fond) q.set("fond", b.fond);
-    location.replace("maquette-perso.html?v=1511r&vrai=1&appli=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511k&nouveau&essai&" + q.toString() + f));
+    location.replace("maquette-perso.html?v=1511s&vrai=1&appli=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&" + q.toString() + f));
   } else location.replace(PAGES[ou] || PAGES.perso);
 });
 /* on dit à l'appli qu'on est prêt à recevoir son site */
