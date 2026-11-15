@@ -98,6 +98,16 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .suit{transition:transform .3s steps(1);transform-box:view-box}
 .clig{animation:clig 1s steps(1) infinite}
 @keyframes clig{50%{opacity:0}}
+/* 15/11 (Marie, idée B) : ce qu'on a trouvé, coché une ligne après l'autre, avec ses vraies infos */
+.lc{width:100%;background:var(--surface);border-radius:22px;padding:4px 18px;text-align:left}
+.lcl{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--ligne)}.lcl:last-child{border:0}
+.lcl .r{flex:0 0 24px;height:24px;border-radius:50%;border:1.4px solid var(--greige);position:relative;transition:background .3s,border-color .3s}
+.lcl .r::after{content:"";position:absolute;left:8px;top:4px;width:5px;height:10px;border:solid var(--fond);border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.lcl.ok .r{background:var(--noir);border-color:var(--noir)}.lcl.ok .r::after{transform:rotate(45deg) scale(1)}
+.lcl.cours .r{border-color:var(--noir);border-top-color:transparent;animation:lctourne .8s linear infinite}
+@keyframes lctourne{to{transform:rotate(360deg)}}
+.lcl.vide .r{border-style:dashed}
+.lcl span{flex:1;font:300 15px Jost,sans-serif}.lcl small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;min-height:17px;opacity:0;transition:opacity .4s}.lcl.ok small,.lcl.vide small{opacity:1}
 #charge .go{opacity:0;transition:opacity .5s}
 #charge.lu .go{opacity:1}
 
@@ -375,21 +385,27 @@ $("sansGoogle").onclick = () => { B.source = "main"; prepareManque(); montre("ma
 const PAS = 52, X0 = -104;   /* 06/11 (Marie) : 5 ongles bien droits, comme les 5 doigts */
 /* 07/11 (Marie) : l'attente = un ongle qu'on prépare, couche par couche (forme, base, couleur, top coat, lampe) */
 const ONG = "M-16 18C-17 -4-12 -30-3 -42C-1.5 -44 1.5 -44 3 -42C12 -30 17 -4 16 18C15.5 27 8 30 0 30C-8 30 -15.5 27 -16 18Z";
-$("mdp").outerHTML = `<svg class="mdp ongle" id="ongle" viewBox="0 0 200 230" aria-hidden="true"><defs>
-  <linearGradient id="dgt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2D3C5"/><stop offset=".6" stop-color="#E2D3C5"/><stop offset="1" stop-color="#E2D3C5" stop-opacity="0"/></linearGradient>
-  <radialGradient id="uv" cx=".5" cy="0" r=".9"><stop offset="0" stop-color="#FFF1CF" stop-opacity="1"/><stop offset="1" stop-color="#FFF1CF" stop-opacity="0"/></radialGradient>
-  <clipPath id="clOng"><path d="${ONG}" transform="translate(100 112) scale(1.8)"/></clipPath>
-  <linearGradient id="refl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
-  <g class="lampe"><rect x="0" y="0" width="200" height="200" fill="url(#uv)"/><path d="M34 22Q100 -8 166 22" fill="none" stroke="${NOIR}" stroke-width="3.2" stroke-linecap="round"/></g>
-  <rect x="62" y="60" width="76" height="190" rx="38" fill="url(#dgt)"/>
-  <g transform="translate(100 112) scale(1.8)"><path class="nat" d="${ONG}" fill="#EEDFD2" stroke="#BFA894" stroke-width=".9" pathLength="1"/></g>
-  <g clip-path="url(#clOng)">
-    <rect class="base" x="60" y="20" width="80" height="180" fill="#FBF6F1"/>
-    <rect class="coul" x="60" y="20" width="80" height="180" fill="${NOIR}"/>
-    <g class="top"><rect x="60" y="20" width="80" height="180" fill="#fff" opacity=".06"/><path d="M86 140C84 116 88 84 97 58" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="5" stroke-linecap="round"/>
-      <rect class="balai" x="30" y="10" width="30" height="200" fill="url(#refl)"/></g></g>
-  <g class="brille"><path d="M150 40l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" fill="${NOIR}"/><path d="M46 80l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="${NOIR}"/></g></svg>`;
-const PHRASES = ["On lime la forme", "On pose la base", "On met la couleur", "On met le top coat", "On passe sous la lampe"];
+function resumeHoraires(h) {
+  if (!h) return "";
+  const idx = h.map((x, i) => x ? i : -1).filter(i => i >= 0);
+  if (!idx.length) return "";
+  if (idx.length === 7) return "7 jours sur 7";
+  return idx[idx.length - 1] - idx[0] + 1 === idx.length ? `Du ${JOURS[idx[0]].toLowerCase()} au ${JOURS[idx[idx.length - 1]].toLowerCase()}` : `${idx.length} jours par semaine`;
+}
+const LIGNES = [["salon", "Votre salon"], ["photos", "Vos photos"], ["avis", "Vos avis"], ["horaires", "Vos horaires"], ["prix", "Vos prix"]];
+$("mdp").outerHTML = `<div class="lc" id="lc">${LIGNES.map(([k, t]) => `<div class="lcl" data-k="${k}"><i class="r"></i><span>${t}<small></small></span></div>`).join("")}</div>`;
+const EXEMPLE = { salon: "Les Ongles de Cerise · Lille", photos: "12 photos", avis: "4,9 ★ · 48 avis", horaires: "Du mardi au samedi", prix: "9 prestations" };
+/* ce qu'on a trouvé (texte) ; "" = pas trouvé : elle l'ajoutera ensuite */
+function trouve(k) {
+  if (DEMO) return EXEMPLE[k];
+  const n = B.photos.length, np = B.prestations.length;
+  if (k === "salon") return [B.nom, B.ville].filter(Boolean).join(" · ") || (B.site ? "Trouvé" : "");
+  if (k === "photos") return n ? `${n} photo${n > 1 ? "s" : ""}` : "";
+  if (k === "avis") return B.nbAvis ? `${B.note != null ? String(B.note).replace(".", ",") + " ★ · " : ""}${B.nbAvis} avis` : "";
+  if (k === "horaires") return resumeHoraires(B.horaires);
+  if (k === "prix") return B.prestationsTrouvees && np ? `${np} prestation${np > 1 ? "s" : ""}` : "";
+}
+const PHRASES = ["On cherche votre salon", "On récupère vos photos", "On lit vos avis", "On lit vos horaires", "On lit vos prix"];
 $("etapes").innerHTML = PHRASES.map(p => `<p>${p}…</p>`).join("") + `<p class="fini">Votre site est prêt.</p>`;
 const attends = ms => new Promise(r => setTimeout(r, ms));
 const prechargePhotos = photos => Promise.all(photos.map(p => new Promise(ok => { const i = new Image(); i.onload = i.onerror = ok; i.src = p.url; })));
@@ -413,28 +429,31 @@ async function litTarifs() {
 }
 async function lance(lien) {
   montre("charge"); $("charge").classList.remove("lu");
-  const og = $("ongle"), ph = [...document.querySelectorAll("#etapes p")];
-  og.setAttribute("class", "mdp ongle"); ph.forEach(p => p.classList.remove("on", "parti"));
-  let fini = false, erreur = "";
+  const L = [...document.querySelectorAll("#lc .lcl")], ph = [...document.querySelectorAll("#etapes p")];
+  L.forEach(l => { l.classList.remove("ok", "vide", "cours"); l.querySelector("small").textContent = ""; }); ph.forEach(p => p.classList.remove("on", "parti"));
+  let fini = false, gOk = false, erreur = "";
   const lecture = DEMO ? attends(400).then(() => { fini = true; }) : fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON }, body: JSON.stringify({ lien }) })
-    .then(r => r.json()).then(async g => { if (g.erreur) throw new Error(g.erreur); depuisGoogle(g); B.site = g.site || "";
+    .then(r => r.json()).then(async g => { if (g.erreur) throw new Error(g.erreur); depuisGoogle(g); B.site = g.site || ""; gOk = true;
       await Promise.all([prechargePhotos(B.photos), litTarifs()]); })
     .catch(e => { erreur = e.message && !/fetch/i.test(e.message) ? e.message : "Pas de connexion. Vérifiez votre réseau et réessayez."; })
     .finally(() => { fini = true; });
-  // l'ongle se prépare couche par couche (sous la lampe, il attend que Google ait répondu)
+  // une ligne après l'autre : elle tourne, puis se coche avec ce qu'on a trouvé (les prix attendent la lecture de son site)
   for (let i = 0; i < 5; i++) {
     if (erreur) break;
-    og.classList.add("e" + i);
     ph.forEach((p, j) => { if (j < i) { p.classList.remove("on"); p.classList.add("parti"); } });
-    ph[i].classList.add("on");
-    await attends(1300);
-    if (i === 4) while (!fini) await attends(200);
+    ph[i].classList.add("on"); L[i].classList.add("cours");
+    await attends(1000);
+    while (!fini && !(i < 4 && gOk)) await attends(200);
+    if (erreur) break;
+    const t = trouve(LIGNES[i][0]);
+    L[i].querySelector("small").textContent = t || { salon: "Vous l’écrirez ensuite", avis: "Pas encore d’avis Google" }[LIGNES[i][0]] || "Vous les ajouterez ensuite";
+    L[i].classList.remove("cours"); L[i].classList.add(t ? "ok" : "vide");
   }
   await lecture;
   if (erreur && !estGoogle(lien) && !/connexion/i.test(erreur)) { B.source = "main"; B.site = lien; prepareManque(); montre("manque"); return; }   // Planity, Booksy, son site : salon pas retrouvé sur Google, elle complète (ses prix se lisent depuis son lien)
   if (erreur) { montre("lien"); msg.textContent = erreur; return; }
   ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
-  ph[5].classList.add("on"); og.classList.add("e5"); $("charge").classList.add("lu");
+  ph[5].classList.add("on"); $("charge").classList.add("lu");
   setTimeout(() => $("continuer").click(), 1500);   // 15/11 (Marie) : plus de « Continuer », on passe tout seul à la suite
 }
 $("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311t"); return; } prepareManque(); montre("manque"); };
