@@ -128,7 +128,7 @@ html,body{touch-action:manipulation}
 .pol.on{background:#fff;box-shadow:inset 0 0 0 1.5px var(--noir)}
 .pages{display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;touch-action:pan-x;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0}
 .choix,.bas{overscroll-behavior:contain}
-.poi{display:none;flex:none;height:26px;place-items:center;touch-action:none;cursor:pointer}.bas.fondE .poi{display:grid}#tel.mc .poi{display:none!important}
+.poi{display:none;flex:none;height:26px;place-items:center;touch-action:none;cursor:pointer}.bas.fondE .poi{display:grid}.bas.fondE .poi+.titreBas{position:relative;z-index:1}#tel.mc .poi{display:none!important}
 .poi i{width:42px;height:5px;border-radius:3px;background:rgba(30,28,27,.28);animation:poiA 2.4s ease-in-out 3}@keyframes poiA{0%,100%{transform:none}50%{transform:translateY(-4px)}}
 .bas{transition:height .2s ease-out}
 .bas.leve{height:min(78%,600px)!important;z-index:8}
@@ -303,6 +303,9 @@ html.vrai .maquette{display:none}
 #hautT{cursor:pointer}
 #barre i{cursor:pointer;position:relative}#barre i:after{content:"";position:absolute;left:-2px;right:-2px;top:-10px;bottom:-10px}
 .etapesM{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 58px);translate:-50% 0;z-index:12;min-width:220px;background:rgba(255,255,255,.97);border-radius:18px;padding:6px;box-shadow:0 14px 34px -10px rgba(0,0,0,.28);opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .2s,transform .2s}
+.segS{flex:none;display:flex;margin:2px auto 8px;background:#F1ECE6;border-radius:999px;padding:3px;width:230px}
+.segS button{flex:1;border:0;background:none;border-radius:999px;padding:8px 0;font:400 12.5px Jost,sans-serif;letter-spacing:.08em;color:var(--muted)}
+.segS button.on{background:#fff;color:var(--noir);box-shadow:0 2px 8px -4px rgba(0,0,0,.3)}
 .etapesM.on{opacity:1;pointer-events:auto;transform:none}
 .etapesM button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;padding:11px 14px;border-radius:12px;font:300 14px Jost,sans-serif;color:var(--noir);text-align:left}
 .etapesM button span{width:20px;font-size:11px;color:var(--muted)}.etapesM button.on{background:rgba(30,28,27,.06);font-weight:500}
@@ -315,7 +318,7 @@ html.vrai .maquette{display:none}
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
-  <div class="haut" id="haut"><b id="hautT" role="button">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
+  <div class="haut" id="haut"><b id="hautT" role="button">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
   <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511j&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
@@ -350,13 +353,14 @@ const APPLI = new URLSearchParams(location.search).has("appli");
 /* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
 const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); /* 14/11 : aussi l'appli iPhone (capacitor://localhost) */ (location.hostname === "loginail.fr" ? ["https://app.loginail.fr", "capacitor://localhost"] : [location.origin]).forEach(o => { try { parent.postMessage({ loginail: "enregistre", br }, o); } catch (_) {} }); } catch (e) {} };
 
-const ORDRE = VRAI ? ["photo", "fond", "entete", "ecriture", "couleurs"] : ["photo", "fond", "entete", "ecriture", "couleurs", "charms"];   /* 15/11 (Marie + la table) : le fond juste après la photo */   /* 14/11 (Marie) : sa plus belle photo en premier */   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
-const NB = 6;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
+const ORDRE = VRAI ? ["photo", "style", "ecriture", "couleurs"] : ["photo", "style", "ecriture", "couleurs", "charms"];   /* 15/11 (Marie, idée B) : le fond et l'en-tête dans la même étape, avec deux onglets */   /* 15/11 (Marie + la table) : le fond juste après la photo */   /* 14/11 (Marie) : sa plus belle photo en premier */   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
+const NB = 5;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
 /* ses choix sont enregistrés dans son brouillon (comme « C'est parfait » de l'éditeur) */
 function enregistre() { try { W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box||!BR)return;Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m},window.__pzEtat?__pzEtat():{});localStorage.setItem("loginail-brouillon",JSON.stringify(BR))})()`); return true; } catch (e) { return false; } }
-const TITRES = { photo: "Votre plus belle photo", entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
+const TITRES = { style: "Votre fond et en-tête", photo: "Votre plus belle photo", entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
 const ONGLET = { photo: 1, entete: 1, ecriture: 4, fond: 3, couleurs: 2, site: 2, charms: 4 };
-const cle = () => ORDRE[etape];
+let sousStyle = "fond";
+const cle = () => ORDRE[etape] === "style" ? sousStyle : ORDRE[etape];
 const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
 /* 14/11 (Marie) : les 10 en-têtes choisies remplacent les formes d'ongles */
 const ENT = [["bandeau", "Bandeau"], ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"], ["balcon", "Balcon"], ["devanture", "Devanture"], ["fleurs", "Fleurs"],
@@ -603,9 +607,9 @@ function assortir(muet) { const n = fondActuel(), f = n && (W.FONDS100?.f || [])
   setTimeout(poseEncre, 80); if (!muet) { bulle("Couleurs assorties"); navigator.vibrate?.(10); } }
 /* 13/11 nuit (Marie) : les fonds défilent comme les couleurs — celui du milieu est en grand et se pose tout seul sur le site */
 function gardeLigne(x) { const l = $("contenu").querySelector(".ligneH"); if (l) { l.style.scrollBehavior = "auto"; l.scrollLeft = x; } }
-function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); if (!t || !c || !m || plein) return; t.style.transform = ""; if ($("bas").classList.contains("leve")) return;
+function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); if (!t || !c || !m || plein) return; t.style.transform = ""; if ($("bas").classList.contains("leve") || ORDRE[etape] === "style") return;   /* 15/11 : avec les onglets, le titre reste à sa place */
   let haut = 1e9; c.querySelectorAll("button,.roue,.pages,.aideP,.ajoutU").forEach(x => { const r = x.getBoundingClientRect(); if (r.height > 4 && r.top < haut) haut = r.top; }); if (haut > 1e8) return;
-  const r = t.getBoundingClientRect(), d = ($("bas").getBoundingClientRect().top + 4 + haut) / 2 - (r.top + r.height / 2); if (Math.abs(d) < 60) t.style.transform = `translateY(${d.toFixed(1)}px)`; }
+  const r = t.getBoundingClientRect(), po = $("poi"), h0 = po && po.offsetHeight ? po.getBoundingClientRect().bottom - 2 : $("bas").getBoundingClientRect().top + 4, d = (h0 + haut) / 2 - (r.top + r.height / 2);   /* 15/11 : sous la poignée, jamais dessus */ if (Math.abs(d) < 60) t.style.transform = `translateY(${d.toFixed(1)}px)`; }
 new MutationObserver(() => requestAnimationFrame(centreTitre)).observe(document.getElementById("contenu"), { childList: true }); addEventListener("resize", () => setTimeout(centreTitre, 80)); [300, 1200, 2500].forEach(x => setTimeout(centreTitre, x));
 function brancheFonds() { const g = $("grilleF"); if (!g) return; const n = g.querySelectorAll(".vg").length; if (!n) return;
   const K = 1, N = n, MIL = (K - 1) / 2; if (K > 1) g.innerHTML = g.innerHTML.repeat(K);   /* sans fin : la liste plusieurs fois, on revient sur celle du milieu quand ça s'arrête */
@@ -925,6 +929,12 @@ const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fer
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
 function prepare() { majCadre(); if (cle() === "charms") setTimeout(ficheDepart, 900); if (cle() === "entete") setTimeout(miniEntetes, 400); if (cle() === "couleurs" && assorti && fondActuel()) setTimeout(() => { assortir(true); rend(); }, 200); ouvreOnglet(ONGLET[cle()]); enHaut(); [80, 300].forEach(t => setTimeout(enHaut, t)); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
+/* 15/11 (Marie, idée B) : deux onglets « Fond · En-tête » en haut du panneau */
+{ const r0 = rend; rend = function () { r0.apply(this, arguments);
+    if (ORDRE[etape] !== "style" || $("bas").classList.contains("leve")) return;
+    const c = $("contenu"); if (!c.querySelector(".segS")) c.insertAdjacentHTML("afterbegin", `<div class="segS">${[["fond", "Fond"], ["entete", "En-tête"]].map(([k, n]) => `<button type="button" data-ss="${k}" class="${k === sousStyle ? "on" : ""}">${n}</button>`).join("")}</div>`);
+    const x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0; $("bas").style.setProperty("--basX", (x + (sousStyle === "fond" ? 74 : 52)) + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(taille, 230); };
+  $("contenu").addEventListener("click", e => { const b = e.target.closest("[data-ss]"); if (!b) return; e.stopPropagation(); if (b.dataset.ss === sousStyle) return; sousStyle = b.dataset.ss; chercheOuvert = false; filtre = ""; prepare(); }, true); }
 addEventListener("scroll", () => { if ((scrollX || scrollY) && !document.activeElement?.matches?.("input")) scrollTo(0, 0); });
 F.classList.add("fondu");
 F.onload = () => {
