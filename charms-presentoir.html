@@ -120,6 +120,9 @@ html,body{touch-action:manipulation}
 .ficheC div{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(30,28,27,.07)}.ficheC div:first-child{border-top:0}
 .ficheC svg{width:20px;height:20px;flex:none;fill:none;stroke:#1E1C1B;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .st.choisiC:not(.eto){outline:1px solid rgba(255,255,255,.95);outline-offset:5px;border-radius:6px}
+#ficheC.lent{transition:opacity .9s,transform .9s}
+#questC.bouge{animation:bougeQ 1.5s ease-in-out}
+@keyframes bougeQ{0%,100%{transform:none}10%,30%,50%,70%{transform:rotate(-14deg) scale(1.08)}20%,40%,60%,80%{transform:rotate(14deg) scale(1.08)}90%{transform:none}}
 </style></head><body>
 <div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button><button class="compte verre" id="questC" type="button" aria-label="Comment bouger un charm">?</button></div>
 <p class="explique" id="explique">Touchez un charm pour le poser · 21 au maximum</p>
@@ -197,7 +200,7 @@ function moteur(ecr) {
   const deux = () => { const p = [...doigts.values()]; if (p.length < 2) return null; return { d: Math.hypot(p[1].x - p[0].x, p[1].y - p[0].y) || 1, a: Math.atan2(p[1].y - p[0].y, p[1].x - p[0].x) * 180 / Math.PI }; };
   const base = () => { const p = [...doigts.values()][0]; dep = { l: parseFloat(choisi.style.left), t: parseFloat(choisi.style.top), x: p.x, y: p.y, s: choisi._s, r: choisi._r, g: deux() }; };
   const horsJeu = t => t.closest(".panneau,.btnBas,.haut,.choix");
-  M.prend = (im, e) => { ficheCharms(false); document.querySelectorAll(".st.choisiC").forEach(x => { if (x !== im) x.classList.remove("choisiC"); }); im.classList.add("choisiC"); clearTimeout(im._cc); im._cc = setTimeout(() => im.classList.remove("choisiC"), 2600); choisi = im; doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); mode = "glisse"; base(); try { ecr.setPointerCapture(e.pointerId); } catch (x) {} poub.classList.add("on"); ecr.classList.add("tient"); };
+  M.prend = (im, e) => { if (!ficheFixe) ficheCharms(false); document.querySelectorAll(".st.choisiC").forEach(x => { if (x !== im) x.classList.remove("choisiC"); }); im.classList.add("choisiC"); clearTimeout(im._cc); im._cc = setTimeout(() => im.classList.remove("choisiC"), 2600); choisi = im; doigts.set(e.pointerId, { x: e.clientX, y: e.clientY }); mode = "glisse"; base(); try { ecr.setPointerCapture(e.pointerId); } catch (x) {} poub.classList.add("on"); ecr.classList.add("tient"); };
   ecr.addEventListener("pointerdown", e => {
     if (horsJeu(e.target) && !doigts.size) return;
     const t = e.target.closest(".st");
@@ -326,8 +329,12 @@ document.addEventListener("dblclick", e => e.preventDefault(), { passive: false 
 const FICHE = '<div><svg viewBox="0 0 20 20"><path d="M10 2v16M2 10h16M10 2 7.5 4.5M10 2l2.5 2.5M10 18l-2.5-2.5M10 18l2.5-2.5M2 10l2.5-2.5M2 10l2.5 2.5M18 10l-2.5-2.5M18 10l-2.5 2.5"/></svg>Glissez-le pour le déplacer</div><div><svg viewBox="0 0 20 20"><path d="M3 17 8 12M17 3l-5 5M3 17v-4M3 17h4M17 3v4M17 3h-4"/></svg>Écartez deux doigts pour l’agrandir</div><div><svg viewBox="0 0 20 20"><path d="M16 10a6 6 0 1 1-2-4.5M16 3v3h-3"/></svg>Tournez deux doigts pour le pencher</div>';
 function ficheCharms(on) { let f = document.getElementById("ficheC"); if (!f) { f = document.createElement("div"); f.id = "ficheC"; f.className = "ficheC"; f.innerHTML = FICHE; document.body.appendChild(f); } f.classList.toggle("on", on); }
 document.getElementById("questC").onclick = e => { e.stopPropagation(); const f = document.getElementById("ficheC"); ficheCharms(!(f && f.classList.contains("on"))); };
-document.addEventListener("pointerdown", e => { if (!e.target.closest("#questC,#ficheC")) ficheCharms(false); }, true);
-{ const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 1) setTimeout(() => ficheCharms(true), 500); if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
+document.addEventListener("pointerdown", e => { if (!ficheFixe && !e.target.closest("#questC,#ficheC")) ficheCharms(false); }, true);
+/* 15/11 (Marie) : la fiche s'affiche dès l'arrivée, s'efface toute seule au bout de 10 s, puis le « ? » bouge 1,5 s */
+let ficheFixe = false;
+setTimeout(() => { ficheCharms(true); ficheFixe = true; setTimeout(() => { ficheFixe = false; const f = document.getElementById("ficheC"); if (f) f.classList.add("lent"); ficheCharms(false);
+  setTimeout(() => { const q = document.getElementById("questC"); q.classList.add("bouge"); setTimeout(() => q.classList.remove("bouge"), 1500); }, 900); }, 10000); }, 900);
+{ const aj0 = M.ajoute; let nb = 0; M.ajoute = (...a) => { const deja = M.a(a[0]), r = aj0(...a); if (!deja) { nb++; if (nb === 3) setTimeout(() => astuceCharm("partout"), 500); } return r; }; }
 { const pn = document.querySelector(".ecr.on .panneau") || document.querySelector(".panneau"); if (pn) pn.appendChild(document.getElementById("etoP")); }   /* 13/11 nuit : Étoiles en bas à gauche, juste au-dessus des charms */
 { const pn = document.getElementById("etoP").parentElement, b = document.createElement("div"); b.id = "etoB"; b.hidden = true;
   const C = ["", "#E9C46A", "#C9CED6", "#F7A8C4", "#FF4FA3", "#E3122C", "#FF8A3D", "#FFD23F", "#7BD389", "#2EC4B6", "#5BA8FF", "#2F57E8", "#9B6BFF", "#D9A6FF", "#8A5A3C"];

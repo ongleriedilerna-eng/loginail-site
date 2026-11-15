@@ -1729,6 +1729,17 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .ecran .he-vitrine .vit .he-ph{position:relative!important;inset:auto!important;width:100%;height:clamp(220px,34vh,320px);border:9px solid var(--papier,#fff);border-radius:8px;box-shadow:0 20px 36px -22px rgba(0,0,0,.5)}
 .ecran .he-devanture .fac{background:var(--papier,#fff);border:3px solid var(--acc);border-bottom:0;box-sizing:border-box}
 .ecran .he-devanture .fac h1{text-align:center}
+/* 15/11 (Marie) : la photo et la bulle du texte ne se collent jamais */
+.ecran .hent:not(.he-bandeau):not(.he-diagonale):not(.he-vague) > :has(+ .he-txt){margin-bottom:26px!important}
+.ecran .he-balcon .balc{margin-bottom:26px!important}
+.ecran .hent:not(.he-bandeau):not(.he-diagonale):not(.he-vague) > .he-txt{margin-top:0!important}
+.ecran .hent.he-fleurs .pol{margin-top:0}
+/* Loge : le texte toujours dans une bulle claire (le nom se lit sur le fond sombre) */
+.ecran .hent.he-loge .he-txt{background:var(--papier,#fff);color:var(--noir);border-radius:24px;padding:18px 22px 22px;box-shadow:0 16px 30px -22px rgba(0,0,0,.4);width:calc(100% - 40px);max-width:520px}
+.ecran .hent.he-loge .he-txt .kick,.ecran .hent.he-loge .he-txt .note{color:var(--gris,#8c847d)}
+/* sur un fond : les petits textes posés dessus ont leur pastille claire */
+.ecran:has(>.fond-site) .he-ticket .he-sur{background:var(--papier,#fff);color:var(--noir);opacity:1;padding:8px 14px 8px 18px;border-radius:20px}
+.ecran:has(>.fond-site) .he-vitrine .vit h1{background:var(--papier,#fff);padding:10px 20px;border-radius:18px}
 </style>
 <style id="entetes-1411">/* 14/11 : le fond choisi se voit derrière l'en-tête ; les boutons prennent la couleur choisie */
 .ecran:has(>.fond-site) .hent{background:transparent!important;--papier:var(--fond-carte,#fff)}

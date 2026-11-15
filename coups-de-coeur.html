@@ -4,7 +4,7 @@ const vrai=q.has("vrai")&&!!br,appli=q.has("appli");document.documentElement.sty
 if(vrai&&q.has("retour")&&!appli){try{const r=JSON.parse(localStorage.getItem("loginail-reprise")||"null");if(r&&r.p==="charms"){location.replace("charms-presentoir.html?vrai&v=1411f");return}}catch(e){}}
 const b=vrai?br:{},p=new URLSearchParams({style:b.style||1,couleur:b.couleur||"lin",mode:"jour",police:b.police||"elegante",paillettes:b.paillettes||"non"});if(b.fond)p.set("fond",b.fond);
 const f=b.arrondi?"&arrondi=1":b.coffin?"&coffin=1":b.epure?"&epure=1":"";
-const src="loginail-creer/pret.html?"+(vrai?"nouveau&essai&":"nouveau&exemple=dilerna&")+p+f+(vrai?"":"&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise");
+const src="loginail-creer/pret.html?v=1511h&"+(vrai?"nouveau&essai&":"nouveau&exemple=dilerna&")+p+f+(vrai?"":"&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise");
 location.replace("maquette-perso.html?v=1411h&genre=classique"+(vrai?"&vrai=1":"")+(appli?"&appli=1":"")+"&src="+encodeURIComponent(src))})();</script>
 <script id="vers-creer">/* 09/11 (Marie) : sur ordinateur, le parcours s'ouvre dans la colonne du milieu (creer.html) */if(window.top===window&&!matchMedia("(max-width: 899px)").matches&&screen.width>=900&&(true))location.replace("creer.html?p="+encodeURIComponent("coups-de-coeur.html"+location.search))</script>
 <meta name="robots" content="noindex">
