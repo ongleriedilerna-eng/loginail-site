@@ -46,7 +46,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .tour text{font:500 6.4px Jost,sans-serif;letter-spacing:.17em;fill:var(--noir)}
 #oeil>svg:not(.tour){position:relative}#oeil svg.tour,#fermerPlein svg.tour{width:64px;height:64px}#oeil,#fermerPlein{width:34px!important;height:34px!important}#oeil>svg:not(.tour),#fermerPlein>svg:not(.tour){width:15px;height:15px}#oeil{overflow:visible}#oeil .lib{position:absolute;left:50%;top:calc(100% + 5px);transform:translateX(-50%);font:500 7.5px/1.35 Jost,sans-serif;letter-spacing:.14em;color:var(--noir);text-align:center;white-space:nowrap;pointer-events:none}#fermerPlein{width:auto!important;height:46px!important;padding:0 18px 0 14px;border-radius:999px;display:flex;align-items:center;gap:9px;font:500 12px Jost,sans-serif;letter-spacing:.16em;color:var(--noir);background:rgba(255,255,255,.94)!important;box-shadow:0 8px 22px -6px rgba(0,0,0,.45)}#fermerPlein[hidden]{display:none}#fermerPlein>svg{width:18px;height:18px;flex:none}
 @keyframes tourne{to{transform:rotate(360deg)}}
-.bas{position:absolute;left:0;right:0;bottom:0;height:calc(var(--basH) + env(safe-area-inset-bottom));padding:0 0 calc(env(safe-area-inset-bottom) + 12px);z-index:3;display:flex;flex-direction:column}
+.bas{position:absolute;left:0;right:0;bottom:0;height:calc(var(--basH) + var(--basX,0px) + env(safe-area-inset-bottom));padding:0 0 calc(env(safe-area-inset-bottom) + 12px);z-index:3;display:flex;flex-direction:column}
 .choix{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
 .ligneH{display:flex;gap:9px;overflow-x:auto;padding:4px 22px 6px;scroll-snap-type:x proximity;scrollbar-width:none}.ligneH::-webkit-scrollbar{display:none}
 .ligneH>*{flex:none;scroll-snap-align:center}
@@ -277,6 +277,14 @@ html.vrai .maquette{display:none}
 .formes.vgE .puce{flex:0 0 var(--iw,66px);display:flex;flex-direction:column;align-items:center;gap:7px;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;font:300 11.5px Jost,sans-serif;color:var(--muted);white-space:normal;line-height:1.2}
 .formes.vgE .puce .mi{display:block;width:calc(var(--iw,66px) - 4px);height:calc((var(--iw,66px) - 4px) * 1.8);border-radius:10px;background:#eee center top/cover no-repeat;outline:1px solid transparent;outline-offset:3px;transition:outline-color .2s;margin:4px 2px 0;box-shadow:0 6px 16px -10px rgba(0,0,0,.35)}
 .formes.vgE .puce.on{background:none;border:0;color:var(--noir)}.formes.vgE .puce.on .mi{outline-color:var(--noir)}
+/* 15/11 (Marie) : les en-têtes défilent comme « Vos couleurs » : celle du milieu est choisie, un peu plus grande ; pas de cadre noir */
+.formes.vgE.roueE{scroll-snap-type:x mandatory;padding:6px calc(50% - var(--iw,66px) / 2) 16px;align-items:center;scrollbar-width:none}
+.formes.vgE.roueE::-webkit-scrollbar{display:none}
+.formes.vgE.roueE .puce{scroll-snap-align:center;transform-origin:50% 35%;transform:scale(.84);opacity:.62;transition:transform .2s cubic-bezier(.3,1.3,.5,1),opacity .2s}
+.formes.vgE.roueE .puce.pres{transform:scale(.9);opacity:.85}
+.formes.vgE.roueE .puce.mil{transform:scale(1);opacity:1;color:var(--noir);font-weight:400}
+.formes.vgE.roueE .puce .mi,.formes.vgE.roueE .puce.on .mi{outline:0!important}
+.formes.vgE.roueE .puce.mil .mi{box-shadow:0 12px 24px -12px rgba(0,0,0,.45)}
 .vg.sansF{background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(30,28,27,.14)}
 .vg.sansF span{font:300 9.5px/1.25 Jost,sans-serif;color:var(--noir);text-align:center;letter-spacing:.02em}
 .bas.leve .grilleF .vg.sansF span{font-size:13px}
@@ -362,13 +370,13 @@ const changeEnt = d => { const i = ENT.findIndex(e => e[0] === ent); poseEnt(ENT
 const NOMC = {"noir": "#1E1C1B", "blanc": "#FFFFFF", "or": "linear-gradient(170deg,#FFF3C4 0%,#E8C66A 38%,#B8862E 62%,#F6DE92 100%)", "argent": "linear-gradient(170deg,#FFFFFF 0%,#D9DCE2 35%,#8C9098 60%,#F2F3F6 100%)", "rosegold": "linear-gradient(170deg,#FCE3DA 0%,#E8A99A 40%,#B9706A 65%,#F6CFC4 100%)", "champagne": "linear-gradient(170deg,#FFF8EA 0%,#E9D3A8 40%,#B8975E 65%,#F6E7C6 100%)", "cuivre": "linear-gradient(170deg,#FBE0C8 0%,#D98B5A 40%,#9A5530 65%,#F2C29E 100%)", "holo": "linear-gradient(100deg,#FFB3E6 0%,#B3D4FF 30%,#B9FFE0 60%,#FFF3B0 100%)", "pastel": "linear-gradient(100deg,#F7B9CF 0%,#D9C2F2 35%,#B9DAF5 65%,#BDEBD7 100%)", "coucher": "linear-gradient(100deg,#F9C49A 0%,#F6A99B 45%,#F4B6C8 100%)", "glace": "linear-gradient(100deg,#B7D3F0 0%,#CDB8EE 50%,#F4B6C8 100%)", "citron": "linear-gradient(100deg,#F6E3A1 0%,#B9E6D3 100%)", "rosep": "#F4B6C8", "lilasp": "#CDB8EE", "bleup": "#B7D3F0", "mentep": "#B9E6D3", "peche": "#F7C6A8", "orangep": "#F9C49A", "jaunep": "#F6E3A1", "corailp": "#F6A99B", "lavande": "#B9A6E8", "sauge": "#A9C3A2", "ciel": "#9FCBEB", "creme": "#F4EADB", "beige": "#D9C4A8", "corail": "#F07A65", "rouge": "#C8243A", "bordeaux": "#7A1F33", "fuchsia": "#E0368C", "violet": "#7B3FB5", "turquoise": "#2BB3B1", "vert": "#1F7A55", "bleunuit": "#1F2E5C", "choco": "#5A3A28", "bleuroi": "#2F57E8", "bleuneon": "linear-gradient(100deg,#6FA8FF 0%,#2F57E8 50%,#7B5CFF 100%)"};   // les couleurs du nom de l'éditeur (hero-format.js)
 let nomc = "";
 let encre = "";
-const FAM = [["Favoris", null, ""], ["Populaires", null, ""], ["Cœurs", /coeur/, "coeurchrome"], ["Fruits", /fraise|cerise|citron|peche|orange|ananas|pomme|framboise|kiwi|banane|myrtille|pasteque|raisin|poire|fruit/, "fraisegelee"],
+const FAM = [["Favoris", null, ""], ["Cœurs", /coeur/, "coeurchrome"], ["Fruits", /fraise|cerise|citron|peche|orange|ananas|pomme|framboise|kiwi|banane|myrtille|pasteque|raisin|poire|fruit/, "fraisegelee"],
   ["Fleurs", /fleur|rose|hibiscus|marguerite|tulipe|lys|pivoine|lotus|tournesol/, "hibiscus"], ["Étoiles", /etoile|lune|planete|soleil|ciel|comete|astro/, "planete"],
   ["Animaux", /chat|ours|papillon|lapin|chien|canard|poisson|cygne|abeille|serpent|grenouille|dauphin|licorne|coccinelle|tortue|cheval|panda|renard|biche/, "papillondore"],
   ["Gourmand", /gateau|glace|bonbon|chocolat|cookie|donut|cafe|sushi|macaron|cupcake|sucette|boba|bubble|croissant|pizza|cocktail/, "chocolat"],
   ["Bijoux", /perle|strass|diamant|cristal|couronne|noeud|bague|bijou|minaudiere|sac|parfum|levre/, "perle"]];
 const POP = ["cerisedisco", "libellule", "croissant", "cocktail", "ramenoeuf", "casquette", "flamme", "clapet", "bouledisco", "boule8", "cabriolet", "cadeau", "baladeur", "lampeuv", "serum", "pinceacheveux", "cremeconcombre", "bottedisco"];   // 09/11 : choisis par Marie
-let famille = "Populaires", recherche = "", enRecherche = false, favoris = [], filtre = "", chercheOuvert = false;
+let famille = "Cœurs", recherche = "", enRecherche = false, favoris = [], filtre = "", chercheOuvert = false;
 const GENRE = new URLSearchParams(location.search).get("genre") || "";
 const sansAccent = t => (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 const champRecherche = ph => `<label class="recherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="filtre" placeholder="${ph}" value="${filtre}"></label>`;
@@ -457,6 +465,7 @@ function ambiance() {
     const h = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1loginail-site/"); if (a._h !== h) { a._h = h; a.innerHTML = `<div class="f100 fond-site" style="position:absolute;inset:0">${h}</div>`; } } catch (e) {}
 }
 function rend() {
+  { const av = $("bas").style.getPropertyValue("--basX"); $("bas").style.setProperty("--basX", "0px"); if (av && av !== "0px") { clearTimeout(window.__tBas); window.__tBas = setTimeout(taille, 230); } }   /* 15/11 : seules « Vos couleurs » agrandissent le panneau */
   $("hautT").textContent = `Personnalisez · ${etape + 1} sur ${NB}`; document.querySelectorAll("#barre i").forEach((x, k) => x.classList.toggle("on", k <= etape));
   [...$("barre").children].forEach((i, k) => i.classList.toggle("on", k <= etape));
   $("titre").textContent = TITRES[cle()]; $("aide").textContent = "";
@@ -479,9 +488,14 @@ function rend() {
   } else if (cle() === "entete") {
     c.innerHTML = `<div class="formes vgE" id="formes">${ENT.map(([k, n]) => `<button class="puce ${k === ent ? "on" : ""}" data-ent="${k}" type="button"><span class="mi" style="background-image:url('idees-perso/ent-${k}.jpg')"></span>${n}</button>`).join("")}</div>`;
     { const g = $("formes"), cw = g.clientWidth - 20, k = Math.max(3, Math.round(cw / 78 - .5)), iw = Math.floor(cw / (k + .5) - 12);   /* 15/11 (Marie) : toujours une demi-image au bord, pour qu'on voie qu'il y en a d'autres */
-      g.style.setProperty("--iw", iw + "px"); }
+      g.style.setProperty("--iw", Math.min(76, iw + 6) + "px"); g.classList.add("roueE"); }
     miniCle = ""; setTimeout(miniEntetes, 30);
-    if (!window.__glisseE) { window.__glisseE = 1; setTimeout(() => { const g = $("formes"); if (!g || g.scrollLeft > 4) return; g.scrollTo({ left: 160, behavior: "smooth" }); setTimeout(() => g.scrollTo({ left: 0, behavior: "smooth" }), 1100); }, 2800); }
+    /* 15/11 (Marie) : comme « Vos couleurs » : on fait défiler, celle du milieu s'applique */
+    { const g = $("formes"), B = [...g.children]; let pret = false, t = 0;
+      const milieu = () => { const c = g.scrollLeft + g.clientWidth / 2; let m = 0, d = 1e9; B.forEach((b, i) => { const x = Math.abs(b.offsetLeft + b.offsetWidth / 2 - c); if (x < d) { d = x; m = i; } }); return m; };
+      const peint = m => B.forEach((b, i) => { b.classList.toggle("mil", i === m); b.classList.toggle("pres", Math.abs(i - m) === 1); });
+      g.onscroll = () => { const m = milieu(); peint(m); if (!pret) return; clearTimeout(t); t = setTimeout(() => { const k = B[m].dataset.ent; if (k !== ent) { poseEnt(k); navigator.vibrate?.(4); } }, 160); };
+      requestAnimationFrame(() => { const o = B.find(b => b.dataset.ent === ent) || B[0]; g.scrollLeft = o.offsetLeft + o.offsetWidth / 2 - g.clientWidth / 2; peint(B.indexOf(o)); setTimeout(() => { pret = true; }, 300); }); }
   } else if (cle() === "fond") {
     const cats = [...D.querySelectorAll("#pzCats [data-c]")];
     const SURPRISE = `<svg viewBox="0 0 24 24"><path d="M3 7h3.5c3 0 4.5 2 6 5s3 5 6 5H21M3 17h3.5c1.6 0 2.7-.6 3.6-1.6M14.4 8.6c.9-1 2-1.6 3.6-1.6H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -490,7 +504,6 @@ function rend() {
       + `<button class="puce verre surprise seul" data-hasard="1" type="button" aria-label="Un fond au hasard" title="Un fond au hasard">${SURPRISE}</button>`
       + (choisisG().length ? `<button class="puce verre ${catPerso === "choisis" ? "on" : ""}" data-perso="choisis">Recommandés</button>` : "")
       + `<button class="puce verre ${catPerso === "pourvous" ? "on" : ""}" data-perso="pourvous">Pour vous</button>`
-      + (essayes.length > 1 ? `<button class="puce verre ${catPerso === "essayes" ? "on" : ""}" data-perso="essayes">Déjà essayés</button>` : "")
       + `${cats.map(b => `<button class="puce verre ${!catPerso && b.classList.contains("on") ? "on" : ""}" data-cat="${b.dataset.c}">${b.textContent}</button>`).join("")}</div>`)
       + `<div class="grilleF defileF" id="grilleF">${catPerso === "favoris" ? "" : SANSF}${catPerso ? vgListe(listePerso(catPerso)) : vignettes()}</div>`;
     if ($("bas").classList.contains("leve")) { marqueFavoris(); $("contenu").insertAdjacentHTML("afterbegin", '<p class="aideF">Pour ne pas vous perdre parmi les fonds,<br>restez appuyée sur un fond pour le mettre en favori.</p>'); const mes = () => { const v = $("grilleF") && $("grilleF").querySelector(".vg"); if (v && v.clientWidth) { $("grilleF").style.setProperty("--kF", (v.clientWidth / 170).toFixed(4)); $("grilleF").style.setProperty("--hF", Math.round(v.clientWidth * 78 / 44) + "px"); } }; requestAnimationFrame(mes); setTimeout(mes, 380); } else { marqueFavoris(); brancheFonds(); }
@@ -509,6 +522,8 @@ function rend() {
       + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
     const aFond = !!fondActuel(); if (!aFond) assorti = false;
     c.innerHTML = (aFond ? `<button class="interA" data-assorti type="button"><span>Assorties à mon fond<small>${assorti ? "Les couleurs vont avec votre fond" : "Touchez pour les assortir à votre fond"}</small></span><i class="sw ${assorti ? "on" : ""}"></i></button>` : "") + (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
+    /* 15/11 (Marie) : « Assorties à mon fond » et « Sur blanc / Sur couleur » ne doivent plus passer sous le bouton du bas */
+    { const x = (aFond ? 58 : 0) + (sousCouleur === "site" ? 74 : 0); $("bas").style.setProperty("--basX", x + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(taille, 230); }
     brancheRoue(choisi ? ki : -1); teinteBlocs();
   } else if (cle() === "ecriture") {
     const ELEG = ["elegante", "chic", "luxe", "parisienne", "calligraphie", "couture", "gala", "satin", "artdeco", "romantique", "manuscrite", "feminine", "douce", "moderne", "vintage", "mode", "magazine", "cinema", "danse", "mystique", "astres"], fun = GENRE === "ouf";
@@ -537,7 +552,7 @@ const CHOISIS = { classique: ["Soie", "Marbre", "Losanges rayés", "Damier lin",
 const choisisG = () => CHOISIS[new URLSearchParams(location.search).get("genre") === "ouf" ? "ouf" : "classique"] || [];
 let catPerso = choisisG().length ? "choisis" : "pourvous", POURVOUS = null, essayes = [], favF = [];
 try { favF = JSON.parse(localStorage.getItem("fondsFavoris") || "[]"); } catch (e) {}
-const persos = () => [["pourvous", "Pour vous"], ["favoris", "♥ Favoris"]].concat(essayes.length > 1 ? [["essayes", "Déjà essayés"]] : []);
+const persos = () => [["pourvous", "Pour vous"], ["favoris", "♥ Favoris"]];   /* 15/11 (Marie) : plus de « Déjà essayés » */
 const fondActuel = () => W.__pzEtat?.().fond || "";
 function listePerso(k) { const F = W.FONDS100?.f || [], existe = n => F.some(x => x[0] === n);
   if (k === "choisis") return choisisG().filter(existe);
@@ -575,8 +590,9 @@ function assortir(muet) { const n = fondActuel(), f = n && (W.FONDS100?.f || [])
   /* 15/11 (Marie) : on compare par teinte (un rouge choisit un rouge, jamais un rouille) */
   const hsl = v => { const [r, g, b] = coul(v).map(x => x / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn; let h = 0;
     if (d) h = mx === r ? ((g - b) / d + 6) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [h * 60, d ? d / (1 - Math.abs(2 * l - 1)) : 0, l]; };
-  const dist = (v, cible, wl = .2) => { const a = hsl(v), t = hsl(cible), dh = Math.min(Math.abs(a[0] - t[0]), 360 - Math.abs(a[0] - t[0])), gris = Math.min(a[1], t[1]) < .12;
-    return (gris ? 0 : (dh / 20) ** 2) + ((a[1] - t[1]) / .25) ** 2 + ((a[2] - t[2]) / wl) ** 2; };
+  const dist = (v, cible, wl = .2) => { const a = hsl(v), t = hsl(cible), dh = Math.min(Math.abs(a[0] - t[0]), 360 - Math.abs(a[0] - t[0])), gA = a[1] < .06, gT = t[1] < .06;
+    /* 15/11 (Marie) : un vert grisé (sauge) n'est pas « gris » : sa teinte compte, sinon un fond beige et marron donnait du vert */
+    return (gA && gT ? 0 : gA || gT ? 3 : (dh / 20) ** 2) + ((a[1] - t[1]) / .25) ** 2 + ((a[2] - t[2]) / wl) ** 2; };
   /* la couleur du fond : la plus colorée entre son encre et sa couleur de base */
   const base = (f[1].match(/background-color:\s*([^;"]+)/) || [])[1] || "", dom = W.FOND_COUL && W.FOND_COUL[n], c = (dom && sat(dom) > .1 ? dom : "") || [f[4], base].filter(Boolean).sort((x, y) => sat(y) - sat(x))[0] || "#1E1C1B";   /* 15/11 : la vraie couleur dominante du fond */
   const cb = lum(c) > .8 ? fonce(c, .72) : c, cn = lum(c) > .5 ? fonce(c, .5) : c;   /* boutons : pas trop pâles ; nom : assez foncé pour se lire */
@@ -621,13 +637,13 @@ function remplitCharms() {
   const bt = n => `<button data-ch="${n}" class="${poses.has(n) ? "pris" : ""} ${favoris.includes(n) ? "fav" : ""}" aria-label="${n}"><img src="loginail-site/charms-mini/${n}.webp" loading="lazy" alt=""></button>`;
   let secs;
   if (q) { const l = tous.filter(n => n.includes(q) || sansAccent(CHNOM[n] || "").replace(/[^a-z0-9]/g, "").includes(q)); secs = [["Résultats", "", l]]; }
-  else { secs = [["Favoris", "♡", favoris.filter(n => tous.includes(n))], ["Populaires", "★", POP.filter(n => tous.includes(n))]];
+  else { secs = [["Favoris", "♡", favoris.filter(n => tous.includes(n))]];   /* 15/11 (Marie) : plus de « Populaires » (★) : les favoris, c'est le cœur */
     FAMILLES.forEach(([f, ic]) => secs.push([f, ic, tous.filter(n => (CHFAM[n] || DERNIERE()) === f)]));
     secs = secs.filter(x => x[2].length || x[0] === "Favoris"); if (!secs[0][2].length && secs.length > 1) secs.splice(1, 0, secs.shift()); }   // 13/11 : « Favoris » reste visible même vide (après Populaires), pour qu'elle comprenne   // une famille vide (Favoris au début) ne s'affiche pas
   const g = $("clGrille");
   g.innerHTML = secs.map(([t, ic, l]) => `<div class="cl-sec" data-sec="${t}"><h5>${t}</h5>${l.length ? `<div class="cl-g">${l.map(bt).join("")}</div>` : `<div class="cl-rien">${t === "Favoris" ? "Restez appuyée sur un charm pour le garder ici ♡" : "Aucun charm"}</div>`}</div>`).join("");
   $("clBarre").innerHTML = q ? "" : secs.map(([t, ic]) => `<button data-sec="${t}" title="${t}" style="${ic.length > 2 ? `background-image:url(loginail-site/charms-mini/${ic}.webp)` : ""}">${ic.length > 2 ? "" : ic}</button>`).join("");
-  g.onscroll = barreCharms; const pop = g.querySelector('[data-sec="Populaires"]'); g.scrollLeft = pop && !q ? pop.offsetLeft - 10 : 0; barreCharms();   // ouvert sur Populaires
+  g.onscroll = barreCharms; g.scrollLeft = 0; barreCharms();   // ouvert sur Populaires
 }
 /* la hauteur du clavier du téléphone (pour poser la recherche juste au-dessus) */
 function clavier() { const vv = window.visualViewport; if (!vv) return; const h = Math.max(0, innerHeight - vv.height - vv.offsetTop); $("bas").style.setProperty("--clav", h + "px"); }
@@ -761,6 +777,8 @@ const blocsChoisis = () => { try { return W.eval('(window.__lgnChoix&&window.__l
 setInterval(() => { const b = $("bas"); if (!b || cle() !== "fond" || b.classList.contains("leve") || plein || document.hidden) return; b.classList.remove("monteF"); void b.offsetWidth; b.classList.add("monteF"); setTimeout(() => b.classList.remove("monteF"), 1500); }, 20000);
 function departSobre() { try { if (VRAI && W.eval("typeof BR!=='undefined'&&BR&&!!BR.entete")) return; } catch (e) {}
   poseEnt("bandeau");
+  /* 15/11 (Marie) : « Fun et ouf » ne part pas sobre : un fond qui pétille, et les couleurs assorties */
+  if (GENRE === "ouf") { setTimeout(() => { poseFond("Cerises disco"); setTimeout(() => { try { assortir(true); } catch (x) {} }, 350); }, 250); return; }
   setTimeout(() => { clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); vifChoisi = "noirb"; clique('.pf-vifs [data-vif="noirb"]');
     nomc = "noir"; try { W.eval('if(typeof BR!=="undefined"&&BR)BR.nomc="noir";window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:"noir"})'); } catch (x) {}
     poseBlocs("verre"); setTimeout(() => { poseEncre(); ambiance(); }, 120); }, 250); }

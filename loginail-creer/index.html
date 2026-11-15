@@ -119,6 +119,10 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .ligne .haut span{font:300 16px Jost,sans-serif}
 .ligne .haut small{display:block;font:300 12.5px/1.4 Jost,sans-serif;color:var(--muted);margin-top:2px}
 .ligne svg.sw{width:52px;flex:none;overflow:visible}
+/* 15/11 (Marie) : plus d'interrupteur (il ressemblait au logo) : un rond qui se coche, comme pendant le chargement */
+.ligne .r{flex:0 0 24px;height:24px;border-radius:50%;border:1.4px solid var(--greige);position:relative;transition:background .3s,border-color .3s}
+.ligne .r::after{content:"";position:absolute;left:8px;top:4px;width:5px;height:10px;border:solid var(--fond);border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.ligne.fait .r{background:var(--noir);border-color:var(--noir)}.ligne.fait .r::after{transform:rotate(45deg) scale(1)}
 .ligne .corps{display:none;padding-top:4px}
 .ligne.ouvert .corps{display:block}
 .ligne .q{font:300 13.5px/1.5 Jost,sans-serif;color:var(--muted);margin-top:8px}
@@ -536,7 +540,7 @@ function corps(m) {
       <button class="ajouter valider" type="button" data-ajoute="hor">AJOUTER</button>`; }
   if (m.k === "photos") return `<p class="q">${m.q}</p><div class="ph">${brouillonPh.map(u => `<img src="${u}" alt="">`).join("")}${brouillonPh.length < 6 ? `<label>+<input type="file" accept="image/*" multiple data-fichiers></label>` : ""}</div>
       <button class="ajouter valider" type="button" data-ajoute="photos">AJOUTER</button>`;
-  return `<p class="q">${m.q}</p><div class="saisie"><input class="champ" type="${m.type || "text"}" placeholder="${m.ph}" data-champ="${m.k}" value="${esc(m.k === "adr" ? "" : B[m.champ])}"><button class="ajouter" type="button" data-ajoute="${m.k}">AJOUTER</button></div>`;
+  return `<p class="q">${m.q}</p><div class="saisie"><input class="champ" type="${m.type || "text"}" placeholder="${m.ph}" data-champ="${m.k}" enterkeyhint="done" value="${esc(m.k === "adr" ? [B.rue, B.cp, B.ville].filter(Boolean).join(" ") : m.k === "insta" ? (B.insta || "").replace(/^@/, "") : B[m.champ] || "")}"></div>`;
 }
 let modeTarifs = false;   // elle revient de son site pour vérifier les tarifs trouvés
 function rendManque() {
@@ -544,7 +548,7 @@ function rendManque() {
   $("titreM").textContent = modeTarifs ? "Vos tarifs" : titre(n);
   $("sousM").textContent = modeTarifs ? "Tout ce que vous changez est gardé." : (n ? "Touchez une ligne pour l’ajouter." : "Votre site a tout ce qu’il faut.") + " Tout ce que vous remplissez est gardé.";
   $("liste").innerHTML = MQ.map(m => `<div class="ligne ${m.fait && juste !== m.k ? "fait" : ""} ${ouvert === m.k ? "ouvert" : ""}" data-k="${m.k}">
-    <button class="haut" type="button" data-ouvre="${m.k}"><div><span>${m.t}</span>${m.fait ? `<small>${esc(resume(m))}</small>` : ""}</div>${SW}</button>
+    <button class="haut" type="button" data-ouvre="${m.k}"><div><span>${m.t}</span>${m.fait ? `<small>${esc(resume(m))}</small>` : ""}</div><i class="r" aria-hidden="true"></i></button>
     <div class="corps">${ouvert === m.k ? corps(m) : ""}</div></div>`).join("");
   $("fini").disabled = !modeTarifs && n > 0;
   if (juste) { const k = juste; juste = null; requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector(`.ligne[data-k="${k}"]`)?.classList.add("fait"))); }
@@ -609,7 +613,18 @@ $("liste").addEventListener("click", e => {
   if (modeTarifs && k === "presta") { B.tarifsVerifies = true; $("fini").click(); return; }
   m.fait = true; m.devine = false; juste = k; ouvert = null; rendManque();
 });
-$("liste").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("[data-champ]")) { e.preventDefault(); e.target.parentElement.querySelector(".ajouter")?.click(); } });
+/* 15/11 (Marie) : elle écrit, et c'est ajouté tout de suite (plus de bouton « Ajouter ») */
+function prendChamp(k, v) {
+  const m = MQ.find(x => x.k === k); if (!m) return;
+  if (k === "adr") { const a = v.match(/^(.*?),?\s*(\d{5})\s+(.+)$/); B.rue = a ? a[1] : v; B.cp = a ? a[2] : ""; B.ville = a ? a[3] : ""; }
+  else if (k === "insta") B.insta = v ? "@" + v.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/[/?#].*$/, "").replace(/^@+/, "") : "";
+  else B[m.champ] = k === "prenom" && v ? v.charAt(0).toUpperCase() + v.slice(1) : v;
+  m.fait = !!v; m.devine = false;
+  document.querySelector(`.ligne[data-k="${k}"]`)?.classList.toggle("fait", m.fait);
+  const n = reste(); $("titreM").textContent = modeTarifs ? "Vos tarifs" : titre(n); $("fini").disabled = !modeTarifs && n > 0;
+}
+$("liste").addEventListener("input", e => { if (e.target.matches("[data-champ]")) prendChamp(e.target.dataset.champ, e.target.value.trim()); });
+$("liste").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("[data-champ]")) { e.preventDefault(); e.target.blur(); ouvert = null; rendManque(); } });
 $("liste").addEventListener("change", async e => {
   if (e.target.matches("[data-tarifphoto]")) { relit(); const ims = []; for (const f of [...e.target.files].slice(0, 3)) ims.push(await reduit(f, 1600)); if (ims.length) litPrix({ images: ims }); return; }
   if (!e.target.matches("[data-fichiers]")) return;

@@ -1,7 +1,9 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><script id="sans-cartes">/* 14/11 (Marie) : plus de cartes à glisser (« Tinder ») : on va directement à la personnalisation */
 (()=>{const q=new URLSearchParams(location.search);let br=null;try{br=JSON.parse(localStorage.getItem("loginail-brouillon")||"null")}catch(e){}
-const vrai=q.has("vrai")&&!!br,appli=q.has("appli");document.documentElement.style.visibility="hidden";
-if(vrai&&q.has("retour")&&!appli){try{const r=JSON.parse(localStorage.getItem("loginail-reprise")||"null");if(r&&r.p==="charms"){location.replace("charms-presentoir.html?vrai&v=1411f");return}}catch(e){}}
+const vrai=q.has("vrai")&&!!br,appli=q.has("appli");
+if(vrai&&q.has("retour")&&!appli){try{const r=JSON.parse(localStorage.getItem("loginail-reprise")||"null");if(r&&r.p==="charms"){document.documentElement.style.visibility="hidden";location.replace("charms-presentoir.html?vrai&v=1411f");return}}catch(e){}}
+if(!appli)return;   /* 15/11 (Marie) : on remet les 2 choix (Chic et classique / Fun et ouf) ; seule l'appli va directement à la personnalisation */
+document.documentElement.style.visibility="hidden";
 const b=vrai?br:{},p=new URLSearchParams({style:b.style||1,couleur:b.couleur||"lin",mode:"jour",police:b.police||"elegante",paillettes:b.paillettes||"non"});if(b.fond)p.set("fond",b.fond);
 const f=b.arrondi?"&arrondi=1":b.coffin?"&coffin=1":b.epure?"&epure=1":"";
 const src="loginail-creer/pret.html?v=1511j&"+(vrai?"nouveau&essai&":"nouveau&exemple=dilerna&")+p+f+(vrai?"":"&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise");
@@ -108,13 +110,11 @@ html,body{touch-action:manipulation}
   <div id="ambiance"></div>
   <span class="maquette">Prototype</span>
   <section class="ecran on" id="q">
-    <div class="pts"><i class="on"></i><i></i><i></i></div>
     <h1 class="titre">Quel site vous <span class="mot" id="mot">ressemble</span> ?</h1>
     <div class="cartes2">
       <button class="carte2" data-genre="classique" style="background-image:url(loginail-site/univers-photos/blanc/salon.webp)"><span>Chic et classique<small>Épuré, élégant, intemporel</small></span></button>
       <button class="carte2" data-genre="ouf" style="background-image:url(loginail-site/univers-photos/bling/5.webp)"><span>Fun et ouf<small>Fonds, charms, écritures folles</small></span></button>
     </div>
-    <div class="liens"><button class="lien" data-genre="mix" type="button">Un mélange</button><button class="lien" id="moi" type="button">À ma façon</button></div>
   </section>
 
   <section class="ecran" id="paquet">
@@ -269,8 +269,10 @@ function branche(c) {
 $("oui").onclick = () => vote(true); $("non").onclick = () => vote(false);
 $("compte").onclick = () => montreCoeurs();
 $("retourQ").onclick = () => montre("q"); $("retourP").onclick = () => { $("nbC").textContent = `${coeurs.length} / ${OBJECTIF}`; montre("paquet"); requestAnimationFrame(echelle); };
-document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre; coeurs = []; lancePaquet(); });
-$("moi").onclick = () => { location.href = "maquette-perso.html?v=1311t&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
+/* 15/11 (Marie) : elle touche son style, et elle arrive directement dans la personnalisation (plus de cartes à glisser) */
+document.querySelectorAll("[data-genre]").forEach(b => b.onclick = () => { genre = b.dataset.genre;
+  location.href = "maquette-perso.html?v=1411h&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511j&" + DEBUT + BASE_STYLE[genre] + "&mode=jour" + SALON); });
+const moiInutile = () => { location.href = "maquette-perso.html?v=1311t&genre=" + genre + (VRAI ? "&vrai=1" : "") + (APPLI ? "&appli=1" : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?" + DEBUT + BASE_STYLE[genre === "mix" ? "mix" : genre] + "&mode=jour" + SALON); };
 
 /* ---------- coups de cœur : carrousel ; seuls le site du milieu et ses voisins sont chargés (pour que ça reste fluide) ---------- */
 const pas = () => (parseFloat(getComputedStyle($("carrou")).getPropertyValue("--w")) || 260) + 12;

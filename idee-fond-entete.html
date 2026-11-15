@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Fond et en-tête ensemble · 3 idées</title>
+<link rel="stylesheet" href="polices.css">
+<style>
+:root{--n:#1E1C1B;--g:#8A817B}
+*{box-sizing:border-box}
+body{margin:0;background:#E7E2DC;color:var(--n);font-family:Jost,system-ui,sans-serif;font-weight:300}
+h1{font-weight:400;letter-spacing:.18em;text-transform:uppercase;font-size:13px;text-align:center;margin:26px 16px 6px}
+.sous{text-align:center;color:var(--g);font-size:14px;margin:0 16px 22px;line-height:1.5}
+.idees{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;padding:0 0 50px}
+.idee{width:min(375px,100vw);display:flex;flex-direction:column;align-items:center}
+.lettre{font-size:30px}
+.nom{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:400;margin:2px 16px 12px;text-align:center}
+.ecr{width:min(375px,100vw);aspect-ratio:390/844;position:relative;overflow:hidden;background:#F4EFE9}
+@media(min-width:420px){.ecr{border-radius:34px;box-shadow:0 14px 40px rgba(0,0,0,.1)}}
+.ecr>img.haut{position:absolute;left:0;top:0;width:100%;transform-origin:50% 0}
+.bas{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -10px 28px -18px rgba(0,0,0,.3);display:flex;flex-direction:column;padding-bottom:10px}
+.titre{text-align:center;font:400 11px Jost;letter-spacing:.2em;margin:14px 0 6px;text-transform:uppercase}
+.bas img.r{width:100%;display:block}
+.pied{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 0;margin-top:auto}
+.pied span{width:42px;height:42px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.3);display:grid;place-items:center;font-size:20px}
+.pied b{flex:1;margin:0 12px;height:48px;border-radius:30px;background:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.25);display:grid;place-items:center;font:400 12.5px Jost;letter-spacing:.24em}
+.txt{font-size:14px;line-height:1.55;margin:16px 18px 0;max-width:375px;color:#3b3734}
+.txt b{font-weight:500}
+.mini{font:400 10px Jost;letter-spacing:.18em;text-transform:uppercase;color:var(--g);text-align:center;margin:6px 0 2px}
+/* B : deux onglets */
+.seg{display:flex;margin:4px auto 6px;background:#F1ECE6;border-radius:999px;padding:3px;width:220px}
+.seg button{flex:1;border:0;background:none;border-radius:999px;padding:8px 0;font:400 12px Jost;letter-spacing:.1em;color:var(--g);cursor:pointer}
+.seg button.on{background:#fff;color:var(--n);box-shadow:0 2px 8px -4px rgba(0,0,0,.3)}
+.vue[hidden]{display:none}
+/* C : ronds de fonds qui défilent comme « Vos couleurs » */
+.ronds{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px calc(50% - 20px) 12px;scrollbar-width:none;align-items:center}
+.ronds::-webkit-scrollbar{display:none}
+.ronds i{flex:none;width:40px;height:40px;border-radius:50%;background:center/cover;scroll-snap-align:center;opacity:.7;transform:scale(.85);transition:transform .18s cubic-bezier(.3,1.3,.5,1),opacity .18s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.ronds i.pres{transform:scale(1);opacity:.9}
+.ronds i.mil{transform:scale(1.3);opacity:1;box-shadow:0 0 0 2.5px #fff,0 5px 14px rgba(0,0,0,.28)}
+.ronds i.sans{background:#fff;display:grid;place-items:center;font:300 9px/1.1 Jost;color:var(--g);font-style:normal;text-align:center}
+</style></head><body>
+<h1>Le fond et l'en-tête ensemble</h1>
+<p class="sous">Une seule étape au lieu de deux.<br>Touchez et faites défiler pour essayer.</p>
+<div class="idees">
+
+<div class="idee"><div class="lettre">A</div><div class="nom">Les deux l'un sous l'autre</div>
+<div class="ecr"><img class="haut" src="idees-perso/fe-haut.jpg" alt="" style="transform:scale(.86)">
+<div class="bas" style="height:44%"><div class="titre">Votre fond et votre en-tête</div>
+<img class="r" src="idees-perso/fe-fonds.jpg" alt="" style="margin-top:-4px"><img class="r" src="idees-perso/fe-entetes.jpg" alt="" style="margin-top:-6px">
+<div class="pied"><span>‹</span><b>SUIVANT</b><span style="font-size:15px">⌕</span></div></div></div>
+<div class="txt">Tout est là d'un coup : les fonds en haut, les en-têtes en dessous. <b>Mais</b> le panneau est plus grand, donc le téléphone est plus petit, et ça fait beaucoup de choses à la fois.</div></div>
+
+<div class="idee"><div class="lettre">B</div><div class="nom">Deux onglets : Fond · En-tête</div>
+<div class="ecr"><img class="haut" src="idees-perso/fe-haut.jpg" alt="">
+<div class="bas" style="height:31%"><div class="titre">Votre style</div>
+<div class="seg" id="segB"><button class="on" data-v="f" type="button">Fond</button><button data-v="e" type="button">En-tête</button></div>
+<div class="vue" data-v="f"><img class="r" src="idees-perso/fe-fonds.jpg" alt=""></div>
+<div class="vue" data-v="e" hidden><img class="r" src="idees-perso/fe-entetes.jpg" alt="" style="margin-top:-10px"></div>
+<div class="pied"><span>‹</span><b>SUIVANT</b><span style="font-size:15px">⌕</span></div></div></div>
+<div class="txt">Le même panneau qu'aujourd'hui, avec deux onglets en haut, comme « Le nom / Les boutons / Le site » dans les couleurs. Le téléphone reste grand. On passe de l'un à l'autre autant qu'on veut.</div></div>
+
+<div class="idee"><div class="lettre">C</div><div class="nom">Les en-têtes + les fonds en petits ronds</div>
+<div class="ecr"><img class="haut" src="idees-perso/fe-haut.jpg" alt="" style="transform:scale(.92)">
+<div class="bas" style="height:38%"><div class="titre" style="margin-bottom:0">Votre en-tête</div>
+<img class="r" src="idees-perso/fe-entetes.jpg" alt="" style="margin-top:-4px">
+<div class="mini">Votre fond</div><div class="ronds" id="ronds"></div>
+<div class="pied"><span>‹</span><b>SUIVANT</b><span style="font-size:15px">⌕</span></div></div></div>
+<div class="txt">Les en-têtes en grand, et juste dessous les fonds en <b>petits ronds</b> qui défilent exactement comme « Vos couleurs » : celui du milieu s'applique. Tout se fait d'un doigt, sans changer d'écran. « Voir tous les fonds » reste possible en tirant le panneau.</div></div>
+
+</div>
+<script>
+const seg=document.getElementById("segB");
+seg.onclick=e=>{const b=e.target.closest("button");if(!b)return;seg.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  seg.parentElement.querySelectorAll(".vue").forEach(v=>v.hidden=v.dataset.v!==b.dataset.v)};
+const F=["cerises-vichy","disco-roses","etoiles-holo","damier-fleuri","coeurs-lin","fraises-vichy","etoiles-noires-creme","damier-noir-creme","coeurs-verre","etoiles-roses","cerises-leopard","jean-etoiles","damier-chrome","disco-velours","etoiles-marine"];
+const R=document.getElementById("ronds");
+R.innerHTML='<i class="sans">Pas de<br>fond</i>'+F.map(n=>`<i style="background-image:url(loginail-site/fonds-mini/${n}.webp)"></i>`).join("");
+const B=[...R.children];
+const peint=()=>{const c=R.scrollLeft+R.clientWidth/2;let m=0,d=1e9;B.forEach((b,i)=>{const x=Math.abs(b.offsetLeft+b.offsetWidth/2-c);if(x<d){d=x;m=i}});B.forEach((b,i)=>{b.classList.toggle("mil",i===m);b.classList.toggle("pres",Math.abs(i-m)===1)})};
+R.onscroll=peint;R.onclick=e=>{const b=e.target.closest("i");if(b)R.scrollTo({left:b.offsetLeft+b.offsetWidth/2-R.clientWidth/2,behavior:"smooth"})};
+requestAnimationFrame(()=>{R.scrollLeft=B[2].offsetLeft+20-R.clientWidth/2;peint()});
+</script>
+</body></html>
