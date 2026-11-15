@@ -127,7 +127,7 @@ html,body{touch-action:manipulation}
 <div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button><button class="compte verre" id="questC" type="button" aria-label="Comment bouger un charm">?</button></div>
 <p class="explique" id="explique">Touchez un charm pour le poser · 21 au maximum</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
-<div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><div id="finiP"><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Gérez tout dans l’appli Loginail</b>Votre agenda, vos clientes et votre site, au même endroit.</li></ol></div><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie">Envoyer à une amie</button><button type="button" class="lien" data-modifier>Modifier mes charms</button></div></div>
+<div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><div id="finiP"><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Téléchargez l’appli Loginail</b>Gérez vos rendez-vous, vos clientes et votre site depuis votre téléphone.</li></ol></div><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie">Envoyer à une amie</button><button type="button" class="lien" data-modifier style="font-weight:600">Modifier mes charms</button></div></div>
 <div class="bulle" id="bulle"></div>
 <div id="ecrans"></div>
 <script>
@@ -289,6 +289,7 @@ val.onclick = () => {
   if (M.n() > MAX) { bulle(`Vous ne pouvez mettre que ${MAX} charms : enlevez-en ${M.n() - MAX}`); return; }
   e.classList.add("finie"); document.getElementById("explique").style.opacity = 0; e.querySelectorAll(".st").forEach((s, n) => { s.classList.add("flotte"); s.style.animationDelay = (-n * .45) + "s"; });
   document.getElementById("fini").hidden = false; };
+document.getElementById("fini").addEventListener("click", ev => { if (ev.target.id === "fini") document.querySelector("[data-modifier]").click(); });   /* 15/11 (Marie) : toucher à côté = continuer */
 document.querySelector("[data-modifier]").onclick = () => { document.getElementById("fini").hidden = true; e.classList.remove("finie"); document.getElementById("explique").style.opacity = 1; e.querySelectorAll(".st").forEach(s => s.classList.remove("flotte")); };
 document.querySelector("[data-activer]").onclick = () => {
   if (!VRAI) { bulle("(maquette) Ici : le paiement, puis son site est en ligne"); return; }
