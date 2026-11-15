@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Le chargement · 5 idées</title>
+<link rel="stylesheet" href="polices.css">
+<style>
+:root{--f:#F6F3EF;--n:#1E1C1B;--g:#8A817B;--l:rgba(30,28,27,.12)}
+*{box-sizing:border-box}
+body{margin:0;background:#E7E2DC;color:var(--n);font-family:Jost,system-ui,sans-serif;font-weight:300}
+h1{font-weight:400;letter-spacing:.18em;text-transform:uppercase;font-size:13px;text-align:center;margin:26px 16px 6px}
+.sous{text-align:center;color:var(--g);font-size:14px;margin:0 16px 22px;line-height:1.5}
+.idees{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;padding:0 0 50px}
+.idee{width:min(375px,100vw);display:flex;flex-direction:column;align-items:center}
+.lettre{font-size:30px}
+.nom{letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:400;margin:2px 16px 12px;text-align:center}
+.ecr{width:min(375px,100vw);height:700px;background:var(--f);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+@media(min-width:420px){.ecr{border-radius:34px;box-shadow:0 14px 40px rgba(0,0,0,.1)}}
+.logo{margin-top:30px;font:400 13px Jost;letter-spacing:.42em}
+.centre{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;padding:0 30px}
+.txt{font-size:14px;line-height:1.55;margin:16px 18px 0;max-width:375px;color:#3b3734}
+.txt b{font-weight:500}
+/* phrases qui se suivent (communes) */
+.phr{position:relative;height:44px;width:100%;text-align:center}
+.phr p{position:absolute;inset:0;margin:0;font:300 17px/1.4 Jost;opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+.phr p.on{opacity:1;transform:none}.phr p.parti{opacity:0;transform:translateY(-8px)}
+.phr p.fin{font:200 28px/1.2 Jost}
+
+/* A : le site se construit */
+.miniT{width:150px;height:300px;border:5px solid var(--n);border-radius:26px;background:#fff;overflow:hidden;position:relative;padding:22px 12px 0;display:flex;flex-direction:column;align-items:center;gap:9px}
+.miniT>*{opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s cubic-bezier(.3,1.3,.5,1)}
+.miniT>.on{opacity:1;transform:none}
+.miniT .n{font:400 11px Jost;letter-spacing:.14em;text-transform:uppercase;text-align:center}
+.miniT .ph{width:100%;height:120px;border-radius:10px;background:center/cover}
+.miniT .bt{width:80%;height:22px;border-radius:12px;background:var(--n)}
+.miniT .et{font-size:11px;letter-spacing:.2em}
+.miniT .pr{width:100%;display:flex;flex-direction:column;gap:5px}.miniT .pr i{height:6px;border-radius:3px;background:#e9e3dc}.miniT .pr i:nth-child(2){width:80%}.miniT .pr i:nth-child(3){width:60%}
+
+/* B : la liste qui se coche */
+.liste{width:100%;background:#FBF9F6;border-radius:22px;padding:4px 18px}
+.li{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--l)}.li:last-child{border:0}
+.li .r{flex:0 0 24px;height:24px;border-radius:50%;border:1.4px solid #cfc6bc;position:relative;transition:background .3s,border-color .3s}
+.li .r::after{content:"";position:absolute;left:8px;top:4px;width:5px;height:10px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.li.ok .r{background:var(--n);border-color:var(--n)}.li.ok .r::after{transform:rotate(45deg) scale(1)}
+.li.cours .r{border-color:var(--n);border-top-color:transparent;animation:tourne .8s linear infinite}
+@keyframes tourne{to{transform:rotate(360deg)}}
+.li span{flex:1;font-size:15px}.li small{display:block;color:var(--g);font-size:12.5px;margin-top:2px;opacity:0;transition:opacity .4s}.li.ok small{opacity:1}
+
+/* C : un chiffre */
+.pct{font:200 92px/1 Jost;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pct sup{font-size:30px;vertical-align:top;margin-left:4px}
+.trait{width:220px;height:1px;background:#ddd5ce;position:relative;overflow:hidden}.trait i{position:absolute;left:0;top:0;bottom:0;background:var(--n);width:0}
+
+/* D : le pinceau */
+.ongD{width:150px;height:auto}
+.ongD .peint{clip-path:inset(100% 0 0 0)}
+.ongD.go .peint{animation:peint 2.6s cubic-bezier(.5,0,.3,1) forwards}
+@keyframes peint{to{clip-path:inset(0 0 0 0)}}
+.ongD .pin{transform:translate(0,120px);opacity:0}
+.ongD.go .pin{animation:pin 2.6s cubic-bezier(.5,0,.3,1) forwards}
+@keyframes pin{0%{opacity:0;transform:translate(0,120px)}10%{opacity:1}25%{transform:translate(-14px,70px)}45%{transform:translate(14px,30px)}65%{transform:translate(-10px,-10px)}85%{opacity:1;transform:translate(0,-40px)}100%{opacity:0;transform:translate(0,-60px)}}
+.ongD .refl{opacity:0}.ongD.brille .refl{animation:refl 1s ease forwards}
+@keyframes refl{0%{opacity:0;transform:translateX(-40px)}50%{opacity:.8}100%{opacity:0;transform:translateX(40px)}}
+.ongD .st{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.3);transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1)}.ongD.brille .st{opacity:1;transform:none}
+
+/* E : ses photos */
+.pile{position:relative;width:200px;height:260px}
+.pile div{position:absolute;inset:0;border-radius:14px;background:center/cover;box-shadow:0 14px 30px -12px rgba(0,0,0,.35);border:5px solid #fff;opacity:0;transform:translateY(-120px) rotate(0);transition:opacity .4s,transform .7s cubic-bezier(.3,1.25,.5,1)}
+.pile div.on{opacity:1}
+.pile.fin div:not(:last-child){opacity:0;transition:opacity .4s}
+.pile.fin div:last-child{transform:none!important;border-width:0;border-radius:18px}
+.compte{font-size:13px;letter-spacing:.2em;color:var(--g);text-transform:uppercase;height:16px}
+</style></head><body>
+<h1>L'attente pendant qu'on crée son site</h1>
+<p class="sous">5 idées. Chacune rejoue toute seule.<br>À la fin, elle part directement à la suite (plus de « Continuer »).</p>
+<div class="idees">
+
+<div class="idee"><div class="lettre">A</div><div class="nom">Son site se construit</div>
+<div class="ecr"><div class="logo">LOGINAIL</div><div class="centre">
+<div class="miniT" id="A"><div class="n">Les Ongles de Cerise</div><div class="ph" style="background-image:url(loginail-site/univers-photos/cerise/2.webp)"></div><div class="bt"></div><div class="et">★★★★★</div><div class="pr"><i></i><i></i><i></i></div></div>
+<div class="phr" id="phA"></div></div></div>
+<div class="txt">Un petit téléphone : son nom arrive, puis sa photo, le bouton, ses avis, ses prix. Elle <b>voit</b> son site se monter, au lieu d'attendre.</div></div>
+
+<div class="idee"><div class="lettre">B</div><div class="nom">Ce qu'on a trouvé, coché</div>
+<div class="ecr"><div class="logo">LOGINAIL</div><div class="centre">
+<div class="liste" id="B">
+<div class="li"><i class="r"></i><span>Votre salon<small>Les Ongles de Cerise · Lille</small></span></div>
+<div class="li"><i class="r"></i><span>Vos photos<small>12 photos</small></span></div>
+<div class="li"><i class="r"></i><span>Vos avis<small>4,9 ★ · 48 avis</small></span></div>
+<div class="li"><i class="r"></i><span>Vos horaires<small>Du mardi au samedi</small></span></div>
+<div class="li"><i class="r"></i><span>Vos prix<small>9 prestations</small></span></div></div>
+<div class="phr" id="phB"></div></div></div>
+<div class="txt">Le plus clair et le plus rassurant : elle voit <b>ses vraies infos</b> arriver, cochées une par une. Facile à comprendre pour tout le monde.</div></div>
+
+<div class="idee"><div class="lettre">C</div><div class="nom">Juste un chiffre</div>
+<div class="ecr"><div class="logo">LOGINAIL</div><div class="centre">
+<div class="pct"><span id="nC">0</span><sup>%</sup></div><div class="trait"><i id="tC"></i></div>
+<div class="phr" id="phC"></div></div></div>
+<div class="txt">Le plus sobre, comme un site de luxe : un grand chiffre fin qui monte jusqu'à 100, un trait, une phrase. Mais rien de « waouh ».</div></div>
+
+<div class="idee"><div class="lettre">D</div><div class="nom">Un ongle peint d'un coup de pinceau</div>
+<div class="ecr"><div class="logo">LOGINAIL</div><div class="centre">
+<svg class="ongD" id="D" viewBox="0 0 200 260" aria-hidden="true"><defs>
+<clipPath id="cD"><path id="pD" d="M100 30C80 30 64 52 62 96C60 140 62 196 70 214C76 228 124 228 130 214C138 196 140 140 138 96C136 52 120 30 100 30Z"/></clipPath>
+<linearGradient id="rD" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+<use href="#pD" fill="#EEDFD2" stroke="#BFA894" stroke-width="1.4"/>
+<g clip-path="url(#cD)"><rect class="peint" x="50" y="20" width="100" height="220" fill="#1E1C1B"/><rect class="refl" x="78" y="20" width="22" height="220" fill="url(#rD)" transform="skewX(-12)"/></g>
+<g class="pin"><rect x="92" y="150" width="16" height="90" rx="4" fill="#1E1C1B"/><path d="M92 150L100 128L108 150Z" fill="#3b3734"/></g>
+<g class="st"><path d="M160 46l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" fill="#1E1C1B"/><path d="M40 90l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#1E1C1B"/></g></svg>
+<div class="phr" id="phD"></div></div></div>
+<div class="txt">Comme aujourd'hui mais en <b>un seul geste</b> : un pinceau peint l'ongle en noir laqué, un reflet passe, deux étoiles. Plus grand, plus net, sans lampe.</div></div>
+
+<div class="idee"><div class="lettre">E</div><div class="nom">Ses photos qui arrivent</div>
+<div class="ecr"><div class="logo">LOGINAIL</div><div class="centre">
+<div class="pile" id="E"></div><div class="compte" id="cE"></div>
+<div class="phr" id="phE"></div></div></div>
+<div class="txt">Ses <b>propres photos</b> tombent une par une, comme des polaroids, puis la plus belle reste en grand. Le plus « waouh » : c'est déjà elle.</div></div>
+
+</div>
+<script>
+const $=id=>document.getElementById(id), att=ms=>new Promise(r=>setTimeout(r,ms));
+const FIN="Votre site est prêt.";
+function phrases(el,L){el.innerHTML=L.map(p=>`<p>${p}…</p>`).join("")+`<p class="fin">${FIN}</p>`;const P=[...el.children];
+  return{va(i){P.forEach((p,j)=>{p.classList.toggle("on",j===i);p.classList.toggle("parti",j<i)})},raz(){P.forEach(p=>p.classList.remove("on","parti"))},fin(){this.va(P.length-1)}}}
+const boucle=async f=>{for(;;){await f();await att(2600)}};
+
+/* A */
+const pA=phrases($("phA"),["On trouve votre salon","On récupère vos photos","On met le bouton Réserver","On lit vos avis","On range vos prix"]);
+boucle(async()=>{const E=[...$("A").children];E.forEach(e=>e.classList.remove("on"));pA.raz();await att(400);
+  for(let i=0;i<E.length;i++){pA.va(i);await att(250);E[i].classList.add("on");await att(1000)}pA.fin()});
+
+/* B */
+const pB=phrases($("phB"),["On cherche votre salon","On récupère vos photos","On lit vos avis","On lit vos horaires","On lit vos prix"]);
+boucle(async()=>{const L=[...$("B").children];L.forEach(l=>l.classList.remove("ok","cours"));pB.raz();await att(400);
+  for(let i=0;i<L.length;i++){pB.va(i);L[i].classList.add("cours");await att(1100);L[i].classList.remove("cours");L[i].classList.add("ok")}pB.fin()});
+
+/* C */
+const pC=phrases($("phC"),["On trouve votre salon","On récupère vos photos","On lit vos avis","On range vos prix"]);
+boucle(async()=>{pC.raz();$("tC").style.width="0";$("nC").textContent="0";await att(400);const t0=performance.now(),T=5200;
+  await new Promise(ok=>{const f=t=>{const x=Math.min(1,(t-t0)/T),e=1-Math.pow(1-x,2.2),v=Math.round(e*100);$("nC").textContent=v;$("tC").style.width=v+"%";pC.va(Math.min(3,Math.floor(x*4)));x<1?requestAnimationFrame(f):ok()};requestAnimationFrame(f)});pC.fin()});
+
+/* D */
+const pD=phrases($("phD"),["On trouve votre salon","On récupère vos photos","On lit vos avis","On range vos prix"]);
+boucle(async()=>{const o=$("D");o.classList.remove("go","brille");pD.raz();void o.getBoundingClientRect();await att(400);o.classList.add("go");
+  for(let i=0;i<4;i++){pD.va(i);await att(1050)}o.classList.add("brille");pD.fin()});
+
+/* E */
+const PH=["1","3","4","5","2"].map(n=>`loginail-site/univers-photos/cerise/${n}.webp`), ROT=[-9,7,-4,10,0], DX=[-18,16,-8,12,0];
+$("E").innerHTML=PH.map(u=>`<div style="background-image:url(${u})"></div>`).join("");
+const pE=phrases($("phE"),["On récupère vos photos","On choisit la plus belle","On lit vos avis","On range vos prix"]);
+boucle(async()=>{const P=[...$("E").children];$("E").classList.remove("fin");P.forEach(p=>{p.classList.remove("on");p.style.transform=""});$("cE").textContent="";pE.raz();await att(400);pE.va(0);
+  for(let i=0;i<P.length;i++){P[i].classList.add("on");P[i].style.transform=`translateX(${DX[i]}px) rotate(${ROT[i]}deg)`;$("cE").textContent=`${i+1} photo${i?"s":""}`;await att(650)}
+  pE.va(1);await att(900);$("E").classList.add("fin");$("cE").textContent="";pE.va(2);await att(1100);pE.va(3);await att(1100);pE.fin()});
+</script>
+</body></html>

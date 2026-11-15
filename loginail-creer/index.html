@@ -233,7 +233,7 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
   <section class="ecran" id="charge">
     <div data-logo></div>
     <div class="centre"><div id="mdp"></div><div class="etapes" id="etapes"></div></div>
-    <div class="bas" style="width:100%"><button class="go" type="button" id="continuer">CONTINUER</button></div>
+    <button type="button" id="continuer" hidden></button>
   </section>
 
   <section class="ecran" id="manque">
@@ -435,6 +435,7 @@ async function lance(lien) {
   if (erreur) { montre("lien"); msg.textContent = erreur; return; }
   ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
   ph[5].classList.add("on"); og.classList.add("e5"); $("charge").classList.add("lu");
+  setTimeout(() => $("continuer").click(), 1500);   // 15/11 (Marie) : plus de « Continuer », on passe tout seul à la suite
 }
 $("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311t"); return; } prepareManque(); montre("manque"); };
 
