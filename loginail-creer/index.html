@@ -29,6 +29,9 @@ h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
 .go{width:100%;border:0;border-radius:999px;padding:18px;background:var(--noir);color:var(--fond);font:500 13px Jost,sans-serif;letter-spacing:.2em}
 .go:disabled{opacity:.35;cursor:default}
 .passer{border:0;background:none;font:300 14px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:6px}
+/* 15/11 (Marie) : « Je n’ai pas de lien » se voyait trop peu : un vrai bouton, juste sous « Créer mon site » */
+#sansGoogle{display:block;width:100%;margin:10px 0 0;border:1px solid rgba(30,28,27,.35);border-radius:999px;padding:16px;background:#fff;color:var(--noir);font:400 13px Jost,sans-serif;letter-spacing:.14em;text-decoration:none;text-transform:uppercase}
+
 .champ{width:100%;min-width:0;border:1px solid rgba(30,28,27,.25);border-radius:999px;padding:14px 18px;background:#fff;font:300 16px Jost,sans-serif;color:var(--noir);outline:none}
 .champ:focus{border-color:var(--noir)}
 .ajouter{border:0;border-radius:999px;padding:14px 20px;background:var(--noir);color:var(--fond);font:500 12px Jost,sans-serif;letter-spacing:.16em;white-space:nowrap}
@@ -224,6 +227,7 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
 .c-barre svg{height:12px;margin-left:6px;fill:currentColor}
 .c-ile{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:126px;height:37px;border-radius:19px;background:#000;z-index:96;pointer-events:none}
 .c-maison{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:140px;height:5px;border-radius:3px;background:var(--noir);opacity:.85;z-index:96;pointer-events:none}
+@media (max-height:760px){#lien h1{margin-top:12px!important;font-size:clamp(34px,9.5vw,42px)!important}#lien .sous{margin-top:8px!important}.tels{height:120px!important;margin-top:8px!important}.tels .t{width:52px!important}#lien .aide{margin-top:10px!important}#sansGoogle{padding:13px!important;margin-top:8px!important}}
 </style>
 </head>
 <body>
@@ -363,16 +367,19 @@ $("coller").onclick = async () => {
 const estInsta = l => /(^|\/\/|\.)(instagram\.com|instagr\.am|tiktok\.com|facebook\.com|fb\.com)/i.test(l);
 const sorte = l => !l || estInsta(l) ? "" : estGoogle(l) ? "Fiche Google reconnue" : /planity\.com/i.test(l) ? "Page Planity reconnue" : /booksy\.com/i.test(l) ? "Page Booksy reconnue"
   : /^https?:\/\/[^\s/]+\.[a-z]{2,}/i.test(l) ? "Votre site reconnu" : "";
+/* 15/11 (Marie) : « monsalon.fr » ou « www.monsalon.fr » sans https:// marche aussi */
+function lienDe(t) { t = String(t || "").trim(); const h = t.match(/https?:\/\/\S+/)?.[0]; if (h) return h;
+  const d = t.match(/(?:^|\s)((?:www\.)?[a-z0-9àâäéèêëîïôöùûüç-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:\/\S*)?)\s*$/i)?.[1]; return d ? "https://" + d.replace(/^\/+/, "") : ""; }
 const estGoogle = l => /^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|(www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)/i.test(l);
 $("creer").onclick = () => {
-  const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || "";   // le partage iPhone ajoute parfois le nom avant le lien
+  const l = lienDe(champLien.value);   // le partage iPhone ajoute parfois le nom avant le lien
   if (!l) { msg.textContent = "Collez d’abord votre lien."; champLien.focus(); return; }
   if (estInsta(l)) { msg.textContent = "Instagram ne suffit pas. Collez votre fiche Google Maps, votre page Planity ou Booksy, ou votre site."; return; }
   if (!sorte(l)) { msg.textContent = "Ce lien n’est pas reconnu. Touchez « Où trouver mon lien ? »."; return; }
   msg.textContent = ""; lance(l);
 };
 // la fiche est reconnue dès que le lien collé vient de Google Maps
-const verifie = () => { const l = champLien.value.trim().match(/https?:\/\/\S+/)?.[0] || "", so = sorte(l); $("lien").classList.toggle("reconnue", !!so); if (so) { msg.textContent = ""; $("okG").textContent = so; } };
+const verifie = () => { const l = lienDe(champLien.value), so = sorte(l); $("lien").classList.toggle("reconnue", !!so); if (so) { msg.textContent = ""; $("okG").textContent = so; } };
 champLien.addEventListener("input", verifie);
 // les 3 petits téléphones : des sites qui changent tout seuls
 {const S=["y2k","pop","chrome","feerique","tpl-maisonsauge","mignon","gothique","baddie","street","sixties","tpl-maisonnoire"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");

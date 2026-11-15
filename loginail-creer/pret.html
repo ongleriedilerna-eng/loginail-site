@@ -1722,6 +1722,26 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .ecran:not(.v1):has(>.fond-site) .defile>.sec .tir,.ecran:not(.v1):has(>.fond-site) .defile>.sec .carte{background:color-mix(in srgb,var(--creme) 45%,#fff)}
 </style>
 <style id="entetes-1511">
+.ecran .hent.he-classique,.ecran .hent.he-medaillon,.ecran .hent.he-magazine,.ecran .hent.he-couverture{justify-content:flex-start;padding-bottom:44px}
+.ecran .hent.he-classique{padding-top:76px}
+.he-classique .he-pil{background:var(--papier,#fff);color:var(--noir);border-radius:999px;padding:9px 18px;font:400 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;box-shadow:0 8px 18px -12px rgba(0,0,0,.4);margin-bottom:16px;max-width:calc(100% - 40px)}
+.he-classique .cad{width:calc(100% - 40px);max-width:520px;border-radius:26px;overflow:hidden;border:6px solid var(--papier,#fff);box-shadow:0 20px 36px -22px rgba(0,0,0,.5);flex:none}
+.he-classique .cad .he-ph{height:clamp(250px,38vh,380px)}
+.ecran .hent.he-medaillon{padding-top:84px}
+.he-medaillon .med{width:min(240px,62%);aspect-ratio:3/4;border-radius:50%;padding:8px;background:var(--papier,#fff);box-shadow:0 0 0 2px var(--acc),0 22px 36px -20px rgba(0,0,0,.5);flex:none}
+.he-medaillon .med .he-ph{width:100%;height:100%;border-radius:50%}
+.he-magazine .mag{position:relative;width:100%;flex:none}
+.ecran .hent.he-magazine>.mag{margin-bottom:-56px!important}
+.he-magazine .mag .he-ph{height:clamp(340px,54vh,480px)}
+.he-magazine .mag-h{position:absolute;left:22px;right:22px;top:calc(env(safe-area-inset-top,0px) + 64px);display:flex;justify-content:space-between;color:#fff;font:400 10.5px Jost,sans-serif;letter-spacing:.3em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.5);border-bottom:1px solid rgba(255,255,255,.85);padding-bottom:8px}
+.he-couverture .cou{position:relative;width:100%;height:clamp(420px,64vh,560px);flex:none}
+.ecran .hent.he-couverture>.cou{margin-bottom:-20px!important}
+.he-couverture .cou .he-ph{position:absolute;inset:0}
+.he-couverture .cou:after{content:"";position:absolute;left:0;right:0;bottom:0;height:58%;background:linear-gradient(transparent,color-mix(in srgb,var(--papier,#fff) 92%,transparent) 78%,var(--papier,#fff))}
+.he-couverture .cou-n{position:absolute;left:0;right:0;bottom:44px;z-index:2;color:#fff;padding:0 22px}
+.he-couverture .cou-n{bottom:30px;color:var(--noir)}
+.he-couverture .cou-n h1{margin:8px 0 0}
+.ecran .hent.he-classique .he-txt,.ecran .hent.he-medaillon .he-txt,.ecran .hent.he-magazine .he-txt,.ecran .hent.he-couverture .he-txt{background:var(--papier,#fff);color:var(--noir);border-radius:24px;padding:18px 22px 22px;box-shadow:0 16px 30px -22px rgba(0,0,0,.4);width:calc(100% - 40px);max-width:520px}
 /* 15/11 (Marie) : pendant la personnalisation, l'en-tête change sans rejouer ses animations */
 html.edition .hent,html.edition .hent *{animation-duration:1ms!important;animation-delay:0s!important;animation-iteration-count:1!important}
 /* 15/11 (Marie) : Fleurs sans motif derrière ; Vitrine = nom centré au-dessus d'une photo plus petite ; Devanture = façade claire pour que le nom se lise toujours */
@@ -2530,7 +2550,7 @@ function haut(t,lettres){
 }
 
 /* 14/11 (Marie) : les 10 en-têtes au choix (BR.entete, ou &entete= dans l'adresse) */
-const ENTETES=[["bandeau","Bandeau"],["diagonale","Diagonale"],["vague","Vague"],["ticket","Ticket"],["vitrine","Vitrine"],["rideau","Rideau"],["loge","Loge de star"],["balcon","Balcon"],["devanture","Devanture"],["fleurs","Fleurs"]];
+const ENTETES=[["bandeau","Bandeau"],["diagonale","Diagonale"],["vague","Vague"],["ticket","Ticket"],["vitrine","Vitrine"],["rideau","Rideau"],["loge","Loge de star"],["balcon","Balcon"],["devanture","Devanture"],["fleurs","Fleurs"],["classique","Classique"],["medaillon","Médaillon"],["magazine","Magazine"],["couverture","Couverture"]];
 window.ENTETES=ENTETES;
 function enteteChoisie(){try{const q=new URLSearchParams(location.search).get("entete");const k=q||(typeof BR!=="undefined"&&BR&&BR.entete)||window.__entete||"";return ENTETES.some(e=>e[0]===k)?k:""}catch(e){return ""}}
 function entete(k,t,lang){
@@ -2550,6 +2570,11 @@ function entete(k,t,lang){
   if(k==="loge")return `<div class="${c}" data-s="accueil"><div class="lo">${ph(D.hero3||D.hero)}${am.map(s=>`<span class="am" style="${s}"></span>`).join("")}</div>${txt()}</div>`;
   if(k==="balcon")return `<div class="${c}" data-s="accueil"><div class="fen">${ph(D.hero)}</div><div class="balc"><span class="pot g"></span><span class="pot d"></span></div>${txt()}</div>`;
   if(k==="devanture")return `<div class="${c}" data-s="accueil"><div class="fac">${nom}</div><div class="store"></div><div class="vit">${ph(D.hero)}</div>${txt(false)}</div>`;
+  /* 15/11 (Marie) : les 4 anciennes refaites en vraies en-têtes (avant, c'étaient des modèles de site entier, d'où les bugs) */
+  if(k==="classique")return `<div class="${c}" data-s="accueil"><div class="he-pil">${D.nom}</div><div class="cad">${ph(D.hero)}</div>${txt()}</div>`;
+  if(k==="medaillon")return `<div class="${c}" data-s="accueil"><div class="med">${ph(D.hero2||D.hero)}</div>${txt()}</div>`;
+  if(k==="magazine")return `<div class="${c}" data-s="accueil"><div class="mag">${ph(D.hero)}<div class="mag-h"><span>${D.ville}</span><span>N° 1</span></div></div>${txt()}</div>`;
+  if(k==="couverture")return `<div class="${c}" data-s="accueil"><div class="cou">${ph(D.hero)}<div class="cou-n">${kick}${nom}</div></div><div class="he-txt">${note}${btn}</div></div>`;
   if(k==="fleurs")return `<div class="${c}" data-s="accueil"><div class="pol">${ph(D.hero2||D.hero)}<span>Bienvenue</span></div>${txt()}</div>`;
   return "";
 }

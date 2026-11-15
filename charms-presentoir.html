@@ -42,7 +42,7 @@ input{-webkit-user-select:text;user-select:text}
 .confirme>div{width:min(290px,86vw);border-radius:20px;background:rgba(255,255,255,.96);padding:20px 18px 14px;text-align:center;box-shadow:0 20px 40px -20px rgba(0,0,0,.5)}
 .confirme p{margin:0;font:500 16px Jost,sans-serif}.confirme span{display:block;margin:4px 0 14px;font:300 13px Jost,sans-serif;color:var(--muted)}
 .confirme div div{display:flex;gap:8px}.confirme button{flex:1;border:0;border-radius:999px;padding:11px;font:500 12px Jost,sans-serif;background:rgba(30,28,27,.07)}.confirme [data-oui]{background:#1E1C1B;color:#fff}
-.fini{align-items:flex-end;background:transparent;pointer-events:none}
+.fini{align-items:flex-end;background:transparent;pointer-events:auto}   /* 15/11 soir (Marie) : toucher le site (à côté du panneau) le ferme */
 .fini>div{pointer-events:auto;width:100%;max-width:480px;border-radius:24px 24px 0 0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:22px 20px calc(env(safe-area-inset-bottom) + 14px);text-align:center;box-shadow:0 -12px 30px -16px rgba(0,0,0,.35)}
 .fini h3{margin:0;font:400 22px Jost,sans-serif}.fini p{margin:6px 0 14px;font:300 13.5px/1.5 Jost,sans-serif;color:var(--muted)}
 .fini .noir{width:100%;border:0;border-radius:999px;background:#1E1C1B;color:#fff;padding:15px;font:500 12px Jost,sans-serif;letter-spacing:.16em}
@@ -127,7 +127,7 @@ html,body{touch-action:manipulation}
 <div class="haut"><span class="compte verre" id="compte">0 / 21</span><button class="compte verre" id="etoP" type="button" aria-label="Ajouter des étoiles qui brillent"><b>✦</b> Étoiles<span id="etoPX" role="button" aria-label="Enlever les dernières étoiles" hidden>✕</span></button><button class="compte verre" id="toutEffacer" type="button">Tout effacer</button><button class="compte verre" id="questC" type="button" aria-label="Comment bouger un charm">?</button></div>
 <p class="explique" id="explique">Touchez un charm pour le poser · 21 au maximum</p>
 <div class="confirme" id="confirme" hidden><div><p>Tout effacer ?</p><span>Tous vos charms seront enlevés.</span><div><button type="button" data-non>Annuler</button><button type="button" data-oui>Tout effacer</button></div></div></div>
-<div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><div id="finiP"><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Téléchargez l’appli Loginail</b>Gérez vos rendez-vous, vos clientes et votre site depuis votre téléphone.</li></ol></div><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie" hidden style="display:none">Envoyer à une amie</button><button type="button" class="lien" data-modifier style="font-weight:600">Modifier mes charms</button></div></div>
+<div class="fini" id="fini" hidden><div><h3>Votre site est prêt ✦</h3><div id="finiP"><ol class="etapesF"><li><b>Mettez votre site en ligne</b>1 mois offert, puis 49,99 € par mois.</li><li><b>Téléchargez l’appli Loginail</b>Gérez vos rendez-vous, vos clientes et votre site depuis votre téléphone.</li></ol></div><button type="button" class="noir" data-activer>METTRE MON SITE EN LIGNE</button><button type="button" class="clair" id="amie" hidden style="display:none">Envoyer à une amie</button><button type="button" class="lien" data-modifier style="font-weight:600">Continuer à personnaliser mon site</button></div></div>
 <div class="bulle" id="bulle"></div>
 <div id="ecrans"></div>
 <script>
@@ -290,8 +290,16 @@ val.onclick = () => {
   if (M.n() > MAX) { bulle(`Vous ne pouvez mettre que ${MAX} charms : enlevez-en ${M.n() - MAX}`); return; }
   e.classList.add("finie"); document.getElementById("explique").style.opacity = 0; e.querySelectorAll(".st").forEach((s, n) => { s.classList.add("flotte"); s.style.animationDelay = (-n * .45) + "s"; });
   document.getElementById("fini").hidden = false; };
-document.getElementById("fini").addEventListener("click", ev => { if (ev.target.id === "fini") document.querySelector("[data-modifier]").click(); });   /* 15/11 (Marie) : toucher à côté = continuer */
-document.querySelector("[data-modifier]").onclick = () => { document.getElementById("fini").hidden = true; e.classList.remove("finie"); document.getElementById("explique").style.opacity = 1; e.querySelectorAll(".st").forEach(s => s.classList.remove("flotte")); };
+document.getElementById("fini").addEventListener("click", ev => { if (ev.target.id === "fini") fermeFini(); });   /* 15/11 (Marie) : toucher à côté (le site) = le panneau se ferme */
+/* 15/11 soir (Marie) : « Continuer à personnaliser mon site » : ses charms sont gardés, et elle retourne à la personnalisation */
+document.querySelector("[data-modifier]").onclick = () => { if (!VRAI || APPLI) { fermeFini(); return; }
+  const cq = e.querySelector(".calque"), w = cq.clientWidth;
+  try { const b = JSON.parse(localStorage.getItem("loginail-brouillon"));
+    b.stickers = [...cq.querySelectorAll(".st")].filter(x => x.dataset.n).map(x => Object.assign({ n: x.dataset.n, x: +(parseFloat(x.style.left) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top)), s: Math.round(x._s), r: Math.round(x._r || 0), w }, x.dataset.c ? { c: x.dataset.c } : {}));
+    b.charms = []; localStorage.setItem("loginail-brouillon", JSON.stringify(b)); } catch (x) {}
+  let g = "classique"; try { g = (JSON.parse(localStorage.getItem("loginail-reprise") || "{}") || {}).g || g; } catch (x) {}
+  location.href = "maquette-perso.html?v=1511k&genre=" + encodeURIComponent(g) + "&vrai=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511k&nouveau&essai"); };
+const fermeFini = () => { document.getElementById("fini").hidden = true; e.classList.remove("finie"); document.getElementById("explique").style.opacity = 1; e.querySelectorAll(".st").forEach(s => s.classList.remove("flotte")); };
 document.querySelector("[data-activer]").onclick = () => {
   if (!VRAI) { bulle("(maquette) Ici : le paiement, puis son site est en ligne"); return; }
   /* ses charms sont enregistrés dans son brouillon, puis « Activer mon site » */

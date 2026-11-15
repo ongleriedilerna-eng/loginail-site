@@ -280,9 +280,9 @@ html.vrai .maquette{display:none}
 /* 15/11 (Marie) : les en-têtes défilent comme « Vos couleurs » : celle du milieu est choisie, un peu plus grande ; pas de cadre noir */
 .formes.vgE.roueE{scroll-snap-type:x mandatory;padding:6px calc(50% - var(--iw,66px) / 2) 16px;align-items:center;scrollbar-width:none}
 .formes.vgE.roueE::-webkit-scrollbar{display:none}
-.formes.vgE.roueE .puce{scroll-snap-align:center;transform-origin:50% 35%;transform:scale(.84);opacity:.62;transition:transform .2s cubic-bezier(.3,1.3,.5,1),opacity .2s}
-.formes.vgE.roueE .puce.pres{transform:scale(.9);opacity:.85}
-.formes.vgE.roueE .puce.mil{transform:scale(1);opacity:1;color:var(--noir);font-weight:400}
+.formes.vgE.roueE .puce{scroll-snap-align:center;opacity:.5;transition:opacity .2s}   /* 15/11 soir : rien ne grandit ni ne saute, seule la lumière change */
+.formes.vgE.roueE .puce.pres{opacity:.75}
+.formes.vgE.roueE .puce.mil{opacity:1;color:var(--noir)}
 .formes.vgE.roueE .puce .mi,.formes.vgE.roueE .puce.on .mi{outline:0!important}
 .formes.vgE.roueE .puce.mil .mi{box-shadow:0 12px 24px -12px rgba(0,0,0,.45)}
 .vg.sansF{background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(30,28,27,.14)}
@@ -318,8 +318,8 @@ html.vrai .maquette{display:none}
 <div id="tel">
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
-  <div class="haut" id="haut"><b id="hautT" role="button">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511j&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div class="haut" id="haut"><b id="hautT" role="button">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511k&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -353,19 +353,19 @@ const APPLI = new URLSearchParams(location.search).has("appli");
 /* 09/11 : dans l'appli, on renvoie le site modifié à l'appli (app.loginail.fr) */
 const renvoieAppli = () => { try { const br = JSON.parse(localStorage.getItem("loginail-brouillon")); /* 14/11 : aussi l'appli iPhone (capacitor://localhost) */ (location.hostname === "loginail.fr" ? ["https://app.loginail.fr", "capacitor://localhost"] : [location.origin]).forEach(o => { try { parent.postMessage({ loginail: "enregistre", br }, o); } catch (_) {} }); } catch (e) {} };
 
-const ORDRE = VRAI ? ["photo", "style", "ecriture", "couleurs"] : ["photo", "style", "ecriture", "couleurs", "charms"];   /* 15/11 (Marie, idée B) : le fond et l'en-tête dans la même étape, avec deux onglets */   /* 15/11 (Marie + la table) : le fond juste après la photo */   /* 14/11 (Marie) : sa plus belle photo en premier */   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
-const NB = 5;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
+const ORDRE = VRAI ? ["photo", "style", "look"] : ["photo", "style", "look", "charms"];   /* 15/11 soir (Marie) : En-tête + Fond ensemble, Écriture + Couleurs ensemble */   /* 15/11 (Marie, idée B) : le fond et l'en-tête dans la même étape, avec deux onglets */   /* 15/11 (Marie + la table) : le fond juste après la photo */   /* 14/11 (Marie) : sa plus belle photo en premier */   /* 13/11 (la table) : les couleurs sur une seule étape → 5 étapes */
+const NB = 4;   // 13/11 nuit (Marie) : « Votre site » a son étape à lui
 /* ses choix sont enregistrés dans son brouillon (comme « C'est parfait » de l'éditeur) */
 function enregistre() { try { W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box||!BR)return;Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m},window.__pzEtat?__pzEtat():{});localStorage.setItem("loginail-brouillon",JSON.stringify(BR))})()`); return true; } catch (e) { return false; } }
-const TITRES = { style: "Votre fond et en-tête", photo: "Votre plus belle photo", entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
+const TITRES = { style: "En-tête et fond", look: "Écriture et couleurs", photo: "Votre plus belle photo", entete: "Votre en-tête", ecriture: "Votre écriture", fond: "Votre fond", couleurs: "Vos couleurs", site: "Votre site", charms: "Vos charms" };
 const ONGLET = { photo: 1, entete: 1, ecriture: 4, fond: 3, couleurs: 2, site: 2, charms: 4 };
-let sousStyle = "fond";
-const cle = () => ORDRE[etape] === "style" ? sousStyle : ORDRE[etape];
+const GROUPES = { style: [["entete", "En-tête"], ["fond", "Fond"]], look: [["ecriture", "Écriture"], ["couleurs", "Couleurs"]] }, SOUS = { style: "entete", look: "ecriture" };
+const cle = () => GROUPES[ORDRE[etape]] ? SOUS[ORDRE[etape]] : ORDRE[etape];
 const NB_FORMES = 6, NOMS_FORMES = ["Amande", "Stiletto", "Carré", "Ovale", "Coffin", "Carré arrondi"];
 /* 14/11 (Marie) : les 10 en-têtes choisies remplacent les formes d'ongles */
-const ENT = [["bandeau", "Bandeau"], ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"], ["balcon", "Balcon"], ["devanture", "Devanture"], ["fleurs", "Fleurs"],
-  /* 15/11 (Marie) : les anciennes en-têtes (les 6 formes d'avant), à la fin */
-  ["f1", "Classique"], ["f2", "Médaillon"], ["f3", "Magazine"], ["f4", "Couverture"], ["f5", "Plein écran"], ["f6", "Grand titre"]];
+const ENT = [["fleurs", "Fleurs"], ["bandeau", "Bandeau"], ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"], ["balcon", "Balcon"], ["devanture", "Devanture"],
+  /* 15/11 soir (Marie) : Classique, Médaillon, Magazine et Couverture refaites en vraies en-têtes ; puis les 2 anciennes formes */
+  ["classique", "Classique"], ["medaillon", "Médaillon"], ["magazine", "Magazine"], ["couverture", "Couverture"], ["f5", "Plein écran"], ["f6", "Grand titre"]];
 let ent = "";
 const poseEnt = k => { const ancien = /^f\d$/.test(k), n = ancien ? +k[1] : 1; ent = k;
   if (forme !== n) { forme = n; try { W.eval(`window.__entete=${JSON.stringify(k)};if(typeof BR!=="undefined"&&BR)BR.entete=${JSON.stringify(k)}`); } catch (e) {} clique(`.pf-st [data-st="${n}"]`); }
@@ -524,7 +524,7 @@ function rend() {
     TRAIT = items; const ki = Math.max(0, items.findIndex(x => x.k === choisi)), bl = blocsChoisis();
     l = (sousCouleur === "site" ? `<div class="deuxB"><button class="pasB ${bl !== "verre" ? "on" : ""}" data-blocs="blanc" type="button"><span class="apB blanc"><i><u></u><u></u></i></span><b>Sur blanc</b></button><button class="pasB ${bl === "verre" ? "on" : ""}" data-blocs="verre" type="button"><span class="apB verre2"><i><u></u><u></u></i></span><b>Sur couleur</b></button></div>` : "")
       + `<div class="roue carres" id="roue"><div class="ro-piste" id="roP">${[0, 1, 2].map(() => items.map((x, i) => `<button class="ro-c" data-i="${i}" type="button" aria-label="${x.k}" style="background:${x.bg}"></button>`).join("")).join("")}</div></div>`;
-    const aFond = !!fondActuel(); if (!aFond) assorti = false;
+    const aFond = !!fondActuel();   /* 15/11 soir : « Assorties » reste allumé même sans fond (il s'applique dès qu'elle en touche un) */
     c.innerHTML = (aFond ? `<button class="interA" data-assorti type="button"><span>Assorties à mon fond<small>${assorti ? "Les couleurs vont avec votre fond" : "Touchez pour les assortir à votre fond"}</small></span><i class="sw ${assorti ? "on" : ""}"></i></button>` : "") + (SC.length ? `<div class="ligneH" style="justify-content:center">${SC.map(x => `<button class="puce verre ${x[0] === sousCouleur ? "on" : ""}" data-sc="${x[0]}">${x[1]}</button>`).join("")}</div>` : "") + `<div id="teintes">${l}</div>`;
     /* 15/11 (Marie) : « Assorties à mon fond » et « Sur blanc / Sur couleur » ne doivent plus passer sous le bouton du bas */
     { const x = (aFond ? 58 : 0) + (sousCouleur === "site" ? 74 : 0); $("bas").style.setProperty("--basX", x + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(taille, 230); }
@@ -580,7 +580,11 @@ const SANSF = `<button class="vg sansF" data-f="" title="Pas de fond" type="butt
 function poseFond(n) { const P = D.getElementById("pzFonds"); if (!P) return; let b = [...P.querySelectorAll("[data-f]")].find(x => x.dataset.f === n), tmp = null;
   if (!b) { tmp = b = D.createElement("button"); b.dataset.f = n; b.style.display = "none"; P.appendChild(b); } b.click(); if (tmp) tmp.remove();
   if (n) { essayes = [n, ...essayes.filter(x => x !== n)].slice(0, 12); try { if (essayes.length === 2 && !localStorage.getItem("astuceFavF")) { localStorage.setItem("astuceFavF", "1"); setTimeout(() => bulle("Astuce : restez appuyée sur un fond pour le garder"), 900); } } catch (e) {} }
-  ambiance(); ajusteFonds(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); majAssortir(); }
+  ambiance(); ajusteFonds(); [40, 150, 400].forEach(t => setTimeout(ambiance, t)); majAssortir();
+  /* 15/11 soir (Marie) : elle touche un fond → ses couleurs s'accordent tout de suite (elle peut l'enlever dans Couleurs) ; « Pas de fond » → noir */
+  if (assorti) { clearTimeout(window.__tAss); window.__tAss = setTimeout(() => { try { n ? assortir(true) : couleursSobres(); } catch (x) {} [60, 300].forEach(t => setTimeout(enHaut, t)); }, 200); } }
+function couleursSobres() { clique('.pf-dots [data-co="noir"]'); vifChoisi = "noirb"; clique('.pf-vifs [data-vif="noirb"]'); nomc = "noir";
+  try { W.eval('if(typeof BR!=="undefined"&&BR)BR.nomc="noir";window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:"noir"})'); } catch (x) {} const i = D.createElement("i"); D.body.appendChild(i); setTimeout(() => i.remove(), 30); }
 /* ‹ › ou un glissé sur le téléphone : le fond d'avant / d'après, dans la liste affichée */
 function fondVoisin(d) { const g = $("grilleF"); if (!g) return; const l = [...g.querySelectorAll("[data-f]")].map(b => b.dataset.f).filter(Boolean); if (!l.length) return;
   let i = l.indexOf(fondActuel()); i = i < 0 ? (d > 0 ? 0 : l.length - 1) : (i + d + l.length) % l.length; poseFond(l[i]);
@@ -607,7 +611,7 @@ function assortir(muet) { const n = fondActuel(), f = n && (W.FONDS100?.f || [])
   setTimeout(poseEncre, 80); if (!muet) { bulle("Couleurs assorties"); navigator.vibrate?.(10); } }
 /* 13/11 nuit (Marie) : les fonds défilent comme les couleurs — celui du milieu est en grand et se pose tout seul sur le site */
 function gardeLigne(x) { const l = $("contenu").querySelector(".ligneH"); if (l) { l.style.scrollBehavior = "auto"; l.scrollLeft = x; } }
-function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); if (!t || !c || !m || plein) return; t.style.transform = ""; if ($("bas").classList.contains("leve") || ORDRE[etape] === "style") return;   /* 15/11 : avec les onglets, le titre reste à sa place */
+function centreTitre() { const t = $("titre"), c = $("contenu"), m = $("mini"); if (!t || !c || !m || plein) return; t.style.transform = ""; if ($("bas").classList.contains("leve") || GROUPES[ORDRE[etape]]) return;   /* 15/11 : avec les onglets, le titre reste à sa place */
   let haut = 1e9; c.querySelectorAll("button,.roue,.pages,.aideP,.ajoutU").forEach(x => { const r = x.getBoundingClientRect(); if (r.height > 4 && r.top < haut) haut = r.top; }); if (haut > 1e8) return;
   const r = t.getBoundingClientRect(), po = $("poi"), h0 = po && po.offsetHeight ? po.getBoundingClientRect().bottom - 2 : $("bas").getBoundingClientRect().top + 4, d = (h0 + haut) / 2 - (r.top + r.height / 2);   /* 15/11 : sous la poignée, jamais dessus */ if (Math.abs(d) < 60) t.style.transform = `translateY(${d.toFixed(1)}px)`; }
 new MutationObserver(() => requestAnimationFrame(centreTitre)).observe(document.getElementById("contenu"), { childList: true }); addEventListener("resize", () => setTimeout(centreTitre, 80)); [300, 1200, 2500].forEach(x => setTimeout(centreTitre, x));
@@ -780,7 +784,7 @@ const blocsChoisis = () => { try { return W.eval('(window.__lgnChoix&&window.__l
 /* 15/11 (Marie) : avant qu'elle choisisse, le plus sobre — en-tête Bandeau, écriture Affiche, pas de fond, site blanc (« noir »), nom et boutons noirs, blocs « Sur couleur » */
 setInterval(() => { const b = $("bas"); if (!b || cle() !== "fond" || b.classList.contains("leve") || plein || document.hidden) return; b.classList.remove("monteF"); void b.offsetWidth; b.classList.add("monteF"); setTimeout(() => b.classList.remove("monteF"), 1500); }, 20000);
 function departSobre() { try { if (VRAI && W.eval("typeof BR!=='undefined'&&BR&&!!BR.entete")) return; } catch (e) {}
-  poseEnt("bandeau");
+  poseEnt("fleurs");   /* 15/11 soir (Marie) : on commence avec Fleurs */
   /* 15/11 (Marie) : « Fun et ouf » ne part pas sobre : un fond qui pétille, et les couleurs assorties */
   if (GENRE === "ouf") { setTimeout(() => { poseFond("Cerises disco"); setTimeout(() => { try { assortir(true); } catch (x) {} }, 350); }, 250); return; }
   setTimeout(() => { clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); vifChoisi = "noirb"; clique('.pf-vifs [data-vif="noirb"]');
@@ -929,12 +933,20 @@ const metPlein = v => { plein = v; $("tel").classList.toggle("plein", v); $("fer
 $("oeil").onclick = () => metPlein(true); $("fermerPlein").onclick = () => metPlein(false);
 function prepare() { majCadre(); if (cle() === "charms") setTimeout(ficheDepart, 900); if (cle() === "entete") setTimeout(miniEntetes, 400); if (cle() === "couleurs" && assorti && fondActuel()) setTimeout(() => { assortir(true); rend(); }, 200); ouvreOnglet(ONGLET[cle()]); enHaut(); [80, 300].forEach(t => setTimeout(enHaut, t)); ambiance(); setTimeout(() => { rend(); ambiance(); }, cle() === "fond" && !D.querySelector("#pzFonds [data-f]") ? 900 : 60); }
 addEventListener("resize", taille);
-/* 15/11 (Marie, idée B) : deux onglets « Fond · En-tête » en haut du panneau */
+/* 15/11 (Marie) : deux onglets en haut du panneau (« En-tête · Fond », « Écriture · Couleurs ») */
+const groupe = () => GROUPES[ORDRE[etape]];
+function ajusteBas() { const c = $("contenu"), o = c.scrollHeight - c.clientHeight; if (o > 2) { const x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0; $("bas").style.setProperty("--basX", (x + o + 6) + "px"); setTimeout(taille, 230); } }
 { const r0 = rend; rend = function () { r0.apply(this, arguments);
-    if (ORDRE[etape] !== "style" || $("bas").classList.contains("leve")) return;
-    const c = $("contenu"); if (!c.querySelector(".segS")) c.insertAdjacentHTML("afterbegin", `<div class="segS">${[["fond", "Fond"], ["entete", "En-tête"]].map(([k, n]) => `<button type="button" data-ss="${k}" class="${k === sousStyle ? "on" : ""}">${n}</button>`).join("")}</div>`);
-    const x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0; $("bas").style.setProperty("--basX", (x + (sousStyle === "fond" ? 74 : 52)) + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(taille, 230); };
-  $("contenu").addEventListener("click", e => { const b = e.target.closest("[data-ss]"); if (!b) return; e.stopPropagation(); if (b.dataset.ss === sousStyle) return; sousStyle = b.dataset.ss; chercheOuvert = false; filtre = ""; prepare(); }, true); }
+    const g = groupe(); if (!g || $("bas").classList.contains("leve")) return; const k = ORDRE[etape];
+    if (g.findIndex(x => x[0] === SOUS[k]) < g.length - 1) $("suivant").textContent = "SUIVANT";
+    const c = $("contenu"); if (!c.querySelector(".segS")) c.insertAdjacentHTML("afterbegin", `<div class="segS">${g.map(([s, n]) => `<button type="button" data-ss="${s}" class="${s === SOUS[k] ? "on" : ""}">${n}</button>`).join("")}</div>`);
+    const x = parseFloat($("bas").style.getPropertyValue("--basX")) || 0; $("bas").style.setProperty("--basX", (x + 52) + "px"); clearTimeout(window.__tBas); window.__tBas = setTimeout(() => { taille(); ajusteBas(); }, 260); };
+  const vers = s => { SOUS[ORDRE[etape]] = s; chercheOuvert = false; filtre = ""; if ($("bas").classList.contains("leve")) leveFonds(false); prepare(); };
+  $("contenu").addEventListener("click", e => { const b = e.target.closest("[data-ss]"); if (!b) return; e.stopPropagation(); if (b.dataset.ss !== SOUS[ORDRE[etape]]) vers(b.dataset.ss); }, true);
+  /* « Suivant » passe d'abord à l'onglet d'à côté (En-tête → Fond, Écriture → Couleurs), « ‹ » revient */
+  const s0 = $("suivant").onclick, b0 = $("retour").onclick;
+  $("suivant").onclick = e => { const g = groupe(); if (g) { const i = g.findIndex(x => x[0] === SOUS[ORDRE[etape]]); if (i < g.length - 1) { vers(g[i + 1][0]); return; } } const nx = GROUPES[ORDRE[etape + 1]]; if (nx) SOUS[ORDRE[etape + 1]] = nx[0][0]; s0(e); };
+  $("retour").onclick = e => { const g = groupe(); if (g) { const i = g.findIndex(x => x[0] === SOUS[ORDRE[etape]]); if (i > 0) { vers(g[i - 1][0]); return; } } const pv = GROUPES[ORDRE[etape - 1]]; if (pv && etape > 0) SOUS[ORDRE[etape - 1]] = pv[pv.length - 1][0]; b0(e); }; }
 addEventListener("scroll", () => { if ((scrollX || scrollY) && !document.activeElement?.matches?.("input")) scrollTo(0, 0); });
 F.classList.add("fondu");
 F.onload = () => {
