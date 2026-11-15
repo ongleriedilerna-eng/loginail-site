@@ -281,6 +281,9 @@ html.vrai .maquette{display:none}
 .vg.sansF span{font:300 9.5px/1.25 Jost,sans-serif;color:var(--noir);text-align:center;letter-spacing:.02em}
 .bas.leve .grilleF .vg.sansF span{font-size:13px}
 .defileF .vg.sansF{box-shadow:inset 0 0 0 1px rgba(30,28,27,.16)!important}
+/* 15/11 (Marie, idée B) : toutes les 20 s, la barre et la flèche sautent 2 fois vers le haut */
+.bas.fondE.monteF .poi i,.bas.monteF .chevT{animation:monteF 1.4s ease-in-out}
+@keyframes monteF{0%,40%,80%,100%{transform:none}20%,60%{transform:translateY(-6px)}}
 </style></head><body>
 <div id="tel">
   <div id="ambiance"></div>
@@ -711,6 +714,7 @@ function familles(items) { const ordre = ["Roses", "Rouges", "Nudes et bruns", "
 function vraiFond(k) { if (k in FONDV) return FONDV[k]; let v = ""; try { const e = D.querySelector(".ecran"), t = D.createElement("div"); t.className = e.className.replace(/\bc-[a-z]+\b/g, "") + " c-" + k; t.style.display = "none"; e.parentNode.appendChild(t); v = W.getComputedStyle(t).getPropertyValue("--creme").trim(); t.remove(); } catch (x) {} return FONDV[k] = v; }
 const blocsChoisis = () => { try { return W.eval('(window.__lgnChoix&&window.__lgnChoix.blocs)||(typeof BR!=="undefined"&&BR&&BR.blocs)||"blanc"'); } catch (x) { return "blanc"; } };
 /* 15/11 (Marie) : avant qu'elle choisisse, le plus sobre — en-tête Bandeau, écriture Affiche, pas de fond, site blanc (« noir »), nom et boutons noirs, blocs « Sur couleur » */
+setInterval(() => { const b = $("bas"); if (!b || cle() !== "fond" || b.classList.contains("leve") || plein || document.hidden) return; b.classList.remove("monteF"); void b.offsetWidth; b.classList.add("monteF"); setTimeout(() => b.classList.remove("monteF"), 1500); }, 20000);
 function departSobre() { try { if (VRAI && W.eval("typeof BR!=='undefined'&&BR&&!!BR.entete")) return; } catch (e) {}
   poseEnt("bandeau");
   setTimeout(() => { clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); vifChoisi = "noirb"; clique('.pf-vifs [data-vif="noirb"]');
