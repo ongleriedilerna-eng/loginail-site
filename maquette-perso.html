@@ -297,7 +297,7 @@ html.vrai .maquette{display:none}
   <div id="ambiance"></div>
   <span class="maquette">Maquette</span>
   <div class="haut" id="haut"><b id="hautT">Personnalisez · 1 sur 6</b><div class="barre" id="barre"><i></i><i></i><i></i><i></i><i></i><i></i></div><p id="aide"></p></div>
-  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511h&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
+  <div id="mini"><iframe id="site" title="Votre site" src="loginail-creer/pret.html?v=1511i&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise"></iframe></div>
   <div id="cadreP"><div class="img" id="cadreImg"></div><span>La 1re chose que vos clientes verront</span></div>
   <button class="fl verre" id="avant" type="button" aria-label="Précédent">‹</button><button class="fl verre" id="apres" type="button" aria-label="Suivant">›</button>
   <button class="fl verre" id="oeil" type="button" aria-label="Voir mon site en grand"><span class="lib">VOIR EN<br>GRAND</span><svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
@@ -421,7 +421,7 @@ function miniEntetes() { const g = $("formes"); if (!g || cle() !== "entete") re
     let acc = "#1E1C1B"; try { acc = W.eval('accDuFond()||(typeof INKJ!=="undefined"&&INKJ[([...document.querySelector(".ecran").classList].find(c=>/^[cn]-/.test(c))||"c-noir").slice(2)])||"#1E1C1B"'); } catch (e) {}
     const nomV = D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"), police = nomV ? getComputedStyle(nomV).fontFamily : "";
     if (police) fs.insertRule(`.hent h1,.hent .pol span{font-family:${police}!important}`, fs.cssRules.length);
-    g.querySelectorAll("[data-ent]").forEach(b => { if (/^f\d$/.test(b.dataset.ent)) return; const m = b.querySelector(".mi"), k = b.dataset.ent, l = m.clientWidth || 62, sc = l / 390;
+    g.querySelectorAll("[data-ent]").forEach(b => { if (/^f\d$/.test(b.dataset.ent)) { miniAncienne(b, ec, fs, root); return; } const m = b.querySelector(".mi"), k = b.dataset.ent, l = m.clientWidth || 62, sc = l / 390;
       const c = document.importNode(ec, true); c.querySelectorAll(".lgn-sticker,.indiceD,.cookies,.grand,.defile>.hf").forEach(x => x.remove());
       c.querySelectorAll("[style*='url(']").forEach(x => x.setAttribute("style", x.getAttribute("style").replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (q, z, u) => `url("${new URL(u, D.baseURI).href}")`)));
       c.querySelectorAll("img[src]").forEach(x => { x.src = new URL(x.getAttribute("src"), D.baseURI).href; x.loading = "eager"; });
@@ -431,6 +431,13 @@ function miniEntetes() { const g = $("formes"); if (!g || cle() !== "entete") re
       Object.assign(c.style, { position: "absolute", left: "0", top: "0", width: "390px", height: "844px", borderRadius: "0", transform: `scale(${sc})`, transformOrigin: "0 0" });
       const sr = m.shadowRoot || m.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ""; m.setAttribute("style", root); sr.appendChild(c); });
   } catch (e) { console.warn("miniatures", e); } }
+/* 15/11 (Marie) : les anciennes en-têtes en miniature, posées sur SON fond (image transparente par-dessus) */
+function miniAncienne(b, ec, fs, root) { const m = b.querySelector(".mi"), sc = (m.clientWidth || 62) / 390;
+  const c = document.importNode(ec, true); c.querySelectorAll(".defile,.lgn-sticker,.indiceD,.cookies,.grand,.menu,.burger,.cta").forEach(x => x.remove());
+  c.querySelectorAll("[style*='url(']").forEach(x => x.setAttribute("style", x.getAttribute("style").replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (q, z, u) => `url("${new URL(u, D.baseURI).href}")`)));
+  const im = document.createElement("img"); im.src = `idees-perso/ent-${b.dataset.ent}.png`; Object.assign(im.style, { position: "absolute", left: "0", top: "0", width: "390px", height: "844px", zIndex: "50" }); c.appendChild(im);
+  Object.assign(c.style, { position: "absolute", left: "0", top: "0", width: "390px", height: "844px", borderRadius: "0", transform: `scale(${sc})`, transformOrigin: "0 0" });
+  const sr = m.shadowRoot || m.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ""; m.setAttribute("style", root); sr.appendChild(c); }
 function majCadre() { const on = !plein && cle() === "photo"; $("tel").classList.toggle("etP", on); if (on) { const u = photoUne(); if (u) $("cadreImg").style.backgroundImage = `url("${vu(u)}")`; } if (!on && cle() === "entete") indiceDefile(); }
 /* son fond derrière le téléphone, en transparence (s'il bouge, il bouge aussi) */
 function ambiance() {
@@ -884,7 +891,7 @@ F.onload = () => {
       if (t) { s.dataset.copie = 1; const c = document.createElement("style"); c.textContent = t; document.head.appendChild(c); } }); };
   copie(); W.addEventListener("f100", () => setTimeout(() => { copie(); ambiance(); if (cle() === "fond") rend(); }, 150));
   const pf = D.querySelector("[data-pf]"); forme = pf?._st || 1; try { ent = (W.enteteChoisie ? W.enteteChoisie() : "") || W.eval("(typeof BR!=='undefined'&&BR&&BR.entete)||window.__entete||''"); } catch (e) {}
-  brancheStickers(); departSobre();
+  brancheStickers(); departSobre(); setTimeout(() => { try { D.documentElement.classList.add("edition"); } catch (e) {} }, 2500);
   { let sx = 0, sy = 0, st = 0;   /* glisser à gauche / à droite sur le téléphone = le fond suivant / d'avant */
     D.addEventListener("touchstart", e => { if (cle() !== "fond" || e.touches.length !== 1) { st = 0; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; st = Date.now(); }, { passive: true });
     D.addEventListener("touchend", e => { if (cle() !== "fond" || !st) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;

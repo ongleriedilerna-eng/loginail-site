@@ -1722,6 +1722,8 @@ html.iph .bandeau,html.iph .code,html.public .pret,html.public .bandeau{display:
 .ecran:not(.v1):has(>.fond-site) .defile>.sec .tir,.ecran:not(.v1):has(>.fond-site) .defile>.sec .carte{background:color-mix(in srgb,var(--creme) 45%,#fff)}
 </style>
 <style id="entetes-1511">
+/* 15/11 (Marie) : pendant la personnalisation, l'en-tête change sans rejouer ses animations */
+html.edition .hent,html.edition .hent *{animation:none!important}
 /* 15/11 (Marie) : Fleurs sans motif derrière ; Vitrine = nom centré au-dessus d'une photo plus petite ; Devanture = façade claire pour que le nom se lise toujours */
 .ecran .hent.he-fleurs{background:transparent!important}
 .ecran .he-vitrine .vit{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;min-height:0;max-height:none;border:0;border-radius:0;box-shadow:none;overflow:visible;background:none;margin-top:36px}
@@ -2650,7 +2652,10 @@ function monte(ecran,lang){
   ecran._lang=lang;D=ecran.dataset.d==="peu"?DPEU:DPLEIN;D={...D,presta:D.presta.filter(c=>c.items&&c.items.length)};VAR=[...ecran.classList].find(c=>/^(v\d|n1|s[abc]|s3[abc])$/.test(c))||"v1";ecran.classList.remove("touche");
   const $=s=>ecran.querySelector(s),$$=s=>[...ecran.querySelectorAll(s)];
   const d=$(".defile"),cta=$(".cta"),mot=$(".mot"),burger=$(".burger"),menu=$(".menu");
+  /* 15/11 (Marie) : le nom garde son écriture pendant qu'on change d'en-tête (plus de saut) */
   ecran.classList.remove("a-entete");d.innerHTML=(/^s3[abc]$/.test(VAR)?site3:/^s[abc]$/.test(VAR)?site2:site)(t,v,lang);poseEntete(ecran,d,t,lang);
+  {const h1=d.querySelector(".hent h1");if(h1&&!h1.getAttribute("style")&&window.__h1st)h1.setAttribute("style",window.__h1st);
+   clearTimeout(window.__h1t);window.__h1t=setTimeout(()=>{const x=d.querySelector(".hent h1");if(x&&x.getAttribute("style"))window.__h1st=x.getAttribute("style")},500);}
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("vu");io.unobserve(e.target)}}),{root:d,threshold:.15});
   d.querySelectorAll(".r").forEach(el=>io.observe(el));
   const ioL=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){d.querySelectorAll(".liste").forEach(l=>l.classList.add("go"));ioL.disconnect()}}),{root:d,threshold:.1});
