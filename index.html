@@ -1720,7 +1720,12 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np h1 .np-l2{display:block;margin-top:.42em;letter-spacing:-.01em;font-size:clamp(24px,min(2.9vw,4.6vh),44px);line-height:1.05;color:var(--accent)}
 .np .np-lead{max-width:none;white-space:nowrap;margin:13px auto 0;font-size:clamp(17px,1.35vw,19.5px);color:var(--ink-2)}
 .np .np-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.np .np-paste{width:min(640px,100%);margin:22px auto 0}
+.np .np-paste{width:auto;margin:24px auto 0}
+.np .np-row{display:flex;align-items:center;justify-content:center;gap:26px}
+.np .np-row .np-cta{height:60px;padding:0 28px}
+.np .np-ready{display:inline-flex;align-items:center;gap:9px;font:400 19px Jost,sans-serif;color:var(--ink-2);white-space:nowrap}
+.np .np-ready b{font-weight:600;color:var(--accent)}
+.np .np-ready svg{width:22px;height:22px;color:var(--accent)}
 .np .np-field{display:flex;align-items:center;gap:8px;height:68px;padding:6px 6px 6px 20px;border-radius:999px;background:#fff;
   box-shadow:inset 0 0 0 1px rgba(30,28,27,.08),0 24px 48px -28px rgba(120,40,70,.45);transition:box-shadow .25s var(--ease)}
 .np .np-field:focus-within{box-shadow:inset 0 0 0 1px rgba(176,53,98,.45),0 0 0 5px rgba(176,53,98,.10),0 24px 48px -28px rgba(120,40,70,.45)}
@@ -1841,7 +1846,9 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np .np-eyebrow{order:1}
 .np h1{order:2}
 .np .np-lead{order:3}
-.np .np-paste{order:4}
+.np .np-paste{order:4;width:100%}
+.np .np-row{flex-direction:column;gap:14px}
+.np .np-row .np-cta{width:100%;max-width:360px;height:64px}
 .np .np-micro{order:5}
 .np .trust{order:6}
 .np .np-f2{order:7}
@@ -1920,15 +1927,10 @@ html{scroll-padding-top:84px}
     <p class="np-eyebrow">Le site + l’appli des prothésistes ongulaires</p>
     <h1 class="serif">Un site à <span class="np-sw">ton image.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="np-l2">L’appli pour tout gérer derrière.</span></h1>
     <p class="np-lead">Elles réservent sur ton site, sans t’écrire. L’appli gère tout le reste.</p>
-    <form class="np-paste" id="paste" action="https://loginail.fr/loginail-creer/index.html" method="get">
-      <label class="np-sr" for="lien">Ton lien Planity, ta fiche Google ou ton ancien site</label>
-      <div class="np-field">
-        <svg class="np-lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
-        <input id="lien" name="lien" type="text" inputmode="url" autocomplete="url" spellcheck="false" placeholder="Colle ton lien Planity, Google ou ton site">
-        <button class="np-cta np-main" type="submit" id="go"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      </div>
-      <p class="np-sub">On récupère tes photos, tes prestations et tes prix. <a href="https://loginail.fr/loginail-creer/index.html">Pas de lien ? Pars de zéro →</a></p>
-    </form>
+    <div class="np-paste" id="paste">
+      <div class="np-row"><span class="np-ready"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 3h4M12 3v3"/></svg><span>Prêt en <b>1 minute</b></span></span><a class="np-cta np-main" id="go" href="https://loginail.fr/loginail-creer/index.html"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <p class="np-sub">On récupère tes photos, tes prestations et tes prix.</p>
+    </div>
     <div class="np-micro">
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>1 mois offert</span>
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sans engagement</span>
@@ -3170,9 +3172,7 @@ document.addEventListener('click',()=>floats.forEach(f=>closeF(f,true)));
 addEventListener('keydown',e=>{if(e.key==='Escape')floats.forEach(f=>closeF(f,true))});
 
 /* Formulaire : si vide, on secoue ; sinon on montre « Création… » et on part */
-$('paste').addEventListener('submit',e=>{const v=$('lien').value.trim();
-  if(!v){e.preventDefault();const f=$('paste');f.classList.remove('np-shake');void f.offsetWidth;f.classList.add('np-shake');$('lien').focus();return}
-  const b=$('go');b.classList.add('np-load');b.querySelector('.t').textContent='Création de ton site…'});
+
 
 
 /* Onglets de la barre : vont à la section visible (sur ordinateur, les univers sont dans #styles-gal) */
