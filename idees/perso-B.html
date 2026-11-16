@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Personnaliser · version B « Le geste »</title>
+<link href="../polices.css" rel="stylesheet">
+<script src="../charms-cat.js?v=1"></script>
+<style>
+/* 16/11 · Pôle Design · Personnaliser, version B « Le geste ».
+   Une chose à la fois, dans l'ordre (En-tête → Fond → Écriture → Couleurs → Charms), comme un filtre Instagram :
+   on GLISSE sur son site (ou flèches ‹ ›, ou flèches du clavier) et il change sous ses yeux. Le nom du choix s'affiche en grand.
+   Couleurs : 12 « duos » tout prêts (nom + boutons) au lieu de 2 nuanciers. Son site prend presque tout l'écran. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--ligne:rgba(30,28,27,.12);--rose:#B5475E;--rosé:#F7E9EA;
+  --sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom);--ressort:cubic-bezier(.2,.9,.25,1);--pop:cubic-bezier(.3,1.5,.5,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:focus-visible{outline:2px solid var(--noir);outline-offset:2px}
+.app{position:relative;height:100dvh;display:flex;flex-direction:column;isolation:isolate}
+#ambiance{position:absolute;inset:0;z-index:-1;opacity:.22;overflow:hidden;pointer-events:none}
+#ambiance .tuile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
+#ambiance:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,243,239,0) 45%,var(--fond) 82%)}
+
+/* ---------- haut : où on en est ---------- */
+.haut{flex:none;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:8px;padding:calc(var(--sat) + 8px) 14px 0}
+.rond{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.75);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 4px 14px -8px rgba(0,0,0,.35);transition:transform .15s}
+.rond:active{transform:scale(.94)}
+.rond svg{width:18px;height:18px}
+.titre{text-align:center;min-width:0}
+.titre small{display:block;font:400 12px Jost,sans-serif;color:var(--muted);letter-spacing:.02em}
+.titre h1{margin:0;font:500 26px/1.05 "Cormorant Garamond",serif;white-space:nowrap}
+.titre h1 em{font-style:italic}
+.pas{grid-column:1/-1;flex:none;display:flex;gap:5px;justify-content:center;padding:9px 0 0}
+.pas button{display:flex;flex-direction:column;align-items:center;gap:5px;font:400 11.5px Jost,sans-serif;color:var(--muted);min-width:58px;padding:4px 0}
+.pas button i{display:block;width:100%;height:3px;border-radius:2px;background:rgba(30,28,27,.12);overflow:hidden;position:relative}
+.pas button i:after{content:"";position:absolute;inset:0;background:var(--noir);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ressort)}
+.pas button.ok i:after,.pas button.on i:after{transform:none}
+.pas button.on{color:var(--noir);font-weight:500}
+.pas button.ok{color:var(--muted)}
+.cote{display:none}
+.logo{display:none}
+
+/* ---------- son site + le geste ---------- */
+.scene{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:10px 0 6px}
+.tel{position:relative;border-radius:34px;background:#1E1C1B;padding:5px;box-shadow:0 26px 50px -28px rgba(0,0,0,.55);transition:transform .4s var(--ressort)}
+.tel.pousse-g{transform:translateX(-10px) rotate(-1deg)}.tel.pousse-d{transform:translateX(10px) rotate(1deg)}
+.tel>.ecr{position:relative;width:100%;height:100%;border-radius:29px;overflow:hidden;background:#fff}
+#site{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff}
+.attente{position:absolute;inset:0;display:grid;place-items:center;font:400 13px Jost,sans-serif;color:var(--doux);background:#fff;transition:opacity .4s}
+.attente.part{opacity:0;pointer-events:none}
+.fleche{position:absolute;top:50%;width:46px;height:46px;margin-top:-23px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 8px 20px -10px rgba(0,0,0,.45);z-index:3;transition:transform .15s,opacity .3s}
+.fleche svg{width:20px;height:20px}
+.fleche:active{transform:scale(.92)}
+#avant{left:calc(50% - var(--tw)/2 - 18px)}#apres{right:calc(50% - var(--tw)/2 - 18px)}
+.app[data-e=charms] .fleche,.app[data-e=charms] .main{opacity:0!important;pointer-events:none;animation:none}
+.app[data-e=charms] .touches{visibility:hidden}
+/* la main qui montre le geste (1re fois à chaque étape) */
+.main{position:absolute;left:50%;top:56%;width:52px;height:52px;margin:-26px;z-index:4;pointer-events:none;opacity:0}
+.main.joue{animation:glisse 2.2s var(--ressort) .3s 2 both}
+.main svg{width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+@keyframes glisse{0%{opacity:0;transform:translateX(40px)}15%{opacity:1;transform:translateX(40px)}60%{opacity:1;transform:translateX(-46px)}80%,100%{opacity:0;transform:translateX(-46px)}}
+
+/* ---------- le nom du choix ---------- */
+.nomC{flex:none;display:flex;align-items:baseline;justify-content:center;gap:10px;height:34px;padding:0 18px}
+.nomC b{font:500 22px/1 "Cormorant Garamond",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+.nomC small{font:400 12px Jost,sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}
+.nomC.pop b{animation:pop .35s var(--pop)}
+@keyframes pop{from{transform:scale(.9);opacity:.3}}
+
+/* ---------- raccourcis + bouton ---------- */
+.bas{flex:none;padding:4px 0 calc(var(--sab) + 12px)}
+.ligne{display:flex;gap:8px;overflow-x:auto;padding:5px 18px 7px;scroll-padding:0 18px;scrollbar-width:none;overscroll-behavior-x:contain;scroll-behavior:smooth}
+.ligne::-webkit-scrollbar{display:none}
+.ligne>*{flex:none}
+.r{width:48px;height:48px;border-radius:12px;overflow:hidden;position:relative;background:#EEE9E3;box-shadow:inset 0 0 0 1px var(--ligne);display:grid;place-items:center;transition:transform .15s,box-shadow .2s}
+.r.on{box-shadow:0 0 0 2px var(--fond),0 0 0 4px var(--noir)}
+.r:active{transform:scale(.93)}
+.r .f100,.r .tuile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
+.r.txt{width:auto;padding:0 14px;background:#fff;font:400 13px Jost,sans-serif;color:var(--muted);white-space:nowrap}
+.r.txt.on{color:var(--noir);font-weight:500}
+.r.pol{width:auto;min-width:48px;padding:0 12px;background:#fff;font-size:22px;color:var(--noir)}
+.r.duo{border-radius:50%;background:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.r.duo.on{box-shadow:0 0 0 2px var(--fond),0 0 0 4px var(--noir)}
+.r.duo span{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.r.duo span+span{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.r.ass{width:auto;padding:0 14px;border-radius:999px;background:#fff;color:var(--rose);font:400 13px Jost,sans-serif;box-shadow:inset 0 0 0 1px rgba(181,71,94,.35)}
+.r.ch{background:#fff}
+.r.ch img{width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18))}
+.r.ch.on{background:var(--rosé)}
+.puces{display:flex;gap:6px;overflow-x:auto;padding:0 18px 4px;scrollbar-width:none}
+.puces::-webkit-scrollbar{display:none}
+.puce{flex:none;height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--ligne);background:#fff;font:400 12.5px Jost,sans-serif;color:var(--muted);white-space:nowrap}
+.puce.on{background:var(--noir);border-color:var(--noir);color:#fff}
+.puces[hidden]{display:none}
+.pied{padding:8px 18px 0;display:flex}
+.noir{flex:1;height:54px;border-radius:999px;background:var(--noir);color:#fff;font:500 13px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 12px 24px -14px rgba(0,0,0,.6);transition:transform .15s,background .2s}
+.noir:active{transform:scale(.98)}
+.noir .fl{font-size:17px;letter-spacing:0;transition:transform .3s var(--ressort)}
+.noir:hover .fl{transform:translateX(4px)}
+.noir.fin{background:var(--rose)}
+.bulle{position:absolute;left:50%;top:calc(var(--sat) + 96px);transform:translate(-50%,-8px);opacity:0;background:var(--noir);color:#fff;font:400 13px Jost,sans-serif;padding:9px 16px;border-radius:999px;white-space:nowrap;pointer-events:none;transition:.3s var(--ressort);z-index:9}
+.bulle.on{opacity:1;transform:translate(-50%,0)}
+.maquette{position:fixed;right:10px;bottom:calc(var(--sab) + 4px);font:500 9px Jost,sans-serif;letter-spacing:.14em;color:var(--doux);opacity:.6;z-index:20;pointer-events:none}
+
+/* =================== ORDINATEUR =================== */
+@media (min-width:900px){
+  .app{display:grid;grid-template-columns:minmax(300px,1fr) auto minmax(340px,1fr);grid-template-rows:auto minmax(0,1fr) auto;column-gap:40px;padding:0 48px}
+  .haut{grid-column:1/-1;display:flex;justify-content:space-between;padding:26px 0 0}
+  .haut .rond,.haut .titre{display:none}
+  .logo{display:block;width:128px}.logo svg{display:block;width:100%;height:auto}
+  .pas{order:2;gap:22px;padding:0}
+  .pas button{flex-direction:row-reverse;gap:9px;min-width:0;font-size:14px}
+  .pas button i{width:26px;height:26px;border-radius:50%;background:none;border:1px solid var(--doux);display:grid;place-items:center;font:400 12px Jost,sans-serif;font-style:normal;color:var(--doux)}
+  .pas button i:after{display:none}
+  .pas button.ok i,.pas button.on i{background:var(--noir);border-color:var(--noir);color:#fff}
+  .cote{display:flex;flex-direction:column;justify-content:center;grid-row:2/4;gap:10px;max-width:420px;justify-self:end;padding-bottom:40px}
+  .cote small{font:400 14px Jost,sans-serif;color:var(--muted)}
+  .cote h1{margin:0;font:500 54px/1 "Cormorant Garamond",serif;letter-spacing:-.01em}
+  .cote h1 em{font-style:italic}
+  .cote p{margin:6px 0 0;font:400 16px/1.5 Jost,sans-serif;color:var(--muted)}
+  .cote .touches{margin-top:18px;display:flex;align-items:center;gap:8px;font:400 13px Jost,sans-serif;color:var(--doux)}
+  .cote kbd{display:inline-grid;place-items:center;min-width:28px;height:26px;border-radius:7px;background:#fff;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08),0 0 0 1px var(--ligne);font:500 13px Jost,sans-serif;color:var(--noir)}
+  .scene{grid-column:2;grid-row:2;padding:22px 70px 8px}
+  .nomC{grid-column:2;grid-row:3;height:44px;padding-bottom:30px}
+  .nomC b{font-size:28px}
+  .bas{grid-column:3;grid-row:2/4;display:flex;flex-direction:column;justify-content:center;gap:10px;max-width:440px;padding:0 0 40px}
+  .bas .ligne,.bas .puces{padding-left:0;padding-right:0}
+  .bas .ligne{flex-wrap:wrap}
+  .bas .puces{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+  .bas .ligne{max-height:46vh;overflow-y:auto;align-content:flex-start;padding:6px}
+  .r{width:58px;height:58px}
+  .r.ch img{width:46px;height:46px}
+  .pied{padding:22px 0 0}
+  .noir{height:58px}
+  .noir:hover{background:#000}
+  .bulle{top:96px}
+  #ambiance:after{background:radial-gradient(ellipse at 50% 50%,rgba(246,243,239,0) 20%,var(--fond) 70%)}
+}
+@media (min-width:900px) and (max-height:760px){.cote h1{font-size:42px}.scene{padding-top:14px}}
+@media (max-width:899px) and (max-height:700px){.pas{padding-top:6px}.titre h1{font-size:23px}.r{width:44px;height:44px}.noir{height:50px}.nomC{height:30px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}.main{display:none}}
+</style>
+</head>
+<body>
+<div class="app" id="app" data-e="entete">
+  <div id="ambiance"></div>
+  <div class="haut">
+    <button class="rond" id="retour" aria-label="Étape d'avant"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <span class="logo"><svg viewBox="0 -2 330 72" aria-label="Loginail"><g transform="scale(.5)"><rect x="0" y="5" width="225" height="120" rx="60" fill="currentColor"/><path d="M172 21H215C254 21 282 42 282 65C282 88 254 109 215 109H172A44 44 0 0 1 172 21Z" fill="currentColor"/><path d="M172 28H213C247 28 274 47 274 65C274 83 247 102 213 102H172A37 37 0 0 1 172 28Z" fill="var(--logo-fond,#F6F3EF)"/></g><text x="160" y="42" font-family="Jost,sans-serif" font-weight="300" font-size="22" letter-spacing="9" fill="currentColor">LOGINAIL</text></svg></span>
+    <div class="titre"><small id="numT">1 sur 5</small><h1 id="titreT">Votre <em>en-tête</em></h1></div>
+    <span></span>
+    <div class="pas" id="pas"></div>
+  </div>
+  <div class="cote"><small id="numC">Étape 1 sur 5</small><h1 id="titreC">Votre <em>en-tête</em></h1><p id="aideC"></p><div class="touches"><kbd>←</kbd><kbd>→</kbd> pour changer</div></div>
+  <div class="scene" id="scene">
+    <div class="tel" id="tel"><div class="ecr"><iframe id="site" title="Votre site"></iframe><div class="attente" id="attente">Votre site arrive…</div></div></div>
+    <button class="fleche" id="avant" aria-label="Le choix d'avant"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="fleche" id="apres" aria-label="Le choix suivant"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="main" id="main"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" fill="rgba(255,255,255,.55)" stroke="#fff" stroke-width="3"/></svg></div>
+  </div>
+  <div class="nomC" id="nomC"><b id="nomCh">Fleurs</b><small id="cpt">1 / 16</small></div>
+  <div class="bas">
+    <div class="puces" id="puces" hidden></div>
+    <div class="ligne" id="ligne"></div>
+    <div class="pied"><button class="noir" id="suivant"><span id="suivantT">Ensuite : le fond</span><span class="fl">→</span></button></div>
+  </div>
+  <div class="bulle" id="bulle"></div>
+  <span class="maquette">MAQUETTE B</span>
+</div>
+<script src="perso-pilote.js?v=1"></script>
+<script>
+const $ = id => document.getElementById(id), P = Pilote;
+const ORDRE = ["entete", "fond", "ecriture", "couleurs", "charms"], NOMS_E = { entete: "En-tête", fond: "Fond", ecriture: "Écriture", couleurs: "Couleurs", charms: "Charms" };
+const TXT = {
+  entete: ["Votre <em>en-tête</em>", "Le haut de votre site. Glissez sur votre site pour en voir une autre."],
+  fond: ["Votre <em>fond</em>", "Plus de 500 fonds. Vos couleurs s’accordent toutes seules."],
+  ecriture: ["Votre <em>écriture</em>", "Votre nom, dans 39 écritures. Glissez pour les essayer."],
+  couleurs: ["Vos <em>couleurs</em>", "Un duo tout prêt : votre nom et vos boutons."],
+  charms: ["Vos <em>charms</em>", "Touchez un charm : il se pose sur votre site. Glissez-le où vous voulez."] };
+const SUITE = { entete: "Ensuite : le fond", fond: "Ensuite : l’écriture", ecriture: "Ensuite : les couleurs", couleurs: "Ensuite : les charms", charms: "C’est parfait ✦" };
+/* 12 duos (couleur du nom + couleur des boutons), du plus sobre au plus vif */
+const DUOS = [["Noir", "noir", "noirb"], ["Chocolat", "choco", "chocob"], ["Caramel", "taupe", "caramelb"], ["Nude", "nude", "chocob"], ["Poudre", "poudre", "bordeauxb"], ["Bordeaux", "bordeaux", "bordeauxb"],
+  ["Framboise", "framboise", "framboiseb"], ["Cerise", "cerise", "cerise"], ["Or", "sable", "orb"], ["Sauge", "sauge", "sapinb"], ["Bleu nuit", "marine", "bleunuitb"], ["Prune", "lilas", "pruneb"]];
+let e = "entete", catFond = "Élégants", catCharm = "Populaires", fondsVus = [];
+const vues = new Set();
+const bulle = t => { const b = $("bulle"); b.textContent = t; b.classList.add("on"); clearTimeout(bulle.t); bulle.t = setTimeout(() => b.classList.remove("on"), 2200); };
+
+function taille() { const s = $("scene"), T = $("tel"), d = innerWidth >= 900, h = Math.max(200, s.clientHeight - (d ? 30 : 16)), k = (h - 10) / 844, w = 390 * k + 10;
+  T.style.width = w + "px"; T.style.height = h + "px"; $("site").style.transform = `scale(${k})`; s.style.setProperty("--tw", w + "px"); }
+addEventListener("resize", taille);
+
+/* ---------- la liste des choix de l'étape ---------- */
+function liste() {
+  if (e === "entete") return P.ENT.map(([k, n]) => ({ k, n }));
+  if (e === "fond") { const F = P.fonds(); return [{ k: "", n: "Sans fond", i: -1 }].concat(F.map((x, i) => ({ k: x[0], n: x[0], i, c: x[3] || [] })).filter(x => x.c.includes(catFond))); }
+  if (e === "ecriture") return P.polices().map(([k, n]) => ({ k, n }));
+  if (e === "couleurs") return DUOS.map(([n, co, vif]) => ({ k: co + "|" + vif, n, co, vif }));
+  return P.charmsDe(catCharm).slice(0, 60).map(n => ({ k: n, n }));
+}
+const actuel = () => e === "entete" ? P.etat.entete : e === "fond" ? P.etat.fond : e === "ecriture" ? P.etat.police : e === "couleurs" ? P.etat.couleur + "|" + P.etat.vif : "";
+function choisis(x, sens) {
+  if (e === "entete") P.entete(x.k); else if (e === "fond") { P.fond(x.k); if (x.k) setTimeout(() => P.assortir(), 250); setTimeout(ambiance, 300); }
+  else if (e === "ecriture") P.police(x.k); else if (e === "couleurs") { P.couleur(x.co, true); P.vif(x.vif); }
+  if (sens) { const t = $("tel"); t.classList.add(sens < 0 ? "pousse-g" : "pousse-d"); setTimeout(() => t.classList.remove("pousse-g", "pousse-d"), 260); }
+  majNom(); marque(); }
+function majNom() { const l = liste(), i = l.findIndex(x => x.k === actuel()); const n = $("nomC");
+  if (e === "charms") { $("nomCh").textContent = P.poses().length ? `${P.poses().length} charm${P.poses().length > 1 ? "s" : ""} sur votre site` : "Touchez un charm"; $("cpt").textContent = ""; }
+  else { $("nomCh").textContent = i >= 0 ? l[i].n : "—"; $("cpt").textContent = `${Math.max(1, i + 1)} / ${l.length}`; }
+  n.classList.remove("pop"); void n.offsetWidth; n.classList.add("pop"); }
+function marque() { const a = actuel(), poses = P.poses(); $("ligne").querySelectorAll("[data-k]").forEach(b => b.classList.toggle("on", e === "charms" ? poses.includes(b.dataset.k) : b.dataset.k === a));
+  const on = $("ligne").querySelector(".on"); if (on && innerWidth < 900) $("ligne").scrollTo({ left: on.offsetLeft - $("ligne").clientWidth / 2 + on.offsetWidth / 2 }); }
+const voisin = d => { if (e === "charms") return; const l = liste(); let i = l.findIndex(x => x.k === actuel()); i = (i + d + l.length) % l.length; choisis(l[i], d); };
+
+function rend() {
+  const l = liste(); let h = "";
+  if (e === "entete") h = l.map(x => `<button class="r txt" data-k="${x.k}">${x.n}</button>`).join("");
+  if (e === "fond") h = l.map(x => x.i < 0 ? `<button class="r txt" data-k="">Sans fond</button>` : `<button class="r" data-k="${x.k.replace(/"/g, "&quot;")}" title="${x.k.replace(/"/g, "&quot;")}">${P.vignetteFond(x.i)}</button>`).join("");
+  if (e === "ecriture") { P.policesCss(); h = l.map(x => `<button class="r pol" data-k="${x.k}" title="${x.n}" style="font-family:${P.famille(x.k).replace(/"/g, "'")}">Aa</button>`).join(""); }
+  if (e === "couleurs") { const bg = Object.fromEntries([...P.couleurs(), ...P.vifs()]); h = (P.etat.fond ? `<button class="r ass" id="ass">✦ Assortir à mon fond</button>` : "") + l.map(x => `<button class="r duo" data-k="${x.k}" title="${x.n}"><span style="background:${bg[x.co]}"></span><span style="background:${bg[x.vif]}"></span></button>`).join(""); }
+  if (e === "charms") h = l.map(x => `<button class="r ch" data-k="${x.k}" aria-label="${x.n}"><img src="${P.imgCharm(x.k)}" alt="" loading="lazy"></button>`).join("");
+  $("ligne").innerHTML = h;
+  const pu = $("puces"); pu.hidden = !(e === "fond" || e === "charms");
+  if (e === "fond") pu.innerHTML = P.categories().map(c => `<button class="puce${c === catFond ? " on" : ""}" data-c="${c}">${c}</button>`).join("");
+  if (e === "charms") pu.innerHTML = ["Populaires", ...P.familles()].map(c => `<button class="puce${c === catCharm ? " on" : ""}" data-c="${c}">${c}</button>`).join("");
+  majNom(); marque();
+}
+function va(x) { e = x; const i = ORDRE.indexOf(e); $("app").dataset.e = e;
+  $("pas").innerHTML = ORDRE.map((o, j) => `<button class="${j < i ? "ok" : j === i ? "on" : ""}" data-o="${o}">${NOMS_E[o]}<i>${j < i ? "✓" : j + 1}</i></button>`).join("");
+  $("titreT").innerHTML = $("titreC").innerHTML = TXT[e][0]; $("aideC").textContent = TXT[e][1]; $("numT").textContent = `${i + 1} sur 5`; $("numC").textContent = `Étape ${i + 1} sur 5`;
+  $("suivantT").textContent = SUITE[e]; $("suivant").classList.toggle("fin", e === "charms");
+  rend(); P.enHaut(); taille();
+  if (!vues.has(e) && e !== "charms") { vues.add(e); const m = $("main"); m.classList.remove("joue"); void m.offsetWidth; m.classList.add("joue"); }
+  if (e === "charms" && !vues.has("charms")) { vues.add("charms"); setTimeout(() => bulle("Touchez un charm pour le poser"), 400); } }
+
+$("pas").onclick = ev => { const b = ev.target.closest("button"); if (b) va(b.dataset.o); };
+$("suivant").onclick = () => { const i = ORDRE.indexOf(e); if (i < 4) va(ORDRE[i + 1]); else bulle("Ensuite : mettre votre site en ligne (page suivante)"); };
+$("retour").onclick = () => { const i = ORDRE.indexOf(e); if (i > 0) va(ORDRE[i - 1]); else bulle("Retour au choix du style (Chic / Fun)"); };
+$("avant").onclick = () => voisin(-1); $("apres").onclick = () => voisin(1);
+addEventListener("keydown", ev => { if (ev.key === "ArrowLeft") voisin(-1); if (ev.key === "ArrowRight") voisin(1); });
+$("ligne").onclick = ev => { if (ev.target.closest("#ass")) { if (P.assortir()) { marque(); bulle("Couleurs assorties à votre fond ✦"); } return; }
+  const b = ev.target.closest("[data-k]"); if (!b) return;
+  if (e === "charms") { const r = P.charm(b.dataset.k); b.classList.toggle("on", r === true); if (r === true && P.poses().length === 1) bulle("Glissez-le où vous voulez sur votre site"); majNom(); return; }
+  const x = liste().find(y => y.k === b.dataset.k); if (x) choisis(x); };
+$("puces").onclick = ev => { const b = ev.target.closest(".puce"); if (!b) return; if (e === "fond") catFond = b.dataset.c; else catCharm = b.dataset.c; rend(); $("ligne").scrollLeft = 0; };
+
+/* glisser SUR son site = le choix suivant (comme un filtre Instagram) */
+function brancheGeste() { let sx = 0, sy = 0, t = 0; const D = P.D;
+  D.addEventListener("touchstart", ev => { if (ev.touches.length !== 1 || ev.target.closest(".lgn-sticker")) { t = 0; return; } sx = ev.touches[0].clientX; sy = ev.touches[0].clientY; t = Date.now(); }, { passive: true });
+  D.addEventListener("touchend", ev => { if (!t) return; const p = ev.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy; if (Date.now() - t < 700 && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.6) voisin(dx < 0 ? 1 : -1); t = 0; }, { passive: true });
+  D.addEventListener("keydown", ev => { if (ev.key === "ArrowLeft") voisin(-1); if (ev.key === "ArrowRight") voisin(1); }); }
+function ambiance() { try { const t = P.D.querySelector(".ecran .tuile"), a = $("ambiance"); if (!P.etat.fond || !t) { a.innerHTML = ""; return; } a.innerHTML = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1../loginail-site/"); } catch (x) {} }
+
+taille();
+P.branche($("site")).then(() => { brancheGeste(); setTimeout(() => { $("attente").classList.add("part"); va("entete"); }, 700); });
+</script>
+</body>
+</html>

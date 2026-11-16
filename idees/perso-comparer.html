@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Personnaliser · comparer</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 16/11 · Pôle Design · page Personnaliser : la page actuelle, la version A « L'atelier », la version B « Le geste ». Toutes vivantes (on peut cliquer dedans). */
+:root{--noir:#1E1C1B;--muted:#5F5751;--ligne:rgba(30,28,27,.12);--rose:#B5475E}
+*{box-sizing:border-box}
+body{margin:0;background:#EAE4DD;color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:14px 28px;background:rgba(246,243,239,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne)}
+header h1{margin:0;font:500 26px "Cormorant Garamond",serif}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav a,.sal button{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--ligne);background:#fff;display:inline-flex;align-items:center;font:400 13.5px Jost,sans-serif;color:var(--noir);text-decoration:none;cursor:pointer}
+.sal{display:flex;gap:6px;margin-left:auto;align-items:center;font:400 13px Jost,sans-serif;color:var(--muted)}
+.sal button.on{background:var(--noir);color:#fff;border-color:var(--noir)}
+section{padding:30px 28px 10px;max-width:1560px;margin:0 auto}
+section h2{margin:0;font:500 36px/1.05 "Cormorant Garamond",serif}
+section h2 small{font:400 15px Jost,sans-serif;color:var(--muted);margin-left:10px}
+p.idee{margin:6px 0 18px;max-width:100ch;font:400 15px/1.55 Jost,sans-serif;color:var(--muted)}
+p.idee b{color:var(--noir);font-weight:500}
+.rang{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figcaption{font:400 13px Jost,sans-serif;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+figcaption a{color:var(--noir)}
+.ordi{--so:.62;width:calc(1440px*var(--so));height:calc(900px*var(--so));border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 20px 40px -26px rgba(0,0,0,.4)}
+.tel{--st:.66;width:calc(390px*var(--st) + 12px);height:calc(844px*var(--st) + 12px);border-radius:32px;background:var(--noir);padding:6px;box-shadow:0 20px 40px -26px rgba(0,0,0,.5)}
+.tel>div{width:100%;height:100%;border-radius:27px;overflow:hidden}
+iframe{border:0;display:block;transform-origin:0 0}
+.ordi iframe{width:1440px;height:900px;transform:scale(var(--so))}
+.tel iframe{width:390px;height:844px;transform:scale(var(--st))}
+.audit{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;margin-top:6px}
+.audit div{background:#fff;border-radius:16px;padding:16px 18px;font:400 14px/1.5 Jost,sans-serif;color:var(--muted)}
+.audit b{display:block;color:var(--noir);font-weight:500;margin-bottom:3px}
+.audit i{font-style:normal;color:var(--rose)}
+table{border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;font:400 14px/1.45 Jost,sans-serif;width:100%;max-width:1100px}
+th,td{padding:11px 14px;border-bottom:1px solid var(--ligne);text-align:left;vertical-align:top}
+th{font-weight:500;background:#F6F3EF}
+td:first-child{color:var(--muted);width:24%}
+.reco{background:var(--noir);color:#fff;border-radius:20px;padding:22px 26px;max-width:1100px;font:400 15.5px/1.6 Jost,sans-serif}
+.reco h3{margin:0 0 6px;font:500 30px "Cormorant Garamond",serif}
+.reco b{font-weight:500}
+footer{height:60px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Personnaliser · 2 versions</h1>
+  <nav><a href="#avant">Aujourd’hui</a><a href="#a">A · L’atelier</a><a href="#b">B · Le geste</a><a href="#audit">Ce qui fait amateur</a><a href="#reco">Ma recommandation</a></nav>
+  <div class="sal">Salon : <button data-s="cerise" class="on">Les Ongles de Cerise</button><button data-s="marie">Marie Onglerie</button></div>
+</header>
+
+<section id="avant">
+  <h2>Aujourd’hui <small>la page en ligne (maquette-perso.html)</small></h2>
+  <p class="idee">4 étapes, mais 2 onglets cachés dans les étapes 2 et 3 (en vrai : 7 écrans). Sur ordinateur : une carte au milieu (« fait iPad ») et d’autres sites flous derrière.</p>
+  <div class="rang">
+    <figure><div class="tel"><div><iframe data-src="../maquette-perso.html" loading="lazy"></iframe></div></div><figcaption>Téléphone</figcaption></figure>
+    <figure><div class="ordi"><iframe data-src="../creer.html?p=maquette-perso.html" loading="lazy"></iframe></div><figcaption>Ordinateur</figcaption></figure>
+  </div>
+</section>
+
+<section id="a">
+  <h2>A · L’atelier <small>tout est visible, on va où on veut</small></h2>
+  <p class="idee"><b>Les 5 réglages toujours sous les yeux</b> (En-tête · Fond · Écriture · Couleurs · Charms) : un toucher et on y est. Le bouton noir dit <b>ce qui vient ensuite</b> (« Ensuite : le fond → »), pour celles qui veulent être guidées. Les en-têtes sont des <b>petites copies de SON site</b> ; les écritures montrent <b>SON nom</b> écrit dans les 39 écritures ; couleurs : 16 d’abord, le reste derrière « + ». Sur ordinateur : toute la page, son site à gauche, les choix en grand à droite, les étapes en haut à droite comme à la page 1.</p>
+  <div class="rang">
+    <figure><div class="tel"><div><iframe data-src="perso-A.html" loading="lazy"></iframe></div></div><figcaption>Téléphone <a href="perso-A.html" target="_blank">ouvrir ↗</a></figcaption></figure>
+    <figure><div class="ordi"><iframe data-src="perso-A.html" loading="lazy"></iframe></div><figcaption>Ordinateur <a href="perso-A.html" target="_blank">ouvrir ↗</a></figcaption></figure>
+  </div>
+</section>
+
+<section id="b">
+  <h2>B · Le geste <small>une chose à la fois, on glisse sur son site</small></h2>
+  <p class="idee"><b>Comme un filtre Instagram :</b> elle glisse le doigt sur son site (ou les flèches ‹ ›, ou les flèches du clavier) et il change sous ses yeux ; le nom du choix s’affiche en grand (« Soie qui ondule · champagne »). Une petite main montre le geste à chaque étape. Son site prend presque tout l’écran. Couleurs : <b>12 duos tout prêts</b> (nom + boutons) au lieu de 2 nuanciers.</p>
+  <div class="rang">
+    <figure><div class="tel"><div><iframe data-src="perso-B.html" loading="lazy"></iframe></div></div><figcaption>Téléphone <a href="perso-B.html" target="_blank">ouvrir ↗</a></figcaption></figure>
+    <figure><div class="ordi"><iframe data-src="perso-B.html" loading="lazy"></iframe></div><figcaption>Ordinateur <a href="perso-B.html" target="_blank">ouvrir ↗</a></figcaption></figure>
+  </div>
+</section>
+
+<section id="audit">
+  <h2>Ce qui fait amateur aujourd’hui <small>et la correction</small></h2>
+  <div class="audit">
+    <div><b>« 2 sur 4 »… mais 7 écrans</b>Des onglets cachés dans les étapes : on croit avoir fini et il en reste. <i>→ A : les 5 réglages visibles. B : « 3 sur 5 » qui dit vrai.</i></div>
+    <div><b>Le bouton « SUIVANT » blanc sur blanc</b>On ne voit pas que c’est LE bouton, et « Suivant » ne dit pas où on va (comme « Continuer »). <i>→ bouton noir qui dit la suite : « Ensuite : le fond → ».</i></div>
+    <div><b>Ordinateur « fait iPad »</b>Une carte au milieu, des sites d’autres salons flous derrière. <i>→ toute la page, comme la page 1 (D26) : logo à gauche, étapes en haut à droite.</i></div>
+    <div><b>« Faites défiler » posé sur son site</b>La bulle cache le bouton « Réserver » de son propre site. <i>→ supprimée : on voit son site en entier.</i></div>
+    <div><b>Les écritures écrivent « Élégante », pas son nom</b>Une liste qui pâlit, avec un grand vide au-dessus. <i>→ SON nom dans chaque écriture (comme l’écran de fin du chargement).</i></div>
+    <div><b>Couleurs : 3 onglets + « sur blanc / sur couleur » + 51 ronds</b>Trop technique pour une prothésiste qui découvre. <i>→ A : 16 couleurs + « + ». B : 12 duos tout prêts. Les deux : « ✦ Assortir à mon fond ».</i></div>
+    <div><b>Petits textes trop pâles</b>Gris clair sur crème (contraste insuffisant, accessibilité). <i>→ textes en gris foncé, 12 px minimum.</i></div>
+    <div><b>« Votre plus belle photo » en 1re étape</b>Sur ordinateur, un grand cadre vide en pointillés. Et la photo n’est pas annoncée dans « En-tête, fond, écriture, couleurs, charms ». <i>→ la photo se choisit à la page 3 « Il vous manque… » (D16) ou dans l’en-tête. À confirmer.</i></div>
+  </div>
+</section>
+
+<section id="comparer">
+  <h2>A ou B</h2>
+  <table>
+    <tr><th></th><th>A · L’atelier</th><th>B · Le geste</th></tr>
+    <tr><td>Comprendre en 3 secondes</td><td>Oui : tout ce qu’on peut changer est écrit</td><td>Oui pour l’étape en cours, le reste est dans la barre du haut</td></tr>
+    <tr><td>Effet « waouh »</td><td>Ses en-têtes et son nom partout</td><td>Plus fort : son site change sous son doigt</td></tr>
+    <tr><td>Comparer les choix</td><td>Facile : on voit 10 à 40 choix d’un coup</td><td>Un à la fois (sauf la petite ligne en bas)</td></tr>
+    <tr><td>Ordinateur</td><td>Naturel (une grille à droite)</td><td>Flèches et clavier : moins naturel qu’au doigt</td></tr>
+    <tr><td>Débutante qui veut être guidée</td><td>Le bouton noir la guide</td><td>Très guidée (une chose à la fois)</td></tr>
+    <tr><td>Travail pour coder</td><td>Moyen (réutilise la page actuelle)</td><td>Moyen + le geste à soigner sur iPhone</td></tr>
+  </table>
+</section>
+
+<section id="reco">
+  <div class="reco"><h3>Ma recommandation : A, avec 2 idées de B</h3>
+  <b>A « L’atelier »</b>, parce qu’une prothésiste qui découvre voit d’un coup tout ce qu’elle peut changer (rien de caché), qu’elle compare ses écritures et ses en-têtes côte à côte, et que c’est la même page sur téléphone et sur ordinateur. Le bouton « Personnaliser mon site » de la fin du chargement promet « écritures, fonds, charms » : A les montre tous tout de suite.<br><br>
+  Je prendrais 2 idées de B : <b>(1) glisser sur son site</b> pour passer au choix suivant (en plus, pour le plaisir) et <b>(2) les 12 duos de couleurs</b>, plus simples que les 2 nuanciers.<br><br>
+  Point faible de A : sur un petit iPhone (SE), la bande des choix est plus basse (150 px) ; c’est vérifié, rien n’est coupé.</div>
+</section>
+<footer></footer>
+<script>
+let salon = "cerise";
+function charge() { document.querySelectorAll("iframe[data-src]").forEach(f => { const u = f.dataset.src; f.src = /perso-[AB]/.test(u) ? u + "?salon=" + salon : u; }); }
+document.querySelector(".sal").onclick = e => { const b = e.target.closest("button"); if (!b) return; salon = b.dataset.s; document.querySelectorAll(".sal button").forEach(x => x.classList.toggle("on", x === b)); charge(); };
+charge();
+</script>
+</body>
+</html>

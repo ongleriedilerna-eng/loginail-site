@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Personnaliser · version A « L'atelier »</title>
+<link href="../polices.css" rel="stylesheet">
+<script src="../charms-cat.js?v=1"></script>
+<style>
+/* 16/11 · Pôle Design · Personnaliser, version A « L'atelier ».
+   Les 5 choses à régler sont TOUJOURS visibles (En-tête · Fond · Écriture · Couleurs · Charms) : on va où on veut,
+   et le bouton noir dit ce qui vient ensuite (« Ensuite : le fond → »). Son VRAI site au-dessus (téléphone) ou à gauche (ordinateur).
+   Écritures : son NOM écrit dans chaque écriture. Couleurs : 16 d'abord, le reste derrière « Plus de couleurs ». */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--ligne:rgba(30,28,27,.12);--rose:#B5475E;--rosé:#F7E9EA;
+  --sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom);--ressort:cubic-bezier(.2,.9,.25,1);--pop:cubic-bezier(.3,1.5,.5,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:focus-visible{outline:2px solid var(--noir);outline-offset:2px}
+.app{position:relative;height:100dvh;display:flex;flex-direction:column;isolation:isolate}
+/* son fond en transparence derrière tout */
+#ambiance{position:absolute;inset:0;z-index:-1;opacity:.2;overflow:hidden;pointer-events:none;transition:opacity .4s}
+#ambiance .tuile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
+#ambiance:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(246,243,239,0) 40%,var(--fond) 78%)}
+
+/* ---------- haut ---------- */
+.haut{flex:none;display:flex;align-items:center;justify-content:space-between;padding:calc(var(--sat) + 8px) 14px 4px;height:calc(var(--sat) + 52px)}
+.rond{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.75);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 4px 14px -8px rgba(0,0,0,.35);transition:transform .15s}
+.rond:active{transform:scale(.94)}
+.rond svg{width:18px;height:18px}
+.logo{width:92px}
+.logo svg{display:block;width:100%;height:auto}
+.etapes{display:none}
+
+/* ---------- son site ---------- */
+.scene{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:4px 0 10px}
+.tel{position:relative;border-radius:34px;background:#1E1C1B;padding:5px;box-shadow:0 26px 50px -28px rgba(0,0,0,.55);transition:transform .35s var(--ressort)}
+.tel>.ecr{position:relative;width:100%;height:100%;border-radius:29px;overflow:hidden;background:#fff}
+#site{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff}
+.grand{position:absolute;right:calc(50% - var(--tw)/2 - 52px);bottom:14px;display:flex;flex-direction:column;align-items:center;gap:4px;font:400 11px Jost,sans-serif;color:var(--muted)}
+.attente{position:absolute;inset:0;display:grid;place-items:center;font:400 13px Jost,sans-serif;color:var(--doux);background:#fff;transition:opacity .4s}
+.attente.part{opacity:0;pointer-events:none}
+
+/* ---------- les 5 onglets ---------- */
+.reglages{flex:none;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -10px 30px -22px rgba(0,0,0,.35);padding:6px 0 calc(var(--sab) + 12px)}
+.onglets{display:flex;justify-content:space-between;padding:6px 14px 0;border-bottom:1px solid var(--ligne)}
+.onglets button{position:relative;flex:1;height:42px;font:400 14px Jost,sans-serif;color:var(--muted);white-space:nowrap;transition:color .2s}
+.onglets button[aria-selected=true]{color:var(--noir);font-weight:500}
+.onglets button:after{content:"";position:absolute;left:22%;right:22%;bottom:-1px;height:2px;border-radius:2px;background:var(--noir);transform:scaleX(0);transition:transform .3s var(--ressort)}
+.onglets button[aria-selected=true]:after{transform:none}
+.onglets button i{display:none}
+.titreP{display:none}
+.aide{margin:10px 18px 0;font:400 13px/1.35 Jost,sans-serif;color:var(--muted);min-height:18px}
+.choix{height:172px;position:relative}
+.panneau{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:8px;opacity:0;visibility:hidden;transform:translateX(16px);transition:opacity .25s,transform .35s var(--ressort),visibility 0s .35s}
+.panneau.on{opacity:1;visibility:visible;transform:none;transition:opacity .25s .05s,transform .35s var(--ressort)}
+.ligne{display:flex;gap:10px;overflow-x:auto;padding:5px 18px 6px;scroll-padding:0 18px;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain}
+.ligne::-webkit-scrollbar{display:none}
+.ligne>*{flex:none;scroll-snap-align:start}
+.puces{display:flex;gap:6px;overflow-x:auto;padding:0 18px;scrollbar-width:none}
+.puces::-webkit-scrollbar{display:none}
+.puce{flex:none;height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--ligne);background:#fff;font:400 13px Jost,sans-serif;color:var(--muted);white-space:nowrap;transition:background .2s,color .2s}
+.puce.on{background:var(--noir);border-color:var(--noir);color:#fff}
+.puce.assort{border-color:rgba(181,71,94,.35);color:var(--rose)}
+.puce.assort b{font-weight:400}
+
+/* en-têtes : son site en tout petit */
+.ent{display:flex;flex-direction:column;align-items:center;gap:5px;font:400 12px Jost,sans-serif;color:var(--muted)}
+.ent .mi{width:76px;height:118px;border-radius:12px;overflow:hidden;background:#EEE9E3;box-shadow:inset 0 0 0 1px var(--ligne);transition:box-shadow .2s,transform .2s}
+.ent.on{color:var(--noir);font-weight:500}
+.ent.on .mi{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.ent:active .mi{transform:scale(.96)}
+/* fonds */
+.vg{width:64px;height:64px;border-radius:14px;overflow:hidden;position:relative;background:#EEE9E3;box-shadow:inset 0 0 0 1px var(--ligne);transition:transform .15s}
+.vg .f100,.vg .tuile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
+.vg.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.vg:active{transform:scale(.95)}
+.vg.sans{display:grid;place-items:center;background:#fff;font:400 11px/1.2 Jost,sans-serif;color:var(--muted);text-align:center}
+/* écritures : SON nom */
+.grille2{display:grid;grid-template-rows:repeat(2,58px);grid-auto-flow:column;grid-auto-columns:max-content;gap:8px;overflow-x:auto;padding:4px 18px 6px;scrollbar-width:none}
+.grille2::-webkit-scrollbar{display:none}
+.ecr-c{min-width:120px;max-width:230px;height:58px;padding:0 16px;border-radius:14px;background:var(--fond);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1px;transition:background .2s,box-shadow .2s}
+.ecr-c span{font-size:21px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;color:var(--noir)}
+.ecr-c small{font:400 10.5px Jost,sans-serif;color:var(--doux)}
+.ecr-c.on{background:#fff;box-shadow:0 0 0 2px var(--noir)}
+/* couleurs */
+.rangC{display:flex;align-items:center;gap:10px;padding:0 18px}
+.rangC>b{flex:none;width:74px;font:400 12.5px Jost,sans-serif;color:var(--muted)}
+.rangC .ligne{padding:4px 2px 6px;flex:1;min-width:0}
+.dot{width:36px;height:36px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .15s}
+.dot.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.dot:active{transform:scale(.9)}
+.dot.plus{display:grid;place-items:center;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne);font:300 20px/1 Jost,sans-serif;color:var(--muted)}
+.basC{display:flex;gap:8px;padding:2px 18px 0}
+/* charms */
+.ch{position:relative;width:62px;height:62px;border-radius:14px;background:var(--fond);display:grid;place-items:center;transition:transform .15s,background .2s}
+.ch img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.18))}
+.ch:active{transform:scale(.93)}
+.ch.on{background:var(--rosé)}
+.ch.on:after{content:"✓";position:absolute;top:3px;right:5px;font:500 11px Jost,sans-serif;color:var(--rose)}
+
+/* ---------- le bouton ---------- */
+.pied{display:flex;align-items:center;gap:10px;padding:8px 18px 0}
+.noir{flex:1;height:54px;border-radius:999px;background:var(--noir);color:#fff;font:500 13px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 12px 24px -14px rgba(0,0,0,.6);transition:transform .15s,background .2s}
+.noir:active{transform:scale(.98)}
+.noir .fl{font-size:17px;letter-spacing:0;transition:transform .3s var(--ressort)}
+.noir:hover .fl{transform:translateX(4px)}
+.noir.fin{background:var(--rose)}
+.retourT{display:none}
+
+/* ---------- voir en grand ---------- */
+.app.agrandi .reglages{transform:translateY(105%)}
+.reglages{transition:transform .4s var(--ressort)}
+#revenir{position:absolute;left:50%;bottom:calc(var(--sab) + 18px);transform:translate(-50%,40px);opacity:0;pointer-events:none;height:46px;padding:0 20px;border-radius:999px;background:var(--noir);color:#fff;font:500 12px Jost,sans-serif;letter-spacing:.14em;transition:.35s var(--ressort);z-index:5}
+.app.agrandi #revenir{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.bulle{position:absolute;left:50%;top:calc(var(--sat) + 60px);transform:translate(-50%,-8px);opacity:0;background:var(--noir);color:#fff;font:400 13px Jost,sans-serif;padding:9px 16px;border-radius:999px;white-space:nowrap;pointer-events:none;transition:.3s var(--ressort);z-index:9}
+.bulle.on{opacity:1;transform:translate(-50%,0)}
+.maquette{position:fixed;right:10px;bottom:calc(var(--sab) + 4px);font:500 9px Jost,sans-serif;letter-spacing:.14em;color:var(--doux);opacity:.6;z-index:20;pointer-events:none}
+
+/* =================== ORDINATEUR : toute la page =================== */
+@media (min-width:900px){
+  .app{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,46%);grid-template-rows:auto minmax(0,1fr)}
+  .haut{grid-column:1/-1;height:auto;padding:26px 48px 0}
+  .haut #retour{display:none}
+  .logo{width:128px}
+  .etapes{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+  .etapes li{display:flex;align-items:center;gap:9px;font:400 14px Jost,sans-serif;color:var(--muted)}
+  .etapes li i{width:26px;height:26px;border-radius:50%;border:1px solid var(--doux);display:grid;place-items:center;font:400 12px Jost,sans-serif;font-style:normal}
+  .etapes li.ok i{background:var(--noir);border-color:var(--noir);color:#fff;font-size:11px}
+  .etapes li.on{color:var(--noir);font-weight:500}
+  .etapes li.on i{background:var(--noir);border-color:var(--noir);color:#fff}
+  #oeilH{display:none}
+  .scene{padding:18px 0 34px}
+  #ambiance{opacity:.24}
+  #ambiance:after{background:linear-gradient(90deg,rgba(246,243,239,0) 30%,var(--fond) 62%)}
+  .grand{display:flex}
+  .reglages{background:transparent;box-shadow:none;border-radius:0;padding:18px 48px 40px 8px;display:flex;flex-direction:column;min-height:0}
+  .onglets{justify-content:flex-start;gap:6px;padding:0;border:0}
+  .onglets button{flex:none;height:40px;padding:0 18px;border-radius:999px;font-size:15px;background:transparent}
+  .onglets button:hover{color:var(--noir)}
+  .onglets button[aria-selected=true]{background:#fff;box-shadow:0 6px 16px -10px rgba(0,0,0,.3)}
+  .onglets button:after{display:none}
+  .onglets button i{top:8px;right:9px}
+  .titreP{display:block;margin:26px 0 0;font:500 40px/1.05 "Cormorant Garamond",serif;letter-spacing:-.01em}
+  .titreP em{font-style:italic}
+  .aide{margin:8px 0 0;font-size:15px}
+  .choix{flex:1;min-height:0;height:auto;margin-top:18px}
+  .panneau{justify-content:flex-start;gap:14px;overflow-y:auto;scrollbar-width:thin;padding-bottom:10px}
+  .ligne,.puces,.grille2,.rangC,.basC{padding-left:0;padding-right:0}
+  .panneau>.ligne{flex-wrap:wrap;overflow:visible}
+  .ent .mi{width:112px;height:176px}
+  .ent{font-size:13px}
+  .vg{width:76px;height:76px}
+  .grille2{grid-template-rows:none;grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));overflow:visible}
+  .ecr-c{max-width:none;height:64px}
+  .ecr-c span{font-size:24px}
+  .ecr-c:hover:not(.on){background:#EFE9E2}
+  .rangC{flex-direction:column;align-items:flex-start;gap:6px}
+  .rangC>b{width:auto;font-size:14px;color:var(--noir);font-weight:500}
+  .rangC .ligne{flex-wrap:wrap;overflow:visible;padding:4px}
+  .dot{width:36px;height:36px}
+  .ch{width:76px;height:76px}.ch img{width:58px;height:58px}
+  .ch:hover{background:#EFE9E2}
+  .pied{padding:16px 0 0;justify-content:flex-end}
+  .retourT{display:block;margin-right:auto;font:400 14px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+  .noir{flex:none;width:auto;min-width:300px;padding:0 30px;height:58px}
+  .noir:hover{background:#000}
+  .bulle{top:90px;left:30%}
+  .maquette{bottom:8px}
+}
+@media (min-width:900px) and (max-height:760px){
+  .titreP{font-size:32px;margin-top:16px}.choix{margin-top:12px}.ent .mi{width:96px;height:150px}.scene{padding-bottom:20px}
+}
+@media (max-width:899px) and (max-height:700px){
+  .choix{height:150px}.ent .mi{width:64px;height:98px}.grille2{grid-template-rows:repeat(2,52px)}.ecr-c{height:52px}.ecr-c span{font-size:19px}
+  .aide{margin-top:8px;font-size:12.5px}.noir{height:50px}
+}
+
+/* 17/11 · où va la photo : ?photo=entete (rangée dans l'onglet En-tête) ou ?photo=onglet (6e onglet « Photo », en premier) */
+.sousT{display:flex;align-items:center;gap:10px;padding:0 18px}
+.sousT>b{flex:none;width:52px;font:400 12.5px Jost,sans-serif;color:var(--muted)}
+.sousT .ligne{padding:4px 2px 6px;flex:1;min-width:0}
+.ph{position:relative;width:48px;height:48px;border-radius:12px;overflow:hidden;background:#EEE9E3 center/cover;box-shadow:inset 0 0 0 1px var(--ligne);transition:transform .15s}
+.ph.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.ph:active{transform:scale(.94)}
+.ph.ajout{display:grid;place-items:center;background:#fff;font:300 22px/1 Jost,sans-serif;color:var(--muted);cursor:pointer}
+.ph.ajout small{display:none}
+body.m-entete .choix{height:190px}
+body.m-entete .panneau[data-p=entete]{gap:4px}
+body.m-entete .ent .mi{width:64px;height:100px}
+.grandP .ph{width:92px;height:122px;border-radius:14px}
+.grandP .ph.ajout{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:26px}
+.grandP .ph.ajout small{display:block;font:400 12px/1.2 Jost,sans-serif;text-align:center}
+body.m-onglet .onglets button{font-size:13.5px}
+@media (min-width:900px){
+  .sousT{flex-direction:column;align-items:flex-start;gap:6px;padding:0}
+  .sousT>b{width:auto;font-size:14px;color:var(--noir);font-weight:500}
+  .sousT .ligne{flex-wrap:wrap;overflow:visible;padding:4px}
+  .ph{width:72px;height:72px}
+  body.m-entete .choix{height:auto}
+  body.m-entete .ent .mi{width:104px;height:164px}
+  .grandP .ph{width:150px;height:200px}
+  body.m-onglet .onglets button{font-size:15px}
+}
+@media (max-width:899px) and (max-height:700px){body.m-entete .choix{height:170px}body.m-entete .ent .mi{width:56px;height:84px}.ph{width:44px;height:44px}.grandP .ph{width:80px;height:106px}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div id="ambiance"></div>
+  <div class="haut">
+    <button class="rond" id="retour" aria-label="Retour au choix du style"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <span class="logo"><svg viewBox="0 -2 330 72" aria-label="Loginail"><g transform="scale(.5)"><rect x="0" y="5" width="225" height="120" rx="60" fill="currentColor"/><path d="M172 21H215C254 21 282 42 282 65C282 88 254 109 215 109H172A44 44 0 0 1 172 21Z" fill="currentColor"/><path d="M172 28H213C247 28 274 47 274 65C274 83 247 102 213 102H172A37 37 0 0 1 172 28Z" fill="var(--logo-fond,#F6F3EF)"/></g><text x="160" y="42" font-family="Jost,sans-serif" font-weight="300" font-size="22" letter-spacing="9" fill="currentColor">LOGINAIL</text></svg></span>
+    <ol class="etapes" id="etapes"><li class="ok"><i>✓</i>Votre lien</li><li class="ok"><i>✓</i>Votre style</li><li class="on" data-s="3"><i>3</i>Vos couleurs et votre fond</li><li data-s="4"><i>4</i>Vos charms</li></ol>
+    <button class="rond" id="oeilH" aria-label="Voir mon site en grand"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="scene" id="scene">
+    <div class="tel" id="tel"><div class="ecr"><iframe id="site" title="Votre site"></iframe><div class="attente" id="attente">Votre site arrive…</div></div></div>
+  </div>
+  <div class="reglages" id="reglages">
+    <div class="onglets" role="tablist" id="onglets">
+      <button role="tab" data-o="entete" aria-selected="true">En-tête<i></i></button>
+      <button role="tab" data-o="fond">Fond<i></i></button>
+      <button role="tab" data-o="ecriture">Écriture<i></i></button>
+      <button role="tab" data-o="couleurs">Couleurs<i></i></button>
+      <button role="tab" data-o="charms">Charms<i></i></button>
+    </div>
+    <h1 class="titreP" id="titreP">Votre en-tête</h1>
+    <p class="aide" id="aide"></p>
+    <div class="choix">
+      <div class="panneau on" data-p="entete"><div class="ligne" id="lEnt"></div></div>
+      <div class="panneau" data-p="fond"><div class="puces" id="catF"></div><div class="ligne" id="lFond"></div></div>
+      <div class="panneau" data-p="ecriture"><div class="grille2" id="lPol"></div></div>
+      <div class="panneau" data-p="couleurs">
+        <div class="rangC"><b>Votre nom</b><div class="ligne" id="lCoul"></div></div>
+        <div class="rangC"><b>Les boutons</b><div class="ligne" id="lVif"></div></div>
+        <div class="basC"><button class="puce assort" id="assortir"><b>✦</b> Assortir à mon fond</button></div>
+      </div>
+      <div class="panneau" data-p="charms"><div class="puces" id="catC"></div><div class="ligne" id="lCh"></div></div>
+    </div>
+    <div class="pied"><button class="retourT" id="retourT">Retour au choix du style</button><button class="noir" id="suivant"><span id="suivantT">Ensuite : le fond</span><span class="fl">→</span></button></div>
+  </div>
+  <button id="revenir">REVENIR AUX RÉGLAGES</button>
+  <div class="bulle" id="bulle"></div>
+  <span class="maquette">MAQUETTE A</span>
+</div>
+<script src="perso-pilote.js?v=1"></script>
+<script>
+const $ = id => document.getElementById(id), P = Pilote;
+const ORDRE = ["entete", "fond", "ecriture", "couleurs", "charms"];
+const TXT = {
+  entete: ["Votre <em>en-tête</em>", "Le haut de votre site, la 1re chose que vos clientes voient."],
+  fond: ["Votre <em>fond</em>", "Plus de 500 fonds. Vos couleurs s’accordent toutes seules."],
+  ecriture: ["Votre <em>écriture</em>", "Votre nom, dans 39 écritures. Touchez celle qui vous ressemble."],
+  couleurs: ["Vos <em>couleurs</em>", "La couleur de votre nom et de vos boutons."],
+  charms: ["Vos <em>charms</em>", "Touchez un charm : il se pose sur votre site. Glissez-le où vous voulez."] };
+const SUITE = { entete: "Ensuite : le fond", fond: "Ensuite : l’écriture", ecriture: "Ensuite : les couleurs", couleurs: "Ensuite : les charms", charms: "C’est parfait ✦" };
+let onglet = "entete", catFond = "Élégants", catCharm = "Populaires", toutesCouleurs = false;
+const vus = new Set(["entete"]);
+const bulle = t => { const b = $("bulle"); b.textContent = t; b.classList.add("on"); clearTimeout(bulle.t); bulle.t = setTimeout(() => b.classList.remove("on"), 2200); };
+
+/* ---------- taille du téléphone ---------- */
+function taille() { const s = $("scene"), T = $("tel"), h = Math.max(200, s.clientHeight - (innerWidth >= 900 ? 52 : 14)), k = (h - 10) / 844, w = 390 * k + 10;
+  T.style.width = w + "px"; T.style.height = h + "px"; $("site").style.transform = `scale(${k})`; s.style.setProperty("--tw", w + "px"); }
+addEventListener("resize", taille);
+
+/* ---------- les onglets ---------- */
+function ouvre(o) { onglet = o; vus.add(o);
+  document.querySelectorAll("#onglets button").forEach(b => { b.setAttribute("aria-selected", b.dataset.o === o); b.classList.toggle("vu", vus.has(b.dataset.o) && b.dataset.o !== o); });
+  document.querySelectorAll(".panneau").forEach(p => p.classList.toggle("on", p.dataset.p === o));
+  $("titreP").innerHTML = TXT[o][0]; $("aide").textContent = TXT[o][1];
+  $("suivantT").textContent = SUITE[o]; $("suivant").classList.toggle("fin", o === "charms");
+  $("etapes").querySelector("[data-s='3']").className = o === "charms" ? "ok" : "on"; $("etapes").querySelector("[data-s='3'] i").textContent = o === "charms" ? "✓" : "3";
+  $("etapes").querySelector("[data-s='4']").className = o === "charms" ? "on" : "";
+  rend(o); P.enHaut(); }
+$("onglets").onclick = e => { const b = e.target.closest("button"); if (b) ouvre(b.dataset.o); };
+$("suivant").onclick = () => { const i = ORDRE.indexOf(onglet); if (i < ORDRE.length - 1) ouvre(ORDRE[i + 1]); else bulle("Ensuite : mettre votre site en ligne (page suivante)"); };
+$("retour").onclick = $("retourT").onclick = () => bulle("Retour au choix du style (Chic / Fun)");
+$("oeilH").onclick = () => { $("app").classList.add("agrandi"); setTimeout(taille, 420); };
+$("revenir").onclick = () => { $("app").classList.remove("agrandi"); setTimeout(taille, 50); };
+
+/* ---------- ce qu'on montre dans chaque onglet ---------- */
+function rend(o) {
+  if (!P.pret) return;
+  if (o === "entete") { const l = $("lEnt"); if (!l.children.length) l.innerHTML = P.ENT.map(([k, n]) => `<button class="ent" data-k="${k}"><span class="mi"></span>${n}</button>`).join("");
+    const larg = l.querySelector(".mi").clientWidth || 76; l.querySelectorAll(".ent").forEach(b => { b.classList.toggle("on", b.dataset.k === P.etat.entete); P.miniEntete(b.querySelector(".mi"), b.dataset.k, larg); }); }
+  if (o === "fond") { const cats = P.categories(); $("catF").innerHTML = cats.map(c => `<button class="puce${c === catFond ? " on" : ""}" data-c="${c}">${c}</button>`).join("");
+    const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => (x[3] || []).includes(catFond) ? `<button class="vg${x[0] === P.etat.fond ? " on" : ""}" data-f="${x[0].replace(/"/g, "&quot;")}" title="${x[0].replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>` : "").join(""); }
+  if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = P.polices().map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
+    l.querySelectorAll(".ecr-c").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.police)); }
+  if (o === "couleurs") { const cs = P.couleurs(), vs = P.vifs();
+    const c = toutesCouleurs ? cs : cs.filter(x => P.COUL_VUES.includes(x[0])).sort((a, b) => P.COUL_VUES.indexOf(a[0]) - P.COUL_VUES.indexOf(b[0]));
+    $("lCoul").innerHTML = c.map(([k, bg]) => `<button class="dot${k === P.etat.couleur ? " on" : ""}" data-co="${k}" style="background:${bg}" aria-label="${P.NOMS[k] || k}" title="${P.NOMS[k] || k}"></button>`).join("") + (toutesCouleurs ? "" : `<button class="dot plus" id="plusC" aria-label="Plus de couleurs" title="Plus de couleurs">+</button>`);
+    const v = vs.filter(x => P.VIFS_VUS.includes(x[0])).sort((a, b) => P.VIFS_VUS.indexOf(a[0]) - P.VIFS_VUS.indexOf(b[0]));
+    $("lVif").innerHTML = v.map(([k, bg]) => `<button class="dot${k === P.etat.vif ? " on" : ""}" data-vif="${k}" style="background:${bg}" aria-label="${P.NOMS[k] || k}" title="${P.NOMS[k] || k}"></button>`).join("");
+    $("assortir").hidden = !P.etat.fond; }
+  if (o === "charms") { const fams = ["Populaires", ...P.familles().filter(f => f !== "Populaires")];
+    $("catC").innerHTML = fams.map(f => `<button class="puce${f === catCharm ? " on" : ""}" data-c="${f}">${f}</button>`).join("");
+    const poses = P.poses(); $("lCh").innerHTML = P.charmsDe(catCharm).slice(0, 80).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}" data-n="${n}" aria-label="${n}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join(""); }
+}
+const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
+$("lEnt").onclick = e => { const b = e.target.closest(".ent"); if (!b) return; P.entete(b.dataset.k); marque($("lEnt"), ".ent", b.dataset.k, "k"); };
+$("catF").onclick = e => { const b = e.target.closest(".puce"); if (!b) return; catFond = b.dataset.c; rend("fond"); $("lFond").scrollLeft = 0; };
+$("lFond").onclick = e => { const b = e.target.closest(".vg"); if (!b) return; P.fond(b.dataset.f); marque($("lFond"), ".vg", b.dataset.f, "f"); if (b.dataset.f) setTimeout(() => P.assortir(), 250); setTimeout(ambiance, 300); };
+$("lPol").onclick = e => { const b = e.target.closest(".ecr-c"); if (!b) return; P.police(b.dataset.k); marque($("lPol"), ".ecr-c", b.dataset.k, "k"); };
+$("lCoul").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; if (b.id === "plusC") { toutesCouleurs = true; rend("couleurs"); return; } P.couleur(b.dataset.co); marque($("lCoul"), ".dot", b.dataset.co, "co"); };
+$("lVif").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; P.vif(b.dataset.vif); marque($("lVif"), ".dot", b.dataset.vif, "vif"); };
+$("assortir").onclick = () => { if (P.assortir()) { rend("couleurs"); bulle("Couleurs assorties à votre fond ✦"); } };
+$("catC").onclick = e => { const b = e.target.closest(".puce"); if (!b) return; catCharm = b.dataset.c; rend("charms"); $("lCh").scrollLeft = 0; };
+$("lCh").onclick = e => { const b = e.target.closest(".ch"); if (!b) return; const r = P.charm(b.dataset.n); b.classList.toggle("on", r === true);
+  if (r === true && P.poses().length === 1) bulle("Glissez-le où vous voulez sur votre site"); if (r === false && !b.classList.contains("on") && P.poses().length >= 12) bulle("12 charms maximum"); };
+
+/* son fond en transparence derrière */
+function ambiance() { try { const t = P.D.querySelector(".ecran .tuile"), a = $("ambiance"); if (!P.etat.fond || !t) { a.innerHTML = ""; return; } a.innerHTML = t.outerHTML.replace(/url\((['"]?)\.\.\/loginail-site\//g, "url($1../loginail-site/"); } catch (e) {} }
+P.change(q => { if (q === "entete") setTimeout(() => rend("entete"), 400); if (q === "fond" || q === "police" || q === "couleur") { clearTimeout(window.__tm); window.__tm = setTimeout(() => { const l = $("lEnt"); l.dataset.sale = 1; }, 300); } });
+/* les mini en-têtes se refont (avec son écriture et son fond) quand on revient dessus */
+const ouvre0 = ouvre;
+
+/* 17/11 · où va la photo (choix de Marie à faire) */
+const MODE = new URLSearchParams(location.search).get("photo") || "";
+if (MODE) document.body.classList.add("m-" + MODE);
+const phHtml = (grand) => `<label class="ph ajout" title="Ajouter ma photo"><input type="file" accept="image/*" hidden class="fichierP">+<small>Ajouter<br>ma photo</small></label>` + P.photos().map(u => `<button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>`).join("");
+function brancheP(l) { l.onclick = e => { const b = e.target.closest("button.ph"); if (!b) return; P.choisitPhoto(b.dataset.u); l.querySelectorAll("button.ph").forEach(x => x.classList.toggle("on", x === b)); };
+  l.querySelector(".fichierP").onchange = e => { const f = e.target.files && e.target.files[0]; if (f) { P.litPhoto(f); setTimeout(() => rendPhotos(), 600); } }; }
+function rendPhotos() { if (MODE === "entete") { const l = $("lPh"); l.innerHTML = phHtml(); brancheP(l); } if (MODE === "onglet") { const l = $("lPhG"); l.innerHTML = phHtml(true); brancheP(l); } }
+if (MODE === "entete") { const pa = document.querySelector('.panneau[data-p=entete]'); pa.innerHTML = `<div class="sousT"><b>Photo</b><div class="ligne" id="lPh"></div></div><div class="sousT"><b>En-tête</b><div class="ligne" id="lEnt"></div></div>`;
+  TXT.entete = ["Votre <em>en-tête</em>", "Votre plus belle photo et le haut de votre site : la 1re chose que vos clientes voient."]; }
+if (MODE === "onglet") { ORDRE.unshift("photo"); const t = document.createElement("button"); t.setAttribute("role", "tab"); t.dataset.o = "photo"; t.innerHTML = "Photo<i></i>"; $("onglets").prepend(t);
+  const pa = document.createElement("div"); pa.className = "panneau"; pa.dataset.p = "photo"; pa.innerHTML = `<div class="ligne grandP" id="lPhG"></div>`; document.querySelector(".choix").prepend(pa);
+  TXT.photo = ["Votre <em>photo</em>", "Votre plus belle création ou votre salon : la 1re chose que vos clientes voient."]; SUITE.photo = "Ensuite : l’en-tête"; }
+P.change(q => { if (q === "photo") [700, 1600].forEach(t => setTimeout(() => { const l = $("lEnt"); if (l && l.children.length) rend("entete"); }, t)); });
+
+taille();
+P.branche($("site")).then(() => { setTimeout(() => { $("attente").classList.add("part"); rendPhotos(); ouvre(ORDRE[0]); }, 700); });
+</script>
+</body>
+</html>

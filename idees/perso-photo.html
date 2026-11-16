@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Personnaliser · la photo</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 16/11 · Pôle Design · page Personnaliser : la page actuelle, la version A « L'atelier », la version B « Le geste ». Toutes vivantes (on peut cliquer dedans). */
+:root{--noir:#1E1C1B;--muted:#5F5751;--ligne:rgba(30,28,27,.12);--rose:#B5475E}
+*{box-sizing:border-box}
+body{margin:0;background:#EAE4DD;color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:14px 28px;background:rgba(246,243,239,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne)}
+header h1{margin:0;font:500 26px "Cormorant Garamond",serif}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav a,.sal button{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--ligne);background:#fff;display:inline-flex;align-items:center;font:400 13.5px Jost,sans-serif;color:var(--noir);text-decoration:none;cursor:pointer}
+.sal{display:flex;gap:6px;margin-left:auto;align-items:center;font:400 13px Jost,sans-serif;color:var(--muted)}
+.sal button.on{background:var(--noir);color:#fff;border-color:var(--noir)}
+section{padding:30px 28px 10px;max-width:1560px;margin:0 auto}
+section h2{margin:0;font:500 36px/1.05 "Cormorant Garamond",serif}
+section h2 small{font:400 15px Jost,sans-serif;color:var(--muted);margin-left:10px}
+p.idee{margin:6px 0 18px;max-width:100ch;font:400 15px/1.55 Jost,sans-serif;color:var(--muted)}
+p.idee b{color:var(--noir);font-weight:500}
+.rang{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figcaption{font:400 13px Jost,sans-serif;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+figcaption a{color:var(--noir)}
+.ordi{--so:.62;width:calc(1440px*var(--so));height:calc(900px*var(--so));border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 20px 40px -26px rgba(0,0,0,.4)}
+.tel{--st:.66;width:calc(390px*var(--st) + 12px);height:calc(844px*var(--st) + 12px);border-radius:32px;background:var(--noir);padding:6px;box-shadow:0 20px 40px -26px rgba(0,0,0,.5)}
+.tel>div{width:100%;height:100%;border-radius:27px;overflow:hidden}
+iframe{border:0;display:block;transform-origin:0 0}
+.ordi iframe{width:1440px;height:900px;transform:scale(var(--so))}
+.tel iframe{width:390px;height:844px;transform:scale(var(--st))}
+.audit{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;margin-top:6px}
+.audit div{background:#fff;border-radius:16px;padding:16px 18px;font:400 14px/1.5 Jost,sans-serif;color:var(--muted)}
+.audit b{display:block;color:var(--noir);font-weight:500;margin-bottom:3px}
+.audit i{font-style:normal;color:var(--rose)}
+table{border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;font:400 14px/1.45 Jost,sans-serif;width:100%;max-width:1100px}
+th,td{padding:11px 14px;border-bottom:1px solid var(--ligne);text-align:left;vertical-align:top}
+th{font-weight:500;background:#F6F3EF}
+td:first-child{color:var(--muted);width:24%}
+.reco{background:var(--noir);color:#fff;border-radius:20px;padding:22px 26px;max-width:1100px;font:400 15.5px/1.6 Jost,sans-serif}
+.reco h3{margin:0 0 6px;font:500 30px "Cormorant Garamond",serif}
+.reco b{font-weight:500}
+footer{height:60px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Personnaliser · où va la photo ?</h1>
+  <nav><a href="#p1">1 · Dans « En-tête »</a><a href="#p2">2 · Un onglet « Photo »</a><a href="#reco">Ma recommandation</a></nav>
+  <div class="sal">Salon : <button data-s="cerise" class="on">Les Ongles de Cerise</button><button data-s="marie">Marie Onglerie</button></div>
+</header>
+<section id="p1">
+  <h2>1 · Dans l’onglet « En-tête » <small>une rangée « Photo » au-dessus des en-têtes</small></h2>
+  <p class="idee">On garde <b>5 onglets</b>. Dans « En-tête », elle choisit sa photo puis la forme du haut : <b>toutes les petites en-têtes se refont avec la photo choisie</b>. « + » pour ajouter une photo de son téléphone.</p>
+  <div class="rang">
+    <figure><div class="tel"><div><iframe data-src="perso-A.html?photo=entete"></iframe></div></div><figcaption>Téléphone <a href="perso-A.html?photo=entete" target="_blank">ouvrir ↗</a></figcaption></figure>
+    <figure><div class="ordi"><iframe data-src="perso-A.html?photo=entete"></iframe></div><figcaption>Ordinateur <a href="perso-A.html?photo=entete" target="_blank">ouvrir ↗</a></figcaption></figure>
+  </div>
+</section>
+<section id="p2">
+  <h2>2 · Un 6ᵉ onglet « Photo », en premier <small>comme aujourd’hui, mais en onglet</small></h2>
+  <p class="idee"><b>6 onglets</b> : Photo · En-tête · Fond · Écriture · Couleurs · Charms. Ses photos en grand, « Ajouter ma photo » en premier. Le bouton dit « Ensuite : l’en-tête → ».</p>
+  <div class="rang">
+    <figure><div class="tel"><div><iframe data-src="perso-A.html?photo=onglet"></iframe></div></div><figcaption>Téléphone <a href="perso-A.html?photo=onglet" target="_blank">ouvrir ↗</a></figcaption></figure>
+    <figure><div class="ordi"><iframe data-src="perso-A.html?photo=onglet"></iframe></div><figcaption>Ordinateur <a href="perso-A.html?photo=onglet" target="_blank">ouvrir ↗</a></figcaption></figure>
+  </div>
+</section>
+<section id="reco">
+  <div class="reco"><h3>Ma recommandation : 1 · dans « En-tête »</h3>
+  La photo ne sert qu’à l’en-tête : la choisir au même endroit, c’est voir tout de suite <b>sa photo dans chaque en-tête</b>. On reste à <b>5 onglets</b>, qui tiennent bien sur un petit iPhone (6 onglets, c’est serré à 375 px). Et la page 3 « Il vous manque… » (D16) n’a pas à changer.<br><br>
+  Point faible : sur téléphone, la bande des choix est un peu plus haute et les petites en-têtes un peu plus petites. C’est vérifié : rien n’est coupé.</div>
+</section>
+<footer></footer>
+<script>
+let salon = "cerise";
+function charge() { document.querySelectorAll("iframe[data-src]").forEach(f => { f.src = f.dataset.src + "&salon=" + salon; }); }
+document.querySelector(".sal").onclick = e => { const b = e.target.closest("button"); if (!b) return; salon = b.dataset.s; document.querySelectorAll(".sal button").forEach(x => x.classList.toggle("on", x === b)); charge(); };
+charge();
+</script>
+</body>
+</html>
