@@ -3185,7 +3185,7 @@ document.querySelectorAll('[data-sec]').forEach(a=>a.addEventListener('click',e=
 function placeBulles(){const fl=[...document.querySelectorAll('.np-float')];fl.forEach(f=>f.classList.remove('np-cache'));
   if(innerWidth<=760)return;
   // on mesure le texte lui-même (pas toute la largeur de la ligne)
-  const zs=[...document.querySelectorAll('.np h1,.np-lead,.np-paste,.np-eyebrow,.np-micro span')].map(e=>{const g=document.createRange();g.selectNodeContents(e);return g.getBoundingClientRect()}).filter(r=>r.width);
+  const zs=[...document.querySelectorAll('.np h1,.np-lead,.np-ready,.np-row .np-cta,.np-paste .np-sub,.np-eyebrow,.np-micro span')].map(e=>{const g=document.createRange();g.selectNodeContents(e);return g.getBoundingClientRect()}).filter(r=>r.width);
   fl.forEach(f=>{const r=f.getBoundingClientRect();if(!r.width)return;
     if(zs.some(z=>!(r.right+10<=z.left||z.right+10<=r.left||r.bottom+8<=z.top||z.bottom+8<=r.top)))f.classList.add('np-cache')})}
 placeBulles();addEventListener('load',placeBulles);addEventListener('resize',placeBulles);if(document.fonts)document.fonts.ready.then(placeBulles);
