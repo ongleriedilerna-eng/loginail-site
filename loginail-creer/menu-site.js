@@ -40,6 +40,12 @@
     font:500 12px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
   .lm-leg{margin-top:auto;padding-top:18px;font:400 11px Jost,sans-serif;opacity:.6;text-align:center;color:var(--lm-e);
     text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:0}
+  .lm-langues{display:flex;justify-content:center;gap:6px;margin-top:auto;padding-top:22px}
+  .lm-langues button{min-width:44px;height:34px;border-radius:17px;border:1px solid color-mix(in srgb,var(--lm-e) 22%,transparent);background:none;
+    color:var(--lm-e);font:500 11px Jost,sans-serif;letter-spacing:.12em;cursor:pointer;padding:0 10px}
+  .lm-langues button.on{background:var(--lm-e);color:var(--lm-c);border-color:var(--lm-e)}
+  .lm-langues+.lm-leg{margin-top:0;padding-top:14px}
+  .lm-sans .lm-pan,.lm-sans .lm-pan a.lm-l,.lm-sans .lm-voile,.lm-sans .lm-btn i{transition:none!important}
   @media (prefers-reduced-motion:reduce){.lm-pan,.lm-pan a.lm-l,.lm-btn i,.lm-voile{transition:none!important}}`;
   document.head.append(css);
 
@@ -80,7 +86,8 @@
     const nom = (typeof D !== "undefined" && D && D.nom) || (typeof BR !== "undefined" && BR && BR.nom) || "";
     e.insertAdjacentHTML("beforeend", `<div class="lm-voile"></div>
       <nav class="lm-pan" aria-label="${m.menu}" aria-hidden="true"><div class="lm-nom">${esc(nom)}</div><div class="lm-liste"></div>
-        <button class="lm-res" data-res>${m.res}</button>${window.LOGI_LEGAL ? `<button class="lm-leg">${m.ml}</button>` : ""}</nav>
+        <button class="lm-res" data-res>${m.res}</button>
+        ${typeof monte === "function" ? `<div class="lm-langues">${["fr", "en", "it"].map(l => `<button class="${l === lang ? "on" : ""}" data-lml="${l}" aria-label="${{ fr: "Français", en: "English", it: "Italiano" }[l]}">${l.toUpperCase()}</button>`).join("")}</div>` : ""}${window.LOGI_LEGAL ? `<button class="lm-leg">${m.ml}</button>` : ""}</nav>
       <button class="lm-btn" aria-label="${m.menu}" aria-expanded="false"><i></i><i></i><i></i></button>`);
     const btn = e.querySelector(":scope > .lm-btn"), pan = e.querySelector(":scope > .lm-pan"), voile = e.querySelector(":scope > .lm-voile");
     let items = [];
@@ -120,6 +127,16 @@
     });
     /* Réserver : la réservation l'attrape avant nous (data-res) → on ferme dès qu'on appuie */
     pan.querySelector(".lm-res").addEventListener("pointerdown", () => setTimeout(() => ouvre(false), 120));
+    /* langue : le site est refait dans la nouvelle langue, le menu reste ouvert (sans rejouer l'animation) */
+    pan.querySelectorAll("[data-lml]").forEach(b => b.addEventListener("click", ev => {
+      ev.stopPropagation(); const l = b.dataset.lml; if (l === e._lmLang) return;
+      const y = e.querySelector(".defile").scrollTop;
+      monte(e, l);
+      const d2 = e.querySelector(".defile"); if (d2) d2.scrollTop = y;
+      if (e._lmOuvre) { e.classList.add("lm-sans"); e._lmOuvre(true); setTimeout(() => e.classList.remove("lm-sans"), 60); }
+      /* le titre du site finit de se dessiner juste après : on reprend ses couleurs */
+      [120, 400, 900].forEach(t => setTimeout(() => e._lmCouleurs && e._lmCouleurs(), t));
+    }));
     const leg = pan.querySelector(".lm-leg");
     if (leg) leg.addEventListener("click", ev => { ev.stopPropagation(); ouvre(false); setTimeout(() => window.LOGI_LEGAL && window.LOGI_LEGAL.ouvre("ml"), 200); });
     e._lmOuvre = ouvre;
