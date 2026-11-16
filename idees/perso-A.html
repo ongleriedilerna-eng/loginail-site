@@ -204,6 +204,21 @@ body.m-onglet .onglets button{font-size:13.5px}
   body.m-onglet .onglets button{font-size:15px}
 }
 @media (max-width:899px) and (max-height:700px){body.m-entete .choix{height:170px}body.m-entete .ent .mi{width:56px;height:84px}.ph{width:44px;height:44px}.grandP .ph{width:80px;height:106px}}
+
+/* 17/11 : photos sur UNE ligne qui défile, croix pour retirer */
+.phBox{position:relative;flex:1;min-width:0}
+.phBox .ligne{flex-wrap:nowrap!important;overflow-x:auto!important;padding:9px 6px 6px 4px}
+.phBox.deborde .ligne{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+.phw{position:relative;flex:none;transition:opacity .25s,transform .25s}
+.phw.part{opacity:0;transform:scale(.6)}
+.sup{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--noir);font:500 10px/22px Jost,sans-serif;text-align:center;box-shadow:0 2px 8px -2px rgba(0,0,0,.35),0 0 0 1px var(--ligne);z-index:2}
+.sup:after{content:"";position:absolute;inset:-10px}
+.flecheP{position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 4px 12px -4px rgba(0,0,0,.35);font:300 22px/1 Jost,sans-serif;padding-bottom:3px;z-index:3;display:none}
+.annuleP{position:absolute;left:50%;top:calc(var(--sat) + 62px);transform:translate(-50%,12px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:14px;background:var(--noir);color:#fff;font:400 14px Jost,sans-serif;padding:8px 8px 8px 18px;border-radius:999px;white-space:nowrap;transition:.3s var(--ressort);z-index:9}
+.annuleP.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.annuleP button{height:34px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;font:500 13px Jost,sans-serif}
+@media (hover:hover){.sup{opacity:0;transition:opacity .2s}.phw:hover .sup,.sup:focus-visible{opacity:1}}
+@media (min-width:900px){.flecheP:not([hidden]){display:grid;place-items:center}.annuleP{left:auto;top:auto;right:48px;transform:translateY(12px);bottom:120px}.annuleP.on{transform:none}.sousT>.phBox{width:100%}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
 </style>
 </head>
@@ -244,6 +259,7 @@ body.m-onglet .onglets button{font-size:13.5px}
   </div>
   <button id="revenir">REVENIR AUX RÉGLAGES</button>
   <div class="bulle" id="bulle"></div>
+  <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
 <script src="perso-pilote.js?v=1"></script>
@@ -321,19 +337,28 @@ const ouvre0 = ouvre;
 /* 17/11 · où va la photo (choix de Marie à faire) */
 const MODE = new URLSearchParams(location.search).get("photo") || "";
 if (MODE) document.body.classList.add("m-" + MODE);
-const phHtml = (grand) => `<label class="ph ajout" title="Ajouter ma photo"><input type="file" accept="image/*" hidden class="fichierP">+<small>Ajouter<br>ma photo</small></label>` + P.photos().map(u => `<button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>`).join("");
-function brancheP(l) { l.onclick = e => { const b = e.target.closest("button.ph"); if (!b) return; P.choisitPhoto(b.dataset.u); l.querySelectorAll("button.ph").forEach(x => x.classList.toggle("on", x === b)); };
-  l.querySelector(".fichierP").onchange = e => { const f = e.target.files && e.target.files[0]; if (f) { P.litPhoto(f); setTimeout(() => rendPhotos(), 600); } }; }
+const phHtml = (grand) => `<label class="ph ajout" title="Ajouter ma photo"><input type="file" accept="image/*" hidden class="fichierP">+<small>Ajouter<br>ma photo</small></label>` + P.photos().map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
+/* 17/11 (Marie) : une croix pour retirer une photo, et « Annuler » pendant 5 s */
+let retiree = null;
+function annule(r) { retiree = r; const a = $("annuleP"); a.classList.add("on"); clearTimeout(annule.t); annule.t = setTimeout(() => { a.classList.remove("on"); retiree = null; }, 5000); }
+function brancheP(l) { l.onclick = e => { const x = e.target.closest("button.sup"); if (x) { const r = P.retirePhoto(x.dataset.u); if (r) { const w = x.closest(".phw"); w.classList.add("part"); setTimeout(rendPhotos, 260); annule(r); } return; }
+    const b = e.target.closest("button.ph"); if (!b) return; P.choisitPhoto(b.dataset.u); l.querySelectorAll("button.ph").forEach(y => y.classList.toggle("on", y === b)); };
+  l.querySelector(".fichierP").onchange = e => { const f = e.target.files && e.target.files[0]; if (f) { P.litPhoto(f); setTimeout(() => rendPhotos(), 600); } };
+  l.onscroll = majFleche; setTimeout(majFleche, 50); }
+function majFleche() { const l = $("lPh"), f = $("flecheP"); if (!l || !f) return; const reste = l.scrollWidth - l.clientWidth - l.scrollLeft; f.hidden = reste < 8; l.parentElement.classList.toggle("deborde", reste >= 8); }
 function rendPhotos() { if (MODE === "entete") { const l = $("lPh"); l.innerHTML = phHtml(); brancheP(l); } if (MODE === "onglet") { const l = $("lPhG"); l.innerHTML = phHtml(true); brancheP(l); } }
-if (MODE === "entete") { const pa = document.querySelector('.panneau[data-p=entete]'); pa.innerHTML = `<div class="sousT"><b>Photo</b><div class="ligne" id="lPh"></div></div><div class="sousT"><b>En-tête</b><div class="ligne" id="lEnt"></div></div>`;
+if (MODE === "entete") { const pa = document.querySelector('.panneau[data-p=entete]'); pa.innerHTML = `<div class="sousT"><b>Photo</b><div class="phBox"><div class="ligne" id="lPh"></div><button class="flecheP" id="flecheP" aria-label="Voir les autres photos" hidden>›</button></div></div><div class="sousT"><b>En-tête</b><div class="ligne" id="lEnt"></div></div>`;
   TXT.entete = ["Votre <em>en-tête</em>", "Votre plus belle photo et le haut de votre site : la 1re chose que vos clientes voient."]; }
 if (MODE === "onglet") { ORDRE.unshift("photo"); const t = document.createElement("button"); t.setAttribute("role", "tab"); t.dataset.o = "photo"; t.innerHTML = "Photo<i></i>"; $("onglets").prepend(t);
   const pa = document.createElement("div"); pa.className = "panneau"; pa.dataset.p = "photo"; pa.innerHTML = `<div class="ligne grandP" id="lPhG"></div>`; document.querySelector(".choix").prepend(pa);
   TXT.photo = ["Votre <em>photo</em>", "Votre plus belle création ou votre salon : la 1re chose que vos clientes voient."]; SUITE.photo = "Ensuite : l’en-tête"; }
+$("annulerP").onclick = () => { if (retiree) { P.remetPhoto(retiree); retiree = null; $("annuleP").classList.remove("on"); setTimeout(rendPhotos, 300); } };
+$("flecheP").onclick = () => { const l = $("lPh"); l.scrollBy({ left: l.clientWidth * .7, behavior: "smooth" }); };
+addEventListener("resize", majFleche);
 P.change(q => { if (q === "photo") [700, 1600].forEach(t => setTimeout(() => { const l = $("lEnt"); if (l && l.children.length) rend("entete"); }, t)); });
 
 taille();
-P.branche($("site")).then(() => { setTimeout(() => { $("attente").classList.add("part"); rendPhotos(); ouvre(ORDRE[0]); }, 700); });
+P.branche($("site")).then(() => { setTimeout(() => { $("attente").classList.add("part"); rendPhotos(); ouvre(ORDRE[0]); setTimeout(() => { if (onglet === "entete") rend("entete"); }, 1400); }, 700); });
 </script>
 </body>
 </html>

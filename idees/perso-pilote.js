@@ -110,7 +110,7 @@
     for (const sh of P.D.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; } const base = sh.href || P.D.baseURI;
       const abs = t => t.replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (m, q, u) => `url("${new URL(u, base).href}")`);
       for (const r of rs) { if (r.type === 3 || r.type === 5) continue; regles.push(abs(r.cssText).replace(/:root/g, ":host")); } }
-    P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}"); return feuille; }
+    P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}"); return feuille; }
   P.miniEntete = (hote, k, largeur) => { const W = P.W, D = P.D; try {
     const ec = D.querySelector(".ecran"); if (!ec || !W.entete || !W.__eT) return; feuille = null; const fs = feuilleSite(), root = D.documentElement.style.cssText, sc = largeur / 390;
     let acc = "#1E1C1B"; try { acc = W.eval('accDuFond()||"#1E1C1B"'); } catch (e) {}
@@ -151,6 +151,11 @@
   P.choisitPhoto = u => { try { P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
     setTimeout(() => { if (P.etat.police) clique(`#pzPol [data-p="${P.etat.police}"]`); }, 120); signale("photo"); };
+  /* 17/11 (Marie) : elle peut retirer une photo (on en garde toujours au moins une) ; remetPhoto = « Annuler » */
+  P.retirePhoto = u => { try { return P.W.eval(`(()=>{const u=${JSON.stringify(u)};if(BR.photos.length<2)return null;const i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0)return null;
+    const p=BR.photos.splice(i,1)[0];if(BR.salon!=null){if(BR.salon===i)BR.salon=null;else if(BR.salon>i)BR.salon--}const une=(BR.principale||0);if(une===i)BR.principale=0;else if(une>i)BR.principale=une-1;
+    const i0=BR.principale||0,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);delete PH["g"+BR.photos.length];const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1);return {p,i,une}})()`); } catch (e) { console.warn(e); return null; } finally { signale("photo"); } };
+  P.remetPhoto = r => { if (!r) return; try { P.W.eval(`(()=>{const r=${JSON.stringify(r)};BR.photos.splice(r.i,0,r.p);BR.principale=r.une;const i0=r.une,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) {} signale("photo"); };
   P.litPhoto = fi => { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
     cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); P.choisitPhoto(cv.toDataURL("image/jpeg", .85)); }; im.src = r.result; }; r.readAsDataURL(fi); };
   P.enHaut = () => { try { const b = P.D.querySelector(".defile") || P.D.scrollingElement; b.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {} };
