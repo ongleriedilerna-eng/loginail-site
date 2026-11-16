@@ -45,15 +45,15 @@ a{color:inherit}
 <li>Vous prévenir sous 48 heures si un incident touche ces données.</li>
 <li>Vous aider à répondre si une cliente demande à voir ou effacer ses informations.</li>
 <li>À la fin de l’abonnement : vous rendre les données (fichier à télécharger), puis les effacer.</li></ul></section><section><h2>Les prestataires de Loginail</h2><p>Pour faire marcher le service, Loginail utilise ces prestataires, qui suivent les mêmes règles :</p>
-<ul><li><b>Supabase</b> : stockage des données et connexion — <span class="verif">serveurs à Londres (Royaume-Uni), pays reconnu par l’Union européenne comme protégeant les données (décision d’adéquation) — lieu à vérifier dans Supabase</span></li>
+<ul><li><b>Supabase</b> : stockage des données et connexion — serveurs à Londres (Royaume-Uni), pays reconnu par l’Union européenne comme protégeant les données (décision d’adéquation)</li>
 <li><b>Stripe</b> (Irlande) : paiement des acomptes en ligne. Le salon ne voit jamais le numéro de carte.</li>
 <li><b>Brevo</b> (France) : envoi des e-mails.</li>
-<li><span class="verif"><span class="verif">Prestataire SMS à choisir</span></span> : envoi des SMS de rappel et d’anniversaire.</li>
+<li><b>Brevo</b> (France) : envoi des SMS de rappel et d’anniversaire.</li>
 <li><b>GitHub</b> (États-Unis, Data Privacy Framework) : hébergement des pages des sites.</li></ul>
 <p>Si nous changeons de prestataire, nous vous prévenons à l’avance. Vous pouvez alors arrêter l’abonnement si vous n’êtes pas d’accord.</p></section><section><h2>Ce que vous faites de votre côté</h2><ul><li>Vous informez vos clientes : la page « Confidentialité » de votre site le fait pour vous.</li>
 <li>Le SMS d’anniversaire ne part qu’aux clientes qui ont dit oui et qui sont venues ces 12 derniers mois : l’application s’en charge.</li>
 <li>Vous gardez l’accès à votre compte secret.</li></ul></section>
 <div class="pied"><a href="./">Retour au site</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a> · <a href="sous-traitance.html">Sous-traitance des données</a></div>
 </main>
-</body>
+<script>/* 16/11 (Apple) : ouverte depuis l'appli, jamais de lien vers les conditions (le prix y figure) ni vers l'accueil ; les autres pages légales restent en mode appli */if(/[?&]appli/.test(location.search))document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute("href");if(h==="conditions-abonnement.html"||h==="./"||h==="index.html"||h==="/"){if(/Retour au site/.test(a.textContent)||a.classList.contains("retour")){a.remove();return}a.replaceWith(document.createTextNode(a.textContent))}else if(/^(mentions-legales|confidentialite|sous-traitance)\.html$/.test(h))a.setAttribute("href",h+"?appli=1")});</script></body>
 </html>
