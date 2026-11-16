@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Annuler mon rendez-vous</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#F6F3EF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icone.png">
+<link href="polices.css" rel="stylesheet">
+<!-- 16/11 (Marie) : la cliente annule elle-même son rendez-vous pris en ligne, avec le lien en bas de son e-mail de confirmation.
+     Jamais d'annulation en un seul clic (les boîtes mail ouvrent parfois les liens toutes seules) : il faut toucher « Oui, annuler ».
+     Possible seulement avant le délai choisi par la prothésiste (24, 48 ou 72 h) ; après : « appelez le salon ».
+     Essai sans rien toucher : annuler.html?j=essai (&etat=tard | deja | passe | introuvable). -->
+<style>
+:root{--noir:#1E1C1B;--creme:#F6F3EF;--gris:#7d746b;--rouge:#A04A4A}
+*{box-sizing:border-box}
+body{margin:0;background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);-webkit-font-smoothing:antialiased}
+main{max-width:480px;min-height:100vh;min-height:100dvh;margin:0 auto;background:var(--creme);padding:0 26px 40px;box-shadow:0 0 70px -24px rgba(30,28,27,.45);display:flex;flex-direction:column}
+.haut{padding:26px 0 8px;text-align:center;font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:500;min-height:62px}
+.carte{flex:1;display:flex;flex-direction:column;justify-content:center;padding:10px 0 20px;animation:monte .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes monte{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.carte{animation:none}}
+.ic{width:58px;height:58px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:#fff;font-size:26px}
+h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:36px;line-height:1.08;margin:0 0 10px;text-align:center;text-wrap:balance}
+.sous{font-size:15px;line-height:1.55;font-weight:300;color:#5d554e;text-align:center;margin:0 0 22px}
+.recap{background:#fff;border-radius:20px;padding:6px 18px;margin:0 0 22px}
+.recap div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #EFEAE4;font-size:14px}
+.recap div:last-child{border:0}
+.recap span{color:var(--gris);font-weight:300}.recap b{font-weight:400;text-align:right}
+.btn{display:block;width:100%;border:0;border-radius:30px;padding:18px 20px;background:var(--noir);color:var(--creme);font:500 12px/1 Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;transition:transform .12s,opacity .2s}
+.btn:active{transform:scale(.98)}.btn[disabled]{opacity:.6}
+.btn.clair{background:transparent;color:var(--noir);border:1px solid rgba(30,28,27,.25);margin-top:10px}
+.petit{font-size:12.5px;line-height:1.6;color:var(--gris);text-align:center;margin:14px 0 0;font-weight:300}
+.err{color:var(--rouge)}
+.pied{font-size:11.5px;color:var(--gris);text-align:center;line-height:1.7;font-weight:300}
+.pied a{color:inherit}
+.charge{margin:auto;width:26px;height:26px;border-radius:50%;border:2px solid rgba(30,28,27,.15);border-top-color:var(--noir);animation:tourne .8s linear infinite}
+@keyframes tourne{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<main>
+<div class="haut" id="salon"></div>
+<div class="carte" id="c"><div class="charge" aria-label="Chargement"></div></div>
+<div class="pied">Site du salon créé avec <a href="https://loginail.fr">Loginail</a></div>
+</main>
+<script>
+(() => {
+  const COFFRE = "https://scfhaombuptmrlkdhcsl.supabase.co/rest/v1/rpc/", CLE = "sb_publishable_lYx1ZH0k3EFrUhZ3v0W8gw_yhGPOhbq";
+  const q = new URLSearchParams(location.search), J = (q.get("j") || "").trim().toLowerCase();
+  const ESSAI = J === "essai";
+  const c = document.getElementById("c"), haut = document.getElementById("salon");
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, x => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[x]));
+  const JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  /* les dates à l'heure du salon (Paris), quel que soit le pays du téléphone */
+  const paris = iso => { const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris", year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false, weekday: "short" }).formatToParts(new Date(iso)).map(x => [x.type, x.value]));
+    return { jour: `${JOURS[["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p.weekday)]} ${Number(p.day)} ${MOIS[Number(p.month) - 1]}`, heure: `${Number(p.hour) % 24}h${p.minute}` }; };
+  const rpc = (f, corps) => fetch(COFFRE + f, { method: "POST", headers: { apikey: CLE, "Content-Type": "application/json" }, body: JSON.stringify(corps) })
+    .then(async r => { const j = await r.json().catch(() => null); if (!r.ok) throw new Error((j && j.message) || "erreur"); return j; });
+  const lienSite = d => d && d.slug ? `loginail-creer/pret.html?public&s=${encodeURIComponent(d.slug)}` : "";
+  const telBtn = d => d && d.tel ? `<a class="btn" href="tel:${esc(String(d.tel).replace(/[^\d+]/g, ""))}">Appeler le salon</a><p class="petit">${esc(d.tel)}</p>` : "";
+  const montre = h => { c.innerHTML = h; c.style.animation = "none"; void c.offsetWidth; c.style.animation = ""; };
+  const recap = (d, q) => `<div class="recap"><div><span>Prestation</span><b>${esc(d.presta || "Rendez-vous")}</b></div><div><span>Quand</span><b>${esc(q.jour)} à ${esc(q.heure)}</b></div>${d.salon ? `<div><span>Où</span><b>${esc(d.salon)}</b></div>` : ""}</div>`;
+
+  function introuvable() { montre(`<div class="ic">?</div><h1>Ce lien ne marche pas</h1><p class="sous">Il est peut-être incomplet. Ouvrez-le à nouveau depuis votre e-mail de confirmation, ou appelez le salon.</p>`); }
+  function dessine(d) {
+    haut.textContent = d.salon || "";
+    if (d.salon) document.title = `Annuler mon rendez-vous · ${d.salon}`;
+    const q = paris(d.debut), lim = paris(d.limite), site = lienSite(d);
+    if (d.statut === "annule") return montre(`<div class="ic">✓</div><h1>Ce rendez&#8209;vous est déjà annulé</h1><p class="sous">${esc(q.jour)} à ${esc(q.heure)}. Vous n’avez rien d’autre à faire.</p>${site ? `<a class="btn" href="${site}">Reprendre un rendez-vous</a>` : ""}`);
+    if (d.statut !== "prevu" || new Date(d.debut) < new Date()) return montre(`<div class="ic">✓</div><h1>Ce rendez&#8209;vous est passé</h1><p class="sous">Il ne peut plus être annulé.</p>${site ? `<a class="btn" href="${site}">Reprendre un rendez-vous</a>` : ""}`);
+    if (!d.possible) return montre(`<div class="ic">☎</div><h1>Trop tard pour annuler en ligne</h1><p class="sous">${esc(d.salon || "Le salon")} demande d’annuler au moins ${esc(String(d.delai || "48 h avant").replace(" avant", "").replace(/ /g, " "))} avant le rendez-vous. Appelez le salon pour le prévenir.</p>${recap(d, q)}${telBtn(d)}`);
+    montre(`<h1>Annuler votre rendez&#8209;vous ?</h1><p class="sous">${d.prenom ? esc(d.prenom) + ", votre" : "Votre"} place sera libérée pour une autre cliente, et le salon sera prévenu.</p>${recap(d, q)}
+      <button class="btn" id="oui">Oui, annuler mon rendez-vous</button>${site ? `<a class="btn clair" href="${site}">Non, je le garde</a>` : ""}
+      <p class="petit">Annulation gratuite jusqu’au ${esc(lim.jour)} à ${esc(lim.heure)}.</p><p class="petit err" id="err" aria-live="polite"></p>`);
+    document.getElementById("oui").onclick = async e => { const b = e.currentTarget; b.disabled = true; b.textContent = "Un instant…";
+      try { if (!ESSAI) await rpc("annuler_rdv", { j: J }); else await new Promise(r => setTimeout(r, 600));
+        montre(`<div class="ic">✓</div><h1>C’est annulé</h1><p class="sous">Votre rendez-vous du ${esc(q.jour)} à ${esc(q.heure)} est annulé. Le salon est prévenu, vous n’avez rien d’autre à faire.</p>${site ? `<a class="btn" href="${site}">Reprendre un rendez-vous</a>` : ""}`); }
+      catch (x) { const m = String(x.message || "");
+        if (/trop_tard/.test(m)) { d.possible = false; return dessine(d); }
+        if (/introuvable/.test(m)) return introuvable();
+        if (/passe/.test(m)) { d.statut = "fini"; return dessine(d); }
+        document.getElementById("err").textContent = "L’annulation n’a pas marché. Vérifiez votre connexion et réessayez, ou appelez le salon.";
+        b.disabled = false; b.textContent = "Oui, annuler mon rendez-vous"; } };
+  }
+
+  if (ESSAI) { const e = q.get("etat") || "", deb = new Date(Date.now() + (e === "tard" ? 20 : 4 * 24) * 3600e3); deb.setMinutes(0, 0, 0);
+    if (e === "introuvable") return introuvable();
+    return dessine({ prenom: "Léa", presta: "Pose gel · Remplissage", debut: deb.toISOString(), statut: e === "deja" ? "annule" : e === "passe" ? "fini" : "prevu", salon: "Les Ongles de Cerise", tel: "06 00 00 00 00", slug: "", delai: "48 h avant",
+      limite: new Date(deb.getTime() - 48 * 3600e3).toISOString(), possible: e !== "tard" }); }
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(J)) return introuvable();
+  rpc("rdv_annulation", { j: J }).then(d => d && d.debut ? dessine(d) : introuvable())
+    .catch(() => montre(`<div class="ic">!</div><h1>Impossible de charger</h1><p class="sous">Vérifiez votre connexion internet, puis rechargez la page.</p><button class="btn" onclick="location.reload()">Recharger</button>`));
+})();
+</script>
+</body>
+</html>

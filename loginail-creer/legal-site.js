@@ -33,9 +33,9 @@
       <h4>Vos droits</h4><p>Vous pouvez voir, corriger ou effacer vos informations en contactant le salon (${contact}). En cas de désaccord, vous pouvez vous adresser à la CNIL (cnil.fr).</p>`],
     cgv: ["Conditions de réservation", `
       <h4>Les prix</h4><p>Les prix affichés sont en euros, toutes taxes comprises${L.tvaNon === false ? "" : " (TVA non applicable, article 293 B du CGI)"}. Le prix payé est celui affiché au moment de la réservation.</p>
-      <h4>La réservation</h4><p>Vous choisissez une prestation, un jour et une heure, puis vous donnez vos coordonnées. Vous recevez une confirmation par SMS.</p>
+      <h4>La réservation</h4><p>Vous choisissez une prestation, un jour et une heure, puis vous donnez vos coordonnées. Vous recevez une confirmation par e-mail (si vous avez donné votre e-mail), puis un SMS de rappel la veille.</p>
       ${R.acompte ? `<h4>L’acompte</h4><p>Un acompte de <b>${esc(R.montant)}</b> est demandé pour réserver. Il est déduit du prix le jour du rendez-vous. Le reste se paie au salon.</p>` : `<h4>Le paiement</h4><p>Tout se paie au salon, le jour du rendez-vous.</p>`}
-      <h4>Annuler ou déplacer</h4><p>Vous pouvez annuler ou déplacer gratuitement jusqu’à <b>${esc(ann)}</b> avant le rendez-vous${R.acompte ? ", et l’acompte vous est rendu" : ""}. Après, ou si vous ne venez pas${R.acompte ? ", l’acompte est gardé" : ", le salon peut refuser une prochaine réservation en ligne"}.</p>
+      <h4>Annuler ou déplacer</h4><p>Vous pouvez annuler ou déplacer gratuitement jusqu’à <b>${esc(ann)}</b> avant le rendez-vous${R.acompte ? ", et l’acompte vous est rendu" : ""}. Après, ou si vous ne venez pas${R.acompte ? ", l’acompte est gardé" : ", le salon peut refuser une prochaine réservation en ligne"}. Pour annuler : le lien « Annuler mon rendez-vous » en bas de l’e-mail de confirmation, ou un appel au salon.</p>
       <h4>Les retards</h4><p>Un retard de <b>${esc(R.retard)}</b> est accepté. Au-delà, la prestation peut être raccourcie ou le rendez-vous déplacé.</p>
       ${R.autre ? `<h4>Bon à savoir</h4><p>${esc(R.autre)}</p>` : ""}
       <h4>Le droit de rétractation</h4><p>Quand vous réservez en ligne, la loi vous donne 14 jours pour changer d’avis. Si votre rendez-vous a lieu avant la fin de ces 14 jours, vous demandez que la prestation soit faite avant. Si vous changez d’avis, il faut nous le dire avant le rendez-vous.</p>
@@ -71,4 +71,6 @@
     if (!PAGES[k]) return;
     e.preventDefault(); e.stopPropagation(); ouvre(k); }, true);
   window.LOGI_LEGAL = { ouvre };
+  /* 16/11 : le lien « Confidentialité » de l'e-mail de confirmation ouvre directement la bonne page (…&legal=conf) */
+  { const k = new URLSearchParams(location.search).get("legal"); if (k && PAGES[k]) setTimeout(() => ouvre(k), 400); }
 })();

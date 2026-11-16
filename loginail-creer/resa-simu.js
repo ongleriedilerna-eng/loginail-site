@@ -116,7 +116,7 @@
     if (etape === 5) rf.innerHTML = `<div class="poi"></div><button class="x" data-rx aria-label="Fermer">×</button>${REEL ? "" : `<div class="simu">SIMULATION · RÉSERVATION</div>`}<div class="ok"></div>
       <h2 style="margin-top:14px">C’est réservé !</h2>
       <div class="recap"><div><span>Prestation</span><b>${esc(R.nom)}</b></div><div><span>Quand</span><b>${R.jourTxt} à ${hm(R.heure)}</b></div><div><span>Où</span><b>${esc(BR.nom)}<br>${esc(BR.rue)}, ${esc(BR.cp)} ${esc(BR.ville)}</b></div>${REEL ? "" : `<div><span>Acompte payé</span><b>${euros(R.acompte)}</b></div>`}</div>
-      ${REEL ? `<p class="petit">Le salon a bien reçu votre réservation.</p>` : `<p class="petit">Un SMS de confirmation vient de partir au ${esc(R.tel)}.</p>
+      ${REEL ? `<p class="petit">Le salon a bien reçu votre réservation.${R.email ? ` Un e-mail de confirmation part à ${esc(R.email)} : il contient aussi le lien pour annuler, si besoin.` : ""}</p>` : `<p class="petit">Un SMS de confirmation vient de partir au ${esc(R.tel)}.</p>
       <button class="go" id="rsms">VOIR MES MESSAGES</button>`}`;
     rf.scrollTop = 0;
   }
