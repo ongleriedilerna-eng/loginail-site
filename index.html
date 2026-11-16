@@ -1665,7 +1665,290 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 }
 .pied-legal{margin-top:10px;font-size:12px;line-height:2}.pied-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 </style>
+<style id="nouveau-haut">/* Nouveau haut de page (16/11/2026) */
+.np{--cream:#F3ECE4;--ink:#1E1C1B;--ink-2:#4A4441;--muted:#5E5550;
+  --accent:#B03562;--rose:#E0628C;--blush:#F6D7E1;--line:rgba(30,28,27,.09);
+  --ease:cubic-bezier(.2,.8,.2,1);}
+.np *{box-sizing:border-box;margin:0;padding:0}
+.np{overflow-x:clip}
+.np{color:var(--ink);font:400 16px/1.55 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background:linear-gradient(180deg,#F7F0EA 0%,#F5E6E8 34%,#F3ECE4 72%,#F3ECE4 100%)}
+.np img{display:block;max-width:100%}
+.np a{color:inherit}
+.np :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.np .serif{font-family:'Abril Fatface',serif;font-weight:400;letter-spacing:-.015em}
+.np .np-cta{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:60px;padding:0 32px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font:500 15px Jost,sans-serif;letter-spacing:.02em;box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 18px 36px -16px rgba(30,28,27,.55);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.np .np-cta::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-20deg);transition:left .8s var(--ease)}
+.np .np-cta:hover{transform:translateY(-1px);box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 24px 44px -16px rgba(30,28,27,.6)}
+.np .np-cta:hover::after{left:120%}
+.np .np-cta:active{transform:scale(.97);transition-duration:.1s}
+.np .np-cta svg{width:18px;height:18px;transition:transform .25s var(--ease)}
+.np .np-cta:hover svg{transform:translateX(3px)}
+.np .np-cta.np-ghost{height:52px;padding:0 24px;background:rgba(255,255,255,.7);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 12px 24px -16px rgba(80,30,50,.35);backdrop-filter:blur(8px)}
+.np .np-nav{position:sticky;top:0;z-index:60;transition:background .35s ease,box-shadow .35s ease,backdrop-filter .35s ease}
+.np .np-nav .np-bar{max-width:1180px;margin:0 auto;height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 clamp(20px,4vw,48px)}
+.np .np-nav.np-scrolled{background:rgba(247,240,234,.78);backdrop-filter:saturate(1.4) blur(18px);-webkit-backdrop-filter:saturate(1.4) blur(18px);box-shadow:0 10px 24px -20px rgba(30,28,27,.35)}
+.np .np-brand{display:flex;align-items:center;gap:9px;text-decoration:none;font:600 13.5px Jost,sans-serif;letter-spacing:.32em}
+.np .np-brand img{width:30px;height:30px;border-radius:9px;box-shadow:0 6px 14px -8px rgba(30,28,27,.6)}
+.np .np-links{display:flex;gap:4px}
+.np .np-links a{position:relative;padding:9px 14px;border-radius:999px;text-decoration:none;font-size:14.5px;color:var(--ink-2);transition:background .2s ease,color .2s ease}
+.np .np-links a:hover{background:rgba(30,28,27,.05);color:var(--ink)}
+.np .np-links a.np-hint{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-weight:500}
+.np .np-links a.np-hint::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--rose);animation:np-ping 2.4s ease-out infinite}
+@keyframes np-ping{0%{box-shadow:0 0 0 0 rgba(224,98,140,.4)}70%,100%{box-shadow:0 0 0 6px rgba(224,98,140,0)}}
+.np .np-links a.np-hint .np-hl{background:linear-gradient(100deg,var(--ink) 42%,var(--rose) 50%,var(--ink) 58%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:np-shine 5s ease-in-out 1.2s infinite}
+@keyframes np-shine{0%,55%{background-position:100% 0}85%,100%{background-position:0 0}}
+.np .np-tip{position:absolute;left:50%;top:calc(100% + 10px);translate:-50% 6px;padding:8px 13px;border-radius:12px;background:var(--ink);color:#fff;font-size:12.5px;font-weight:400;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .35s ease,translate .35s var(--ease);box-shadow:0 14px 28px -14px rgba(30,28,27,.6)}
+.np .np-tip::before{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;background:var(--ink);transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.np .np-tip.on,.np .np-links a.np-hint:hover .np-tip{opacity:1;translate:-50% 0}
+.np .np-links a:active{background:rgba(30,28,27,.09);transition-duration:.08s}
+.np .np-nav .np-go{height:44px;padding:0 20px;font-size:14px;background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(30,28,27,.10),0 8px 18px -12px rgba(80,30,50,.35)}
+.np .np-nav .np-go:hover{box-shadow:inset 0 0 0 1px rgba(30,28,27,.18),0 12px 22px -12px rgba(80,30,50,.4)}
+.np .np-nav .np-go::after{background:linear-gradient(100deg,transparent,rgba(224,98,140,.14),transparent)}
+.np .np-hero{position:relative;text-align:center;margin-top:-76px;padding-top:76px;background:
+  radial-gradient(46% 40% at 50% 26%,rgba(246,215,225,.85),transparent 70%),
+  radial-gradient(30% 30% at 8% 70%,rgba(201,138,98,.10),transparent 70%),
+  radial-gradient(30% 30% at 92% 64%,rgba(224,98,140,.08),transparent 70%)}
+.np .np-hero .np-top{position:relative;z-index:3;max-width:1180px;margin:0 auto;padding:clamp(14px,3vh,38px) 20px 0}
+.np .np-eyebrow{display:inline-flex;align-items:center;gap:8px;font:500 12px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.np .np-eyebrow::before,.np .np-eyebrow::after{content:"";width:22px;height:1px;background:currentColor;opacity:.5}
+.np h1{font-size:clamp(42px,min(5.6vw,8.8vh),86px);line-height:.96;letter-spacing:-.022em;margin:18px auto 0;max-width:13ch}
+.np h1 .np-sw{position:relative;white-space:nowrap}
+.np h1 .np-sw svg{position:absolute;left:-2%;bottom:-.05em;width:104%;height:.2em;color:var(--rose);overflow:visible}
+.np h1 .np-sw path{stroke-dasharray:1;stroke-dashoffset:1;animation:np-draw 1.1s .5s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes np-draw{to{stroke-dashoffset:0}}
+.np h1 .np-l2{display:block;margin-top:.42em;letter-spacing:-.01em;font-size:clamp(24px,min(2.9vw,4.6vh),44px);line-height:1.05;color:var(--accent)}
+.np .np-lead{max-width:none;white-space:nowrap;margin:13px auto 0;font-size:clamp(17px,1.35vw,19.5px);color:var(--ink-2)}
+.np .np-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.np .np-paste{width:min(640px,100%);margin:22px auto 0}
+.np .np-field{display:flex;align-items:center;gap:8px;height:68px;padding:6px 6px 6px 20px;border-radius:999px;background:#fff;
+  box-shadow:inset 0 0 0 1px rgba(30,28,27,.08),0 24px 48px -28px rgba(120,40,70,.45);transition:box-shadow .25s var(--ease)}
+.np .np-field:focus-within{box-shadow:inset 0 0 0 1px rgba(176,53,98,.45),0 0 0 5px rgba(176,53,98,.10),0 24px 48px -28px rgba(120,40,70,.45)}
+.np .np-field .np-lk{flex:none;width:19px;height:19px;color:var(--muted)}
+.np .np-field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:400 16px Jost,sans-serif;color:var(--ink)}
+.np .np-field input::placeholder{color:#9A8F88}
+.np .np-field input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #fff inset}
+.np .np-field .np-cta{height:56px;padding:0 26px;flex:none}
+.np .np-field .np-cta.np-load .np-t{opacity:.6}
+.np .np-paste .np-sub{margin-top:12px;font-size:13.5px;color:var(--muted)}
+.np .np-paste .np-sub a{display:inline-block;padding:8px 2px;margin:-8px 0 -8px 4px;color:var(--ink);font-weight:500;text-decoration:none;background:linear-gradient(rgba(30,28,27,.25),rgba(30,28,27,.25)) 0 calc(100% - 7px)/100% 1px no-repeat;white-space:nowrap}
+.np .np-paste .np-sub a:hover{border-color:var(--ink)}
+.np .np-paste.np-shake .np-field{animation:np-shake .4s ease}
+@keyframes np-shake{25%{translate:-6px 0}50%{translate:5px 0}75%{translate:-3px 0}}
+.np .trust{display:inline-flex;align-items:center;gap:12px;margin-top:14px;padding:7px 16px 7px 8px;border-radius:999px;background:rgba(255,255,255,.62);box-shadow:inset 0 0 0 1px rgba(30,28,27,.06);font-size:14px;color:var(--ink-2)}
+.np .trust b{color:var(--ink);font-weight:600}
+.np .trust .faces{display:flex}
+.np .trust .faces i{width:30px;height:30px;border-radius:50%;margin-left:-9px;border:2px solid #FBF5F2;background:center/cover;box-shadow:0 3px 8px -4px rgba(0,0,0,.35)}
+.np .trust .faces i:first-child{margin-left:0}
+.np .np-micro{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;margin-top:14px;font-size:13.5px;color:var(--muted)}
+.np .np-micro span{display:inline-flex;align-items:center;gap:7px}
+.np .np-micro svg{width:13px;height:13px;color:var(--accent)}
+.np .np-float{position:absolute;z-index:4;display:flex;align-items:center;gap:13px;padding:12px 18px 12px 12px;border-radius:20px;background:linear-gradient(180deg,#FFFFFF,#FFF8F9);text-align:left;font-size:12.5px;color:var(--muted);line-height:1.3;animation:np-bob 8s ease-in-out infinite;
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(176,53,98,.07),0 2px 4px rgba(80,30,50,.05),0 12px 24px -10px rgba(80,30,50,.18),0 34px 60px -26px rgba(176,53,98,.32)}
+.np .np-float b{display:block;color:var(--ink);font-weight:600;font-size:14px;letter-spacing:-.005em}
+.np .np-float .np-ic{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--accent);background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 10px -4px rgba(176,53,98,.35)}
+.np .np-float .np-ic svg{width:18px;height:18px}
+.np .np-float .np-av{flex:none;width:40px;height:40px;border-radius:50%;background:center/cover;box-shadow:0 0 0 2px #fff,0 4px 10px -4px rgba(80,30,50,.4)}
+.np .np-float .np-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 4px rgba(224,98,140,.18);margin-left:6px}
+.np .np-f1{left:2%;top:20%;rotate:-2deg;animation-delay:-1s}
+.np .np-f2{right:2%;top:17%;rotate:2deg;animation-delay:-3s}
+.np .np-f3{left:2%;top:60%;rotate:1.5deg;animation-delay:-5s}
+.np .np-f4{right:2%;top:58%;rotate:-1.5deg;animation-delay:-2s}
+@keyframes np-bob{50%{translate:0 -4px}}
+.np .np-float{cursor:pointer;outline:none;transition:rotate .35s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease}
+.np .np-float:active{scale:.98}
+.np .np-float:focus-visible{box-shadow:0 0 0 3px rgba(176,53,98,.35),0 12px 24px -10px rgba(80,30,50,.18)}
+.np .np-float:hover,.np .np-float:focus-within,.np .np-float.np-active{animation-play-state:paused;z-index:30;rotate:0deg}
+.np .np-pop{position:absolute;top:50%;width:290px;padding:10px;border-radius:28px;text-align:left;pointer-events:none;z-index:40;
+  background:linear-gradient(180deg,#FFFFFF,#FFF9FA);
+  opacity:0;scale:.9;filter:blur(6px);translate:0 -50%;transition:opacity .25s ease,scale .4s cubic-bezier(.2,.8,.2,1),filter .35s ease;
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(176,53,98,.10),0 2px 6px rgba(80,30,50,.06),0 40px 80px -30px rgba(80,30,50,.5),0 80px 120px -60px rgba(176,53,98,.45)}
+.np .np-pop.np-pr{left:calc(100% + 18px);transform-origin:0 50%}
+.np .np-pop.np-pl{right:calc(100% + 18px);transform-origin:100% 50%}
+.np .np-pop::before{content:"";position:absolute;top:50%;width:14px;height:14px;background:#fff;border-radius:3px;transform:translateY(-50%) rotate(45deg);box-shadow:-1px 1px 0 rgba(176,53,98,.08)}
+.np .np-pop.np-pr::before{left:-6px}
+.np .np-pop.np-pl::before{right:-6px;box-shadow:1px -1px 0 rgba(176,53,98,.08)}
+.np .np-f1 .np-pop::before,.np .np-f2 .np-pop::before{top:44px}
+.np .np-float:hover .np-pop,.np .np-float:focus-within .np-pop,.np .np-float.np-pin .np-pop{opacity:1;scale:1;filter:none;pointer-events:auto}
+.np .np-pop .np-shot{height:min(280px,38vh);border-radius:20px;overflow:hidden;background:#F6EFEA;box-shadow:inset 0 0 0 1px rgba(30,28,27,.06)}
+.np .np-pop .np-shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.np .np-pt-w{padding:14px 10px 6px}
+.np .np-pk{display:inline-block;font:600 10.5px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.np .np-pt{margin-top:6px;font:400 20px/1.12 'Abril Fatface',serif;letter-spacing:-.01em;color:var(--ink)}
+.np .np-pd{margin-top:8px;font-size:14px;line-height:1.45;color:#3E3835;-webkit-font-smoothing:subpixel-antialiased}
+.np .np-pt-w small{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(30,28,27,.07);font-size:11px;letter-spacing:.04em;color:var(--muted)}
+.np .np-pt-w small::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--rose)}
+.np .np-scrim{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;transition:opacity .3s ease,backdrop-filter .3s ease;
+  background:radial-gradient(60% 70% at var(--fx,50%) var(--fy,40%),rgba(243,236,228,.15),rgba(243,236,228,.55));
+  -webkit-backdrop-filter:blur(0);backdrop-filter:blur(0)}
+.np .np-hero.np-focus .np-scrim{opacity:1;-webkit-backdrop-filter:blur(9px) saturate(.9);backdrop-filter:blur(9px) saturate(.9)}
+.np .np-float.np-active{z-index:30;animation-play-state:paused}
+.np .np-ig{padding:12px 12px 0;font:400 10.5px/1.35 Jost,sans-serif;color:#111;background:#fff}
+.np .np-ig-b{display:flex;align-items:center;gap:4px;font-size:12px}
+.np .np-ig-b b{font-weight:600}
+.np .np-ig-t{display:flex;align-items:center;gap:12px;margin-top:10px}
+.np .np-ig-av{flex:none;width:54px;height:54px;border-radius:50%;background:center/cover;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #E0628C}
+.np .np-ig-c{flex:1;display:flex;justify-content:space-between;text-align:center;font-size:9.5px;color:#444}
+.np .np-ig-c b{display:block;font-size:12px;color:#111}
+.np .np-ig-n{margin-top:8px;font-weight:600;font-size:10.5px}
+.np .np-ig-k{color:#777;font-size:10px}
+.np .np-ig-bio{margin-top:2px}
+.np .np-ig-l{display:inline-block;margin-top:4px;color:#00376B;font-weight:600}
+.np .np-ig-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin:9px -12px 0}
+.np .np-ig-g i{aspect-ratio:3/4;background:#eee center/cover}
+.np .np-f1 .np-pop,.np .np-f2 .np-pop{top:-14px;translate:0 0}
+.np .np-f3 .np-pop,.np .np-f4 .np-pop{top:auto;bottom:-70px;translate:0 0}
+.np .np-f3 .np-pop::before,.np .np-f4 .np-pop::before{top:auto;bottom:90px;transform:rotate(45deg)}
+@media (max-width:760px){.np .np-pop{display:none}
+}
+.np .np-charms{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.np .np-charm{position:absolute;filter:drop-shadow(0 10px 12px rgba(80,20,40,.22));will-change:transform;transition:filter .3s ease}
+.np .np-charm.np-hot{filter:drop-shadow(0 14px 18px rgba(176,53,98,.38))}
+.np .np-arc{position:relative;z-index:1;height:700px;margin-top:6px;overflow:hidden}
+.np .np-wheel{position:absolute;left:50%;top:6px;width:0;height:var(--R);animation:np-spin 220s linear infinite}
+.np .np-arc.np-off .np-wheel{animation-play-state:paused}
+@keyframes np-spin{to{transform:rotate(-360deg)}}
+.np .np-wheel{transform-origin:0 100%}
+.np .np-slot{position:absolute;left:0;top:0;width:0;height:var(--R);transform-origin:0 100%}
+.np .np-card{position:absolute;left:calc(var(--w)/-2);top:0;width:var(--w);height:var(--h);padding:7px;border-radius:34px;background:#141212;box-shadow:0 26px 46px -26px rgba(80,30,50,.6);transition:transform .4s var(--ease)}
+.np .np-card:hover{transform:translateY(-10px)}
+.np .np-card .np-sc{width:100%;height:100%;border-radius:27px;background:#F4D3DE center top/cover no-repeat}
+.np .np-card .np-nt{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:54px;height:16px;border-radius:0 0 11px 11px;background:#141212}
+.np .np-card .np-nm{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);font-size:11.5px;font-weight:500;white-space:nowrap;box-shadow:0 6px 14px -8px rgba(0,0,0,.4)}
+.np .np-wheel-mask{position:absolute;inset:0;-webkit-mask-image:radial-gradient(64% 96% at 50% 4%,#000 62%,transparent 86%);mask-image:radial-gradient(64% 96% at 50% 4%,#000 62%,transparent 86%)}
+.np .np-inarc{position:absolute;z-index:3;left:50%;bottom:18px;translate:-50% 0;width:min(440px,90vw);text-align:center}
+.np .np-inarc .np-k{font:500 12px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.np .np-inarc h2{margin-top:10px;font:400 clamp(26px,2.4vw,34px)/1.08 'Abril Fatface',serif}
+.np .np-inarc ul{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin:14px 0 18px;font-size:13.5px;color:var(--ink-2)}
+.np .np-inarc li{display:inline-flex;align-items:center;gap:6px}
+.np .np-inarc li svg{width:13px;height:13px;color:var(--accent)}
+.np .live-note{max-width:1120px;margin:40px auto 0;padding:0 20px;display:flex;align-items:center;gap:14px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.np .live-note::before,.np .live-note::after{content:"";flex:1;height:1px;background:var(--line)}
+.np .live{position:relative}
+.np .live iframe{position:sticky;top:0;display:block;width:100%;height:100vh;border:0;background:var(--cream)}
+@media (max-width:1180px){.np .np-f3,.np .np-f4{display:none}
+.np .np-f1{top:12%}
+.np .np-f2{top:12%}
+}
+@media (max-width:900px){.np .np-lead{white-space:normal;max-width:40ch}
+.np .np-links{display:none}
+}
+@media (max-width:760px){.np .np-nav .np-bar{height:64px}
+.np .np-brand{letter-spacing:.24em}
+.np .np-float{display:none}
+.np .np-f2{display:flex;position:relative;right:auto;top:auto;margin:22px auto 0;width:max-content;rotate:-2deg}
+.np .np-hero .np-top{display:flex;flex-direction:column;align-items:center}
+.np .np-eyebrow{order:1}
+.np h1{order:2}
+.np .np-lead{order:3}
+.np .np-paste{order:4}
+.np .np-micro{order:5}
+.np .trust{order:6}
+.np .np-f2{order:7}
+.np h1{font-size:clamp(40px,12vw,56px)}
+.np .np-eyebrow{font-size:10.5px;letter-spacing:.16em}
+.np .np-field{flex-wrap:wrap;height:auto;border-radius:26px;padding:8px}
+.np .np-field .np-lk{display:none}
+.np .np-field input{height:52px;padding:0 12px}
+.np .np-field .np-cta{width:100%}
+.np .np-arc{height:620px}
+.np .np-wheel-mask{-webkit-mask-image:radial-gradient(90% 92% at 50% 4%,#000 60%,transparent 84%);mask-image:radial-gradient(90% 92% at 50% 4%,#000 60%,transparent 84%)}
+.np .np-inarc{bottom:22px;width:min(330px,88vw)}
+.np .np-inarc h2{font-size:24px}
+.np .np-charm{display:none}
+.np .np-charm.np-m{display:block}
+.np .np-charm.np-m:nth-child(1),.np .np-charm.np-m:nth-child(6){display:none}
+.np .np-charm.np-m:nth-child(5),.np .np-charm.np-m:nth-child(10){top:auto!important;bottom:70px}
+.np br.d{display:none}
+.np .np-eyebrow::before,.np .np-eyebrow::after{display:none}
+
+}
+@media (prefers-reduced-transparency:reduce){.np .np-hero.np-focus .np-scrim{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(243,236,228,.88)}
+.np .np-nav.np-scrolled{background:#F7F0EA;backdrop-filter:none}
+.np .np-nav .np-bar,.np .np-float,.np .np-card .np-nm,.np .np-cta.np-ghost{background:#FFFCFA;backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+@media (prefers-contrast:more){.np .np-nav .np-bar,.np .np-float,.np .np-cta.np-ghost{box-shadow:0 0 0 1.5px var(--ink)}
+.np .np-micro,.np .np-lead{color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){.np *,.np *::before,.np *::after{animation:none!important;transition:none!important}
+.np h1 .np-sw path{stroke-dashoffset:0}
+
+}
+
+
+.np .np-hero{background:radial-gradient(46% 40% at 50% 26%,rgba(246,215,225,.85),transparent 70%),radial-gradient(30% 30% at 8% 70%,rgba(201,138,98,.10),transparent 70%),radial-gradient(30% 30% at 92% 64%,rgba(224,98,140,.08),transparent 70%),linear-gradient(180deg,#F7F0EA 0%,#F5E6E8 50%,#F3ECE4 100%)}
+
+header.top,section.hero:not(#hero){display:none!important}
+html{scroll-padding-top:84px}
+</style>
 </head><body>
+<div class="np" style="display:contents"><header class="np-nav" id="nav">
+  <div class="np-bar">
+    <a class="np-brand" href="#"><img src="https://loginail.fr/favicon.svg" alt="" width="30" height="30">LOGINAIL</a>
+    <nav class="np-links" aria-label="Principal">
+      <a href="#appli" data-sec="#appli" class="np-hint"><span class="np-hl">Fonctionnalités</span><span class="np-tip" id="tip">Découvre tout ce que fait l’appli</span></a>
+      <a href="#styles" data-sec="#styles">Univers</a>
+      <a href="#prix" data-sec="#prix">Tarif</a>
+      <a href="#questions" data-sec="#questions">FAQ</a>
+    </nav>
+    <a class="np-cta np-go" href="https://loginail.fr/loginail-creer/index.html">Essai gratuit</a>
+  </div>
+</header></div>
+<div class="np" style="display:contents"><section class="np-hero" id="hero">
+  <div class="np-charms" id="charms" aria-hidden="true"></div>
+
+  <div class="np-top">
+    <div class="np-scrim" aria-hidden="true"></div>
+    <!-- Bulles : au survol, une mini-carte montre la vraie capture qui correspond -->
+    <div class="np-float np-f1" tabindex="0" role="button" aria-expanded="false" aria-label="Ton site, ton lien en bio"><span class="np-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></span><div><b>votresalon.fr</b>Ton site, dans ta bio</div>
+      <div class="np-pop np-pr"><div class="np-shot np-ig">
+        <div class="np-ig-b"><b>ateliermercure.nails</b><span>⌄</span></div>
+        <div class="np-ig-t"><span class="np-ig-av" style="background-image:url(https://loginail.fr/loginail-site/insta/profil.webp)"></span><div class="np-ig-c"><div><b>32</b>publications</div><div><b>10K</b>abonnés</div><div><b>612</b>suivi(e)s</div></div></div>
+        <div class="np-ig-n">ATELIER MERCURE | NAIL ART</div><div class="np-ig-k">Artiste ongulaire</div>
+        <div class="np-ig-bio">Des ongles qui prennent toute la place.<br>Nail art · Chrome · Sur-mesure<br>📍 Lyon · Sur rendez-vous<br>Mon prochain set ↓</div>
+        <span class="np-ig-l">🔗 votresalon.fr</span>
+        <div class="np-ig-g"><i style="background-image:url(https://loginail.fr/loginail-site/insta/1.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/2.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/3.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/4.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/5.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/6.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/7.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/8.webp)"></i><i style="background-image:url(https://loginail.fr/loginail-site/insta/9.webp)"></i></div>
+      </div><div class="np-pt-w"><span class="np-pk">Ton site</span><p class="np-pt">De sa bio à son rendez-vous, en un clic.</p><p class="np-pd">Ton lien .fr dans ta bio : elle voit tes sets, elle clique, elle réserve. Sans un seul DM.</p><small>Profil d’exemple</small></div></div></div>
+    <div class="np-float np-f2" tabindex="0" role="button" aria-expanded="false" aria-label="Nouvelle réservation dans l’appli"><span class="np-av" style="background-image:url(loginail-site/apercus-univers/avatar-lea.webp)"></span><div><b>Léa · nouveau RDV</b>Pose américaine · 10 h</div><span class="np-dot"></span>
+      <div class="np-pop np-pl"><div class="np-shot"><img src="https://loginail.fr/loginail-site/apercus-univers/app-accueil.webp" style="object-position:50% 56%" alt="L’accueil de l’appli Loginail : prochain rendez-vous à 10 h avec Léa" loading="lazy"></div><div class="np-pt-w"><span class="np-pk">Ton appli · Accueil</span><p class="np-pt">Ta journée, d’un coup d’œil.</p><p class="np-pd">Chaque réservation arrive ici toute seule, avec ton prochain rendez-vous en grand.</p></div></div></div>
+    <div class="np-float np-f3" tabindex="0" role="button" aria-expanded="false" aria-label="Rappels SMS automatiques"><span class="np-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5z"/><path d="M8.5 10l2 2 4-4"/></svg></span><div><b>Rappel SMS envoyé</b>Zéro lapin demain</div>
+      <div class="np-pop np-pr"><div class="np-shot"><img src="https://loginail.fr/loginail-site/apercus-mini/app-rose.webp" style="object-position:50% 58%" alt="L’agenda de l’appli Loginail, avec la mention rappel sur chaque rendez-vous" loading="lazy"></div><div class="np-pt-w"><span class="np-pk">Rappels SMS · inclus</span><p class="np-pt">Moins de lapins, sans y penser.</p><p class="np-pd">La veille, un SMS part tout seul. Le ✓ rappel s’affiche sur chaque rendez-vous.</p></div></div></div>
+    <div class="np-float np-f4" tabindex="0" role="button" aria-expanded="false" aria-label="Clientes et liste d’attente"><span class="np-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/></svg></span><div><b>Liste d’attente · 3</b>Clara veut un créneau</div>
+      <div class="np-pop np-pl"><div class="np-shot"><img src="https://loginail.fr/loginail-site/apercus-univers/app-clientes.webp" alt="La page Clientes de l’appli Loginail, avec la liste d’attente" loading="lazy"></div><div class="np-pt-w"><span class="np-pk">Clientes · liste d’attente</span><p class="np-pt">Remplis les trous de ton agenda.</p><p class="np-pd">Une place se libère ? Ta liste d’attente est prête : tu proposes le créneau en un clic.</p></div></div></div>
+
+    <p class="np-eyebrow">Le site + l’appli des prothésistes ongulaires</p>
+    <h1 class="serif">Un site à <span class="np-sw">ton image.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="np-l2">L’appli pour tout gérer derrière.</span></h1>
+    <p class="np-lead">Elles réservent sur ton site, sans t’écrire. L’appli gère tout le reste.</p>
+    <form class="np-paste" id="paste" action="https://loginail.fr/loginail-creer/index.html" method="get">
+      <label class="np-sr" for="lien">Ton lien Planity, ta fiche Google ou ton ancien site</label>
+      <div class="np-field">
+        <svg class="np-lk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+        <input id="lien" name="lien" type="text" inputmode="url" autocomplete="url" spellcheck="false" placeholder="Colle ton lien Planity, Google ou ton site">
+        <button class="np-cta np-main" type="submit" id="go"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <p class="np-sub">On récupère tes photos, tes prestations et tes prix. <a href="https://loginail.fr/loginail-creer/index.html">Pas de lien ? Pars de zéro →</a></p>
+    </form>
+    <div class="np-micro">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>1 mois offert</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sans engagement</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>0 % de commission</span>
+    </div>
+  </div>
+
+  <div class="np-arc" id="arc" aria-label="Exemples de sites Loginail">
+    <div class="np-wheel-mask"><div class="np-wheel" id="wheel"></div></div>
+    <div class="np-inarc">
+      <p class="np-k">Plus de 30 univers</p>
+      <h2>Choisis ton style. On s’occupe du reste.</h2>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ton adresse .fr</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Réservation 24 h/24</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>SMS inclus</li>
+      </ul>
+      <a class="np-cta np-ghost" href="https://loginail.fr/loginail-creer/index.html">Créer le mien <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section></div>
 <header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
 
 <section class="hero">
@@ -2807,4 +3090,95 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 /* 10/11 (Marie) : le haut — « Prêt en une minute · créé par une prothésiste » juste au-dessus du lien */
 (()=>{const h=document.querySelector(".hero");if(!h)return;const k=h.querySelector(":scope>.k"),f=h.querySelector("form.creer");if(k&&f){k.classList.add("k-bas");k.innerHTML="Prêt en une minute · créé par une prothésiste";f.before(k)}})();
 </script>
+<script id="nouveau-haut-js">(()=>{
+
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=id=>document.getElementById(id);
+
+/* Nav : un peu plus opaque au scroll */
+const nav=$('nav');addEventListener('scroll',()=>nav.classList.toggle('np-scrolled',scrollY>10),{passive:true});
+
+/* ---- Vitrine en arc : de vrais sites Loginail sur une roue qui tourne lentement ---- */
+const U='https://loginail.fr/loginail-site/apercus-univers/';
+const SITES=[['THE SLIDE SALON','loginail-site/apercus-univers/ex-theslidesalon.webp'],['nails by sab','loginail-site/apercus-univers/ex-nailsbysab.webp'],['IZI NAILS','loginail-site/apercus-univers/ex-izinails.webp'],['Sy’lver Salon','chrome'],['YOUR FAV NAIL TECH','loginail-site/apercus-univers/ex-yourfavnailtech.webp'],['les Ongles de Cerise','loginail-site/apercus-univers/ex-lesonglesdecerise.webp'],['Les ongles de Lilow','loginail-site/apercus-univers/ex-lesonglesdelilow.webp'],['NAILVIZION','loginail-site/apercus-univers/ex-nailvizion.webp'],['Les ongles de cerise','loginail-site/apercus-univers/ex-lesonglesdecerise2.webp']];
+function buildWheel(){
+  const m=innerWidth<760, w=m?118:172, h=Math.round(w*19.3/9), R=m?760:1040, gap=m?30:62;
+  const step=(w+gap)/R*180/Math.PI, n=Math.floor(360/step), real=360/n;
+  const wh=$('wheel');wh.style.setProperty('--R',R+'px');wh.style.setProperty('--w',w+'px');wh.style.setProperty('--h',h+'px');
+  wh.innerHTML=Array.from({length:n},(_,i)=>{const [nm,f]=SITES[i%SITES.length];
+    return `<div class="np-slot" style="transform:rotate(${i*real}deg)"><div class="np-card"><div class="np-nt"></div><div class="np-sc" style="background-image:url(${f.includes('/')?f:U+f+'.webp'})"></div><span class="np-nm">${nm}</span></div></div>`}).join('');
+}
+buildWheel();let lw=innerWidth;addEventListener('resize',()=>{if((innerWidth<760)!==(lw<760))buildWheel();lw=innerWidth});
+
+/* ---- Charms « baddie » : sur les bords, ils s'écartent quand la souris approche ---- */
+const C='https://loginail.fr/loginail-site/charms-mini/';
+const CH=[ // fichier, x(%), y(px depuis le haut du hero), taille, rotation, garder sur mobile
+  ['cerisedisco',3,120,78,-14,1],['etoile4',20,150,38,10],['coeurepinesmetal',2,400,64,8],['papilloncyber',18,470,56,-10],['collierperles',5,600,58,6,1],
+  ['saturne',96,110,70,12,1],['tribal',76,96,42,-8],['clenoire',96,390,56,-12],['cerisecoeur',80,470,54,10],['sacmatelasse',94,600,60,-6,1]];
+const host=$('charms'),hero=$('hero');
+const items=CH.map(([f,x,y,sz,r,m],i)=>{const im=new Image();im.src=C+f+'.webp';im.alt='';im.className='np-charm'+(m?' np-m':'');
+  im.style.cssText=`width:${sz}px;left:calc(${x}% - ${sz/2}px);top:${y}px`;host.append(im);
+  return{el:im,s:sz,r,ph:i*.9,dx:0,dy:0,vx:0,vy:0,rot:0,vr:0,cool:0}});
+let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3,mvx=0,mvy=0;
+hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();mx=e.clientX-b.left;my=e.clientY-b.top});
+hero.addEventListener('pointerleave',()=>{mx=my=-9e3});
+function tick(t){
+  // vitesse de la souris (pour « lancer » les charms dans sa direction)
+  if(mx>-9e3&&pmx>-9e3){mvx=mx-pmx;mvy=my-pmy}else{mvx=mvy=0}pmx=mx;pmy=my;
+  const W=hero.clientWidth,H=hero.clientHeight;
+  for(const it of items){
+    const e=it.el,bx=e.offsetLeft,by=e.offsetTop,cx=bx+it.dx+it.s/2,cy=by+it.dy+it.s/2;
+    const ux=cx-mx,uy=cy-my,d=Math.hypot(ux,uy)||1,hit=it.s/2+28;
+    if(d<hit&&it.cool<=0){ // la souris touche le charm : petite pichenette
+      const k=1-d/hit;it.vx+=ux/d*(10+k*12)+mvx*.85;it.vy+=uy/d*(10+k*12)+mvy*.85;it.vr+=(ux>0?1:-1)*(6+Math.min(14,Math.abs(mvx)*.3));it.cool=8}
+    it.cool--;
+    // ressort très doux vers sa place + frottement : il se balade puis revient tout seul
+    it.vx+=-it.dx*.0011;it.vy+=-it.dy*.0011;it.vx*=.984;it.vy*=.984;it.vr*=.95;
+    const sp=Math.hypot(it.vx,it.vy);if(sp>60){it.vx*=60/sp;it.vy*=60/sp}
+    it.dx+=it.vx;it.dy+=it.vy;it.rot+=it.vr*.35;it.rot*=.982;
+    // rebond sur les bords de la zone
+    const px=bx+it.dx,py=by+it.dy;
+    if(px<4){it.dx=4-bx;it.vx=Math.abs(it.vx)*.7}else if(px>W-it.s-4){it.dx=W-it.s-4-bx;it.vx=-Math.abs(it.vx)*.7}
+    if(py<4){it.dy=4-by;it.vy=Math.abs(it.vy)*.7}else if(py>H-it.s-4){it.dy=H-it.s-4-by;it.vy=-Math.abs(it.vy)*.7}
+    e.classList.toggle('np-hot',sp>1.2);
+    const calm=Math.max(0,1-sp/6),fx=Math.sin(t/2300+it.ph)*9*calm,fy=Math.sin(t/1700+it.ph*1.3)*13*calm,wob=Math.sin(t/2600+it.ph*.7)*9*calm;
+    e.style.transform=`translate(${it.dx+fx}px,${it.dy+fy}px) rotate(${it.r+it.rot+wob}deg)`}
+  heroOn?requestAnimationFrame(tick):setTimeout(()=>requestAnimationFrame(tick),300)}
+let heroOn=true;new IntersectionObserver(([e])=>{heroOn=e.isIntersecting;$('arc').classList.toggle('np-off',!heroOn)}).observe(hero);
+if(!RM)requestAnimationFrame(tick);else items.forEach(it=>it.el.style.transform=`rotate(${it.r}deg)`);
+
+/* Bulle d'appel sur « Fonctionnalités » : apparaît une fois, disparaît dès qu'on scrolle */
+const tip=$('tip');if(tip&&!RM){setTimeout(()=>{if(scrollY<40)tip.classList.add('on')},2600);setTimeout(()=>tip.classList.remove('on'),8600)}
+addEventListener('scroll',()=>tip&&tip.classList.remove('on'),{passive:true});
+
+/* Mise au point : le reste du haut de page se floute autour de la carte ouverte */
+const floats=[...document.querySelectorAll('.np-float')];
+function openF(f){const r=f.getBoundingClientRect();hero.style.setProperty('--fx',(r.left+r.width/2)+'px');hero.style.setProperty('--fy',(r.top+r.height/2)+'px');
+  // on fige la bulle sur un pixel entier : texte net
+  const t=getComputedStyle(f).translate.split(' ').map(v=>Math.round(parseFloat(v)||0)+'px');f.style.translate=t.join(' ');f.style.animation='none';
+  floats.forEach(x=>{if(x!==f)closeF(x,true)});f.classList.add('np-active');f.setAttribute('aria-expanded','true');hero.classList.add('np-focus');if(tip)tip.classList.remove('on')}
+function closeF(f,keep){if(f.classList.contains('np-pin')&&!keep)return;f.classList.remove('np-active','np-pin');f.setAttribute('aria-expanded','false');f.style.translate='';f.style.animation='';
+  if(!floats.some(x=>x.classList.contains('np-active')))hero.classList.remove('np-focus')}
+floats.forEach(f=>{
+  f.addEventListener('pointerenter',()=>openF(f));f.addEventListener('pointerleave',()=>closeF(f));
+  f.addEventListener('np-focus',()=>openF(f));f.addEventListener('blur',()=>closeF(f,true));
+  f.addEventListener('click',e=>{e.stopPropagation();if(f.classList.contains('np-pin'))closeF(f,true);else{openF(f);f.classList.add('np-pin')}});
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f.click()}});
+});
+document.addEventListener('click',()=>floats.forEach(f=>closeF(f,true)));
+addEventListener('keydown',e=>{if(e.key==='Escape')floats.forEach(f=>closeF(f,true))});
+
+/* Formulaire : si vide, on secoue ; sinon on montre « Création… » et on part */
+$('paste').addEventListener('submit',e=>{const v=$('lien').value.trim();
+  if(!v){e.preventDefault();const f=$('paste');f.classList.remove('np-shake');void f.offsetWidth;f.classList.add('np-shake');$('lien').focus();return}
+  const b=$('go');b.classList.add('np-load');b.querySelector('.t').textContent='Création de ton site…'});
+
+
+/* Onglets de la barre : vont à la section visible (sur ordinateur, les univers sont dans #styles-gal) */
+document.querySelectorAll('[data-sec]').forEach(a=>a.addEventListener('click',e=>{
+  const alt={'#styles':['#styles-gal','#styles']}[a.dataset.sec]||[a.dataset.sec];
+  const el=alt.map(s=>document.querySelector(s)).find(x=>x&&x.offsetHeight>0);if(!el)return;e.preventDefault();
+  scrollTo({top:el.getBoundingClientRect().top+scrollY-80,behavior:RM?'auto':'smooth'})}));
+
+})();</script>
 </body></html>
