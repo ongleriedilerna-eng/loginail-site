@@ -1878,6 +1878,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 
 .np .np-hero{background:radial-gradient(46% 40% at 50% 26%,rgba(246,215,225,.85),transparent 70%),radial-gradient(30% 30% at 8% 70%,rgba(201,138,98,.10),transparent 70%),radial-gradient(30% 30% at 92% 64%,rgba(224,98,140,.08),transparent 70%),linear-gradient(180deg,#F7F0EA 0%,#F5E6E8 50%,#F3ECE4 100%)}
 
+.np .np-float.np-cache{display:none!important}
 header.top,section.hero:not(#hero){display:none!important}
 html{scroll-padding-top:84px}
 </style>
@@ -3179,6 +3180,15 @@ document.querySelectorAll('[data-sec]').forEach(a=>a.addEventListener('click',e=
   const alt={'#styles':['#styles-gal','#styles']}[a.dataset.sec]||[a.dataset.sec];
   const el=alt.map(s=>document.querySelector(s)).find(x=>x&&x.offsetHeight>0);if(!el)return;e.preventDefault();
   scrollTo({top:el.getBoundingClientRect().top+scrollY-80,behavior:RM?'auto':'smooth'})}));
+
+/* Bulles : sur les écrans moyens, une bulle qui toucherait le titre, la phrase ou le champ est cachée */
+function placeBulles(){const fl=[...document.querySelectorAll('.np-float')];fl.forEach(f=>f.classList.remove('np-cache'));
+  if(innerWidth<=760)return;
+  // on mesure le texte lui-même (pas toute la largeur de la ligne)
+  const zs=[...document.querySelectorAll('.np h1,.np-lead,.np-paste,.np-eyebrow,.np-micro span')].map(e=>{const g=document.createRange();g.selectNodeContents(e);return g.getBoundingClientRect()}).filter(r=>r.width);
+  fl.forEach(f=>{const r=f.getBoundingClientRect();if(!r.width)return;
+    if(zs.some(z=>!(r.right+10<=z.left||z.right+10<=r.left||r.bottom+8<=z.top||z.bottom+8<=r.top)))f.classList.add('np-cache')})}
+placeBulles();addEventListener('load',placeBulles);addEventListener('resize',placeBulles);if(document.fonts)document.fonts.ready.then(placeBulles);
 
 })();</script>
 </body></html>
