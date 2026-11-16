@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Menu des sites</title>
+<link rel="stylesheet" href="../polices.css">
+<style>
+:root{--encre:#2A1B1E;--doux:#7A6A6E;--fond:#F4EFEA;--rose:#B5475E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:Jost,system-ui,sans-serif}
+header{max-width:1100px;margin:0 auto;padding:28px 16px 8px;text-align:center}
+h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:34px;margin:0 0 6px}
+header p{margin:0 auto;max-width:620px;color:var(--doux);font-size:14px;line-height:1.5}
+.choix{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 6px}
+.choix button{border:1px solid #d9cfc7;background:#fff;border-radius:20px;padding:9px 16px;font:500 13px Jost,sans-serif;color:var(--encre);cursor:pointer;transition:background .15s,color .15s}
+.choix button.on{background:var(--encre);color:#fff;border-color:var(--encre)}
+.geste{margin-top:6px}
+.geste button{border:0;background:var(--rose);color:#fff;border-radius:20px;padding:10px 18px;font:500 13px Jost,sans-serif;cursor:pointer}
+main{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;padding:18px 16px 50px}
+figure{margin:0;text-align:center}
+figcaption{margin-bottom:12px}
+figcaption b{display:block;font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:600}
+figcaption span{font-size:13px;color:var(--doux)}
+.tel{width:351px;height:760px;border-radius:44px;background:#111;padding:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.tel .vue{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative}
+.tel iframe{border:0;width:390px;height:844px;transform:scale(.8462);transform-origin:0 0;display:block}
+.audit{max-width:820px;margin:0 auto 60px;padding:0 16px;font-size:14px;line-height:1.55}
+.audit h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:24px;margin:0 0 8px}
+.audit li{margin-bottom:6px}
+@media (max-width:420px){.tel{width:min(351px,calc(100vw - 32px));height:auto;aspect-ratio:351/760}.tel iframe{transform:scale(calc((100vw - 52px)/390))}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Le menu des sites</h1>
+  <p>Les trois traits en haut à droite, sur tous les sites. Touchez-les pour ouvrir le menu, puis une rubrique pour y aller. C'est le vrai site de Cerise : le menu prend tout seul les couleurs et l'écriture de chaque style.</p>
+  <div class="choix" id="styles">
+    <button data-st="chic" class="on">Chic</button>
+    <button data-st="fun">Fun</button>
+    <button data-st="mix">Entre les deux</button>
+  </div>
+  <div class="geste"><button id="geste">Ouvrir les deux menus</button></div>
+</header>
+<main>
+  <figure><figcaption><b>A · Le rideau</b><span>glisse depuis la droite, on voit encore le site</span></figcaption>
+    <div class="tel"><div class="vue"><iframe id="fA" title="Version A"></iframe></div></div></figure>
+  <figure><figcaption><b>B · Plein écran</b><span>tout l'écran, grandes écritures centrées</span></figcaption>
+    <div class="tel"><div class="vue"><iframe id="fB" title="Version B"></iframe></div></div></figure>
+</main>
+<section class="audit">
+  <h2>Dans les deux versions</h2>
+  <ul>
+    <li><b>Les rubriques :</b> Accueil, Prestations, Avis, À propos, Bon à savoir, Infos pratiques (horaires et accès). Une rubrique vide chez une prothésiste disparaît du menu.</li>
+    <li><b>Réserver :</b> un vrai bouton plein en bas du menu, pas une ligne de plus.</li>
+    <li><b>Mentions légales :</b> tout en bas, en petit (obligatoire par la loi).</li>
+    <li><b>Les trois traits :</b> dans une petite pastille claire, pour rester lisibles sur tous les fonds, même chargés.</li>
+    <li><b>Sur ordinateur :</b> le site s'affiche dans un téléphone au milieu de l'écran, donc c'est exactement le même menu.</li>
+  </ul>
+</section>
+<script>
+const STYLES={
+  chic:"style=1&couleur=lin&police=elegante&paillettes=non",
+  fun:"style=2&couleur=rose&police=bonbon&paillettes=nacre",
+  mix:"style=1&couleur=poudre&police=chic&paillettes=non"};
+const base=st=>"../loginail-creer/pret.html?public&nouveau&exemple=dilerna&"+STYLES[st]+"&mode=jour&photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise&menu=";
+const RUB=[["Accueil",null],["Prestations",/^prestations/i],["Avis",/^avis/i],["À propos",/^à propos/i],["Bon à savoir",/^bon à savoir/i],["Infos pratiques",/^horaires/i]];
+
+function poser(fr,version){
+  const w=fr.contentWindow,doc=fr.contentDocument;
+  const ecran=doc.querySelector(".ecran"),defile=doc.querySelector(".defile");
+  if(!ecran||!defile){setTimeout(()=>poser(fr,version),200);return}
+  if(ecran.querySelector(".lm-btn"))return;
+  /* couleurs et écriture du site */
+  const cs=w.getComputedStyle(ecran);
+  const encre=cs.getPropertyValue("--encre").trim()||"#2A1B1E";
+  const carte=cs.getPropertyValue("--carte").trim()||"#FBF8F3";
+  const titre=[...doc.querySelectorAll(".hf-nom,.defile h1")].find(e=>e.getBoundingClientRect().width>0)||doc.querySelector(".defile h1");
+  const police=titre?w.getComputedStyle(titre).fontFamily:'"Cormorant Garamond",serif';
+  const nom=((doc.querySelector(".menu .nom")||titre||{}).textContent||"").trim().replace(/\s+/g," ");
+  /* rubriques présentes */
+  const secs=[...defile.querySelectorAll(".sec")];
+  const items=RUB.map(([lib,re])=>{if(!re)return{lib,el:null};const s=secs.find(x=>re.test(((x.querySelector("h2,h3")||x).textContent||"").trim()));return s?{lib,el:s}:null}).filter(Boolean);
+  const css=doc.createElement("style");
+  css.textContent=`
+  .lm-btn{position:absolute;top:14px;right:14px;z-index:90;width:46px;height:46px;border-radius:23px;border:0;cursor:pointer;
+    background:color-mix(in srgb,${carte} 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    box-shadow:0 6px 18px -8px rgba(0,0,0,.35);display:grid;place-items:center;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+  .lm-btn:active{transform:scale(.94)}
+  .lm-btn i{position:absolute;left:14px;width:18px;height:1.8px;border-radius:2px;background:${encre};transition:transform .28s cubic-bezier(.32,.72,0,1),opacity .2s}
+  .lm-btn i:nth-child(1){top:16.5px}.lm-btn i:nth-child(2){top:22px}.lm-btn i:nth-child(3){top:27.5px}
+  .lm-on .lm-btn i:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+  .lm-on .lm-btn i:nth-child(2){opacity:0}
+  .lm-on .lm-btn i:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+  .lm-voile{position:absolute;inset:0;z-index:80;background:rgba(20,14,15,.32);opacity:0;pointer-events:none;transition:opacity .28s}
+  .lm-on .lm-voile{opacity:1;pointer-events:auto}
+  .lm-pan{position:absolute;z-index:85;display:flex;flex-direction:column;color:${encre};background:${carte}}
+  .lm-pan a.lm-l{display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:${encre};font-family:var(--lm-pol,${police})!important;cursor:pointer}
+  html body .ecran .lm-pan a.lm-l{font-family:var(--lm-pol,${police})!important}
+  .lm-res{border:0;border-radius:30px;height:54px;background:${encre};color:${carte};font:500 12px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;width:100%}
+  .lm-leg{font:400 11px Jost,sans-serif;opacity:.55;text-align:center;margin-top:14px;color:${encre};text-decoration:underline;text-underline-offset:3px}
+  .lm-nom{font:500 10.5px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+  /* A : rideau */
+  .lmA .lm-pan{top:0;right:0;bottom:0;width:84%;padding:84px 26px 28px;transform:translateX(102%);transition:transform .32s cubic-bezier(.32,.72,0,1);box-shadow:-20px 0 40px -20px rgba(0,0,0,.35);border-radius:26px 0 0 26px}
+  .lmA.lm-on .lm-pan{transform:none}
+  .lmA .lm-liste{margin:22px 0 28px}
+  .lmA .lm-leg{margin-top:auto}
+  .lmA a.lm-l{font-size:28px;line-height:1.1;padding:13px 0;border-bottom:1px solid color-mix(in srgb,${encre} 14%,transparent)}
+  .lmA a.lm-l::after{content:"›";font:300 22px Jost,sans-serif;opacity:.45}
+  /* B : plein écran */
+  .lmB .lm-pan{inset:0;padding:96px 30px 34px;text-align:center;align-items:stretch;opacity:0;pointer-events:none;transform:scale(1.02);transition:opacity .26s,transform .3s cubic-bezier(.32,.72,0,1);background:color-mix(in srgb,${carte} 94%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .lmB.lm-on .lm-pan{opacity:1;pointer-events:auto;transform:none}
+  .lmB .lm-voile{display:none}
+  .lmB .lm-liste{flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .lmB a.lm-l{justify-content:center;font-size:34px;line-height:1.15;padding:7px 0}
+  .lmB .lm-nom{margin-bottom:4px}
+  /* les lignes arrivent une par une */
+  .lm-pan a.lm-l{opacity:0;transform:translateY(8px);transition:opacity .25s,transform .3s cubic-bezier(.32,.72,0,1)}
+  .lm-on .lm-pan a.lm-l{opacity:1;transform:none}
+  ${items.map((_,i)=>`.lm-on .lm-pan a.lm-l:nth-child(${i+1}){transition-delay:${60+i*35}ms}`).join("")}
+  @media (prefers-reduced-motion:reduce){.lm-pan,.lm-pan a.lm-l,.lm-btn i{transition:none!important}}`;
+  doc.head.appendChild(css);
+  ecran.classList.add("lm"+version);
+  ecran.insertAdjacentHTML("beforeend",`
+    <div class="lm-voile"></div>
+    <nav class="lm-pan" aria-label="Menu">
+      <div class="lm-nom">${nom}</div>
+      <div class="lm-liste">${items.map((it,i)=>`<a class="lm-l" data-i="${i}">${it.lib}</a>`).join("")}</div>
+      <button class="lm-res">Réserver</button>
+      <a class="lm-leg">Mentions légales</a>
+    </nav>
+    <button class="lm-btn" aria-label="Menu"><i></i><i></i><i></i></button>`);
+  const ouvre=v=>{if(v){const t=[...doc.querySelectorAll(".hf-nom,.defile h1")].find(e=>e.getBoundingClientRect().width>0);if(t)ecran.querySelector(".lm-pan").style.setProperty("--lm-pol",w.getComputedStyle(t).fontFamily)}ecran.classList.toggle("lm-on",v)};
+  ecran.querySelector(".lm-btn").onclick=()=>ouvre(!ecran.classList.contains("lm-on"));
+  ecran.querySelector(".lm-voile").onclick=()=>ouvre(false);
+  ecran.querySelectorAll(".lm-l").forEach(a=>a.onclick=()=>{
+    const it=items[+a.dataset.i];ouvre(false);
+    setTimeout(()=>defile.scrollTo({top:it.el?it.el.offsetTop-70:0,behavior:"smooth"}),220)});
+  ecran.querySelector(".lm-res").onclick=()=>{ouvre(false);const b=doc.querySelector(".hbtn,[data-res]");setTimeout(()=>b&&b.click(),250)};
+  fr._ouvre=ouvre;
+}
+let ouvert=false;
+const fA=document.getElementById("fA"),fB=document.getElementById("fB");
+fA.onload=()=>poser(fA,"A");fB.onload=()=>poser(fB,"B");
+function charge(st){fA.src=base(st)+"A";fB.src=base(st)+"B";ouvert=false;document.getElementById("geste").textContent="Ouvrir les deux menus"}
+document.querySelectorAll("#styles button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#styles button").forEach(x=>x.classList.toggle("on",x===b));charge(b.dataset.st)});
+document.getElementById("geste").onclick=e=>{ouvert=!ouvert;[fA,fB].forEach(f=>f._ouvre&&f._ouvre(ouvert));e.target.textContent=ouvert?"Refermer les deux menus":"Ouvrir les deux menus"};
+charge("chic");
+</script>
+</body>
+</html>
