@@ -759,6 +759,40 @@ body.ep1 .choix:after{display:none!important}
 @keyframes fdEntre{from{opacity:0;transform:translateY(8px)}}
 @media (max-width:899px){.fondDeux .catBoxF{width:72px}.fondDeux .catFond{width:68px;font-size:10.5px}.fondDeux .catFond .vgI{width:48px;height:48px;border-radius:12px}
   .fondDeux #lFond{grid-template-columns:repeat(3,1fr);gap:8px}}
+
+/* 17/11 (Marie) : ses looks enregistrés ont une petite croix en haut : on la touche → « Supprimer ce look ? » → Oui */
+.look .supL{position:absolute;left:7px;top:7px;z-index:5;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.94);color:var(--noir);
+  font-size:12px;line-height:1;box-shadow:0 3px 10px -4px rgba(0,0,0,.45);cursor:pointer;transition:transform .15s,background .15s}
+.look .supL:hover{background:#fff;transform:scale(1.1)}.look .supL:active{transform:scale(.9)}
+.supFond{position:fixed;inset:0;z-index:300;background:rgba(30,28,27,.35);display:grid;place-items:center;padding:16px;animation:supF .2s ease-out}
+.supBoite{background:#fff;border-radius:22px;padding:22px 22px 18px;width:min(340px,100%);text-align:center;box-shadow:0 30px 60px -25px rgba(0,0,0,.5);animation:supB .28s cubic-bezier(.2,1.3,.4,1)}
+.supBoite h4{margin:0 0 6px;font:500 24px "Cormorant Garamond",serif;color:var(--noir)}
+.supBoite p{margin:0 0 18px;font:400 14px Jost,sans-serif;color:var(--muted)}
+.supBoite div{display:flex;gap:10px}.supBoite button{flex:1;height:44px;border-radius:999px;border:0;font:500 14px Jost,sans-serif;cursor:pointer}
+.supBoite .non{background:var(--fond);color:var(--noir)}.supBoite .oui{background:#B5475E;color:#fff}
+@keyframes supF{from{opacity:0}}@keyframes supB{from{opacity:0;transform:scale(.92) translateY(8px)}}
+
+/* 17/11 v2 (Marie : « on ne voit pas qu'on peut descendre » + « ça se fond avec les fonds ») :
+   les catégories sont dans un RAIL à part (bande blanche arrondie), en RONDS (les fonds restent carrés),
+   une flèche ⌄ en bas qui sautille pour dire « il y en a d'autres », et la suivante est coupée à moitié */
+.fondDeux .catBoxF{width:96px;position:relative;background:#fff;border-radius:22px;box-shadow:0 10px 26px -18px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.04)}
+.fondDeux #catF{padding:8px 4px 46px;gap:4px;-webkit-mask:linear-gradient(#000 calc(100% - 60px),transparent calc(100% - 8px));mask:linear-gradient(#000 calc(100% - 60px),transparent calc(100% - 8px))}
+.fondDeux .catFond{width:88px;padding:6px 2px 7px;border-radius:16px;background:transparent!important;color:var(--muted)}
+.fondDeux .catFond .vgI{width:54px;height:54px;border-radius:50%!important;box-shadow:0 0 0 1px rgba(0,0,0,.08);transition:box-shadow .2s,transform .2s}
+.fondDeux .catFond:hover:not(.on) .vgI{transform:scale(1.05)}
+.fondDeux .catFond.on{color:var(--noir)!important;font-weight:500}
+.fondDeux .catFond.on .vgI{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.fondDeux .catFond.on:after{content:"";position:absolute;right:-9px;top:33px;width:12px;height:12px;background:#fff;rotate:45deg;border-radius:2px;box-shadow:2px -2px 4px -2px rgba(0,0,0,.12)}
+.fondDeux .catFond{position:relative}
+.fondDeux .catFond span{max-width:84px}
+.fdFleche{position:absolute;left:50%;bottom:7px;translate:-50% 0;z-index:3;width:34px;height:34px;border-radius:50%;border:0;background:var(--noir);color:#fff;font:300 18px/1 Jost,sans-serif;
+  display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 14px -6px rgba(0,0,0,.5);transition:opacity .25s,rotate .3s,background .2s;animation:fdSaut 1.4s ease-in-out 3}
+.fdFleche:hover{background:#000}.fdFleche.haut{rotate:180deg;animation:none}
+@keyframes fdSaut{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.fdTitre{font:500 10px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--doux);text-align:center;padding:9px 0 0}
+.fondDeux .catBoxF{flex-direction:column;overflow:hidden}.fondDeux #catF{min-height:0}.fondDeux .catFond.on:after{display:none}
+@media (max-width:899px){.fondDeux .catBoxF{width:80px}.fondDeux .catFond{width:74px}.fondDeux .catFond .vgI{width:44px;height:44px}.fondDeux .catFond.on:after{top:27px;right:-5px}
+  .fdFleche{width:30px;height:30px;font-size:16px}}
 </style>
 </head>
 <body>
@@ -1030,7 +1064,7 @@ const idxFond = nom => P.fonds().findIndex(x => x[0] === nom);
 function rendLooks() { const l = $("lLook");
   l.innerHTML = `<button class="look surp" data-i="s"><span class="vis"><b><i>✦</i>Surprends-moi</b></span>Au hasard</button><button class="look ajout" data-i="plus"><span class="vis"><b><i>+</i>Enregistrer ce look</b></span>Mon site tel qu’il est</button>` + tousLooks().map((L, i) => { const k = idxFond(L.f);
     const vis = L.img ? `<img class="cap" src="../loginail-site/apercus-univers/${L.img}.webp" alt="" loading="lazy">` : (k >= 0 ? P.vignetteFond(k) : "") + `<b style="font-family:${P.famille(L.p).replace(/"/g, "'")}">${L.n}</b>`;
-    return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span>${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join(""); }
+    return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span>${i < MES.length ? `<span class="supL" role="button" aria-label="Supprimer ce look">✕</span>` : ""}${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join(""); }
 const pause = ms => new Promise(r => setTimeout(r, ms));
 async function appliqueLook(L) {
   P.poses().forEach(n => P.charm(n)); while (P.nbEtoiles()) P.enleveEtoiles();
@@ -1084,6 +1118,16 @@ function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (ME
   MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, lb: { ...P.libre }, c: P.poses(), pos, et, quand: new Date().toISOString() });
   try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (e) {}
   lookOn = 0; rendLooks(); bulle("Look « " + nom + " » enregistré ✦"); }
+/* la croix d'un look enregistré : on demande avant de supprimer */
+$("lLook").addEventListener("click", e => { const x = e.target.closest(".supL"); if (!x) return; e.preventDefault(); e.stopImmediatePropagation();
+  const i = +x.closest(".look").dataset.i, L = MES[i]; if (!L) return;
+  const d = document.createElement("div"); d.className = "supFond";
+  d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Supprimer ce look ?</h4><p>« ${L.n.replace(/</g, "&lt;")} » sera effacé.<br>Votre site ne change pas.</p><div><button class="non">Non</button><button class="oui">Oui, supprimer</button></div></div>`;
+  const ferme = () => d.remove();
+  d.onclick = ev => { if (ev.target === d || ev.target.closest(".non")) return ferme();
+    if (ev.target.closest(".oui")) { MES.splice(i, 1); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (er) {}
+      if (lookOn === i) lookOn = -1; else if (lookOn > i) lookOn--; ferme(); rendLooks(); rend("look"); bulle("Look supprimé"); } };
+  document.body.appendChild(d); d.querySelector(".non").focus(); }, true);
 $("lLook").onclick = async e => { const b = e.target.closest(".look"); if (!b) return;
   if (b.dataset.i === "plus") return enregistre();
   memo(); const L = b.dataset.i === "s" ? await auHasard() : tousLooks()[+b.dataset.i]; lookOn = b.dataset.i === "s" ? -1 : +b.dataset.i;
@@ -1388,7 +1432,7 @@ rend = o => { rendAvantFav(o);
 const ASTUCES = {
   look: [["✦", "<b>Surprends-moi</b> : un toucher, un nouveau site complet. Recommencez autant que vous voulez."], ["♥", "<b>Restez appuyée</b> sur un look pour le garder en favori."], ["+", "<b>Enregistrer ce look</b> : votre site tel qu'il est, pour le retrouver plus tard."], ["◉", "<b>Voir comme ma cliente</b> : votre site exactement comme elles le verront."]],
   photo: [["+", "<b>Votre plus belle photo</b> : c'est la 1re chose que vos clientes voient."], ["✕", "Une photo en trop ? Touchez la <b>croix</b> (vous pouvez annuler)."], ["✦", "Une photo <b>bien éclairée</b>, ongles au premier plan : c'est elle qui donne envie de réserver."]],
-  fond: [["♥", "<b>Restez appuyée</b> sur un fond pour le mettre en favori : il apparaît dans « Favoris »."], ["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."], ["‹›", "Plus de 500 fonds : <b>faites glisser la colonne des catégories</b> (Dark, Élégants, Y2K…)."]],
+  fond: [["♥", "<b>Restez appuyée</b> sur un fond pour le mettre en favori : il apparaît dans « Favoris »."], ["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."], ["‹›", "Plus de 500 fonds : <b>faites glisser les thèmes</b> ou touchez la flèche ⌄ (Dark, Élégants, Y2K…)."]],
   entete: [["♥", "<b>Restez appuyée</b> sur une en-tête pour la mettre en favori : elle passe en premier."], ["↻", "Elles bougent comme sur votre vrai site : <b>regardez-les vivre</b>."], ["▣", "<b>Votre photo</b> se place toute seule dans chaque en-tête."]],
   ecriture: [["♥", "<b>Restez appuyée</b> sur une écriture pour la mettre en favori."], ["Aa", "Votre nom est montré <b>sur votre fond</b>, comme vos clientes le verront."], ["↔", "Votre nom tient <b>toujours sur une ligne</b> : il se règle tout seul."]],
   couleurs: [["✦", "<b>Assortir à mon fond</b> : tout va ensemble, en un toucher."], ["◐", "<b>Glissez le doigt</b> sur le rectangle : le nom de la couleur s'affiche."], ["▢", "<b>Blancs ou en couleur</b> : l'allure de vos encadrés."]],
@@ -1429,6 +1473,12 @@ P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.sear
 (() => { const P = document.querySelector('.panneau[data-p="fond"]'), cb = P.querySelector(".catBoxF"), lf = document.getElementById("lFond");
   const d = document.createElement("div"); d.className = "fondDeux"; cb.before(d); d.append(cb, lf); lf.classList.remove("ligne");
   document.getElementById("catF").addEventListener("click", e => { if (!e.target.closest(".catI")) return; lf.scrollTop = 0; lf.classList.remove("entre"); void lf.offsetWidth; lf.classList.add("entre"); });
+  /* le rail : un petit titre, et la flèche ⌄ qui fait descendre (elle se retourne ⌃ en bas de la liste) */
+  const cf = document.getElementById("catF"), t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; cb.prepend(t);
+  const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg>`; cb.append(fl);
+  const majF = () => { if (!cf.clientHeight) return; fl.style.opacity = cf.scrollHeight > cf.clientHeight + 6 ? "" : "0"; const fin = cf.scrollTop + cf.clientHeight >= cf.scrollHeight - 6; fl.classList.toggle("haut", fin); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres thèmes"); };
+  fl.onclick = () => cf.scrollBy({ top: fl.classList.contains("haut") ? -cf.scrollHeight : cf.clientHeight * .7, behavior: "smooth" });
+  cf.addEventListener("scroll", majF, { passive: true }); new ResizeObserver(majF).observe(cf); new MutationObserver(majF).observe(cf, { childList: true }); setInterval(majF, 800);
   /* chaque fond est un carré parfait : la hauteur des lignes = la largeur des colonnes, recalculée si la place change */
   const carre = () => { const c = getComputedStyle(lf).gridTemplateColumns.split(" ")[0]; if (c && c.endsWith("px")) lf.style.gridAutoRows = c; };
   new ResizeObserver(carre).observe(lf); carre();
