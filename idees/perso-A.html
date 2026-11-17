@@ -719,6 +719,22 @@ body.coul2 .rangC .ligne{gap:8px}
 @media (min-width:900px){.panneau{padding-left:7px!important;padding-right:7px!important;padding-top:7px!important}}
 /* 17/11 (Marie) : plus d'effet flou en bas des listes */
 body.ep1 .choix:after{display:none!important}
+/* 17/11 (Marie) : FAVORIS partout (appui long) · téléphone collé à droite · colonne d'astuces à gauche · poignée alignée sur l'étape 3 */
+.vg.fav:after,.ent.fav:after,.ecr-c.fav:after,.look.fav:after{content:"♥";position:absolute;z-index:4;font-size:13px;color:#fff;text-shadow:0 0 3px rgba(181,71,94,1),0 0 8px rgba(181,71,94,.8);pointer-events:none}
+.vg.fav:after{right:6px;top:4px}.ent{position:relative}.ent.fav:after{right:14px;top:14px}.ecr-c.fav:after{left:10px;top:7px}.look{position:relative}.look.fav:after{right:10px;top:8px}
+.vg,.ent,.ecr-c,.look{-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.catFav .vgI{display:grid;place-items:center;background:#fff;color:var(--rose);font-style:normal;font-size:15px}
+.astuces{display:none}
+@media (min-width:900px){
+  .scene{justify-content:flex-end!important;padding-right:34px!important}
+  .astuces{display:flex;flex-direction:column;gap:10px;position:absolute;left:48px;top:62px;width:var(--astW,230px);z-index:3;opacity:1;transition:opacity .3s}
+  .astuces.cache{opacity:0;pointer-events:none}
+  .astuces h3{margin:0 0 2px;font:500 22px "Cormorant Garamond",serif}
+  .astuces h3 em{font-style:italic}
+  .astuce{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.72);border-radius:16px;padding:11px 12px;font:400 13px/1.4 Jost,sans-serif;color:var(--muted);box-shadow:0 8px 20px -18px rgba(0,0,0,.5);backdrop-filter:blur(6px)}
+  .astuce b{color:var(--noir);font-weight:500}
+  .astuce i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--rosé);color:var(--rose);font-style:normal;font-size:14px}
+}
 @keyframes respire{0%,100%{translate:0 0}50%{translate:0 3px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
 </style>
@@ -737,6 +753,7 @@ body.ep1 .choix:after{display:none!important}
     </div>
   </div>
   <div class="scene" id="scene">
+    <aside class="astuces" id="astuces" aria-label="Astuces"></aside>
     <button class="vueCliente" id="vueCliente"><svg viewBox="0 0 24 24" width="17" height="17"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Voir comme ma cliente</span></button>
     <div class="tel" id="tel"><div class="ecr"><iframe id="site" title="Votre site"></iframe><div class="attente" id="attente">Votre site arrive…</div><div class="defileIndice" id="defileIndice"><span class="doigt"><i></i></span>Faites défiler<span class="lg"> votre site</span></div></div></div>
   </div>
@@ -1305,6 +1322,56 @@ P.change(q => { if (q && q.startsWith && q.startsWith("vise:")) { partC = q.slic
     d.addEventListener("scroll", fin, { passive: true }); P.D.addEventListener("scroll", fin, { passive: true, capture: true }); } });
   setTimeout(montre, 2500); }
 setInterval(placeVue, 500); addEventListener("resize", () => setTimeout(placeVue, 60));
+
+/* ===== 17/11 (Marie) : FAVORIS partout, par appui long (fonds, en-têtes, écritures, looks ; les charms l'avaient déjà) ===== */
+const FAVS = (() => { try { return Object.assign({ fond: [], entete: [], ecriture: [], look: [] }, JSON.parse(localStorage.getItem("lgnFavoris") || "{}")); } catch (e) { return { fond: [], entete: [], ecriture: [], look: [] }; } })();
+const sauveFavs = () => { try { localStorage.setItem("lgnFavoris", JSON.stringify(FAVS)); } catch (e) {} };
+function brancheFavori(conteneur, sel, type, cle, apres) { let long = false;
+  conteneur.addEventListener("pointerdown", e => { const b = e.target.closest(sel); if (!b) return; long = false; clearTimeout(b._tf);
+    b._tf = setTimeout(() => { long = true; const k = cle(b); if (k == null) return; const L = FAVS[type], i = L.indexOf(k); if (i < 0) L.unshift(k); else L.splice(i, 1); sauveFavs();
+      b.classList.toggle("fav", i < 0); navigator.vibrate?.(15); bulle(i < 0 ? "♥ Ajouté à vos favoris" : "Retiré de vos favoris"); apres && apres(); }, 480); });
+  ["pointerup", "pointerleave", "pointercancel"].forEach(ty => conteneur.addEventListener(ty, e => { const b = e.target.closest?.(sel); if (b) clearTimeout(b._tf); }));
+  conteneur.addEventListener("pointermove", e => { if (Math.abs(e.movementX) + Math.abs(e.movementY) > 6) { const b = e.target.closest?.(sel); if (b) clearTimeout(b._tf); } });
+  conteneur.addEventListener("contextmenu", e => { if (e.target.closest(sel)) e.preventDefault(); });
+  conteneur.addEventListener("click", e => { if (long) { e.stopImmediatePropagation(); e.preventDefault(); long = false; } }, true); }
+brancheFavori($("lFond"), ".vg", "fond", b => b.dataset.f || null, () => { $("lFond").dataset.cat = ""; rend("fond"); });
+brancheFavori($("lEnt"), ".ent", "entete", b => b.dataset.k, () => rangeFavEntetes());
+brancheFavori($("lPol"), ".ecr-c", "ecriture", b => b.dataset.k, () => { $("lPol").dataset.cle = ""; rend("ecriture"); });
+brancheFavori($("lLook"), ".look", "look", b => { const L = tousLooks()[+b.dataset.i]; return L ? L.n : null; }, () => rendLooks());
+/* les en-têtes favorites passent en premier (on déplace les vignettes déjà dessinées, sans les refaire) */
+function rangeFavEntetes() { const l = $("lEnt"); [...l.querySelectorAll(".ent")].forEach(b => b.classList.toggle("fav", FAVS.entete.includes(b.dataset.k)));
+  FAVS.entete.slice().reverse().forEach(k => { const b = l.querySelector(`.ent[data-k="${k}"]`); if (b) l.prepend(b); }); }
+const rendAvantFav = rend;
+rend = o => { rendAvantFav(o);
+  if (o === "fond") { $("lFond").querySelectorAll(".vg").forEach(b => b.classList.toggle("fav", FAVS.fond.includes(b.dataset.f)));
+    if (FAVS.fond.length && !$("catF").querySelector('[data-c="Favoris"]')) $("catF").insertAdjacentHTML("afterbegin", `<button class="catI catFond catFav${catFond === "Favoris" ? " on" : ""}" data-c="Favoris"><i class="vgI">♥</i><span>Favoris</span></button>`); }
+  if (o === "entete") rangeFavEntetes();
+  if (o === "ecriture") { const l = $("lPol"); l.querySelectorAll(".ecr-c").forEach(b => b.classList.toggle("fav", FAVS.ecriture.includes(b.dataset.k))); FAVS.ecriture.slice().reverse().forEach(k => { const b = l.querySelector(`.ecr-c[data-k="${k}"]`); if (b) l.prepend(b); }); }
+  if (o === "look") $("lLook").querySelectorAll(".look").forEach(b => { const L = tousLooks()[+b.dataset.i]; b.classList.toggle("fav", !!L && FAVS.look.includes(L.n)); }); };
+/* la catégorie « ♥ Favoris » des fonds */
+{ const rendFondAvant = rend; rend = o => { if (o === "fond" && catFond === "Favoris") { rendFondAvant(o); const F = P.fonds();
+    $("lFond").innerHTML = FAVS.fond.map(n => { const i = F.findIndex(x => x[0] === n); return i < 0 ? "" : `<button class="vg fav${n === P.etat.fond ? " on" : ""}" data-f="${n.replace(/"/g, "&quot;")}" title="${n.replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>`; }).join("") || "<p style='font:400 13px Jost;color:#8A817A'>Restez appuyée sur un fond pour l'ajouter ici ♥</p>"; $("lFond").dataset.cat = ""; return; } rendFondAvant(o); }; }
+
+/* ===== la colonne d'ASTUCES (ordinateur), tout à gauche sous LOGINAIL : elle change selon l'onglet ===== */
+const ASTUCES = {
+  look: [["✦", "<b>Surprends-moi</b> : un toucher, un nouveau site complet. Recommencez autant que vous voulez."], ["♥", "<b>Restez appuyée</b> sur un look pour le garder en favori."]],
+  photo: [["+", "<b>Votre plus belle photo</b> : c'est la 1re chose que vos clientes voient."], ["✕", "Une photo en trop ? Touchez la <b>croix</b> (vous pouvez annuler)."]],
+  fond: [["♥", "<b>Restez appuyée</b> sur un fond pour le mettre en favori : il apparaît dans « Favoris »."], ["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."]],
+  entete: [["♥", "<b>Restez appuyée</b> sur une en-tête pour la mettre en favori : elle passe en premier."], ["↻", "Elles bougent comme sur votre vrai site : <b>regardez-les vivre</b>."]],
+  ecriture: [["♥", "<b>Restez appuyée</b> sur une écriture pour la mettre en favori."], ["Aa", "Votre nom est montré <b>sur votre fond</b>, comme vos clientes le verront."]],
+  couleurs: [["☝", "<b>Touchez votre site</b> (le nom, l'encadré, le bouton) pour choisir ce que vous colorez."], ["✦", "<b>Assortir à mon fond</b> : tout va ensemble, en un toucher."]],
+  charms: [["♥", "<b>Restez appuyée</b> sur un charm pour le mettre en favori."], ["⤡", "Touchez un charm posé : <b>⤡ agrandir</b>, <b>↻ tourner</b>, <b>⇋ miroir</b>, <b>✕ enlever</b>."], ["✦", "Ajoutez des <b>étoiles qui brillent</b> : glissez-les où vous voulez."]] };
+const COMMUNES = [["‹›", "<b>Tirez la poignée</b> pour agrandir vos réglages."], ["↶", "Une erreur ? <b>Annuler</b>, en haut à droite."]];
+function rendAstuces(o) { const a = $("astuces"); if (!a) return; const L = (ASTUCES[o] || []).concat(COMMUNES).slice(0, 4);
+  a.innerHTML = `<h3>Les <em>astuces</em></h3>` + L.map(([i, txt]) => `<div class="astuce"><i>${i}</i><span>${txt}</span></div>`).join(""); placeAstuces(); }
+function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || innerWidth < 900) return; const libre = T.offsetLeft - 48 - 24; a.style.setProperty("--astW", Math.min(260, libre) + "px"); a.classList.toggle("cache", libre < 170 || $("app").classList.contains("agrandi")); }
+{ const ouvreAvantAst = ouvre; ouvre = o => { ouvreAvantAst(o); rendAstuces(o); }; }
+setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(placeAstuces, 80));
+
+/* ===== à la 1re arrivée, la poignée est alignée sur l'étape « 3 · Vos couleurs et votre fond » ===== */
+(() => { let deja = null; try { deja = localStorage.getItem("lgnColR"); } catch (e) {} if (deja || innerWidth < 900) return;
+  const e3 = $("etapes").querySelector('[data-s="3"]'); if (!e3) return; const x = e3.getBoundingClientRect().left - 22, w = Math.round(innerWidth - x);
+  if (w > 480 && w < innerWidth - 420) { $("app").style.setProperty("--colR", w + "px"); setTimeout(taille, 30); } })();
 
 /* 17/11 tard (Marie) : la poignée à tirer entre le téléphone et les réglages (ordinateur) */
 (() => { const g = $("poignee"), app = $("app"); let x0 = null, w0 = 0, raf = 0;
