@@ -6,7 +6,9 @@
   const MOTS = {
     fr: { avis: "Avis", infos: "Infos pratiques", res: "Réserver", ml: "Mentions légales", menu: "Menu", fermer: "Fermer le menu" },
     en: { avis: "Reviews", infos: "Practical info", res: "Book", ml: "Legal notice", menu: "Menu", fermer: "Close menu" },
-    it: { avis: "Recensioni", infos: "Info pratiche", res: "Prenota", ml: "Note legali", menu: "Menu", fermer: "Chiudi il menu" }
+    it: { avis: "Recensioni", infos: "Info pratiche", res: "Prenota", ml: "Note legali", menu: "Menu", fermer: "Chiudi il menu" },
+    es: { avis: "Reseñas", infos: "Información práctica", res: "Reservar", ml: "Aviso legal", menu: "Menú", fermer: "Cerrar el menú" },
+    de: { avis: "Bewertungen", infos: "Praktische Infos", res: "Buchen", ml: "Impressum", menu: "Menü", fermer: "Menü schließen" }
   };
   const css = document.createElement("style");
   css.textContent = `
@@ -87,7 +89,7 @@
     e.insertAdjacentHTML("beforeend", `<div class="lm-voile"></div>
       <nav class="lm-pan" aria-label="${m.menu}" aria-hidden="true"><div class="lm-nom">${esc(nom)}</div><div class="lm-liste"></div>
         <button class="lm-res" data-res>${m.res}</button>
-        ${typeof monte === "function" ? `<div class="lm-langues">${["fr", "en", "it"].map(l => `<button class="${l === lang ? "on" : ""}" data-lml="${l}" aria-label="${{ fr: "Français", en: "English", it: "Italiano" }[l]}">${l.toUpperCase()}</button>`).join("")}</div>` : ""}${window.LOGI_LEGAL ? `<button class="lm-leg">${m.ml}</button>` : ""}</nav>
+        ${typeof monte === "function" ? `<div class="lm-langues">${["fr", "en", "it", "es", "de"].map(l => `<button class="${l === lang ? "on" : ""}" data-lml="${l}" aria-label="${{ fr: "Français", en: "English", it: "Italiano", es: "Español", de: "Deutsch" }[l]}">${l.toUpperCase()}</button>`).join("")}</div>` : ""}${window.LOGI_LEGAL ? `<button class="lm-leg">${m.ml}</button>` : ""}</nav>
       <button class="lm-btn" aria-label="${m.menu}" aria-expanded="false"><i></i><i></i><i></i></button>`);
     const btn = e.querySelector(":scope > .lm-btn"), pan = e.querySelector(":scope > .lm-pan"), voile = e.querySelector(":scope > .lm-voile");
     let items = [];
