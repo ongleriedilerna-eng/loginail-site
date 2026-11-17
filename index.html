@@ -1894,7 +1894,8 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 /* 17/11 (Marie) : sur ordinateur, le haut de page est une « scène » dessinée à la taille de l'écran de Marie (1536×720)
    puis agrandie ou réduite d'un bloc : tous les ordis voient la même chose (titre, bulles, téléphones coupés au même endroit). */
 html.np-stage .np .np-hero{width:calc(100% / var(--s));padding-top:calc(76px / var(--s));transform:scale(var(--s));transform-origin:0 0;margin-bottom:var(--mb,0px)}
-html.np-stage .np .np-hero .np-top{padding-top:22px}
+html.np-stage .np .np-hero .np-top{padding-top:calc(22px + var(--gt,0px))}
+html.np-stage .np .np-arc{margin-top:calc(6px + var(--ga,0px))}
 html.np-stage .np h1{font-size:63px}
 html.np-stage .np h1 .np-l2{font-size:33px}
 html.np-stage .np .np-lead{font-size:19.5px;white-space:nowrap;max-width:none}
@@ -3120,7 +3121,10 @@ const $=id=>document.getElementById(id);
 const REF_H=720,REF_W_MIN=1100,NAV_H=76;let S=1;
 function stage(){const h=$('hero'),root=document.documentElement;if(!h)return;
   if(innerWidth<1000){root.classList.remove('np-stage');S=1;h.style.removeProperty('--mb');return}
-  S=Math.min((innerHeight-NAV_H)/(REF_H-NAV_H),innerWidth/REF_W_MIN);
+  /* 17/11 (Marie) : jamais plus gros que chez Marie ; sur un écran plus haut, on ajoute de l'air (dessus et avant les téléphones) au lieu d'agrandir */
+  S=Math.min(1,(innerHeight-NAV_H)/(REF_H-NAV_H),innerWidth/REF_W_MIN);
+  const E=Math.max(0,(innerHeight-NAV_H)/S-(REF_H-NAV_H));
+  h.style.setProperty('--gt',(E*.4)+'px');h.style.setProperty('--ga',(E*.6)+'px');
   root.style.setProperty('--s',S);root.style.setProperty('--sw',(innerWidth/S)+'px');root.classList.add('np-stage');
   h.style.setProperty('--mb',(h.offsetHeight*(S-1))+'px')}
 stage();addEventListener('resize',stage);addEventListener('load',stage);
