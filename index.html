@@ -1804,6 +1804,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np .np-f1 .np-pop,.np .np-f2 .np-pop{top:-14px;translate:0 0}
 .np .np-f3 .np-pop,.np .np-f4 .np-pop{top:auto;bottom:-70px;translate:0 0}
 .np .np-f3 .np-pop::before,.np .np-f4 .np-pop::before{top:auto;bottom:90px;transform:rotate(45deg)}
+.np .np-float .np-pop::before{top:var(--ay,50%);bottom:auto;transform:translateY(-50%) rotate(45deg)}
 @media (max-width:760px){.np .np-pop{display:none}
 }
 .np .np-charms{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
@@ -1831,7 +1832,7 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np .live-note::before,.np .live-note::after{content:"";flex:1;height:1px;background:var(--line)}
 .np .live{position:relative}
 .np .live iframe{position:sticky;top:0;display:block;width:100%;height:100vh;border:0;background:var(--cream)}
-@media (max-width:1180px){.np .np-f3,.np .np-f4{display:none}
+@media (max-width:1180px){
 .np .np-f1{top:12%}
 .np .np-f2{top:12%}
 }
@@ -3109,7 +3110,7 @@ function buildWheel(){
   const step=(w+gap)/R*180/Math.PI, n=Math.floor(360/step), real=360/n;
   const wh=$('wheel');wh.style.setProperty('--R',R+'px');wh.style.setProperty('--w',w+'px');wh.style.setProperty('--h',h+'px');
   wh.innerHTML=Array.from({length:n},(_,i)=>{const [nm,f]=SITES[i%SITES.length];
-    return `<div class="np-slot" style="transform:rotate(${i*real}deg)"><div class="np-card"><div class="np-nt"></div><div class="np-sc" style="background-image:url(${f.includes('/')?f:U+f+'.webp'})"></div><span class="np-nm">${nm}</span></div></div>`}).join('');
+    return `<div class="np-slot" style="transform:rotate(${i*real}deg)"><div class="np-card"><div class="np-nt"></div><div class="np-sc" role="img" aria-label="Site ${nm}" style="background-image:url(${f.includes('/')?f:U+f+'.webp'})"></div></div></div>`}).join('');
 }
 buildWheel();let lw=innerWidth;addEventListener('resize',()=>{if((innerWidth<760)!==(lw<760))buildWheel();lw=innerWidth});
 
@@ -3151,12 +3152,18 @@ let heroOn=true;new IntersectionObserver(([e])=>{heroOn=e.isIntersecting;$('arc'
 if(!RM)requestAnimationFrame(tick);else items.forEach(it=>it.el.style.transform=`rotate(${it.r}deg)`);
 
 /* Bulle d'appel sur « Fonctionnalités » : apparaît une fois, disparaît dès qu'on scrolle */
-const tip=$('tip');if(tip&&!RM){setTimeout(()=>{if(scrollY<40)tip.classList.add('on')},2600);setTimeout(()=>tip.classList.remove('on'),8600)}
+const tip=$('tip');if(tip&&!RM){setTimeout(()=>{if(scrollY<40)tip.classList.add('on')},2600);setTimeout(()=>tip.classList.remove('on'),7600)} /* visible 5 s, pas plus */
 addEventListener('scroll',()=>tip&&tip.classList.remove('on'),{passive:true});
 
 /* Mise au point : le reste du haut de page se floute autour de la carte ouverte */
 const floats=[...document.querySelectorAll('.np-float')];
-function openF(f){const r=f.getBoundingClientRect();hero.style.setProperty('--fx',(r.left+r.width/2)+'px');hero.style.setProperty('--fy',(r.top+r.height/2)+'px');
+/* Le carré d'aperçu reste sous la barre du haut et dans l'écran, quelle que soit la taille de l'écran */
+function placePop(f){const p=f.querySelector('.np-pop');if(!p)return;p.style.top='';p.style.bottom='';p.style.removeProperty('--ay');if(!p.offsetWidth)return;
+  const fr=f.getBoundingClientRect(),h=p.offsetHeight,t=fr.top+p.offsetTop,nav=document.querySelector('.np-nav'),
+    hi=(nav?nav.getBoundingClientRect().bottom:76)+14,lo=innerHeight-h-12;
+  const nt=Math.max(hi,Math.min(t,lo));if(Math.abs(nt-t)>1){p.style.top=(nt-fr.top)+'px';p.style.bottom='auto'}
+  p.style.setProperty('--ay',Math.max(24,Math.min(h-24,fr.top+fr.height/2-nt))+'px')}
+function openF(f){placePop(f);const r=f.getBoundingClientRect();hero.style.setProperty('--fx',(r.left+r.width/2)+'px');hero.style.setProperty('--fy',(r.top+r.height/2)+'px');
   // on fige la bulle sur un pixel entier : texte net
   const t=getComputedStyle(f).translate.split(' ').map(v=>Math.round(parseFloat(v)||0)+'px');f.style.translate=t.join(' ');f.style.animation='none';
   floats.forEach(x=>{if(x!==f)closeF(x,true)});f.classList.add('np-active');f.setAttribute('aria-expanded','true');hero.classList.add('np-focus');if(tip)tip.classList.remove('on')}
