@@ -138,9 +138,31 @@
      .pf-dots = la couleur du SITE, et les blocs « Sur blanc / Sur couleur » */
   P.NOMC = {"noir": "#1E1C1B", "blanc": "#FFFFFF", "or": "linear-gradient(170deg,#FFF3C4 0%,#E8C66A 38%,#B8862E 62%,#F6DE92 100%)", "argent": "linear-gradient(170deg,#FFFFFF 0%,#D9DCE2 35%,#8C9098 60%,#F2F3F6 100%)", "rosegold": "linear-gradient(170deg,#FCE3DA 0%,#E8A99A 40%,#B9706A 65%,#F6CFC4 100%)", "champagne": "linear-gradient(170deg,#FFF8EA 0%,#E9D3A8 40%,#B8975E 65%,#F6E7C6 100%)", "cuivre": "linear-gradient(170deg,#FBE0C8 0%,#D98B5A 40%,#9A5530 65%,#F2C29E 100%)", "holo": "linear-gradient(100deg,#FFB3E6 0%,#B3D4FF 30%,#B9FFE0 60%,#FFF3B0 100%)", "pastel": "linear-gradient(100deg,#F7B9CF 0%,#D9C2F2 35%,#B9DAF5 65%,#BDEBD7 100%)", "coucher": "linear-gradient(100deg,#F9C49A 0%,#F6A99B 45%,#F4B6C8 100%)", "glace": "linear-gradient(100deg,#B7D3F0 0%,#CDB8EE 50%,#F4B6C8 100%)", "citron": "linear-gradient(100deg,#F6E3A1 0%,#B9E6D3 100%)", "rosep": "#F4B6C8", "lilasp": "#CDB8EE", "bleup": "#B7D3F0", "mentep": "#B9E6D3", "peche": "#F7C6A8", "orangep": "#F9C49A", "jaunep": "#F6E3A1", "corailp": "#F6A99B", "lavande": "#B9A6E8", "sauge": "#A9C3A2", "ciel": "#9FCBEB", "creme": "#F4EADB", "beige": "#D9C4A8", "corail": "#F07A65", "rouge": "#C8243A", "bordeaux": "#7A1F33", "fuchsia": "#E0368C", "violet": "#7B3FB5", "turquoise": "#2BB3B1", "vert": "#1F7A55", "bleunuit": "#1F2E5C", "choco": "#5A3A28", "bleuroi": "#2F57E8", "bleuneon": "linear-gradient(100deg,#6FA8FF 0%,#2F57E8 50%,#7B5CFF 100%)"};
   const reveille = () => { const i = P.D.createElement("i"); P.D.body.appendChild(i); setTimeout(() => i.remove(), 30); };
-  P.nomc = k => { P.etat.nomc = k; P.calme(); try { P.W.eval(`if(typeof BR!=="undefined"&&BR)BR.nomc=${JSON.stringify(k)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:${JSON.stringify(k)}})`); } catch (e) {} reveille(); signale("couleur"); };
+  P.nomc = k => { P.etat.nomc = k; if (!P._libreEnCours) P.effaceLibre("nm"); P.calme(); try { P.W.eval(`if(typeof BR!=="undefined"&&BR)BR.nomc=${JSON.stringify(k)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:${JSON.stringify(k)}})`); } catch (e) {} reveille(); signale("couleur"); };
   P.blocs = v => { P.etat.blocs = v; P.calme(); try { P.W.eval(`if(typeof BR!=="undefined"&&BR)BR.blocs=${JSON.stringify(v)};window.__lgnChoix=Object.assign(window.__lgnChoix||{},{blocs:${JSON.stringify(v)}})`); } catch (e) {} reveille();
     try { const d = P.D.querySelector(".ecran .defile"), sec = P.D.querySelector(".ecran .defile>.sec"); if (d && sec && d.scrollTop < sec.offsetTop - 300) d.scrollTo({ top: sec.offsetTop - 150, behavior: "smooth" }); } catch (e) {} signale("couleur"); };
+  /* 17/11 (Marie : « que les couleurs soient impeccables ») : la couleur EXACTE choisie au doigt, sans l'arrondir à une des ~50 couleurs du site.
+     Encadrés : on règle --creme (fond clair) et --noir (encre) de la page ; nom : sa couleur ; bouton : --encre. */
+  P.libre = { bl: null, nm: null, bt: null };
+  const hx = h => { const m = String(h).match(/#([0-9a-f]{6})/i); return m ? [0, 2, 4].map(i => parseInt(m[1].substr(i, 2), 16)) : [0, 0, 0]; };
+  const toHex = a => "#" + a.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join("");
+  const melange = (a, b, k) => toHex(hx(a).map((v, i) => v * (1 - k) + hx(b)[i] * k));
+  function peintLibre() { const D = P.D; if (!D) return; let st = D.getElementById("pzLibre"); if (!st) { st = D.createElement("style"); st.id = "pzLibre"; D.head.appendChild(st); }
+    const L = P.libre; let css = "";
+    if (L.bl) { const fonce = melange(L.bl, "#141210", .78); css += `.ecran{--creme:${L.bl}!important;--noir:${fonce}!important;--gris:${melange(L.bl, "#141210", .5)}!important;--lgn-bloc:${L.bl}!important}`; }
+    if (L.bt) css += `.ecran,.ecran [data-vif]{--encre:${L.bt}!important;--btn:${L.bt}!important;--acc:${L.bt}!important}.ecran .hent .he-btn,.ecran .defile :is(.hf-res,.hbtn){background:${L.bt}!important;border-color:${L.bt}!important}`;
+    st.textContent = css; peintNomLibre(); }
+  /* le site pose la couleur du nom DIRECTEMENT sur le nom (style « important ») : on fait pareil, et on la remet si le site la repeint */
+  const NOMSEL = ".ecran h1, .ecran .hf-nom";
+  function peintNomLibre() { const D = P.D, c = P.libre.nm; if (!D) return;
+    D.querySelectorAll(NOMSEL).forEach(el => { const tous = [el, ...el.querySelectorAll("*:not(i)")];
+      if (c) { el.style.setProperty("background", "none", "important"); tous.forEach(x => { x.style.setProperty("color", c, "important"); x.style.setProperty("-webkit-text-fill-color", c, "important"); }); el._libre = 1; }
+      else if (el._libre) { el._libre = 0; ["color", "-webkit-text-fill-color", "background"].forEach(k => tous.forEach(x => x.style.removeProperty(k)));
+        const z = D.createElement("i"); D.body.appendChild(z); z.remove(); } });   /* petit signal : le site repeint son nom normal */
+    if (!D._obsLibre) { D._obsLibre = new P.W.MutationObserver(() => { if (P.libre.nm) { clearTimeout(D._tLibre); D._tLibre = setTimeout(peintNomLibre, 160); } });
+      D._obsLibre.observe(D.body, { childList: true, subtree: true }); } }
+  P.couleurLibre = (q, hex) => { P.libre[q] = hex; peintLibre(); };
+  P.effaceLibre = (...qs) => { (qs.length ? qs : ["bl", "nm", "bt"]).forEach(q => P.libre[q] = null); peintLibre(); };
   P.couleurs = () => [...P.D.querySelectorAll(".pf-dots [data-co]")].map(b => [b.dataset.co, b.style.background]);
   P.vifs = () => [...P.D.querySelectorAll(".pf-vifs [data-vif]")].map(b => [b.dataset.vif, b.style.background]);
   /* après un remontage du site (couleur, boutons), on remet TOUT DE SUITE son écriture et ses réglages, sous le rideau */
@@ -149,12 +171,12 @@
     P.calme(); };
   /* 17/11 : la couleur du site change DIRECTEMENT (on remplace la classe c-xxx), sans reconstruire le site : instantané, même résultat
      (vérifié : blocs, bouton, sections, nom identiques). Si ça ne marche pas, on revient à l'ancienne façon, sous le rideau. */
-  P.couleur = (k, muet) => { P.etat.couleur = k; let ok = false;
+  P.couleur = (k, muet) => { P.etat.couleur = k; if (!P._libreEnCours) P.effaceLibre("bl"); let ok = false;
     try { ok = P.W.eval(`(()=>{const box=document.querySelector("[data-pf]");if(!box)return false;const e=box.querySelector(".ecran"),o=box._c,k=${JSON.stringify(k)};if(o===k)return true;const r=new RegExp("(^| )([cn])-"+o+"( |$)");if(!r.test(e.className))return false;e.className=e.className.replace(r,"$1$2-"+k+"$3");box._c=k;if(typeof BR!=="undefined"&&BR)BR.couleur=k;box.querySelectorAll("[data-co]").forEach(b=>b.classList.toggle("on",b.dataset.co===k));return true})()`); } catch (e) {}
     if (!ok) { P.rideau(650); clique(`.pf-dots [data-co="${k}"]`); if (P.etat.vif) P.vif(P.etat.vif, true); remet(); [60, 200].forEach(ms => setTimeout(remet, ms)); }
     if (!muet) signale("couleur"); };
   /* attention : recliquer la même couleur de boutons l'ENLÈVE dans le site ; on ne clique que si elle change */
-  P.vif = (k, force) => { P.etat.vif = k; let cur = ""; try { cur = P.W.eval('typeof BR!=="undefined"&&BR?BR.vif||"":""'); } catch (e) {}
+  P.vif = (k, force) => { P.etat.vif = k; if (!P._libreEnCours) P.effaceLibre("bt"); let cur = ""; try { cur = P.W.eval('typeof BR!=="undefined"&&BR?BR.vif||"":""'); } catch (e) {}
     if (cur !== k || force) { if (force && cur === k) return; clique(`.pf-vifs [data-vif="${k}"]`); } signale("couleur"); };
 
   P.entete = (k, muet) => { P.etat.entete = k; const W = P.W; if (!muet) P.rideau();

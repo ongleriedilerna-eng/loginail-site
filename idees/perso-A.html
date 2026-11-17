@@ -417,7 +417,7 @@ body.ecr2 .ecr-c.on .ok{display:grid;place-items:center;position:absolute;top:7p
 .ch.fav:before{content:"♥";position:absolute;left:5px;top:3px;font-size:11px;color:var(--rose)}
 .ch{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 /* « Voir comme ma cliente » */
-.vueCliente{position:absolute;left:14px;top:4px;z-index:4;display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:999px;background:#fff;color:var(--noir);font:500 12.5px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.45),inset 0 0 0 1px rgba(181,71,94,.25);transition:transform .15s,background .2s}
+.vueCliente{white-space:nowrap;position:absolute;left:14px;top:4px;z-index:4;display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:999px;background:#fff;color:var(--noir);font:500 12.5px Jost,sans-serif;box-shadow:0 6px 16px -10px rgba(0,0,0,.45),inset 0 0 0 1px rgba(181,71,94,.25);transition:transform .15s,background .2s}
 .vueCliente svg{color:var(--rose)}
 .vueCliente:active{transform:scale(.96)}
 body.enCliente .vueCliente{background:var(--rose);color:#fff}
@@ -1016,6 +1016,7 @@ async function appliqueLook(L) {
   P.fond(L.f); await pause(260);
   if (L.co) { P.etat.vif = L.v || P.etat.vif; P.couleur(L.co, true); if (L.v) P.vif(L.v); } else if (!L.f || !P.assortir()) { P.couleur("noir", true); P.vif("noirb"); }
   if (L.nc) P.nomc(L.nc); if (L.bl) P.blocs(L.bl);
+  P.effaceLibre(); if (L.lb) Object.entries(L.lb).forEach(([q, v]) => { if (v) P.couleurLibre(q, v); });
   if (L.p) P.police(L.p); setTimeout(ambiance, 300);
   const ok = P.charmsTous(), box = P.D.querySelector(".defile") || P.D.scrollingElement;
   for (const c of L.c.filter(x => ok.includes(x)).slice(0, P.MAX)) { await pause(120); P.charm(c);
@@ -1058,7 +1059,7 @@ function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (ME
   const box = P.D.querySelector(".defile") || P.D.scrollingElement, W = box.clientWidth, H = box.clientHeight, r1 = v => Math.round(v * 10) / 10, pos = {}, et = [];
   P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").forEach(im => pos[im.dataset.n] = [r1(parseFloat(im.style.left) / W * 100), r1(parseFloat(im.style.top) / H * 100), Math.round(im._s || 74), Math.round(im._r || 0), im._f === -1 ? -1 : 1]);
   P.D.querySelectorAll(".lgn-etoile").forEach(x => et.push([r1(parseFloat(x.style.left) / W * 100), r1(parseFloat(x.style.top) / H * 100), Math.round(x._s || 20)]));
-  MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, c: P.poses(), pos, et, quand: new Date().toISOString() });
+  MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, lb: { ...P.libre }, c: P.poses(), pos, et, quand: new Date().toISOString() });
   try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (e) {}
   lookOn = 0; rendLooks(); bulle("Look « " + nom + " » enregistré ✦"); }
 $("lLook").onclick = async e => { const b = e.target.closest(".look"); if (!b) return;
@@ -1078,7 +1079,7 @@ $("onglets").onclick = e => { const b = e.target.closest("button"); if (b) ouvre
 
 /* Annuler : on garde l'état AVANT chaque choix (photo, en-tête, fond, écriture, couleurs, charms, look) */
 const pile = []; let dernier = 0;
-const etatMaintenant = () => ({ ...P.etat, ch: P.poses(), ph: P.photoUne() });
+const etatMaintenant = () => ({ ...P.etat, ch: P.poses(), ph: P.photoUne(), lib: { ...P.libre } });
 function memo() { const t = Date.now(); if (t - dernier < 500) return; dernier = t; pile.push(etatMaintenant()); if (pile.length > 40) pile.shift(); $("annul").disabled = false; }
 $("reglages").addEventListener("click", e => { if (e.target.closest(".ent,.vg,.ecr-c,.dot:not(.plus),.ch,#assortir,button.ph,.sup")) memo(); }, true);
 $("annul").onclick = async () => { const s = pile.pop(); if (!s) return; $("annul").disabled = !pile.length; const m = P.etat;
@@ -1088,6 +1089,7 @@ $("annul").onclick = async () => { const s = pile.pop(); if (!s) return; $("annu
   if (s.police !== m.police) P.police(s.police);
   P.etat.vif = s.vif; P.couleur(s.couleur, true); P.vif(s.vif);
   if (s.nomc && s.nomc !== m.nomc) P.nomc(s.nomc); if (s.blocs && s.blocs !== m.blocs) P.blocs(s.blocs);
+  if (s.lib) { Object.entries(s.lib).forEach(([q, v]) => { P._libreEnCours = true; P.couleurLibre(q, v); P._libreEnCours = false; }); }
   const now = P.poses(); now.filter(n => !s.ch.includes(n)).forEach(n => P.charm(n)); s.ch.filter(n => !now.includes(n)).forEach(n => P.charm(n));
   setTimeout(() => { rend(onglet); ambiance(); }, 350); bulle("Annulé ↶"); };
 
@@ -1157,7 +1159,7 @@ const teinte = s => { const [r, g, b] = rgbDe(s).map(v => v / 255), mx = Math.ma
 const range = L => L.slice().sort((a, b) => { const x = teinte(a[1]), y = teinte(b[1]); return x[0] - y[0] || x[1] - y[1]; });
 function listePart(q) { if (q === "bl") return range(P.couleurs()); if (q === "bt") return range(P.vifs().filter(x => x[0] !== "blancb")); return range(Object.entries(P.NOMC).filter(x => !/gradient/.test(x[1]))); }
 function valPart(q) { return q === "bl" ? P.etat.couleur : q === "bt" ? P.etat.vif : P.etat.nomc; }
-function bgPart(q) { const k = valPart(q), L = q === "bl" ? P.couleurs() : q === "bt" ? P.vifs() : Object.entries(P.NOMC); const x = L.find(y => y[0] === k); return x ? x[1] : "#ccc"; }
+function bgPart(q) { if (P.libre && P.libre[q]) return P.libre[q]; const k = valPart(q), L = q === "bl" ? P.couleurs() : q === "bt" ? P.vifs() : Object.entries(P.NOMC); const x = L.find(y => y[0] === k); return x ? x[1] : "#ccc"; }
 /* 17/11 (Marie : « la bande est trop moche ») : une bande DOUCE (dégradé continu, neutres puis arc-en-ciel),
    et en glissant on prend la vraie couleur du site la plus proche, dont le nom s'affiche au-dessus du doigt */
 const NOMSC = Object.assign({}, P.NOMS || {}, { peche: "Pêche", lin: "Lin", bleup: "Bleu pastel", jaune: "Jaune pastel", menthe: "Menthe", abricot: "Abricot", ciel: "Bleu ciel", rosep: "Rose pastel", pechep: "Pêche pastel", lavande: "Lavande", corail: "Corail", rougefonce: "Rouge foncé", rouille: "Rouille", moutarde: "Moutarde", fuchsia: "Fuchsia", kaki: "Kaki", anthracite: "Anthracite", cobalt: "Cobalt", bleunuit: "Bleu nuit", prune: "Prune", caramel: "Caramel", vanille: "Vanille", olive: "Olive", emeraude: "Émeraude", turquoise: "Turquoise", perle: "Perle", verttendre: "Vert tendre", vertdeau: "Vert d’eau", glycine: "Glycine", lilaspoudre: "Lilas poudré", nacre: "Nacre", cremedoree: "Crème dorée", miel: "Miel", feuillage: "Feuillage", mousse: "Mousse",
@@ -1219,13 +1221,13 @@ function rendCouleursG() { if (!P.pret) return;
   const ex = $("extraC"); if (partC === "nm") { ex.innerHTML = `<div class="brillV">${Object.entries(P.NOMC).filter(x => /gradient/.test(x[1])).slice(0, 12).map(([k, v]) => `<button data-nc="${k}" title="${nomCoul(k)}" class="${k === P.etat.nomc ? "on" : ""}" style="background:${v}"></button>`).join("")}</div>`; ex.classList.add("vis"); rendSpectre(); P.vise && P.vise(onglet === "couleurs" ? partC : null); return; }
   ex.innerHTML = `<div class="exP"><button class="${P.etat.blocs === "blanc" ? "on" : ""}" data-bl="blanc">Blancs</button><button class="${P.etat.blocs !== "blanc" ? "on" : ""}" data-bl="verre">En couleur</button></div>`; ex.classList.toggle("vis", partC === "bl"); rendSpectre();
   P.vise && P.vise(onglet === "couleurs" ? partC : null); }
-$("assortG").onclick = () => { specMain = null; const a = $("assortG"); a.classList.remove("pop"); void a.offsetWidth; a.classList.add("pop");
+$("assortG").onclick = () => { specMain = null; P.effaceLibre(); const a = $("assortG"); a.classList.remove("pop"); void a.offsetWidth; a.classList.add("pop");
   /* des petites étincelles ✦ qui jaillissent autour du bouton */
   const r = a.getBoundingClientRect(); for (let i = 0; i < 9; i++) { const s = document.createElement("span"); s.className = "etincelle"; s.textContent = i % 3 ? "✦" : "·";
     const ang = Math.PI * 2 * i / 9 + Math.random() * .4, d = 46 + Math.random() * 30; s.style.left = r.left + r.width * (.15 + Math.random() * .7) + "px"; s.style.top = r.top + r.height / 2 - 6 + "px";
     s.style.setProperty("--dx", Math.cos(ang) * d + "px"); s.style.setProperty("--dy", Math.sin(ang) * d * .7 + "px"); s.style.fontSize = (13 + Math.random() * 9) + "px"; document.body.appendChild(s); setTimeout(() => s.remove(), 800); }
   memo(); if (P.assortir()) bulle("Couleurs assorties à votre fond ✦"); setTimeout(rendCouleursG, 60); };
-$("hautG").onclick = e => { const a = e.target.closest(".ambG"); if (!a) return; memo(); specMain = null;
+$("hautG").onclick = e => { const a = e.target.closest(".ambG"); if (!a) return; memo(); specMain = null; P.effaceLibre();
   if (a.classList.contains("assortG")) { if (P.assortir()) bulle("Couleurs assorties à votre fond ✦"); }
   else { const x = DUOS[+a.dataset.i]; P.couleur(x[1], true); P.vif(x[2]); P.nomc(x[3]); }
   setTimeout(rendCouleursG, 60); };
@@ -1293,6 +1295,12 @@ addEventListener("resize", () => { placeRoue(); if (onglet === "couleurs") rendS
   sl.addEventListener("input", () => appliqueHex(peint())); sl.addEventListener("change", () => rendSephora()); peint(); }
 /* ===== le rectangle : la teinte de gauche à droite, du vif (haut) au doux (bas) ; le trait règle foncé / clair ===== */
 const spec = { h: 340, s: 70 };
+/* la couleur exacte sous le doigt : appliquée tout de suite (une fois par image d'écran), le nom de la teinte la plus proche s'affiche */
+let rafEx = 0;
+function appliqueExact() { const hex = couleurSpec(), q = partC; $("partsG").querySelector(`[data-q="${q}"] i`).style.background = hex;
+  const it = procheReel(q, hex); $("nomS").textContent = nomCoul(it[0]);
+  cancelAnimationFrame(rafEx); rafEx = requestAnimationFrame(() => { if (q === "bl" && P.etat.blocs === "blanc") { P.blocs("verre"); bulle("Encadrés passés en couleur ✦"); }
+    P._libreEnCours = true; P.couleurLibre(q, hex); P._libreEnCours = false; }); }
 function couleurSpec() { return hexG(spec.h, spec.s, +$("reglS").value); }
 function peintSpectre() { const l = +$("reglS").value, H = [0, 30, 55, 90, 140, 175, 200, 230, 265, 300, 330, 360];
   $("rectS").style.setProperty("--spec", `linear-gradient(90deg,${H.map((h, i) => `${hexG(h, 85, l)} ${(i / (H.length - 1) * 100).toFixed(1)}%`).join(",")})`);
@@ -1305,14 +1313,13 @@ function rendSpectre() { const cur = bgPart(partC); if (specMain === partC) { pe
   peintSpectre(); }
 { const r = $("rectS"); let tient = false, der = "";
   const prend = e => { const b = r.getBoundingClientRect(), x = Math.min(1, Math.max(0, (e.clientX - b.left) / b.width)), y = Math.min(1, Math.max(0, (e.clientY - b.top) / b.height));
-    spec.h = x * 360; spec.s = Math.round(85 - y * 75); peintSpectre(); const hex = couleurSpec(), it = procheReel(partC, hex); $("nomS").textContent = nomCoul(it[0]);
-    if (it[0] !== der) { der = it[0]; appliquePart(partC, it[0]); $("partsG").querySelector(`[data-q="${partC}"] i`).style.background = it[1]; } };
+    spec.h = x * 360; spec.s = Math.round(85 - y * 75); peintSpectre(); appliqueExact(); };
   r.addEventListener("pointerdown", e => { e.preventDefault(); tient = true; der = ""; memo(); specMain = partC; r.classList.add("tient"); r.setPointerCapture(e.pointerId); prend(e); });
   r.addEventListener("dragstart", e => e.preventDefault()); r.addEventListener("lostpointercapture", () => { tient = false; r.classList.remove("tient"); });
   r.addEventListener("pointermove", e => { if (tient) prend(e); });
   r.addEventListener("pointerup", () => { tient = false; r.classList.remove("tient"); setTimeout(rendCouleursG, 60); });
   $("reglS").addEventListener("pointerdown", () => { memo(); specMain = partC; });
-  $("reglS").addEventListener("input", () => { peintSpectre(); const it = procheReel(partC, couleurSpec()); appliquePart(partC, it[0]); $("partsG").querySelector(`[data-q="${partC}"] i`).style.background = it[1]; });
+  $("reglS").addEventListener("input", () => { peintSpectre(); appliqueExact(); });
   $("reglS").addEventListener("change", () => setTimeout(rendCouleursG, 60)); }
 /* toucher le site (dans l'onglet Couleurs) = choisir la partie à colorer */
 P.change(q => { if (q && q.startsWith && q.startsWith("vise:")) { partC = q.slice(5); if (onglet !== "couleurs") ouvre("couleurs"); rendCouleursG(); } });
