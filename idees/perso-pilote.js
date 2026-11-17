@@ -125,7 +125,7 @@
     return c.outerHTML.replace(/fonds-img\//g, "fonds-mini/"); };
   P.fond = n => { const Pz = P.D.getElementById("pzFonds"); if (!Pz) return; P.etat.fond = n; P.rideau(90); P._attente++;
     precharge(n).then(() => { P._attente--; if (P.etat.fond !== n) return; const b = P.D.createElement("button"); b.dataset.f = n; b.style.display = "none"; Pz.appendChild(b); b.click(); b.remove();
-      P.calme(); signale("fond"); }); };
+      P.calme(); haloEtoiles(); signale("fond"); }); };
   /* « Assortir à mon fond » : chaque fond connaît sa couleur d'encre ; on prend le bouton le plus proche */
   const rgb = s => { const h = (String(s).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(s).match(/\d+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0]; };
   const dist = (a, b) => { const x = rgb(a), y = rgb(b); return (x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2 + (x[2] - y[2]) ** 2; };
@@ -343,7 +343,13 @@
   /* 17/11 (Marie) : les ÉTOILES QUI BRILLENT (« ✦ Étoiles ») : un bouquet de 3 à chaque toucher, 12 maximum, la croix enlève le dernier bouquet */
   P.MAX_ETOILES = 12;
   P.nbEtoiles = () => P.D.querySelectorAll(".lgn-etoile").length;
-  function haloEtoiles() { try { const f = P.fonds().find(x => x[0] === P.etat.fond); let c = f && f[4];
+  /* 17/11 (Marie : « si le fond est bleu, le halo des étoiles doit être bleu ») : le halo prend la couleur DOMINANTE du fond
+     (teintes-fonds.js), rendue lumineuse pour briller ; fond blanc/gris → la couleur d'encre du fond */
+  const haloDuFond = n => { const h = (window.TEINTES_FONDS || {})[n]; if (!h) return "";
+    const [r, g, b] = [1, 3, 5].map(k => parseInt(h.substr(k, 2), 16) / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    const sat = d ? d / (1 - Math.abs(2 * l - 1)) : 0; if (sat < .12) return ""; let hu = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; hu = (hu * 60 + 360) % 360;
+    return `hsl(${Math.round(hu)} ${Math.round(Math.max(sat, .7) * 100)}% 64%)`; };
+  function haloEtoiles() { try { const f = P.fonds().find(x => x[0] === P.etat.fond); let c = haloDuFond(P.etat.fond) || (f && f[4]);
     if (!c) { const b = P.D.querySelector(".appel"); c = b ? P.W.getComputedStyle(b).backgroundColor : ""; }
     if (c && !/rgba?\(0, 0, 0, 0\)|transparent/.test(c)) P.D.documentElement.style.setProperty("--lgn-halo", c); else P.D.documentElement.style.removeProperty("--lgn-halo"); } catch (e) {} }
   P.etoiles = () => { const D = P.D; if (P.nbEtoiles() >= P.MAX_ETOILES) return false; haloEtoiles(); const g = "g" + Date.now(), box = boite();

@@ -798,7 +798,8 @@ body.ep1 .choix:after{display:none!important}
 /* 17/11 v3 (Marie : « le bouton noir est dégueulasse ») : juste une petite flèche, bien visible, qui respire doucement */
 .fdFleche{width:44px!important;height:30px!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:var(--noir)!important;rotate:0deg!important;
   animation:fdRespire 1.8s ease-in-out infinite!important;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff)}
-.fdFleche svg{width:24px;height:24px;transition:transform .3s}
+.fdFleche svg{width:24px;height:24px;transition:transform .3s;transform-origin:50% 50%;transform-box:fill-box;display:block}
+.fdFleche{max-width:44px!important;min-width:0!important;padding:0!important;display:grid!important;place-items:center!important}
 .fdFleche.haut svg{transform:rotate(180deg)}
 .fdFleche.haut{animation:none!important}
 @keyframes fdRespire{0%,100%{transform:translateY(-2px);opacity:.75}50%{transform:translateY(3px);opacity:1}}
@@ -829,9 +830,24 @@ body.ep1 .choix:after{display:none!important}
 .ambG.mienC.nouveau{animation:popA .6s var(--pop)}
 
 .msgTel{position:absolute;left:50%;top:50%;z-index:6;translate:-50% -50%;scale:.92;opacity:0;pointer-events:none;text-align:center;white-space:nowrap;
-  background:rgba(30,28,27,.86);color:#fff;font:500 14px/1.35 Jost,sans-serif;padding:12px 20px;border-radius:18px;box-shadow:0 14px 30px -14px rgba(0,0,0,.6);backdrop-filter:blur(6px);transition:opacity .3s,scale .35s var(--ressort)}
+  background:rgba(255,255,255,.95);color:var(--noir);font:500 14px/1.35 Jost,sans-serif;padding:12px 20px;border-radius:18px;box-shadow:0 14px 30px -14px rgba(0,0,0,.6);backdrop-filter:blur(6px);transition:opacity .3s,scale .35s var(--ressort)}
 .msgTel.on{opacity:1;scale:1}
 @media (max-width:899px){.msgTel{font-size:11px;padding:8px 13px;border-radius:13px}}
+
+@media (min-width:900px){
+  .astuces{transition:opacity .35s ease,transform .45s var(--ressort),width .3s ease!important}
+  .astuces.cache{transform:translateX(-14px)}
+  .astuce{transition:opacity .3s ease,transform .35s var(--ressort)}
+  .astuce.loin{opacity:0;transform:translateY(6px) scale(.97);pointer-events:none}
+}
+
+/* 17/11 (Marie : « tout à droite, sous Publier, il y a tout un vide ») : sur ordinateur, « Assortir » se pose en haut à droite, à côté du titre */
+@media (min-width:900px){
+  .reglages{position:relative}
+  #assortirF.aDroite{position:absolute;right:48px;top:var(--assTop,96px);z-index:4;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .3s,transform .4s var(--ressort)}
+  body.surFond #assortirF.aDroite{opacity:1;pointer-events:auto;transform:none}
+  .panneau[data-p="fond"]>.basC:empty{display:none}
+}
 </style>
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
@@ -1117,6 +1133,11 @@ const cleTeinte = (() => { const cache = {}; return n => { if (n in cache) retur
   if (sat < .14 || l > .93) return cache[n] = l > .55 ? 1000 - l * 100 : 7000 - l * 100;   /* blancs/beiges au début, gris avant les noirs */
   const famille = Math.floor(((hue - 320 + 360) % 360) / 40);                      /* 0 = roses, puis rouges, oranges… */
   return cache[n] = 2000 + famille * 500 - l * 100; }; })();
+/* « Assortir » (onglet Fond) : sur ordinateur, posé en haut à droite, à la hauteur du titre */
+(() => { const b = $("assortirF"), basC = b.parentElement, R = $("reglages");
+  const place = () => { if (innerWidth >= 900) { if (b.parentElement !== R) { R.appendChild(b); b.classList.add("aDroite"); } const t = $("titreP"); R.style.setProperty("--assTop", (t.offsetTop + t.offsetHeight / 2 - b.offsetHeight / 2) + "px"); }
+    else if (b.parentElement !== basC) { basC.appendChild(b); b.classList.remove("aDroite"); } document.body.classList.toggle("surFond", onglet === "fond"); };
+  const ouvreAvantAss = ouvre; ouvre = o => { ouvreAvantAss(o); setTimeout(place, 0); }; addEventListener("resize", place); setTimeout(place, 50); setInterval(place, 800); })();
 /* 17/11 (Marie : « ça ne s'aligne pas au téléphone, écris-le au milieu ») : un message posé AU MILIEU de l'écran du téléphone */
 function msgTel(t, ms = 3500) { const m = $("msgTel"); m.innerHTML = t; m.classList.add("on"); clearTimeout(msgTel.t); msgTel.t = setTimeout(() => m.classList.remove("on"), ms); }
 const idxFond = nom => P.fonds().findIndex(x => x[0] === nom);
@@ -1519,7 +1540,8 @@ function rendAstuces(o) { const a = $("astuces"); if (!a) return; const L = (AST
   a.innerHTML = `<h3>Les <em>astuces</em></h3>` + L.map(([i, txt]) => `<div class="astuce"><i>${i}</i><span>${txt}</span></div>`).join(""); placeAstuces(); }
 function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || innerWidth < 900) return; const libre = T.offsetLeft - 48 - 24; a.style.setProperty("--astW", Math.min(260, libre) + "px"); a.classList.toggle("cache", libre < 170 || $("app").classList.contains("agrandi"));
   /* on n'affiche que les astuces qui tiennent dans la hauteur du téléphone */
-  const bas = T.offsetTop + T.offsetHeight; [...a.querySelectorAll(".astuce")].forEach(x => x.style.display = ""); [...a.querySelectorAll(".astuce")].forEach(x => { if (a.offsetTop + x.offsetTop + x.offsetHeight > bas) x.style.display = "none"; }); }
+  const bas = T.offsetTop + T.offsetHeight; /* 17/11 (Marie : « plus smooth quand ça se ferme ») : une astuce qui ne tient plus s'efface en douceur au lieu de disparaître d'un coup */
+  [...a.querySelectorAll(".astuce")].forEach(x => x.classList.toggle("loin", a.offsetTop + x.offsetTop + x.offsetHeight > bas)); }
 { const ouvreAvantAst = ouvre; ouvre = o => { ouvreAvantAst(o); rendAstuces(o); }; }
 setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(placeAstuces, 80));
 
@@ -1531,7 +1553,7 @@ setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(plac
 /* 17/11 tard (Marie) : la poignée à tirer entre le téléphone et les réglages (ordinateur) */
 (() => { const g = $("poignee"), app = $("app"); let x0 = null, w0 = 0, raf = 0;
   const mini = 480, maxi = () => innerWidth - 420;   /* 17/11 (Marie : « ça touche le téléphone ») : toujours de l'air autour */
-  const pose = w => { w = Math.round(Math.min(maxi(), Math.max(mini, w))); app.style.setProperty("--colR", w + "px"); cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { taille(); majEncore(); }); return w; };
+  const pose = w => { w = Math.round(Math.min(maxi(), Math.max(mini, w))); app.style.setProperty("--colR", w + "px"); cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { taille(); majEncore(); placeAstuces(); }); return w; };
   try { const v = +localStorage.getItem("lgnColR"); if (v) pose(v); } catch (e) {}
   g.addEventListener("pointerdown", e => { e.preventDefault(); g.setPointerCapture(e.pointerId); x0 = e.clientX; w0 = $("reglages").getBoundingClientRect().width; g.classList.add("tire"); document.body.classList.add("tirage"); });
   g.addEventListener("pointermove", e => { if (x0 == null) return; pose(w0 + (x0 - e.clientX)); });
