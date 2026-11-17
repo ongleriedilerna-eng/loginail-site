@@ -1215,7 +1215,7 @@ $("lLook").onclick = async e => { const b = e.target.closest(".look"); if (!b) r
   if (b.dataset.i === "plus") return enregistre();
   memo(); const L = b.dataset.i === "s" ? await auHasard() : tousLooks()[+b.dataset.i]; lookOn = b.dataset.i === "s" ? -1 : +b.dataset.i;
   $("lLook").querySelectorAll(".look").forEach(x => x.classList.toggle("on", x === b && b.dataset.i !== "s"));
-  await appliqueLook(L); if (b.dataset.i === "s") bulle("Et voilà ✦ Encore ? Retouchez « Surprends-moi »"); };
+  await appliqueLook(L); };   /* 17/11 (Marie) : plus de message « Et voilà… Retouchez Surprends-moi » */
 $("affiner").onclick = () => ouvre("entete");
 const ouvreAvantLook = ouvre;
 ouvre = o => { ouvreAvantLook(o); document.body.classList.toggle("surCouleurs", o === "couleurs"); document.body.classList.toggle("surCharms", o === "charms"); setTimeout(taille, 30); if (o !== "couleurs" && P.vise) P.vise(null); document.body.classList.toggle("surLook", o === "look"); if (o === "look") rendLooks(); };
