@@ -793,7 +793,22 @@ body.ep1 .choix:after{display:none!important}
 .fondDeux .catBoxF{flex-direction:column;overflow:hidden}.fondDeux #catF{min-height:0}.fondDeux .catFond.on:after{display:none}
 @media (max-width:899px){.fondDeux .catBoxF{width:80px}.fondDeux .catFond{width:74px}.fondDeux .catFond .vgI{width:44px;height:44px}.fondDeux .catFond.on:after{top:27px;right:-5px}
   .fdFleche{width:30px;height:30px;font-size:16px}}
+
+/* 17/11 v3 (Marie : « le bouton noir est dégueulasse ») : juste une petite flèche, bien visible, qui respire doucement */
+.fdFleche{width:44px!important;height:30px!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:var(--noir)!important;rotate:0deg!important;
+  animation:fdRespire 1.8s ease-in-out infinite!important;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff)}
+.fdFleche svg{width:24px;height:24px;transition:transform .3s}
+.fdFleche.haut svg{transform:rotate(180deg)}
+.fdFleche.haut{animation:none!important}
+@keyframes fdRespire{0%,100%{transform:translateY(-2px);opacity:.75}50%{transform:translateY(3px);opacity:1}}
+/* mode « choisir les ronds » (?ronds=1) : un bandeau qui explique */
+.rondsBandeau{margin:0 18px 8px;padding:10px 14px;border-radius:14px;background:#FDF1F4;color:#7A2C3E;font:400 13px/1.35 Jost,sans-serif;box-shadow:inset 0 0 0 1px #F2C9D3}
+.rondsBandeau b{font-weight:600}
 </style>
+<script>/* 17/11 (Marie : « je veux choisir moi le fond qui se verra dans les ronds ») : l'image de chaque rond.
+   Mode choix : ajouter ?ronds=1 à l'adresse → touchez un thème, puis le fond qui ira dans son rond. */
+var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, JSON.parse(localStorage.getItem("lgnRondsThemes") || "{}")); } catch (e) { return {}; } })();
+</script>
 </head>
 <body>
 <div class="app" id="app">
@@ -917,8 +932,9 @@ function rend(o) {
     const tous = [...l.querySelectorAll(".ent")]; let i = 0; const lot = () => { const t0 = performance.now(); while (i < tous.length && performance.now() - t0 < 24) { const b = tous[i++]; P.miniEntete(b.querySelector(".mi"), b.dataset.k, larg); } if (i < tous.length) setTimeout(lot, 16); }; lot(); }
   if (o === "fond" && $("lFond").dataset.cat === catFond && $("lFond").children.length) { $("lFond").querySelectorAll(".vg").forEach(b => b.classList.toggle("on", b.dataset.f === P.etat.fond)); $("catF").querySelectorAll(".puce").forEach(b => b.classList.toggle("on", b.dataset.c === catFond)); return rendAutres(o); }
   if (o === "fond") $("lFond").dataset.cat = catFond;
-  if (o === "fond") { const cats = ["Tous", ...P.categories()]; /* 17/11 (Marie : « la même chose que pour les charms ») : les catégories de fonds avec leur petite image, sur une ligne qui glisse */
-    const F0 = P.fonds(), pris = new Set(), ex = c => { const L = F0.map((x, i) => [x, i]).filter(([x]) => c === "Tous" || (x[3] || []).includes(c)); if (!L.length) return ""; let k = Math.floor(L.length / 3); while (k < L.length - 1 && pris.has(L[k][1])) k++; pris.add(L[k][1]); return P.vignetteFond(L[k][1]); };
+  if (o === "fond") { const ORDRE = ["Qui bougent", "Élégants", "Y2K", "Mignons", "Bohème"], cs = P.categories();
+    const cats = ["Tous", ...ORDRE.filter(c => cs.includes(c)), ...cs.filter(c => !ORDRE.includes(c))];   /* 17/11 (Marie) : l'ordre des thèmes */ /* 17/11 (Marie : « la même chose que pour les charms ») : les catégories de fonds avec leur petite image, sur une ligne qui glisse */
+    const F0 = P.fonds(), pris = new Set(), ex = c => { const choisi = RONDS[c] ? F0.findIndex(x => x[0] === RONDS[c]) : -1; if (choisi >= 0) { pris.add(choisi); return P.vignetteFond(choisi); } const L = F0.map((x, i) => [x, i]).filter(([x]) => c === "Tous" || (x[3] || []).includes(c)); if (!L.length) return ""; let k = Math.floor(L.length / 3); while (k < L.length - 1 && pris.has(L[k][1])) k++; pris.add(L[k][1]); return P.vignetteFond(L[k][1]); };
     $("catF").innerHTML = cats.map(c => `<button class="catI catFond${c === catFond ? " on" : ""}" data-c="${c}"><i class="vgI">${ex(c)}</i><span>${c === "Tous" ? "Tous les fonds" : c}</span></button>`).join(""); setTimeout(majFlechesF, 30);
     const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => (catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)) ? `<button class="vg${x[0] === P.etat.fond ? " on" : ""}" data-f="${x[0].replace(/"/g, "&quot;")}" title="${x[0].replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>` : "").join(""); }
   if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = P.polices().map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
@@ -1475,13 +1491,18 @@ P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.sear
   document.getElementById("catF").addEventListener("click", e => { if (!e.target.closest(".catI")) return; lf.scrollTop = 0; lf.classList.remove("entre"); void lf.offsetWidth; lf.classList.add("entre"); });
   /* le rail : un petit titre, et la flèche ⌄ qui fait descendre (elle se retourne ⌃ en bas de la liste) */
   const cf = document.getElementById("catF"), t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; cb.prepend(t);
-  const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg>`; cb.append(fl);
+  const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; cb.append(fl);
   const majF = () => { if (!cf.clientHeight) return; fl.style.opacity = cf.scrollHeight > cf.clientHeight + 6 ? "" : "0"; const fin = cf.scrollTop + cf.clientHeight >= cf.scrollHeight - 6; fl.classList.toggle("haut", fin); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres thèmes"); };
   fl.onclick = () => cf.scrollBy({ top: fl.classList.contains("haut") ? -cf.scrollHeight : cf.clientHeight * .7, behavior: "smooth" });
   cf.addEventListener("scroll", majF, { passive: true }); new ResizeObserver(majF).observe(cf); new MutationObserver(majF).observe(cf, { childList: true }); setInterval(majF, 800);
   /* chaque fond est un carré parfait : la hauteur des lignes = la largeur des colonnes, recalculée si la place change */
   const carre = () => { const c = getComputedStyle(lf).gridTemplateColumns.split(" ")[0]; if (c && c.endsWith("px")) lf.style.gridAutoRows = c; };
   new ResizeObserver(carre).observe(lf); carre();
+  if (/[?&]ronds=1/.test(location.search)) { const bd = document.createElement("div"); bd.className = "rondsBandeau";
+    bd.innerHTML = "<b>Choix des ronds</b> : touchez un thème, puis le fond qui ira dans son rond."; d.before(bd);
+    lf.addEventListener("click", e => { const v = e.target.closest(".vg"); if (!v || !v.dataset.f || catFond === "Favoris") return;
+      RONDS[catFond] = v.dataset.f; try { localStorage.setItem("lgnRondsThemes", JSON.stringify(RONDS)); } catch (x) {}
+      const top = cf.scrollTop; lf.dataset.cat = ""; rend("fond"); cf.scrollTop = top; bulle("Rond « " + (catFond === "Tous" ? "Tous les fonds" : catFond) + " » choisi ✓"); }); }
   document.title = "Personnaliser · fonds en 2 colonnes"; })();
 </script>
 </body>
