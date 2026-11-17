@@ -74,8 +74,10 @@ h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:36px;line-he
     if (d.statut !== "prevu" || new Date(d.debut) < new Date()) return montre(`<div class="ic">✓</div><h1>Ce rendez&#8209;vous est passé</h1><p class="sous">Il ne peut plus être annulé.</p>${site ? `<a class="btn" href="${site}">Reprendre un rendez-vous</a>` : ""}`);
     if (!d.possible) return montre(`<div class="ic">☎</div><h1>Trop tard pour annuler en ligne</h1><p class="sous">${esc(d.salon || "Le salon")} demande d’annuler au moins ${esc(String(d.delai || "48 h avant").replace(" avant", "").replace(/ /g, " "))} avant le rendez-vous. Appelez le salon pour le prévenir.</p>${recap(d, q)}${telBtn(d)}`);
     montre(`<h1>Annuler votre rendez&#8209;vous ?</h1><p class="sous">${d.prenom ? esc(d.prenom) + ", votre" : "Votre"} place sera libérée pour une autre cliente, et le salon sera prévenu.</p>${recap(d, q)}
-      <button class="btn" id="oui">Oui, annuler mon rendez-vous</button>${site ? `<a class="btn clair" href="${site}">Non, je le garde</a>` : ""}
+      <button class="btn" id="oui">Oui, annuler mon rendez-vous</button><button class="btn clair" id="non">Non, je le garde</button>
       <p class="petit">Annulation gratuite jusqu’au ${esc(lim.jour)} à ${esc(lim.heure)}.</p><p class="petit err" id="err" aria-live="polite"></p>`);
+    /* 18/11 (Marie) : « Non, je le garde » toujours là, même sans site en ligne */
+    document.getElementById("non").onclick = () => montre(`<div class="ic">✓</div><h1>C’est noté, votre rendez&#8209;vous est gardé</h1><p class="sous">${esc(q.jour)} à ${esc(q.heure)}. À bientôt${d.salon ? " chez " + esc(d.salon) : ""} !</p>${site ? `<a class="btn clair" href="${site}">Voir le site du salon</a>` : ""}`);
     document.getElementById("oui").onclick = async e => { const b = e.currentTarget; b.disabled = true; b.textContent = "Un instant…";
       try { if (!ESSAI) await rpc("annuler_rdv", { j: J }); else await new Promise(r => setTimeout(r, 600));
         montre(`<div class="ic">✓</div><h1>C’est annulé</h1><p class="sous">Votre rendez-vous du ${esc(q.jour)} à ${esc(q.heure)} est annulé. Le salon est prévenu, vous n’avez rien d’autre à faire.</p>${site ? `<a class="btn" href="${site}">Reprendre un rendez-vous</a>` : ""}`); }
