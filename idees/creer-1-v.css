@@ -1,0 +1,150 @@
+/* 16/11 · Base commune des 5 versions de la page 1 « Collez votre lien » + écran de chargement.
+   Chaque version (creer-1-v1.html … v5.html) ajoute son propre dessin par-dessus.
+   Téléphone : l'écran prend tout. Ordinateur (≥ 900 px) : « 4 étapes, 1 minute » à gauche, l'écran au format téléphone au milieu, « Vu comme vos clientes » à droite. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--greige:#CFC6BC;--ligne:rgba(30,28,27,.12);--vert:#2A6F44;
+  --rose:#B5475E;--brun:#2A1B1E;--rosé:#F7E9EA;
+  --sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom);
+  --ressort:cubic-bezier(.2,.9,.25,1);--pop:cubic-bezier(.3,1.5,.5,1);--doux-out:cubic-bezier(.22,1,.36,1);color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;border:0;background:none;padding:0}
+img{display:block}
+
+/* ---------- le cadre ---------- */
+.cadre{position:relative;height:100dvh}
+.cote,.logo-page,.fond-ordi{display:none}
+.app{position:relative;height:100%;overflow:hidden;background:var(--fond);isolation:isolate}
+.ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--sat) + 16px) 22px calc(var(--sab) + 16px);
+  opacity:0;visibility:hidden;transform:translateX(28px);transition:opacity .3s,transform .45s var(--doux-out),visibility 0s .45s}
+#s1{transform:translateX(-28px)}
+body[data-e="lien"] #s1,body[data-e="charge"] #s2{opacity:1;visibility:visible;transform:none;transition:opacity .35s .05s,transform .5s var(--doux-out)}
+.logo{display:block;width:104px;height:auto;align-self:center;flex:none}
+.logo svg{display:block;width:100%;height:auto}
+
+/* ---------- la case du lien ---------- */
+.lien{position:relative}
+.champ{width:100%;height:58px;border:1px solid rgba(30,28,27,.24);border-radius:999px;padding:0 104px 0 22px;background:#fff;font:400 16px Jost,sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.champ::placeholder{color:var(--doux)}
+.champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.07)}
+.coller{position:absolute;right:6px;top:50%;transform:translateY(-50%);height:46px;display:flex;align-items:center;gap:7px;border-radius:999px;background:var(--fond);padding:0 16px;font:500 14px Jost,sans-serif;transition:transform .12s,opacity .2s}
+.coller svg{width:15px;height:15px}
+.coller:active{transform:translateY(-50%) scale(.95)}
+/* une fois reconnu : on ne montre plus « https://maps.app.goo.gl/… » mais une étiquette claire */
+.puce{position:absolute;inset:1px;border-radius:999px;background:#fff;display:flex;align-items:center;gap:11px;padding:0 10px 0 20px;opacity:0;pointer-events:none;transform:scale(.97);transition:opacity .2s,transform .35s var(--pop)}
+.puce .ic{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:#F1ECE6}
+.puce .ic svg{width:12px;height:15px}
+.puce span{flex:1;font:400 15.5px Jost,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.puce span b{font-weight:500}
+.puce .ok{width:30px;height:30px;flex:none;border-radius:50%;background:var(--vert);color:#fff;display:grid;place-items:center}
+.puce .ok svg{width:14px;height:14px}
+.puce .chg{font:400 13px Jost,sans-serif;color:var(--doux);text-decoration:underline;text-underline-offset:3px;padding:8px 4px}
+.lien.reconnue .champ{border-color:var(--vert);box-shadow:0 0 0 4px rgba(42,111,68,.10)}
+.lien.reconnue .puce{opacity:1;pointer-events:auto;transform:none}
+.lien.reconnue .coller{opacity:0;pointer-events:none}
+.msg{margin:8px 10px 0;text-align:center;font:400 13.5px/1.4 Jost,sans-serif;color:var(--muted);min-height:0}
+.msg:empty{display:none}
+.msg.err{color:#9A3B2E}
+
+/* ---------- boutons ---------- */
+.go{display:block;width:100%;height:58px;border-radius:999px;background:var(--noir);color:var(--fond);font:500 13px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;transition:transform .12s,background .2s}
+.go:active{transform:scale(.98)}
+.lienb{font:400 14px Jost,sans-serif;text-decoration:underline;text-decoration-color:rgba(30,28,27,.35);text-underline-offset:4px;padding:10px 4px}
+.rassure{margin:10px 0 0;text-align:center;font:400 13px Jost,sans-serif;color:var(--muted)}
+.rassure b{font-weight:500;color:var(--noir)}
+
+/* ---------- chargement : ce qui est commun ---------- */
+#s2 [data-k] .r{position:relative;flex:none;width:24px;height:24px;border-radius:50%;border:1.4px solid var(--greige);transition:background .3s,border-color .3s}
+#s2 [data-k] .r::after{content:"";position:absolute;left:7.5px;top:3.5px;width:5px;height:10px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .35s var(--pop)}
+#s2 [data-k].cours .r{border-color:transparent;border-top-color:var(--noir);border-right-color:var(--noir);animation:tourne .8s linear infinite}
+#s2 [data-k].ok .r{background:var(--noir);border-color:var(--noir);animation:none}
+#s2 [data-k].ok .r::after{transform:rotate(45deg) scale(1)}
+@keyframes tourne{to{transform:rotate(360deg)}}
+#phrase{min-height:24px;text-align:center;font:400 16px Jost,sans-serif;color:var(--muted);transition:opacity .18s,transform .25s}
+#phrase.change{opacity:0;transform:translateY(-4px)}
+#phrase.fini{color:var(--noir)}
+#continuer{opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .35s,transform .45s var(--doux-out)}
+body.pret.attend #continuer{opacity:1;transform:none;pointer-events:auto}
+.eclat{position:absolute;pointer-events:none;z-index:20}
+.eclat i{position:absolute;left:0;top:0;font-style:normal;color:#fff;text-shadow:0 0 6px rgba(255,140,190,1),0 0 14px rgba(255,180,210,.8)}
+.etoiles i{position:absolute;font-style:normal;color:#fff;text-shadow:0 0 6px rgba(240,130,175,.95),0 0 14px rgba(255,180,210,.75);animation:scint 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes scint{0%,100%{opacity:.25;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+
+/* ---------- « Où trouver mon lien ? » : une feuille qui monte et MONTRE le geste ---------- */
+.voile{position:absolute;inset:0;background:rgba(30,28,27,.32);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40}
+.feuille{position:absolute;left:0;right:0;bottom:0;z-index:41;background:#fff;border-radius:26px 26px 0 0;padding:10px 20px calc(var(--sab) + 18px);transform:translateY(105%);transition:transform .45s var(--doux-out);box-shadow:0 -20px 40px -20px rgba(30,28,27,.35)}
+.app.aide .voile{opacity:1;pointer-events:auto}.app.aide .feuille{transform:none}
+.poignee{width:38px;height:5px;border-radius:3px;background:#DDD5CC;margin:0 auto 12px}
+.feuille h3{margin:0;text-align:center;font:500 26px/1.1 "Cormorant Garamond",serif}
+.srcs{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:14px 0 16px}
+.srcs button{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--ligne);font:400 13.5px Jost,sans-serif;transition:background .2s,color .2s}
+.srcs button.on{background:var(--noir);color:var(--fond);border-color:var(--noir)}
+.montre{display:flex;gap:16px;align-items:center}
+.mm{position:relative;flex:none;width:112px;aspect-ratio:9/18;border-radius:18px;background:var(--noir);padding:3px}
+.mm .e{position:relative;width:100%;height:100%;border-radius:15px;overflow:hidden;background:#fff;font-family:system-ui,-apple-system,sans-serif}
+.mm .carte{height:38%;background:linear-gradient(135deg,#E8EFE4 0 30%,#F3EFE6 30% 55%,#E3ECF3 55%);position:relative}
+.mm .carte::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:15px;margin:-12px 0 0 -6px;background:#D9473B;border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.mm .fi{padding:7px 7px;font-size:7.5px;color:#222}
+.mm .fi b{display:block;font-size:9px;margin-bottom:2px}
+.mm .fi small{color:#777;font-size:6.5px}
+.mm .bts{display:flex;gap:3px;margin-top:6px}
+.mm .bts span{flex:1;text-align:center;padding:4px 0;border-radius:999px;border:1px solid #ddd;font-size:6px;color:#1a73e8;transition:background .2s}
+.mm .tap{background:#E4EEFD!important}
+.mm .mf{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:10px 10px 0 0;box-shadow:0 -6px 14px -6px rgba(0,0,0,.25);padding:8px 6px 10px;transform:translateY(105%);transition:transform .4s var(--doux-out)}
+.mm .mf.on{transform:none}
+.mm .mf div{display:flex;align-items:center;gap:5px;padding:5px;border-radius:5px;font-size:7px;transition:background .2s}
+.mm .mf div i{width:13px;height:13px;border-radius:50%;background:#EEF2F7}
+.mm .mok{position:absolute;left:50%;bottom:12%;transform:translate(-50%,6px);opacity:0;background:#333;color:#fff;border-radius:5px;padding:4px 7px;font-size:7px;white-space:nowrap;transition:opacity .25s,transform .3s}
+.mm .mok.on{opacity:1;transform:translate(-50%,0)}
+.mm .doigt{position:absolute;width:22px;height:22px;border-radius:50%;background:rgba(30,28,27,.3);border:2px solid rgba(255,255,255,.95);box-shadow:0 3px 8px rgba(0,0,0,.2);opacity:0;z-index:5;transform:translate(-50%,-50%);transition:left .5s var(--ressort),top .5s var(--ressort),opacity .2s,transform .12s;pointer-events:none}
+.mm .doigt.on{opacity:1}.mm .doigt.appui{transform:translate(-50%,-50%) scale(.7)}
+.mm .mnav{position:absolute;inset:0;background:#fff;display:none;flex-direction:column}
+.mm .mnav.on{display:flex}
+.mm .barre-n{margin:16px 5px 0;padding:5px 6px;border-radius:7px;background:#F0EEEC;font-size:6.5px;color:#444;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .2s}
+.mm .barre-n.sel{background:#CFE0FB}
+.mm .bulle{align-self:flex-start;margin:4px 0 0 8px;padding:4px 8px;border-radius:6px;background:#333;color:#fff;font-size:7px;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .25s}
+.mm .bulle.on{opacity:1;transform:none}
+.mm .page-n{padding:8px 6px;display:flex;flex-direction:column;gap:5px}
+.mm .page-n i{display:block;height:6px;border-radius:3px;background:#ECE7E1}.mm .page-n i:first-child{height:44px;border-radius:7px}.mm .page-n i:nth-child(3){width:70%}
+.gestes{flex:1;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.gestes li{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:14px;font:400 14.5px/1.35 Jost,sans-serif;color:var(--doux);transition:background .3s,color .3s}
+.gestes li b{font-weight:500}
+.gestes li i{flex:none;width:22px;height:22px;border-radius:50%;border:1.3px solid currentColor;display:grid;place-items:center;font:500 11px Jost,sans-serif;font-style:normal}
+.gestes li.on{background:var(--fond);color:var(--noir)}
+.gestes li.on i{background:var(--noir);border-color:var(--noir);color:#fff}
+.feuille .go{margin-top:16px}
+
+/* ---------- petit message « page suivante » (maquette) ---------- */
+.suite{position:absolute;left:50%;top:calc(var(--sat) + 16px);transform:translate(-50%,-16px);opacity:0;background:var(--noir);color:var(--fond);border-radius:999px;padding:11px 18px;font:400 13.5px Jost,sans-serif;transition:opacity .25s,transform .35s var(--ressort);z-index:60;pointer-events:none;white-space:nowrap}
+.suite.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- VRAI ORDINATEUR ---------- */
+@media (min-width:900px){
+  body{background:#EDE7E0}
+  .cadre{height:100vh;display:grid;grid-template-columns:1fr 410px 1fr;align-items:center;column-gap:clamp(48px,5vw,88px);padding:24px clamp(40px,4vw,64px)}
+  .fond-ordi{display:block;position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .logo-page{color:var(--noir);display:block;position:absolute;left:clamp(40px,4vw,64px);top:30px;width:132px;z-index:3}
+  .logo-page svg{display:block;width:100%;height:auto}
+  .app{height:min(844px,calc(100vh - 48px));border-radius:40px;box-shadow:0 50px 90px -40px rgba(30,28,27,.45),0 0 0 1px rgba(30,28,27,.07);z-index:2}
+  .ecran{padding:24px 26px 24px}
+  .cote{display:block;position:relative;z-index:2;max-width:330px}
+  .cote.g{justify-self:end;text-align:right}
+  .cote h2{margin:0 0 16px;font:500 48px/1 "Cormorant Garamond",serif;letter-spacing:-.015em}
+  .cote h2 em{font-style:italic}
+  .cote p{margin:0 0 14px;font:400 16.5px/1.55 Jost,sans-serif;color:var(--muted)}
+  .cote p b{font-weight:500;color:var(--noir)}
+  .pas{margin:26px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+  .pas li{display:flex;align-items:center;gap:12px;font:400 15.5px Jost,sans-serif;color:var(--doux)}
+  .pas li i{width:28px;height:28px;border-radius:50%;border:1.4px solid currentColor;display:grid;place-items:center;font:500 12px Jost,sans-serif;font-style:normal}
+  .pas li.on{color:var(--noir);font-weight:500}
+  .pas li.on i{background:var(--noir);border-color:var(--noir);color:#fff}
+  .offre{display:inline-flex;flex-direction:column;gap:6px;margin-top:10px;padding:16px 20px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:0 20px 40px -30px rgba(30,28,27,.4)}
+  .offre b{font:500 17px Jost,sans-serif}
+  .offre span{font:400 14.5px Jost,sans-serif;color:var(--muted)}
+  button:hover{opacity:.9}
+  .go:hover{opacity:1;filter:brightness(1.15)}
+}
+@media (min-width:900px) and (max-width:1099px){.cadre{grid-template-columns:1fr}.cote{display:none}.app{justify-self:center;width:410px}}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01s!important;animation-duration:.01s!important;animation-iteration-count:1!important}}
