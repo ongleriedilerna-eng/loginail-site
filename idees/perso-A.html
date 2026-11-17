@@ -717,6 +717,8 @@ body.coul2 .rangC .ligne{gap:8px}
 @media (min-width:900px){.catBoxF{padding:0}.catBoxF .catF.g{left:0}.catBoxF .catF.d{right:0}#catF{flex-wrap:nowrap!important}}
 /* 17/11 (Marie : « il y a un bug ») : le contour noir de l'élément choisi ne doit jamais être coupé au bord du panneau */
 @media (min-width:900px){.panneau{padding-left:7px!important;padding-right:7px!important;padding-top:7px!important}}
+/* 17/11 (Marie) : plus d'effet flou en bas des listes */
+body.ep1 .choix:after{display:none!important}
 @keyframes respire{0%,100%{translate:0 0}50%{translate:0 3px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
 </style>
@@ -1006,9 +1008,35 @@ async function appliqueLook(L) {
   /* les étoiles qui brillent, à leur place */
   const et = L.et || []; for (let i = 0; i < et.length; i += 3) P.etoiles();
   [...P.D.querySelectorAll(".lgn-etoile")].forEach((x, i) => { const s = et[i]; if (!s) return x.remove(); x.style.left = box.clientWidth * s[0] / 100 + "px"; x.style.top = box.clientHeight * s[1] / 100 + "px"; x._s = s[2]; x.style.width = x.style.height = s[2] + "px"; }); }
-function auHasard() { const F = P.fonds().filter(x => !(x[3] || []).includes("Phrases")), pol = P.polices();
-  const pick = a => a[Math.floor(Math.random() * a.length)]; const ch = P.POP.filter(c => P.charmsTous().includes(c));
-  return { f: pick(F)[0], p: pick(pol)[0], c: [pick(ch), pick(ch), pick(ch)].filter((v, i, a) => a.indexOf(v) === i) }; }
+/* 17/11 (Marie : « n'hésite pas : charms, couleurs, tailles… toujours des couleurs similaires, avec des étoiles qui brillent ») :
+   un fond au hasard, couleurs assorties, puis 5 à 8 charms DONT LA COULEUR VA AVEC LE FOND (couleur moyenne de chaque image mesurée),
+   tailles et inclinaisons variées, bien répartis autour du nom, et souvent des étoiles qui brillent */
+const couleurCharm = {};
+function mesureCharm(n) { if (n in couleurCharm) return Promise.resolve(couleurCharm[n]);
+  return new Promise(ok => { const im = new Image(); im.onload = () => { try { const c = document.createElement("canvas"); c.width = c.height = 16; const g = c.getContext("2d"); g.drawImage(im, 0, 0, 16, 16);
+      const d = g.getImageData(0, 0, 16, 16).data; let r = 0, v = 0, b = 0, n2 = 0; for (let i = 0; i < d.length; i += 4) if (d[i + 3] > 160) { r += d[i]; v += d[i + 1]; b += d[i + 2]; n2++; }
+      couleurCharm[n] = n2 ? [r / n2, v / n2, b / n2] : null; } catch (x) { couleurCharm[n] = null; } ok(couleurCharm[n]); };
+    im.onerror = () => { couleurCharm[n] = null; ok(null); }; im.src = "../loginail-site/charms-mini/" + n + ".webp"; }); }
+const hexRgb = h => { const m = String(h).match(/#([0-9a-f]{6})/i); return m ? [0, 2, 4].map(i => parseInt(m[1].substr(i, 2), 16)) : null; };
+const ecartTeinte = (a, b) => { const x = hsl(`rgb(${a.join(",")})`), y = hsl(`rgb(${b.join(",")})`); const dh = Math.min(Math.abs(x[0] - y[0]), 360 - Math.abs(x[0] - y[0])) / 180;
+  const neutreA = x[1] < .15, neutreB = y[1] < .15; return (neutreA || neutreB ? (neutreA && neutreB ? .1 : .5) : dh) + Math.abs(x[2] - y[2]) * .6; };
+async function auHasard() { const pick = a => a[Math.floor(Math.random() * a.length)], mel = a => a.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+  const F = P.fonds().filter(x => !(x[3] || []).includes("Phrases")), f = pick(F), pol = P.polices();
+  /* les couleurs du fond : sa couleur d'accent + les couleurs écrites dans son dessin */
+  const cibles = [hexRgb(f[4]), ...((f[1] || "").match(/#[0-9a-f]{6}/gi) || []).slice(0, 4).map(hexRgb)].filter(Boolean);
+  const tous = P.charmsTous(), brille = tous.filter(n => /strass|etoile|disco|perle|diamant|bijou|paillet|cristal|chrome|coeur|noeud/.test(n));
+  const pool = [...new Set(mel(brille).slice(0, 60).concat(mel(P.POP.filter(c => tous.includes(c)))).concat(mel(tous).slice(0, 110)))];
+  const mes = await Promise.all(pool.map(n => mesureCharm(n).then(c => [n, c])));
+  const notes = mes.filter(([, c]) => c).map(([n, c]) => [n, Math.min(...cibles.map(t => ecartTeinte(c, t))) - (brille.includes(n) ? .08 : 0)]).sort((a, b) => a[1] - b[1]);
+  const nb = 5 + Math.floor(Math.random() * 3), choisis = mel(notes.slice(0, nb + 2)).slice(0, nb).map(x => x[0]);   /* seulement les plus proches de la couleur du fond */
+  /* des places autour du nom (jamais au milieu), en % de l'écran */
+  /* places : en haut (autour de la photo) les charms peuvent être grands ; sur les côtés du bloc du nom, petits, collés au bord : jamais sur le nom ni sur le bouton */
+  const haut = mel([[4, 5, 104], [72, 4, 104], [40, 2, 84], [2, 22, 92], [76, 20, 92], [64, 32, 76], [14, 33, 76]]), cotes = mel([[-2, 50, 58], [86, 48, 58], [-2, 74, 54], [86, 72, 54], [2, 92, 60], [80, 92, 60]]);
+  const places = []; for (let i = 0; i < 12; i++) places.push(i % 3 === 2 ? cotes[(i / 3) | 0] : haut[i - ((i / 3) | 0)]);
+  const pos = {}; choisis.forEach((n, i) => { const p = places[i] || haut[i % haut.length]; const maxi = p[2], mini = Math.min(50, maxi - 6);
+    pos[n] = [p[0] + Math.random() * 4 - 2, p[1] + Math.random() * 4 - 2, Math.round(mini + Math.random() * (maxi - mini)), Math.round(Math.random() * 56 - 28), Math.random() < .25 ? -1 : 1]; });
+  const et = []; if (Math.random() < .8) { const nbB = 1 + Math.floor(Math.random() * 3); for (let k = 0; k < nbB; k++) { const p = places[(choisis.length + k) % places.length]; [[0, 0, 34], [9, -5, 20], [-7, 6, 15]].forEach(([dx, dy, sz]) => et.push([p[0] + dx, p[1] + dy, sz])); } }
+  return { e: pick(P.ENT)[0], f: f[0], p: pick(pol)[0], c: choisis, pos, et }; }
 function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (MES.length + 1)); if (!nom) return;
   const box = P.D.querySelector(".defile") || P.D.scrollingElement, W = box.clientWidth, H = box.clientHeight, r1 = v => Math.round(v * 10) / 10, pos = {}, et = [];
   P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").forEach(im => pos[im.dataset.n] = [r1(parseFloat(im.style.left) / W * 100), r1(parseFloat(im.style.top) / H * 100), Math.round(im._s || 74), Math.round(im._r || 0), im._f === -1 ? -1 : 1]);
@@ -1018,7 +1046,7 @@ function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (ME
   lookOn = 0; rendLooks(); bulle("Look « " + nom + " » enregistré ✦"); }
 $("lLook").onclick = async e => { const b = e.target.closest(".look"); if (!b) return;
   if (b.dataset.i === "plus") return enregistre();
-  memo(); const L = b.dataset.i === "s" ? auHasard() : tousLooks()[+b.dataset.i]; lookOn = b.dataset.i === "s" ? -1 : +b.dataset.i;
+  memo(); const L = b.dataset.i === "s" ? await auHasard() : tousLooks()[+b.dataset.i]; lookOn = b.dataset.i === "s" ? -1 : +b.dataset.i;
   $("lLook").querySelectorAll(".look").forEach(x => x.classList.toggle("on", x === b && b.dataset.i !== "s"));
   await appliqueLook(L); if (b.dataset.i === "s") bulle("Et voilà ✦ Encore ? Retouchez « Surprends-moi »"); };
 $("affiner").onclick = () => ouvre("entete");
