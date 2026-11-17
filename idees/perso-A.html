@@ -645,8 +645,8 @@ body.coul2 .rangC .ligne{gap:8px}
 @media (max-width:899px){.gaucheC{width:118px}.assortV{height:40px;padding:0 8px 0 6px;font-size:11.5px;gap:6px;white-space:normal;line-height:1.1}.assortV b{width:22px;height:22px;font-size:12px}}
 /* 17/11 (Marie) : « Assortir à mon fond » un peu différent + une petite animation au clic */
 .assortV{position:relative;overflow:hidden;background:linear-gradient(120deg,#C2537B 0%,#B5475E 45%,#9E3A55 100%)!important;box-shadow:0 10px 22px -10px rgba(181,71,94,.9),inset 0 1px 0 rgba(255,255,255,.35)!important;transition:transform .2s var(--pop)}
-.assortV:before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:reflet 4.5s ease-in-out infinite;pointer-events:none}
-@keyframes reflet{0%,70%{left:-60%}100%{left:130%}}
+.assortV:before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);transform:skewX(-18deg);animation:reflet 60s linear infinite;animation-delay:-56s;pointer-events:none}
+@keyframes reflet{0%,97%{left:-60%}100%{left:130%}}   /* 17/11 (Marie : « il brille trop ») : un reflet doux, une fois par minute */
 .assortV:hover{transform:translateY(-1px)}
 .assortV.pop{animation:popA .55s var(--pop)}
 @keyframes popA{0%{transform:scale(1)}25%{transform:scale(.94)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
@@ -913,7 +913,7 @@ body.surCharms .pied .etoN .etoT{white-space:nowrap}
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
 <script src="ordre-ecritures.js?v=1711b"></script>
-<script src="vedettes-fonds.js?v=1711"></script>
+<script src="vedettes-fonds.js?v=1711b"></script>
 <script>/* 17/11 (Marie : « en choisir quelques-uns, les plus jolis, sur les 4 premières lignes ») : dans « Tous les fonds », ses fonds vedettes
    passent en premier (dans son ordre), puis tous les autres triés par couleur. Mode choix : ?vedettes=1 */
 var MODE_VED = /[?&]vedettes=1/.test(location.search);
@@ -1060,7 +1060,7 @@ function rend(o) {
     const cats = ["Tous", ...ORDRE.filter(c => cs.includes(c)), ...cs.filter(c => !ORDRE.includes(c))];   /* 17/11 (Marie) : l'ordre des thèmes */ /* 17/11 (Marie : « la même chose que pour les charms ») : les catégories de fonds avec leur petite image, sur une ligne qui glisse */
     const F0 = P.fonds(), pris = new Set(), ex = c => { const choisi = RONDS[c] ? F0.findIndex(x => x[0] === RONDS[c]) : -1; if (choisi >= 0) { pris.add(choisi); return P.vignetteFond(choisi); } const L = F0.map((x, i) => [x, i]).filter(([x]) => c === "Tous" || (x[3] || []).includes(c)); if (!L.length) return ""; let k = Math.floor(L.length / 3); while (k < L.length - 1 && pris.has(L[k][1])) k++; pris.add(L[k][1]); return P.vignetteFond(L[k][1]); };
     $("catF").innerHTML = cats.map(c => `<button class="catI catFond${c === catFond ? " on" : ""}" data-c="${c}"><i class="vgI">${ex(c)}</i><span>${c === "Tous" ? "Tous les fonds" : c}</span></button>`).join(""); setTimeout(majFlechesF, 30);
-    const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => [x, i]).filter(([x]) => catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)).sort((a, b) => rangVedette(a[0][0]) - rangVedette(b[0][0]) || cleTeinte(a[0][0]) - cleTeinte(b[0][0]))
+    const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => [x, i]).filter(([x, i]) => !(window.FONDS_ENLEVES || []).includes(i)).filter(([x]) => catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)).sort((a, b) => rangVedette(a[0][0]) - rangVedette(b[0][0]) || cleTeinte(a[0][0]) - cleTeinte(b[0][0]))
       .map(([x, i]) => `<button class="vg${x[0] === P.etat.fond ? " on" : ""}" data-f="${x[0].replace(/"/g, "&quot;")}" title="${x[0].replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>`).join(""); }
   if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = ordonnePol(P.polices()).map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
     l.querySelectorAll(".ecr-c").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.police)); }
@@ -1233,7 +1233,7 @@ if (MODE_VED) { const lf = $("lFond"), bd = document.createElement("div"); bd.cl
 (() => { const box = $("catBox"), lc = $("lCh"), d = document.createElement("div"); d.className = "chDeux"; box.before(d); d.append(box, lc); lc.classList.remove("ligne");
   const t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; box.prepend(t);
   const cc = $("catC"), fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes");
-  fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; box.append(fl);
+  fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; box.append(fl);
   const maj = () => { if (!cc.clientHeight) return; fl.style.opacity = cc.scrollHeight > cc.clientHeight + 6 ? "" : "0"; const fin = cc.scrollTop + cc.clientHeight >= cc.scrollHeight - 6;
     if (fl.classList.contains("haut") !== fin) { fl.classList.toggle("haut", fin); fl.querySelector("path").setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); } };
   fl.onclick = () => cc.scrollBy({ top: fl.classList.contains("haut") ? -cc.scrollHeight : cc.clientHeight * .7, behavior: "smooth" });
@@ -1657,7 +1657,7 @@ function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || 
 { const ouvreAvantAst = ouvre; ouvre = o => { ouvreAvantAst(o); rendAstuces(o); }; }
 /* la flèche de l'onglet En-tête : descend d'un écran ; en bas elle se retourne et remonte ; cachée sur les autres onglets */
 (() => { const ch = document.querySelector(".choix"); if (!ch) return; const fl = document.createElement("button"); fl.type = "button"; fl.className = "flecheEnt cache"; fl.setAttribute("aria-label", "Voir d'autres en-têtes");
-  fl.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; ch.appendChild(fl);
+  fl.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; ch.appendChild(fl);
   const pan = () => document.querySelector('.panneau[data-p="entete"]');
   const maj = () => { const p = pan(); const sur = onglet === "entete" && p && p.scrollHeight > p.clientHeight + 10; fl.classList.toggle("cache", !sur); if (!sur) return;
     const fin = p.scrollTop + p.clientHeight >= p.scrollHeight - 8; if (fl._fin !== fin) { fl._fin = fin; fl.querySelector("path").setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres en-têtes"); } };
@@ -1670,7 +1670,10 @@ setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(plac
 /* ===== à la 1re arrivée, la poignée est alignée sur l'étape « 3 · Vos couleurs et votre fond » ===== */
 (() => { let deja = null; try { deja = localStorage.getItem("lgnColR"); } catch (e) {} if (deja || innerWidth < 900) return;
   const e3 = $("etapes").querySelector('[data-s="3"]'); if (!e3) return; const x = e3.getBoundingClientRect().left - 22, w = Math.round(innerWidth - x);
-  if (w > 480 && w < innerWidth - 420) { $("app").style.setProperty("--colR", w + "px"); setTimeout(taille, 30); } })();
+  if (w > 480 && w < innerWidth - 420) { $("app").style.setProperty("--colR", w + "px"); setTimeout(taille, 30);
+    /* 17/11 : les astuces gardent toujours leur place à la 1re arrivée : si le téléphone les cache, on rend un peu de place à gauche */
+    setTimeout(() => { let k = w; const T = $("tel"), A = $("astuces"); const place = () => T.getBoundingClientRect().left - A.parentElement.getBoundingClientRect().left - 48 - 28;
+      while (place() < 200 && k > 500) { k -= 10; $("app").style.setProperty("--colR", k + "px"); taille(); } placeAstuces(); }, 120); } })();
 
 /* 17/11 tard (Marie) : la poignée à tirer entre le téléphone et les réglages (ordinateur) */
 (() => { const g = $("poignee"), app = $("app"); let x0 = null, w0 = 0, raf = 0;
@@ -1696,7 +1699,7 @@ P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.sear
   document.getElementById("catF").addEventListener("click", e => { if (!e.target.closest(".catI")) return; lf.scrollTop = 0; lf.classList.remove("entre"); void lf.offsetWidth; lf.classList.add("entre"); });
   /* le rail : un petit titre, et la flèche ⌄ qui fait descendre (elle se retourne ⌃ en bas de la liste) */
   const cf = document.getElementById("catF"), t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; cb.prepend(t);
-  const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; cb.append(fl);
+  const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; cb.append(fl);
   const majF = () => { if (!cf.clientHeight) return; fl.style.opacity = cf.scrollHeight > cf.clientHeight + 6 ? "" : "0"; const fin = cf.scrollTop + cf.clientHeight >= cf.scrollHeight - 6; if (fl.classList.contains("haut") !== fin) { fl.classList.toggle("haut", fin); const p = fl.querySelector("path"); if (p) p.setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); } fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres thèmes"); };
   fl.onclick = () => cf.scrollBy({ top: fl.classList.contains("haut") ? -cf.scrollHeight : cf.clientHeight * .7, behavior: "smooth" });
   cf.addEventListener("scroll", majF, { passive: true }); new ResizeObserver(majF).observe(cf); new MutationObserver(majF).observe(cf, { childList: true }); setInterval(majF, 800);

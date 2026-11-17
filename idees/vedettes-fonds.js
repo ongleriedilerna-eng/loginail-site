@@ -1,3 +1,5 @@
-/* 17/11 · Les plus jolis fonds choisis par Marie : ils passent en premier dans « Tous les fonds », dans cet ordre ; le reste suit, trié par couleur.
+/* 17/11 · Les 31 plus jolis fonds choisis par Marie : ils passent en premier dans « Tous les fonds », dans cet ordre ; le reste suit, trié par couleur.
    Pour changer : perso-A.html?onglet=fond&vedettes=1, puis recopier ici. */
-window.VEDETTES_FONDS = [];
+window.VEDETTES_FONDS = ["Strass qui tombent sur rose", "Cerises vichy", "Zèbre", "Mer et soleil", "Boules à facettes", "Reflets disco", "Vache noire et blanche", "Agrumes", "Soleils sur vert sapin", "Faon", "Pied-de-poule chocolat", "Tulipes médaillons", "Cerises qui tombent", "Damier rose et chrome", "Nacre irisée", "Boules disco sur velours", "Dalmatien aquarelle", "Léopard rose", "Mosaïque ondulée", "Traits crème sur bordeaux", "Vache marron peluche", "Bouquets de tulipes", "Vichy bleu et cœurs", "Cœurs de verre", "Bogolan", "Étoiles chromées sur noir charbon", "Shibori indigo", "Bandes de satin aux couleurs trans", "Papillons chromés émeraude sur fond pistache", "Rayures citron", "Damier ondulé fleuri"];
+/* 17/11 (Marie : « il y en a deux 18, celui de gauche bug, on l'enlève ») : fonds retirés de la maquette (numéro dans la liste du site) */
+window.FONDS_ENLEVES = [109];   /* le 1er « Léopard rose » (flou) ; on garde l'autre */
