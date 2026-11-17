@@ -800,7 +800,8 @@ body.ep1 .choix:after{display:none!important}
   animation:fdRespire 1.8s ease-in-out infinite!important;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff)}
 .fdFleche svg{width:24px;height:24px;transition:transform .3s;transform-origin:50% 50%;transform-box:fill-box;display:block}
 .fdFleche{max-width:44px!important;min-width:0!important;padding:0!important;display:grid!important;place-items:center!important}
-.fdFleche.haut svg{transform:rotate(180deg)}
+.fdFleche.haut svg{transform:none}
+.fdFleche svg{position:absolute!important;left:50%!important;top:50%!important;translate:-50% -50%!important;margin:0!important;transition:none!important}
 .fdFleche.haut{animation:none!important}
 @keyframes fdRespire{0%,100%{transform:translateY(-2px);opacity:.75}50%{transform:translateY(3px);opacity:1}}
 /* mode « choisir les ronds » (?ronds=1) : un bandeau qui explique */
@@ -835,7 +836,7 @@ body.ep1 .choix:after{display:none!important}
 @media (max-width:899px){.msgTel{font-size:11px;padding:8px 13px;border-radius:13px}}
 
 @media (min-width:900px){
-  .astuces{transition:opacity .35s ease,transform .45s var(--ressort),width .3s ease!important}
+  .astuces{transition:opacity .25s ease,transform .35s var(--ressort)!important;overflow:visible}
   .astuces.cache{transform:translateX(-14px)}
   .astuce{transition:opacity .3s ease,transform .35s var(--ressort)}
   .astuce.loin{opacity:0;transform:translateY(6px) scale(.97);pointer-events:none}
@@ -855,6 +856,19 @@ body.ep1 .choix:after{display:none!important}
 .ecr-c{position:relative}
 .ecr-c .numO{position:absolute;left:8px;top:8px;z-index:3;min-width:26px;height:26px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:#B5475E;color:#fff;font:600 13px/1 Jost,sans-serif;font-style:normal;box-shadow:0 4px 10px -4px rgba(0,0,0,.45);animation:popA .4s var(--pop)}
 @media (max-width:899px){.ordreBandeau{margin:0 18px 8px;font-size:12px}}
+
+/* 17/11 (Marie : « un chouïa plus petit ») : les looks un peu plus petits → 5 par ligne sur ordinateur */
+@media (min-width:900px){.looks{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))!important;gap:12px!important}.look{font-size:12px!important}.look small{font-size:10.5px!important}}
+@media (max-width:899px){.looks{gap:8px!important}}
+/* 17/11 (Marie) : En-tête : la MÊME petite flèche que les thèmes, pour comprendre qu'on peut descendre */
+.choix{position:relative}
+.flecheEnt{position:absolute;left:50%;bottom:6px;translate:-50% 0;z-index:6;width:44px;height:30px;border:0;padding:0;background:none;color:var(--noir);display:grid;place-items:center;cursor:pointer;
+  filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px #fff);animation:fdRespire 1.8s ease-in-out infinite;transition:opacity .3s}
+.flecheEnt svg{width:24px;height:24px;display:block}
+.flecheEnt.cache{display:none}
+
+/* 17/11 (Marie : « les astuces vont parfois sur le téléphone ») : le téléphone passe TOUJOURS devant les astuces */
+@media (min-width:900px){.tel{position:relative;z-index:8}.astuces{z-index:2!important}}
 </style>
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
@@ -1565,12 +1579,22 @@ const ASTUCES = {
 const COMMUNES = [["‹›", "<b>Tirez la poignée</b> pour agrandir vos réglages."], ["↶", "Une erreur ? <b>Annuler</b>, en haut à droite."], ["✎", "<b>Publiez quand vous voulez</b> : tout reste modifiable ensuite, depuis l'appli."]];
 function rendAstuces(o) { const a = $("astuces"); if (!a) return; const L = (ASTUCES[o] || []).concat(COMMUNES).slice(0, 6);
   a.innerHTML = `<h3>Les <em>astuces</em></h3>` + L.map(([i, txt]) => `<div class="astuce"><i>${i}</i><span>${txt}</span></div>`).join(""); placeAstuces(); }
-function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || innerWidth < 900) return; const libre = T.offsetLeft - 48 - 24; a.style.setProperty("--astW", Math.min(260, libre) + "px"); a.classList.toggle("cache", libre < 170 || $("app").classList.contains("agrandi"));
+function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || innerWidth < 900) return; const libre = Math.round(T.getBoundingClientRect().left - a.parentElement.getBoundingClientRect().left - 48 - 28); a.style.setProperty("--astW", Math.max(0, Math.min(260, libre)) + "px");   /* mesuré à l'écran : jamais sur le téléphone */ a.classList.toggle("cache", libre < 170 || $("app").classList.contains("agrandi"));
   /* on n'affiche que les astuces qui tiennent dans la hauteur du téléphone */
   const bas = T.offsetTop + T.offsetHeight; /* 17/11 (Marie : « plus smooth quand ça se ferme ») : une astuce qui ne tient plus s'efface en douceur au lieu de disparaître d'un coup */
   [...a.querySelectorAll(".astuce")].forEach(x => x.classList.toggle("loin", a.offsetTop + x.offsetTop + x.offsetHeight > bas)); }
 { const ouvreAvantAst = ouvre; ouvre = o => { ouvreAvantAst(o); rendAstuces(o); }; }
+/* la flèche de l'onglet En-tête : descend d'un écran ; en bas elle se retourne et remonte ; cachée sur les autres onglets */
+(() => { const ch = document.querySelector(".choix"); if (!ch) return; const fl = document.createElement("button"); fl.type = "button"; fl.className = "flecheEnt cache"; fl.setAttribute("aria-label", "Voir d'autres en-têtes");
+  fl.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; ch.appendChild(fl);
+  const pan = () => document.querySelector('.panneau[data-p="entete"]');
+  const maj = () => { const p = pan(); const sur = onglet === "entete" && p && p.scrollHeight > p.clientHeight + 10; fl.classList.toggle("cache", !sur); if (!sur) return;
+    const fin = p.scrollTop + p.clientHeight >= p.scrollHeight - 8; if (fl._fin !== fin) { fl._fin = fin; fl.querySelector("path").setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres en-têtes"); } };
+  fl.onclick = () => { const p = pan(); if (p) p.scrollBy({ top: fl._fin ? -p.scrollHeight : p.clientHeight * .75, behavior: "smooth" }); };
+  pan() && pan().addEventListener("scroll", maj, { passive: true }); setInterval(maj, 500); })();
 setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(placeAstuces, 80));
+/* 17/11 (Marie : « des fois, les astuces vont sur le téléphone ») : on surveille la place du téléphone à chaque image ; dès qu'il bouge, on recale */
+(() => { let x0 = null; const veille = () => { const T = $("tel"); if (T && innerWidth >= 900) { const x = Math.round(T.getBoundingClientRect().left); if (x !== x0) { x0 = x; placeAstuces(); } } requestAnimationFrame(veille); }; requestAnimationFrame(veille); })();
 
 /* ===== à la 1re arrivée, la poignée est alignée sur l'étape « 3 · Vos couleurs et votre fond » ===== */
 (() => { let deja = null; try { deja = localStorage.getItem("lgnColR"); } catch (e) {} if (deja || innerWidth < 900) return;
@@ -1602,7 +1626,7 @@ P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.sear
   /* le rail : un petit titre, et la flèche ⌄ qui fait descendre (elle se retourne ⌃ en bas de la liste) */
   const cf = document.getElementById("catF"), t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; cb.prepend(t);
   const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; cb.append(fl);
-  const majF = () => { if (!cf.clientHeight) return; fl.style.opacity = cf.scrollHeight > cf.clientHeight + 6 ? "" : "0"; const fin = cf.scrollTop + cf.clientHeight >= cf.scrollHeight - 6; fl.classList.toggle("haut", fin); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres thèmes"); };
+  const majF = () => { if (!cf.clientHeight) return; fl.style.opacity = cf.scrollHeight > cf.clientHeight + 6 ? "" : "0"; const fin = cf.scrollTop + cf.clientHeight >= cf.scrollHeight - 6; if (fl.classList.contains("haut") !== fin) { fl.classList.toggle("haut", fin); const p = fl.querySelector("path"); if (p) p.setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); } fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres thèmes"); };
   fl.onclick = () => cf.scrollBy({ top: fl.classList.contains("haut") ? -cf.scrollHeight : cf.clientHeight * .7, behavior: "smooth" });
   cf.addEventListener("scroll", majF, { passive: true }); new ResizeObserver(majF).observe(cf); new MutationObserver(majF).observe(cf, { childList: true }); setInterval(majF, 800);
   /* chaque fond est un carré parfait : la hauteur des lignes = la largeur des colonnes, recalculée si la place change */
