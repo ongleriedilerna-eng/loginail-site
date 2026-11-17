@@ -230,6 +230,21 @@
     const sr = hote.shadowRoot || hote.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ""; hote.setAttribute("style", root); sr.appendChild(c);
   } catch (e) { console.warn("mini en-tête", e); } };
 
+  /* 17/11 (Marie : « mon look 1, c'est pas joli : il faut que le carré soit SON look ») : une copie figée du haut de son site
+     (en-tête, fond, écriture, couleurs, charms), gardée avec le look, puis remontrée en tout petit */
+  P.photoSite = () => { const D = P.D; try { const ec = D.querySelector(".ecran"); if (!ec) return null;
+    const c = ec.cloneNode(true); c.querySelectorAll(".indiceD,.cookies,.grand,.ile,.lm-btn,.pzVise,script,.pz-poignee,.pzPoig").forEach(x => x.remove());
+    c.querySelectorAll(".lgn-sticker").forEach(x => x.classList.remove("choisi", "pzChoisi"));
+    const df = c.querySelector(".defile"); if (df) [...df.children].slice(3).forEach(x => x.remove());   /* seulement le haut : plus léger */
+    c.querySelectorAll("[style*='url(']").forEach(x => x.setAttribute("style", x.getAttribute("style").replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (q, z, u) => `url("${new URL(u, D.baseURI).href}")`)));
+    c.querySelectorAll("img[src]").forEach(x => { x.setAttribute("src", new URL(x.getAttribute("src"), D.baseURI).href); x.removeAttribute("loading"); });
+    if (SALON.vrai) { const w = D.createTreeWalker(c, NodeFilter.SHOW_TEXT); let t; while ((t = w.nextNode())) t.nodeValue = t.nodeValue.replace(SALON.vrai, SALON.nom).replace(SALON.vrai.toUpperCase(), SALON.nom.toUpperCase()); }
+    return { h: c.outerHTML, r: D.documentElement.style.cssText, w: ec.offsetWidth || 390, ht: ec.offsetHeight || 844 }; } catch (e) { console.warn("photo du site", e); return null; } };
+  P.montreSite = (hote, ph, largeur) => { try { const fs = feuilleSite(), sc = largeur / ph.w;
+    const sr = hote.shadowRoot || hote.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ph.h; hote.setAttribute("style", ph.r);
+    const c = sr.firstElementChild; Object.assign(c.style, { position: "absolute", left: "0", top: "0", width: ph.w + "px", height: ph.ht + "px", borderRadius: "0", transform: `scale(${sc})`, transformOrigin: "0 0", pointerEvents: "none" });
+  } catch (e) { console.warn("montre site", e); } };
+
   /* les charms : posés DANS son site, ils flottent ; on les glisse au doigt ou à la souris */
   P.charmsTous = () => Object.keys(P.W.CH_IMG || {});
   P.familles = () => (window.CH_FAMS || []).filter(f => !f[1].startsWith("*")).map(f => f[0]);
