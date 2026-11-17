@@ -854,7 +854,7 @@ body.ep1 .choix:after{display:none!important}
 .ordreBandeau{display:flex;align-items:center;gap:10px;margin:0 0 8px;padding:10px 14px;border-radius:14px;background:#FDF1F4;color:#7A2C3E;font:400 13px/1.35 Jost,sans-serif;box-shadow:inset 0 0 0 1px #F2C9D3}
 .ordreBandeau b{font-weight:600}.ordreBandeau button{flex:none;height:34px;padding:0 14px;border-radius:999px;border:0;background:#fff;color:#7A2C3E;font:500 12px Jost,sans-serif;cursor:pointer;box-shadow:0 3px 10px -5px rgba(0,0,0,.35)}
 .ecr-c{position:relative}
-.ecr-c .numO{position:absolute;left:8px;top:8px;z-index:3;min-width:26px;height:26px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:#B5475E;color:#fff;font:600 13px/1 Jost,sans-serif;font-style:normal;box-shadow:0 4px 10px -4px rgba(0,0,0,.45);animation:popA .4s var(--pop)}
+.vg .numO,.ecr-c .numO{position:absolute;left:8px;top:8px;z-index:3;min-width:26px;height:26px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:#B5475E;color:#fff;font:600 13px/1 Jost,sans-serif;font-style:normal;box-shadow:0 4px 10px -4px rgba(0,0,0,.45);animation:popA .4s var(--pop)}
 @media (max-width:899px){.ordreBandeau{margin:0 18px 8px;font-size:12px}}
 
 /* 17/11 (Marie : « un chouïa plus petit ») : les looks un peu plus petits → 5 par ligne sur ordinateur */
@@ -869,11 +869,57 @@ body.ep1 .choix:after{display:none!important}
 
 /* 17/11 (Marie : « les astuces vont parfois sur le téléphone ») : le téléphone passe TOUJOURS devant les astuces */
 @media (min-width:900px){.tel{position:relative;z-index:8}.astuces{z-index:2!important}}
+
+/* 17/11 (Marie) : « Voir comme ma cliente » enlevé (les charms flottent déjà comme chez la cliente) ; « Retour au choix du style » enlevé */
+#vueCliente,#retourT{display:none!important}
+.pied{justify-content:flex-end}
+
+/* 17/11 (Marie : « les charms, exactement comme les fonds ») : thèmes en RONDS dans un rail à gauche (avec la petite flèche), charms à droite */
+.panneau[data-p="charms"]{justify-content:flex-start!important;overflow:hidden!important}
+.chDeux{display:flex;gap:12px;flex:1;min-height:0;padding:0 18px 4px}
+.chDeux #catBox{flex:none;width:96px;display:flex!important;flex-direction:column;overflow:hidden;position:relative;background:#fff;border-radius:22px;box-shadow:0 10px 26px -18px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.04);min-height:0}
+.chDeux #catBox .catF{display:none!important}
+.chDeux #catC{flex:1;min-height:0;display:flex!important;flex-direction:column;flex-wrap:nowrap!important;gap:0;overflow-x:hidden!important;overflow-y:auto!important;padding:4px 4px 34px!important;scrollbar-width:none;overscroll-behavior:contain;
+  -webkit-mask:linear-gradient(#000 calc(100% - 56px),transparent calc(100% - 8px))!important;mask:linear-gradient(#000 calc(100% - 56px),transparent calc(100% - 8px))!important}
+.chDeux #catC .catI{flex:none;flex-direction:column;justify-content:flex-start;align-items:center;width:88px;height:auto!important;padding:4px 2px 5px;gap:3px;border-radius:16px;background:transparent!important;color:var(--muted)!important;
+  font-size:11px;line-height:1.15;text-align:center;transition:transform .15s}
+.chDeux #catC .catI:active{transform:scale(.95)}
+.chDeux #catC .catI img,.chDeux #catC .catI .cfav{width:44px!important;height:44px!important;border-radius:50%;background:var(--fond);padding:6px;box-sizing:border-box;object-fit:contain;box-shadow:0 0 0 1px rgba(0,0,0,.06);transition:box-shadow .2s,transform .2s;display:grid;place-items:center}
+.chDeux #catC .catI:hover:not(.on) img{transform:scale(1.05)}
+.chDeux #catC .catI.on{color:var(--noir)!important;font-weight:500}
+.chDeux #catC .catI.on img,.chDeux #catC .catI.on .cfav{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.chDeux #catC .catI span{max-width:84px}
+.chDeux #lCh{flex:1;min-width:0;display:grid!important;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px!important;align-content:start;overflow-x:hidden!important;overflow-y:auto!important;padding:3px 3px 30px!important;scrollbar-width:none;overscroll-behavior:contain;flex-wrap:wrap}
+.chDeux #lCh .ch{width:100%!important;height:auto!important;aspect-ratio:1}
+.chDeux #lCh.entre{animation:fdEntre .28s cubic-bezier(.2,.8,.2,1)}
+body.cat2 .chDeux ~ .catMenu,.panneau[data-p="charms"] .catMenu,.panneau[data-p="charms"] .catPop{display:none!important}
+@media (max-width:899px){.chDeux #catBox{width:80px}.chDeux #catC .catI{width:74px;font-size:9.5px;padding:3px 2px}.chDeux #catC .catI img,.chDeux #catC .catI .cfav{width:36px!important;height:36px!important;padding:4px}
+  .chDeux #lCh{grid-template-columns:repeat(4,1fr)}}
+/* les étoiles qui brillent : à côté de « C'est parfait », seulement sur l'onglet Charms */
+.pied .etoN{display:none!important}
+body.surCharms .pied .etoN{display:flex!important;flex-direction:row!important;align-items:center;gap:8px!important;margin:0 8px 0 0!important}
+body.surCharms .pied .etoN .etoT{white-space:nowrap}
+@media (max-width:899px){body.surCharms .pied .etoN .etoT{display:none}}
+
+/* 17/11 (Marie) : « Sauvegarder mes couleurs » collé juste sous la dernière partie quand il n'y a rien entre les deux ; ses couleurs = juste les ronds, sans nom */
+.gaucheC .extraC:not(.vis){display:none!important}
+.ambG.mienC{padding-right:10px!important;gap:0!important}
+
+.gaucheC .extraC:not(.vis) + .sauveC{margin-top:0!important}
+
+/* 17/11 : sur ordinateur, les petits messages se centrent sur le téléphone (plus jamais coupés au bord) */
+@media (min-width:900px){.bulle{left:var(--bulX,50%)!important;max-width:min(560px,90vw);white-space:nowrap}}
 </style>
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
 <script src="ordre-ecritures.js?v=1711b"></script>
-<script>/* 17/11 (Marie : « pour les écritures, je veux choisir moi l'ordre ») : l'ordre vient de ordre-ecritures.js ;
+<script src="vedettes-fonds.js?v=1711"></script>
+<script>/* 17/11 (Marie : « en choisir quelques-uns, les plus jolis, sur les 4 premières lignes ») : dans « Tous les fonds », ses fonds vedettes
+   passent en premier (dans son ordre), puis tous les autres triés par couleur. Mode choix : ?vedettes=1 */
+var MODE_VED = /[?&]vedettes=1/.test(location.search);
+var VED_CHOIX = (() => { try { const x = JSON.parse(localStorage.getItem("lgnVedettes") || "null"); return x || (window.VEDETTES_FONDS || []).slice(); } catch (e) { return (window.VEDETTES_FONDS || []).slice(); } })();
+function rangVedette(n) { if (MODE_VED || typeof catFond === "undefined" || catFond !== "Tous") return 0; const L = window.VEDETTES_FONDS || [], i = L.indexOf(n); return i < 0 ? 1e4 : i; }
+/* 17/11 (Marie : « pour les écritures, je veux choisir moi l'ordre ») : l'ordre vient de ordre-ecritures.js ;
    mode choix (?ordre=1 dans l'adresse) : elle touche les écritures dans l'ordre voulu, un numéro s'affiche sur chacune */
 var MODE_ORDRE = /[?&]ordre=1/.test(location.search);
 var ORDRE_CHOIX = (() => { try { return JSON.parse(localStorage.getItem("lgnOrdreEcr") || "[]"); } catch (e) { return []; } })();
@@ -896,6 +942,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
     <ol class="etapes" id="etapes"><li class="ok"><i>✓</i>Votre lien</li><li class="ok"><i>✓</i>Votre style</li><li class="on" data-s="3"><i>3</i>Vos couleurs et votre fond</li><li data-s="4"><i>4</i>Vos charms</li></ol>
     <div class="droite">
       <button class="rond" id="annul" aria-label="Annuler" title="Annuler" disabled><svg viewBox="0 0 24 24"><path d="M9 7L4.5 11.5 9 16M5 11.5h9.5a5 5 0 0 1 0 10H11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="rond" id="refaire" aria-label="Refaire" title="Refaire" disabled><svg viewBox="0 0 24 24"><path d="M15 7l4.5 4.5L15 16M19 11.5H9.5a5 5 0 0 0 0 10H13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="rond" id="oeilH" aria-label="Voir mon site en grand"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
       <button class="publier" id="publier">Publier</button>
     </div>
@@ -1013,7 +1060,7 @@ function rend(o) {
     const cats = ["Tous", ...ORDRE.filter(c => cs.includes(c)), ...cs.filter(c => !ORDRE.includes(c))];   /* 17/11 (Marie) : l'ordre des thèmes */ /* 17/11 (Marie : « la même chose que pour les charms ») : les catégories de fonds avec leur petite image, sur une ligne qui glisse */
     const F0 = P.fonds(), pris = new Set(), ex = c => { const choisi = RONDS[c] ? F0.findIndex(x => x[0] === RONDS[c]) : -1; if (choisi >= 0) { pris.add(choisi); return P.vignetteFond(choisi); } const L = F0.map((x, i) => [x, i]).filter(([x]) => c === "Tous" || (x[3] || []).includes(c)); if (!L.length) return ""; let k = Math.floor(L.length / 3); while (k < L.length - 1 && pris.has(L[k][1])) k++; pris.add(L[k][1]); return P.vignetteFond(L[k][1]); };
     $("catF").innerHTML = cats.map(c => `<button class="catI catFond${c === catFond ? " on" : ""}" data-c="${c}"><i class="vgI">${ex(c)}</i><span>${c === "Tous" ? "Tous les fonds" : c}</span></button>`).join(""); setTimeout(majFlechesF, 30);
-    const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => [x, i]).filter(([x]) => catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)).sort((a, b) => cleTeinte(a[0][0]) - cleTeinte(b[0][0]))
+    const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => [x, i]).filter(([x]) => catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)).sort((a, b) => rangVedette(a[0][0]) - rangVedette(b[0][0]) || cleTeinte(a[0][0]) - cleTeinte(b[0][0]))
       .map(([x, i]) => `<button class="vg${x[0] === P.etat.fond ? " on" : ""}" data-f="${x[0].replace(/"/g, "&quot;")}" title="${x[0].replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>`).join(""); }
   if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = ordonnePol(P.polices()).map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
     l.querySelectorAll(".ecr-c").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.police)); }
@@ -1174,6 +1221,27 @@ const cleTeinte = (() => { const cache = {}; return n => { if (n in cache) retur
   if (sat < .14 || l > .93) return cache[n] = l > .55 ? 1000 - l * 100 : 7000 - l * 100;   /* blancs/beiges au début, gris avant les noirs */
   const famille = Math.floor(((hue - 320 + 360) % 360) / 40);                      /* 0 = roses, puis rouges, oranges… */
   return cache[n] = 2000 + famille * 500 - l * 100; }; })();
+if (MODE_VED) { const lf = $("lFond"), bd = document.createElement("div"); bd.className = "ordreBandeau";
+  bd.innerHTML = `<span><b>Mes plus jolis fonds</b> : touchez-les dans l'ordre voulu (environ 31). <b id="vedN">0</b> choisis.</span><button id="vedRaz">Recommencer</button>`;
+  setTimeout(() => (document.querySelector(".fondDeux") || lf).before(bd), 0);
+  const badges = () => { const vn = $("vedN"); if (vn) vn.textContent = VED_CHOIX.length; lf.querySelectorAll(".vg").forEach(b => { const i = VED_CHOIX.indexOf(b.dataset.f); let n = b.querySelector(".numO"); if (i < 0) { if (n) n.remove(); return; }
+    if (!n) { n = document.createElement("em"); n.className = "numO"; b.appendChild(n); } n.textContent = i + 1; }); };
+  const sauve = () => { try { localStorage.setItem("lgnVedettes", JSON.stringify(VED_CHOIX)); } catch (e) {} badges(); };
+  lf.addEventListener("click", e => { const b = e.target.closest(".vg"); if (!b || !b.dataset.f) return; const i = VED_CHOIX.indexOf(b.dataset.f); if (i < 0) VED_CHOIX.push(b.dataset.f); else VED_CHOIX.splice(i, 1); sauve(); }, true);
+  bd.querySelector("#vedRaz").onclick = () => { VED_CHOIX = []; sauve(); bulle("On recommence"); }; setInterval(badges, 500); }
+/* charms en 2 colonnes (comme les fonds) + les étoiles déplacées à côté de « C'est parfait » */
+(() => { const box = $("catBox"), lc = $("lCh"), d = document.createElement("div"); d.className = "chDeux"; box.before(d); d.append(box, lc); lc.classList.remove("ligne");
+  const t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; box.prepend(t);
+  const cc = $("catC"), fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes");
+  fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; box.append(fl);
+  const maj = () => { if (!cc.clientHeight) return; fl.style.opacity = cc.scrollHeight > cc.clientHeight + 6 ? "" : "0"; const fin = cc.scrollTop + cc.clientHeight >= cc.scrollHeight - 6;
+    if (fl.classList.contains("haut") !== fin) { fl.classList.toggle("haut", fin); fl.querySelector("path").setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); } };
+  fl.onclick = () => cc.scrollBy({ top: fl.classList.contains("haut") ? -cc.scrollHeight : cc.clientHeight * .7, behavior: "smooth" });
+  cc.addEventListener("scroll", maj, { passive: true }); setInterval(maj, 800);
+  cc.addEventListener("click", e => { if (!e.target.closest(".catI")) return; lc.scrollTop = 0; lc.classList.remove("entre"); void lc.offsetWidth; lc.classList.add("entre"); });
+  /* garder le thème choisi visible dans le rail */
+  const garde = () => { const on = cc.querySelector(".catI.on"); if (on && (on.offsetTop < cc.scrollTop || on.offsetTop + on.offsetHeight > cc.scrollTop + cc.clientHeight)) cc.scrollTop = on.offsetTop - 30; };
+  const e = $("etoN"); $("suivant").before(e); })();
 /* « Assortir » (onglet Fond) : sur ordinateur, posé en haut à droite, à la hauteur du titre */
 (() => { const b = $("assortirF"), basC = b.parentElement, R = $("reglages");
   const place = () => { if (innerWidth >= 900) { if (b.parentElement !== R) { R.appendChild(b); b.classList.add("aDroite"); } const t = $("titreP"); R.style.setProperty("--assTop", (t.offsetTop + t.offsetHeight / 2 - b.offsetHeight / 2) + "px"); }
@@ -1270,9 +1338,12 @@ $("onglets").onclick = e => { const b = e.target.closest("button"); if (b) ouvre
 /* Annuler : on garde l'état AVANT chaque choix (photo, en-tête, fond, écriture, couleurs, charms, look) */
 const pile = []; let dernier = 0;
 const etatMaintenant = () => ({ ...P.etat, ch: P.poses(), ph: P.photoUne(), lib: { ...P.libre } });
-function memo() { const t = Date.now(); if (t - dernier < 500) return; dernier = t; pile.push(etatMaintenant()); if (pile.length > 40) pile.shift(); $("annul").disabled = false; }
+const avant = [];   /* 17/11 (Marie) : « Refaire » (la flèche vers l'avant) */
+function memo() { const t = Date.now(); if (t - dernier < 500) return; dernier = t; pile.push(etatMaintenant()); if (pile.length > 40) pile.shift(); avant.length = 0; $("annul").disabled = false; $("refaire").disabled = true; }
 $("reglages").addEventListener("click", e => { if (e.target.closest(".ent,.vg,.ecr-c,.dot:not(.plus),.ch,#assortir,button.ph,.sup")) memo(); }, true);
-$("annul").onclick = async () => { const s = pile.pop(); if (!s) return; $("annul").disabled = !pile.length; const m = P.etat;
+$("annul").onclick = async () => { const s = pile.pop(); if (!s) return; avant.push(etatMaintenant()); $("refaire").disabled = false; $("annul").disabled = !pile.length; await remetEtat(s); bulle("Annulé ↶"); };
+$("refaire").onclick = async () => { const s = avant.pop(); if (!s) return; pile.push(etatMaintenant()); $("annul").disabled = false; $("refaire").disabled = !avant.length; await remetEtat(s); bulle("Refait ↷"); };
+async function remetEtat(s) { const m = P.etat;
   if (s.ph && s.ph !== P.photoUne()) P.choisitPhoto(s.ph);
   if (s.entete !== m.entete) { P.entete(s.entete); await pause(160); }
   if (s.fond !== m.fond) { P.fond(s.fond); await pause(200); }
@@ -1281,7 +1352,7 @@ $("annul").onclick = async () => { const s = pile.pop(); if (!s) return; $("annu
   if (s.nomc && s.nomc !== m.nomc) P.nomc(s.nomc); if (s.blocs && s.blocs !== m.blocs) P.blocs(s.blocs);
   if (s.lib) { Object.entries(s.lib).forEach(([q, v]) => { P._libreEnCours = true; P.couleurLibre(q, v); P._libreEnCours = false; }); }
   const now = P.poses(); now.filter(n => !s.ch.includes(n)).forEach(n => P.charm(n)); s.ch.filter(n => !now.includes(n)).forEach(n => P.charm(n));
-  setTimeout(() => { rend(onglet); ambiance(); }, 350); bulle("Annulé ↶"); };
+  setTimeout(() => { rend(onglet); ambiance(); }, 350); }
 
 /* Placer mes charms en grand (téléphone) : le site prend tout l'écran, on glisse au doigt, « Terminé » */
 $("grandCh").onclick = () => { const a = $("app"); a.classList.add("agrandi", "charmsG"); $("revenir").textContent = "TERMINÉ ✓"; setTimeout(taille, 420); bulle("Glissez vos charms où vous voulez"); };
@@ -1402,7 +1473,7 @@ const distC = (a, b) => { const x = rgbDe(a), y = rgbDe(b); return (x[0] - y[0])
 const procheReel = (q, hex) => listePart(q).reduce((m, x) => distC(x[1], hex) < distC(m[1], hex) ? x : m);
 function rendCouleursG() { if (!P.pret) return;
   const h = $("hautG"); if (!h.children.length) { const C = Object.fromEntries(P.couleurs()), V = Object.fromEntries(P.vifs());
-    const mien = MESC.map((m, j) => `<button class="ambG mienC" data-m="${j}"><span class="tri"><i style="background:${(m.lb && m.lb.bl) || C[m.co] || "#eee"}"></i><i style="background:${(m.lb && m.lb.nm) || P.NOMC[m.nc] || "#333"}"></i><i style="background:${(m.lb && m.lb.bt) || V[m.v] || "#333"}"></i></span>${m.n}<span class="supC" role="button" aria-label="Supprimer">✕</span></button>`).join("");
+    const mien = MESC.map((m, j) => `<button class="ambG mienC" data-m="${j}" title="Mes couleurs" aria-label="Mes couleurs sauvegardées"><span class="tri"><i style="background:${(m.lb && m.lb.bl) || C[m.co] || "#eee"}"></i><i style="background:${(m.lb && m.lb.nm) || P.NOMC[m.nc] || "#333"}"></i><i style="background:${(m.lb && m.lb.bt) || V[m.v] || "#333"}"></i></span><span class="supC" role="button" aria-label="Supprimer">✕</span></button>`).join("");
     h.innerHTML = `<div class="ambsG">` + mien + DUOS.map((x, i) => `<button class="ambG" data-i="${i}"><span class="tri"><i style="background:${C[x[1]] || "#eee"}"></i><i style="background:${P.NOMC[x[3]] || "#333"}"></i><i style="background:${V[x[2]] || "#333"}"></i></span>${x[0]}</button>`).join("") + `</div><button class="flecheA g" id="ambG" aria-label="Ambiances précédentes">‹</button><button class="flecheA d" id="ambD" aria-label="Autres ambiances">›</button>`;
     const s = h.querySelector(".ambsG"), maj = () => { $("ambG").style.left = "0px"; $("ambG").classList.toggle("cache", s.scrollLeft < 6); $("ambD").classList.toggle("cache", s.scrollLeft > s.scrollWidth - s.clientWidth - 6); };
     s.addEventListener("scroll", maj); addEventListener("resize", maj); setTimeout(maj, 50);
@@ -1569,7 +1640,7 @@ rend = o => { rendAvantFav(o);
 
 /* ===== la colonne d'ASTUCES (ordinateur), tout à gauche sous LOGINAIL : elle change selon l'onglet ===== */
 const ASTUCES = {
-  look: [["✦", "<b>Surprends-moi</b> : un toucher, un nouveau site complet. Recommencez autant que vous voulez."], ["♥", "<b>Restez appuyée</b> sur un look pour le garder en favori."], ["+", "<b>Enregistrer ce look</b> : votre site tel qu'il est, pour le retrouver plus tard."], ["◉", "<b>Voir comme ma cliente</b> : votre site exactement comme elles le verront."]],
+  look: [["✦", "<b>Surprends-moi</b> : un toucher, un nouveau site complet. Recommencez autant que vous voulez."], ["♥", "<b>Restez appuyée</b> sur un look pour le garder en favori."], ["+", "<b>Enregistrer ce look</b> : votre site tel qu'il est, pour le retrouver plus tard."]],
   photo: [["+", "<b>Votre plus belle photo</b> : c'est la 1re chose que vos clientes voient."], ["✕", "Une photo en trop ? Touchez la <b>croix</b> (vous pouvez annuler)."], ["✦", "Une photo <b>bien éclairée</b>, ongles au premier plan : c'est elle qui donne envie de réserver."]],
   fond: [["♥", "<b>Restez appuyée</b> sur un fond pour le mettre en favori : il apparaît dans « Favoris »."], ["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."], ["‹›", "Plus de 500 fonds : <b>faites glisser les thèmes</b> ou touchez la flèche ⌄ (Dark, Élégants, Y2K…)."]],
   entete: [["♥", "<b>Restez appuyée</b> sur une en-tête pour la mettre en favori : elle passe en premier."], ["↻", "Elles bougent comme sur votre vrai site : <b>regardez-les vivre</b>."], ["▣", "<b>Votre photo</b> se place toute seule dans chaque en-tête."]],
@@ -1594,7 +1665,7 @@ function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || 
   pan() && pan().addEventListener("scroll", maj, { passive: true }); setInterval(maj, 500); })();
 setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(placeAstuces, 80));
 /* 17/11 (Marie : « des fois, les astuces vont sur le téléphone ») : on surveille la place du téléphone à chaque image ; dès qu'il bouge, on recale */
-(() => { let x0 = null; const veille = () => { const T = $("tel"); if (T && innerWidth >= 900) { const x = Math.round(T.getBoundingClientRect().left); if (x !== x0) { x0 = x; placeAstuces(); } } requestAnimationFrame(veille); }; requestAnimationFrame(veille); })();
+(() => { let x0 = null; const veille = () => { const T = $("tel"); if (T && innerWidth >= 900) { const x = Math.round(T.getBoundingClientRect().left); if (x !== x0) { x0 = x; placeAstuces(); const bu = document.querySelector(".bulle"); if (bu && bu.offsetParent) { const r = T.getBoundingClientRect(), o = bu.offsetParent.getBoundingClientRect(); bu.style.setProperty("--bulX", Math.round(r.left + r.width / 2 - o.left) + "px"); } } } requestAnimationFrame(veille); }; requestAnimationFrame(veille); })();
 
 /* ===== à la 1re arrivée, la poignée est alignée sur l'étape « 3 · Vos couleurs et votre fond » ===== */
 (() => { let deja = null; try { deja = localStorage.getItem("lgnColR"); } catch (e) {} if (deja || innerWidth < 900) return;

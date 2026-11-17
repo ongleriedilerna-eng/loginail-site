@@ -284,7 +284,9 @@
       .pzPoign .tg{right:-11px;bottom:-11px;cursor:nwse-resize}.pzPoign .sx{right:-11px;top:-11px;cursor:pointer}.pzPoign .tr{left:-11px;top:-11px;cursor:grab;font-size:13px}.pzPoign .mi{left:-11px;bottom:-11px;cursor:pointer;font-size:13px}
       .pzPoign b:active{transform:scale(.9)}
       @keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}
-      html.pzCliente .lgn-sticker:not(.lgn-etoile){animation:lgnFlotte 3.2s ease-in-out infinite!important}
+      /* 17/11 (Marie : « les charms, directement comme la cliente les voit ») : ils flottent TOUJOURS ; celui qu'elle touche s'arrête (pour le bouger, l'agrandir…) */
+      .lgn-sticker:not(.lgn-etoile):not(.choisiC){animation-name:lgnFlotte!important;animation-duration:3.2s!important;animation-timing-function:ease-in-out!important;animation-iteration-count:infinite!important}
+      .lgn-sticker.choisiC{animation:none!important;translate:none!important}
       html.pzCliente .pzPoign{display:none!important}`;
     D.head.appendChild(st);
     poign = D.createElement("div"); poign.className = "pzPoign"; poign.hidden = true; poign.innerHTML = '<b class="sx" title="Enlever">✕</b><b class="tg" title="Tirer pour agrandir">⤡</b><b class="tr" title="Tirer pour tourner">↻</b><b class="mi" title="Effet miroir">⇋</b>';
@@ -337,6 +339,7 @@
       else if (c.nm && c.nm.contains(e.target)) q = "nm"; else if (c.bl && c.bl.contains(e.target)) q = "bl";
       if (!q) return; e.preventDefault(); e.stopPropagation(); P.vise(q); signale("vise:" + q); }, true); }
   /* 17/11 (Marie) : « Voir comme ma cliente » : les charms flottent comme sur le vrai site, plus de cadre ni de poignées */
+  setInterval(() => { try { P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").forEach((x, i) => { if (!x.style.animationDelay) x.style.animationDelay = (-(i * .7) % 3.2).toFixed(2) + "s"; }); } catch (e) {} }, 700);
   P.modeCliente = on => { choisit(null); P.D.documentElement.classList.toggle("pzCliente", !!on);
     P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").forEach((x, i) => x.style.animationDelay = on ? (-(i * .7) % 3.2).toFixed(2) + "s" : ""); };
 
