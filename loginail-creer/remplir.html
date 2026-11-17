@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Loginail · Créer mon site</title>
+<meta name="theme-color" content="#F6F3EF">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="polices.css" rel="stylesheet"><link href="../loginail-site/polices-sites.css" rel="stylesheet">
+<style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
+<style>
+/* Création du site en 3 étapes : 1. coller le lien (ou tout écrire soi-même), 2. le chargement (L2, les ongles
+   s'écrivent comme un mot de passe), 3. « Il manque N choses » (I1, une ligne par chose, l'interrupteur s'allume).
+   Ensuite « Votre site est prêt » (pret.html). Identité Épure : Jost, noir doux, blanc cassé, toujours en clair. */
+:root{--sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom);--fond:#F6F3EF;--noir:#1E1C1B;--greige:#CFC6BC;--muted:#6B625C;--surface:#FBF9F6;--ligne:rgba(30,28,27,.12);color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#E7E2DC;font-family:Jost,sans-serif;color:var(--noir);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+#tel{max-width:480px;height:100vh;height:100dvh;margin:0 auto;position:relative;overflow:hidden;background:var(--fond)}
+.ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--sat) + 26px) 24px calc(var(--sab) + 22px);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.ecran.on{opacity:1;pointer-events:auto}
+.ecran{scrollbar-width:none}.ecran::-webkit-scrollbar{display:none}
+.logo{width:130px;align-self:center;flex:none}
+h1{margin:34px 0 0;font:200 34px/1.12 Jost,sans-serif;letter-spacing:-.01em}
+.sous{margin:10px 0 0;font:300 15px/1.55 Jost,sans-serif;color:var(--muted)}
+.bas{margin-top:auto;padding-top:22px;display:flex;flex-direction:column;gap:12px}
+.go{width:100%;border:0;border-radius:999px;padding:18px;background:var(--noir);color:var(--fond);font:500 13px Jost,sans-serif;letter-spacing:.2em}
+.go:disabled{opacity:.35;cursor:default}
+.passer{border:0;background:none;font:300 14px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:6px}
+/* 15/11 (Marie) : « Je n’ai pas de lien » se voyait trop peu : un vrai bouton, juste sous « Créer mon site » */
+#sansGoogle{display:block;width:100%;margin:10px 0 0;border:1px solid rgba(30,28,27,.35);border-radius:999px;padding:16px;background:#fff;color:var(--noir);font:400 13px Jost,sans-serif;letter-spacing:.14em;text-decoration:none;text-transform:uppercase}
+
+.champ{width:100%;min-width:0;border:1px solid rgba(30,28,27,.25);border-radius:999px;padding:14px 18px;background:#fff;font:300 16px Jost,sans-serif;color:var(--noir);outline:none}
+.champ:focus{border-color:var(--noir)}
+.ajouter{border:0;border-radius:999px;padding:14px 20px;background:var(--noir);color:var(--fond);font:500 12px Jost,sans-serif;letter-spacing:.16em;white-space:nowrap}
+.saisie{display:flex;gap:8px;margin-top:12px}
+
+/* 1 · le lien (07/11, Marie) : même univers que l'accueil ; la case du lien est collée au bouton, en bas, sous le pouce */
+#lien h1{margin:36px 0 0;font:500 clamp(40px,11.5vw,50px)/.98 "Cormorant Garamond",serif;letter-spacing:-.01em;text-align:center}
+#lien .sous{text-align:center;margin-top:14px}
+.mot{display:inline-block;position:relative;white-space:nowrap;transition:opacity .2s}.mot.chg{opacity:0}
+.mot img{position:absolute;width:34px;height:34px;transform:rotate(12deg)}
+#lien .aide{margin-top:26px}
+.collee{display:flex;flex-direction:column;gap:10px}
+.collee .msg{margin:0 6px;min-height:0;text-align:center;font-weight:400}
+.collee .msg:empty{display:none}
+.lien{position:relative}
+.lien .champ{padding-right:104px;padding-top:16px;padding-bottom:16px}
+/* 07/11 : 3 petits téléphones qui montrent des sites, la fiche reconnue en vert, l'aide qui ouvre Google Maps */
+.tels{position:relative;height:178px;margin:22px auto 0;width:100%;flex:none}
+.tels .t{position:absolute;top:14px;left:50%;width:72px;aspect-ratio:420/909;border-radius:13px;background:#1E1C1B;padding:3px;box-shadow:0 14px 26px -12px rgba(30,28,27,.45);transition:transform .6s cubic-bezier(.3,1.3,.5,1)}
+.tels .t div{width:100%;height:100%;border-radius:10px;overflow:hidden;background:#EDE7E0;position:relative}
+.tels .t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.tels .t img.on{opacity:1}
+.tels .g{transform:translateX(-128%) rotate(-9deg)}
+.tels .d{transform:translateX(28%) rotate(9deg)}
+.tels .m{top:0;width:80px;transform:translateX(-50%);z-index:2}
+.tels.hop .g{transform:translateX(-136%) rotate(-12deg) translateY(4px)}
+.tels.hop .d{transform:translateX(36%) rotate(12deg) translateY(4px)}
+.rassure{margin:0;text-align:center;font:300 12.5px Jost,sans-serif;color:var(--muted);letter-spacing:.02em}
+.ok-g{display:none;align-items:center;justify-content:center;gap:7px;margin:0 6px;font:400 14px Jost,sans-serif;color:#2F7A4A}
+.ok-g i{width:18px;height:18px;border-radius:50%;background:#2F7A4A;color:#fff;font:600 11px/18px Jost,sans-serif;font-style:normal;text-align:center}
+.reconnue .ok-g{display:flex}
+.reconnue .lien .champ{border-color:#2F7A4A}
+.aide:not(.ouvert) .maps{display:none}
+.maps svg{width:13px;height:16px}
+.maps{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0 0 16px;border:1px solid rgba(30,28,27,.25);border-radius:999px;padding:12px;background:#fff;font:400 13px Jost,sans-serif;letter-spacing:.06em;color:var(--noir);text-decoration:none}
+.coller{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;border-radius:999px;background:var(--fond);padding:9px 14px;font:400 12px Jost,sans-serif;letter-spacing:.14em}
+.msg{min-height:22px;margin:12px 4px 0;font:300 14px/1.45 Jost,sans-serif;color:var(--noir)}
+.aide{margin-top:18px;background:var(--surface);border-radius:22px;padding:4px 18px}
+.aide>button{width:100%;display:flex;justify-content:space-between;align-items:center;border:0;background:none;padding:14px 0;font:300 15px Jost,sans-serif;text-align:left}
+.aide>button i{width:9px;height:9px;border-right:1.4px solid;border-bottom:1.4px solid;transform:rotate(45deg) translateY(-3px);transition:transform .3s}
+.aide.ouvert>button i{transform:rotate(225deg) translateY(-2px)}
+.aide ol{display:none;margin:0 0 16px;padding-left:20px;font:300 14px/1.7 Jost,sans-serif;color:var(--muted)}
+.aide.ouvert ol{display:block}
+.aide ol b{font-weight:400;color:var(--noir)}
+
+/* 2 · le chargement (L2 sans le rond) */
+#charge{align-items:center;text-align:center}
+.centre{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px}
+.mdp{width:310px;max-width:100%;overflow:visible}
+.ongle{width:170px;height:auto}
+.ongle .nat{stroke-dasharray:1;stroke-dashoffset:1;fill-opacity:0;transition:stroke-dashoffset 1s ease,fill-opacity .6s ease .5s}
+.ongle.e0 .nat{stroke-dashoffset:0;fill-opacity:1}
+.ongle .base{opacity:0;transition:opacity .8s}.ongle.e1 .base{opacity:.55}
+.ongle .coul{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform 1.1s cubic-bezier(.5,0,.3,1)}.ongle.e2 .coul{transform:none}
+.ongle .top{opacity:0;transition:opacity .5s}.ongle.e3 .top{opacity:1}
+.ongle .balai{transform:skewX(-14deg);transition:transform 1s ease}.ongle.e3 .balai{transform:skewX(-14deg) translateX(130px)}
+.ongle .lampe{opacity:0;transition:opacity .6s}.ongle.e4 .lampe{opacity:1;animation:uv 1.4s ease-in-out infinite alternate}.ongle.e5 .lampe{opacity:0;animation:none}
+@keyframes uv{from{opacity:.6}to{opacity:1}}
+.ongle .brille{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.3);transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1)}.ongle.e5 .brille{opacity:1;transform:none}
+.etapes{position:relative;height:60px;width:100%}
+.etapes p{position:absolute;inset:0;margin:0;font:300 17px/1.4 Jost,sans-serif;opacity:0;transition:opacity .5s ease,transform .5s ease;transform:translateY(8px)}
+.etapes p.on{opacity:1;transform:none}
+.etapes p.parti{opacity:0;transform:translateY(-8px)}
+.etapes p.fini{font:200 30px/1.2 Jost,sans-serif}
+.pt{opacity:0;transform-box:fill-box;transform-origin:center;transition:opacity .3s ease,transform .3s ease;transform:scale(.5)}
+.pt.on{opacity:1;transform:none}
+.suit{transition:transform .3s steps(1);transform-box:view-box}
+.clig{animation:clig 1s steps(1) infinite}
+@keyframes clig{50%{opacity:0}}
+/* 15/11 (Marie, idée B) : ce qu'on a trouvé, coché une ligne après l'autre, avec ses vraies infos */
+.lc{width:100%;background:var(--surface);border-radius:22px;padding:4px 18px;text-align:left}
+.lcl{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--ligne)}.lcl:last-child{border:0}
+.lcl .r{flex:0 0 24px;height:24px;border-radius:50%;border:1.4px solid var(--greige);position:relative;transition:background .3s,border-color .3s}
+.lcl .r::after{content:"";position:absolute;left:8px;top:4px;width:5px;height:10px;border:solid var(--fond);border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.lcl.ok .r{background:var(--noir);border-color:var(--noir)}.lcl.ok .r::after{transform:rotate(45deg) scale(1)}
+.lcl.cours .r{border-color:var(--noir);border-top-color:transparent;animation:lctourne .8s linear infinite}
+@keyframes lctourne{to{transform:rotate(360deg)}}
+.lcl.vide .r{border-style:dashed}
+.lcl span{flex:1;font:300 15px Jost,sans-serif}.lcl small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;min-height:17px;opacity:0;transition:opacity .4s}.lcl.ok small,.lcl.vide small{opacity:1}
+#charge .go{opacity:0;transition:opacity .5s}
+#charge.lu .go{opacity:1}
+
+/* 3 · il manque (I1) */
+.liste{margin-top:24px;display:flex;flex-direction:column;background:var(--surface);border-radius:22px;padding:2px 16px}
+.ligne{border-bottom:1px solid var(--ligne);padding:16px 0}
+.ligne:last-child{border-bottom:0}
+.ligne .haut{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;border:0;background:none;padding:0;text-align:left}
+.ligne .haut span{font:300 16px Jost,sans-serif}
+.ligne .haut small{display:block;font:300 12.5px/1.4 Jost,sans-serif;color:var(--muted);margin-top:2px}
+.ligne svg.sw{width:52px;flex:none;overflow:visible}
+/* 15/11 (Marie) : plus d'interrupteur (il ressemblait au logo) : un rond qui se coche, comme pendant le chargement */
+.ligne .r{flex:0 0 24px;height:24px;border-radius:50%;border:1.4px solid var(--greige);position:relative;transition:background .3s,border-color .3s}
+.ligne .r::after{content:"";position:absolute;left:8px;top:4px;width:5px;height:10px;border:solid var(--fond);border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.ligne.fait .r{background:var(--noir);border-color:var(--noir)}.ligne.fait .r::after{transform:rotate(45deg) scale(1)}
+.ligne .corps{display:none;padding-top:4px}
+.ligne.ouvert .corps{display:block}
+.ligne .q{font:300 13.5px/1.5 Jost,sans-serif;color:var(--muted);margin-top:8px}
+.sw .plein{opacity:0;transition:opacity .35s ease .15s}
+.sw .bout{transition:transform .45s cubic-bezier(.4,0,.2,1);transform-box:view-box}
+.sw .nf{transition:opacity .3s ease .15s}
+.sw .nc{opacity:0;transition:opacity .3s ease .15s}
+.fait .sw .plein,.fait .sw .nc{opacity:1}
+.fait .sw .nf{opacity:0}
+.fait .sw .bout{transform:translateX(var(--dx))}
+/* prestations */
+/* 07/11 (Marie) : les bulles coulissent avec le pouce, sur une seule ligne */
+.puces{display:flex;flex-wrap:nowrap;gap:7px;margin:0 -16px;padding:2px 16px 6px;overflow-x:auto;scrollbar-width:none;-webkit-mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent);mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent)}
+.puces::-webkit-scrollbar{display:none}
+.puces button{flex:none;white-space:nowrap}
+.lire p b{font-weight:500}
+.lire-noir{background:var(--noir)!important;color:var(--fond);gap:8px;display:flex!important;align-items:center;justify-content:center;letter-spacing:.14em;font-size:12px!important;padding:14px 8px!important}
+.lire-noir svg{width:18px;height:18px}
+.colle-bas{position:sticky;bottom:0;margin:0 -16px;padding:10px 16px 12px;background:linear-gradient(180deg,rgba(251,249,246,0),var(--surface) 30%);z-index:3}
+.colle-bas .valider{margin-top:0}
+.puces button{border:1px solid rgba(30,28,27,.22);background:#fff;border-radius:999px;padding:8px 13px;font:300 13.5px Jost,sans-serif}
+.puces button.pris{background:var(--noir);color:var(--fond);border-color:var(--noir)}
+.pr{display:grid;grid-template-columns:1fr 78px;gap:6px;margin-top:10px;padding:10px;background:#fff;border-radius:18px}
+.pr .champ{padding:10px 12px;font-size:15px;border-radius:12px}
+.pr .nomp{grid-column:1/-1}
+.pr select{border:1px solid rgba(30,28,27,.25);border-radius:12px;background:#fff;padding:10px;font:300 15px Jost,sans-serif}
+.pr .enl{border:0;background:none;font:300 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;justify-self:end;grid-column:1/-1;padding:2px}
+.prix{position:relative}.prix::after{content:"€";position:absolute;right:12px;top:50%;transform:translateY(-50%);font:300 15px Jost,sans-serif;color:var(--muted)}
+.prix .champ{padding-right:26px}
+.autre{display:flex;align-items:center;justify-content:center;gap:9px;border:1.4px solid var(--noir);background:#fff;border-radius:999px;padding:12px;width:100%;margin-top:12px;font:400 14.5px Jost,sans-serif}
+.autre i{width:22px;height:22px;border-radius:50%;background:var(--noir);color:var(--fond);font:400 17px/21px Jost,sans-serif;font-style:normal}
+.valider{width:100%;margin-top:12px;padding:15px}
+.pastille{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;border:0;background:#fff;border-radius:999px;padding:12px 18px;font:300 15px Jost,sans-serif;text-align:left;cursor:pointer}
+.pastille b{font-weight:400;font-size:13.5px;color:var(--muted);white-space:nowrap}
+.phx-t{margin:16px 0 8px;font:400 12.5px Jost,sans-serif;letter-spacing:.04em}
+.pastille span{font-weight:500}
+.voirplus{display:block;margin:8px auto 0;border:0;background:none;font:400 13px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.lire{margin-top:12px;background:#fff;border-radius:18px;padding:14px}
+.lire p{margin:0;font:300 13.5px/1.5 Jost,sans-serif}
+.lire-bts{display:flex;gap:8px;margin-top:10px}
+.lire-b{flex:1;display:grid;place-items:center;text-align:center;border:1px solid var(--noir);border-radius:999px;padding:11px 8px;background:none;font:400 13px Jost,sans-serif;cursor:pointer}
+.lire-b input{display:none}
+.lire-etat{margin-top:10px!important;font-weight:400!important}
+.phx{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.phx button{padding:0;border:0;border-radius:12px;overflow:hidden;aspect-ratio:1;background:none;outline:3px solid transparent;outline-offset:-3px;cursor:pointer;position:relative}
+.phx img{width:100%;height:100%;object-fit:cover;display:block}
+.phx button.sel{outline-color:var(--noir)}
+.phx button.sel::after{content:"✓";position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--noir);color:var(--fond);font:400 12px/22px Jost,sans-serif;text-align:center}
+.aucune{width:100%;margin-top:8px;border:1px solid rgba(30,28,27,.22);background:#fff;border-radius:999px;padding:11px;font:300 14px Jost,sans-serif;cursor:pointer}
+.aucune.sel{background:var(--noir);color:var(--fond);border-color:var(--noir)}
+/* horaires */
+.jr{display:grid;grid-template-columns:86px 46px 1fr;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--ligne)}
+.jr:last-of-type{border-bottom:0}
+.jr b{font:300 15px Jost,sans-serif}
+.jr .h{display:flex;align-items:center;gap:6px;font:300 13px Jost,sans-serif;color:var(--muted)}
+.jr .h input{width:100%;min-width:0;border:1px solid rgba(30,28,27,.25);border-radius:10px;padding:7px 6px;background:#fff;font:300 14px Jost,sans-serif}
+.jr .h.ferme{visibility:hidden}
+.mini{width:44px;height:26px;border-radius:13px;border:1.4px solid var(--noir);background:none;position:relative;padding:0}
+.mini i{position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--noir);transition:transform .3s,background .3s}
+.mini.on{background:var(--noir)}.mini.on i{transform:translateX(18px);background:var(--fond)}
+/* photos */
+.ph{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
+.ph img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;display:block}
+.ph label{aspect-ratio:1;border:1px dashed rgba(30,28,27,.35);border-radius:12px;display:grid;place-items:center;font:300 26px Jost,sans-serif;color:var(--muted);cursor:pointer}
+.ph input{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* aperçu dans un iPhone 17 sur l'ordinateur (?iphone) */
+html.cadre{--sat:54px;--sab:20px}
+/* Vos photos : en plein écran, comme son site (2A) */
+#manque.tarifs .ligne .haut{display:none}
+#photosPlein{padding:0;background:#1E1C1B;overflow:hidden}
+.pp-piste{position:absolute;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;cursor:grab}
+.pp-piste::-webkit-scrollbar{display:none}
+.pp-diapo{flex:none;width:100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always;background:#cfc6bc center/cover}
+.pp-vide{display:grid;place-items:center;text-align:center;font:400 24px/1.3 Italiana,serif;color:var(--muted);background:#E7E2DC;padding-bottom:180px}
+.pp-voile{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.32),rgba(0,0,0,0) 20%,rgba(0,0,0,0) 38%,rgba(0,0,0,.72));pointer-events:none}
+.pp-etape{position:absolute;top:calc(var(--sat) + 14px);left:0;right:0;text-align:center;color:#fff;font:400 10.5px Jost,sans-serif;letter-spacing:.28em;text-transform:uppercase;pointer-events:none}
+.pp-fermer{position:absolute;top:calc(var(--sat) + 2px);right:12px;width:40px;height:40px;border:0;background:none;padding:9px;cursor:pointer}
+.pp-fermer svg{width:100%;height:100%;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+.pp-bas{position:absolute;left:20px;right:20px;bottom:calc(var(--sab) + 18px);display:flex;flex-direction:column;gap:12px;color:#fff;pointer-events:none}
+.pp-bas button,.pp-bas label,.pp-pts i{pointer-events:auto}
+.pp-txt span{display:block;font:400 10px Jost,sans-serif;letter-spacing:.3em;text-transform:uppercase;opacity:.9;margin-bottom:10px}
+.pp-txt h2{margin:0;font:400 44px/1 Italiana,serif;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pp-pts{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}
+.pp-pts i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.45);transition:width .3s;cursor:pointer}
+.pp-pts i.on{background:#fff;width:18px}
+.pp-cons{margin:0;text-align:center}
+.pp-cons b{display:block;font:400 22px/1.2 Italiana,serif;white-space:nowrap}
+.pp-cons small{display:block;font:300 12px Jost,sans-serif;opacity:.8;margin-top:4px}
+.pp-pills{display:flex;gap:8px}
+.pp-pills>*{flex:1;border:0;background:rgba(255,255,255,.95);color:var(--noir);border-radius:999px;padding:15px 8px;font:300 14px Jost,sans-serif;text-align:center;cursor:pointer}
+.pp-pills input{display:none}
+.pp-pills .pp-noir{background:var(--noir);color:var(--fond);font:400 11.5px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.pp-sans{align-self:center;border:0;background:none;color:#fff;font:300 13px Jost,sans-serif;text-decoration:underline;text-underline-offset:4px;opacity:.9;padding:2px;cursor:pointer}
+html.cadre body{display:flex;align-items:center;justify-content:center;min-height:100vh}
+html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margin:0;box-shadow:0 0 0 12px #1b1b1d,0 0 0 14px #3a3a3c,0 40px 80px -30px rgba(30,28,27,.55);zoom:var(--z,1);flex:none}
+.c-barre{position:absolute;top:0;left:0;right:0;height:54px;display:flex;justify-content:space-between;align-items:center;padding:4px 34px 0 46px;font:600 16px -apple-system,system-ui,sans-serif;z-index:95;pointer-events:none}
+.c-barre svg{height:12px;margin-left:6px;fill:currentColor}
+.c-ile{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:126px;height:37px;border-radius:19px;background:#000;z-index:96;pointer-events:none}
+.c-maison{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:140px;height:5px;border-radius:3px;background:var(--noir);opacity:.85;z-index:96;pointer-events:none}
+@media (max-height:760px){#lien h1{margin-top:12px!important;font-size:clamp(34px,9.5vw,42px)!important}#lien .sous{margin-top:8px!important}.tels{height:120px!important;margin-top:8px!important}.tels .t{width:52px!important}#lien .aide{margin-top:10px!important}#sansGoogle{padding:13px!important;margin-top:8px!important}}
+</style>
+</head>
+<body>
+<div id="tel">
+  <section class="ecran on" id="lien">
+    <div data-logo></div>
+    <h1>Votre site,<br>prêt à <span class="mot" id="mot"><span class="mt">briller</span><img id="motCh" alt=""></span>.</h1>
+    <p class="sous">Collez le lien de votre fiche Google Maps, de votre page Planity ou Booksy, ou de votre site : on y lit votre nom, vos horaires, vos avis et vos photos.</p>
+    <div class="tels" id="tels" aria-hidden="true"><div class="t g"><div></div></div><div class="t d"><div></div></div><div class="t m"><div></div></div></div>
+    <div class="aide"><button type="button" id="aideB">Où trouver mon lien ?<i></i></button>
+      <ol><li>Ouvrez <b>Google Maps</b> et cherchez votre salon (ou votre page <b>Planity</b>, <b>Booksy</b>, ou votre site).</li><li>Touchez <b>Partager</b>, puis <b>Copier le lien</b>.</li><li>Revenez ici, restez appuyée dans la case et touchez <b>Coller</b>.</li></ol><a class="maps" href="https://www.google.com/maps" target="_blank" rel="noopener"><svg viewBox="0 0 13 16" aria-hidden="true"><path d="M6.5 0A6.5 6.5 0 0 0 0 6.5C0 11 6.5 16 6.5 16S13 11 13 6.5A6.5 6.5 0 0 0 6.5 0Zm0 9A2.5 2.5 0 1 1 6.5 4a2.5 2.5 0 0 1 0 5Z" fill="#1E1C1B"/></svg>Ouvrir Google Maps</a></div>
+    <div class="bas"><div class="collee">
+      <p class="msg" id="msg" role="status"></p>
+      <p class="ok-g"><i>✓</i><span id="okG">Fiche Google reconnue</span></p>
+      <div class="lien"><input class="champ" id="champLien" type="url" inputmode="url" autocomplete="off" placeholder="Maps, Planity, Booksy, votre site…"><button class="coller" type="button" id="coller">CRÉER</button></div>
+      <button class="go" type="button" id="creer">CRÉER MON SITE</button>
+      <p class="rassure">Gratuit · sans carte bancaire · prêt en 1 minute</p></div>
+      <button class="passer" type="button" id="sansGoogle">Je n’ai pas de lien</button></div>
+  </section>
+
+  <section class="ecran" id="charge">
+    <div data-logo></div>
+    <div class="centre"><div id="mdp"></div><div class="etapes" id="etapes"></div></div>
+    <button type="button" id="continuer" hidden></button>
+  </section>
+
+  <section class="ecran" id="manque">
+    <div data-logo></div>
+    <h1 id="titreM"></h1>
+    <p class="sous" id="sousM"></p>
+    <div class="liste" id="liste"></div>
+    <div class="bas"><button class="go" type="button" id="fini">CRÉER MON SITE</button></div>
+  </section>
+
+  <section class="ecran" id="photosPlein" aria-label="Vos photos"></section>
+</div>
+
+<script>
+/* ---------- l'aperçu iPhone sur l'ordinateur ---------- */
+if (new URLSearchParams(location.search).has("iphone")) {
+  document.documentElement.classList.add("cadre");
+  document.getElementById("tel").insertAdjacentHTML("afterbegin", '<div class="c-barre"><span>9:41</span><span><svg viewBox="0 0 18 12"><rect y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="currentColor"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="24" y="4" width="2" height="4" rx="1"/></svg></span></div><div class="c-ile"></div><div class="c-maison"></div>');
+  const z = () => document.documentElement.style.setProperty("--z", Math.min(1, (innerHeight - 40) / 900, (innerWidth - 30) / 430).toFixed(3));
+  z(); addEventListener("resize", z);
+}
+const IPHONE = location.search.includes("iphone") ? "?iphone" : "";
+
+/* ---------- le coffre ---------- */
+const FONCTION = "https://scfhaombuptmrlkdhcsl.supabase.co/functions/v1/lire-fiche";
+const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZmhhb21idXB0bXJsa2RoY3NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MTg0NzQsImV4cCI6MjEwOTE5NDQ3NH0.CYfWbG_UmTsqCeRDyab6HN5oZKveoiFlNMZcMYkYYjc";
+
+/* ---------- le logo et l'ongle (cercles d'or) ---------- */
+const PHI = (1 + Math.sqrt(5)) / 2, NOIR = "#1E1C1B", BLANC = "#F6F3EF";
+const r = [0, 1, 2, 3, 4, 5, 6].map(i => 10 * PHI ** i);
+const W = r[4], H = Math.sqrt(r[6] ** 2 - r[5] ** 2), S = r[3], BAS = S + W, CY = (BAS - H) / 2;
+const ONGLE = `M0 ${-H} A${r[6]} ${r[6]} 0 0 1 ${W} 0 L${W} ${S} A${r[4]} ${r[4]} 0 0 1 ${-W} ${S} L${-W} 0 A${r[6]} ${r[6]} 0 0 1 0 ${-H}Z`;
+const ongle = (c, x, y, k, a = 0, extra = "") => `<g transform="translate(${x} ${y}) rotate(${a}) scale(${k}) translate(0 ${-CY})"><path d="${ONGLE}" fill="${c}" ${extra}/></g>`;
+const PW = 150, PHt = PW / PHI;
+const LOGO = `<svg class="logo" viewBox="0 -2 330 72" aria-label="Loginail"><g transform="scale(.5)"><rect x="0" y="5" width="225" height="120" rx="60" fill="${NOIR}"/><path d="M172 21H215C254 21 282 42 282 65C282 88 254 109 215 109H172A44 44 0 0 1 172 21Z" fill="${NOIR}"/><path d="M172 28H213C247 28 274 47 274 65C274 83 247 102 213 102H172A37 37 0 0 1 172 28Z" fill="${BLANC}"/></g>
+  <text x="160" y="42" font-family="Jost,sans-serif" font-weight="300" font-size="22" letter-spacing="9" fill="${NOIR}">LOGINAIL</text></svg>`;
+document.querySelectorAll("[data-logo]").forEach(d => d.outerHTML = LOGO);
+const SW = `<svg class="sw" viewBox="-80 -50 160 100" aria-hidden="true"><rect x="${-PW / 2}" y="${-PHt / 2}" width="${PW}" height="${PHt}" rx="${PHt / 2}" fill="none" stroke="${NOIR}" stroke-width="5"/>
+  <rect class="plein" x="${-PW / 2}" y="${-PHt / 2}" width="${PW}" height="${PHt}" rx="${PHt / 2}" fill="${NOIR}"/>
+  <g class="bout" style="--dx:${PW - PHt}px"><g class="nf">${ongle(NOIR, -PW / 2 + PHt / 2, 0, .27, 90)}</g><g class="nc">${ongle(BLANC, -PW / 2 + PHt / 2, 0, .27, 90)}</g></g></svg>`;
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const $ = id => document.getElementById(id);
+const montre = id => document.querySelectorAll(".ecran").forEach(e => e.classList.toggle("on", e.id === id));
+
+/* ---------- ce qu'on sait d'elle (rien n'est inventé : vide tant qu'on ne l'a pas lu ou qu'elle ne l'a pas écrit) ---------- */
+const JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+const DEMO = new URLSearchParams(location.search).has("demo");
+/* 18/11 (Produit, D26) : cette page ne sert plus qu’à « Je n’ai pas de lien » (?sans), au salon pas retrouvé sur Google (?sans&site=…),
+   au site créé sur l’accueil (?depuis=accueil) et à la vérification des tarifs (?tarifs). La page 1 et le chargement sont dans index.html.
+   (Le renvoi automatique vers « Bon retour » est retiré : « Essai gratuit » ouvrait la création sur les charms.) */
+let B = { source: "main", nom: "", prenom: "", rue: "", cp: "", ville: "", telephone: "", position: null, placeId: "", lienGoogle: "",
+  horaires: null, note: null, nbAvis: 0, avis: [], photos: [], prestations: [] };
+
+const hhmm = (h, m) => `${String(h).padStart(2, "0")}:${String(m || 0).padStart(2, "0")}`;
+/* horaires Google (0 = dimanche) → 7 jours en partant du lundi ; deux plages le même jour = une pause */
+function horairesGoogle(periods) {
+  if (!periods?.length) return null;
+  const j = Array.from({ length: 7 }, () => []);
+  periods.forEach(p => {
+    if (!p.close) { for (let k = 0; k < 7; k++) j[k].push(["00:00", "23:59"]); return; }   // ouvert 24 h/24
+    const k = (p.open.day + 6) % 7;
+    const fin = p.close.day !== p.open.day && p.close.hour === 0 ? "23:59" : hhmm(p.close.hour, p.close.minute);
+    j[k].push([hhmm(p.open.hour, p.open.minute), fin]);
+  });
+  return j.map(pl => {
+    if (!pl.length) return null;
+    pl.sort((a, b) => a[0] < b[0] ? -1 : 1);
+    const h = { d: pl[0][0], f: pl[pl.length - 1][1] };
+    if (pl.length > 1) { h.pd = pl[0][1]; h.pf = pl[1][0]; }
+    return h;
+  });
+}
+/* Le nom Google est souvent rallongé de mots-clés pour Google (« Institut X - Onglerie - Prothésiste ongulaire - Ajaccio ») :
+   sur son site, on garde le vrai nom (« Institut X »). */
+const nomCourt = (n, ville) => {
+  const plat = x => x.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const GEN = /^(onglerie|ongles?|nails?|bar|prothesiste|ongulaire|manucure|pedicure|institut|salon|beaute|esthetique|studio|spa|art|by|a|au|aux|de|des|du|d|la|le|les|l|et|&|en|sur|chez)$/;
+  const v = plat(ville || "");
+  const generique = p => plat(p).split(/[\s'’,]+/).filter(Boolean).every(m => GEN.test(m) || (v && v.includes(m)) || /^\d{5}$/.test(m));
+  const s = String(n || "").replace(/\s*\(([^)]*)\)\s*$/, (m, x) => generique(x) ? "" : m).trim();
+  const parts = s.split(/\s+[-–—|·•:]\s+|\s*\|\s*/).map(x => x.trim()).filter(Boolean);
+  return parts.length < 2 ? s : parts.find(p => !generique(p)) || parts[0];
+};
+function depuisGoogle(g) {
+  const m = (g.adresse || "").match(/^(.*?),\s*(\d{5})\s+([^,]+)/);
+  B = { ...B, source: "google", placeId: g.placeId, lienGoogle: g.lienGoogle, nom: nomCourt(g.nom, g.ville || (m ? m[3] : "")), nomGoogle: g.nom || "",
+    rue: m ? m[1] : (g.adresse || "").replace(/,\s*France$/, ""), cp: m ? m[2] : "", ville: g.ville || (m ? m[3] : ""),
+    telephone: g.telephone || "", position: g.position, horaires: horairesGoogle(g.horaires),
+    note: g.note, nbAvis: g.nbAvis || 0, avis: (g.avis || []).filter(a => a.texte).map(a => ({ auteur: a.auteur, note: a.note, texte: a.texte })),
+    photos: g.photos || [], apropos: g.apropos || null };
+}
+
+/* ---------- 1 · le lien ---------- */
+{const F=[["'Cherry Bomb One'","fraisegelee"],["'Yeseva One'","oeilbleu"],["'Righteous'","fleursixties"],["'Playfair Display'","couronnestrass"],["'Silkscreen'","consoleviolette"],["'Italiana'","perle"],["'Corben'","canard"],["'Sedgwick Ave Display'","levresgrillz"],["'Bebas Neue'","boule8"],["'Allura'","etoiledemerperles"],["'Cinzel'","cristal"],["'Rubik Bubbles'","chocolat"],["'Playball'","hibiscus"],["'Monoton'","minaudiere"],["'Cinzel Decorative'","cerisesor"],["'Fascinate'","bouledisco"]];
+ const m=document.getElementById("mot"),t=m.querySelector(".mt"),c=document.getElementById("motCh"),cv=document.createElement("canvas").getContext("2d");
+ const IM=F.map(f=>{const im=new Image();im.src="../loginail-site/charms-mini/"+f[1]+".webp";return im});let i=0,base=0,larg=0;
+ const pose=()=>{t.style.fontSize=base+"px";const w=t.offsetWidth||1;t.style.fontSize=Math.min(base*1.05,base*larg/w).toFixed(1)+"px";m.style.width=larg+"px";
+   const cs=getComputedStyle(t);cv.font=cs.fontSize+" "+cs.fontFamily;const mt=cv.measureText("briller");const fa=mt.fontBoundingBoxAscent||parseFloat(cs.fontSize)*.9;
+   c.style.left=(t.offsetLeft+Math.min(t.offsetWidth,mt.actualBoundingBoxRight||t.offsetWidth)-34*.18).toFixed(1)+"px";c.style.top=(t.offsetTop+(fa-mt.actualBoundingBoxAscent)-34*.62).toFixed(1)+"px"};
+ Promise.all(F.map(f=>document.fonts?document.fonts.load("40px "+f[0]).catch(()=>0):0).concat(IM.map(im=>im.decode?im.decode().catch(()=>0):0))).then(()=>{
+   base=parseFloat(getComputedStyle(m).fontSize);t.style.fontFamily="'Cormorant Garamond'";larg=t.offsetWidth;t.style.fontFamily=F[0][0];c.src=IM[0].src;pose();
+   setInterval(()=>{if(document.hidden||!document.getElementById("lien").classList.contains("on"))return;m.classList.add("chg");setTimeout(()=>{i=(i+1)%F.length;t.style.fontFamily=F[i][0];c.src=IM[i].src;pose();requestAnimationFrame(()=>requestAnimationFrame(()=>m.classList.remove("chg")))},210)},1800)})}
+const champLien = $("champLien"), msg = $("msg");
+$("aideB").onclick = () => $("aideB").parentElement.classList.toggle("ouvert");
+$("coller").onclick = async () => {
+  if (!champLien.value.trim()) {
+    try { const t = await navigator.clipboard.readText(); if (t) champLien.value = t.trim(); }
+    catch { champLien.focus(); msg.textContent = "Restez appuyée dans la case, touchez « Coller », puis « Créer »."; return; }
+  }
+  $("creer").click();
+};
+/* 09/11 (Marie) : pas seulement Google Maps — Planity, Booksy, ou son propre site (.fr, .com…). Jamais Instagram. */
+const estInsta = l => /(^|\/\/|\.)(instagram\.com|instagr\.am|tiktok\.com|facebook\.com|fb\.com)/i.test(l);
+const sorte = l => !l || estInsta(l) ? "" : estGoogle(l) ? "Fiche Google reconnue" : /planity\.com/i.test(l) ? "Page Planity reconnue" : /booksy\.com/i.test(l) ? "Page Booksy reconnue"
+  : /^https?:\/\/[^\s/]+\.[a-z]{2,}/i.test(l) ? "Votre site reconnu" : "";
+/* 15/11 (Marie) : « monsalon.fr » ou « www.monsalon.fr » sans https:// marche aussi */
+function lienDe(t) { t = String(t || "").trim(); const h = t.match(/https?:\/\/\S+/)?.[0]; if (h) return h;
+  const d = t.match(/(?:^|\s)((?:www\.)?[a-z0-9àâäéèêëîïôöùûüç-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:\/\S*)?)\s*$/i)?.[1]; return d ? "https://" + d.replace(/^\/+/, "") : ""; }
+const estGoogle = l => /^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|(www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)/i.test(l);
+$("creer").onclick = () => {
+  const l = lienDe(champLien.value);   // le partage iPhone ajoute parfois le nom avant le lien
+  if (!l) { msg.textContent = "Collez d’abord votre lien."; champLien.focus(); return; }
+  if (estInsta(l)) { msg.textContent = "Instagram ne suffit pas. Collez votre fiche Google Maps, votre page Planity ou Booksy, ou votre site."; return; }
+  if (!sorte(l)) { msg.textContent = "Ce lien n’est pas reconnu. Touchez « Où trouver mon lien ? »."; return; }
+  msg.textContent = ""; lance(l);
+};
+// la fiche est reconnue dès que le lien collé vient de Google Maps
+const verifie = () => { const l = lienDe(champLien.value), so = sorte(l); $("lien").classList.toggle("reconnue", !!so); if (so) { msg.textContent = ""; $("okG").textContent = so; } };
+champLien.addEventListener("input", verifie);
+// les 3 petits téléphones : des sites qui changent tout seuls
+{const S=["y2k","pop","chrome","feerique","tpl-maisonsauge","mignon","gothique","baddie","street","sixties","tpl-maisonnoire"].map(n=>"../loginail-site/apercus-mini/"+n+".webp");
+ const T=[...document.querySelectorAll("#tels .t div")],z=$("tels");let k=0,n=2;
+ T.forEach((d,j)=>{for(let n=0;n<2;n++){const im=new Image();im.alt="";d.appendChild(im)}const a=d.children[0];a.src=S[j];a.className="on"});
+ const tour=()=>{if(document.hidden||!$("lien").classList.contains("on"))return;k++;const j=k%3,d=T[j],[a,b]=d.children,vis=a.classList.contains("on")?a:b,cach=vis===a?b:a;
+   cach.src=S[++n%S.length];const f=()=>{cach.classList.add("on");vis.classList.remove("on")};cach.decode?cach.decode().then(f,f):f();
+   if(j===2){z.classList.add("hop");setTimeout(()=>z.classList.remove("hop"),700)}};
+ setInterval(tour,1300)}
+champLien.addEventListener("keydown", e => { if (e.key === "Enter") $("creer").click(); });
+$("sansGoogle").onclick = () => { B.source = "main"; prepareManque(); montre("manque"); };
+
+/* ---------- 2 · le chargement : un ongle de plus toutes les 0,7 s, les phrases défilent, pendant que Google répond ---------- */
+const PAS = 52, X0 = -104;   /* 06/11 (Marie) : 5 ongles bien droits, comme les 5 doigts */
+/* 07/11 (Marie) : l'attente = un ongle qu'on prépare, couche par couche (forme, base, couleur, top coat, lampe) */
+const ONG = "M-16 18C-17 -4-12 -30-3 -42C-1.5 -44 1.5 -44 3 -42C12 -30 17 -4 16 18C15.5 27 8 30 0 30C-8 30 -15.5 27 -16 18Z";
+function resumeHoraires(h) {
+  if (!h) return "";
+  const idx = h.map((x, i) => x ? i : -1).filter(i => i >= 0);
+  if (!idx.length) return "";
+  if (idx.length === 7) return "7 jours sur 7";
+  return idx[idx.length - 1] - idx[0] + 1 === idx.length ? `Du ${JOURS[idx[0]].toLowerCase()} au ${JOURS[idx[idx.length - 1]].toLowerCase()}` : `${idx.length} jours par semaine`;
+}
+const LIGNES = [["salon", "Votre salon"], ["photos", "Vos photos"], ["avis", "Vos avis"], ["horaires", "Vos horaires"], ["prix", "Vos prix"]];
+$("mdp").outerHTML = `<div class="lc" id="lc">${LIGNES.map(([k, t]) => `<div class="lcl" data-k="${k}"><i class="r"></i><span>${t}<small></small></span></div>`).join("")}</div>`;
+const EXEMPLE = { salon: "Les Ongles de Cerise · Lille", photos: "12 photos", avis: "4,9 ★ · 48 avis", horaires: "Du mardi au samedi", prix: "9 prestations" };
+/* ce qu'on a trouvé (texte) ; "" = pas trouvé : elle l'ajoutera ensuite */
+function trouve(k) {
+  if (DEMO) return EXEMPLE[k];
+  const n = B.photos.length, np = B.prestations.length;
+  if (k === "salon") return [B.nom, B.ville].filter(Boolean).join(" · ") || (B.site ? "Trouvé" : "");
+  if (k === "photos") return n ? `${n} photo${n > 1 ? "s" : ""}` : "";
+  if (k === "avis") return B.nbAvis ? `${B.note != null ? String(B.note).replace(".", ",") + " ★ · " : ""}${B.nbAvis} avis` : "";
+  if (k === "horaires") return resumeHoraires(B.horaires);
+  if (k === "prix") return B.prestationsTrouvees && np ? `${np} prestation${np > 1 ? "s" : ""}` : "";
+}
+const PHRASES = ["On cherche votre salon", "On récupère vos photos", "On lit vos avis", "On lit vos horaires", "On lit vos prix"];
+$("etapes").innerHTML = PHRASES.map(p => `<p>${p}…</p>`).join("") + `<p class="fini">Votre site est prêt.</p>`;
+const attends = ms => new Promise(r => setTimeout(r, ms));
+const prechargePhotos = photos => Promise.all(photos.map(p => new Promise(ok => { const i = new Image(); i.onload = i.onerror = ok; i.src = p.url; })));
+
+/* ses prestations et ses prix, lus sur son site (ou sa page de réservation) et ses photos de tarifs ; son Instagram.
+   Au plus 75 s : sinon on continue, elle les écrira. */
+async function litTarifs() {
+  if (!B.site && !B.photos.length) return;
+  const corps = JSON.stringify({ quoi: "tarifs", site: B.site, nom: B.nom, ville: B.ville, cp: B.cp, rue: B.rue, photos: B.photos.map(p => p.url) });
+  const essai = () => fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON }, body: corps })
+    .then(r => r.ok ? r.json() : null).catch(() => null);
+  const lecture = essai().then(t => t || essai());   // un raté du serveur : on réessaie une fois
+  const t = await Promise.race([lecture, attends(75000).then(() => null)]);   // la recherche sur internet peut prendre ~30 s
+  if (!t) return;
+  if (t.instagram) B.insta = t.instagram;
+  if (t.presentation) B.presentation = t.presentation;   // son « À propos » de sa page de réservation ou de son site
+  if (t.prestations?.length) {
+    B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60) }));
+    B.prestationsTrouvees = true;
+  }
+}
+async function lance(lien) {
+  montre("charge"); $("charge").classList.remove("lu");
+  const L = [...document.querySelectorAll("#lc .lcl")], ph = [...document.querySelectorAll("#etapes p")];
+  L.forEach(l => { l.classList.remove("ok", "vide", "cours"); l.querySelector("small").textContent = ""; }); ph.forEach(p => p.classList.remove("on", "parti"));
+  let fini = false, gOk = false, erreur = "";
+  const lecture = DEMO ? attends(400).then(() => { fini = true; }) : fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON }, body: JSON.stringify({ lien }) })
+    .then(r => r.json()).then(async g => { if (g.erreur) throw new Error(g.erreur); depuisGoogle(g); B.site = g.site || ""; gOk = true;
+      await Promise.all([prechargePhotos(B.photos), litTarifs()]); })
+    .catch(e => { erreur = e.message && !/fetch/i.test(e.message) ? e.message : "Pas de connexion. Vérifiez votre réseau et réessayez."; })
+    .finally(() => { fini = true; });
+  // une ligne après l'autre : elle tourne, puis se coche avec ce qu'on a trouvé (les prix attendent la lecture de son site)
+  for (let i = 0; i < 5; i++) {
+    if (erreur) break;
+    ph.forEach((p, j) => { if (j < i) { p.classList.remove("on"); p.classList.add("parti"); } });
+    ph[i].classList.add("on"); L[i].classList.add("cours");
+    await attends(1000);
+    while (!fini && !(i < 4 && gOk)) await attends(200);
+    if (erreur) break;
+    const t = trouve(LIGNES[i][0]);
+    L[i].querySelector("small").textContent = t || { salon: "Vous l’écrirez ensuite", avis: "Pas encore d’avis Google" }[LIGNES[i][0]] || "Vous les ajouterez ensuite";
+    L[i].classList.remove("cours"); L[i].classList.add(t ? "ok" : "vide");
+  }
+  await lecture;
+  if (erreur && !estGoogle(lien) && !/connexion/i.test(erreur)) { B.source = "main"; B.site = lien; prepareManque(); montre("manque"); return; }   // Planity, Booksy, son site : salon pas retrouvé sur Google, elle complète (ses prix se lisent depuis son lien)
+  if (erreur) { montre("lien"); msg.textContent = erreur; return; }
+  ph.forEach(p => { if (!p.classList.contains("fini")) { p.classList.remove("on"); p.classList.add("parti"); } });
+  ph[5].classList.add("on"); $("charge").classList.add("lu");
+  setTimeout(() => $("continuer").click(), 1500);   // 15/11 (Marie) : plus de « Continuer », on passe tout seul à la suite
+}
+$("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getItem("loginail-modele") ? "pret.html?essai&" + localStorage.getItem("loginail-modele") : "../coups-de-coeur.html?v=1311t"); return; } prepareManque(); montre("manque"); };
+
+/* ---------- 3 · il manque (une ligne par chose ; touchée, elle s'ouvre ; « Ajouter » allume l'interrupteur) ---------- */
+const SUGG = ["Pose gel", "Remplissage", "Semi-permanent mains", "Semi-permanent pieds", "Manucure", "Beauté des pieds", "Dépose", "Nail art"];
+const DUREES = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 210, 240];
+const dureeTxt = m => m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`;
+let MQ = [], ouvert = null, juste = null, brouillonP = [], brouillonH = null, brouillonPh = [], choixPh = { principale: 0, salon: null };
+let plusPh = { g: false, s: false }, lienOuvert = false, etatLecture = "";
+
+/* 07/11 (Marie) : les clientes écrivent « Merci Léa ! » : on prend le prénom seulement s'il revient dans au moins 2 avis, et elle vérifie */
+const PAS_PRENOM = new Set("Merci Bravo Encore Beaucoup Pour Elle Il Je Tu Vous Toi Le La Les Un Une Des Très Super Top Trop Salon Madame Mme Mlle Mademoiselle Mr Monsieur Toute Tout Tous Mille Infiniment Grand Grande Gros Chère Cher Ma Mon Notre Votre Equipe Équipe Institut Nails Ongles Onglerie Pour Avec".split(" "));
+function devinePrenom(avis) {
+  const vu = {}, mots = new Set((B.nom || "").split(/[^A-Za-zÀ-ÿ]+/).map(m => m.toLowerCase()));
+  (avis || []).forEach(a => { const dans = new Set();
+    for (const m of (a.texte || "").matchAll(/(?:merci|remercie|bravo)[\s,!]+(?:encore\s+|beaucoup\s+|infiniment\s+)?(?:à\s+|a\s+)?([A-ZÀ-Ý][a-zà-ÿ]{2,}(?:-[A-ZÀ-Ý][a-zà-ÿ]+)?)/gi)) {
+      const n = m[1]; if (n[0] !== n[0].toUpperCase() || PAS_PRENOM.has(n) || mots.has(n.toLowerCase())) continue; dans.add(n); }
+    dans.forEach(n => vu[n] = (vu[n] || 0) + 1); });
+  const [n, c] = Object.entries(vu).sort((x, y) => y[1] - x[1])[0] || [];
+  return c >= 2 ? n : "";
+}
+function prepareManque() {
+  MQ = [];
+  if (!B.nom) MQ.push({ k: "nom", t: "Le nom de votre salon", q: "Il s’affiche en grand en haut de votre site.", ph: "Ex. : Les ongles de Léa", champ: "nom" });
+  const dv = !B.prenom && devinePrenom(B.avis); if (dv) B.prenom = dv;
+  MQ.push({ k: "prenom", t: "Votre prénom", q: dv ? "Trouvé dans vos avis Google. Vérifiez qu’il est bien juste." : "Pour signer votre site et votre espace.", ph: "Votre prénom", champ: "prenom", dejaFait: !!dv, devine: !!dv });
+  // seulement ce qui manque vraiment : des tarifs trouvés se vérifient depuis son site (« Vérifier », index.html?tarifs)
+  if (!B.prestations.some(p => p.prix != null))
+    MQ.push({ k: "presta", t: "Vos prestations et vos prix", q: "Pas de prix sur votre fiche Google." });
+  if (!B.rue) MQ.push({ k: "adr", t: "Votre adresse", q: "Pour le plan et l’itinéraire de vos clientes.", ph: "N°, rue, code postal et ville", champ: "adr" });
+  if (!B.telephone) MQ.push({ k: "tel", t: "Votre téléphone", q: "Pour que vos clientes puissent vous appeler.", ph: "06 00 00 00 00", champ: "telephone", type: "tel" });
+  // Instagram pas trouvé : facultatif (ne bloque pas) ; sans lui, son aperçu montre « @votre.instagram » en exemple
+  if (!B.insta) MQ.push({ k: "insta", t: "Votre Instagram", q: "Facultatif. Vos clientes pourront vous suivre depuis votre site.", ph: "@votre.compte", champ: "insta", option: true });
+  if (!B.horaires) MQ.push({ k: "hor", t: "Vos horaires", q: "Touchez les jours où vous travaillez." });
+  if (!B.photos.length) MQ.push({ k: "choixph", t: "Vos photos", q: "", option: true });   // aucune photo trouvée : elle ajoute les siennes (plein écran, ouvrePhotos)
+  MQ.forEach(m => m.fait = !!m.dejaFait);
+  ouvert = null; brouillonP = B.prestations.map(p => ({ ...p, ferme: prixOk(p.prix) }));   // sans prix trouvé : ouverte, à compléter brouillonH = null; brouillonPh = [];
+  choixPh = { principale: B.principale || 0, salon: B.salon ?? null }; plusPh = { g: false, s: false }; lienOuvert = false; etatLecture = "";
+  rendManque();
+}
+const reste = () => MQ.filter(m => !m.fait && !m.option).length;
+const titre = n => n === 0 ? "Tout est prêt." : n === 1 ? "Il ne manque plus qu’une chose." : `Il manque ${["", "", "deux", "trois", "quatre", "cinq", "six"][n] || n} choses.`;
+const resume = m => {
+  if (!m.fait) return "";
+  if (m.k === "presta") return m.dejaFait ? `${B.prestations.length} prestation${B.prestations.length > 1 ? "s" : ""} trouvée${B.prestations.length > 1 ? "s" : ""} · touchez pour vérifier` : B.prestations.map(p => p.nom).join(" · ");
+  if (m.k === "prenom" && m.devine) return `${B.prenom} · trouvé dans vos avis, touchez pour vérifier`;
+  if (m.k === "hor") return B.horaires.map((h, i) => h ? JOURS[i].slice(0, 3) : null).filter(Boolean).join(" · ");
+  if (m.k === "photos") return `${B.photos.length} photo${B.photos.length > 1 ? "s" : ""}`;
+  if (m.k === "choixph") return B.salon == null ? "Photo principale choisie · salon : plus tard" : "Photo principale et photo du salon choisies";
+  if (m.k === "adr") return [B.rue, B.cp, B.ville].filter(Boolean).join(" ");
+  return B[m.champ];
+};
+function corps(m) {
+  if (m.k === "presta") return `<p class="q">${B.prestationsTrouvees ? "Nous avons trouvé ces tarifs. Dites-nous s’ils sont encore valables, et s’il en manque." : m.q}</p>
+    <div class="lire"><p><b>${B.prestationsTrouvees ? "Une autre carte de prix ?" : "Le plus rapide : une capture d’écran de vos tarifs."}</b><br>Instagram, page de réservation, carte du salon… Vos prix s’écrivent tout seuls.</p>
+      <div class="lire-bts"><label class="lire-b lire-noir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l1.6-2.4h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>AJOUTER MA CAPTURE<input type="file" accept="image/*" multiple data-tarifphoto></label></div>
+      ${lienOuvert ? `<div class="saisie"><input class="champ" id="lienTarifs" inputmode="url" placeholder="Votre page de réservation, votre site…" value="${esc(B.site || "")}"><button class="ajouter" type="button" data-lirelien>LIRE</button></div>` : ""}
+      ${etatLecture ? `<p class="lire-etat">${etatLecture}</p>` : ""}</div>
+    <p class="phx-t">Ou touchez vos prestations</p>
+    <div class="puces">${SUGG.map(s => `<button type="button" data-sugg="${esc(s)}" class="${brouillonP.some(p => p.nom === s) ? "pris" : ""}">${s}</button>`).join("")}</div>
+    ${brouillonP.map((p, i) => p.ferme
+      ? `<button type="button" class="pastille" data-po="${i}"><span>${esc(p.nom)}</span><b>${String(p.prix ?? "").trim() === "" ? "Sur devis" : esc(String(p.prix).replace(".", ",")) + " €"} · ${dureeTxt(p.duree)}</b></button>`
+      : `<div class="pr"><input class="champ nomp" data-pn="${i}" value="${esc(p.nom)}" placeholder="Nom de la prestation">
+      <div class="prix"><input class="champ" data-pp="${i}" inputmode="decimal" value="${p.prix ?? ""}" placeholder="Prix ou vide"></div>
+      <select data-pd="${i}" aria-label="Durée">${[...new Set([...DUREES, p.duree])].sort((a, b) => a - b).map(d => `<option value="${d}" ${d === p.duree ? "selected" : ""}>${dureeTxt(d)}</option>`).join("")}</select>
+      <button class="enl" type="button" data-pe="${i}">Enlever</button></div>`).join("")}
+    <button class="autre" type="button" data-autre><i>+</i>${brouillonP.length ? "Ajouter une autre prestation" : "Ajouter une prestation"}</button>
+    <div class="colle-bas"><button class="ajouter valider" type="button" data-ajoute="presta">C’EST BON POUR MES PRIX</button></div>`;
+  if (m.k === "choixph") return `<p class="q">${m.q}</p>
+      <div class="phx-t">La photo en grand, en haut de votre site</div><div class="phx">${B.photos.map((p, i) => (i < 3 || plusPh.g || i === choixPh.principale) ? `<button type="button" data-pp1="${i}" class="${i === choixPh.principale ? "sel" : ""}"><img src="${esc(p.url)}" alt=""></button>` : "").join("")}</div>
+      ${B.photos.length > 3 ? `<button type="button" class="voirplus" data-plus="g">${plusPh.g ? "Voir moins" : "Voir plus"}</button>` : ""}
+      <div class="phx-t">La photo de votre salon</div><div class="phx">${B.photos.map((p, i) => (i < 3 || plusPh.s || i === choixPh.salon) ? `<button type="button" data-ps="${i}" class="${i === choixPh.salon ? "sel" : ""}"><img src="${esc(p.url)}" alt=""></button>` : "").join("")}</div>
+      ${B.photos.length > 3 ? `<button type="button" class="voirplus" data-plus="s">${plusPh.s ? "Voir moins" : "Voir plus"}</button>` : ""}
+      <button type="button" class="aucune ${choixPh.salon == null ? "sel" : ""}" data-ps="-1">Aucune de ces photos n’est mon salon</button>
+      <button class="ajouter valider" type="button" data-ajoute="choixph">AJOUTER</button>`;
+  if (m.k === "hor") { const h = brouillonH || (brouillonH = Array(7).fill(null));
+    return `<p class="q">${m.q}</p>${h.map((x, i) => `<div class="jr"><b>${JOURS[i]}</b><button type="button" class="mini ${x ? "on" : ""}" data-hj="${i}" aria-label="${JOURS[i]} ouvert"><i></i></button>
+      <div class="h ${x ? "" : "ferme"}"><input type="time" data-hd="${i}" value="${x?.d || "09:00"}"> à <input type="time" data-hf="${i}" value="${x?.f || "19:00"}"></div></div>`).join("")}
+      <button class="ajouter valider" type="button" data-ajoute="hor">AJOUTER</button>`; }
+  if (m.k === "photos") return `<p class="q">${m.q}</p><div class="ph">${brouillonPh.map(u => `<img src="${u}" alt="">`).join("")}${brouillonPh.length < 6 ? `<label>+<input type="file" accept="image/*" multiple data-fichiers></label>` : ""}</div>
+      <button class="ajouter valider" type="button" data-ajoute="photos">AJOUTER</button>`;
+  return `<p class="q">${m.q}</p><div class="saisie"><input class="champ" type="${m.type || "text"}" placeholder="${m.ph}" data-champ="${m.k}" enterkeyhint="done" value="${esc(m.k === "adr" ? [B.rue, B.cp, B.ville].filter(Boolean).join(" ") : m.k === "insta" ? (B.insta || "").replace(/^@/, "") : B[m.champ] || "")}"></div>`;
+}
+let modeTarifs = false;   // elle revient de son site pour vérifier les tarifs trouvés
+function rendManque() {
+  const n = reste();
+  $("titreM").textContent = modeTarifs ? "Vos tarifs" : titre(n);
+  $("sousM").textContent = modeTarifs ? "Tout ce que vous changez est gardé." : (n ? "Touchez une ligne pour l’ajouter." : "Votre site a tout ce qu’il faut.") + " Tout ce que vous remplissez est gardé.";
+  $("liste").innerHTML = MQ.map(m => `<div class="ligne ${m.fait && juste !== m.k ? "fait" : ""} ${ouvert === m.k ? "ouvert" : ""}" data-k="${m.k}">
+    <button class="haut" type="button" data-ouvre="${m.k}"><div><span>${m.t}</span>${m.fait ? `<small>${esc(resume(m))}</small>` : ""}</div><i class="r" aria-hidden="true"></i></button>
+    <div class="corps">${ouvert === m.k ? corps(m) : ""}</div></div>`).join("");
+  $("fini").disabled = !modeTarifs && n > 0;
+  if (juste) { const k = juste; juste = null; requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector(`.ligne[data-k="${k}"]`)?.classList.add("fait"))); }
+}
+/* garde ce qui est tapé avant de redessiner */
+function relit() {
+  document.querySelectorAll("[data-pn]").forEach(i => brouillonP[+i.dataset.pn].nom = i.value);
+  document.querySelectorAll("[data-pp]").forEach(i => brouillonP[+i.dataset.pp].prix = i.value);
+  document.querySelectorAll("[data-pd]").forEach(i => brouillonP[+i.dataset.pd].duree = +i.value);
+  document.querySelectorAll("[data-hd]").forEach(i => { const x = brouillonH[+i.dataset.hd]; if (x) x.d = i.value; });
+  document.querySelectorAll("[data-hf]").forEach(i => { const x = brouillonH[+i.dataset.hf]; if (x) x.f = i.value; });
+}
+const prixOk = v => String(v ?? "").trim() === "" || /^\d+([.,]\d{1,2})?$/.test(String(v).trim());   // vide = « Sur devis »
+/* la prestation qu'elle vient d'écrire se range en pastille (« Remplissage · 30 € · 1 h 15 ») ; une vide s'en va */
+function fermeTout() {
+  for (let i = brouillonP.length - 1; i >= 0; i--) { const p = brouillonP[i]; if (p.ferme) continue;
+    if (!p.nom.trim() && !String(p.prix).trim()) { brouillonP.splice(i, 1); continue; }
+    if (!p.nom.trim()) { dit("Écrivez le nom de la prestation."); document.querySelector(`[data-pn="${i}"]`)?.focus(); return false; }
+    if (!prixOk(p.prix)) { dit(`Il manque le prix de « ${p.nom} ».`); document.querySelector(`[data-pp="${i}"]`)?.focus(); return false; }
+    p.ferme = true; }
+  return true;
+}
+$("liste").addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return;
+  relit();
+  if (t.dataset.ouvre === "choixph") { ouvrePhotos(); return; }
+  if (t.dataset.ouvre) { ouvert = ouvert === t.dataset.ouvre ? null : t.dataset.ouvre; rendManque(); document.querySelector(".ouvert input:not([type=file])")?.focus({ preventScroll: true }); document.querySelector(".ouvert")?.scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
+  if (t.dataset.sugg) { const s = t.dataset.sugg, i = brouillonP.findIndex(p => p.nom === s);
+    if (i >= 0) { brouillonP.splice(i, 1); rendManque(); return; }
+    if (!fermeTout()) return; brouillonP.push({ nom: s, prix: "", duree: 60 }); rendManque(); document.querySelector(`[data-pp="${brouillonP.length - 1}"]`)?.focus(); return; }
+  if (t.dataset.pe) { brouillonP.splice(+t.dataset.pe, 1); rendManque(); return; }
+  if (t.hasAttribute("data-autre")) { if (!fermeTout()) return; brouillonP.push({ nom: "", prix: "", duree: 60 }); rendManque(); const nv = document.querySelector(`[data-pn="${brouillonP.length - 1}"]`); nv?.focus({ preventScroll: true }); nv?.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+  if (t.dataset.po) { if (!fermeTout()) return; brouillonP[+t.dataset.po].ferme = false; rendManque(); document.querySelector(`[data-pp="${t.dataset.po}"]`)?.focus(); return; }
+  if (t.dataset.pp1) { choixPh.principale = +t.dataset.pp1; rendManque(); return; }
+  if (t.dataset.ps) { choixPh.salon = +t.dataset.ps < 0 ? null : +t.dataset.ps; rendManque(); return; }
+  if (t.dataset.plus) { plusPh[t.dataset.plus] = !plusPh[t.dataset.plus]; rendManque(); return; }
+  if (t.hasAttribute("data-tariflien")) { lienOuvert = !lienOuvert; rendManque(); $("lienTarifs")?.focus(); return; }
+  if (t.hasAttribute("data-lirelien")) { const l = ($("lienTarifs")?.value || "").trim().match(/https?:\/\/\S+/)?.[0]; if (!l) { $("lienTarifs")?.focus(); return; } litPrix({ site: l }); return; }
+  if (t.dataset.hj) { const i = +t.dataset.hj, prec = brouillonH.filter(Boolean).pop(); brouillonH[i] = brouillonH[i] ? null : { d: prec?.d || "09:00", f: prec?.f || "19:00" }; rendManque(); return; }
+  const k = t.dataset.ajoute; if (!k) return;
+  const m = MQ.find(x => x.k === k);
+  if (k === "presta") {
+    const ps = brouillonP.filter(p => p.nom.trim());
+    const sansPrix = ps.find(p => !prixOk(p.prix));
+    if (!ps.length) return dit("Touchez au moins une prestation.");
+    if (sansPrix) { dit(`Il manque le prix de « ${sansPrix.nom} ».`); document.querySelector(`[data-pp="${brouillonP.indexOf(sansPrix)}"]`)?.focus(); return; }
+    B.prestations = ps.map(p => ({ nom: p.nom.trim(), prix: String(p.prix ?? "").trim() === "" ? null : +String(p.prix).replace(",", "."), duree: p.duree }));
+  } else if (k === "hor") {
+    if (!brouillonH.some(Boolean)) return dit("Touchez au moins un jour.");
+    B.horaires = brouillonH.map(x => x && { d: x.d, f: x.f });
+  } else if (k === "photos") {
+    B.photos = brouillonPh.map(u => ({ url: u, auteurs: [] }));
+  } else if (k === "choixph") {
+    B.principale = choixPh.principale; B.salon = choixPh.salon;
+  } else {
+    const v = (document.querySelector(`[data-champ="${k}"]`)?.value || "").trim();
+    if (!v) { document.querySelector(`[data-champ="${k}"]`)?.focus(); return; }
+    if (k === "adr") { const a = v.match(/^(.*?),?\s*(\d{5})\s+(.+)$/); B.rue = a ? a[1] : v; B.cp = a ? a[2] : ""; B.ville = a ? a[3] : ""; }
+    else if (k === "insta") B.insta = "@" + v.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/[/?#].*$/, "").replace(/^@+/, "");   // « @lea.nails » ou le lien du compte
+    else B[m.champ] = k === "prenom" ? v.charAt(0).toUpperCase() + v.slice(1) : v;
+  }
+  if (modeTarifs && k === "presta") { B.tarifsVerifies = true; $("fini").click(); return; }
+  m.fait = true; m.devine = false; juste = k; ouvert = null; rendManque();
+});
+/* 15/11 (Marie) : elle écrit, et c'est ajouté tout de suite (plus de bouton « Ajouter ») */
+function prendChamp(k, v) {
+  const m = MQ.find(x => x.k === k); if (!m) return;
+  if (k === "adr") { const a = v.match(/^(.*?),?\s*(\d{5})\s+(.+)$/); B.rue = a ? a[1] : v; B.cp = a ? a[2] : ""; B.ville = a ? a[3] : ""; }
+  else if (k === "insta") B.insta = v ? "@" + v.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/[/?#].*$/, "").replace(/^@+/, "") : "";
+  else B[m.champ] = k === "prenom" && v ? v.charAt(0).toUpperCase() + v.slice(1) : v;
+  m.fait = !!v; m.devine = false;
+  document.querySelector(`.ligne[data-k="${k}"]`)?.classList.toggle("fait", m.fait);
+  const n = reste(); $("titreM").textContent = modeTarifs ? "Vos tarifs" : titre(n); $("fini").disabled = !modeTarifs && n > 0;
+}
+$("liste").addEventListener("input", e => { if (e.target.matches("[data-champ]")) prendChamp(e.target.dataset.champ, e.target.value.trim()); });
+$("liste").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("[data-champ]")) { e.preventDefault(); e.target.blur(); ouvert = null; rendManque(); } });
+$("liste").addEventListener("change", async e => {
+  if (e.target.matches("[data-tarifphoto]")) { relit(); const ims = []; for (const f of [...e.target.files].slice(0, 3)) ims.push(await reduit(f, 1600)); if (ims.length) litPrix({ images: ims }); return; }
+  if (!e.target.matches("[data-fichiers]")) return;
+  relit();
+  for (const f of [...e.target.files].slice(0, 6 - brouillonPh.length)) brouillonPh.push(await reduit(f));
+  rendManque();
+});
+/* elle donne une photo (capture de ses tarifs) ou un lien : on lit ses prix et on les ajoute à sa liste */
+async function litPrix(quoi) {
+  etatLecture = "On lit vos tarifs…"; rendManque();
+  const t = await fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON },
+    body: JSON.stringify({ quoi: "tarifs", nom: B.nom, ...quoi }) }).then(r => r.json()).catch(() => null);
+  const nouvelles = (t?.prestations || []).filter(p => !brouillonP.some(x => x.nom.toLowerCase() === p.nom.toLowerCase()))
+    .map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60), ferme: true }));
+  if (t?.instagram && !B.insta) B.insta = t.instagram;
+  if (nouvelles.length) { brouillonP.push(...nouvelles); B.prestationsTrouvees = true; lienOuvert = false;
+    etatLecture = `${nouvelles.length} prestation${nouvelles.length > 1 ? "s" : ""} trouvée${nouvelles.length > 1 ? "s" : ""}. Vérifiez qu’elles sont encore valables.`; }
+  else etatLecture = t ? "On n’a pas trouvé de prix ici. Essayez une autre photo, ou ajoutez-les à la main." : "Pas de connexion. Réessayez.";
+  rendManque();
+}
+/* une photo du téléphone, réduite (1000 px, ou plus pour lire des tarifs) pour rester légère */
+function reduit(f, max = 1000) {
+  return new Promise(ok => { const i = new Image(); i.onload = () => { const k = Math.min(1, max / Math.max(i.width, i.height)), c = document.createElement("canvas");
+    c.width = i.width * k; c.height = i.height * k; c.getContext("2d").drawImage(i, 0, 0, c.width, c.height); URL.revokeObjectURL(i.src); ok(c.toDataURL("image/jpeg", .82)); };
+    i.src = URL.createObjectURL(f); });
+}
+let tDit;
+function dit(t) { const q = document.querySelector(".ouvert .q"); if (!q) return; q.textContent = t; q.style.color = "var(--noir)"; clearTimeout(tDit); tDit = setTimeout(() => { if (!document.querySelector(".ouvert .q")) return; relit(); rendManque(); }, 2600); }
+
+/* ---------- Vos photos : en plein écran, comme son site (choix 2A du 03/11) ----------
+   Étape 1 : la photo principale ; étape 2 : celle du salon (ou « Je n'ai pas de photo de mon salon »).
+   Les photos sont une bande qui suit le pouce et s'arrête pile sur une photo ; à la souris, on la tire.
+   Ses photos à elle (depuis le téléphone) passent devant celles de Google. */
+const PP = { etape: 0, i: 0, h: 0 };
+function ouvrePhotos() { PP.etape = 0; PP.h = Math.min(B.principale || 0, Math.max(0, B.photos.length - 1)); PP.i = PP.h; montre("photosPlein"); rendPhotos(); }
+function rendPhotos() {
+  const l = B.photos, salon = PP.etape === 1, vide = !l.length;
+  $("photosPlein").innerHTML = `<div class="pp-piste" id="ppPiste">${vide ? `<div class="pp-diapo pp-vide"><span>Ajoutez vos photos<br>depuis votre téléphone</span></div>` : l.map(p => `<div class="pp-diapo" style="background-image:url('${esc(p.url)}')"></div>`).join("")}</div><div class="pp-voile"></div>
+    <div class="pp-etape">Étape ${PP.etape + 1} sur 2</div>
+    <button class="pp-fermer" type="button" data-ppfermer aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="pp-bas">
+      ${salon ? "" : `<div class="pp-txt"><span>Prothésiste ongulaire${B.ville ? " · " + esc(B.ville) : ""}</span><h2>${esc(B.nom || "")}</h2></div>`}
+      ${l.length > 1 ? `<div class="pp-pts">${l.map((_, k) => `<i data-pppt="${k}"></i>`).join("")}</div>` : ""}
+      <p class="pp-cons"><b>${salon ? "Choisissez la photo de votre salon" : "Choisissez votre photo principale"}</b>${l.length > 1 ? "<small>Faites glisser pour voir les autres</small>" : ""}</p>
+      <div class="pp-pills"><label>Ajouter une photo<input type="file" accept="image/*" multiple data-ppajout></label>${vide ? "" : `<button class="pp-noir" type="button" data-ppok>${salon ? "C’est mon salon" : "Celle-ci"}</button>`}</div>
+      ${salon ? `<button class="pp-sans" type="button" data-ppsans>Je n’ai pas de photo de mon salon</button>` : ""}
+    </div>`;
+  const p = $("ppPiste"); p.style.scrollBehavior = "auto"; p.scrollLeft = PP.i * p.clientWidth; p.style.scrollBehavior = ""; ppMaj();
+  p.addEventListener("scroll", () => { const i = Math.round(p.scrollLeft / p.clientWidth); if (i !== PP.i) { PP.i = i; ppMaj(); } }, { passive: true });
+}
+const ppMaj = () => document.querySelectorAll("#photosPlein .pp-pts i").forEach((x, k) => x.classList.toggle("on", k === PP.i));
+function ppFin(salon) {
+  B.principale = PP.h; B.salon = salon; B.sansSalon = salon == null;
+  const m = MQ.find(x => x.k === "choixph"); if (m) m.fait = true;
+  juste = "choixph"; ouvert = null; montre("manque"); rendManque();
+}
+$("photosPlein").addEventListener("click", e => {
+  const t = e.target.closest("button,[data-pppt]"); if (!t) return;
+  if (t.hasAttribute("data-ppfermer")) { montre("manque"); return; }
+  if (t.dataset.pppt != null) { const p = $("ppPiste"); p.scrollTo({ left: +t.dataset.pppt * p.clientWidth, behavior: "smooth" }); return; }
+  if (t.hasAttribute("data-ppok")) {
+    if (PP.etape === 1) { ppFin(PP.i); return; }
+    PP.h = PP.i; PP.etape = 1; PP.i = B.salon != null && B.salon !== PP.h ? B.salon : (PP.h === 0 && B.photos.length > 1 ? 1 : 0); rendPhotos(); return; }
+  if (t.hasAttribute("data-ppsans")) ppFin(null);
+});
+$("photosPlein").addEventListener("change", async e => {
+  if (!e.target.matches("[data-ppajout]")) return;
+  const nv = []; for (const f of [...e.target.files].slice(0, 6)) nv.push({ url: await reduit(f, 1400), auteurs: [], mienne: true });
+  if (!nv.length) return;
+  B.photos = [...nv, ...B.photos];
+  if (PP.etape === 1) PP.h += nv.length;          // la photo principale déjà choisie reste la même
+  if (B.salon != null) B.salon += nv.length;
+  PP.i = 0; rendPhotos();                            // on montre tout de suite la sienne
+});
+/* à la souris (ordinateur) : on tire la bande, elle se cale sur la photo la plus proche */
+let ppTire = null;
+const zoomCadre = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--z")) || 1;
+$("photosPlein").addEventListener("pointerdown", e => {
+  if (e.pointerType !== "mouse" || !e.target.closest(".pp-piste")) return;
+  const p = $("ppPiste"); ppTire = { x: e.clientX, l: p.scrollLeft }; p.style.scrollSnapType = "none"; p.style.scrollBehavior = "auto"; e.preventDefault(); });
+addEventListener("pointermove", e => { if (ppTire) $("ppPiste").scrollLeft = ppTire.l - (e.clientX - ppTire.x) / (document.documentElement.classList.contains("cadre") ? zoomCadre() : 1); });
+addEventListener("pointerup", e => {
+  if (!ppTire) return; const p = $("ppPiste"), w = p.clientWidth, dx = e.clientX - ppTire.x;
+  let i = Math.round(ppTire.l / w); if (dx < -25) i++; else if (dx > 25) i--; ppTire = null;
+  i = Math.max(0, Math.min(p.children.length - 1, i)); p.style.scrollSnapType = ""; p.style.scrollBehavior = ""; p.scrollTo({ left: i * w, behavior: "smooth" }); });
+
+/* ---------- vers Personnaliser ---------- */
+const PERSO = "personnaliser.html?vrai=1&genre=classique&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&style=1&couleur=lin&police=elegante&paillettes=non&mode=jour");
+$("fini").onclick = () => {
+  try { localStorage.setItem("loginail-brouillon", JSON.stringify(B)); }
+  catch {
+    const garde = B.photos.map(p => !p.url.startsWith("data:")), place = i => i == null || !garde[i] ? null : garde.slice(0, i).filter(Boolean).length;
+    B.principale = place(B.principale) ?? 0; B.salon = place(B.salon); B.photos = B.photos.filter((p, i) => garde[i]);
+    localStorage.setItem("loginail-brouillon", JSON.stringify(B)); }
+  if (modeTarifs) { if (history.length > 1) history.back(); else location.href = PERSO; return; }   // elle revient sur son site
+  location.href = PERSO;   // 18/11 (D26/D31) : ensuite, directement Personnaliser (le style se choisit dans « Looks »)
+};
+/* 09/11 (Marie) : ?demo — pour montrer Loginail : un faux lien (les Ongles de Cerise, exemple), rien n'est lu sur Google ;
+   après « Votre site est prêt », on enchaîne sur le choix du style, la personnalisation et les charms */
+if (DEMO) { champLien.value = "https://maps.app.goo.gl/lesonglesdecerise"; verifie(); }
+/* ?lien=… : le lien collé sur la page d'accueil de loginail.fr */
+const venu = new URLSearchParams(location.search).get("lien");
+if (venu) { champLien.value = venu; $("creer").click(); }
+/* ?depuis=accueil : son site a été créé sur l'accueil ; on reprend avec ce qui a déjà été lu (fiche Google + prix) */
+if (new URLSearchParams(location.search).get("depuis") === "accueil") {
+  let lu = null; try { lu = JSON.parse(localStorage.getItem("loginail-accueil")); } catch {}
+  if (lu && lu.g) {
+    depuisGoogle(lu.g); B.site = lu.g.site || "";
+    const t = lu.t;
+    if (t) { if (t.instagram) B.insta = t.instagram; if (t.presentation) B.presentation = t.presentation;
+      if (t.prestations?.length) { B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60) })); B.prestationsTrouvees = true; } }
+    prepareManque();
+    document.querySelectorAll(".ecran").forEach(e => e.style.transition = "none"); montre("manque");
+    requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".ecran").forEach(e => e.style.transition = "")));
+  }
+}
+/* ?tarifs : elle vient de son site (« Vérifier ») : ses tarifs s'ouvrent tout de suite, prêts à modifier */
+if (new URLSearchParams(location.search).has("tarifs")) {
+  let br = null; try { br = JSON.parse(localStorage.getItem("loginail-brouillon")); } catch {}
+  if (br) {
+    Object.assign(B, br); modeTarifs = true;
+    MQ = [{ k: "presta", t: "Vos tarifs", q: "", option: true }]; ouvert = "presta";
+    brouillonP = B.prestations.map(p => ({ ...p, prix: p.prix ?? "", ferme: prixOk(p.prix) }));
+    $("fini").textContent = "VOIR MON SITE"; $("manque").classList.add("tarifs"); rendManque();
+    document.querySelectorAll(".ecran").forEach(e => e.style.transition = "none"); montre("manque");   // tout de suite, sans montrer l'accueil
+    requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".ecran").forEach(e => e.style.transition = "")));
+  }
+}
+/* ?sans : « Je n’ai pas de lien » (page 1) ; ?sans&site=… : son lien Planity, Booksy ou son site, salon pas retrouvé sur Google */
+{ const q = new URLSearchParams(location.search);
+  if (q.has("sans")) { B.source = "main"; const st = lienDe(q.get("site") || ""); if (st && !estInsta(st)) B.site = st; prepareManque();
+    document.querySelectorAll(".ecran").forEach(e => e.style.transition = "none"); montre("manque");
+    requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".ecran").forEach(e => e.style.transition = ""))); } }
+</script>
+</body>
+</html>

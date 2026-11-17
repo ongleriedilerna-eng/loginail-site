@@ -44,6 +44,8 @@ const q = new URLSearchParams(location.search);
 /* la page du parcours à ouvrir (?p=…), sinon le début ; on garde ?lien=… */
 let p = q.get("p") || "loginail-creer/index.html" + (q.get("lien") ? "?lien=" + encodeURIComponent(q.get("lien")) : "");
 if (!/^(loginail-creer\/|coups-de-coeur\.html|maquette-perso\.html|charms-presentoir\.html)/.test(p)) p = "loginail-creer/index.html";
+/* 18/11 (Produit, D26) : la page 1 et le chargement prennent tout l'écran de l'ordinateur (plus de colonne au milieu) */
+if (/^loginail-creer\/(index\.html)?(\?|$)/.test(p)) location.replace(p);
 /* sur un téléphone : directement le parcours, en plein écran */
 if (matchMedia("(max-width: 899px)").matches) location.replace(p);
 const f = document.getElementById("parcours"); f.src = p;

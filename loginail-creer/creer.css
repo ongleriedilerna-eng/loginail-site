@@ -1,0 +1,489 @@
+/* COPIE DE PRODUCTION (18/11, Produit) de la maquette validée par Marie : idees/creer-1-v.css + le style de idees/creer-1-v1f.html (D26).
+   Page 1 « Un lien suffit. » + chargement C « Tourbillon ». Pour changer le dessin : modifier la maquette, puis recopier ici. */
+/* 16/11 · Base commune des 5 versions de la page 1 « Collez votre lien » + écran de chargement.
+   Chaque version (creer-1-v1.html … v5.html) ajoute son propre dessin par-dessus.
+   Téléphone : l'écran prend tout. Ordinateur (≥ 900 px) : « 4 étapes, 1 minute » à gauche, l'écran au format téléphone au milieu, « Vu comme vos clientes » à droite. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--greige:#CFC6BC;--ligne:rgba(30,28,27,.12);--vert:#2A6F44;
+  --rose:#B5475E;--brun:#2A1B1E;--rosé:#F7E9EA;
+  --sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom);
+  --ressort:cubic-bezier(.2,.9,.25,1);--pop:cubic-bezier(.3,1.5,.5,1);--doux-out:cubic-bezier(.22,1,.36,1);color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;border:0;background:none;padding:0}
+img{display:block}
+
+/* ---------- le cadre ---------- */
+.cadre{position:relative;height:100dvh}
+.cote,.logo-page,.fond-ordi{display:none}
+.app{position:relative;height:100%;overflow:hidden;background:var(--fond);isolation:isolate}
+.ecran{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--sat) + 16px) 22px calc(var(--sab) + 16px);
+  opacity:0;visibility:hidden;transform:translateX(28px);transition:opacity .3s,transform .45s var(--doux-out),visibility 0s .45s}
+#s1{transform:translateX(-28px)}
+body[data-e="lien"] #s1,body[data-e="charge"] #s2{opacity:1;visibility:visible;transform:none;transition:opacity .35s .05s,transform .5s var(--doux-out)}
+.logo{display:block;width:104px;height:auto;align-self:center;flex:none}
+.logo svg{display:block;width:100%;height:auto}
+
+/* ---------- la case du lien ---------- */
+.lien{position:relative}
+.champ{width:100%;height:58px;border:1px solid rgba(30,28,27,.24);border-radius:999px;padding:0 104px 0 22px;background:#fff;font:400 16px Jost,sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.champ::placeholder{color:var(--doux)}
+.champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.07)}
+.coller{position:absolute;right:6px;top:50%;transform:translateY(-50%);height:46px;display:flex;align-items:center;gap:7px;border-radius:999px;background:var(--fond);padding:0 16px;font:500 14px Jost,sans-serif;transition:transform .12s,opacity .2s}
+.coller svg{width:15px;height:15px}
+.coller:active{transform:translateY(-50%) scale(.95)}
+/* une fois reconnu : on ne montre plus « https://maps.app.goo.gl/… » mais une étiquette claire */
+.puce{position:absolute;inset:1px;border-radius:999px;background:#fff;display:flex;align-items:center;gap:11px;padding:0 10px 0 20px;opacity:0;pointer-events:none;transform:scale(.97);transition:opacity .2s,transform .35s var(--pop)}
+.puce .ic{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:#F1ECE6}
+.puce .ic svg{width:12px;height:15px}
+.puce span{flex:1;font:400 15.5px Jost,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.puce span b{font-weight:500}
+.puce .ok{width:30px;height:30px;flex:none;border-radius:50%;background:var(--vert);color:#fff;display:grid;place-items:center}
+.puce .ok svg{width:14px;height:14px}
+.puce .chg{font:400 13px Jost,sans-serif;color:var(--doux);text-decoration:underline;text-underline-offset:3px;padding:8px 4px}
+.lien.reconnue .champ{border-color:var(--vert);box-shadow:0 0 0 4px rgba(42,111,68,.10)}
+.lien.reconnue .puce{opacity:1;pointer-events:auto;transform:none}
+.lien.reconnue .coller{opacity:0;pointer-events:none}
+.msg{margin:8px 10px 0;text-align:center;font:400 13.5px/1.4 Jost,sans-serif;color:var(--muted);min-height:0}
+.msg:empty{display:none}
+.msg.err{color:#9A3B2E}
+
+/* ---------- boutons ---------- */
+.go{display:block;width:100%;height:58px;border-radius:999px;background:var(--noir);color:var(--fond);font:500 13px Jost,sans-serif;letter-spacing:.18em;text-transform:uppercase;transition:transform .12s,background .2s}
+.go:active{transform:scale(.98)}
+.lienb{font:400 14px Jost,sans-serif;text-decoration:underline;text-decoration-color:rgba(30,28,27,.35);text-underline-offset:4px;padding:10px 4px}
+.rassure{margin:10px 0 0;text-align:center;font:400 13px Jost,sans-serif;color:var(--muted)}
+.rassure b{font-weight:500;color:var(--noir)}
+
+/* ---------- chargement : ce qui est commun ---------- */
+#s2 [data-k] .r{position:relative;flex:none;width:24px;height:24px;border-radius:50%;border:1.4px solid var(--greige);transition:background .3s,border-color .3s}
+#s2 [data-k] .r::after{content:"";position:absolute;left:7.5px;top:3.5px;width:5px;height:10px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg) scale(0);transition:transform .35s var(--pop)}
+#s2 [data-k].cours .r{border-color:transparent;border-top-color:var(--noir);border-right-color:var(--noir);animation:tourne .8s linear infinite}
+#s2 [data-k].ok .r{background:var(--noir);border-color:var(--noir);animation:none}
+#s2 [data-k].ok .r::after{transform:rotate(45deg) scale(1)}
+@keyframes tourne{to{transform:rotate(360deg)}}
+#phrase{min-height:24px;text-align:center;font:400 16px Jost,sans-serif;color:var(--muted);transition:opacity .18s,transform .25s}
+#phrase.change{opacity:0;transform:translateY(-4px)}
+#phrase.fini{color:var(--noir)}
+#continuer{opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .35s,transform .45s var(--doux-out)}
+body.pret.attend #continuer{opacity:1;transform:none;pointer-events:auto}
+.eclat{position:absolute;pointer-events:none;z-index:20}
+.eclat i{position:absolute;left:0;top:0;font-style:normal;color:#fff;text-shadow:0 0 6px rgba(255,140,190,1),0 0 14px rgba(255,180,210,.8)}
+.etoiles i{position:absolute;font-style:normal;color:#fff;text-shadow:0 0 6px rgba(240,130,175,.95),0 0 14px rgba(255,180,210,.75);animation:scint 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes scint{0%,100%{opacity:.25;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+
+/* ---------- « Où trouver mon lien ? » : une feuille qui monte et MONTRE le geste ---------- */
+.voile{position:absolute;inset:0;background:rgba(30,28,27,.32);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40}
+.feuille{position:absolute;left:0;right:0;bottom:0;z-index:41;background:#fff;border-radius:26px 26px 0 0;padding:10px 20px calc(var(--sab) + 18px);transform:translateY(105%);transition:transform .45s var(--doux-out);box-shadow:0 -20px 40px -20px rgba(30,28,27,.35)}
+.app.aide .voile{opacity:1;pointer-events:auto}.app.aide .feuille{transform:none}
+.poignee{width:38px;height:5px;border-radius:3px;background:#DDD5CC;margin:0 auto 12px}
+.feuille h3{margin:0;text-align:center;font:500 26px/1.1 "Cormorant Garamond",serif}
+.srcs{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:14px 0 16px}
+.srcs button{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--ligne);font:400 13.5px Jost,sans-serif;transition:background .2s,color .2s}
+.srcs button.on{background:var(--noir);color:var(--fond);border-color:var(--noir)}
+.montre{display:flex;gap:16px;align-items:center}
+.mm{position:relative;flex:none;width:112px;aspect-ratio:9/18;border-radius:18px;background:var(--noir);padding:3px}
+.mm .e{position:relative;width:100%;height:100%;border-radius:15px;overflow:hidden;background:#fff;font-family:system-ui,-apple-system,sans-serif}
+.mm .carte{height:38%;background:linear-gradient(135deg,#E8EFE4 0 30%,#F3EFE6 30% 55%,#E3ECF3 55%);position:relative}
+.mm .carte::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:15px;margin:-12px 0 0 -6px;background:#D9473B;border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.mm .fi{padding:7px 7px;font-size:7.5px;color:#222}
+.mm .fi b{display:block;font-size:9px;margin-bottom:2px}
+.mm .fi small{color:#777;font-size:6.5px}
+.mm .bts{display:flex;gap:3px;margin-top:6px}
+.mm .bts span{flex:1;text-align:center;padding:4px 0;border-radius:999px;border:1px solid #ddd;font-size:6px;color:#1a73e8;transition:background .2s}
+.mm .tap{background:#E4EEFD!important}
+.mm .mf{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:10px 10px 0 0;box-shadow:0 -6px 14px -6px rgba(0,0,0,.25);padding:8px 6px 10px;transform:translateY(105%);transition:transform .4s var(--doux-out)}
+.mm .mf.on{transform:none}
+.mm .mf div{display:flex;align-items:center;gap:5px;padding:5px;border-radius:5px;font-size:7px;transition:background .2s}
+.mm .mf div i{width:13px;height:13px;border-radius:50%;background:#EEF2F7}
+.mm .mok{position:absolute;left:50%;bottom:12%;transform:translate(-50%,6px);opacity:0;background:#333;color:#fff;border-radius:5px;padding:4px 7px;font-size:7px;white-space:nowrap;transition:opacity .25s,transform .3s}
+.mm .mok.on{opacity:1;transform:translate(-50%,0)}
+.mm .doigt{position:absolute;width:22px;height:22px;border-radius:50%;background:rgba(30,28,27,.3);border:2px solid rgba(255,255,255,.95);box-shadow:0 3px 8px rgba(0,0,0,.2);opacity:0;z-index:5;transform:translate(-50%,-50%);transition:left .5s var(--ressort),top .5s var(--ressort),opacity .2s,transform .12s;pointer-events:none}
+.mm .doigt.on{opacity:1}.mm .doigt.appui{transform:translate(-50%,-50%) scale(.7)}
+.mm .mnav{position:absolute;inset:0;background:#fff;display:none;flex-direction:column}
+.mm .mnav.on{display:flex}
+.mm .barre-n{margin:16px 5px 0;padding:5px 6px;border-radius:7px;background:#F0EEEC;font-size:6.5px;color:#444;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .2s}
+.mm .barre-n.sel{background:#CFE0FB}
+.mm .bulle{align-self:flex-start;margin:4px 0 0 8px;padding:4px 8px;border-radius:6px;background:#333;color:#fff;font-size:7px;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .25s}
+.mm .bulle.on{opacity:1;transform:none}
+.mm .page-n{padding:8px 6px;display:flex;flex-direction:column;gap:5px}
+.mm .page-n i{display:block;height:6px;border-radius:3px;background:#ECE7E1}.mm .page-n i:first-child{height:44px;border-radius:7px}.mm .page-n i:nth-child(3){width:70%}
+.gestes{flex:1;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.gestes li{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:14px;font:400 14.5px/1.35 Jost,sans-serif;color:var(--doux);transition:background .3s,color .3s}
+.gestes li b{font-weight:500}
+.gestes li i{flex:none;width:22px;height:22px;border-radius:50%;border:1.3px solid currentColor;display:grid;place-items:center;font:500 11px Jost,sans-serif;font-style:normal}
+.gestes li.on{background:var(--fond);color:var(--noir)}
+.gestes li.on i{background:var(--noir);border-color:var(--noir);color:#fff}
+.feuille .go{margin-top:16px}
+
+/* ---------- petit message « page suivante » (maquette) ---------- */
+.suite{position:absolute;left:50%;top:calc(var(--sat) + 16px);transform:translate(-50%,-16px);opacity:0;background:var(--noir);color:var(--fond);border-radius:999px;padding:11px 18px;font:400 13.5px Jost,sans-serif;transition:opacity .25s,transform .35s var(--ressort);z-index:60;pointer-events:none;white-space:nowrap}
+.suite.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- VRAI ORDINATEUR ---------- */
+@media (min-width:900px){
+  body{background:#EDE7E0}
+  .cadre{height:100vh;display:grid;grid-template-columns:1fr 410px 1fr;align-items:center;column-gap:clamp(48px,5vw,88px);padding:24px clamp(40px,4vw,64px)}
+  .fond-ordi{display:block;position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .logo-page{color:var(--noir);display:block;position:absolute;left:clamp(40px,4vw,64px);top:30px;width:132px;z-index:3}
+  .logo-page svg{display:block;width:100%;height:auto}
+  .app{height:min(844px,calc(100vh - 48px));border-radius:40px;box-shadow:0 50px 90px -40px rgba(30,28,27,.45),0 0 0 1px rgba(30,28,27,.07);z-index:2}
+  .ecran{padding:24px 26px 24px}
+  .cote{display:block;position:relative;z-index:2;max-width:330px}
+  .cote.g{justify-self:end;text-align:right}
+  .cote h2{margin:0 0 16px;font:500 48px/1 "Cormorant Garamond",serif;letter-spacing:-.015em}
+  .cote h2 em{font-style:italic}
+  .cote p{margin:0 0 14px;font:400 16.5px/1.55 Jost,sans-serif;color:var(--muted)}
+  .cote p b{font-weight:500;color:var(--noir)}
+  .pas{margin:26px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+  .pas li{display:flex;align-items:center;gap:12px;font:400 15.5px Jost,sans-serif;color:var(--doux)}
+  .pas li i{width:28px;height:28px;border-radius:50%;border:1.4px solid currentColor;display:grid;place-items:center;font:500 12px Jost,sans-serif;font-style:normal}
+  .pas li.on{color:var(--noir);font-weight:500}
+  .pas li.on i{background:var(--noir);border-color:var(--noir);color:#fff}
+  .offre{display:inline-flex;flex-direction:column;gap:6px;margin-top:10px;padding:16px 20px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:0 20px 40px -30px rgba(30,28,27,.4)}
+  .offre b{font:500 17px Jost,sans-serif}
+  .offre span{font:400 14.5px Jost,sans-serif;color:var(--muted)}
+  button:hover{opacity:.9}
+  .go:hover{opacity:1;filter:brightness(1.15)}
+}
+@media (min-width:900px) and (max-width:1099px){.cadre{grid-template-columns:1fr}.cote{display:none}.app{justify-self:center;width:410px}}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01s!important;animation-duration:.01s!important;animation-iteration-count:1!important}}
+
+/* ===== style de la page creer-1-v1f.html ===== */
+
+/* 16/11 (Marie) : « des charms de partout, pas que dans le carré » ; « le carré au milieu fait format iPad » ;
+   « garder les boutons pour savoir où trouver son lien, mais il n'y a pas que ces trois liens-là ».
+   → ORDINATEUR : la page prend tout l'écran (plus de carré), les 4 étapes passent en haut, les charms sont partout autour.
+   → 5 boutons : Google Maps, Planity, Booksy, Mon site, Autre lien ; chacun MONTRE où trouver le lien.
+   → Les charms se posent seulement dans les espaces vides (jamais sur un texte, la case ou un bouton), à toutes les tailles d'écran.
+   ?charge=A (son site se construit dans le téléphone) · ?charge=B (le relevé). */
+
+/* ---------- commun ---------- */
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.deco img{position:absolute;width:var(--t);height:auto;filter:drop-shadow(0 8px 10px rgba(30,28,27,.18));opacity:0;
+  animation:arrive .7s var(--pop) forwards,flotte var(--f,4.6s) ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+@keyframes arrive{from{opacity:0;transform:translateY(14px) scale(.4) rotate(var(--r,0deg))}to{opacity:1;transform:rotate(var(--r,0deg))}}
+@keyframes flotte{0%,100%{opacity:1;transform:translateY(0) rotate(var(--r,0deg))}50%{opacity:1;transform:translateY(-7px) rotate(calc(var(--r,0deg) + 6deg))}}
+.deco i{position:absolute;font-style:normal;color:#fff;text-shadow:0 0 6px rgba(240,130,175,.95),0 0 14px rgba(255,180,210,.75);animation:scint 2.4s ease-in-out infinite;animation-delay:var(--d,0s);font-size:var(--t,14px)}
+.deco img{will-change:transform,translate;transition:filter .3s ease}
+.deco img.chaud{filter:drop-shadow(0 14px 18px rgba(176,53,98,.38))}
+.pret .deco img{animation:hop .6s var(--pop) 1,flotte var(--f,4.6s) ease-in-out .6s infinite;opacity:1}
+@keyframes hop{50%{transform:translateY(-16px) rotate(var(--r,0deg)) scale(1.12)}}
+.ecran>*:not(.deco):not(.eclat){position:relative;z-index:1}
+.pas-h{display:none}
+
+/* ---------- page 1 ---------- */
+#s1 .haut{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding-bottom:6px}
+.etape{margin:0 0 14px;font:400 13px Jost,sans-serif;color:var(--doux)}
+h1{margin:0;font:500 clamp(42px,11.6vw,50px)/.98 "Cormorant Garamond",serif;letter-spacing:-.02em}
+h1 em{font-style:italic;position:relative}
+h1 .st{position:absolute;right:-.42em;top:-.08em;font-size:.36em;font-style:normal;color:#E99AB6;animation:scint 2.6s ease-in-out infinite}
+.sous{margin:14px auto 0;max-width:30ch;font:400 16px/1.5 Jost,sans-serif;color:var(--muted)}
+.ou{margin:20px 0 8px;font:400 13px Jost,sans-serif;color:var(--doux)}
+.sources{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;max-width:350px;margin:0 auto}
+.sources button{display:flex;align-items:center;gap:7px;height:38px;padding:0 13px;border-radius:999px;background:#fff;border:1px solid var(--ligne);font:400 13.5px Jost,sans-serif;transition:transform .12s,border-color .2s}
+.sources button:active{transform:scale(.96)}
+.sources i{width:8px;height:8px;border-radius:50%;flex:none}
+.sources svg{width:13px;height:13px;flex:none}
+.ligne-lien{display:flex;flex-direction:column;gap:12px}
+#s1 .bas{flex:none}
+.pied{display:flex;justify-content:center;margin-top:2px}
+/* 17/11 (Marie, 2e passage) : l'offre devient une petite carte comme « votresalon.fr » et « Liste d'attente » de l'accueil :
+   icône rose, le mot en gras, une petite ligne dessous ; elle flotte doucement. */
+.offre-c{display:flex;align-items:center;gap:12px;width:max-content;max-width:100%;margin:16px auto 0;padding:10px 18px 10px 10px;border-radius:18px;
+  background:linear-gradient(180deg,#FFFFFF,#FFF8F9);text-align:left;font:400 12.5px/1.3 Jost,sans-serif;color:var(--muted);rotate:-1.5deg;animation:bob 8s ease-in-out infinite;
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(176,53,98,.07),0 2px 4px rgba(80,30,50,.05),0 12px 24px -10px rgba(80,30,50,.18),0 30px 50px -26px rgba(176,53,98,.30)}
+.offre-c b{display:block;color:var(--noir);font-weight:600;font-size:14px;letter-spacing:-.005em}
+.offre-c .ic{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 10px -4px rgba(176,53,98,.35)}
+.offre-c .ic svg{width:17px;height:17px}
+@keyframes bob{50%{translate:0 -4px}}
+/* 17/11 (Marie) : 3 cartes. Téléphone : pas la place sur les côtés → au même endroit, elles se relaient (une à la fois). */
+.offres{display:grid;justify-items:center;margin-top:16px}
+.offres .offre-c{grid-area:1/1;margin:0;opacity:0;scale:.94;filter:blur(3px);transition:opacity .45s,scale .55s var(--pop),filter .45s}
+.offres .offre-c.vue{opacity:1;scale:1;filter:none}
+/* « Je n'ai pas de lien » : une simple phrase, élégante, bien lisible (plus de gros bouton) */
+.pied{margin-top:14px}
+.sans-lien{padding:8px 4px;font:400 15px Jost,sans-serif;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.sans-lien u{color:var(--noir);font-weight:500;text-decoration:underline;text-decoration-color:rgba(30,28,27,.4);text-decoration-thickness:1px;text-underline-offset:5px;transition:text-decoration-color .2s}
+.sans-lien svg{width:14px;height:14px;color:var(--noir);transition:transform .25s var(--ressort)}
+.sans-lien:hover u{text-decoration-color:var(--noir)}.sans-lien:hover svg{transform:translateX(3px)}
+.sans-lien:active{opacity:.7}
+
+/* ---------- chargement B : le relevé ---------- */
+.charge-b #s2 .milieu{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;max-width:520px;margin:0 auto}
+.charge-b #s2 .etape{text-align:center}
+.nom{margin:0;min-height:1.05em;text-align:center;font:500 clamp(34px,9.4vw,40px)/1.02 "Cormorant Garamond",serif;letter-spacing:-.015em;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .5s,transform .6s var(--doux-out),filter .6s}
+.k-salon .nom{opacity:1;transform:none;filter:none}
+.ville{margin:6px 0 0;text-align:center;font:400 14px Jost,sans-serif;color:var(--doux);opacity:0;transition:opacity .5s .2s}
+.k-salon .ville{opacity:1}
+.vign{display:flex;justify-content:center;gap:6px;margin:20px 0 6px;height:var(--vh,62px)}
+.vign img{width:calc(var(--vh,62px)*.8);height:var(--vh,62px);object-fit:cover;border-radius:10px;opacity:0;transform:translateY(12px) scale(.9);transition:opacity .4s,transform .55s var(--pop);transition-delay:calc(var(--i)*.12s)}
+.k-photos .vign img{opacity:1;transform:none}
+.releve{margin:22px 0 0;padding:0;list-style:none;border-top:1px solid var(--ligne)}
+.releve li{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--ligne);font:400 15.5px Jost,sans-serif;color:var(--doux);transition:color .3s}
+.releve li small{flex:1;text-align:right;font:400 15px Jost,sans-serif;color:var(--noir);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .45s var(--doux-out)}
+.releve li.cours,.releve li.ok{color:var(--noir)}
+.releve li.ok small{opacity:1;transform:none}
+.charge-b #s2 .bas{flex:none;display:flex;flex-direction:column;gap:14px;width:100%;max-width:520px;margin:0 auto}
+.barre{height:3px;border-radius:2px;background:#E7E0D8;overflow:hidden}
+.barre i{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--noir);transition:width .6s var(--doux-out)}
+.pret .barre{opacity:0;transition:opacity .4s}
+.charge-b .eclat{left:50%;top:24%}
+
+/* ---------- chargement A : son site se construit ---------- */
+.charge-a #s2 .titre{text-align:center;margin:18px 0 0;font:500 30px/1.05 "Cormorant Garamond",serif}
+.charge-a #s2 .scene{position:relative;flex:1;--lt:150px;width:100%;max-width:520px;margin:0 auto}
+.vu{display:none}
+.tel{position:absolute;left:50%;top:50%;width:var(--lt);aspect-ratio:9/19.5;transform:translate(-50%,-50%);border-radius:calc(var(--lt)*.17);background:var(--noir);padding:calc(var(--lt)*.027);box-shadow:0 26px 40px -22px rgba(30,28,27,.55);z-index:1;transition:box-shadow .4s}
+.tel.brille{box-shadow:0 0 0 5px rgba(242,167,191,.5),0 0 50px 10px rgba(242,167,191,.6)}
+.ecr{position:relative;width:100%;height:100%;border-radius:calc(var(--lt)*.14);overflow:hidden;background:#EFEAE4;font-size:7.5px}
+.mini{position:absolute;inset:0;background:#FBF9F6;display:flex;flex-direction:column}
+.mini .hero{position:relative;height:46%;overflow:hidden;background:#E7E0D8}
+.mini .hero img{width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity .6s,transform 1.2s var(--doux-out)}
+.mini .hero::after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.45))}
+.mini .hero p{position:absolute;left:6%;right:6%;bottom:5%;margin:0;z-index:1;color:#fff;font:500 2em/1 "Cormorant Garamond",serif;opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s var(--doux-out)}
+.mini .lg{padding:5% 6%;display:flex;flex-direction:column;gap:.8em}
+.mini .ligne{height:.95em;border-radius:4px;background:#E7E0D8;position:relative;overflow:hidden}
+.mini .ligne span{position:absolute;inset:0;display:flex;align-items:center;font:400 1em Jost,sans-serif;color:var(--noir);opacity:0;transition:opacity .4s;background:#FBF9F6;white-space:nowrap}
+.mini .gal{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.mini .gal img,.mini .gal i{aspect-ratio:1;width:100%;object-fit:cover;border-radius:4px;background:#E7E0D8}
+.mini .gal i{position:absolute;width:calc((100% - 6px)/3)}
+.mini .gal img{position:relative;z-index:1;opacity:0;transform:scale(.85);transition:opacity .35s,transform .45s var(--pop);transition-delay:calc(var(--i)*.1s)}
+.k-salon .mini .hero p,.k-photos .mini .hero img,.k-photos .mini .gal img{opacity:1;transform:none}
+.k-avis .mini .l-avis span,.k-horaires .mini .l-hor span,.k-prix .mini .l-prix span{opacity:1}
+.k-avis .mini .l-avis,.k-horaires .mini .l-hor,.k-prix .mini .l-prix{height:auto;min-height:1.2em;overflow:visible}
+.etq{position:absolute;display:flex;align-items:center;gap:7px;padding:7px 12px 7px 8px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 8px 20px -12px rgba(30,28,27,.45);font:400 13px Jost,sans-serif;white-space:nowrap;opacity:0;transform:scale(.6);transition:opacity .25s,transform .45s var(--pop);z-index:2}
+.etq .c{width:18px;height:18px;border-radius:50%;background:var(--noir);display:grid;place-items:center;flex:none}
+.etq .c svg{width:9px;height:9px}
+.etq b{font-weight:500}
+.etq.cours,.etq.ok{opacity:1;transform:none}
+.etq.cours .c{background:none;border:1.5px solid var(--greige);border-top-color:var(--noir);animation:tourne .8s linear infinite}
+.etq.cours .c svg{opacity:0}
+.charge-a [data-k="salon"]{left:0;top:12%}.charge-a [data-k="photos"]{right:0;top:27%}.charge-a [data-k="avis"]{left:0;top:48%}.charge-a [data-k="horaires"]{right:0;top:64%}.charge-a [data-k="prix"]{left:4%;top:80%}
+.charge-a #s2 .bas{display:flex;flex-direction:column;gap:12px;width:100%;max-width:420px;margin:0 auto}
+.charge-a .eclat{left:50%;top:46%}
+
+/* ---------- la fin, commune à B, C et D ---------- */
+.fin{text-align:center;visibility:hidden;opacity:0}
+.pret .fin{visibility:visible;animation:finIn .6s var(--doux-out) both}
+@keyframes finIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.fin-t{margin:0;font:500 34px/1.05 "Cormorant Garamond",serif;letter-spacing:-.01em}
+.fin-st{display:inline-block;margin-left:.15em;font-size:.5em;vertical-align:.7em;color:#E99AB6;animation:scint 2.4s ease-in-out infinite}
+.fin-s{margin:6px 0 0;font:400 15px Jost,sans-serif;color:var(--muted)}
+
+.pret #phrase{visibility:hidden}
+/* la phrase d'attente et la fin occupent LA MÊME place : rien ne bouge quand c'est prêt */
+.charge-b #s2 .bas,.charge-c #s2 .bas,.charge-d #s2 .bas{display:grid!important;grid-template-columns:minmax(0,1fr)}
+#s2 .bas .barre{grid-row:1;grid-column:1}#s2 .bas #phrase,#s2 .bas .fin{grid-row:2;grid-column:1;align-self:end}#s2 .bas .go{grid-row:3;grid-column:1}
+.pret .barre{display:none}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px}
+.cta svg{width:16px;height:16px;transition:transform .25s var(--doux-out)}
+.cta:hover svg{transform:translateX(4px)}
+body.pret.attend .cta{animation:appel 2.6s ease-in-out 1s infinite}
+@keyframes appel{0%,100%{box-shadow:0 0 0 0 rgba(30,28,27,.0)}50%{box-shadow:0 0 0 7px rgba(233,154,182,.28)}}
+.charge-b #s2 .bas,.charge-c #s2 .bas,.charge-d #s2 .bas{flex:none;display:flex;flex-direction:column;gap:14px;width:100%;max-width:520px;margin:0 auto}
+
+/* ---------- chargement C : l'anneau ---------- */
+.charge-c #s2 .milieu,.charge-d #s2 .milieu{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%}
+.charge-c #s2 .etape,.charge-d #s2 .etape{text-align:center}
+.anneau{position:relative;width:var(--ta,220px);aspect-ratio:1;margin-top:8px}
+.cercle{width:100%;height:100%;transform:rotate(-90deg)}
+.a-fond{fill:none;stroke:#E7E0D8;stroke-width:2}
+.a-prog{fill:none;stroke:var(--noir);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));transition:stroke-dashoffset .9s var(--doux-out),stroke .4s}
+.pret .a-prog{stroke:#D97A9C}
+.a-centre{position:absolute;inset:14%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity .3s}
+.a-lab{margin:0;font:400 14px Jost,sans-serif;color:var(--doux)}
+.a-val{margin:6px 0 0;font:500 26px/1.1 "Cormorant Garamond",serif;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .45s var(--doux-out)}
+.a-val.on{opacity:1;transform:none}
+.a-coche{position:absolute;left:50%;top:50%;width:34%;transform:translate(-50%,-50%) scale(.5);opacity:0;fill:none;stroke:#D97A9C;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s,transform .5s var(--pop)}
+.pret .a-centre{opacity:0}
+.pret .a-coche{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.points{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 14px;margin:22px 0 0;padding:0;list-style:none}
+.points li{display:flex;align-items:center;gap:6px;font:400 13.5px Jost,sans-serif;color:var(--doux);transition:color .3s}
+.points li .r{width:18px!important;height:18px!important}
+.points li .r::after{left:5.5px!important;top:2.5px!important;width:4px!important;height:8px!important}
+.points li.cours,.points li.ok{color:var(--noir)}
+.charge-c .eclat{left:50%;top:42%}
+
+/* ---------- chargement D : la phrase qui s'écrit ---------- */
+.phrase-d{width:100%;max-width:20em;margin:14px auto 0;text-align:center;font:500 31px/1.28 "Cormorant Garamond",serif;letter-spacing:-.01em;min-height:6.5em}
+.phrase-d .fr{display:inline}
+.phrase-d .fr .t:empty{display:none}
+.phrase-d .fr.cours::after{content:"";display:inline-block;width:3.2em;height:.5em;border-radius:.25em;margin:0 .15em;vertical-align:.05em;background:linear-gradient(100deg,#E7E0D8 30%,#F3EEE8 50%,#E7E0D8 70%);background-size:300% 100%;animation:miroite 1.2s linear infinite}
+@keyframes miroite{to{background-position:-150% 0}}
+.phrase-d .t{background:linear-gradient(transparent 62%,rgba(233,154,182,.35) 62%) no-repeat 0 0/0% 100%;animation:surligne .9s var(--doux-out) .1s forwards,apparait .5s both}
+@keyframes surligne{to{background-size:100% 100%}}
+@keyframes apparait{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:none}}
+.phrase-d em{font-style:italic}
+.charge-d .eclat{left:50%;top:40%}
+
+/* ---------- 16/11 soir (Marie : « le bouton est trop bas ») : B2 et C2, le bouton remonte au centre ---------- */
+.charge-b #s2 .milieu,.charge-c #s2 .milieu{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:520px;margin:0 auto}
+.cellule{display:grid;width:100%;margin-top:22px}
+.cellule>*{grid-area:1/1;align-self:center}
+.cellule #phrase{margin:0}
+.milieu .cta{width:auto;min-width:min(100%,300px);padding:0 30px;margin-top:16px;opacity:0;transform:translateY(10px) scale(.96);pointer-events:none;transition:opacity .4s,transform .5s var(--pop)}
+body.pret.attend .milieu .cta{opacity:1;transform:none;pointer-events:auto}
+.pret .etape{visibility:hidden}
+.charge-b .releve{width:100%}
+/* C2 : l'étoile qui tourne au bout du trait, ce qu'on a trouvé en pastilles */
+.comete{position:absolute;inset:0;transform:rotate(calc(var(--p,0)*360deg));transition:transform .9s var(--doux-out),opacity .3s;pointer-events:none}
+.comete i{position:absolute;left:50%;top:4.2%;transform:translate(-50%,-50%);font-style:normal;font-size:18px;color:#fff;text-shadow:0 0 6px rgba(240,130,175,1),0 0 16px rgba(255,170,205,.9)}
+.pret .comete{opacity:0}
+.charge-c .points{gap:7px;margin-top:20px}
+.charge-c .points li{height:34px;padding:0 12px 0 7px;border-radius:999px;background:rgba(255,255,255,.75);border:1px solid var(--ligne);gap:7px}
+.charge-c .points li b{font-weight:500}
+.charge-c .points li b:empty{display:none}
+.charge-c .points li.ok .l{display:none}
+.charge-c .a-prog{stroke-width:3}
+.pret .anneau{animation:battement .6s var(--pop) 1}
+@keyframes battement{50%{transform:scale(1.04)}}
+@media (max-height:740px){.charge-c .anneau{--ta:150px}.cellule{margin-top:14px}.charge-c .points{margin-top:14px}.charge-c .points li{height:30px;font-size:13px}.nom{font-size:32px}.charge-b .releve li{padding:8px 2px}}
+
+/* ---------- 16/11 soir : la fin qui donne envie (« ah ouais, c'est stylé ») ----------
+   1) son nom passe d'une VRAIE écriture de Personnaliser à l'autre ; 2) sous le bouton, ce qu'il y a derrière ;
+   3) (?fin=2) les charms sont attirés vers le bouton, puis repartent flotter. */
+.fin-t2{margin:0;font:400 14px Jost,sans-serif;color:var(--muted)}
+.fin-t2 .fin-st{margin:0;vertical-align:.1em;font-size:12px}
+.charge-c .fin{width:100%;min-width:0}.charge-c .cellule{grid-template-columns:minmax(0,1fr)}
+.vitrine{width:100%;min-width:0;position:relative;height:var(--hv,74px);margin:4px 0 2px;display:flex;align-items:center;justify-content:center;overflow:visible}
+#nomStyle{display:inline-block;white-space:nowrap;font-size:var(--fv,42px);line-height:1.1;transform-origin:center;transition:opacity .35s,filter .35s,transform .45s var(--doux-out)}
+#nomStyle.sort{opacity:0;filter:blur(6px)}
+.fin-s{margin-top:2px}
+.chiffres{margin:10px 0 0;text-align:center;font:400 13px Jost,sans-serif;color:var(--doux);letter-spacing:.02em;opacity:0;transition:opacity .4s .25s}
+body.pret.attend .chiffres{opacity:1}
+.charge-c .cellule{margin-top:16px}
+/* quand c'est prêt, l'anneau rétrécit en douceur : tout remonte, le bouton aussi */
+.charge-c .anneau{transition:width .7s var(--doux-out)}
+.mesure-fin .anneau{transition:none!important}
+.pret .a-coche{width:40%}
+@media (max-height:740px){.vitrine{--hv:56px}#nomStyle{--fv:32px}.chiffres{font-size:12px;margin-top:8px}}
+@media (min-width:900px){.vitrine{--hv:104px}#nomStyle{--fv:64px}.fin-t2{font-size:16px}.chiffres{font-size:14.5px}}
+@media (min-width:900px) and (max-height:800px){.vitrine{--hv:80px}#nomStyle{--fv:50px}}
+
+@media (max-height:740px){.ecr{font-size:6.4px}.anneau{--ta:170px}.a-val{font-size:22px}.phrase-d{font-size:27px}.fin-t{font-size:30px}h1{font-size:40px}.sous{font-size:15px;margin-top:10px}.ou{margin-top:14px}.releve li{padding:10px 2px}.vign{margin-top:14px}.charge-a #s2 .scene{--lt:128px}}
+
+/* 17/11 (Marie, 2e passage) : les 5 infos deviennent des cartes flottantes (comme « 1er mois offert ») ;
+   elles apparaissent une à une quand l'info est trouvée. Téléphone : sous l'anneau, en 2 colonnes. Ordinateur : à gauche et à droite de l'anneau. */
+.charge-c .anneau{margin-bottom:198px}
+.charge-c .points.cartes{position:absolute;left:50%;top:calc(100% + 18px);width:min(350px,calc(100vw - 32px));translate:-50% 0;margin:0;padding:0;list-style:none;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px 10px;justify-items:center}
+.charge-c .points.cartes li{all:unset;display:block;opacity:0;scale:.6;transition:opacity .35s,scale .5s var(--pop);rotate:var(--rz,0deg)}
+.charge-c .points.cartes li.ok{opacity:1;scale:1}
+.charge-c .points.cartes li[data-k="salon"]{grid-column:1/-1}
+.charge-c .points.cartes li[data-k="salon"] b{max-width:250px}
+.charge-c .points.cartes li:nth-child(1){--rz:-2deg}.charge-c .points.cartes li:nth-child(2){--rz:1.8deg}.charge-c .points.cartes li:nth-child(3){--rz:1.2deg}.charge-c .points.cartes li:nth-child(4){--rz:-1.6deg}.charge-c .points.cartes li:nth-child(5){--rz:-1deg}
+.carte{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:16px;background:linear-gradient(180deg,#FFFFFF,#FFF8F9);text-align:left;white-space:nowrap;
+  font:400 11.5px/1.25 Jost,sans-serif;color:var(--muted);animation:bobc 7s ease-in-out infinite;
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(176,53,98,.07),0 2px 4px rgba(80,30,50,.05),0 12px 22px -10px rgba(80,30,50,.18),0 26px 44px -24px rgba(176,53,98,.30)}
+.carte b{display:block;color:var(--noir);font-weight:600;font-size:13.5px;letter-spacing:-.005em;max-width:112px;overflow:hidden;text-overflow:ellipsis}
+.carte .ic{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 10px -4px rgba(176,53,98,.35)}
+.carte .ic svg{width:16px;height:16px}
+li:nth-child(2) .carte{animation-delay:-2s}li:nth-child(3) .carte{animation-delay:-4s}li:nth-child(4) .carte{animation-delay:-1s}li:nth-child(5) .carte{animation-delay:-5s}
+@keyframes bobc{50%{transform:translateY(-4px)}}
+@media (max-height:740px){.charge-c .anneau{margin-bottom:186px}.charge-c .points.cartes{gap:8px;top:calc(100% + 14px)}.carte{padding:7px 12px 7px 7px}}
+/* le tremblement : l'anneau tremble avec les charms juste avant le « boum » */
+.seisme .anneau .cercle,.seisme .anneau .a-coche{animation:secoue .07s linear infinite}
+@keyframes secoue{0%{translate:1.5px -1px}25%{translate:-1.5px 1.5px}50%{translate:1px 1.5px}75%{translate:-1px -1.5px}100%{translate:1.5px -1px}}
+/* 17/11 (Marie) : plus de « Votre salon est créé » + nom qui change d'écriture, plus de bouton « Personnaliser mon site » :
+   à la fin, les charms s'engouffrent dans l'anneau et la page Personnaliser s'ouvre en cercle depuis l'anneau. */
+.charge-c .fin,.charge-c #continuer,.charge-c .chiffres{display:none!important}
+.bam .anneau{animation:bam .45s var(--pop) 1}
+.tourbillon .anneau .a-coche{transition:opacity .6s,transform .6s}.tourbillon .anneau{filter:drop-shadow(0 0 18px rgba(240,150,190,.45));transition:filter .8s}
+@keyframes bam{40%{transform:scale(1.18)}100%{transform:scale(.9)}}
+.portail{position:absolute;inset:0;z-index:80;visibility:hidden;clip-path:circle(0 at 50% 50%);background:var(--fond)}
+.portail.on{visibility:visible}
+.portail iframe{width:100%;height:100%;border:0;display:block;background:var(--fond)}
+.revoir{position:absolute;left:8px;top:50%;translate:0 -50%;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(30,28,27,.78);color:#fff;font:400 17px/1 Jost,sans-serif;opacity:0;transition:opacity .4s .6s;backdrop-filter:blur(6px)}
+.ouvert .revoir{opacity:1}
+.flash{position:absolute;z-index:79;width:220px;height:220px;border-radius:50%;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,#fff 0,rgba(255,236,244,.95) 30%,rgba(240,150,190,.55) 55%,rgba(240,150,190,0) 72%)}
+/* ---------- VRAI ORDINATEUR : toute la page, plus de carré ---------- */
+@media (min-width:900px){
+  body{background:var(--fond)}
+  .cadre{display:block;padding:0;height:100vh}
+  .logo-page,.cote,.fond-ordi{display:none!important}
+  .cadre .app{width:100%;height:100vh;border-radius:0;box-shadow:none;background:radial-gradient(70% 80% at 50% 48%,#FBF9F6 0,var(--fond) 70%)}
+  .ecran{padding:30px clamp(40px,4vw,64px) 30px}
+  .tete{display:flex;align-items:center;justify-content:space-between}
+  .tete .logo{align-self:auto;width:132px}
+  /* 17/11 (Marie) : plus de ronds numérotés, juste les mots ; un petit point sépare les étapes */
+  .pas-h{display:flex;align-items:center;margin:0;padding:0;list-style:none}
+  .pas-h li{display:flex;align-items:center;font:400 14.5px Jost,sans-serif;color:var(--doux);white-space:nowrap}
+  .pas-h li+li::before{content:"·";margin:0 16px;color:var(--greige);font-weight:400}
+  .pas-h li.on{color:var(--noir);font-weight:500}
+  .etape{display:none}
+  #s1{justify-content:flex-start}
+  #s1 .haut{flex:none;margin-top:auto;padding:0}
+  h1{font-size:clamp(64px,6vw,88px);line-height:.95}
+  .sous{margin-top:20px;max-width:44ch;font-size:18.5px}
+  .ou{margin-top:30px;font-size:14px}
+  .sources{max-width:none;gap:9px}
+  .sources button{height:44px;padding:0 18px;font-size:15px}
+  .sources button:hover{border-color:var(--noir);opacity:1}
+  #s1 .bas{width:100%;max-width:640px;margin:34px auto auto}
+  .ligne-lien{flex-direction:row;gap:10px}
+  .ligne-lien .lien{flex:1}
+  .champ{height:64px;font-size:17px}
+  .ligne-lien .go{width:auto;height:64px;padding:0 34px;flex:none}
+  .rassure{font-size:14px;margin-top:14px}
+  /* ORDINATEUR : les 5 cartes à gauche et à droite de l'anneau, en zigzag (gauche, droite, gauche, droite, gauche) */
+  .charge-c .anneau{margin-bottom:0}
+  .charge-c .points.cartes{position:absolute;inset:0;width:auto;translate:none;display:block}
+  .charge-c .points.cartes li{position:absolute;transform:translateY(-50%)}
+  .charge-c .points.cartes li[data-k="salon"]{right:calc(100% + 46px);top:calc(50% - 108px)}
+  .charge-c .points.cartes li[data-k="photos"]{left:calc(100% + 46px);top:calc(50% - 56px)}
+  .charge-c .points.cartes li[data-k="avis"]{right:calc(100% + 92px);top:50%}
+  .charge-c .points.cartes li[data-k="horaires"]{left:calc(100% + 92px);top:calc(50% + 56px)}
+  .charge-c .points.cartes li[data-k="prix"]{right:calc(100% + 46px);top:calc(50% + 108px)}
+  .charge-c .points.cartes li[data-k="salon"] b{max-width:none}
+  .carte{padding:12px 20px 12px 12px;font-size:13.5px;gap:12px}.carte b{font-size:15.5px;max-width:none}.carte .ic{width:40px;height:40px;border-radius:12px}.carte .ic svg{width:19px;height:19px}
+  /* ORDINATEUR : les 3 cartes posées sur les côtés, comme « votresalon.fr » / « Liste d'attente » sur l'accueil */
+  #s1 .bas{position:static}#s1 .bas>*{position:relative;z-index:1}#s1 .bas>.offres{position:static;margin:0}
+  #s1{--bx:max(28px,calc((100vw - 1180px) * .27 + 26px))}
+  .offres .offre-c{position:absolute;z-index:2;opacity:1;scale:1;filter:none;padding:12px 20px 12px 12px;font-size:13.5px;cursor:default;transition:rotate .35s cubic-bezier(.2,.8,.2,1)}
+  .offre-c b{font-size:15px}.offre-c .ic{width:40px;height:40px;border-radius:12px}
+  .offres .o1{left:var(--bx);top:27%;rotate:-2deg;animation-delay:-1s}
+  .offres .o2{right:var(--bx);top:41%;rotate:2deg;animation-delay:-4s}
+  .offres .o3{left:calc(var(--bx) + 34px);top:63%;rotate:1.5deg;animation-delay:-6s}
+  .offres .offre-c:hover{rotate:0deg;animation-play-state:paused}
+  .pied{margin-top:16px}.sans-lien{font-size:16px}
+  /* la feuille d'aide devient une fenêtre au milieu */
+  .feuille{left:50%;right:auto;width:560px;margin-left:-280px;bottom:50%;border-radius:28px;padding:22px 26px 24px;transform:translateY(calc(50% + 100vh))}
+  .app.aide .feuille{transform:translateY(50%)}
+  .poignee{display:none}
+  .mm{width:140px}
+  /* chargement */
+  .charge-a #s2 .titre{font-size:52px;margin-top:6px}
+  .charge-a #s2 .scene{--lt:220px;max-width:720px}.ecr{font-size:11px}
+  .etq{font-size:15px;padding:10px 16px 10px 11px}.etq .c{width:22px;height:22px}
+  .charge-a [data-k="salon"]{left:6%}.charge-a [data-k="photos"]{right:6%}.charge-a [data-k="avis"]{left:4%}.charge-a [data-k="horaires"]{right:4%}.charge-a [data-k="prix"]{left:10%}
+  .vu{display:block;margin:0;text-align:center;font:400 15px Jost,sans-serif;color:var(--muted)}
+  .vu b{font-weight:500;color:var(--noir)}
+  #phrase{font-size:18px}
+  .charge-b #s2 .milieu{max-width:600px}
+  .nom{font-size:64px}
+  .vign{--vh:96px;gap:10px;margin-top:26px}
+  .releve li{font-size:17px;padding:15px 2px}.releve li small{font-size:17px}
+  .charge-b #s2 .bas,.charge-c #s2 .bas,.charge-d #s2 .bas{max-width:440px}
+  .anneau{--ta:260px}.a-lab{font-size:16px}.a-val{font-size:34px}
+  .charge-b #s2 .milieu,.charge-c #s2 .milieu{max-width:720px}.charge-b .releve{max-width:560px}
+  .comete i{font-size:22px}.charge-c .points li{height:40px;font-size:15px;padding:0 15px 0 9px}
+  .milieu .cta{min-width:340px;height:62px}
+  .points{gap:8px 24px;margin-top:30px}.points li{font-size:15.5px}
+  .phrase-d{font-size:54px;max-width:17em;line-height:1.2}
+  .fin-t{font-size:52px}.fin-s{font-size:17px}
+  .cta{height:62px;font-size:14px}
+}
+@media (min-width:900px) and (max-height:800px){
+  .ecran{padding-top:22px;padding-bottom:22px}
+  h1{font-size:clamp(56px,5vw,72px)}.sous{margin-top:14px;font-size:17px}.ou{margin-top:20px}#s1 .bas{margin-top:24px}
+  .nom{font-size:50px}.vign{--vh:74px;margin-top:16px}.releve{margin-top:14px}.releve li{padding:10px 2px}
+  .charge-a #s2 .titre{font-size:44px}
+  .charge-a #s2 .scene{--lt:180px}.ecr{font-size:9px}
+  .anneau{--ta:190px}.a-val{font-size:28px}.fin-t{font-size:40px}.cellule{margin-top:14px}.milieu .cta{margin-top:12px}.phrase-d{font-size:44px}.fin-t{font-size:42px}
+}
+
+/* production : le chargement est toujours la version C */
