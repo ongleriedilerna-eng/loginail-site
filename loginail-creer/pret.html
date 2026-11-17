@@ -2606,6 +2606,10 @@ function entete(k,t,lang){
   if(k==="fleurs")return `<div class="${c}" data-s="accueil"><div class="pol">${ph(D.hero2||D.hero)}<span>Bienvenue</span></div>${txt()}</div>`;
   return "";
 }
+</script>
+<!-- 18/11 (Produit, D21/D22/D31) : les nouvelles en-têtes animées (copiées de idees/entetes-nouvelles/), branchées sur entete() -->
+<script src="entetes/entetes-plus.js?v=1811"></script><script src="entetes/entetes-plus2.js?v=1811"></script><script src="entetes/entetes-plus3.js?v=1811"></script><script src="entetes/entetes-plus4.js?v=1811"></script><script src="entetes/entetes-plus5.js?v=1811"></script><script src="entetes/entetes-plus6.js?v=1811"></script><script src="entetes/entetes-plus7.js?v=1811"></script><script src="entetes/entetes-plus8.js?v=1811"></script><script src="entetes/entetes-plus9.js?v=1811"></script><script src="entetes/entetes-plus10.js?v=1811"></script>
+<script>
 /* 14/11 (Marie) : les traits, rayures, rideaux… de l'en-tête prennent la couleur du fond qu'elle a choisi */
 function accDuFond(){try{const n=window.__pzEtat&&window.__pzEtat().fond,f=n&&window.FONDS100&&FONDS100.f.find(x=>x[0]===n);if(!f)return "";
   const rgb=v=>{const h=(String(v).match(/#([0-9a-f]{6})/i)||[])[1];if(h)return[0,2,4].map(k=>parseInt(h.substr(k,2),16));const m=String(v).match(/\d+(\.\d+)?/g);return m&&m.length>=3?m.slice(0,3).map(Number):null};
@@ -3271,7 +3275,7 @@ window.poseCharms=(liste)=>{document.querySelectorAll(".ecran").forEach(ecran=>{
   const P=[[.80,.10],[.04,.24],[.82,.40],[.03,.58],[.80,.74],[.40,.05],[.05,.88],[.62,.90],[.78,.57],[.30,.70],[.55,.30]];
   const items=liste.map((n,k)=>{const el=document.createElement("div");el.className="charm"+(CH_BRILLE[n]?" brille":"");el.dataset.n=n;el.innerHTML=`<div class="ch-corps" style="animation-delay:${-k*1.1}s">${chContenu(n,"v"+k)}</div>`;
     const om=document.createElement("div");om.className="ch-ombre";om.innerHTML=`<i style="animation-delay:${-k*1.1}s"></i>`;couche.append(om,el);
-    let x,y;if(k===0&&h1){const r=h1.getBoundingClientRect(),rr=document.createRange();rr.selectNodeContents(h1);const t=[...rr.getClientRects()].reduce((m,q)=>q.width?{l:Math.min(m.l,q.left),r:Math.max(m.r,q.right),t:Math.min(m.t,q.top)}:m,{l:1e9,r:-1e9,t:1e9});const R=t.r>t.l?t:{r:r.right,t:r.top};x=R.r-dr.left-14;y=R.t-dr.top+st0-38}else{const p=P[(k-1)%P.length];x=W*p[0];y=st0+H*p[1]}
+    let x,y;if(k===0&&h1){const r=h1.getBoundingClientRect(),rr=document.createRange();rr.selectNodeContents(h1);const t=[...rr.getClientRects()].reduce((m,q)=>q.width?{l:Math.min(m.l,q.left),r:Math.max(m.r,q.right),t:Math.min(m.t,q.top)}:m,{l:1e9,r:-1e9,t:1e9});const R=t.r>t.l?t:{r:r.right,t:r.top};x=R.r-dr.left-14;y=R.t-dr.top+st0-38}else{const p=P[(k-1+P.length)%P.length];/* 18/11 : sans nom visible, k=0 lisait P[-1] et plantait */x=W*p[0];y=st0+H*p[1]}
     {const cl=(new URLSearchParams(location.search).get("chpos")||(typeof BR!=="undefined"&&BR&&BR.chpos)||"").split("_");const cn=cl.find(z=>z.split("~")[0]===n);const cp=cn?cn.split("~")[1]:(cl.some(z=>z.includes("~"))?"":cl[k]);if(cp&&/^\d+(\.\d+)?-\d+(\.\d+)?$/.test(cp)){const [px,py]=cp.split("-").map(Number);x=W*px/100;y=st0+H*py/100}}   /* 07/11 (Marie) : la prothésiste place elle-même ses charms */
     y=Math.max(st0+8,y);/* 07/11 (Marie) : le 1er charm collé au nom visible, jamais hors de l’écran */
     x=Math.max(4,Math.min(W-S-4,x));const c={n,el,om,x,y,vx:0,vy:0,mode:"haut",rot:(k%2?10:-10),vr:0,tenu:false,k};attrapeV5(c,def,couche,S);return c});
@@ -3396,6 +3400,7 @@ document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){
 <script src="../loginail-site/options-site.js?v=2"></script><script src="resa-simu.js"></script><script src="legal-site.js"></script><script src="menu-coffin.js?v=3"></script><script src="menu-site.js?v=3"></script>
 <script src="fonds-couleur.js?v=1511"></script>
 <script src="hero-format.js?v=63"></script>
+<script src="couleur-libre.js?v=1811"></script>
 <script>
 /* 09/11 (Marie) : les charms posés avec le présentoir (BR.stickers : n, x en % de la largeur, y en px, taille s, rotation r, largeur w du téléphone) ; ils flottent doucement */
 (function(){try{if(typeof BR==="undefined"||!BR||!Array.isArray(BR.stickers)||!BR.stickers.length)return;
@@ -3404,7 +3409,7 @@ document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){
   const halo=()=>{try{const f=BR.fond&&window.FONDS100&&(FONDS100.f||[]).find(x=>x[0]===BR.fond);let c=(BR.fond&&window.FOND_COUL&&FOND_COUL[BR.fond])||(f&&f[4]);if(!c){const b=document.querySelector(".ecran .appel");c=b?getComputedStyle(b).backgroundColor:""}if(c&&!/rgba?\(0, 0, 0, 0\)|transparent/.test(c))document.documentElement.style.setProperty("--lgn-halo",c)}catch(e){}};
   const pose=()=>{const d=document.querySelector(".ecran .defile");if(!d)return setTimeout(pose,200);d.querySelectorAll(".lgn-st").forEach(x=>x.remove());const k=d.clientWidth/(BR.stickers[0].w||d.clientWidth||390);
     BR.stickers.forEach((c,i)=>{const eto=c.n==="__etoile",im=document.createElement(eto?"div":"img");im.className="lgn-st"+(eto?" lgn-eto":"");if(eto){im.innerHTML='<i style="animation-delay:'+(-(i*.37%1.6)).toFixed(2)+'s">✦</i>';if(/^#[0-9a-f]{6}$/i.test(c.c||"")){im.dataset.c=c.c;im.style.setProperty("--lgn-halo",c.c)}}else{im.alt="";im.src="../loginail-site/charms/"+String(c.n).replace(/[^a-z0-9-]/gi,"")+".png"}
-      im.style.left=c.x+"%";im.style.top=(c.y*k)+"px";im.style.width=im.style.height=(c.s*k)+"px";im.style.rotate=(c.r||0)+"deg";if(!eto)im.style.animationDelay=(-i*.45)+"s";d.appendChild(im)});halo();setTimeout(halo,1500);setTimeout(halo,4000)};
+      im.style.left=c.x+"%";im.style.top=(c.y*k)+"px";im.style.width=im.style.height=(c.s*k)+"px";im.style.rotate=(c.r||0)+"deg";if(c.f===-1)im.style.scale="-1 1";if(!eto)im.style.animationDelay=(-i*.45)+"s";d.appendChild(im)});halo();setTimeout(halo,1500);setTimeout(halo,4000)};
   setTimeout(pose,500)}catch(e){}})();
 /* ?activer : elle arrive des charms, on ouvre directement « Activer mon site » */
 if(new URLSearchParams(location.search).has("activer"))setTimeout(()=>{try{ouvreActiver()}catch(e){}},900);
