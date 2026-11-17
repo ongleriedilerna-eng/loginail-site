@@ -3156,7 +3156,7 @@ let heroOn=true;new IntersectionObserver(([e])=>{heroOn=e.isIntersecting;$('arc'
 if(!RM)requestAnimationFrame(tick);else items.forEach(it=>it.el.style.transform=`rotate(${it.r}deg)`);
 
 /* Bulle d'appel sur « Fonctionnalités » : apparaît une fois, disparaît dès qu'on scrolle */
-const tip=$('tip');if(tip&&!RM){setTimeout(()=>{if(scrollY<40)tip.classList.add('on')},2600);setTimeout(()=>tip.classList.remove('on'),7600)} /* visible 5 s, pas plus */
+const tip=$('tip');if(tip&&!RM){setTimeout(()=>{if(scrollY<40)tip.classList.add('on')},5000);setTimeout(()=>tip.classList.remove('on'),10000)} /* apparaît à 5 s, visible 5 s */
 addEventListener('scroll',()=>tip&&tip.classList.remove('on'),{passive:true});
 
 /* Mise au point : le reste du haut de page se floute autour de la carte ouverte */
