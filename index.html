@@ -1755,10 +1755,14 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np .np-float .np-ic svg{width:18px;height:18px}
 .np .np-float .np-av{flex:none;width:40px;height:40px;border-radius:50%;background:center/cover;box-shadow:0 0 0 2px #fff,0 4px 10px -4px rgba(80,30,50,.4)}
 .np .np-float .np-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);box-shadow:0 0 0 4px rgba(224,98,140,.18);margin-left:6px}
-.np .np-f1{left:2%;top:20%;rotate:-2deg;animation-delay:-1s}
-.np .np-f2{right:2%;top:17%;rotate:2deg;animation-delay:-3s}
-.np .np-f3{left:2%;top:60%;rotate:1.5deg;animation-delay:-5s}
-.np .np-f4{right:2%;top:58%;rotate:-1.5deg;animation-delay:-2s}
+/* Bulles calées sur les bords de l'écran (pas sur la colonne du milieu) : sur grand écran elles s'écartent du titre au lieu d'être cachées */
+.np .np-float{--bx:calc(50% - 50vw + max(26px,(100vw - 1180px)*.27))}
+@media (min-width:761px) and (max-width:1099px){.np .np-float{scale:.82}.np .np-float:active{scale:.8}
+.np .np-f1,.np .np-f3{transform-origin:0 50%}.np .np-f2,.np .np-f4{transform-origin:100% 50%}}
+.np .np-f1{left:var(--bx);top:20%;rotate:-2deg;animation-delay:-1s}
+.np .np-f2{right:calc(var(--bx) + 8px);top:17%;rotate:2deg;animation-delay:-3s}
+.np .np-f3{left:var(--bx);top:60%;rotate:1.5deg;animation-delay:-5s}
+.np .np-f4{right:calc(var(--bx) + 8px);top:58%;rotate:-1.5deg;animation-delay:-2s}
 @keyframes np-bob{50%{translate:0 -4px}}
 .np .np-float{cursor:pointer;outline:none;transition:rotate .35s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease}
 .np .np-float:active{scale:.98}
