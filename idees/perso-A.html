@@ -738,6 +738,28 @@ body.ep1 .choix:after{display:none!important}
 @keyframes respire{0%,100%{translate:0 0}50%{translate:0 3px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
 
+/* ===== VERSION « fonds en 2 colonnes » (17/11, Marie) : les catégories en petits carrés à gauche (on glisse), leurs fonds à droite ===== */
+.panneau[data-p="fond"]{justify-content:flex-start!important;overflow:hidden!important}
+.fondDeux{display:flex;gap:12px;flex:1;min-height:0;padding:0 18px 4px}
+.fondDeux .catBoxF{flex:none;width:86px;padding:0!important;min-height:0;display:flex}
+.fondDeux .catBoxF .catF{display:none!important}
+.fondDeux #catF{flex:1;display:flex;flex-direction:column;flex-wrap:nowrap!important;gap:8px;overflow-x:hidden;overflow-y:auto;padding:3px 3px 30px;scrollbar-width:none;overscroll-behavior:contain;
+  -webkit-mask:linear-gradient(#000 85%,transparent);mask:linear-gradient(#000 85%,transparent)}
+.fondDeux .catFond{flex-direction:column;justify-content:flex-start;align-items:center;width:80px;height:auto!important;padding:6px 4px 7px;border-radius:16px;gap:5px;
+  font-size:11px;line-height:1.15;text-align:center;background:transparent;transition:background .2s,color .2s,transform .15s}
+.fondDeux .catFond:active{transform:scale(.95)}
+.fondDeux .catFond .vgI{width:58px;height:58px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:box-shadow .2s}
+.fondDeux .catFond.on{background:var(--noir);color:#fff}
+.fondDeux .catFond.on .vgI{box-shadow:0 0 0 2px #fff}
+.fondDeux .catFav .vgI{font-size:22px}
+.fondDeux #lFond{flex:1;min-width:0;display:grid!important;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:9px;align-content:start;overflow-x:hidden!important;overflow-y:auto!important;
+  padding:3px 3px 30px!important;scrollbar-width:none;overscroll-behavior:contain}
+.fondDeux #lFond .vg{width:100%!important;height:100%!important;aspect-ratio:auto;content-visibility:visible!important;contain-intrinsic-size:none!important}
+.fondDeux #lFond.entre{animation:fdEntre .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes fdEntre{from{opacity:0;transform:translateY(8px)}}
+@media (max-width:899px){.fondDeux .catBoxF{width:72px}.fondDeux .catFond{width:68px;font-size:10.5px}.fondDeux .catFond .vgI{width:48px;height:48px;border-radius:12px}
+  .fondDeux #lFond{grid-template-columns:repeat(3,1fr);gap:8px}}
+
 /* 17/11 (Marie) : ses looks enregistrés ont une petite croix en haut : on la touche → « Supprimer ce look ? » → Oui */
 .look .supL{position:absolute;left:7px;top:7px;z-index:5;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.94);color:var(--noir);
   font-size:12px;line-height:1;box-shadow:0 3px 10px -4px rgba(0,0,0,.45);cursor:pointer;transition:transform .15s,background .15s}
@@ -749,7 +771,45 @@ body.ep1 .choix:after{display:none!important}
 .supBoite div{display:flex;gap:10px}.supBoite button{flex:1;height:44px;border-radius:999px;border:0;font:500 14px Jost,sans-serif;cursor:pointer}
 .supBoite .non{background:var(--fond);color:var(--noir)}.supBoite .oui{background:#B5475E;color:#fff}
 @keyframes supF{from{opacity:0}}@keyframes supB{from{opacity:0;transform:scale(.92) translateY(8px)}}
+
+/* 17/11 v2 (Marie : « on ne voit pas qu'on peut descendre » + « ça se fond avec les fonds ») :
+   les catégories sont dans un RAIL à part (bande blanche arrondie), en RONDS (les fonds restent carrés),
+   une flèche ⌄ en bas qui sautille pour dire « il y en a d'autres », et la suivante est coupée à moitié */
+.fondDeux .catBoxF{width:96px;position:relative;background:#fff;border-radius:22px;box-shadow:0 10px 26px -18px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.04)}
+.fondDeux #catF{padding:8px 4px 46px;gap:4px;-webkit-mask:linear-gradient(#000 calc(100% - 60px),transparent calc(100% - 8px));mask:linear-gradient(#000 calc(100% - 60px),transparent calc(100% - 8px))}
+.fondDeux .catFond{width:88px;padding:6px 2px 7px;border-radius:16px;background:transparent!important;color:var(--muted)}
+.fondDeux .catFond .vgI{width:54px;height:54px;border-radius:50%!important;box-shadow:0 0 0 1px rgba(0,0,0,.08);transition:box-shadow .2s,transform .2s}
+.fondDeux .catFond:hover:not(.on) .vgI{transform:scale(1.05)}
+.fondDeux .catFond.on{color:var(--noir)!important;font-weight:500}
+.fondDeux .catFond.on .vgI{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.fondDeux .catFond.on:after{content:"";position:absolute;right:-9px;top:33px;width:12px;height:12px;background:#fff;rotate:45deg;border-radius:2px;box-shadow:2px -2px 4px -2px rgba(0,0,0,.12)}
+.fondDeux .catFond{position:relative}
+.fondDeux .catFond span{max-width:84px}
+.fdFleche{position:absolute;left:50%;bottom:7px;translate:-50% 0;z-index:3;width:34px;height:34px;border-radius:50%;border:0;background:var(--noir);color:#fff;font:300 18px/1 Jost,sans-serif;
+  display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 14px -6px rgba(0,0,0,.5);transition:opacity .25s,rotate .3s,background .2s;animation:fdSaut 1.4s ease-in-out 3}
+.fdFleche:hover{background:#000}.fdFleche.haut{rotate:180deg;animation:none}
+@keyframes fdSaut{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.fdTitre{font:500 10px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--doux);text-align:center;padding:9px 0 0}
+.fondDeux .catBoxF{flex-direction:column;overflow:hidden}.fondDeux #catF{min-height:0}.fondDeux .catFond.on:after{display:none}
+@media (max-width:899px){.fondDeux .catBoxF{width:80px}.fondDeux .catFond{width:74px}.fondDeux .catFond .vgI{width:44px;height:44px}.fondDeux .catFond.on:after{top:27px;right:-5px}
+  .fdFleche{width:30px;height:30px;font-size:16px}}
+
+/* 17/11 v3 (Marie : « le bouton noir est dégueulasse ») : juste une petite flèche, bien visible, qui respire doucement */
+.fdFleche{width:44px!important;height:30px!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:var(--noir)!important;rotate:0deg!important;
+  animation:fdRespire 1.8s ease-in-out infinite!important;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff)}
+.fdFleche svg{width:24px;height:24px;transition:transform .3s}
+.fdFleche.haut svg{transform:rotate(180deg)}
+.fdFleche.haut{animation:none!important}
+@keyframes fdRespire{0%,100%{transform:translateY(-2px);opacity:.75}50%{transform:translateY(3px);opacity:1}}
+/* mode « choisir les ronds » (?ronds=1) : un bandeau qui explique */
+.rondsBandeau{margin:0 18px 8px;padding:10px 14px;border-radius:14px;background:#FDF1F4;color:#7A2C3E;font:400 13px/1.35 Jost,sans-serif;box-shadow:inset 0 0 0 1px #F2C9D3}
+.rondsBandeau b{font-weight:600}
 </style>
+<script src="ronds-themes.js?v=1711"></script>
+<script>/* 17/11 (Marie : « je veux choisir moi le fond qui se verra dans les ronds ») : l'image de chaque rond.
+   Mode choix : ajouter ?ronds=1 à l'adresse → touchez un thème, puis le fond qui ira dans son rond. */
+var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, JSON.parse(localStorage.getItem("lgnRondsThemes") || "{}")); } catch (e) { return {}; } })();
+</script>
 </head>
 <body>
 <div class="app" id="app">
@@ -873,8 +933,9 @@ function rend(o) {
     const tous = [...l.querySelectorAll(".ent")]; let i = 0; const lot = () => { const t0 = performance.now(); while (i < tous.length && performance.now() - t0 < 24) { const b = tous[i++]; P.miniEntete(b.querySelector(".mi"), b.dataset.k, larg); } if (i < tous.length) setTimeout(lot, 16); }; lot(); }
   if (o === "fond" && $("lFond").dataset.cat === catFond && $("lFond").children.length) { $("lFond").querySelectorAll(".vg").forEach(b => b.classList.toggle("on", b.dataset.f === P.etat.fond)); $("catF").querySelectorAll(".puce").forEach(b => b.classList.toggle("on", b.dataset.c === catFond)); return rendAutres(o); }
   if (o === "fond") $("lFond").dataset.cat = catFond;
-  if (o === "fond") { const cats = ["Tous", ...P.categories()]; /* 17/11 (Marie : « la même chose que pour les charms ») : les catégories de fonds avec leur petite image, sur une ligne qui glisse */
-    const F0 = P.fonds(), pris = new Set(), ex = c => { const L = F0.map((x, i) => [x, i]).filter(([x]) => c === "Tous" || (x[3] || []).includes(c)); if (!L.length) return ""; let k = Math.floor(L.length / 3); while (k < L.length - 1 && pris.has(L[k][1])) k++; pris.add(L[k][1]); return P.vignetteFond(L[k][1]); };
+  if (o === "fond") { const ORDRE = ["Qui bougent", "Élégants", "Y2K", "Mignons", "Bohème"], cs = P.categories();
+    const cats = ["Tous", ...ORDRE.filter(c => cs.includes(c)), ...cs.filter(c => !ORDRE.includes(c))];   /* 17/11 (Marie) : l'ordre des thèmes */ /* 17/11 (Marie : « la même chose que pour les charms ») : les catégories de fonds avec leur petite image, sur une ligne qui glisse */
+    const F0 = P.fonds(), pris = new Set(), ex = c => { const choisi = RONDS[c] ? F0.findIndex(x => x[0] === RONDS[c]) : -1; if (choisi >= 0) { pris.add(choisi); return P.vignetteFond(choisi); } const L = F0.map((x, i) => [x, i]).filter(([x]) => c === "Tous" || (x[3] || []).includes(c)); if (!L.length) return ""; let k = Math.floor(L.length / 3); while (k < L.length - 1 && pris.has(L[k][1])) k++; pris.add(L[k][1]); return P.vignetteFond(L[k][1]); };
     $("catF").innerHTML = cats.map(c => `<button class="catI catFond${c === catFond ? " on" : ""}" data-c="${c}"><i class="vgI">${ex(c)}</i><span>${c === "Tous" ? "Tous les fonds" : c}</span></button>`).join(""); setTimeout(majFlechesF, 30);
     const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => (catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)) ? `<button class="vg${x[0] === P.etat.fond ? " on" : ""}" data-f="${x[0].replace(/"/g, "&quot;")}" title="${x[0].replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>` : "").join(""); }
   if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = P.polices().map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
@@ -1388,7 +1449,7 @@ rend = o => { rendAvantFav(o);
 const ASTUCES = {
   look: [["✦", "<b>Surprends-moi</b> : un toucher, un nouveau site complet. Recommencez autant que vous voulez."], ["♥", "<b>Restez appuyée</b> sur un look pour le garder en favori."], ["+", "<b>Enregistrer ce look</b> : votre site tel qu'il est, pour le retrouver plus tard."], ["◉", "<b>Voir comme ma cliente</b> : votre site exactement comme elles le verront."]],
   photo: [["+", "<b>Votre plus belle photo</b> : c'est la 1re chose que vos clientes voient."], ["✕", "Une photo en trop ? Touchez la <b>croix</b> (vous pouvez annuler)."], ["✦", "Une photo <b>bien éclairée</b>, ongles au premier plan : c'est elle qui donne envie de réserver."]],
-  fond: [["♥", "<b>Restez appuyée</b> sur un fond pour le mettre en favori : il apparaît dans « Favoris »."], ["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."], ["‹›", "Plus de 500 fonds : <b>glissez la ligne des catégories</b> (Dark, Élégants, Y2K…)."]],
+  fond: [["♥", "<b>Restez appuyée</b> sur un fond pour le mettre en favori : il apparaît dans « Favoris »."], ["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."], ["‹›", "Plus de 500 fonds : <b>faites glisser les thèmes</b> ou touchez la flèche ⌄ (Dark, Élégants, Y2K…)."]],
   entete: [["♥", "<b>Restez appuyée</b> sur une en-tête pour la mettre en favori : elle passe en premier."], ["↻", "Elles bougent comme sur votre vrai site : <b>regardez-les vivre</b>."], ["▣", "<b>Votre photo</b> se place toute seule dans chaque en-tête."]],
   ecriture: [["♥", "<b>Restez appuyée</b> sur une écriture pour la mettre en favori."], ["Aa", "Votre nom est montré <b>sur votre fond</b>, comme vos clientes le verront."], ["↔", "Votre nom tient <b>toujours sur une ligne</b> : il se règle tout seul."]],
   couleurs: [["✦", "<b>Assortir à mon fond</b> : tout va ensemble, en un toucher."], ["◐", "<b>Glissez le doigt</b> sur le rectangle : le nom de la couleur s'affiche."], ["▢", "<b>Blancs ou en couleur</b> : l'allure de vos encadrés."]],
@@ -1423,6 +1484,27 @@ setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(plac
 
 taille();
 P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.search).get("fond"); if (f0) { P.fond(f0); setTimeout(() => P.assortir(), 250); } } setTimeout(() => { $("attente").classList.add("part"); rendPhotos(); ouvre(ORDRE.includes(new URLSearchParams(location.search).get("onglet")) ? new URLSearchParams(location.search).get("onglet") : ORDRE[0]); setTimeout(() => { if (onglet === "entete") rend("entete"); }, 1400); }, 700); });
+</script>
+<script>
+/* 17/11 (Marie : « Oui, remplace ») : les fonds en 2 colonnes : on range les catégories et les fonds côte à côte */
+(() => { const P = document.querySelector('.panneau[data-p="fond"]'), cb = P.querySelector(".catBoxF"), lf = document.getElementById("lFond");
+  const d = document.createElement("div"); d.className = "fondDeux"; cb.before(d); d.append(cb, lf); lf.classList.remove("ligne");
+  document.getElementById("catF").addEventListener("click", e => { if (!e.target.closest(".catI")) return; lf.scrollTop = 0; lf.classList.remove("entre"); void lf.offsetWidth; lf.classList.add("entre"); });
+  /* le rail : un petit titre, et la flèche ⌄ qui fait descendre (elle se retourne ⌃ en bas de la liste) */
+  const cf = document.getElementById("catF"), t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; cb.prepend(t);
+  const fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes"); fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; cb.append(fl);
+  const majF = () => { if (!cf.clientHeight) return; fl.style.opacity = cf.scrollHeight > cf.clientHeight + 6 ? "" : "0"; const fin = cf.scrollTop + cf.clientHeight >= cf.scrollHeight - 6; fl.classList.toggle("haut", fin); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir d'autres thèmes"); };
+  fl.onclick = () => cf.scrollBy({ top: fl.classList.contains("haut") ? -cf.scrollHeight : cf.clientHeight * .7, behavior: "smooth" });
+  cf.addEventListener("scroll", majF, { passive: true }); new ResizeObserver(majF).observe(cf); new MutationObserver(majF).observe(cf, { childList: true }); setInterval(majF, 800);
+  /* chaque fond est un carré parfait : la hauteur des lignes = la largeur des colonnes, recalculée si la place change */
+  const carre = () => { const c = getComputedStyle(lf).gridTemplateColumns.split(" ")[0]; if (c && c.endsWith("px")) lf.style.gridAutoRows = c; };
+  new ResizeObserver(carre).observe(lf); carre();
+  if (/[?&]ronds=1/.test(location.search)) { const bd = document.createElement("div"); bd.className = "rondsBandeau";
+    bd.innerHTML = "<b>Choix des ronds</b> : touchez un thème, puis le fond qui ira dans son rond."; d.before(bd);
+    lf.addEventListener("click", e => { const v = e.target.closest(".vg"); if (!v || !v.dataset.f || catFond === "Favoris") return;
+      RONDS[catFond] = v.dataset.f; try { localStorage.setItem("lgnRondsThemes", JSON.stringify(RONDS)); } catch (x) {}
+      const top = cf.scrollTop; lf.dataset.cat = ""; rend("fond"); cf.scrollTop = top; bulle("Rond « " + (catFond === "Tous" ? "Tous les fonds" : catFond) + " » choisi ✓"); }); }
+  })();
 </script>
 </body>
 </html>
