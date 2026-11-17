@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Couleurs · Sephora ou Roue</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 17/11 soir · Pôle Design · remplacer la grille de carrés (Marie : « les carrés collés, non »).
+   A « Comme chez Sephora » : familles, puis teintes nommées. B « La roue » : roue de couleurs + réglette clair/foncé. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--rose:#B5475E}
+*{box-sizing:border-box}body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;padding:28px 16px 60px}
+button{font:inherit;border:0;background:none;cursor:pointer;color:inherit;padding:0}
+h1{font:500 38px "Cormorant Garamond",serif;margin:0 0 6px;text-align:center}
+.sous{text-align:center;color:var(--muted);margin:0 0 24px}
+.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,460px));gap:26px;justify-content:center}
+.carte{min-width:0;background:#fff;border-radius:28px;padding:22px 20px 24px;box-shadow:0 18px 40px -30px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
+.carte h2{margin:0;font:500 28px "Cormorant Garamond",serif}.carte h2 i{font-style:normal;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--noir);color:#fff;font:500 15px Jost,sans-serif;margin-right:8px;vertical-align:4px}
+.carte p.idee{margin:-6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.ap{border-radius:20px;padding:16px 14px;background:#F8EEEF}
+.fiche{background:var(--bl,#F2D3D6);border-radius:16px;padding:13px 12px;text-align:center;box-shadow:0 10px 24px -18px rgba(0,0,0,.5);transition:background .3s}
+.fiche small{display:block;font-size:8.5px;letter-spacing:.2em;color:rgba(30,28,27,.5);text-transform:uppercase}
+.nom{font:400 30px "Bebas Neue",Jost,sans-serif;margin:3px 0 2px;color:var(--nm,#1E1C1B);transition:color .3s}
+.res{display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:var(--bt,#B5475E);color:#fff;font:600 9.5px Jost,sans-serif;letter-spacing:.16em;transition:background .3s}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--fond);border-radius:999px;padding:4px}
+.parts button{height:36px;border-radius:999px;font:400 12.5px Jost,sans-serif;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:7px}
+.parts button i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.parts button.on{background:#fff;color:var(--noir);font-weight:500;box-shadow:0 4px 10px -6px rgba(0,0,0,.4)}
+/* A · Sephora */
+.fams{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.fams::-webkit-scrollbar{display:none}
+.fams button{flex:none;display:flex;align-items:center;gap:7px;height:34px;padding:0 13px 0 5px;border-radius:999px;background:var(--fond);font:400 12.5px Jost,sans-serif;color:var(--muted)}
+.fams button i{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.fams button.on{background:var(--noir);color:#fff}
+.teintes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 10px}
+.teinte{display:flex;flex-direction:column;align-items:center;gap:6px;font:400 11.5px Jost,sans-serif;color:var(--muted)}
+.teinte .goutte{width:100%;aspect-ratio:1.25;border-radius:14px 14px 14px 14px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),0 8px 16px -12px rgba(0,0,0,.5);transition:transform .2s}
+.teinte .goutte:after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.45),rgba(255,255,255,0) 40%)}
+.teinte:hover .goutte{transform:translateY(-2px)}
+.teinte.on{color:var(--noir);font-weight:500}.teinte.on .goutte{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir),0 10px 18px -12px rgba(0,0,0,.6)}
+/* B · roue */
+.roueBox{display:flex;flex-direction:column;align-items:center;gap:14px}
+.roue{position:relative;width:220px;height:220px;border-radius:50%;cursor:crosshair;touch-action:none;background:radial-gradient(circle,#fff 0,rgba(255,255,255,0) 68%),conic-gradient(from 90deg,#ff3b5c,#ff8a3d,#ffd23f,#7bd389,#2bb3b1,#3b82f6,#7b5cff,#d946ef,#ff3b5c);box-shadow:0 14px 30px -18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(0,0,0,.06)}
+.roue .pt{position:absolute;width:30px;height:30px;border-radius:50%;translate:-50% -50%;box-shadow:0 0 0 3px #fff,0 6px 14px -4px rgba(0,0,0,.5);pointer-events:none}
+.regl{width:100%;max-width:300px}
+.regl input{width:100%;-webkit-appearance:none;appearance:none;height:26px;border-radius:999px;outline:none;background:var(--rg)}
+.regl input::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer}
+.regl label{display:flex;justify-content:space-between;font:400 11.5px Jost,sans-serif;color:var(--doux);margin-top:4px}
+.reco{max-width:760px;margin:30px auto 0;background:var(--noir);color:#fff;border-radius:20px;padding:18px 22px;font-size:14.5px;line-height:1.55}.reco b{color:#FFD9EA}
+@media (max-width:520px){.grille{grid-template-columns:minmax(0,1fr)}}
+</style></head><body>
+<h1>Choisir la <em>couleur</em> · A ou B</h1>
+<p class="sous">Ce qui remplace la grille de carrés. (Au-dessus restent « Assortir à mon fond », les ambiances, et Encadrés · Nom · Bouton.)</p>
+<div class="grille" id="g"></div>
+<div class="reco"><b>Ma recommandation : A, « Comme chez Sephora ».</b> Le nom des teintes rassure (« Framboise », « Nude rosé ») et parle le langage de la beauté que les prothésistes utilisent tous les jours avec leurs vernis. On trouve en 2 touchers, sans jamais se perdre. La roue est jolie mais plus « graphiste » : on a du mal à retrouver exactement la même couleur.</div>
+<script>
+const FAM = { Roses: [["Poudré", "#F2D3D6"], ["Rose pastel", "#F4B6C8"], ["Rose vernis", "#E07A9A"], ["Framboise", "#C2185B"], ["Fuchsia", "#E0368C"], ["Vieux rose", "#B5475E"], ["Pêche", "#F7C6A8"], ["Corail", "#F07A65"]],
+  Rouges: [["Cerise", "#C8243A"], ["Rouge", "#E3122C"], ["Rouge foncé", "#8E1A22"], ["Bordeaux", "#6E1A2C"], ["Prune", "#5A1E3C"], ["Brique", "#A4502F"], ["Rouille", "#8E3B1E"], ["Terracotta", "#C0603A"]],
+  Nudes: [["Lin", "#EFE6DA"], ["Sable", "#E2CFB3"], ["Nude", "#D9B8A0"], ["Nude rosé", "#D7A99A"], ["Caramel", "#B98154"], ["Taupe", "#8C7A6B"], ["Greige", "#B8AFA4"], ["Crème", "#F4EADB"]],
+  Marrons: [["Moka", "#7A5444"], ["Chocolat", "#4A3226"], ["Café", "#5E3A28"], ["Cannelle", "#9A5A36"], ["Noisette", "#8C5F45"], ["Ébène", "#2E211B"], ["Miel", "#C9A86A"], ["Or", "#B8862E"]],
+  Verts: [["Menthe", "#B9E6D3"], ["Sauge", "#A9C3A2"], ["Olive", "#7A7A4A"], ["Kaki", "#5E5E3A"], ["Sapin", "#2F5A45"], ["Émeraude", "#1F7A55"], ["Lagon", "#1F7A7A"], ["Vert d'eau", "#BFE3DA"]],
+  Bleus: [["Ciel", "#B7D3F0"], ["Bleu pastel", "#9FCBEB"], ["Glacier", "#DDEAF4"], ["Bleu roi", "#2F57E8"], ["Cobalt", "#1F4FA3"], ["Marine", "#24344F"], ["Bleu nuit", "#1F2E5C"], ["Turquoise", "#2BB3B1"]],
+  Violets: [["Lilas", "#CDB8EE"], ["Lavande", "#B9A6E8"], ["Glycine", "#A08BD0"], ["Violet", "#7B3FB5"], ["Améthyste", "#76589A"], ["Aubergine", "#3B2E55"], ["Mauve", "#B48AA6"], ["Parme", "#D8C2E0"]],
+  Neutres: [["Blanc", "#FFFFFF"], ["Perle", "#F2F0EC"], ["Gris clair", "#D9D9D9"], ["Gris", "#9A9A9A"], ["Anthracite", "#3A3A3A"], ["Noir", "#1E1C1B"], ["Argent", "#C9CED6"], ["Champagne", "#E9D3A8"]] };
+const g = document.getElementById("g");
+const hsl2hex = (h, s, l) => { s /= 100; l /= 100; const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l), f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); return "#" + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, "0")).join(""); };
+[["A", "Comme chez Sephora", "D'abord la famille (Roses, Rouges, Nudes…), puis 8 teintes en pastilles, chacune avec son nom. Comme un nuancier de maquillage."],
+ ["B", "La roue", "On pose le doigt sur la roue pour la teinte, et la réglette dessous règle plus clair ou plus foncé. Choix infini."]].forEach(([L, tt, idee]) => {
+  const c = document.createElement("section"); c.className = "carte"; g.appendChild(c);
+  c.innerHTML = `<h2><i>${L}</i>${tt}</h2><p class="idee">${idee}</p>
+   <div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+   <div class="parts"><button data-q="bl" class="on"><i></i>Encadrés</button><button data-q="nm"><i></i>Nom</button><button data-q="bt"><i></i>Bouton Réserver</button></div>
+   ${L === "A" ? `<div class="fams"></div><div class="teintes"></div>` : `<div class="roueBox"><div class="roue"><span class="pt"></span></div><div class="regl"><input type="range" min="12" max="92" value="55"><label><span>Plus foncé</span><span>Plus clair</span></label></div></div>`}`;
+  const fiche = c.querySelector(".fiche"), val = { bl: "#F2D3D6", nm: "#1E1C1B", bt: "#B5475E" }; let q = "bl", fam = "Roses";
+  const pose = (k, v) => { val[k] = v; fiche.style.setProperty("--" + k, v); c.querySelectorAll(".parts i").forEach(i => i.style.background = val[i.parentElement.dataset.q]); if (L === "A") rendA(); };
+  c.querySelector(".parts").onclick = e => { const b = e.target.closest("button"); if (!b) return; q = b.dataset.q; c.querySelectorAll(".parts button").forEach(x => x.classList.toggle("on", x === b)); if (L === "A") rendA(); };
+  const rendA = () => { c.querySelector(".fams").innerHTML = Object.keys(FAM).map(f => `<button data-f="${f}" class="${f === fam ? "on" : ""}"><i style="background:${FAM[f][2][1]}"></i>${f}</button>`).join("");
+    c.querySelector(".teintes").innerHTML = FAM[fam].map(([n, v]) => `<button class="teinte${v === val[q] ? " on" : ""}" data-v="${v}"><span class="goutte" style="background:${v}"></span>${n}</button>`).join(""); };
+  if (L === "A") { c.querySelector(".fams").onclick = e => { const b = e.target.closest("button"); if (!b) return; fam = b.dataset.f; rendA(); };
+    c.querySelector(".teintes").onclick = e => { const b = e.target.closest(".teinte"); if (!b) return; pose(q, b.dataset.v); }; rendA(); }
+  else { const r = c.querySelector(".roue"), pt = c.querySelector(".pt"), sl = c.querySelector("input"); let h = 340, s = 70;
+    const peint = () => { const l = +sl.value, v = hsl2hex(h, s, l); sl.style.setProperty("--rg", `linear-gradient(90deg,${hsl2hex(h, s, 12)},${hsl2hex(h, s, 50)},${hsl2hex(h, s, 92)})`); pt.style.background = v; pose(q, v); };
+    const prend = e => { const b = r.getBoundingClientRect(), x = e.clientX - b.left - b.width / 2, y = e.clientY - b.top - b.height / 2, d = Math.min(1, Math.hypot(x, y) / (b.width / 2));
+      h = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360; s = Math.round(d * 85); pt.style.left = (b.width / 2 + Math.cos(h * Math.PI / 180) * d * b.width / 2) + "px"; pt.style.top = (b.height / 2 + Math.sin(h * Math.PI / 180) * d * b.height / 2) + "px"; peint(); };
+    let tient = false; r.onpointerdown = e => { tient = true; r.setPointerCapture(e.pointerId); prend(e); }; r.onpointermove = e => { if (tient) prend(e); }; r.onpointerup = () => tient = false; sl.oninput = peint;
+    pt.style.left = "60%"; pt.style.top = "30%"; sl.style.setProperty("--rg", `linear-gradient(90deg,${hsl2hex(h, s, 12)},${hsl2hex(h, s, 50)},${hsl2hex(h, s, 92)})`); pt.style.background = val.bl; }
+  Object.entries(val).forEach(([k, v]) => pose(k, v));
+});
+</script>
+</body></html>

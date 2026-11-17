@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Couleurs · Studio ou Grille</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 17/11 soir · Pôle Design · onglet Couleurs, 2 propositions complètes (Marie : « tu peux faire beaucoup mieux »).
+   Règles : « Assortir à mon fond » visible sans descendre ; Encadrés · Nom · Bouton alignés sur UNE ligne. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--rose:#B5475E;--ligne:rgba(30,28,27,.1)}
+*{box-sizing:border-box}body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;padding:28px 16px 60px}
+button{font:inherit;border:0;background:none;cursor:pointer;color:inherit;padding:0}
+h1{font:500 38px "Cormorant Garamond",serif;margin:0 0 6px;text-align:center}
+.sous{text-align:center;color:var(--muted);margin:0 0 24px}
+.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,470px));gap:26px;justify-content:center}
+.carte{background:#fff;border-radius:28px;padding:22px 20px 24px;box-shadow:0 18px 40px -30px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
+.carte h2{margin:0;font:500 28px "Cormorant Garamond",serif}.carte h2 i{font-style:normal;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--noir);color:#fff;font:500 15px Jost,sans-serif;margin-right:8px;vertical-align:4px}
+.carte p.idee{margin:-6px 0 0;color:var(--muted);font-size:13.5px;line-height:1.45}
+/* l'aperçu */
+.ap{border-radius:20px;padding:16px 14px;background:#F8EEEF;background-image:radial-gradient(circle at 15% 20%,rgba(255,255,255,.7) 0 6px,transparent 7px),radial-gradient(circle at 80% 70%,rgba(255,255,255,.6) 0 5px,transparent 6px);background-size:60px 60px}
+.fiche{background:var(--bl);border-radius:16px;padding:13px 12px;text-align:center;box-shadow:0 10px 24px -18px rgba(0,0,0,.5);transition:background .3s}
+.fiche small{display:block;font-size:8.5px;letter-spacing:.2em;color:rgba(30,28,27,.5);text-transform:uppercase}
+.nom{font:400 30px "Bebas Neue",Jost,sans-serif;margin:3px 0 2px;color:var(--nm);transition:color .3s}
+.nom.grad{color:transparent;background:var(--nmg);-webkit-background-clip:text;background-clip:text}
+.et{font-size:11px;color:var(--bt)}.et span{color:var(--muted);font-size:10px}
+.res{display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:var(--bt);color:#fff;font:600 9.5px Jost,sans-serif;letter-spacing:.16em;transition:background .3s}
+/* ligne du haut, commune : Assortir + ambiances */
+.haut{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px}
+.haut::-webkit-scrollbar{display:none}
+.assort{flex:none;display:flex;align-items:center;gap:7px;height:44px;padding:0 16px;border-radius:999px;background:var(--rose);color:#fff;font:500 13px Jost,sans-serif;box-shadow:0 8px 18px -10px rgba(181,71,94,.8)}
+.assort b{font-weight:400;font-size:16px}
+.amb{flex:none;display:flex;align-items:center;gap:8px;height:44px;padding:0 14px 0 6px;border-radius:999px;background:var(--fond);font:400 12.5px Jost,sans-serif;color:var(--muted);transition:box-shadow .2s}
+.amb .tri{display:flex;width:32px;height:32px;border-radius:50%;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}.amb .tri i{flex:1}
+.amb.on{background:#fff;color:var(--noir);font-weight:500;box-shadow:0 0 0 2px var(--noir)}
+.sTitre{font:500 12.5px Jost,sans-serif;color:var(--doux);letter-spacing:.04em;margin:2px 0 -6px}
+/* A · tuiles */
+.tuiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tuile{border-radius:18px;padding:12px 6px 10px;background:var(--fond);display:flex;flex-direction:column;align-items:center;gap:8px;font:400 12px Jost,sans-serif;color:var(--muted);transition:background .2s,box-shadow .2s,transform .2s}
+.tuile .vis{height:40px;display:grid;place-items:center}
+.tuile .mEnc{width:52px;height:34px;border-radius:9px;box-shadow:0 6px 12px -8px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.06)}
+.tuile .mNom{font:400 32px "Bebas Neue",Jost,sans-serif;line-height:1}
+.tuile .mBtn{width:58px;height:20px;border-radius:999px;box-shadow:0 6px 12px -8px rgba(0,0,0,.5)}
+.tuile.on{background:#fff;color:var(--noir);font-weight:500;box-shadow:0 0 0 2px var(--noir);transform:translateY(-2px)}
+.nuances{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:6px 2px 8px;scroll-snap-type:x proximity}
+.nuances::-webkit-scrollbar{display:none}
+.perle{flex:none;width:38px;height:38px;border-radius:50%;position:relative;scroll-snap-align:start;transition:transform .2s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 6px 12px -8px rgba(0,0,0,.5)}
+.perle:after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.75),rgba(255,255,255,0) 38%)}
+.perle:hover{transform:translateY(-2px)}.perle.on{box-shadow:0 0 0 2.5px #fff,0 0 0 4.5px var(--noir),0 8px 14px -8px rgba(0,0,0,.5)}
+/* B · grille iPhone */
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--fond);border-radius:999px;padding:4px}
+.parts button{height:38px;border-radius:999px;font:400 12.5px Jost,sans-serif;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:7px;transition:background .2s,color .2s}
+.parts button i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.parts button.on{background:#fff;color:var(--noir);font-weight:500;box-shadow:0 4px 10px -6px rgba(0,0,0,.4)}
+.ios{display:grid;grid-template-columns:repeat(12,1fr);border-radius:14px;overflow:hidden;box-shadow:0 10px 24px -18px rgba(0,0,0,.5);cursor:pointer}
+.ios i{aspect-ratio:1;position:relative;transition:transform .12s}
+.ios i:hover{transform:scale(1.25);z-index:2;box-shadow:0 4px 10px rgba(0,0,0,.35);border-radius:4px}
+.ios i.on{z-index:3;box-shadow:0 0 0 2.5px #fff,0 0 0 4px var(--noir);border-radius:4px;transform:scale(1.15)}
+.brillants{display:flex;gap:8px;align-items:center;font:400 12px Jost,sans-serif;color:var(--doux)}
+.brillants button{width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.brillants button.on{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
+.reco{max-width:760px;margin:30px auto 0;background:var(--noir);color:#fff;border-radius:20px;padding:18px 22px;font-size:14.5px;line-height:1.55}.reco b{color:#FFD9EA}
+@media (max-width:520px){.grille{grid-template-columns:minmax(0,1fr)}.carte{min-width:0;padding:18px 14px}}
+.carte{min-width:0}
+</style></head><body>
+<h1>Vos <em>couleurs</em> · Studio ou Grille</h1>
+<p class="sous">Les deux : « Assortir à mon fond » visible tout de suite · Encadrés, Nom, Bouton alignés · tout est cliquable.</p>
+<div class="grille" id="g"></div>
+<div class="reco"><b>Ma recommandation : B, « La grille ».</b> C'est le sélecteur de couleurs de l'iPhone : toutes les prothésistes le connaissent déjà, il tient dans un seul bloc (pas de bande, pas de défilement), et il donne toutes les nuances, du pastel au foncé, d'un coup d'œil. La ligne du haut règle 90 % des cas en un toucher.</div>
+<script>
+const AMB = [["Mon fond", null], ["Rose vernis", ["#F2D3D6", "#1E1C1B", "#B5475E"]], ["Nude", ["#F0E6DC", "#4A3226", "#8C5F45"]], ["Sauge", ["#E4EBE1", "#2F3A2B", "#4F6E55"]], ["Lavande", ["#ECE6F3", "#3B2E55", "#76589A"]], ["Nuit", ["#2C3044", "#F4EADB", "#C9A86A"]], ["Cerise", ["#F6D9DE", "#6E1A2C", "#A01C2E"]], ["Or", ["#F4EADB", "linear-gradient(170deg,#FFF3C4,#E8C66A 38%,#B8862E 62%,#F6DE92)", "#B8862E"]], ["Noir", ["#EDEBE8", "#1E1C1B", "#1E1C1B"]]];
+const FOND = ["#F7E1E6", "#6E1A2C", "#C2537B"];   /* « Mon fond » : les couleurs du fond pétales roses */
+const PERLES = { bl: ["#FFFFFF", "#F6E3E4", "#F2D3D6", "#F7E1D0", "#F6E3A1", "#E4EBE1", "#DDF0EF", "#D3DCEB", "#ECE6F3", "#EADBCB", "#E6E7EA", "#2C3044", "#1E1C1B"],
+  nm: ["#1E1C1B", "#FFFFFF", "#4A3226", "#6E1A2C", "#B3125F", "#C0503A", "#2F5A45", "#1F7A7A", "#1F2E5C", "#7B62A8"], bt: ["#1E1C1B", "#B3125F", "#B5475E", "#A01C2E", "#6E1A2C", "#C0503A", "#8C5F45", "#C9A86A", "#4F6E55", "#1F7A7A", "#3B5583", "#7B62A8"] };
+const BRILL = [["Or", "linear-gradient(170deg,#FFF3C4,#E8C66A 38%,#B8862E 62%,#F6DE92)"], ["Argent", "linear-gradient(170deg,#FFFFFF,#D9DCE2 35%,#8C9098 60%,#F2F3F6)"], ["Rose gold", "linear-gradient(170deg,#FCE3DA,#E8A99A 40%,#B9706A 65%,#F6CFC4)"], ["Holo", "linear-gradient(100deg,#FFB3E6,#B3D4FF 30%,#B9FFE0 60%,#FFF3B0)"]];
+/* grille iPhone : 12 teintes en colonnes, du très clair au très foncé en lignes (+ une ligne de gris) */
+const hslToHex = (h, s, l) => { s /= 100; l /= 100; const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l), f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); return "#" + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, "0")).join(""); };
+const GRILLE = (() => { const L = []; for (let c = 0; c < 12; c++) L.push(hslToHex(0, 0, 100 - c * 100 / 11)); const H = [340, 355, 10, 25, 40, 55, 90, 150, 180, 210, 240, 280]; const Ls = [92, 84, 74, 62, 50, 38, 26]; Ls.forEach(l => H.forEach(h => L.push(hslToHex(h, l > 80 ? 55 : 60, l)))); return L; })();
+const g = document.getElementById("g");
+[["A", "Le studio", "En haut, ✦ Assortir et les ambiances (un toucher). En dessous, 3 grandes tuiles alignées qui montrent chaque partie en miniature, puis des perles de couleur brillantes pour la tuile choisie."],
+ ["B", "La grille", "En haut, la même ligne. En dessous, les 3 parties alignées en pastilles, puis la grille de couleurs de l'iPhone : toutes les nuances d'un coup d'œil, du pastel au foncé. Plus de bande."]].forEach(([L, titre, idee]) => {
+  const c = document.createElement("section"); c.className = "carte"; g.appendChild(c);
+  c.innerHTML = `<h2><i>${L}</i>${titre}</h2><p class="idee">${idee}</p>
+   <div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="et">★★★★★ <span>5,0 · 3 avis</span></div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+   <div class="haut"><button class="assort"><b>✦</b>Assortir à mon fond</button>${AMB.slice(1).map((a, i) => `<button class="amb" data-i="${i + 1}"><span class="tri">${a[1].map(x => `<i style="background:${x}"></i>`).join("")}</span>${a[0]}</button>`).join("")}</div>
+   ${L === "A" ? `<div class="tuiles"><button class="tuile on" data-q="bl"><span class="vis"><span class="mEnc"></span></span>Encadrés</button><button class="tuile" data-q="nm"><span class="vis"><span class="mNom">Aa</span></span>Nom</button><button class="tuile" data-q="bt"><span class="vis"><span class="mBtn"></span></span>Bouton Réserver</button></div><div class="nuances"></div>`
+    : `<div class="parts"><button data-q="bl" class="on"><i></i>Encadrés</button><button data-q="nm"><i></i>Nom</button><button data-q="bt"><i></i>Bouton Réserver</button></div><div class="ios"></div><div class="brillants"></div>`}`;
+  const val = { bl: "#F2D3D6", nm: "#1E1C1B", bt: "#B5475E" }; let q = "bl";
+  const fiche = c.querySelector(".fiche"), nom = c.querySelector(".nom");
+  const pose = (k, v) => { val[k] = v; if (k === "bl") fiche.style.setProperty("--bl", v); if (k === "bt") fiche.style.setProperty("--bt", v);
+    if (k === "nm") { const gr = /gradient/.test(v); nom.classList.toggle("grad", gr); fiche.style.setProperty("--nmg", gr ? v : "none"); fiche.style.setProperty("--nm", gr ? "transparent" : v); } maj(); };
+  const maj = () => {
+    if (L === "A") { c.querySelector(".mEnc").style.background = val.bl; const mn = c.querySelector(".mNom"); const gr = /gradient/.test(val.nm); mn.style.background = gr ? val.nm : "none"; mn.style.webkitBackgroundClip = gr ? "text" : ""; mn.style.backgroundClip = gr ? "text" : ""; mn.style.color = gr ? "transparent" : val.nm; c.querySelector(".mBtn").style.background = val.bt;
+      c.querySelectorAll(".tuile").forEach(t => t.classList.toggle("on", t.dataset.q === q));
+      const n = c.querySelector(".nuances"); const lst = PERLES[q].concat(q === "nm" ? BRILL.map(b => b[1]) : []); n.innerHTML = lst.map(v => `<button class="perle${v === val[q] ? " on" : ""}" data-v="${v}" style="background:${v}"></button>`).join(""); }
+    else { c.querySelectorAll(".parts button").forEach(b => { b.classList.toggle("on", b.dataset.q === q); b.querySelector("i").style.background = val[b.dataset.q]; });
+      c.querySelector(".ios").innerHTML = GRILLE.map(v => `<i data-v="${v}" class="${v.toLowerCase() === String(val[q]).toLowerCase() ? "on" : ""}" style="background:${v}"></i>`).join("");
+      c.querySelector(".brillants").innerHTML = q === "nm" ? `Brillants ${BRILL.map(b => `<button data-v="${b[1]}" title="${b[0]}" class="${b[1] === val.nm ? "on" : ""}" style="background:${b[1]}"></button>`).join("")}` : ""; } };
+  c.querySelector(".haut").onclick = e => { const a = e.target.closest(".amb,.assort"); if (!a) return; const p = a.classList.contains("assort") ? FOND : AMB[+a.dataset.i][1];
+    pose("bl", p[0]); pose("nm", p[1]); pose("bt", p[2]); c.querySelectorAll(".amb").forEach(x => x.classList.toggle("on", x === a)); };
+  c.addEventListener("click", e => { const t = e.target.closest(".tuile,.parts button"); if (t) { q = t.dataset.q; maj(); return; }
+    const v = e.target.closest(".perle,.ios i,.brillants button"); if (v) pose(q, v.dataset.v); });
+  pose("bl", val.bl); pose("nm", val.nm); pose("bt", val.bt);
+});
+</script>
+</body></html>

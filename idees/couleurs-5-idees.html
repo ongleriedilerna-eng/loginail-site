@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Couleurs · 5 idées</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 17/11 · Pôle Design · onglet « Couleurs » de Personnaliser : 5 idées à comparer (Marie : « les bulles, ça fait cheap »).
+   Inspirations : Wix et Squarespace (palettes toutes faites), Canva (combinaisons), Linktree (on règle ce qu'on voit),
+   Instagram (bande de couleurs qu'on glisse), et notre appli Loginail (ronds « Duos », D19). Tout est cliquable. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--rose:#B5475E;--ligne:rgba(30,28,27,.1)}
+*{box-sizing:border-box}body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;padding:28px 16px 60px}
+h1{font:500 38px "Cormorant Garamond",serif;margin:0 0 4px;text-align:center}
+.sous{text-align:center;color:var(--muted);margin:0 0 8px}
+.noms{max-width:760px;margin:0 auto 26px;background:#fff;border-radius:18px;padding:14px 18px;font-size:14px;color:var(--muted);line-height:1.55}
+.noms b{color:var(--noir)}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:22px;max-width:1340px;margin:0 auto}
+.carte{background:#fff;border-radius:26px;padding:20px 20px 22px;box-shadow:0 18px 40px -30px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
+.carte h2{margin:0;font:500 26px "Cormorant Garamond",serif}.carte h2 i{font-style:normal;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--noir);color:#fff;font:500 14px Jost,sans-serif;margin-right:8px;vertical-align:4px}
+.carte p.idee{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.carte p.qui{margin:0;font-size:11.5px;color:var(--doux);letter-spacing:.04em}
+/* aperçu : le haut de SON site, qui change pour de vrai */
+.ap{border-radius:20px;padding:18px 14px 16px;background:var(--pf,#F6E3E4);position:relative;overflow:hidden;transition:background .25s}
+.ap:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.5),transparent 50%)}
+.fiche{position:relative;background:var(--bl,#F2D3D6);border-radius:16px;padding:14px 12px 14px;text-align:center;transition:background .25s;box-shadow:0 10px 24px -18px rgba(0,0,0,.5)}
+.fiche small{display:block;font-size:8.5px;letter-spacing:.2em;color:rgba(30,28,27,.55);text-transform:uppercase}
+.fiche .nom{font:400 30px "Bebas Neue",Jost,sans-serif;letter-spacing:.02em;color:var(--nm,#1E1C1B);margin:4px 0 2px;transition:color .25s;background:var(--nmg,none);-webkit-background-clip:text;background-clip:text}
+.fiche .nom.grad{color:transparent}
+.fiche .et{font-size:11px;color:var(--bt,#1E1C1B);transition:color .25s}.fiche .et span{color:var(--muted);font-size:10px}
+.fiche .res{display:inline-block;margin-top:9px;padding:9px 18px;border-radius:999px;background:var(--bt,#1E1C1B);color:#fff;font:600 9.5px Jost,sans-serif;letter-spacing:.16em;transition:background .25s}
+.zone{position:relative;cursor:pointer;border-radius:10px;transition:outline-color .2s;outline:2px dashed transparent;outline-offset:3px}
+.c3 .zone:hover,.c3 .zone.vise{outline-color:var(--rose)}
+.lab{font:500 12.5px Jost,sans-serif;color:var(--noir);margin:2px 0 6px}
+.lab em{font-style:normal;color:var(--doux);font-weight:400}
+/* 1 · palettes */
+.pals{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pal{border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 0 0 1px var(--ligne);transition:transform .2s,box-shadow .2s;background:#fff}
+.pal .bd{display:flex;height:42px}.pal .bd i{flex:1}.pal .bd i:first-child{flex:1.6}
+.pal span{display:block;font-size:11px;padding:5px 7px;color:var(--muted)}
+.pal:hover{transform:translateY(-2px)}.pal.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.perso{align-self:flex-start;font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;background:none;border:0;cursor:pointer}
+/* 2 · mini-cartes */
+.minis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mini{border-radius:14px;padding:10px 6px 9px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.mini b{display:block;font:400 17px "Bebas Neue",Jost,sans-serif;letter-spacing:.02em}
+.mini i{display:inline-block;margin-top:5px;width:52px;height:11px;border-radius:999px}
+.mini:hover{transform:translateY(-2px)}.mini.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.onglets3{display:flex;gap:4px;background:var(--fond);border-radius:999px;padding:4px;align-self:flex-start}
+.onglets3 button{border:0;background:none;border-radius:999px;padding:7px 14px;font:400 12.5px Jost,sans-serif;color:var(--muted);cursor:pointer}
+.onglets3 button.on{background:#fff;color:var(--noir);font-weight:500;box-shadow:0 4px 10px -8px rgba(0,0,0,.4)}
+/* 3 · toucher la partie */
+.bande{display:flex;gap:8px;flex-wrap:wrap}
+.pastille{width:34px;height:34px;border-radius:12px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .15s}
+.pastille:hover{transform:scale(1.08)}.pastille.on{box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.astuce{font-size:12px;color:var(--rose);display:flex;align-items:center;gap:6px}
+/* 4 · bande à glisser */
+.arc{position:relative;height:46px;border-radius:999px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);touch-action:none}
+.arc .pouce{position:absolute;top:50%;width:34px;height:34px;border-radius:50%;translate:-50% -50%;box-shadow:0 0 0 3px #fff,0 6px 14px -4px rgba(0,0,0,.5);pointer-events:none;transition:left .08s}
+.trois{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.trois button{border:0;border-radius:12px;padding:8px 6px;background:var(--fond);font:400 12px Jost,sans-serif;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.trois button i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.trois button.on{background:var(--noir);color:#fff}
+/* 5 · duos */
+.duos{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;justify-items:center}
+.duo{width:46px;height:46px;border-radius:50%;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.duo:before,.duo:after{content:"";position:absolute;inset:0}
+.duo:before{background:var(--a);clip-path:polygon(0 0,100% 0,0 100%)}.duo:after{background:var(--b);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.duo:hover{transform:scale(1.07)}.duo.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.duoN{font-size:10.5px;color:var(--doux);text-align:center;margin-top:4px}
+.reco{max-width:760px;margin:30px auto 0;background:var(--noir);color:#fff;border-radius:20px;padding:18px 22px;font-size:14.5px;line-height:1.55}
+.reco b{color:#FFD9EA}
+@media (max-width:460px){.grille{grid-template-columns:1fr}.pals,.minis{grid-template-columns:repeat(2,1fr)}.duos{grid-template-columns:repeat(4,1fr)}}
+</style></head><body>
+<h1>Vos <em>couleurs</em> · 5 idées</h1>
+<p class="sous">Tout est cliquable : touchez, le haut du site change pour de vrai.</p>
+<div class="noms"><b>Les 3 noms, plus clairs :</b> « Votre site » devient <b>« Vos encadrés »</b> (les blocs du site) · « Votre nom » reste <b>« Votre nom »</b> · « Les boutons » devient <b>« Bouton Réserver »</b> (le bouton et les étoiles des avis).</div>
+<div class="grille">
+
+<!-- 1 -->
+<section class="carte c1"><h2><i>1</i>Les palettes toutes faites</h2>
+<p class="idee">Un toucher = les 3 couleurs d'un coup, déjà assorties par nous. « Personnaliser » en dessous pour celles qui veulent régler chaque couleur.</p>
+<p class="qui">COMME WIX, SQUARESPACE, CANVA</p>
+<div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="et">★★★★★ <span>5,0 · 3 avis</span></div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+<div class="pals" id="pals"></div>
+<button class="perso">Personnaliser chaque couleur ›</button>
+</section>
+
+<!-- 2 -->
+<section class="carte c2"><h2><i>2</i>Les mini-fiches</h2>
+<p class="idee">Chaque couleur est montrée en vrai : une petite fiche (encadré + nom + bouton). On ne choisit plus un rond, on choisit un rendu. Comme les cartes des écritures.</p>
+<p class="qui">COMME NOS ÉCRITURES · SHOPIFY</p>
+<div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="et">★★★★★ <span>5,0 · 3 avis</span></div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+<div class="onglets3" id="o2"><button class="on" data-q="bl">Vos encadrés</button><button data-q="nm">Votre nom</button><button data-q="bt">Bouton Réserver</button></div>
+<div class="minis" id="minis"></div>
+</section>
+
+<!-- 3 -->
+<section class="carte c3"><h2><i>3</i>On touche ce qu'on veut colorer</h2>
+<p class="idee">Pas de mots : elle touche directement l'encadré, le nom ou le bouton sur l'aperçu, et les couleurs de cette partie apparaissent. Le plus intuitif.</p>
+<p class="qui">COMME LINKTREE, CANVA</p>
+<div class="ap"><div class="fiche zone" data-q="bl"><small>Prothésiste ongulaire · Marseille</small><div class="nom zone" data-q="nm">Les ongles de Cerise</div><div class="et zone" data-q="bt">★★★★★ <span>5,0 · 3 avis</span></div><div class="res zone" data-q="bt">RÉSERVER UN CRÉNEAU</div></div></div>
+<div class="astuce" id="ast3">☝ Touchez l'encadré, le nom ou le bouton</div>
+<div class="lab" id="lab3">Vos encadrés</div>
+<div class="bande" id="bande3"></div>
+</section>
+
+<!-- 4 -->
+<section class="carte c4"><h2><i>4</i>La bande qu'on fait glisser</h2>
+<p class="idee">Une seule bande de couleurs, on glisse le doigt dessus et la couleur change en direct. Très épuré, très « appli ». Les 3 parties en petits boutons au-dessus.</p>
+<p class="qui">COMME INSTAGRAM (texte des stories)</p>
+<div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="et">★★★★★ <span>5,0 · 3 avis</span></div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+<div class="trois" id="o4"><button class="on" data-q="bl"><i></i>Encadrés</button><button data-q="nm"><i></i>Nom</button><button data-q="bt"><i></i>Bouton</button></div>
+<div class="arc" id="arc"><div class="pouce" id="pouce"></div></div>
+</section>
+
+<!-- 5 -->
+<section class="carte c5"><h2><i>5</i>Les duos (comme l'appli)</h2>
+<p class="idee">Chaque rond montre 2 couleurs qui vont ensemble : la claire pour les encadrés, la forte pour le bouton. Même dessin que les couleurs de l'appli Loginail. Le nom se règle à part.</p>
+<p class="qui">COMME NOTRE APPLI (D19)</p>
+<div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="et">★★★★★ <span>5,0 · 3 avis</span></div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+<div class="duos" id="duos"></div>
+</section>
+</div>
+<div class="reco"><b>Ma recommandation : l'idée 1 (palettes) + l'idée 3 (toucher pour personnaliser).</b> 9 prothésistes sur 10 veulent que « ça aille ensemble » sans réfléchir : la palette le fait en un toucher. Celles qui veulent aller plus loin touchent directement la partie à changer, sans avoir à comprendre « encadrés », « boutons »… C'est ce que font les meilleurs (Wix, Canva), en plus simple.</div>
+<script>
+const P = [ // [nom, fond de page, encadré, nom, bouton]
+ ["Cerise", "#F6E3E4", "#F2D3D6", "#1E1C1B", "#B3125F"], ["Nude", "#F4ECE4", "#EADBCB", "#4A3226", "#8C5F45"], ["Nuit", "#1F2230", "#2C3044", "#F4EADB", "#C9A86A"], ["Sauge", "#EEF2EB", "#DDE7D0", "#2F3A2B", "#4F6E55"],
+ ["Lilas", "#F2EDF7", "#E2D7F0", "#3B2E55", "#7B62A8"], ["Bordeaux", "#F7ECEA", "#EBD3D0", "#6E1A2C", "#6E1A2C"], ["Or & noir", "#F4EFE6", "#1E1C1B", "linear-gradient(170deg,#FFF3C4,#E8C66A 38%,#B8862E 62%,#F6DE92)", "#B8862E"], ["Bleu nuit", "#EDF1F7", "#D3DCEB", "#1F2E5C", "#3B5583"]];
+const ENC = ["#FFFFFF","#F2D3D6","#EADBCB","#DDE7D0","#E2D7F0","#D3DCEB","#F6E3A1","#EBD3D0","#2C3044","#1E1C1B"];
+const NOM = ["#1E1C1B","#FFFFFF","#4A3226","#6E1A2C","#B3125F","#1F2E5C","#2F5A45","#7B62A8","linear-gradient(170deg,#FFF3C4,#E8C66A 38%,#B8862E 62%,#F6DE92)","linear-gradient(170deg,#FFFFFF,#D9DCE2 35%,#8C9098 60%,#F2F3F6)"];
+const BTN = ["#1E1C1B","#B3125F","#A8325A","#6E1A2C","#8C5F45","#C9A86A","#4F6E55","#3B5583","#7B62A8","#C0503A"];
+const pose = (carte, q, v) => { const ap = carte.querySelector(".ap"), n = carte.querySelector(".nom");
+  if (q === "bl") ap.style.setProperty("--bl", v);
+  if (q === "bt") ap.style.setProperty("--bt", v);
+  if (q === "nm") { const g = /gradient/.test(v); n.classList.toggle("grad", g); ap.style.setProperty("--nmg", g ? v : "none"); ap.style.setProperty("--nm", g ? "transparent" : v); } };
+const enc = v => v === "#2C3044" || v === "#1E1C1B";
+/* 1 */
+{ const c = document.querySelector(".c1"), l = document.getElementById("pals");
+  l.innerHTML = P.map((p, i) => `<div class="pal${i ? "" : " on"}" data-i="${i}"><div class="bd"><i style="background:${p[2]}"></i><i style="background:${p[3]}"></i><i style="background:${p[4]}"></i></div><span>${p[0]}</span></div>`).join("");
+  l.onclick = e => { const b = e.target.closest(".pal"); if (!b) return; const p = P[+b.dataset.i]; c.querySelector(".ap").style.setProperty("--pf", p[1]); pose(c, "bl", p[2]); pose(c, "nm", p[3]); pose(c, "bt", p[4]); l.querySelectorAll(".pal").forEach(x => x.classList.toggle("on", x === b)); }; }
+/* 2 */
+{ const c = document.querySelector(".c2"), l = document.getElementById("minis"); let q = "bl";
+  const rend = () => { const L = q === "bl" ? ENC : q === "nm" ? NOM : BTN;
+    l.innerHTML = L.slice(0, 8).map((v, i) => { const bl = q === "bl" ? v : "#F2D3D6", nm = q === "nm" ? v : (q === "bl" && enc(v) ? "#F4EADB" : "#1E1C1B"), bt = q === "bt" ? v : "#1E1C1B", g = /gradient/.test(nm);
+      return `<div class="mini" data-v="${v}" style="background:${bl}"><b style="${g ? `background:${nm};-webkit-background-clip:text;background-clip:text;color:transparent` : `color:${nm}`}">Cerise</b><i style="background:${bt}"></i></div>`; }).join(""); };
+  document.getElementById("o2").onclick = e => { const b = e.target.closest("button"); if (!b) return; q = b.dataset.q; document.querySelectorAll("#o2 button").forEach(x => x.classList.toggle("on", x === b)); rend(); };
+  l.onclick = e => { const b = e.target.closest(".mini"); if (!b) return; pose(c, q, b.dataset.v); if (q === "bl" && enc(b.dataset.v)) pose(c, "nm", "#F4EADB"); l.querySelectorAll(".mini").forEach(x => x.classList.toggle("on", x === b)); }; rend(); }
+/* 3 */
+{ const c = document.querySelector(".c3"), l = document.getElementById("bande3"); let q = "bl"; const NOMS = { bl: "Vos encadrés", nm: "Votre nom", bt: "Bouton Réserver <em>(et les étoiles des avis)</em>" };
+  const rend = () => { const L = q === "bl" ? ENC : q === "nm" ? NOM : BTN; l.innerHTML = L.map(v => `<div class="pastille" data-v="${v}" style="background:${v}"></div>`).join(""); document.getElementById("lab3").innerHTML = NOMS[q];
+    c.querySelectorAll(".zone").forEach(z => z.classList.toggle("vise", z.dataset.q === q)); };
+  c.querySelector(".ap").onclick = e => { const z = e.target.closest(".zone"); if (!z) return; e.stopPropagation(); q = z.dataset.q; rend(); document.getElementById("ast3").textContent = "✓ Choisissez la couleur"; };
+  l.onclick = e => { const b = e.target.closest(".pastille"); if (!b) return; pose(c, q, b.dataset.v); l.querySelectorAll(".pastille").forEach(x => x.classList.toggle("on", x === b)); }; rend(); }
+/* 4 */
+{ const c = document.querySelector(".c4"), a = document.getElementById("arc"), po = document.getElementById("pouce"); let q = "bl";
+  const BANDES = { bl: ["#FFFFFF", "#F6E3E4", "#F2D3D6", "#F7E1D0", "#F6E3A1", "#DDE7D0", "#D3DCEB", "#E2D7F0", "#EADBCB", "#2C3044", "#1E1C1B"], nm: NOM.filter(v => !/gradient/.test(v)).concat(["#C0503A"]), bt: BTN };
+  const peint = () => { const L = BANDES[q]; a.style.background = `linear-gradient(90deg,${L.map((v, i) => `${v} ${i / (L.length - 1) * 100}%`).join(",")})`;
+    document.querySelectorAll("#o4 button i").forEach(i => { const k = i.parentElement.dataset.q; i.style.background = getComputedStyle(c.querySelector(".ap")).getPropertyValue(k === "bl" ? "--bl" : k === "nm" ? "--nm" : "--bt") || "#ccc"; }); };
+  const choisit = x => { const r = a.getBoundingClientRect(), t = Math.min(1, Math.max(0, (x - r.left) / r.width)), L = BANDES[q], v = L[Math.round(t * (L.length - 1))];
+    po.style.left = t * 100 + "%"; po.style.background = v; pose(c, q, v); peint(); };
+  let tient = false; a.onpointerdown = e => { tient = true; a.setPointerCapture(e.pointerId); choisit(e.clientX); }; a.onpointermove = e => { if (tient) choisit(e.clientX); }; a.onpointerup = () => tient = false;
+  document.getElementById("o4").onclick = e => { const b = e.target.closest("button"); if (!b) return; q = b.dataset.q; document.querySelectorAll("#o4 button").forEach(x => x.classList.toggle("on", x === b)); peint(); po.style.left = "8%"; po.style.background = BANDES[q][1]; };
+  peint(); po.style.left = "18%"; po.style.background = "#F2D3D6"; }
+/* 5 */
+{ const c = document.querySelector(".c5"), l = document.getElementById("duos");
+  const D = [["Rose vernis", "#F2D3D6", "#B5475E"], ["Graphite", "#E6E7EA", "#4A4E55"], ["Nude", "#F0E6DC", "#8C5F45"], ["Sauge", "#E4EBE1", "#4F6E55"], ["Lavande", "#ECE6F3", "#76589A"], ["Terracotta", "#F4E3DA", "#A4502F"], ["Bleu nuit", "#E3E8F1", "#3B5583"], ["Cerise", "#F6D9DE", "#A01C2E"], ["Or", "#F4EADB", "#B8862E"], ["Noir", "#EDEBE8", "#1E1C1B"], ["Bordeaux", "#EBD3D0", "#6E1A2C"], ["Lagon", "#DDF0EF", "#1F7A7A"]];
+  l.innerHTML = D.map((d, i) => `<div><div class="duo${i ? "" : " on"}" data-i="${i}" style="--a:${d[1]};--b:${d[2]}"></div><div class="duoN">${d[0]}</div></div>`).join("");
+  l.querySelectorAll(".duo").forEach(x => { x.style.setProperty("--a", D[+x.dataset.i][1]); x.style.setProperty("--b", D[+x.dataset.i][2]); });
+  l.onclick = e => { const b = e.target.closest(".duo"); if (!b) return; const d = D[+b.dataset.i]; pose(c, "bl", d[1]); pose(c, "bt", d[2]); l.querySelectorAll(".duo").forEach(x => x.classList.toggle("on", x === b)); }; }
+</script>
+</body></html>

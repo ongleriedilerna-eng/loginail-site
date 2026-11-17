@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choisir les charms « Pour vous »</title>
+<link href="../polices.css" rel="stylesheet">
+<script src="../charms-cat.js?v=1"></script>
+<script src="charms-noms.js?v=1711"></script>
+<style>
+/* 17/11 · Marie choisit les charms de la catégorie « Pour vous ». Tous les charms, par famille, numérotés.
+   Un clic = choisi (♥ rose) ; la sélection est gardée dans ce navigateur et listée en bas. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--rose:#B5475E}
+*{box-sizing:border-box}body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;padding:22px 16px 140px}
+h1{font:500 34px "Cormorant Garamond",serif;margin:0 0 4px;text-align:center}
+.sous{text-align:center;color:var(--muted);margin:0 0 16px;font-size:14px}
+.outils{position:sticky;top:0;z-index:5;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px 0;background:var(--fond)}
+.outils input{height:40px;width:min(360px,100%);border-radius:999px;border:0;padding:0 16px;font:400 15px Jost,sans-serif;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.outils button{height:40px;padding:0 16px;border-radius:999px;border:0;background:#fff;font:400 13px Jost,sans-serif;cursor:pointer;box-shadow:0 4px 12px -8px rgba(0,0,0,.4)}
+.outils button.on{background:var(--noir);color:#fff}
+h2{font:500 22px "Cormorant Garamond",serif;margin:22px 0 8px}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px}
+.c{position:relative;background:#fff;border-radius:14px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:0;font:400 10.5px Jost,sans-serif;color:var(--muted);text-align:center;line-height:1.15;transition:transform .15s,box-shadow .15s}
+.c img{width:54px;height:54px;object-fit:contain}
+.c b{position:absolute;left:6px;top:4px;font:500 9.5px Jost,sans-serif;color:var(--doux)}
+.c:hover{transform:translateY(-2px)}
+.c.deja{box-shadow:0 0 0 2px #E8C9D2}
+.c.on{box-shadow:0 0 0 2.5px var(--rose);color:var(--noir);font-weight:500}
+.c.on:after{content:"♥";position:absolute;right:6px;top:3px;color:var(--rose);font-size:13px}
+.barre{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--noir);color:#fff;padding:12px 18px;font-size:13.5px;line-height:1.45;max-height:30vh;overflow:auto}
+.barre b{color:#FFD9EA}
+</style></head><body>
+<h1>Les charms « <em>Pour vous</em> »</h1>
+<p class="sous">Touchez les charms que vous voulez dans « Pour vous » (♥ rose). Les contours roses pâles = ceux qui y sont déjà.</p>
+<div class="outils"><input id="q" placeholder="Chercher : cœur, cerise, nœud…"><button id="vue" data-v="tous" class="on">Tous</button><button id="vueSel" data-v="sel">Ma sélection</button><button id="raz">Repartir de la liste actuelle</button></div>
+<div id="liste"></div>
+<div class="barre" id="barre"></div>
+<script>
+const ACTUELS = ["cerisedisco", "libellule", "croissant", "cocktail", "ramenoeuf", "casquette", "flamme", "clapet", "bouledisco", "boule8", "cabriolet", "cadeau", "baladeur", "lampeuv", "serum", "pinceacheveux", "cremeconcombre", "bottedisco", "canard", "ourson", "papillonroseverre", "papilloncyber", "bougielotus", "levresgrillz", "planeteetincelles", "coeurpixel", "fleursixties", "tulipe", "cerisesor", "baguettetradition", "onigiri", "painchocolat", "potionviolette", "boueeflamant", "hautsirene", "etoiledemerrose", "hippocampe", "basketargent", "chapeaupaille", "cible", "cassette", "manetteblanche"];
+const tous = Object.keys(window.CH_CAT || {}).sort((a, b) => (CH_CAT[a] || "").localeCompare(CH_CAT[b] || "", "fr") || nom(a).localeCompare(nom(b), "fr"));
+function nom(n) { return (window.CHNOM || {})[n] || n; }
+const num = {}; tous.forEach((n, i) => num[n] = i + 1);
+let sel = (() => { try { return JSON.parse(localStorage.getItem("pourVousChoix") || "null") || ACTUELS.slice(); } catch (e) { return ACTUELS.slice(); } })(), vue = "tous";
+const sauve = () => { try { localStorage.setItem("pourVousChoix", JSON.stringify(sel)); } catch (e) {} };
+const sa = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+function rend() { const q = sa(document.getElementById("q").value), par = {};
+  tous.filter(n => (vue === "tous" || sel.includes(n)) && (!q || sa(nom(n)).includes(q) || n.includes(q))).forEach(n => { const f = CH_CAT[n] || "Autres"; (par[f] = par[f] || []).push(n); });
+  document.getElementById("liste").innerHTML = Object.entries(par).map(([f, L]) => `<h2>${f} <small style="font:400 13px Jost;color:#8A817A">(${L.length})</small></h2><div class="grille">${L.map(n => `<button class="c${sel.includes(n) ? " on" : ""}${ACTUELS.includes(n) ? " deja" : ""}" data-n="${n}"><b>${num[n]}</b><img src="../loginail-site/charms-mini/${n}.webp" alt="" loading="lazy">${nom(n)}</button>`).join("")}</div>`).join("") || "<p>Aucun charm.</p>";
+  document.getElementById("barre").innerHTML = `<b>Ma sélection (${sel.length}) :</b> ` + sel.map(n => `${nom(n)} (n°${num[n]})`).join(" · "); }
+document.getElementById("liste").onclick = e => { const b = e.target.closest(".c"); if (!b) return; const n = b.dataset.n, i = sel.indexOf(n); if (i < 0) sel.push(n); else sel.splice(i, 1); sauve(); b.classList.toggle("on", i < 0); rend(); };
+document.getElementById("q").oninput = rend;
+document.querySelector(".outils").onclick = e => { const b = e.target.closest("[data-v]"); if (b) { vue = b.dataset.v; document.querySelectorAll("[data-v]").forEach(x => x.classList.toggle("on", x === b)); rend(); } if (e.target.id === "raz") { sel = ACTUELS.slice(); sauve(); rend(); } };
+window.selectionPourVous = () => sel.slice();
+rend();
+</script>
+</body></html>

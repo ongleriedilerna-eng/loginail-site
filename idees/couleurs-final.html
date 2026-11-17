@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Couleurs · A ou B</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 17/11 · Pôle Design · onglet « Couleurs » : les 2 mélanges finaux demandés par Marie (idée 5 « duos » + idée 3 « toucher » + pastilles ;
+   B ajoute l'idée 4 « bande à glisser »). Tout est cliquable. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--rose:#B5475E;--ligne:rgba(30,28,27,.1)}
+*{box-sizing:border-box}body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;padding:28px 16px 60px}
+h1{font:500 38px "Cormorant Garamond",serif;margin:0 0 6px;text-align:center}
+.sous{text-align:center;color:var(--muted);margin:0 0 24px}
+.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,520px));gap:26px;justify-content:center}
+.carte{background:#fff;border-radius:28px;padding:22px 22px 26px;box-shadow:0 18px 40px -30px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
+.carte h2{margin:0;font:500 28px "Cormorant Garamond",serif}.carte h2 i{font-style:normal;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--noir);color:#fff;font:500 15px Jost,sans-serif;margin-right:8px;vertical-align:4px}
+.carte p.idee{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.titre{font:500 13px Jost,sans-serif;color:var(--noir);margin:6px 0 -4px}
+.titre em{font-style:normal;color:var(--doux);font-weight:400}
+.ap{border-radius:20px;padding:18px 14px 16px;background:var(--pf,#F6E3E4);position:relative;overflow:hidden}
+.fiche{position:relative;background:var(--bl,#F2D3D6);border-radius:16px;padding:14px 12px;text-align:center;transition:background .25s;box-shadow:0 10px 24px -18px rgba(0,0,0,.5)}
+.fiche small{display:block;font-size:8.5px;letter-spacing:.2em;color:rgba(30,28,27,.55);text-transform:uppercase}
+.nom{font:400 30px "Bebas Neue",Jost,sans-serif;color:var(--nm,#1E1C1B);margin:4px 0 2px;transition:color .25s}
+.nom.grad{color:transparent;background:var(--nmg);-webkit-background-clip:text;background-clip:text}
+.et{font-size:11px;color:var(--bt,#1E1C1B);transition:color .25s}.et span{color:var(--muted);font-size:10px}
+.res{display:inline-block;margin-top:9px;padding:9px 18px;border-radius:999px;background:var(--bt,#1E1C1B);color:#fff;font:600 9.5px Jost,sans-serif;letter-spacing:.16em;transition:background .25s}
+/* toucher : la partie choisie clignote doucement */
+.zone{position:relative;cursor:pointer;border-radius:12px;outline:2px dashed transparent;outline-offset:4px;transition:outline-color .2s}
+.zone:hover{outline-color:rgba(181,71,94,.45)}
+.zone.vise{outline-color:var(--rose);animation:vise 1.6s ease-in-out infinite}
+@keyframes vise{50%{outline-color:rgba(181,71,94,.25)}}
+.main{position:absolute;right:12px;bottom:10px;font-size:22px;animation:tape 2.2s ease-in-out infinite;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));transition:opacity .3s}
+@keyframes tape{0%,60%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(-8px,-6px) scale(.9)}}
+/* duos */
+.duos{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;justify-items:center}
+.duo{width:44px;height:44px;border-radius:50%;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.duo:before,.duo:after{content:"";position:absolute;inset:0}
+.duo:before{background:var(--a);clip-path:polygon(0 0,100% 0,0 100%)}.duo:after{background:var(--b);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.duo:hover{transform:scale(1.07)}.duo.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.duoN{font-size:10px;color:var(--doux);text-align:center;margin-top:3px}
+/* pastilles des 3 parties */
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.parts button{border:0;border-radius:14px;padding:9px 6px;background:var(--fond);font:400 12.5px Jost,sans-serif;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .2s,color .2s}
+.parts button i{width:15px;height:15px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.parts button.on{background:var(--noir);color:#fff}
+.aide{font-size:12px;color:var(--rose);margin-top:-6px}
+/* A : ronds */
+.ronds{display:flex;flex-wrap:wrap;gap:9px}
+.rond{width:32px;height:32px;border-radius:50%;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);transition:transform .15s}
+.rond:hover{transform:scale(1.1)}.rond.on{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 0 0 2px #fff,0 0 0 4px var(--noir)}
+/* B : bande */
+.arc{position:relative;height:46px;border-radius:999px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);touch-action:none}
+.arc .pouce{position:absolute;top:50%;width:34px;height:34px;border-radius:50%;translate:-50% -50%;box-shadow:0 0 0 3px #fff,0 6px 14px -4px rgba(0,0,0,.5);pointer-events:none}
+.reco{max-width:760px;margin:30px auto 0;background:var(--noir);color:#fff;border-radius:20px;padding:18px 22px;font-size:14.5px;line-height:1.55}.reco b{color:#FFD9EA}
+@media (max-width:440px){.grille{grid-template-columns:1fr}.duos{grid-template-columns:repeat(4,1fr)}}
+</style></head><body>
+<h1>Vos <em>couleurs</em> · A ou B</h1>
+<p class="sous">Le mélange de vos idées : les duos (5) + toucher le site (3) + des pastilles claires. B ajoute la bande à glisser (4).</p>
+<div class="grille" id="grille"></div>
+<div class="reco"><b>Ma recommandation : B.</b> Les duos pour celles qui ne veulent pas réfléchir, et la bande pour celles qui veulent « leur » couleur exacte : un choix presque infini, en un geste. Les pastilles + la petite main règlent la question « est-ce qu'elle va comprendre qu'elle peut toucher » : elle n'est pas obligée de deviner.</div>
+<template id="t"><section class="carte">
+  <h2><i></i><span class="tt"></span></h2><p class="idee"></p>
+  <div class="ap"><div class="fiche zone" data-q="bl"><small>Prothésiste ongulaire · Marseille</small><div class="nom zone" data-q="nm">Les ongles de Cerise</div><div class="et zone" data-q="bt">★★★★★ <span>5,0 · 3 avis</span></div><div class="res zone" data-q="bt">RÉSERVER UN CRÉNEAU</div></div><span class="main">☝</span></div>
+  <div class="titre">Couleurs assorties <em>· un toucher, tout va ensemble</em></div>
+  <div class="duos"></div>
+  <div class="titre">Personnaliser <em>· touchez le site ou une pastille</em></div>
+  <div class="parts"><button data-q="bl" class="on"><i></i>Encadrés</button><button data-q="nm"><i></i>Nom</button><button data-q="bt"><i></i>Bouton Réserver</button></div>
+  <div class="choixC"></div>
+</section></template>
+<script>
+const D = [["Rose vernis", "#F2D3D6", "#B5475E", "#1E1C1B"], ["Graphite", "#E6E7EA", "#4A4E55", "#1E1C1B"], ["Nude", "#F0E6DC", "#8C5F45", "#4A3226"], ["Sauge", "#E4EBE1", "#4F6E55", "#2F3A2B"], ["Lavande", "#ECE6F3", "#76589A", "#3B2E55"], ["Terracotta", "#F4E3DA", "#A4502F", "#4A2A1C"],
+  ["Bleu nuit", "#E3E8F1", "#3B5583", "#1F2E5C"], ["Cerise", "#F6D9DE", "#A01C2E", "#6E1A2C"], ["Or", "#F4EADB", "#B8862E", "linear-gradient(170deg,#FFF3C4,#E8C66A 38%,#B8862E 62%,#F6DE92)"], ["Noir", "#EDEBE8", "#1E1C1B", "#1E1C1B"], ["Bordeaux", "#EBD3D0", "#6E1A2C", "#6E1A2C"], ["Lagon", "#DDF0EF", "#1F7A7A", "#16504F"]];
+const L = { bl: ["#FFFFFF", "#F6E3E4", "#F2D3D6", "#F7E1D0", "#F6E3A1", "#DDE7D0", "#D3DCEB", "#E2D7F0", "#EADBCB", "#2C3044", "#1E1C1B"],
+  nm: ["#1E1C1B", "#FFFFFF", "#4A3226", "#6E1A2C", "#B3125F", "#C0503A", "#2F5A45", "#1F2E5C", "#7B62A8", "linear-gradient(170deg,#FFF3C4,#E8C66A 38%,#B8862E 62%,#F6DE92)", "linear-gradient(170deg,#FFFFFF,#D9DCE2 35%,#8C9098 60%,#F2F3F6)"],
+  bt: ["#1E1C1B", "#B3125F", "#A8325A", "#6E1A2C", "#C0503A", "#8C5F45", "#C9A86A", "#4F6E55", "#1F7A7A", "#3B5583", "#7B62A8"] };
+const VERS = [["A", "Duos + toucher + ronds", "Les couleurs assorties en haut. En dessous, elle touche la partie à changer (sur le site ou sur une pastille) et choisit parmi des ronds."],
+  ["B", "Duos + toucher + bande", "Pareil, mais la couleur se choisit en glissant le doigt sur une bande : un choix presque infini, en un seul geste."]];
+const g = document.getElementById("grille");
+VERS.forEach(([lettre, tt, idee]) => {
+  const c = document.getElementById("t").content.firstElementChild.cloneNode(true); g.appendChild(c);
+  c.querySelector("h2 i").textContent = lettre; c.querySelector(".tt").textContent = tt; c.querySelector(".idee").textContent = idee;
+  const ap = c.querySelector(".ap"), nom = c.querySelector(".nom"); let q = "bl";
+  const val = { bl: "#F2D3D6", nm: "#1E1C1B", bt: "#1E1C1B" };
+  const pose = (k, v) => { val[k] = v; if (k === "bl") ap.style.setProperty("--bl", v); if (k === "bt") ap.style.setProperty("--bt", v);
+    if (k === "nm") { const gr = /gradient/.test(v); nom.classList.toggle("grad", gr); ap.style.setProperty("--nmg", gr ? v : "none"); ap.style.setProperty("--nm", gr ? "transparent" : v); }
+    c.querySelectorAll(".parts button").forEach(b => b.querySelector("i").style.background = val[b.dataset.q]); };
+  const duos = c.querySelector(".duos"); duos.innerHTML = D.map((d, i) => `<div><div class="duo" data-i="${i}" style="--a:${d[1]};--b:${d[2]}"></div><div class="duoN">${d[0]}</div></div>`).join("");
+  duos.onclick = e => { const b = e.target.closest(".duo"); if (!b) return; const d = D[+b.dataset.i]; pose("bl", d[1]); pose("bt", d[2]); pose("nm", d[3]); duos.querySelectorAll(".duo").forEach(x => x.classList.toggle("on", x === b)); rend(); };
+  const ch = c.querySelector(".choixC");
+  const rend = () => { c.querySelectorAll(".zone").forEach(z => z.classList.toggle("vise", z.dataset.q === q)); c.querySelectorAll(".parts button").forEach(b => b.classList.toggle("on", b.dataset.q === q));
+    if (lettre === "A") { ch.innerHTML = `<div class="ronds">${L[q].map(v => `<div class="rond${v === val[q] ? " on" : ""}" data-v="${v}" style="background:${v}"></div>`).join("")}</div>`; }
+    else { const flat = L[q].filter(v => !/gradient/.test(v)); ch.innerHTML = `<div class="arc" style="background:linear-gradient(90deg,${flat.map((v, i) => `${v} ${i / (flat.length - 1) * 100}%`).join(",")})"><div class="pouce" style="left:${Math.max(0, flat.indexOf(val[q])) / (flat.length - 1) * 100}%;background:${val[q]}"></div></div>`;
+      const a = ch.querySelector(".arc"), po = ch.querySelector(".pouce"); let tient = false;
+      const choisit = x => { const r = a.getBoundingClientRect(), t = Math.min(1, Math.max(0, (x - r.left) / r.width)), v = flat[Math.round(t * (flat.length - 1))]; po.style.left = t * 100 + "%"; po.style.background = v; pose(q, v); };
+      a.onpointerdown = e => { tient = true; a.setPointerCapture(e.pointerId); choisit(e.clientX); }; a.onpointermove = e => { if (tient) choisit(e.clientX); }; a.onpointerup = () => tient = false; } };
+  ch.onclick = e => { const b = e.target.closest(".rond"); if (!b) return; pose(q, b.dataset.v); rend(); };
+  c.querySelector(".parts").onclick = e => { const b = e.target.closest("button"); if (!b) return; q = b.dataset.q; rend(); };
+  ap.onclick = e => { const z = e.target.closest(".zone"); if (!z) return; e.stopPropagation(); q = z.dataset.q; rend(); ap.querySelector(".main").style.opacity = 0; };
+  Object.entries(val).forEach(([k, v]) => pose(k, v)); rend();
+});
+</script>
+</body></html>
