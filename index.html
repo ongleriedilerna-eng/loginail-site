@@ -1891,6 +1891,19 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np .np-hero{background:radial-gradient(46% 40% at 50% 26%,rgba(246,215,225,.85),transparent 70%),radial-gradient(30% 30% at 8% 70%,rgba(201,138,98,.10),transparent 70%),radial-gradient(30% 30% at 92% 64%,rgba(224,98,140,.08),transparent 70%),linear-gradient(180deg,#F7F0EA 0%,#F5E6E8 50%,#F3ECE4 100%)}
 
 .np .np-float.np-cache{display:none!important}
+/* 17/11 (Marie) : sur ordinateur, le haut de page est une « scène » dessinée à la taille de l'écran de Marie (1536×720)
+   puis agrandie ou réduite d'un bloc : tous les ordis voient la même chose (titre, bulles, téléphones coupés au même endroit). */
+html.np-stage .np .np-hero{width:calc(100% / var(--s));padding-top:calc(76px / var(--s));transform:scale(var(--s));transform-origin:0 0;margin-bottom:var(--mb,0px)}
+html.np-stage .np .np-hero .np-top{padding-top:22px}
+html.np-stage .np h1{font-size:63px}
+html.np-stage .np h1 .np-l2{font-size:33px}
+html.np-stage .np .np-lead{font-size:19.5px;white-space:nowrap;max-width:none}
+html.np-stage .np .np-pop .np-shot{height:273px}
+html.np-stage .np .np-inarc h2{font-size:34px}
+html.np-stage .np .np-float{--bx:calc(50% - var(--sw) / 2 + max(26px, (var(--sw) - 1180px) * .27));scale:1}
+html.np-stage .np .np-float:active{scale:.98}
+html.np-stage .np .np-f1{top:20%}html.np-stage .np .np-f2{top:17%}
+html.np-stage .np .np-f3{top:60%}html.np-stage .np .np-f4{top:58%}
 header.top,section.hero:not(#hero){display:none!important}
 html{scroll-padding-top:84px}
 </style>
@@ -3103,6 +3116,15 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $=id=>document.getElementById(id);
 
+/* ---- Scène : sur ordinateur, le haut est dessiné pour un écran de 1536×720 puis mis à l'échelle de l'écran ---- */
+const REF_H=720,REF_W_MIN=1100,NAV_H=76;let S=1;
+function stage(){const h=$('hero'),root=document.documentElement;if(!h)return;
+  if(innerWidth<1000){root.classList.remove('np-stage');S=1;h.style.removeProperty('--mb');return}
+  S=Math.min((innerHeight-NAV_H)/(REF_H-NAV_H),innerWidth/REF_W_MIN);
+  root.style.setProperty('--s',S);root.style.setProperty('--sw',(innerWidth/S)+'px');root.classList.add('np-stage');
+  h.style.setProperty('--mb',(h.offsetHeight*(S-1))+'px')}
+stage();addEventListener('resize',stage);addEventListener('load',stage);
+
 /* Nav : un peu plus opaque au scroll */
 const nav=$('nav');addEventListener('scroll',()=>nav.classList.toggle('np-scrolled',scrollY>10),{passive:true});
 
@@ -3128,7 +3150,7 @@ const items=CH.map(([f,x,y,sz,r,m],i)=>{const im=new Image();im.src=C+f+'.webp';
   im.style.cssText=`width:${sz}px;left:calc(${x}% - ${sz/2}px);top:${y}px`;host.append(im);
   return{el:im,s:sz,r,ph:i*.9,dx:0,dy:0,vx:0,vy:0,rot:0,vr:0,cool:0}});
 let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3,mvx=0,mvy=0;
-hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();mx=e.clientX-b.left;my=e.clientY-b.top});
+hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();mx=(e.clientX-b.left)/S;my=(e.clientY-b.top)/S});
 hero.addEventListener('pointerleave',()=>{mx=my=-9e3});
 function tick(t){
   // vitesse de la souris (pour « lancer » les charms dans sa direction)
@@ -3163,11 +3185,11 @@ addEventListener('scroll',()=>tip&&tip.classList.remove('on'),{passive:true});
 const floats=[...document.querySelectorAll('.np-float')];
 /* Le carré d'aperçu reste sous la barre du haut et dans l'écran, quelle que soit la taille de l'écran */
 function placePop(f){const p=f.querySelector('.np-pop');if(!p)return;p.style.top='';p.style.bottom='';p.style.removeProperty('--ay');if(!p.offsetWidth)return;
-  const fr=f.getBoundingClientRect(),h=p.offsetHeight,t=fr.top+p.offsetTop,nav=document.querySelector('.np-nav'),
+  const fr=f.getBoundingClientRect(),h=p.offsetHeight*S,t=fr.top+p.offsetTop*S,nav=document.querySelector('.np-nav'),
     hi=(nav?nav.getBoundingClientRect().bottom:76)+14,lo=innerHeight-h-12;
-  const nt=Math.max(hi,Math.min(t,lo));if(Math.abs(nt-t)>1){p.style.top=(nt-fr.top)+'px';p.style.bottom='auto'}
-  p.style.setProperty('--ay',Math.max(24,Math.min(h-24,fr.top+fr.height/2-nt))+'px')}
-function openF(f){placePop(f);const r=f.getBoundingClientRect();hero.style.setProperty('--fx',(r.left+r.width/2)+'px');hero.style.setProperty('--fy',(r.top+r.height/2)+'px');
+  const nt=Math.max(hi,Math.min(t,lo));if(Math.abs(nt-t)>1){p.style.top=((nt-fr.top)/S)+'px';p.style.bottom='auto'}
+  p.style.setProperty('--ay',Math.max(24,Math.min(h-24,fr.top+fr.height/2-nt))/S+'px')}
+function openF(f){placePop(f);const r=f.getBoundingClientRect(),hb=S!==1?hero.getBoundingClientRect():{left:0,top:0};hero.style.setProperty('--fx',((r.left+r.width/2-hb.left)/S)+'px');hero.style.setProperty('--fy',((r.top+r.height/2-hb.top)/S)+'px');
   // on fige la bulle sur un pixel entier : texte net
   const t=getComputedStyle(f).translate.split(' ').map(v=>Math.round(parseFloat(v)||0)+'px');f.style.translate=t.join(' ');f.style.animation='none';
   floats.forEach(x=>{if(x!==f)closeF(x,true)});f.classList.add('np-active');f.setAttribute('aria-expanded','true');hero.classList.add('np-focus');if(tip)tip.classList.remove('on')}
