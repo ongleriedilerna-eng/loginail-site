@@ -672,9 +672,9 @@ body.coul2 .rangC .ligne{gap:8px}
 .reglS input::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0;box-shadow:0 2px 8px rgba(0,0,0,.4)}
 /* les brillants du nom, à la place de « Blancs / En couleur » */
 .brillV{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;width:100%}
-.brillV button{aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.brillV button{aspect-ratio:1;border-radius:50%;width:86%;justify-self:center;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
 .brillV button.on{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
-@media (max-width:899px){.brillV{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:899px){.brillV{grid-template-columns:repeat(3,1fr)}}
 /* 17/11 (Marie) : « Voir comme ma cliente » TOUJOURS au milieu du téléphone (il suit le téléphone) */
 .vueCliente{left:var(--vcx,50%)!important;top:var(--vcy,4px)!important;transform:translateX(-50%)!important}
 .vueCliente:active{transform:translateX(-50%) scale(.96)!important}
@@ -858,13 +858,15 @@ body.ep1 .choix:after{display:none!important}
 </style>
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
-<script src="ordre-ecritures.js?v=1711"></script>
+<script src="ordre-ecritures.js?v=1711b"></script>
 <script>/* 17/11 (Marie : « pour les écritures, je veux choisir moi l'ordre ») : l'ordre vient de ordre-ecritures.js ;
    mode choix (?ordre=1 dans l'adresse) : elle touche les écritures dans l'ordre voulu, un numéro s'affiche sur chacune */
 var MODE_ORDRE = /[?&]ordre=1/.test(location.search);
 var ORDRE_CHOIX = (() => { try { return JSON.parse(localStorage.getItem("lgnOrdreEcr") || "[]"); } catch (e) { return []; } })();
-function ordonnePol(L) { const O = MODE_ORDRE ? (window.ORDRE_ECRITURES || []) : (ORDRE_CHOIX.length ? ORDRE_CHOIX : (window.ORDRE_ECRITURES || [])); if (!O.length) return L;
-  const r = k => { const i = O.indexOf(k); return i < 0 ? 1e4 : i; }; return L.map((x, i) => [x, i]).sort((a, b) => r(a[0][0]) - r(b[0][0]) || a[1] - b[1]).map(x => x[0]); }
+var HASARD_ECR = {};   /* les écritures hors liste : un ordre au hasard, tiré une fois par visite (la liste ne bouge pas pendant qu'elle choisit) */
+function ordonnePol(L) { const O = window.ORDRE_ECRITURES || [];
+  const r = k => { const i = O.indexOf(k); if (i >= 0) return i; if (!(k in HASARD_ECR)) HASARD_ECR[k] = 1e4 + Math.random(); return HASARD_ECR[k]; };
+  return L.slice().sort((a, b) => r(a[0]) - r(b[0])); }
 </script>
 <script>/* 17/11 (Marie : « je veux choisir moi le fond qui se verra dans les ronds ») : l'image de chaque rond.
    Mode choix : ajouter ?ronds=1 à l'adresse → touchez un thème, puis le fond qui ira dans son rond. */
@@ -1041,9 +1043,9 @@ $("lPol").onclick = e => { const b = e.target.closest(".ecr-c"); if (!b) return;
 $("lCoul").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; if (b.id === "plusC") { toutesCouleurs = true; rend("couleurs"); return; } P.couleur(b.dataset.co); marque($("lCoul"), ".dot", b.dataset.co, "co"); };
 $("lNom").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; P.nomc(b.dataset.nc); marque($("lNom"), ".dot", b.dataset.nc, "nc"); };
 $("blocsC").onclick = e => { const b = e.target.closest("[data-bl]"); if (!b) return; memo(); P.blocs(b.dataset.bl); marque($("blocsC"), "[data-bl]", b.dataset.bl, "bl"); };
-$("assortirF").onclick = () => { if (!P.etat.fond) return bulle("Choisissez d’abord un fond"); petillant($("assortirF")); memo(); if (P.assortir()) bulle("Couleurs assorties à votre fond ✦"); };
+$("assortirF").onclick = () => { if (!P.etat.fond) return bulle("Choisissez d’abord un fond"); petillant($("assortirF")); memo(); P.assortir(); };
 $("lVif").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; P.vif(b.dataset.vif); marque($("lVif"), ".dot", b.dataset.vif, "vif"); };
-$("assortir").onclick = () => { if (P.assortir()) { rend("couleurs"); bulle("Couleurs assorties à votre fond ✦"); } };
+$("assortir").onclick = () => { if (P.assortir()) rend("couleurs"); };
 $("catC").onclick = e => { const b = e.target.closest(".catI,.puce"); if (!b) return; catCharm = b.dataset.c; rend("charms"); $("lCh").scrollLeft = 0; };
 const sansAcc = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
 function majCompte() { const n = P.pret ? P.poses().length : 0, e = P.pret ? P.nbEtoiles() : 0; $("compteC").textContent = n + " / " + P.MAX + " charms"; $("compteC").classList.toggle("plein", n >= P.MAX); $("etoX").hidden = true; majEtoN(); }
@@ -1324,7 +1326,7 @@ P.change(() => {}); const rendAvantCat = rend; rend = o => { rendAvantCat(o); if
 /* ===== Couleurs · version B (17/11, Marie : « B, la bande ») ===== */
 const DUOS = [/* 17/11 (Marie) : chaque ambiance = 3 couleurs de la MÊME famille (encadré clair · nom · bouton) */
   ["Rose vernis", "poudre", "framboiseb", "fuchsia"], ["Graphite", "greige", "anthraciteb", "noir"], ["Nude", "nude", "caramelb", "choco"], ["Sauge", "sauge", "sapinb", "vert"],
-  ["Lavande", "lavande", "pruneb", "violet"], ["Terracotta", "peche", "terracottab", "choco"], ["Bleu nuit", "bleup", "bleunuitb", "bleunuit"], ["Cerise", "rose", "cerise", "rouge"]];   /* 17/11 (Marie) : Or, Noir, Bordeaux et Lagon enlevés */
+  ["Lavande", "lavande", "pruneb", "violet"], ["Bleu nuit", "bleup", "bleunuitb", "bleunuit"], ["Cerise", "rose", "cerise", "rouge"]];   /* 17/11 (Marie) : Or, Noir, Bordeaux, Lagon et Terracotta enlevés */
 /* 17/11 (Marie) : « Sauvegarder mes couleurs » → ses assortiments à elle, en PREMIER sur la ligne des ambiances */
 const MESC = (() => { try { return JSON.parse(localStorage.getItem("lgnMesCouleurs") || "[]"); } catch (e) { return []; } })();
 const sauveMESC = () => { try { localStorage.setItem("lgnMesCouleurs", JSON.stringify(MESC)); } catch (e) {} };
@@ -1395,11 +1397,11 @@ function rendCouleursG() { if (!P.pret) return;
   h.querySelectorAll(".ambG:not(.mienC)").forEach(b => { const x = DUOS[+b.dataset.i]; b.classList.toggle("on", P.etat.couleur === x[1] && P.etat.vif === x[2] && P.etat.nomc === x[3]); });
   $("partsG").querySelectorAll("button").forEach(b => { b.classList.toggle("on", b.dataset.q === partC); b.querySelector("i").style.background = bgPart(b.dataset.q); });
   rendSephora(); $("brillG").innerHTML = "";
-  const ex = $("extraC"); if (partC === "nm") { ex.innerHTML = `<div class="brillV">${Object.entries(P.NOMC).filter(x => /gradient/.test(x[1])).slice(0, 12).map(([k, v]) => `<button data-nc="${k}" title="${nomCoul(k)}" class="${k === P.etat.nomc ? "on" : ""}" style="background:${v}"></button>`).join("")}</div>`; ex.classList.add("vis"); rendSpectre(); P.vise && P.vise(onglet === "couleurs" ? partC : null); return; }
+  const ex = $("extraC"); if (partC === "nm") { ex.innerHTML = `<div class="brillV">${Object.entries(P.NOMC).filter(x => /gradient/.test(x[1])).slice(0, 6).map(([k, v]) => `<button data-nc="${k}" title="${nomCoul(k)}" class="${k === P.etat.nomc ? "on" : ""}" style="background:${v}"></button>`).join("")}</div>`; ex.classList.add("vis"); rendSpectre(); P.vise && P.vise(onglet === "couleurs" ? partC : null); return; }
   ex.innerHTML = `<div class="exP"><button class="${P.etat.blocs === "blanc" ? "on" : ""}" data-bl="blanc">Blancs</button><button class="${P.etat.blocs !== "blanc" ? "on" : ""}" data-bl="verre">En couleur</button></div>`; ex.classList.toggle("vis", partC === "bl"); rendSpectre();
   P.vise && P.vise(onglet === "couleurs" ? partC : null); }
 $("assortG").onclick = () => { specMain = null; P.effaceLibre(); const a = $("assortG"); petillant(a);
-  memo(); if (P.assortir()) bulle("Couleurs assorties à votre fond ✦"); setTimeout(rendCouleursG, 60); };
+  memo(); P.assortir(); setTimeout(rendCouleursG, 60); };
 /* le bouton qui « pétille » au clic : il rebondit, son ✦ tourne, et des petites étincelles jaillissent autour (Assortir, dans Fond et dans Couleurs) */
 function petillant(a) { a.classList.remove("pop"); void a.offsetWidth; a.classList.add("pop");
   const r = a.getBoundingClientRect(); for (let i = 0; i < 9; i++) { const s = document.createElement("span"); s.className = "etincelle"; s.textContent = i % 3 ? "✦" : "·";
@@ -1412,7 +1414,7 @@ $("hautG").onclick = e => { const a = e.target.closest(".ambG"); if (!a) return;
     P._libreEnCours = true; ["bl", "nm", "bt"].forEach(q => m.lb && m.lb[q] && P.couleurLibre(q, m.lb[q])); P._libreEnCours = false;
     h0(); return; }
   memo(); specMain = null; P.effaceLibre();
-  if (a.classList.contains("assortG")) { if (P.assortir()) bulle("Couleurs assorties à votre fond ✦"); }
+  if (a.classList.contains("assortG")) { P.assortir(); }
   else { const x = DUOS[+a.dataset.i]; P.couleur(x[1], true); P.vif(x[2]); P.nomc(x[3]); }
   setTimeout(rendCouleursG, 60); };
 function h0() { setTimeout(() => { rendCouleursG(); $("hautG").querySelectorAll(".mienC").forEach(b => b.classList.remove("on")); }, 60); }
