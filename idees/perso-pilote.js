@@ -72,7 +72,7 @@
       clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); clique('.pf-vifs [data-vif="noirb"]');
       try { W.eval('if(typeof BR!=="undefined"&&BR){BR.nomc="noir";BR.blocs="verre"}window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:"noir",blocs:"verre"})'); } catch (e) {}
       [900, 2200].forEach(t => setTimeout(() => { if (P.etat.police === "affiche") clique('#pzPol [data-p="affiche"]'); }, t));
-      brancheGestes(); brancheVise();
+      brancheGestes();   /* 17/11 (Marie) : on ne touche plus le site pour choisir la partie à colorer (inutile) */
       P.pret = true; ok(P); signale("pret");
     }, { once: true });
   });
@@ -313,7 +313,7 @@
   let viseQ = null;
   const cibles = () => { const D = P.D, b = [...D.querySelectorAll(".ecran button")].find(x => /r[ée]server un cr[ée]neau/i.test(x.textContent)), nom = D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1");
     return { bt: b, nm: nom, bl: (b && b.closest(".fiche")) || (nom && nom.closest(".fiche")) }; };
-  P.vise = q => { viseQ = q; const D = P.D; if (!D) return; D.querySelectorAll(".pzVise").forEach(x => x.classList.remove("pzVise")); if (!q) return; const c = cibles()[q]; if (c) c.classList.add("pzVise"); };
+  P.vise = () => {}; P._viseAncien = q => { viseQ = q; const D = P.D; if (!D) return; D.querySelectorAll(".pzVise").forEach(x => x.classList.remove("pzVise")); if (!q) return; const c = cibles()[q]; if (c) c.classList.add("pzVise"); };
   function brancheVise() { const D = P.D; const st = D.createElement("style");
     st.textContent = `.pzVise{outline:2px dashed #B5475E!important;outline-offset:5px!important;border-radius:12px;animation:pzViseA 1.6s ease-in-out infinite!important}@keyframes pzViseA{50%{outline-color:rgba(181,71,94,.25)}}`;
     D.head.appendChild(st);
