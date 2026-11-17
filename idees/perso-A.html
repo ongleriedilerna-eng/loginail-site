@@ -848,9 +848,24 @@ body.ep1 .choix:after{display:none!important}
   body.surFond #assortirF.aDroite{opacity:1;pointer-events:auto;transform:none}
   .panneau[data-p="fond"]>.basC:empty{display:none}
 }
+
+/* mode « ordre des écritures » (?ordre=1) */
+.ordreBandeau{display:flex;align-items:center;gap:10px;margin:0 0 8px;padding:10px 14px;border-radius:14px;background:#FDF1F4;color:#7A2C3E;font:400 13px/1.35 Jost,sans-serif;box-shadow:inset 0 0 0 1px #F2C9D3}
+.ordreBandeau b{font-weight:600}.ordreBandeau button{flex:none;height:34px;padding:0 14px;border-radius:999px;border:0;background:#fff;color:#7A2C3E;font:500 12px Jost,sans-serif;cursor:pointer;box-shadow:0 3px 10px -5px rgba(0,0,0,.35)}
+.ecr-c{position:relative}
+.ecr-c .numO{position:absolute;left:8px;top:8px;z-index:3;min-width:26px;height:26px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:#B5475E;color:#fff;font:600 13px/1 Jost,sans-serif;font-style:normal;box-shadow:0 4px 10px -4px rgba(0,0,0,.45);animation:popA .4s var(--pop)}
+@media (max-width:899px){.ordreBandeau{margin:0 18px 8px;font-size:12px}}
 </style>
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
+<script src="ordre-ecritures.js?v=1711"></script>
+<script>/* 17/11 (Marie : « pour les écritures, je veux choisir moi l'ordre ») : l'ordre vient de ordre-ecritures.js ;
+   mode choix (?ordre=1 dans l'adresse) : elle touche les écritures dans l'ordre voulu, un numéro s'affiche sur chacune */
+var MODE_ORDRE = /[?&]ordre=1/.test(location.search);
+var ORDRE_CHOIX = (() => { try { return JSON.parse(localStorage.getItem("lgnOrdreEcr") || "[]"); } catch (e) { return []; } })();
+function ordonnePol(L) { const O = MODE_ORDRE ? (window.ORDRE_ECRITURES || []) : (ORDRE_CHOIX.length ? ORDRE_CHOIX : (window.ORDRE_ECRITURES || [])); if (!O.length) return L;
+  const r = k => { const i = O.indexOf(k); return i < 0 ? 1e4 : i; }; return L.map((x, i) => [x, i]).sort((a, b) => r(a[0][0]) - r(b[0][0]) || a[1] - b[1]).map(x => x[0]); }
+</script>
 <script>/* 17/11 (Marie : « je veux choisir moi le fond qui se verra dans les ronds ») : l'image de chaque rond.
    Mode choix : ajouter ?ronds=1 à l'adresse → touchez un thème, puis le fond qui ira dans son rond. */
 var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, JSON.parse(localStorage.getItem("lgnRondsThemes") || "{}")); } catch (e) { return {}; } })();
@@ -984,7 +999,7 @@ function rend(o) {
     $("catF").innerHTML = cats.map(c => `<button class="catI catFond${c === catFond ? " on" : ""}" data-c="${c}"><i class="vgI">${ex(c)}</i><span>${c === "Tous" ? "Tous les fonds" : c}</span></button>`).join(""); setTimeout(majFlechesF, 30);
     const F = P.fonds(); $("lFond").innerHTML = `<button class="vg sans${P.etat.fond ? "" : " on"}" data-f="">Sans<br>fond</button>` + F.map((x, i) => [x, i]).filter(([x]) => catFond === "Tous" ? !(x[3] || []).includes("Phrases") : (x[3] || []).includes(catFond)).sort((a, b) => cleTeinte(a[0][0]) - cleTeinte(b[0][0]))
       .map(([x, i]) => `<button class="vg${x[0] === P.etat.fond ? " on" : ""}" data-f="${x[0].replace(/"/g, "&quot;")}" title="${x[0].replace(/"/g, "&quot;")}">${P.vignetteFond(i)}</button>`).join(""); }
-  if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = P.polices().map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
+  if (o === "ecriture") { P.policesCss(); const l = $("lPol"); if (!l.children.length) l.innerHTML = ordonnePol(P.polices()).map(([k, n]) => `<button class="ecr-c" data-k="${k}"><span style="font-family:${P.famille(k).replace(/"/g, "'")}">${P.nomSalon()}</span><small>${n}</small></button>`).join("");
     l.querySelectorAll(".ecr-c").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.police)); }
   if (o === "couleurs") { const cs = P.couleurs(), vs = P.vifs();
     const c = toutesCouleurs ? cs : cs.filter(x => P.COUL_VUES.includes(x[0])).sort((a, b) => P.COUL_VUES.indexOf(a[0]) - P.COUL_VUES.indexOf(b[0]));
@@ -1012,6 +1027,16 @@ $("catF").addEventListener("scroll", majFlechesF); addEventListener("resize", ma
 $("catFG").onclick = () => $("catF").scrollBy({ left: -$("catF").clientWidth * .7, behavior: "smooth" }); $("catFD").onclick = () => $("catF").scrollBy({ left: $("catF").clientWidth * .7, behavior: "smooth" });
 $("catF").onclick = e => { const b = e.target.closest(".catI,.puce"); if (!b) return; catFond = b.dataset.c; rend("fond"); $("lFond").scrollLeft = 0; };
 $("lFond").onclick = e => { const b = e.target.closest(".vg"); if (!b) return; P.fond(b.dataset.f); marque($("lFond"), ".vg", b.dataset.f, "f"); if (b.dataset.f) setTimeout(() => P.assortir(), 30); };
+if (MODE_ORDRE) { const l = $("lPol"), bd = document.createElement("div"); bd.className = "ordreBandeau";
+  bd.innerHTML = `<span><b>Ordre des écritures</b> : touchez-les dans l'ordre que vous voulez (1, 2, 3…). Celles pas touchées viendront après.</span><button id="ordreRaz">Recommencer</button>`;
+  l.before(bd); document.body.classList.add("modeOrdre");
+  const badges = () => l.querySelectorAll(".ecr-c").forEach(b => { const i = ORDRE_CHOIX.indexOf(b.dataset.k); let n = b.querySelector(".numO"); if (i < 0) { if (n) n.remove(); return; }
+    if (!n) { n = document.createElement("em"); n.className = "numO"; b.appendChild(n); } n.textContent = i + 1; });
+  const sauve = () => { try { localStorage.setItem("lgnOrdreEcr", JSON.stringify(ORDRE_CHOIX)); } catch (e) {} badges(); };
+  l.addEventListener("click", e => { const b = e.target.closest(".ecr-c"); if (!b) return; const k = b.dataset.k, i = ORDRE_CHOIX.indexOf(k);
+    if (i < 0) ORDRE_CHOIX.push(k); else ORDRE_CHOIX.splice(i, 1); sauve(); }, true);
+  $("ordreRaz").onclick = () => { ORDRE_CHOIX = []; sauve(); bulle("On recommence"); };
+  setInterval(badges, 500); }
 $("lPol").onclick = e => { const b = e.target.closest(".ecr-c"); if (!b) return; P.police(b.dataset.k); marque($("lPol"), ".ecr-c", b.dataset.k, "k"); };
 $("lCoul").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; if (b.id === "plusC") { toutesCouleurs = true; rend("couleurs"); return; } P.couleur(b.dataset.co); marque($("lCoul"), ".dot", b.dataset.co, "co"); };
 $("lNom").onclick = e => { const b = e.target.closest(".dot"); if (!b) return; P.nomc(b.dataset.nc); marque($("lNom"), ".dot", b.dataset.nc, "nc"); };
@@ -1280,7 +1305,7 @@ rend = o => { if (o !== "ecriture" || !P.pret) return rendAvantEcr(o);
   const encre = () => { if (EC !== "2") return ""; if (fond && fondFonce[P.etat.fond]) return "color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35)";
     if (fond && P.etat.nomc === "blanc") return "color:#1E1C1B;text-shadow:0 1px 10px rgba(255,255,255,.6)"; return encreNom() + (fond ? ";text-shadow:0 1px 10px rgba(255,255,255,.55)" : ""); };
   l.classList.toggle("surFonce", !!(fond && fondFonce[P.etat.fond]));
-  l.innerHTML = P.polices().map(([k, n]) => `<button class="ecr-c${k === P.etat.police ? " on" : ""}" data-k="${k}"${bloc ? ` style="background:${bloc}"` : ""}>${fond ? `<span class="fd">${fond}</span>` : ""}<span style="font-family:${P.famille(k).replace(/"/g, "'")};${encre()}">${P.nomSalon()}</span><small>${n}</small><i class="ok">✓</i></button>`).join("");
+  l.innerHTML = ordonnePol(P.polices()).map(([k, n]) => `<button class="ecr-c${k === P.etat.police ? " on" : ""}" data-k="${k}"${bloc ? ` style="background:${bloc}"` : ""}>${fond ? `<span class="fd">${fond}</span>` : ""}<span style="font-family:${P.famille(k).replace(/"/g, "'")};${encre()}">${P.nomSalon()}</span><small>${n}</small><i class="ok">✓</i></button>`).join("");
   if (fond && !(P.etat.fond in fondFonce)) mesureFond(P.etat.fond).then(() => { if (onglet === "ecriture") rend("ecriture"); });
   requestAnimationFrame(() => ajusteNoms(l)); [300, 900, 2000].forEach(ms => setTimeout(() => ajusteNoms(l), ms)); try { document.fonts.ready.then(() => ajusteNoms(l)); } catch (e) {} };
 
