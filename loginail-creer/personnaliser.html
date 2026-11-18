@@ -403,7 +403,7 @@ body.ecr2 .ecr-c.on .ok{display:grid;place-items:center;position:absolute;top:7p
 @keyframes lgnBr{0%,100%{opacity:.55}50%{opacity:1}}
 .etoB span{display:grid;place-items:center;width:22px;height:22px;margin:0 -6px 0 4px;border-radius:50%;background:rgba(255,255,255,.18);font-size:11px}
 .etoB span[hidden]{display:none}
-.compteC{font:400 12.5px Jost,sans-serif;color:var(--doux);white-space:nowrap}
+.compteC{font:600 13px Jost,sans-serif;color:var(--noir);white-space:nowrap}   /* 18/11 soir (Marie) : plus voyant, en gras */
 .compteC.plein{color:var(--rose);font-weight:500}
 .rienC{font:400 14px Jost,sans-serif;color:var(--muted);padding:6px 2px}
 @media (min-width:900px){.outilsC{padding:0}}
@@ -1090,7 +1090,7 @@ function majFlechesF() { const c = $("catF"); $("catFG").classList.toggle("cache
 $("catF").addEventListener("scroll", majFlechesF); addEventListener("resize", majFlechesF);
 $("catFG").onclick = () => $("catF").scrollBy({ left: -$("catF").clientWidth * .7, behavior: "smooth" }); $("catFD").onclick = () => $("catF").scrollBy({ left: $("catF").clientWidth * .7, behavior: "smooth" });
 $("catF").onclick = e => { const b = e.target.closest(".catI,.puce"); if (!b) return; catFond = b.dataset.c; rend("fond"); $("lFond").scrollLeft = 0; };
-$("lFond").onclick = e => { const b = e.target.closest(".vg"); if (!b) return; P.fond(b.dataset.f); marque($("lFond"), ".vg", b.dataset.f, "f"); if (b.dataset.f) setTimeout(() => P.assortir(), 30); };
+$("lFond").onclick = e => { const b = e.target.closest(".vg"); if (!b) return; P.fond(b.dataset.f, !!b.dataset.f); marque($("lFond"), ".vg", b.dataset.f, "f"); };   /* 18/11 soir : couleurs assorties posées en même temps que le fond */
 if (MODE_ORDRE) { const l = $("lPol"), bd = document.createElement("div"); bd.className = "ordreBandeau";
   bd.innerHTML = `<span><b>Ordre des écritures</b> : touchez-les dans l'ordre que vous voulez (1, 2, 3…). Celles pas touchées viendront après.</span><button id="ordreRaz">Recommencer</button>`;
   l.before(bd); document.body.classList.add("modeOrdre");
@@ -1747,6 +1747,17 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 @media (max-width:899px){.btnLooks.lkHaut{height:36px;padding:0 11px 0 9px;font-size:12.5px;gap:4px}}
 .btnLooks.lkFin{height:34px;margin-left:6px;align-self:center;background:var(--rosé,#F7E9EA);color:var(--rose);box-shadow:none;font-size:13px}
 .btnLooks.lkFin:after{display:none}
+/* 18/11 soir (Marie) : la petite flèche ⌄ « il y en a d'autres en dessous », en bas, sur la même ligne que la flèche rose (En-tête, Fond, Écriture, Charms) */
+.flecheEnt{display:none!important}
+.pied{position:relative}
+.flecheBas{position:absolute;left:50%;top:calc(50% + 3px);translate:-50% -50%;width:44px;height:40px;display:grid;place-items:center;background:none;border:0;color:var(--noir);transition:opacity .25s,scale .15s;z-index:3}   /* 18/11 soir (Marie) : juste la flèche, fine, sans rond */
+.flecheBas svg{width:26px;height:26px;stroke-width:1.3;animation:sautFl 1.8s ease-in-out infinite}
+.flecheBas.haut svg{animation:none}
+@keyframes sautFl{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.flecheBas.cache{opacity:0;pointer-events:none}
+.flecheBas:active{scale:.92}
+@media (max-width:899px){.flecheBas{left:5px;translate:0 -50%}body.surCharms .pied .finiP{max-width:calc(100% - 64px)}}
+@media (prefers-reduced-motion:reduce){.flecheBas svg{animation:none}}
 /* la fenêtre des looks */
 .fenLooks{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center;background:rgba(30,28,27,.38);opacity:0;pointer-events:none;transition:opacity .25s ease}
 .fenLooks.on{opacity:1;pointer-events:auto}
@@ -1799,6 +1810,17 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
   ASTUCES.fond = ASTUCES.fond.filter(x => !/accordent/.test(x[1])).concat([["✦", "Vos couleurs s'<b>accordent toutes seules</b> au fond choisi."]]);
 
   /* 3. « Assortir à mon fond » : remis EXACTEMENT comme avant dans Couleurs (18/11 soir, Marie) ; retiré de Fond ; les couleurs suivent toujours le fond choisi */
+
+  /* 3b. la flèche ⌄ en bas : elle fait descendre la liste de l'onglet ouvert ; en bas de la liste elle se retourne ⌃ et remonte */
+  { const fl = document.createElement("button"); fl.type = "button"; fl.className = "flecheBas cache"; fl.setAttribute("aria-label", "Voir la suite");
+    fl.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`;
+    fl.querySelector("svg").setAttribute("stroke-width", "1.1");
+    document.querySelector(".pied").appendChild(fl);
+    const cible = () => ({ entete: document.querySelector('.panneau[data-p="entete"]'), fond: $("lFond"), ecriture: document.querySelector('.panneau[data-p="ecriture"]'), charms: $("lCh") })[onglet];
+    const maj = () => { const c = cible(), sur = !!c && c.scrollHeight > c.clientHeight + 10; fl.classList.toggle("cache", !sur); if (!sur) return;
+      const fin = c.scrollTop + c.clientHeight >= c.scrollHeight - 8; if (fl._fin !== fin) { fl._fin = fin; fl.classList.toggle("haut", fin); fl.querySelector("path").setAttribute("d", fin ? "M3 10.5l5-5 5 5" : "M3 5.5l5 5 5-5"); fl.setAttribute("aria-label", fin ? "Revenir en haut" : "Voir la suite"); } };
+    fl.onclick = () => { const c = cible(); if (c) c.scrollBy({ top: fl._fin ? -c.scrollHeight : c.clientHeight * .75, behavior: "smooth" }); };
+    document.addEventListener("scroll", maj, true); $("onglets").addEventListener("click", () => [50, 400].forEach(t => setTimeout(maj, t))); setInterval(maj, 500); }
 
   /* 4. les LOOKS : un bouton en haut du téléphone, qui ouvre une petite fenêtre */
   const btn = document.createElement("button"); btn.type = "button"; btn.className = "btnLooks"; btn.innerHTML = "<b>✦</b> Looks"; btn.setAttribute("aria-label", "Voir les looks tout prêts");

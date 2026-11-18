@@ -90,20 +90,38 @@
      Elle ne voit plus jamais les étapes intermédiaires. */
   let rideau = null, tRideau = 0;
   const animsFinies = () => { try { return !P.D.getAnimations().some(a => a.playState === "running" && a.effect && a.effect.getTiming().iterations !== Infinity); } catch (e) { return true; } };
-  P.rideau = (duree = 420, maxi = 1800) => { const D = P.D; if (!D) return; clearTimeout(tRideau);
+  P.rideau = (duree = 420, maxi = 1800) => { const D = P.D; if (!D) return; clearTimeout(tRideau); P._verrou = false;
     if (!rideau || !rideau.isConnected) { const e = D.querySelector(".ecran"); if (!e || !e.parentElement) return;
       const c = e.cloneNode(true); c.removeAttribute("id"); c.dataset.rideau = 1; c.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
       Object.assign(c.style, { position: "absolute", left: e.offsetLeft + "px", top: e.offsetTop + "px", width: e.offsetWidth + "px", height: e.offsetHeight + "px", zIndex: 99999, pointerEvents: "none", transition: "opacity .14s ease", margin: 0 });
       c.querySelectorAll(".pzPoign").forEach(x => x.remove());
+      /* 18/11 soir (Marie : « le carré s'affiche ou pas », « le nom fait un bond ») : la copie est VRAIMENT figée —
+         ses couleurs sont recopiées telles quelles (sinon elles changent avec le site) et ses animations d'entrée ne rejouent pas */
+      try { const cs = P.W.getComputedStyle(e); for (let i = 0; i < cs.length; i++) { const k = cs[i]; if (k.startsWith("--")) c.style.setProperty(k, cs.getPropertyValue(k)); } } catch (x) {}
+      try { const sel = ".he-btn,.he-txt,.hent h1,.hf-nom,.fiche,.note,.kick,button"; const o = [...e.querySelectorAll(sel)], k = [...c.querySelectorAll(sel)];
+        o.forEach((x, i) => { const y = k[i]; if (!y) return; const z = P.W.getComputedStyle(x); ["background-color", "background-image", "color", "border-color", "box-shadow"].forEach(p => y.style.setProperty(p, z.getPropertyValue(p), "important")); }); } catch (x) {}
+      if (!D.getElementById("pzFige")) { const st = D.createElement("style"); st.id = "pzFige"; st.textContent = "[data-rideau],[data-rideau] *{animation:none!important;transition:none!important}"; D.head.appendChild(st); }
       e.after(c); const d0 = e.querySelector(".defile"), d1 = c.querySelector(".defile"); if (d0 && d1) d1.scrollTop = d0.scrollTop; rideau = c; }
-    garde(); const t0 = Date.now(); const leve = () => { if (Date.now() - t0 < maxi && (!animsFinies() || P._attente > 0 || !ecritureOk())) { tRideau = setTimeout(leve, 60); return; }
-      try { P.ajusteBouton(99); } catch (e) {} const c = rideau; rideau = null; if (!c) return; P.leves.forEach(f => { try { f(); } catch (e) {} }); c.remove(); };   /* d'un coup : le téléphone et la page changent au même instant */
+    garde(); const t0 = Date.now(); let sig0 = null;
+    /* 18/11 soir (Marie : « le nom fait un bond ») : sous la copie, on règle la taille du nom comme elle sera à l'écran (copie masquée le temps de mesurer,
+       dans la même image : rien ne se voit), et on ne dévoile qu'une fois la taille STABLE deux fois de suite (images chargées, mise en page finie) */
+    const mesure = () => { const c = rideau, par = c && c.parentNode, suiv = c && c.nextSibling; try { if (c) c.remove(); P.ajusteBouton(999); const n = P.D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"), b = n && (n.closest(".he-txt") || n.parentElement);
+        return n ? n.style.fontSize + "|" + Math.round(n.getBoundingClientRect().height) + "|" + (b ? b.style.translate : "") : ""; } catch (e) { return ""; } finally { if (c && par) par.insertBefore(c, suiv); } };
+    const leve = () => { const sig = mesure(), stable = sig === sig0; sig0 = sig;
+      if (Date.now() - t0 < maxi && (!animsFinies() || P._attente > 0 || !ecritureOk() || !stable)) { tRideau = setTimeout(leve, 60); return; }
+      const c = rideau; rideau = null; if (!c) return; c.remove(); P._verrou = true; P.leves.forEach(f => { try { f(); } catch (e) {} }); };   /* la taille du nom est calculée APRÈS avoir enlevé la copie, dans la même image : plus de bond */   /* d'un coup : le téléphone et la page changent au même instant */
     tRideau = setTimeout(leve, duree); };
   P._attente = 0; P.leves = []; P.auLever = f => P.leves.push(f);
   /* le GARDIEN de l'écriture : le site remet parfois l'écriture de départ ~0,5 s après un changement ; on la remet aussitôt */
   const premiere = s => String(s || "").split(",")[0].replace(/["']/g, "").trim().toLowerCase();
   const ecritureOk = () => { try { const k = P.etat.police; if (!k) return true; const n = P.D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"); if (!n) return true;
     const b = P.D.querySelector(`#pzPol [data-p="${k}"]`); if (!b) return true; return premiere(P.W.getComputedStyle(n).fontFamily) === premiere(b.style.fontFamily || P.W.getComputedStyle(b).fontFamily); } catch (e) { return true; } };
+  /* 18/11 soir (Marie : « quand je change de photo, ça change la couleur du bouton ») : le site se reconstruit d'abord avec son bouton doré par défaut ;
+     le rideau reste posé tant que le bouton n'a pas retrouvé SA couleur */
+  const boutonOk = () => { try { const b = P.D.querySelector(".ecran .he-btn"); if (!b) return true; let att = P.libre && P.libre.bt;
+      if (!att) { const v = P.D.querySelector(`.pf-vifs [data-vif="${P.etat.vif}"]`); if (!v) return true; const cv = P.W.getComputedStyle(v); if (cv.backgroundImage !== "none") return true; att = cv.backgroundColor; }
+      const t = P.D.createElement("i"); t.style.color = att; P.D.body.appendChild(t); const want = P.W.getComputedStyle(t).color; t.remove();
+      return P.W.getComputedStyle(b).backgroundColor === want; } catch (e) { return true; } };
   let gardeJusqua = 0, tGarde = 0;
   const garde = () => { gardeJusqua = Date.now() + 1600; if (tGarde) return;
     const tour = () => { if (!ecritureOk()) { clique(`#pzPol [data-p="${P.etat.police}"]`); P.calme(); P.ajusteBouton(99); }
@@ -131,8 +149,11 @@
   P.vignetteFond = i => { const W = P.W; if (!W.F100) return ""; const t = document.createElement("div"); t.innerHTML = W.F100.rond(i); const c = t.querySelector(".f100"); if (!c) return "";
     c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k));
     return c.outerHTML.replace(/fonds-img\//g, "fonds-mini/"); };
-  P.fond = n => { const Pz = P.D.getElementById("pzFonds"); if (!Pz) return; P.etat.fond = n; P.rideau(90); P._attente++;
+  /* 18/11 soir (Marie : « le carré bug quand je change de fond ») : avec assort=true, les couleurs assorties sont posées DANS LE MÊME INSTANT que le fond,
+     derrière le rideau (avant : 80 ms après, on voyait le carré changer de couleur) */
+  P.fond = (n, assort) => { const Pz = P.D.getElementById("pzFonds"); if (!Pz) return; P.etat.fond = n; P.rideau(90); P._attente++;
     precharge(n).then(() => { P._attente--; if (P.etat.fond !== n) return; const b = P.D.createElement("button"); b.dataset.f = n; b.style.display = "none"; Pz.appendChild(b); b.click(); b.remove();
+      if (assort) try { P.assortir(); } catch (e) {}
       P.calme(); haloEtoiles(); signale("fond"); }); };
   /* « Assortir à mon fond » : chaque fond connaît sa couleur d'encre ; on prend le bouton le plus proche */
   const rgb = s => { const h = (String(s).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(s).match(/\d+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0]; };
@@ -241,7 +262,8 @@
   /* 17/11 (Marie : « le bouton Réserver un créneau ne doit jamais dépasser ») : si le bouton du haut du site touche le bas
      du 1er écran, le nom rapetisse doucement jusqu'à ce que le bouton soit entier (règle pour TOUTES les en-têtes et écritures) */
   const enMouvement = () => { try { return P.D.getAnimations().some(a => a.playState === "running" && a.effect && a.effect.getTiming().iterations !== Infinity); } catch (e) { return false; } };
-  P.ajusteBouton = (essai = 0) => { if (enMouvement() && essai < 25) return setTimeout(() => P.ajusteBouton(essai + 1), 120);   /* 17/11 : on mesure quand plus rien ne bouge (sinon le nom rapetissait à chaque clic) */
+  P.ajusteBouton = (essai = 0) => { if (P._verrou && essai !== 999) return;   /* 18/11 soir : une fois le site dévoilé, la taille du nom ne bouge plus jusqu'au prochain changement */
+    if (enMouvement() && essai < 25) return setTimeout(() => P.ajusteBouton(essai + 1), 120);   /* 17/11 : on mesure quand plus rien ne bouge (sinon le nom rapetissait à chaque clic) */
     try { const D = P.D, W = P.W, H = W.innerHeight, marge = 30;
     const b = [...D.querySelectorAll(".ecran button")].find(x => /r[ée]server un cr[ée]neau/i.test(x.textContent)); if (!b) return;
     const nom = D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"); if (!nom) return;
@@ -250,11 +272,14 @@
     /* 17/11 (Marie) : le nom tient TOUJOURS sur une seule ligne : on rapetisse juste ce qu'il faut */
     nom.style.setProperty("white-space", "nowrap", "important");
     const cadre = nom.parentElement, cs = W.getComputedStyle(cadre), dispo = cadre.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
-    const large = () => Math.max(nom.scrollWidth, nom.getBoundingClientRect().width) > dispo;
-    let m = 0; while (large() && m++ < 30) { f *= .95; nom.style.setProperty("font-size", f + "px", "important"); }
+    /* 18/11 soir (Marie : « le nom fait un bond ») : EXACTEMENT le même calcul que le site (hero-format.js, ajusteNom) — avant, les deux ne tombaient
+       pas d'accord (44 px ici, 42 px là-bas) et le nom sautait de l'un à l'autre */
+    const large = () => nom.scrollWidth > nom.clientWidth + 1 || Math.max(nom.scrollWidth, nom.getBoundingClientRect().width) > dispo + 40;
+    let m = 0; while (large() && f > 18 && m++ < 40) { f *= .95; nom.style.setProperty("font-size", f.toFixed(1) + "px", "important"); }
     const touche = () => { const r = b.getBoundingClientRect(); return r.top < H && r.bottom > H - marge; };
-    while (touche() && n++ < 6) { f *= .94; nom.style.setProperty("font-size", f + "px", "important"); }
-    if (touche()) { const d = Math.ceil(b.getBoundingClientRect().bottom - (H - marge)); bloc.style.setProperty("translate", `0 -${d}px`); } } catch (e) {} };
+    /* 18/11 soir : on ne rétrécit plus le nom pour faire remonter le bouton (le site retenait cette taille et le nom faisait des bonds) : le carré remonte, c'est tout */
+    if (touche()) { const d = Math.ceil(b.getBoundingClientRect().bottom - (H - marge)); bloc.style.setProperty("translate", `0 -${d}px`); }
+    } catch (e) {} };
   let tAj = 0; const ajusteBientot = () => { clearTimeout(tAj); tAj = setTimeout(() => P.ajusteBouton(), 80); };
   P.miniEntete = (hote, k, largeur) => { const W = P.W, D = P.D; try {
     const ec = D.querySelector(".ecran"); if (!ec || !W.entete || !W.__eT) return; const fs = feuilleSite(), root = D.documentElement.style.cssText, sc = largeur / 390;
@@ -415,7 +440,7 @@
   P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false;
     const go = () => { if (fait) return; fait = true; P._choisitPhoto(u); };
     if (im.complete) go(); else { im.onload = im.onerror = go; setTimeout(go, 1200); } };
-  P._choisitPhoto = u => { P.rideau(90, 450); try { P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
+  P._choisitPhoto = u => { P.rideau(600, 900); try {   /* le site remet ses couleurs ~0,5 s après une nouvelle photo : la copie reste jusque-là */ P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
     setTimeout(() => { if (P.etat.police) clique(`#pzPol [data-p="${P.etat.police}"]`); }, 120); P.calme(); ajusteBientot(); signale("photo"); };
   /* 17/11 (Marie) : elle peut retirer une photo (on en garde toujours au moins une) ; remetPhoto = « Annuler » */
