@@ -6,7 +6,7 @@ window.FINI = (() => {
   const aDuSite = !!(br && br.nom);
   /* son site, en vrai, dans un téléphone (l'éditeur caché) ; sans brouillon : l'exemple de Cerise */
   function telephone(boite) {
-    boite.innerHTML = `<div class="fT-cadre"><iframe title="Votre site" tabindex="-1" src="${aDuSite ? "../loginail-creer/pret.html" : "../loginail-creer/pret.html?demo"}"></iframe><div class="fT-encoche"></div></div>`;
+    boite.innerHTML = `<div class="fT-cadre"><iframe title="Votre site" tabindex="-1" src="${aDuSite ? "../loginail-creer/pret.html" : "../loginail-creer/pret.html?public&nouveau&exemple=dilerna&portrait=cerise&couleur=choco&vif=rosep&fond=Cerises%20qui%20tombent&police=ronde&charm=noeudcerise,framboise,cerisedisco,cerisecoeur,ceriseruban,cerises-roses,noeudgelee,boueeflamant,oursongelee,flamant&chpos=noeudcerise~70.7-28.5_framboise~80-10_cerisedisco~4-24_cerisecoeur~82-40_ceriseruban~3-58_cerises-roses~63.1-71.6_noeudgelee~40-5_boueeflamant~10.6-102.6_oursongelee~76.4-105.5_flamant~63.2-130.2"}"></iframe><div class="fT-encoche"></div></div>`;
     const f = boite.querySelector("iframe"), c = boite.querySelector(".fT-cadre");
     const echelle = () => { const k = c.clientWidth / 390; f.style.transform = `scale(${k})`; c.style.height = Math.round(844 * k) + "px"; };
     echelle(); new ResizeObserver(echelle).observe(c);   /* le téléphone suit sa taille (il rétrécit aux étapes suivantes) */
