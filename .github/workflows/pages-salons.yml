@@ -1,0 +1,28 @@
+# 18/11 (Marie : « une page par salon ») : loginail.fr/nom-du-salon/ avec le nom, la photo et une phrase du salon
+# (c'est l'aperçu du lien quand on le partage). Le script est .github/pages-salons.mjs ; il n'écrit que s'il y a du nouveau.
+name: Pages des salons
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pages-salons
+  cancel-in-progress: false
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fabriquer les pages
+        run: node .github/pages-salons.mjs
+      - name: Enregistrer s'il y a du nouveau
+        run: |
+          git add -A -- . ':!.github'
+          if git diff --cached --quiet; then echo "rien de nouveau"; exit 0; fi
+          git -c user.name="Loginail (pages des salons)" -c user.email=noreply@loginail.fr commit -m "Pages des salons : mise à jour automatique"
+          git pull --rebase -q origin main && git push -q origin HEAD:main
