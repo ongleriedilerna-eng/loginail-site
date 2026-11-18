@@ -11,7 +11,7 @@ window.FINI = (() => {
     const echelle = () => { const k = c.clientWidth / 390; f.style.transform = `scale(${k})`; c.style.height = Math.round(844 * k) + "px"; };
     echelle(); new ResizeObserver(echelle).observe(c);   /* le téléphone suit sa taille (il rétrécit aux étapes suivantes) */
     f.addEventListener("load", () => { try { const d = f.contentDocument, s = d.createElement("style");
-      s.textContent = ".pret,.langues,.indiceD,.act{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(s);
+      s.textContent = ".pret,.langues,.indiceD,.act,.verif{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(s);
       /* 18/11 (Marie : « qu'elle puisse le faire coulisser elle aussi ») : elle fait défiler son site au doigt ; on arrête le défilement tout seul,
          et les boutons du site ne mènent nulle part (on reste sur cette page) */
       ["pointerdown", "touchstart", "wheel"].forEach(t => d.addEventListener(t, () => { f._touche = true; }, { passive: true, capture: true }));
