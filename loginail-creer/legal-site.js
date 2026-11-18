@@ -28,7 +28,8 @@
       <h4>Ce que nous gardons</h4><p>Quand vous réservez : votre prénom, votre nom, votre téléphone, votre e-mail, la prestation, la date et l’heure, et l’acompte payé.</p>
       <h4>Pourquoi</h4><p>Pour réserver votre rendez-vous, vous envoyer la confirmation et le rappel la veille, et faire votre ticket de caisse. C’est nécessaire pour la réservation que vous demandez.</p>
       <p>Le petit SMS d’anniversaire n’est envoyé que si vous avez dit oui, et seulement si vous êtes venue au salon ces 12 derniers mois. Vous pouvez dire stop à tout moment. Aucune publicité n’est envoyée.</p>
-      <h4>Combien de temps</h4><p>Trois ans après votre dernier rendez-vous, puis tout est effacé. Les tickets de caisse sont gardés le temps exigé par la loi.</p>
+      <p>Liste d’attente : si vous demandez à être prévenue quand une place se libère, votre prénom, votre téléphone et votre e-mail servent seulement à vous envoyer cet e-mail.</p>
+      <h4>Combien de temps</h4><p>Trois ans après votre dernier rendez-vous, puis tout est effacé. Les tickets de caisse sont gardés le temps exigé par la loi. La liste d’attente est effacée dès que le jour demandé est passé.</p>
       <h4>Qui les voit</h4><p>Seulement ${salon || "la prothésiste"}. Le site et l’agenda sont gérés par Loginail, qui les garde pour elle et ne les utilise pas pour autre chose. Si vous payez un acompte en ligne, le paiement passe par Stripe : le salon ne voit jamais votre numéro de carte.</p>
       <h4>Vos droits</h4><p>Vous pouvez voir, corriger ou effacer vos informations en contactant le salon (${contact}). En cas de désaccord, vous pouvez vous adresser à la CNIL (cnil.fr).</p>`],
     cgv: ["Conditions de réservation", `

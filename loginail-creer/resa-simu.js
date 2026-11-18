@@ -67,12 +67,19 @@
   .rs .apay{width:100%;margin-top:16px;border:0;border-radius:999px;padding:15px;background:#000;color:#fff;font:500 19px -apple-system,system-ui,sans-serif;cursor:pointer}
   .rs .ou{display:flex;align-items:center;gap:12px;margin:14px 0 0;font:300 12.5px Jost;color:#8a8076}.rs .ou::before,.rs .ou::after{content:"";flex:1;height:1px;background:rgba(30,28,27,.15)}
   .rs .petit{margin:12px 4px 0;text-align:center;font:300 12.5px/1.5 Jost;color:#8a8076}
+  .rs .jr.plein{background:none;border-style:dashed}.rs .jr.plein small{display:block;font:300 9.5px Jost;letter-spacing:.04em;color:#8a8076;margin-top:1px}
+  .rs .jr.plein.on{background:#fff;border-style:solid;border-color:var(--rs);color:#1E1C1B}
+  .rs .att{display:block;width:100%;margin:16px 0 0;border:0;background:none;font:300 13.5px/1.5 Jost;color:#5d554e;text-align:center;cursor:pointer}
+  .rs .att u{text-decoration-color:rgba(30,28,27,.35);text-underline-offset:3px}
+  .rs .complet{background:#fff;border-radius:20px;padding:18px 18px 4px;margin-top:8px;text-align:center;font:300 14.5px/1.5 Jost;color:#5d554e}
+  .rs .complet b{display:block;font:300 18px Jost;color:#1E1C1B;margin-bottom:4px}
   .rs .ok{width:64px;height:64px;border-radius:50%;background:var(--rs);margin:16px auto 0;display:grid;place-items:center}
   .rs .ok::after{content:"";width:22px;height:11px;border-left:2px solid #F6F3EF;border-bottom:2px solid #F6F3EF;transform:rotate(-45deg) translate(2px,-3px)}`;
   document.head.append(css);
   tel.insertAdjacentHTML("beforeend", `<div class="rs" id="rs" style="--rs:${encre}"><div class="rv" data-rx></div><div class="rf" id="rf"></div></div>`);
   const rs = document.getElementById("rs"), rf = document.getElementById("rf");
-  let R = {}, etape = 1, jourChoisi = null;
+  let R = {}, etape = 1, jourChoisi = null, att = 0;   /* att : 0 = non, 1 = formulaire liste d'attente, 2 = « C'est noté » */
+  let jourVoulu = (location.search.match(/[?&]resa=(\d{4}-\d{2}-\d{2})/) || [])[1] || "";
   const ferme = () => { rs.classList.remove("on"); document.documentElement.dataset.resa = etape >= 5 ? "5" : ""; };
   rs.querySelector("[data-rx]").onclick = ferme;
   if (typeof glisse === "function") glisse(rf, () => rf, (dx, dy) => { if (dy > 90) ferme(); }, false, e => !e.target.closest("input,button,a,label"));
@@ -86,15 +93,35 @@
     const P = pris(jour.date);
     const r = []; for (let t = debut; t + dur <= fin; t += 30) { if (pd && t < pf && t + dur > pd) continue; if (auj && t < deja) continue; if (P.some(z => t < z[1] && t + dur > z[0])) continue; r.push(t); } return r; };
 
+  /* un jour où le salon est ouvert (et, pour aujourd'hui, pas déjà fini dans moins d'une heure) */
+  const ouvertJ = x => { if (!x.h) return false; const m = new Date(); return x.date.toDateString() !== m.toDateString() || m.getHours() * 60 + m.getMinutes() + 60 < minutes(x.h.f); };
   function dessine() {
     document.documentElement.dataset.resa = String(etape);
     const tete = `<div class="poi"></div><button class="x" data-rx aria-label="Fermer">×</button>${etape > 1 && etape < 5 ? `<button class="ret" data-ret>‹ Retour</button>` : ""}${REEL ? "" : `<div class="simu">SIMULATION · RÉSERVATION</div>`}`;
     if (etape === 1) rf.innerHTML = tete + `<div class="kick">1 / 4</div><h2>Votre prestation</h2>` +
       BR.prestations.map((p, i) => `<button class="pr" data-p="${i}"><span>${esc(p.nom)}<small>${p.duree ? duree(p.duree) : ""}</small></span><b>${euros(p.prix)}</b></button>`).join("");
-    if (etape === 2) { const P = prochains(); if (!jourChoisi) jourChoisi = P.find(x => creneaux(x, R.duree).length) || P[0];
+    if (etape === 2 && att) { const jt = jourChoisi.date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+      rf.innerHTML = att === 2 ? `<div class="poi"></div><button class="x" data-rx aria-label="Fermer">×</button>${REEL ? "" : `<div class="simu">SIMULATION · LISTE D’ATTENTE</div>`}<div class="ok"></div>
+        <h2 style="margin-top:14px">C’est noté !</h2><p class="petit" style="font-size:14px;color:#5d554e">Si une place se libère ${esc(jt)}, vous recevez un e-mail tout de suite.<br>La première qui réserve a la place.</p>
+        <button class="go" data-att-fin>J’AI COMPRIS</button>`
+      : tete.replace(/<button class="ret" data-ret>/, '<button class="ret" data-att-ret>') + `<div class="kick">LISTE D’ATTENTE</div><h2>Prévenez-moi</h2>
+        <div class="recap"><div><span>${esc(R.nom)}</span><b>${R.duree ? duree(R.duree) : ""}</b></div><div><span>Le jour</span><b>${esc(jt)}</b></div></div>
+        <div class="deux"><input class="champ" id="ap" placeholder="Prénom" autocomplete="given-name"><input class="champ" id="at" type="tel" placeholder="Téléphone" autocomplete="tel"></div>
+        <input class="champ" id="ae" type="email" placeholder="E-mail" autocomplete="email">
+        <button class="go" id="ago" disabled>ME PRÉVENIR</button>
+        <p class="petit">Vous recevez un e-mail si une place se libère ce jour-là. Vos coordonnées sont effacées après ce jour.</p><p class="petit aerr" style="color:#A04A4A"></p>`;
+      rf.scrollTop = 0; return; }
+    if (etape === 2) { const P = prochains();
+      /* 18/11 : « &resa=2026-11-24 » (lien de l'e-mail de la liste d'attente) → ce jour-là directement */
+      if (!jourChoisi && jourVoulu) { jourChoisi = P.find(x => cle(x.date) === jourVoulu && ouvertJ(x)) || null; jourVoulu = ""; }
+      if (!jourChoisi) jourChoisi = P.find(x => creneaux(x, R.duree).length) || P.find(ouvertJ) || P[0];
       const c = creneaux(jourChoisi, R.duree);
-      rf.innerHTML = tete + `<div class="kick">2 / 4</div><h2>Le jour et l’heure</h2><div class="jours">${P.map((x, k) => `<button class="jr ${x.date.getTime() === jourChoisi.date.getTime() ? "on" : ""}" data-j="${k}" ${creneaux(x, R.duree).length ? "" : "disabled"}>${JOURS[x.j].slice(0, 3)}<b>${x.date.getDate()}</b>${x.date.toLocaleDateString("fr-FR", { month: "short" }).replace(".", "")}</button>`).join("")}</div>
-        ${c.length ? `<div class="h">${c.map(t => `<button data-t="${t}">${hm(t)}</button>`).join("")}</div>` : `<div class="rien">Pas de créneau ce jour-là.</div>`}`;
+      /* 18/11 (liste d'attente) : un jour complet n'est plus grisé, on peut le toucher pour demander à être prévenue ; seul un jour fermé reste grisé */
+      rf.innerHTML = tete + `<div class="kick">2 / 4</div><h2>Le jour et l’heure</h2><div class="jours">${P.map((x, k) => { const n = creneaux(x, R.duree).length, o = ouvertJ(x);
+          return `<button class="jr ${x.date.getTime() === jourChoisi.date.getTime() ? "on" : ""}${o && !n ? " plein" : ""}" data-j="${k}" ${o ? "" : "disabled"}>${JOURS[x.j].slice(0, 3)}<b>${x.date.getDate()}</b>${o && !n ? "<small>complet</small>" : x.date.toLocaleDateString("fr-FR", { month: "short" }).replace(".", "")}</button>`; }).join("")}</div>
+        ${c.length ? `<div class="h">${c.map(t => `<button data-t="${t}">${hm(t)}</button>`).join("")}</div><button class="att" data-att>Aucun horaire ne vous va ? <u>Prévenez-moi si une place se libère</u></button>`
+          : ouvertJ(jourChoisi) ? `<div class="complet"><b>Ce jour est complet</b>Laissez vos coordonnées : si une place se libère, vous êtes prévenue par e-mail.<button class="go" data-att style="margin:14px 0">PRÉVENEZ-MOI</button></div>`
+          : `<div class="rien">Pas de créneau ce jour-là.</div>`}`;
       rf._P = P; }
     if (etape === 3) rf.innerHTML = tete + `<div class="kick">3 / 4</div><h2>Vos coordonnées</h2>
       <div class="recap"><div><span>${esc(R.nom)}</span><b>${euros(R.prix)}</b></div><div><span>${R.jourTxt}</span><b>${hm(R.heure)}</b></div></div>
@@ -123,13 +150,27 @@
   async function chargeOcc() { if (!REEL) return; const a = new Date(), b = new Date(); b.setDate(b.getDate() + 15);
     try { const l = await rpc("moments_pris", { s: window.LOGI_SLUG, de: cle(a), a: cle(b) }); OCC = {};
       (l || []).forEach(m => { const d = new Date(m.debut), f = new Date(m.fin), k = cle(d); (OCC[k] = OCC[k] || []).push([d.getHours() * 60 + d.getMinutes(), f.getHours() * 60 + f.getMinutes() + (cle(f) !== k ? 1440 : 0)]); }); } catch (e) {} }
-  async function ouvre() { if (etape >= 5) { R = {}; etape = 1; jourChoisi = null; } await chargeOcc(); dessine(); rs.classList.add("on"); }
+  async function ouvre() { if (etape >= 5 || att === 2) { R = {}; etape = 1; jourChoisi = null; } att = 0; await chargeOcc(); dessine(); rs.classList.add("on"); }
+  /* 18/11 : en arrivant par le lien « Réserver cette place » de l'e-mail, la réservation s'ouvre toute seule */
+  if (jourVoulu) setTimeout(ouvre, 600);
   /* « Réserver » sur son site ouvre la réservation (au lieu du message « étape 5 ») */
   document.addEventListener("click", ev => { if (ev.target.closest(".rs")) return; const b = ev.target.closest("[data-res]"); if (!b) return; ev.preventDefault(); ev.stopPropagation(); ouvre(); }, true);
   rf.addEventListener("click", ev => {
     const t = ev.target.closest("button"); if (!t) return;
     if (t.hasAttribute("data-rx")) return ferme();
     if (t.hasAttribute("data-ret")) { etape--; return dessine(); }
+    /* 18/11 · liste d'attente */
+    if (t.hasAttribute("data-att")) { att = 1; return dessine(); }
+    if (t.hasAttribute("data-att-ret")) { att = 0; return dessine(); }
+    if (t.hasAttribute("data-att-fin")) { att = 0; R = {}; etape = 1; jourChoisi = null; return ferme(); }
+    if (t.id === "ago") { const p = rf.querySelector("#ap").value.trim(), tl = rf.querySelector("#at").value.trim(), em = rf.querySelector("#ae").value.trim(), z = rf.querySelector(".aerr");
+      if (!REEL) { att = 2; return dessine(); }
+      t.disabled = true; t.textContent = "UN INSTANT…";
+      rpc("attendre", { s: window.LOGI_SLUG, p_jour: cle(jourChoisi.date), p_presta: R.i, p_prenom: p, p_tel: tl, p_email: em })
+        .then(() => { att = 2; dessine(); })
+        .catch(e => { const m = String(e.message || ""); t.disabled = false; t.textContent = "ME PRÉVENIR";
+          if (z) z.textContent = m === "email" ? "Vérifiez votre e-mail." : m === "coordonnees" ? "Vérifiez votre prénom et votre téléphone." : /^(trop|plein)$/.test(m) ? "La liste d’attente est pleine pour l’instant. Appelez le salon." : "Ça n’a pas marché. Réessayez, ou appelez le salon."; });
+      return; }
     if (t.dataset.p) { const p = BR.prestations[+t.dataset.p]; R = { i: +t.dataset.p, nom: p.nom, prix: p.prix || 0, duree: p.duree || 60, acompte: acompteDe(p.prix) }; jourChoisi = null; etape = 2; return dessine(); }
     if (t.dataset.j) { jourChoisi = rf._P[+t.dataset.j]; return dessine(); }
     if (t.dataset.t) { R.heure = +t.dataset.t; R.date = jourChoisi.date.toISOString(); R.jour = cle(jourChoisi.date); R.jourTxt = jourChoisi.date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }); etape = 3; return dessine(); }
@@ -145,7 +186,9 @@
           if (z) z.textContent = "La réservation n’a pas marché. Réessayez, ou appelez le salon."; t.disabled = false; t.textContent = "CONFIRMER MA RÉSERVATION"; }); return; }
     if (t.id === "rsms") { location.href = "sms-simu.html"; }
   });
-  rf.addEventListener("input", () => { const g = rf.querySelector("#rgo"); if (!g) return;
+  rf.addEventListener("input", () => { const a = rf.querySelector("#ago");
+    if (a) a.disabled = !(rf.querySelector("#ap").value.trim() && rf.querySelector("#at").value.replace(/\D/g, "").length >= 10 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rf.querySelector("#ae").value.trim()));
+    const g = rf.querySelector("#rgo"); if (!g) return;
     g.disabled = !(rf.querySelector("#rp").value.trim() && rf.querySelector("#rt").value.trim().replace(/\D/g, "").length >= 10 && rf.querySelector("#rc").checked); });
   rf.addEventListener("change", () => rf.dispatchEvent(new Event("input")));
 })();

@@ -1,0 +1,34 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>Activez votre site</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"></head>
+<body style="margin:0;padding:0;background:#F6F3EF">
+<div style="display:none;max-height:0;overflow:hidden">Il ne reste qu’un geste : touchez le bouton, et votre site s’affiche en ligne.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F6F3EF"><tr><td align="center" style="padding:30px 14px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px">
+<tr><td align="center" style="padding:4px 0 22px"><img src="https://loginail.fr/mails/logo-loginail.png" width="176" height="38" alt="Loginail" style="display:block;border:0;width:176px;height:auto"></td></tr>
+<tr><td style="background:#FFFFFF;border-radius:28px;border:1px solid #ECE6DF;overflow:hidden">
+ <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr><td style="background:#FBEFF3;border-radius:28px 28px 0 0;padding:24px 14px 22px">
+   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+    <td width="62" valign="top"><img src="{{ if .Data.c1 }}{{ .Data.c1 }}{{ else }}https://loginail.fr/mails/charms/cerisedisco.jpg{{ end }}" width="54" height="54" alt="" style="display:block;width:54px;height:54px;border:0;transform:rotate(-12deg)"><div style="height:28px;line-height:28px">&nbsp;</div><img src="{{ if .Data.c2 }}{{ .Data.c2 }}{{ else }}https://loginail.fr/mails/charms/cerises.jpg{{ end }}" width="44" height="44" alt="" style="display:block;width:44px;height:44px;border:0;transform:rotate(10deg)"></td>
+    <td align="center" valign="middle" style="text-align:center;padding:8px 2px 0">
+     <div style="font:500 11px/1.3 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:3px;color:#B03562;text-transform:uppercase">✦ C’est fait{{ if .Data.prenom }}, {{ .Data.prenom }}{{ end }}</div>
+     <div style="margin:12px 0 0;font:400 38px/1.05 'Cormorant Garamond',Georgia,'Times New Roman',serif;color:#1E1C1B">Votre site est <i>prêt</i>.</div>
+     {{ if .Data.adresse }}<div style="margin:12px 0 0;font:400 14px/1.4 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#6B625C"><span style="color:#B03562">✦</span> {{ .Data.adresse }}</div>{{ end }}</td>
+    <td width="62" valign="top" align="right"><img src="{{ if .Data.c3 }}{{ .Data.c3 }}{{ else }}https://loginail.fr/mails/charms/ceriseruban.jpg{{ end }}" width="46" height="46" alt="" style="display:block;width:46px;height:46px;border:0;margin-left:auto;transform:rotate(14deg)"><div style="height:26px;line-height:26px">&nbsp;</div><img src="{{ if .Data.c4 }}{{ .Data.c4 }}{{ else }}https://loginail.fr/mails/charms/cerisecoeur.jpg{{ end }}" width="54" height="54" alt="" style="display:block;width:54px;height:54px;border:0;margin-left:auto;transform:rotate(-8deg)"></td>
+   </tr></table></td></tr>
+  <tr><td style="padding:22px 30px 6px;text-align:center">
+   <div style="margin:0 auto 24px;max-width:340px;font:300 15px/1.6 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#5d554e">Il ne reste qu’un geste : touchez le bouton,<br>et vos clientes peuvent réserver dès ce soir.</div>
+   <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td style="background:#1E1C1B;border-radius:28px">
+    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:18px 38px;font:500 16px/1 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#F6F3EF;text-decoration:none">Activer mon site ✦</a></td></tr></table>
+  </td></tr>
+  <tr><td style="padding:26px 22px 22px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:5px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F6F3EF;border-radius:16px"><tr>
+      <td width="44" style="padding:12px 0 12px 14px;vertical-align:middle"><div style="width:26px;height:26px;border-radius:13px;background:#1E1C1B;color:#ffffff;font:500 12px/26px Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center">1</div></td>
+      <td style="padding:12px 14px 12px 4px;font:300 14px/1.4 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#5d554e;text-align:left">Touchez <b style="font-weight:500;color:#1E1C1B">Activer mon site</b> : il s’affiche en ligne.</td></tr></table></td></tr><tr><td style="padding:5px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F6F3EF;border-radius:16px"><tr>
+      <td width="44" style="padding:12px 0 12px 14px;vertical-align:middle"><div style="width:26px;height:26px;border-radius:13px;background:#1E1C1B;color:#ffffff;font:500 12px/26px Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center">2</div></td>
+      <td style="padding:12px 14px 12px 4px;font:300 14px/1.4 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#5d554e;text-align:left">Téléchargez <b style="font-weight:500;color:#1E1C1B">l’appli Loginail</b> et connectez-vous avec cette adresse.</td></tr></table></td></tr><tr><td style="padding:5px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F6F3EF;border-radius:16px"><tr>
+      <td width="44" style="padding:12px 0 12px 14px;vertical-align:middle"><div style="width:26px;height:26px;border-radius:13px;background:#1E1C1B;color:#ffffff;font:500 12px/26px Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center">3</div></td>
+      <td style="padding:12px 14px 12px 4px;font:300 14px/1.4 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#5d554e;text-align:left">Partagez votre lien sur Instagram : vos clientes réservent.</td></tr></table></td></tr></table></td></tr>
+ </table></td></tr>
+<tr><td style="padding:22px 30px 28px;text-align:center;font:300 12px/1.7 Jost,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#8a8076">
+ Vous n’avez rien demandé ? Ignorez simplement ce message.<br><span style="color:#D97A9C;font-size:10px;line-height:1">✦</span> &nbsp;<a href="https://loginail.fr" style="color:#5d554e;text-decoration:none">loginail.fr</a> · <a href="mailto:contact@loginail.fr" style="color:#5d554e;text-decoration:none">contact@loginail.fr</a></td></tr>
+</table></td></tr></table></body></html>
