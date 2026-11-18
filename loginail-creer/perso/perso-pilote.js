@@ -15,8 +15,8 @@
     ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"],
     ["balcon", "Balcon"], ["devanture", "Devanture"], ["classique", "Classique"], ["couverture", "Couverture"], ["grandtitre", "Grand titre"]];
   /* D22 · les 39 en-têtes gardées par Marie, dans l'ordre (les anciennes d'abord, puis les nouvelles) */
-  const GARDEES = ["medaillon", "bandeau", "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
-    "tele", "carrousel", "viseur", "feuilleter", "swipe", "ondes", "confettis", "arcenciel", "ballons", "chromecadre", "enveloppe", "machine",
+  const GARDEES = ["cadre", "medaillon", "bandeau",   /* 18/11 (Marie) : « Photo encadrée » en premier = l'en-tête de départ */ "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
+    "tele", "carrousel", "viseur", "feuilleter", "swipe", "ondes", "confettis", "arcenciel", "ballons", "chromecadre", "enveloppe",   /* 18/11 soir : « Machine à écrire » retirée (Marie) */
     "aquarelle", "rayons", "popart", "etoile", "brume", "lueurs", "trace", "coeurparticules", "levitation", "live", "pendentif", "foil"];
   /* 17/11 soir : « Pour vous » = les 42 charms choisis par Marie (page idees/choix-pour-vous.html) */
   const POP = ["cerisedisco", "libellule", "croissant", "cocktail", "ramenoeuf", "casquette", "flamme", "clapet", "bouledisco", "boule8", "cabriolet", "cadeau", "baladeur", "lampeuv", "serum", "pinceacheveux", "cremeconcombre", "bottedisco", "canard", "ourson", "papillonroseverre", "papilloncyber", "bougielotus", "levresgrillz", "planeteetincelles", "coeurpixel", "fleursixties", "tulipe", "cerisesor", "baguettetradition", "onigiri", "painchocolat", "potionviolette", "boueeflamant", "hautsirene", "etoiledemerrose", "hippocampe", "basketargent", "chapeaupaille", "cible", "cassette", "manetteblanche"];
@@ -67,16 +67,19 @@
       /* 17/11 soir (Marie : « on doit mettre toutes les en-têtes ») : les 23 nouvelles en-têtes gardées (D21, D22),
          code de maquette idees/entetes-nouvelles/, injectées dans son site comme dans la maquette des en-têtes */
       /* 18/11 (Produit) : les nouvelles en-têtes sont maintenant DANS le site (pret.html charge entetes/entetes-plus*.js) */
-      if (!W.ENTETES || W.ENTETES.length < 40) for (const n of ["", "2", "3", "4", "5", "6", "7", "8", "9", "10"]) await new Promise(r => { const s = D.createElement("script"); s.src = `entetes/entetes-plus${n}.js?v=1811`; s.onload = s.onerror = r; D.body.appendChild(s); });
+      if (!W.ENTETES || W.ENTETES.length < 40) for (const n of ["", "2", "3", "4", "5", "6", "7", "8", "9", "10"]) await new Promise(r => { const s = D.createElement("script"); s.src = `entetes/entetes-plus${n}.js?v=1811b`; s.onload = s.onerror = r; D.body.appendChild(s); });
       try { const tous = W.eval("ENTETES"); const nom = k => (tous.find(x => x[0] === k) || [k, k])[1];
         P.ENT = GARDEES.filter(k => tous.some(x => x[0] === k)).map(k => [k, nom(k)]); } catch (e) { console.warn(e); }
       await attends(250); copieStyles();
       /* départ sobre (comme la page actuelle) : Fleurs, Affiche, noir, blocs « verre » */
       if (P.reprend && P.reprend()) { brancheGestes(); P.pret = true; ok(P); signale("pret"); return; }   /* 18/11 : elle revient → SES choix */
-      P.entete("medaillon", true);   /* 17/11 (Marie) : au départ, une en-tête où l'on voit bien le fond */ await attends(200);
+      P.entete("cadre", true);   /* 18/11 (Marie) : au départ, le Reflet holographique SANS reflet (« la cliente se projette ») */ await attends(200);
       clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); clique('.pf-vifs [data-vif="noirb"]');
       try { W.eval('if(typeof BR!=="undefined"&&BR){BR.nomc="noir";BR.blocs="verre"}window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:"noir",blocs:"verre"})'); } catch (e) {}
       [900, 2200].forEach(t => setTimeout(() => { if (P.etat.police === "affiche") clique('#pzPol [data-p="affiche"]'); }, t));
+      /* 18/11 (Marie : « un fond de base, pour l'effet waouh ») : le fond Agrumes dès l'arrivée, couleurs assorties */
+      if (P.fonds().some(x => x[0] === P.FOND_DEPART)) { P.fond(P.FOND_DEPART); P.change(function q1(q) { if (q === "fond" && P.etat.fond === P.FOND_DEPART && !P._departFait) { P._departFait = true; if (P.autoAssort !== false) { P.assortir(); P.DEPART_COUL && P.DEPART_COUL(); } } }); }
+      setTimeout(() => P.prechargePhotos(), 1500);
       brancheGestes();   /* 17/11 (Marie) : on ne touche plus le site pour choisir la partie à colorer (inutile) */
       P.pret = true; ok(P); signale("pret");
     }, { once: true });
@@ -87,13 +90,13 @@
      Elle ne voit plus jamais les étapes intermédiaires. */
   let rideau = null, tRideau = 0;
   const animsFinies = () => { try { return !P.D.getAnimations().some(a => a.playState === "running" && a.effect && a.effect.getTiming().iterations !== Infinity); } catch (e) { return true; } };
-  P.rideau = (duree = 420) => { const D = P.D; if (!D) return; clearTimeout(tRideau);
+  P.rideau = (duree = 420, maxi = 1800) => { const D = P.D; if (!D) return; clearTimeout(tRideau);
     if (!rideau || !rideau.isConnected) { const e = D.querySelector(".ecran"); if (!e || !e.parentElement) return;
       const c = e.cloneNode(true); c.removeAttribute("id"); c.dataset.rideau = 1; c.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
       Object.assign(c.style, { position: "absolute", left: e.offsetLeft + "px", top: e.offsetTop + "px", width: e.offsetWidth + "px", height: e.offsetHeight + "px", zIndex: 99999, pointerEvents: "none", transition: "opacity .14s ease", margin: 0 });
       c.querySelectorAll(".pzPoign").forEach(x => x.remove());
       e.after(c); const d0 = e.querySelector(".defile"), d1 = c.querySelector(".defile"); if (d0 && d1) d1.scrollTop = d0.scrollTop; rideau = c; }
-    garde(); const t0 = Date.now(); const leve = () => { if (Date.now() - t0 < 1800 && (!animsFinies() || P._attente > 0 || !ecritureOk())) { tRideau = setTimeout(leve, 60); return; }
+    garde(); const t0 = Date.now(); const leve = () => { if (Date.now() - t0 < maxi && (!animsFinies() || P._attente > 0 || !ecritureOk())) { tRideau = setTimeout(leve, 60); return; }
       try { P.ajusteBouton(99); } catch (e) {} const c = rideau; rideau = null; if (!c) return; P.leves.forEach(f => { try { f(); } catch (e) {} }); c.remove(); };   /* d'un coup : le téléphone et la page changent au même instant */
     tRideau = setTimeout(leve, duree); };
   P._attente = 0; P.leves = []; P.auLever = f => P.leves.push(f);
@@ -134,10 +137,42 @@
   /* « Assortir à mon fond » : chaque fond connaît sa couleur d'encre ; on prend le bouton le plus proche */
   const rgb = s => { const h = (String(s).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(s).match(/\d+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0]; };
   const dist = (a, b) => { const x = rgb(a), y = rgb(b); return (x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2 + (x[2] - y[2]) ** 2; };
-  P.assortir = () => { const f = P.fonds().find(x => x[0] === P.etat.fond); if (!f || !f[4]) return false;
+  P.FOND_DEPART = "Ruban framboise sur crème";
+  /* son trait framboise n'est pas dans la couleur moyenne : on pose nous-mêmes encadrés poudre + bouton framboise */
+  P.DEPART_COUL = () => { if (P.D.querySelector('.pf-dots [data-co="poudre"]')) P.couleur("poudre", true); if (P.D.querySelector('.pf-vifs [data-vif="framboiseb"]')) P.vif("framboiseb"); P.nomc("bordeaux"); };   /* 18/11 soir (Marie) : le beige avec le trait rose */
+  /* 18/11 (Marie : « sur un fond rose, il me met du jaune ») : avant, on suivait UNE couleur de détail du fond (f[4]), parfois jaune sur un fond rose.
+     Maintenant : la couleur DOMINANTE du fond (mesurée, teintes-fonds.js) décide ; le détail n'est gardé que s'il est de la même famille. */
+  const tsl = c => { const [r, g, b] = rgb(c).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    const s = d ? d / (1 - Math.abs(2 * l - 1)) : 0; let h = 0; if (d) h = mx === r ? 60 * (((g - b) / d) % 6) : mx === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4); return [(h + 360) % 360, s, l]; };
+  const ecH = (a, b) => Math.min(Math.abs(a - b), 360 - Math.abs(a - b));
+  const proche = (cible, liste) => { const C = tsl(cible); return liste.reduce((m, b) => { const note = x => { const X = tsl(x.style.background);
+      if (C[1] < .15) return dist(x.style.background, cible) / 65025;                     /* fond neutre (blanc, beige, noir) : la plus proche, tout simplement */
+      return ecH(X[0], C[0]) / 60 + Math.abs(X[2] - C[2]) * 1.2 + (X[1] < .15 ? 1.5 : 0); };   /* sinon : même famille de couleur d'abord */
+    return note(b) < note(m) ? b : m; }); };
+  P.assortir = () => { const f = P.fonds().find(x => x[0] === P.etat.fond); if (!f) return false;
+    const dom = (window.TEINTES_FONDS || {})[f[0]] || f[4], acc = f[4] || dom; if (!dom) return false;
+    const D = tsl(dom), A = tsl(acc);
+    /* 18/11 soir : beaucoup de fonds ont reçu la même couleur de détail « moutarde » par défaut (#B?8?2?) : on l'ignore.
+       Un fond crème, beige, gris, noir ou blanc compte comme « sans couleur ». */
+    const dore = A[0] >= 28 && A[0] <= 62 && A[1] > .3 && !/dor|or|gold|mimosa|soleil|citron|jaune|miel|tournesol|banane/i.test(f[0]);   /* du doré seulement si le fond EST doré ou jaune */
+    const moutarde = dore || (A[0] >= 34 && A[0] <= 50 && A[1] > .5 && A[2] > .28 && A[2] < .5), accVrai = !moutarde && A[1] >= .35 && A[2] > .15 && A[2] < .8;
+    if (D[1] < .15 || (D[2] > .65 && D[1] < .45) || D[2] < .2) D[1] = 0;
+    const ref = accVrai ? acc : dom;
     const vifs = [...P.D.querySelectorAll(".pf-vifs [data-vif]")].filter(b => b.dataset.vif !== "blancb"); if (!vifs.length) return false;
-    const v = vifs.reduce((m, b) => dist(b.style.background, f[4]) < dist(m.style.background, f[4]) ? b : m); P.vif(v.dataset.vif);
-    const dots = [...P.D.querySelectorAll(".pf-dots [data-co]")]; const d = dots.reduce((m, b) => dist(b.style.background, f[4]) < dist(m.style.background, f[4]) ? b : m); P.couleur(d.dataset.co, true); return true; };
+    const R = tsl(ref); if (R[2] > .6 && (R[0] >= 315 || R[0] <= 15)) R[0] = 338;   /* un rose pâle → un bouton framboise, pas rouge */
+    const cibleV = R[1] < .15 ? ref : `hsl(${R[0]},${Math.max(45, R[1] * 100)}%,${Math.min(48, R[2] * 100)}%)`;   /* le bouton : la même famille, assez soutenue pour se lire */
+    /* 18/11 soir (Marie : « fond noir et bouton jaune ??? ») : fond sans couleur (noir, gris, blanc, beige) → bouton noir, sobre */
+    const vifChoisi = (D[1] < .15 && !accVrai) ? (vifs.find(b => b.dataset.vif === "noirb") || proche(dom, vifs)) : proche(hexDe(cibleV), vifs);
+    P.vif(vifChoisi.dataset.vif);
+    const dots = [...P.D.querySelectorAll(".pf-dots [data-co]")]; const dot = proche(dom, dots); P.couleur(dot.dataset.co, true);
+    /* 18/11 soir (Marie : « le nom n'a pas bougé ») : le nom suit aussi — même famille que le bouton, assez foncé pour se lire ; sur encadrés foncés, en blanc */
+    try { const clair = tsl(dot.style.background)[2] > .45;
+      let nc = "noir"; if (!clair) nc = "blanc";
+      else if (D[1] >= .15 || accVrai) { const V = tsl(vifChoisi.style.background); const cand = Object.entries(P.NOMC).filter(([k, v]) => !/gradient/.test(v) && v.startsWith("#")).map(([k, v]) => [k, tsl(v)]).filter(([, x]) => x[2] < .5 && x[1] > .2);
+        const best = cand.reduce((m, x) => { const n = ecH(x[1][0], V[0]) / 60 + Math.abs(x[1][2] - Math.min(V[2], .4)); return !m || n < m[0] ? [n, x[0]] : m; }, null); if (best && best[0] < .6) nc = best[1]; }
+      P.nomc(nc); } catch (e) {}
+    return true; };
+  const hexDe = c => { if (/^#/.test(c)) return c; const d = document.createElement("i"); d.style.color = c; document.body.appendChild(d); const m = getComputedStyle(d).color.match(/\d+/g).slice(0, 3); d.remove(); return "#" + m.map(x => (+x).toString(16).padStart(2, "0")).join(""); };
 
   /* 17/11 soir (Marie) : remettre « Votre site » — la couleur du NOM a sa propre palette (comme l'ancienne page, hero-format.js),
      .pf-dots = la couleur du SITE, et les blocs « Sur blanc / Sur couleur » */
@@ -374,7 +409,13 @@
   /* sa photo du haut (même méthode que la page actuelle : choisitPhoto / litPhoto) */
   P.photos = () => { try { return P.W.eval("(BR.photos||[]).map(p=>p.url)").map(u => new URL(u, P.D.baseURI).href); } catch (e) { return []; } };
   P.photoUne = () => { try { const u = P.W.eval("(BR.photos||[])[BR.principale||0]?.url||''"); return u ? new URL(u, P.D.baseURI).href : ""; } catch (e) { return ""; } };
-  P.choisitPhoto = u => { P.rideau(650); try { P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
+  /* 18/11 soir (Marie : « changer de photo, ça met 3 heures ») : toutes ses photos sont chargées d'avance ;
+     au clic, on attend juste que LA photo soit prête, puis le changement se fait en moins d'une demi-seconde */
+  const photoPrete = {}; P.prechargePhotos = () => { try { P.photos().forEach(u => { if (!photoPrete[u]) { const im = new Image(); im.decoding = "async"; im.src = u; photoPrete[u] = im; } }); } catch (e) {} };
+  P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false;
+    const go = () => { if (fait) return; fait = true; P._choisitPhoto(u); };
+    if (im.complete) go(); else { im.onload = im.onerror = go; setTimeout(go, 1200); } };
+  P._choisitPhoto = u => { P.rideau(90, 450); try { P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
     setTimeout(() => { if (P.etat.police) clique(`#pzPol [data-p="${P.etat.police}"]`); }, 120); P.calme(); ajusteBientot(); signale("photo"); };
   /* 17/11 (Marie) : elle peut retirer une photo (on en garde toujours au moins une) ; remetPhoto = « Annuler » */

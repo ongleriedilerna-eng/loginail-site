@@ -39,10 +39,10 @@ body[data-e="lien"] #s1,body[data-e="charge"] #s2{opacity:1;visibility:visible;t
 .puce .ic svg{width:12px;height:15px}
 .puce span{flex:1;font:400 15.5px Jost,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .puce span b{font-weight:500}
-.puce .ok{width:30px;height:30px;flex:none;border-radius:50%;background:var(--vert);color:#fff;display:grid;place-items:center}
+.puce .ok{width:30px;height:30px;flex:none;border-radius:50%;color:#B03562;display:grid;place-items:center;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 10px -4px rgba(176,53,98,.35)}   /* 18/11 (Marie) : la coche a la couleur de « 1er mois offert » */
 .puce .ok svg{width:14px;height:14px}
 .puce .chg{font:400 13px Jost,sans-serif;color:var(--doux);text-decoration:underline;text-underline-offset:3px;padding:8px 4px}
-.lien.reconnue .champ{border-color:var(--vert);box-shadow:0 0 0 4px rgba(42,111,68,.10)}
+.lien.reconnue .champ{border-color:#E9A9BF;box-shadow:0 0 0 4px rgba(176,53,98,.08)}
 .lien.reconnue .puce{opacity:1;pointer-events:auto;transform:none}
 .lien.reconnue .coller{opacity:0;pointer-events:none}
 .msg{margin:8px 10px 0;text-align:center;font:400 13.5px/1.4 Jost,sans-serif;color:var(--muted);min-height:0}
@@ -291,12 +291,13 @@ body.pret.attend .cta{animation:appel 2.6s ease-in-out 1s infinite}
 .anneau{position:relative;width:var(--ta,220px);aspect-ratio:1;margin-top:8px}
 .cercle{width:100%;height:100%;transform:rotate(-90deg)}
 .a-fond{fill:none;stroke:#E7E0D8;stroke-width:2}
-.a-prog{fill:none;stroke:var(--noir);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));transition:stroke-dashoffset .9s var(--doux-out),stroke .4s}
+.a-prog{fill:none;stroke:var(--noir);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));transition:stroke-dashoffset var(--pd,.9s) linear,stroke .4s}   /* 18/11 (Marie) : le trait COULISSE d'un seul geste, plus 5 sauts */
 .pret .a-prog{stroke:#D97A9C}
 .a-centre{position:absolute;inset:14%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity .3s}
 .a-lab{margin:0;font:400 14px Jost,sans-serif;color:var(--doux)}
 .a-val{margin:6px 0 0;font:500 26px/1.1 "Cormorant Garamond",serif;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .45s var(--doux-out)}
 .a-val.on{opacity:1;transform:none}
+.a-val{display:none!important}   /* 18/11 (Marie : « enlève le 9 prestations, l'écriture ») : dans le rond, seulement ce qu'on cherche, pas ce qu'on a trouvé */
 .a-coche{position:absolute;left:50%;top:50%;width:34%;transform:translate(-50%,-50%) scale(.5);opacity:0;fill:none;stroke:#D97A9C;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s,transform .5s var(--pop)}
 .pret .a-centre{opacity:0}
 .pret .a-coche{opacity:1;transform:translate(-50%,-50%) scale(1)}
@@ -329,7 +330,7 @@ body.pret.attend .milieu .cta{opacity:1;transform:none;pointer-events:auto}
 .pret .etape{visibility:hidden}
 .charge-b .releve{width:100%}
 /* C2 : l'étoile qui tourne au bout du trait, ce qu'on a trouvé en pastilles */
-.comete{position:absolute;inset:0;transform:rotate(calc(var(--p,0)*360deg));transition:transform .9s var(--doux-out),opacity .3s;pointer-events:none}
+.comete{position:absolute;inset:0;transform:rotate(calc(var(--p,0)*360deg));transition:transform var(--pd,.9s) linear,opacity .3s;pointer-events:none}
 .comete i{position:absolute;left:50%;top:4.2%;transform:translate(-50%,-50%);font-style:normal;font-size:18px;color:#fff;text-shadow:0 0 6px rgba(240,130,175,1),0 0 16px rgba(255,170,205,.9)}
 .pret .comete{opacity:0}
 .charge-c .points{gap:7px;margin-top:20px}
@@ -391,7 +392,7 @@ li:nth-child(2) .carte{animation-delay:-2s}li:nth-child(3) .carte{animation-dela
    à la fin, les charms s'engouffrent dans l'anneau et la page Personnaliser s'ouvre en cercle depuis l'anneau. */
 .charge-c .fin,.charge-c #continuer,.charge-c .chiffres{display:none!important}
 .bam .anneau{animation:bam .45s var(--pop) 1}
-.tourbillon .anneau .a-coche{transition:opacity .6s,transform .6s}.tourbillon .anneau{filter:drop-shadow(0 0 18px rgba(240,150,190,.45));transition:filter .8s}
+.tourbillon .anneau .a-coche{transition:opacity .6s,transform .6s}
 @keyframes bam{40%{transform:scale(1.18)}100%{transform:scale(.9)}}
 .portail{position:absolute;inset:0;z-index:80;visibility:hidden;clip-path:circle(0 at 50% 50%);background:var(--fond)}
 .portail.on{visibility:visible}

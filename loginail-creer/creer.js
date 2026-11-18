@@ -123,7 +123,7 @@ function garde() {
 /* =====================================================================
    2 · LA PAGE 1 : la case du lien
    ===================================================================== */
-const PIN = '<svg viewBox="0 0 13 16"><path d="M6.5 0A6.5 6.5 0 0 0 0 6.5C0 11 6.5 16 6.5 16S13 11 13 6.5A6.5 6.5 0 0 0 6.5 0Zm0 9A2.5 2.5 0 1 1 6.5 4a2.5 2.5 0 0 1 0 5Z" fill="#D9473B"/></svg>';
+const PIN = '<svg viewBox="0 0 13 16"><path d="M6.5 0A6.5 6.5 0 0 0 0 6.5C0 11 6.5 16 6.5 16S13 11 13 6.5A6.5 6.5 0 0 0 6.5 0Zm0 9A2.5 2.5 0 1 1 6.5 4a2.5 2.5 0 0 1 0 5Z" fill="#1E1C1B"/></svg>';   /* 18/11 (Marie) : épingle noire */
 const COCHE = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg>';
 /* 09/11 (Marie) : Google Maps, Planity, Booksy, ou son propre site (.fr, .com…). Jamais Instagram. */
 const estInsta = l => /(^|\/\/|\.)(instagram\.com|instagr\.am|tiktok\.com|facebook\.com|fb\.com)/i.test(l);
@@ -278,7 +278,7 @@ let jeton = 0;
 function reset() {
   K.forEach(k => BODY.classList.remove("en-" + k, "k-" + k)); BODY.classList.remove("pret", "attend", "seisme", "bam", "tourbillon", "ouvert");
   $$("#s2 [data-k]").forEach(x => { x.classList.remove("cours", "ok"); x.querySelectorAll("[data-court]").forEach(s => s.textContent = ""); x.style.translate = ""; x.getAnimations().forEach(a => a.cancel()); });
-  BODY.style.setProperty("--p", 0); phrase.textContent = ""; $("cLab").textContent = ""; $("cVal").textContent = ""; $("cVal").classList.remove("on");
+  BODY.style.setProperty("--pd", "0ms"); BODY.style.setProperty("--p", 0); phrase.textContent = ""; $("cLab").textContent = ""; $("cVal").textContent = ""; $("cVal").classList.remove("on");
   port.classList.remove("on"); port.getAnimations().forEach(a => a.cancel());
   $$("#deco2 img").forEach(im => { E.delete(im); im.style.translate = im.style.rotate = im.style.scale = im.style.opacity = ""; });
 }
@@ -321,7 +321,9 @@ async function charge(lien) {
     BODY.classList.add("en-" + k); BODY.dataset.k = k;
     $$(`#s2 [data-k="${k}"]`).forEach(x => x.classList.add("cours"));
     dire(PHRASES[i]); $("cLab").textContent = LAB[k]; $("cVal").textContent = ""; $("cVal").classList.remove("on");
-    await attends(RM ? 300 : i === 1 ? 1500 : 1100);
+    /* 18/11 (Marie : « que ça coulisse ») : le trait avance en continu pendant toute l'étape, au lieu de sauter à la fin */
+    const duree = RM ? 300 : i === 1 ? 1500 : 1100; void BODY.offsetWidth; BODY.style.setProperty("--pd", (duree + 250) + "ms"); BODY.style.setProperty("--p", (i + 1) / K.length);
+    await attends(duree);
     while (!fini && !(i < 4 && gOk)) await attends(200);   // les prix attendent la lecture de son site
     if (j !== jeton || erreur) break;
     const t = trouve(k), tc = trouve(k, true);
@@ -361,15 +363,11 @@ async function fin(j) {
     if (ring) ring.animate([{ scale: 1 }, { scale: 1.045 }, { scale: 1 }], { duration: 320, delay: dl + 900, easing: "ease-out" }); });   // l'anneau « avale » la carte
   await attends(2050); if (j !== jeton) return;
   await ifrPret; if (j !== jeton) return;   // Personnaliser est prête (elle s'est chargée pendant le tourbillon)
-  BODY.classList.add("bam");
-  flash.style.left = C.cx + "px"; flash.style.top = C.cy + "px";
-  flash.animate([{ transform: "translate(-50%,-50%) scale(.4)", opacity: 0 }, { transform: "translate(-50%,-50%) scale(1.6)", opacity: .9, offset: .45 }, { transform: "translate(-50%,-50%) scale(4)", opacity: 0 }], { duration: 1300, easing: "cubic-bezier(.3,0,.2,1)" });
-  eclate(16);
-  await attends(260); if (j !== jeton) return;
-  port.classList.add("on");
-  port.animate([{ clipPath: `circle(${C.r0 * .7}px at ${C.cx}px ${C.cy}px)` }, { clipPath: `circle(${C.rmax}px at ${C.cx}px ${C.cy}px)` }],
-    { duration: 1150, easing: "cubic-bezier(.7,0,.2,1)", fill: "forwards" });
-  await attends(1200); if (j !== jeton) return;
+  /* 18/11 (Marie : « je ne veux pas le halo, ni le site en petit puis en grand ») : plus de flash rose ni d'ouverture en cercle :
+     Personnaliser apparaît simplement en fondu, à sa vraie taille */
+  port.style.clipPath = "none"; port.classList.add("on");
+  port.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 480, easing: "ease-out", fill: "forwards" });
+  await attends(500); if (j !== jeton) return;
   BODY.classList.add("ouvert"); devientPerso();
 }
 
