@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Votre site est prêt · Loginail</title>
+<meta name="theme-color" content="#F6F3EF">
+<link href="../polices.css" rel="stylesheet">
+<style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
+<style>
+/* 18/11 nuit · « Votre site est prêt » (Marie : « la page décisive : tout sur UN écran, sans descendre ; le carré, on le garde ;
+   le titre sur une ligne ; le téléphone plus petit ; une fête : des charms qui tombent tout autour »).
+   Tour de table : Marketing (textes, 2 avantages, rassurance sous le bouton), Design (hauteurs, chute des charms SES charms autour),
+   Business (prix + conditions obligatoires, case jamais cochée d'avance, lien vers les conditions d'abonnement). */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#6B625C;--rose:#D97A9C;--roseF:#B03562;--ligne:rgba(30,28,27,.12);--sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom)}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}
+.page{position:relative;z-index:2;height:100dvh;max-width:440px;margin:0 auto;padding:calc(var(--sat) + 8px) 16px calc(var(--sab) + 10px);display:flex;flex-direction:column;align-items:center}
+.haut{position:relative;width:100%;height:30px;flex:none;display:flex;align-items:center;justify-content:center}
+.logo{width:80px;color:var(--noir)}
+.retouche{position:absolute;left:-4px;top:50%;transform:translateY(-50%);padding:6px 8px;border:0;background:none;font:400 13px Jost,sans-serif;color:var(--muted);cursor:pointer}
+.retouche:active{opacity:.6}
+.scene{position:relative;flex:1 1 0;min-height:120px;width:100%;display:flex;align-items:center;justify-content:center;margin-top:8px}
+.tel{position:relative}
+.fT-cadre{position:relative;width:100%;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 0 0 6px #1b1b1d,0 0 0 7px #3a3a3c,0 26px 44px -22px rgba(80,30,50,.55);animation:monte .8s cubic-bezier(.2,.8,.3,1) both}
+.fT-cadre iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none}
+.fT-encoche{position:absolute;left:50%;top:6px;width:28%;height:3.6%;max-height:20px;border-radius:99px;background:#1b1b1d;transform:translateX(-50%)}
+@keyframes monte{from{opacity:0;transform:translateY(22px) scale(.94)}}
+.halo{position:absolute;inset:-14% -40%;z-index:-1;background:radial-gradient(closest-side,rgba(233,169,191,.5),rgba(233,169,191,0));filter:blur(6px);animation:respire 4s ease-in-out infinite}
+@keyframes respire{50%{transform:scale(1.06);opacity:.8}}
+.titres{flex:none;display:flex;flex-direction:column;align-items:center;margin-top:12px;animation:monte .7s .15s cubic-bezier(.2,.8,.3,1) both}
+.kick{font:500 10.5px Jost,sans-serif;letter-spacing:.22em;color:var(--roseF)}
+h1{margin:4px 0 0;font:400 34px/1 "Cormorant Garamond",serif;letter-spacing:-.01em;white-space:nowrap}
+h1 em{font-style:italic}
+.adr{margin-top:5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 13px Jost,sans-serif;color:var(--muted)}
+.adr b{font-weight:500;color:var(--noir)}
+.adr i{font-style:normal;color:var(--roseF)}
+/* le carré */
+.carte{position:relative;z-index:3;flex:none;width:100%;margin-top:12px;padding:14px 16px 12px;border-radius:24px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 20px 36px -28px rgba(80,30,50,.45);animation:monte .7s .25s cubic-bezier(.2,.8,.3,1) both}
+.offre{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.offre b{display:block;font:400 25px/1 "Cormorant Garamond",serif}.offre b em{font-style:italic}
+.offre span{display:block;margin-top:2px;font:300 12.5px Jost,sans-serif;color:var(--muted)}
+.offre small{flex:none;padding:6px 10px;border-radius:999px;background:#FBF1F4;color:var(--roseF);font:500 9.5px/1.3 Jost,sans-serif;letter-spacing:.12em;text-align:center}
+.plus{display:flex;flex-wrap:wrap;gap:4px 12px;margin:9px 0 2px;padding-top:9px;border-top:1px solid var(--ligne);font:300 12.5px/1.3 Jost,sans-serif}
+.plus span::before{content:"✦ ";color:var(--rose)}
+.plus b{font-weight:500}
+.champ{width:100%;height:46px;margin-top:8px;border:1px solid rgba(30,28,27,.22);border-radius:999px;padding:0 18px;background:#fff;font:400 16px Jost,sans-serif;outline:none;transition:border-color .15s,box-shadow .15s}
+.champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.06)}
+.mdp{position:relative}.mdp .champ{padding-right:70px}
+.oeil{position:absolute;right:6px;top:11px;height:36px;padding:0 12px;border:0;border-radius:999px;background:none;font:400 13px Jost,sans-serif;color:var(--muted);cursor:pointer}
+.cgv{display:flex;gap:9px;align-items:center;margin-top:9px;font:300 12.5px/1.35 Jost,sans-serif;color:var(--muted);cursor:pointer}
+.cgv input{width:19px;height:19px;margin:0;accent-color:var(--noir);flex:none}
+.cgv a{color:var(--noir)}
+.go{width:100%;height:50px;margin-top:10px;border:0;border-radius:999px;background:var(--noir);color:var(--fond);font:500 15px Jost,sans-serif;letter-spacing:.04em;box-shadow:0 12px 24px -14px rgba(0,0,0,.6);transition:transform .15s,opacity .25s;cursor:pointer}
+.go:disabled{opacity:.35;cursor:default}.go:not(:disabled):active{transform:scale(.97)}
+.petit{margin:7px 0 0;text-align:center;font:300 11.5px/1.35 Jost,sans-serif;color:var(--muted)}
+.petit b{font-weight:500;color:var(--noir)}
+/* après : regardez vos e-mails (même écran, le carré change) */
+.fin{display:none;text-align:center}
+body.envoye .fin{display:block}body.envoye .avant{display:none}
+.env{width:50px;height:38px;color:var(--roseF)}
+.fin h2{margin:4px 0 0;font:400 30px/1 "Cormorant Garamond",serif}.fin h2 em{font-style:italic}
+.fin p{margin:8px auto 0;max-width:32ch;font:300 13.5px/1.45 Jost,sans-serif;color:var(--muted)}.fin p b{color:var(--noir);font-weight:500;word-break:break-all}
+.etapes{margin-top:12px;display:grid;gap:7px;text-align:left}
+.etapes div{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:14px;background:var(--fond);font:300 13px/1.3 Jost,sans-serif}
+.etapes i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--noir);color:#fff;font:500 11px Jost,sans-serif;font-style:normal}
+.carte.change{animation:change .45s cubic-bezier(.2,.8,.3,1)}
+@keyframes change{from{opacity:0;transform:scale(.96)}}
+/* la fête : ses charms tombent et restent posés AUTOUR (jamais sur le texte ni le formulaire) */
+.fete{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.fete span{position:absolute;display:block}
+.fete img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 5px rgba(80,30,50,.22));animation:flotte 4s ease-in-out infinite alternate}
+@keyframes flotte{to{transform:translateY(-5px) rotate(4deg)}}
+.fete .etF{position:absolute;display:block;font-style:normal;line-height:1;text-shadow:0 0 6px currentColor;opacity:0;animation:etApp .5s var(--a) ease-out forwards,scint 2.4s calc(var(--a) + var(--d)) ease-in-out infinite}
+@keyframes etApp{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
+@keyframes scint{50%{opacity:.35;transform:scale(.7) rotate(20deg)}}
+/* les 2 téléphones */
+.duo{--w:140px;position:relative;width:calc(var(--w) * 1.7);height:calc(var(--w) * 844 / 390)}
+.duo .halo{inset:-10% -14%}
+.unS{position:absolute;left:0;top:0;width:var(--w);z-index:2}
+.unA{position:absolute;right:0;top:9%;width:calc(var(--w) * .8);z-index:1;rotate:5deg;animation:entreA .8s .35s cubic-bezier(.2,.8,.3,1) both}
+@keyframes entreA{from{opacity:0;transform:translateX(-40%) scale(.9)}}
+.cadreA{position:relative;aspect-ratio:390/844;border-radius:22px;overflow:hidden;background:#F8EFEF;box-shadow:0 0 0 5px #1b1b1d,0 0 0 6px #3a3a3c,0 22px 38px -22px rgba(80,30,50,.5)}
+.cadreA img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .5s}
+.cadreA img.on{opacity:1}
+.cadreA .fT-encoche{top:5px}
+.etq{position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);z-index:3;white-space:nowrap;padding:4px 10px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 6px 14px -8px rgba(80,30,50,.4);font:500 10.5px Jost,sans-serif;letter-spacing:.04em}
+.unA .etq{color:var(--roseF);left:auto;right:-6px;transform:none;rotate:-5deg}
+/* les 4 avantages en 2 colonnes */
+.plus4{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;margin:9px 0 2px;padding-top:9px;border-top:1px solid var(--ligne)}
+.plus4>div{display:flex;gap:7px;align-items:flex-start}
+.plus4 i{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#E9A9BF,#D97A9C);color:#fff;font-size:8px;font-style:normal;margin-top:1px}
+.plus4 span{font:300 11.5px/1.25 Jost,sans-serif;color:var(--muted)}
+.plus4 b{display:block;font:500 12.5px/1.25 Jost,sans-serif;color:var(--noir)}
+@media (min-width:900px){.etq{font-size:12px;padding:5px 12px;bottom:-13px}}
+.msg{margin:6px 0 0;min-height:0;text-align:center;font:400 12.5px/1.35 Jost,sans-serif;color:var(--roseF)}.msg:empty{display:none}
+.renv{display:block;margin:10px auto 0;padding:6px 10px;border:0;background:none;font:300 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.etoileV{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+/* petits écrans (Safari avec ses barres) : on serre encore */
+@media (max-height:700px) and (max-width:899px){.kick{display:none}h1{font-size:30px}.offre b{font-size:22px}.offre span{font-size:12px}.champ{height:44px;margin-top:7px}.oeil{top:11px}.go{height:48px;margin-top:8px}.carte{padding-top:12px}}
+/* ordinateur : son site à gauche, le reste à droite, tout dans l'écran */
+@media (min-width:900px){
+  .page{max-width:1100px;padding:24px 40px 24px;display:grid;grid-template-columns:auto 460px;grid-template-rows:30px 1fr;column-gap:96px;justify-content:center;align-items:center}
+  .haut{grid-column:1/-1}.logo{width:96px}.retouche{left:0;font-size:14px}
+  .scene{grid-column:1;grid-row:2;height:min(640px,calc(100dvh - 110px));width:auto;margin:0;flex:none}
+  .droite{grid-column:2;grid-row:2;display:flex;flex-direction:column;align-items:flex-start}
+  .titres{align-items:flex-start;margin:0}.kick{font-size:12px}h1{font-size:54px;margin-top:8px}.adr{font-size:15px;margin-top:10px}
+  .carte{margin-top:24px;padding:22px 24px 18px;border-radius:28px}
+  .offre b{font-size:30px}.offre span{font-size:14px}.plus4{margin-top:14px;padding-top:14px;gap:12px 16px}.plus4 b{font-size:14px}.plus4 span{font-size:13px}.plus4 i{width:22px;height:22px}
+  .champ{height:52px;margin-top:10px}.oeil{top:14px}.cgv{font-size:13.5px;margin-top:12px}.go{height:56px;margin-top:14px}.petit{font-size:12.5px;margin-top:10px}
+  .fin{text-align:left}.fin p{margin-left:0}
+}
+@media (max-width:899px){.droite{display:contents}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.fete .etF{opacity:1}}
+</style>
+</head>
+<body>
+<div class="fete" id="fete" aria-hidden="true"></div>
+<div class="page">
+  <div class="haut"><button class="retouche" type="button" onclick="history.length > 1 ? history.back() : location.href = 'personnaliser.html'">← Retoucher</button><div class="logo" id="logo"></div></div>
+  <div class="scene" id="scene"><div class="duo" id="telB"><div class="halo"></div>
+    <div class="unS"><div id="tel"></div><span class="etq">Votre site</span></div>
+    <div class="unA"><div class="cadreA"><img class="on" src="fini/fini-appli-agenda.jpg" alt=""><img src="fini/fini-appli-accueil.jpg" alt=""><img src="fini/fini-appli-clientes.jpg" alt=""><div class="fT-encoche"></div></div><span class="etq">Votre appli</span></div>
+  </div></div>
+  <div class="droite">
+    <div class="titres" id="titres">
+      <div class="kick" id="kick">✦ C'EST FAIT</div>
+      <h1>Votre site est <em>prêt</em>.</h1>
+      <div class="adr"><i>✦</i> loginail.fr/<b id="slug"></b></div>
+    </div>
+    <div class="carte" id="carte">
+      <div class="avant">
+        <div class="offre"><div><b>1 mois <em>offert</em></b><span>puis 49,99 € par mois</span></div><small>SANS<br>ENGAGEMENT</small></div>
+        <div class="plus4"><div><i>✦</i><span><b>Votre site</b>à votre nom</span></div><div><i>✦</i><span><b>Réservation en ligne</b>+ SMS de rappel</span></div><div><i>✦</i><span><b>Votre appli</b>agenda, clientes, caisse</span></div><div><i>✦</i><span><b>0 % de commission</b>sur vos rendez-vous</span></div></div>
+        <input class="champ" id="mail" type="email" inputmode="email" autocomplete="email" placeholder="Votre adresse e-mail">
+        <div class="mdp"><input class="champ" id="mdp" type="password" autocomplete="new-password" placeholder="Mot de passe (8 caractères min.)"><button class="oeil" type="button" id="oeil">Voir</button></div>
+        <label class="cgv"><input type="checkbox" id="cgv"><span>J'accepte les <a href="../conditions-abonnement.html" target="_blank" rel="noopener">conditions</a> et la <a href="../confidentialite.html" target="_blank" rel="noopener">confidentialité</a>.</span></label>
+        <button class="go" id="go" disabled>Activer mon site ✦</button>
+        <p class="msg" id="msgA" role="status"></p>
+        <p class="petit"><b>Rien n'est prélevé</b> pendant le mois offert · arrêt en 1 clic.</p>
+      </div>
+      <div class="fin">
+        <svg class="env" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="1.5" y="1.5" width="61" height="45" rx="9"/><path d="M4 6l28 21L60 6"/></svg>
+        <h2>Regardez vos <em>e-mails</em></h2>
+        <p>Un lien vous attend à <b id="adrMail"></b>. Touchez-le : votre site s'active.</p>
+        <div class="etapes">
+          <div><i>1</i><span>Touchez <b>« Activer mon site »</b> dans l'e-mail.</span></div>
+          <div><i>2</i><span>Téléchargez <b>l'appli Loginail</b>.</span></div>
+          <div><i>3</i><span>Partagez votre lien sur Instagram.</span></div>
+        </div>
+        <button class="renv" id="renv" type="button">Je n'ai rien reçu : renvoyer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="vendor/supabase.js"></script>
+<script src="fini/manque-commun.js?v=1811a"></script>
+<script src="fini/teintes-fonds.js?v=1811a"></script>
+<script src="fini/fini-commun.js?v=1811a"></script>
+<script>
+const $ = id => document.getElementById(id);
+if (!FINI.aDuSite) location.replace("index.html");
+$("logo").innerHTML = LOGO;
+$("slug").textContent = FINI.slug;
+$("kick").textContent = `✦ C'EST FAIT, ${FINI.prenom.toUpperCase()}`;
+/* le téléphone prend la hauteur qui reste (rien ne défile) */
+const tb = $("telB"), sc = $("scene");
+/* 2 téléphones : son site devant, son appli derrière à droite (Marie : « qu'elles voient qu'il y a aussi l'appli pour tout gérer ») */
+const taille = () => { const g = innerWidth >= 900, h = Math.min(sc.clientHeight - (g ? 26 : 18), g ? 600 : 420), w = Math.max(60, g ? Math.floor(h * 390 / 844) : Math.min(Math.floor(h * 390 / 844), Math.floor((sc.clientWidth - 8) / 1.7))); tb.style.setProperty("--w", w + "px"); };
+taille(); new ResizeObserver(taille).observe(sc);
+const f = FINI.telephone($("tel")); FINI.defile(f);
+setTimeout(() => eclat($("tel"), 20), 600);
+/* l'appli montre ses écrans l'un après l'autre : agenda, accueil, clientes */
+{ const ims = [...document.querySelectorAll(".cadreA img")]; let i = 0; setInterval(() => { ims[i].classList.remove("on"); i = (i + 1) % ims.length; ims[i].classList.add("on"); }, 2800); }
+/* le formulaire */
+const verif = () => { $("go").disabled = !(FINI.mailOk($("mail").value) && $("mdp").value.length >= 8 && $("cgv").checked); };
+["mail", "mdp"].forEach(k => $(k).oninput = verif); $("cgv").onchange = verif;
+$("oeil").onclick = e => { const v = $("mdp").type === "password"; $("mdp").type = v ? "text" : "password"; e.target.textContent = v ? "Cacher" : "Voir"; };
+const coffre = window.supabase ? supabase.createClient("https://scfhaombuptmrlkdhcsl.supabase.co", "sb_publishable_lYx1ZH0k3EFrUhZ3v0W8gw_yhGPOhbq") : null;
+const SIMU = (() => { try { return localStorage.getItem("loginail-simu") === "1"; } catch (e) { return false; } })();
+async function envoie() {
+  const adr = $("mail").value.trim(), BR = FINI.br; $("go").disabled = true; $("msgA").textContent = "";
+  if (SIMU) { BR.email = adr; try { localStorage.setItem("loginail-brouillon", JSON.stringify(BR)); } catch (e) {} montreMails(adr); return; }
+  if (!coffre) { $("msgA").textContent = "Pas de connexion. Vérifiez votre internet et réessayez."; verif(); return; }
+  $("go").textContent = "Un instant…";
+  try {
+    const { photos, avis, ...garde } = BR || {};   /* les photos et avis Google ne se gardent pas : on les relira sur Google */
+    const { data: bid } = await coffre.rpc("poser_brouillon", { donnees: garde });   /* le brouillon la suit même si elle ouvre l'e-mail sur un autre téléphone */
+    const q = new URLSearchParams(); if (bid) q.set("b", bid);
+    const { data: inscr, error } = await coffre.auth.signUp({ email: adr, password: $("mdp").value, options: { emailRedirectTo: new URL("fin.html?" + q.toString(), location.href).href, data: { brouillon: garde } } });
+    $("go").textContent = "Activer mon site ✦";
+    if (!error && inscr?.user && !inscr.user.identities?.length) { $("msgA").textContent = "Vous avez déjà un compte avec cette adresse : connectez-vous dans l'appli Loginail."; verif(); return; }
+    if (error) { $("msgA").textContent = /rate|limit|seconds/i.test(error.message) ? "Trop d'essais d'un coup. Réessayez dans une minute." : /password/i.test(error.message) ? "Choisissez un mot de passe plus long (8 caractères ou plus)." : "Le compte n'a pas pu être créé. Vérifiez l'adresse et réessayez."; verif(); return; }
+    montreMails(adr);
+  } catch (e) { $("go").textContent = "Activer mon site ✦"; $("msgA").textContent = "Pas de connexion. Vérifiez votre internet et réessayez."; verif(); }
+}
+$("go").onclick = envoie;
+$("mail").addEventListener("keydown", e => { if (e.key === "Enter" && !$("go").disabled) envoie(); });
+$("renv").onclick = () => { document.body.classList.remove("envoye"); verif(); };
+if (SIMU) { $("renv").textContent = "Ouvrir mes e-mails"; $("renv").onclick = () => { location.href = "mail-simu.html"; }; }
+function montreMails(adr) { $("adrMail").textContent = adr; document.body.classList.add("envoye");
+  const c = $("carte"); c.classList.remove("change"); void c.offsetWidth; c.classList.add("change"); setTimeout(() => eclat(document.querySelector(".env"), 14), 250); };
+/* la fête (18/11, Marie) : SES charms (tous ceux qu'elle a posés, chacun différent avant de se répéter) ;
+   si elle n'en a pas mis : des cerises, mais 10 cerises DIFFÉRENTES ; + de petites étoiles qui brillent, à la couleur de SON fond */
+(() => {
+  const br = FINI.br || {}, siens = [...new Set([...(br.charms || []), ...((br.stickers || []).map(s => s && s.n))].filter(n => n && n !== "__etoile"))];
+  const melange = a => a.map(x => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map(x => x[1]);
+  const liste = melange(siens.length ? siens : ["cerises", "cerisedisco", "cerisecoeur", "ceriseruban", "noeudcerise", "cerisesverre", "cerisesor", "etoilecerise", "cupcakecerise", "cerisesemail"]);
+  /* la couleur des étoiles : celle de son fond, rendue assez vive pour se voir sur le beige de la page */
+  const couleurEtoile = (() => { const h = (window.TEINTES_FONDS || {})[br.fond]; if (!h) return "#E99AB6";
+    let [r, g, b] = [1, 3, 5].map(k => parseInt(h.substr(k, 2), 16) / 255); const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; let l = (mx + mn) / 2, s = d ? d / (1 - Math.abs(2 * l - 1)) : 0, t = 0;
+    if (d) t = mx === r ? 60 * (((g - b) / d) % 6) : mx === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4); t = (t + 360) % 360;
+    if (s < .12) return l < .3 ? "#C9A86A" : "#D9B97A";                     /* fond blanc, gris ou noir : des étoiles dorées */
+    return `hsl(${Math.round(t)} ${Math.round(Math.max(s, .55) * 100)}% ${Math.round(Math.min(Math.max(l, .55), .68) * 100)}%)`; })();
+  const doux = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const lance = anime => {
+    const W = innerWidth, H = innerHeight, gd = W >= 900, nbC = gd ? 14 : 8, nbE = gd ? 12 : 7, smin = gd ? 42 : 26, smax = gd ? 66 : 40;
+    /* les zones interdites : téléphone, titres, carré, haut de page */
+    const zones = [$("telB"), $("titres"), $("carte"), document.querySelector(".haut")].map(el => { const r = el.getBoundingClientRect(); return [r.left - 8, r.top - 8, r.right + 8, r.bottom + 8]; });
+    const poses = [], fete = $("fete");
+    const place = (s, ecart) => { for (let t = 0; t < 300; t++) { const x = 4 + Math.random() * (W - s - 8), y = 4 + Math.random() * (H - s - 8);
+        if (zones.some(z => x < z[2] && x + s > z[0] && y < z[3] && y + s > z[1])) continue;
+        if (poses.some(p => Math.hypot(p[0] + p[2] / 2 - x - s / 2, p[1] + p[2] / 2 - y - s / 2) < (p[2] + s) * ecart)) continue;
+        poses.push([x, y, s]); return [x, y]; } return null; };
+    const tombe = (sp, y, s, r, k, n) => (doux || !anime) ? sp.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, fill: "both" })
+      : sp.animate([{ transform: `translateY(${-(y + s + 60)}px) rotate(${r > 0 ? -25 : 25}deg)` }, { transform: "none" }], { duration: 900 + Math.random() * 400, delay: (k / n) * 700, easing: "cubic-bezier(.2,.7,.3,1.15)", fill: "both" });
+    for (let k = 0; k < nbC; k++) {
+      const s = smin + Math.random() * (smax - smin), xy = place(s, .55); if (!xy) continue;
+      const [x, y] = xy, sp = document.createElement("span"), im = new Image(), r = Math.round(Math.random() * 50 - 25);
+      im.src = "../loginail-site/charms-mini/" + liste[k % liste.length] + ".webp"; im.alt = ""; im.onerror = () => sp.remove();
+      im.style.animationDelay = -(Math.random() * 4) + "s";
+      sp.style.cssText = `left:${x}px;top:${y}px;width:${s}px;height:${s}px;rotate:${r}deg`; sp.appendChild(im); fete.appendChild(sp); tombe(sp, y, s, r, k, nbC);
+    }
+    /* les étoiles : elles apparaissent juste après les charms, puis scintillent doucement */
+    for (let k = 0; k < nbE; k++) {
+      const s = (gd ? 12 : 9) + Math.random() * (gd ? 12 : 8), xy = place(s, .9); if (!xy) continue;
+      const e = document.createElement("i"); e.className = "etF"; e.textContent = "✦";
+      e.style.cssText = `left:${xy[0]}px;top:${xy[1]}px;font-size:${s}px;color:${couleurEtoile};--d:${(Math.random() * 2.4).toFixed(2)}s;--a:${(900 + k * 90)}ms`; fete.appendChild(e);
+    }
+  };
+  setTimeout(() => lance(true), 700);
+  /* l'écran change de taille (téléphone tourné, fenêtre) : on repose les charms autour, sans les refaire tomber */
+  let tR; addEventListener("resize", () => { clearTimeout(tR); tR = setTimeout(() => { $("fete").innerHTML = ""; lance(false); }, 250); });
+})();
+</script>
+</body>
+</html>
