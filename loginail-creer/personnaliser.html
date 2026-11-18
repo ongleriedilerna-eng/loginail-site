@@ -6,8 +6,8 @@
 <title>Personnalisez votre site · Loginail</title>
 <link href="../polices.css" rel="stylesheet">
 <script src="../charms-cat.js?v=1"></script>
-<script src="perso/charms-noms.js?v=1811"></script>
-<script src="perso/looks-marie.js?v=1811"></script>
+<script src="perso/charms-noms.js?v=1811c"></script>
+<script src="perso/looks-marie.js?v=1811c"></script>
 <style>
 /* 16/11 · Pôle Design · Personnaliser, version A « L'atelier ».
    Les 5 choses à régler sont TOUJOURS visibles (En-tête · Fond · Écriture · Couleurs · Charms) : on va où on veut,
@@ -910,10 +910,10 @@ body.surCharms .pied .etoN .etoT{white-space:nowrap}
 /* 17/11 : sur ordinateur, les petits messages se centrent sur le téléphone (plus jamais coupés au bord) */
 @media (min-width:900px){.bulle{left:var(--bulX,50%)!important;max-width:min(560px,90vw);white-space:nowrap}}
 </style>
-<script src="perso/ronds-themes.js?v=1811"></script>
-<script src="perso/teintes-fonds.js?v=1811"></script>
-<script src="perso/ordre-ecritures.js?v=1811"></script>
-<script src="perso/vedettes-fonds.js?v=1811"></script>
+<script src="perso/ronds-themes.js?v=1811c"></script>
+<script src="perso/teintes-fonds.js?v=1811c"></script>
+<script src="perso/ordre-ecritures.js?v=1811c"></script>
+<script src="perso/vedettes-fonds.js?v=1811c"></script>
 <script>/* 17/11 (Marie : « en choisir quelques-uns, les plus jolis, sur les 4 premières lignes ») : dans « Tous les fonds », ses fonds vedettes
    passent en premier (dans son ordre), puis tous les autres triés par couleur. Mode choix : ?vedettes=1 */
 var MODE_VED = false;
@@ -1008,7 +1008,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=1811"></script>
+<script src="perso/perso-pilote.js?v=1811c"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1154,7 +1154,7 @@ const ouvre0 = ouvre;
 /* 17/11 soir (Marie) : la photo a SON onglet, plus mélangée aux en-têtes (?photo=entete = ancienne façon, ?photo=ensemble pour la garder) */
 const MODE = ({ entete: "onglet", ensemble: "entete" })[new URLSearchParams(location.search).get("photo")] || "onglet";
 if (MODE) document.body.classList.add("m-" + MODE);
-const phHtml = (grand) => `<label class="ph ajout" title="Ajouter ma photo"><input type="file" accept="image/*" hidden class="fichierP">+<small>Ajouter<br>ma photo</small></label>` + P.photos().slice(0, 5).map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
+const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : `<label class="ph ajout" title="Ajouter ma photo"><input type="file" accept="image/*" hidden class="fichierP">+<small>Ajouter<br>ma photo</small></label>` + P.photos().slice(0, 5).map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
 /* 17/11 (Marie) : une croix pour retirer une photo, et « Annuler » pendant 5 s */
 let retiree = null;
 function annule(r) { retiree = r; const a = $("annuleP"); a.classList.add("on"); clearTimeout(annule.t); annule.t = setTimeout(() => { a.classList.remove("on"); retiree = null; }, 5000); }
@@ -1778,6 +1778,11 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 @media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(auto-fill,minmax(114px,1fr))!important;gap:12px 12px!important}}
 /* 18/11 soir (Marie) : photos beaucoup plus petites (ordinateur et téléphone) */
 @media (min-width:900px){.grandP .ph{width:104px!important;height:138px!important}}
+/* 18/11 (Marie) : pas encore de photo : une grande case « Ajoutez vos photos » */
+.grandP .ph.ajout.videP{width:auto!important;max-width:340px;flex:1 1 auto;flex-direction:row;justify-content:flex-start;gap:14px;padding:0 20px;border:1.5px dashed rgba(217,122,156,.6);background:#fff;text-align:left}
+.grandP .ph.ajout.videP .pl{display:grid;place-items:center;flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#E9A9BF,#D97A9C);color:#fff;font:300 26px/1 Jost,sans-serif}
+.grandP .ph.ajout.videP b{display:block;font:500 15px/1.2 Jost,sans-serif;color:var(--noir)}
+.grandP .ph.ajout.videP small{display:block;margin-top:4px;font:300 12px/1.35 Jost,sans-serif;color:var(--muted);text-align:left}
 @media (max-width:899px){body.grandC .grandP .ph,.grandP .ph{width:66px!important;height:88px!important}.grandP .ph.ajout small{font-size:10.5px}}
 /* 18/11 soir (Marie : « le carré n'est pas aligné ») : la recherche, la boîte Thèmes et la grille démarrent pile sous le titre */
 @media (min-width:900px){.chDeux,.fondDeux{padding-left:0!important}.outilsC,.chDeux,.fondDeux,.basC{margin-left:-7px!important}}

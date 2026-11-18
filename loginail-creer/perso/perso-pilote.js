@@ -440,7 +440,7 @@
   P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false;
     const go = () => { if (fait) return; fait = true; P._choisitPhoto(u); };
     if (im.complete) go(); else { im.onload = im.onerror = go; setTimeout(go, 1200); } };
-  P._choisitPhoto = u => { P.rideau(600, 900); try {   /* le site remet ses couleurs ~0,5 s après une nouvelle photo : la copie reste jusque-là */ P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
+  P._choisitPhoto = u => { P.rideau(600, 900); try {   /* le site remet ses couleurs ~0,5 s après une nouvelle photo : la copie reste jusque-là ; 18/11 : sa 1re photo remplace « Votre photo apparaîtra ici » partout */ P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0;if(BR.photos.length===1)PH.vide=u}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
     setTimeout(() => { if (P.etat.police) clique(`#pzPol [data-p="${P.etat.police}"]`); }, 120); P.calme(); ajusteBientot(); signale("photo"); };
   /* 17/11 (Marie) : elle peut retirer une photo (on en garde toujours au moins une) ; remetPhoto = « Annuler » */
