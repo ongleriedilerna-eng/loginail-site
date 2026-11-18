@@ -23,7 +23,7 @@ button,input{font:inherit;color:inherit}
 .scene{position:relative;flex:1 1 0;min-height:120px;width:100%;display:flex;align-items:center;justify-content:center;margin-top:8px}
 .tel{position:relative}
 .fT-cadre{position:relative;width:100%;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 0 0 6px #1b1b1d,0 0 0 7px #3a3a3c,0 26px 44px -22px rgba(80,30,50,.55);animation:monte .8s cubic-bezier(.2,.8,.3,1) both}
-.fT-cadre iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none}
+.fT-cadre iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0}
 .fT-encoche{position:absolute;left:50%;top:6px;width:28%;height:3.6%;max-height:20px;border-radius:99px;background:#1b1b1d;transform:translateX(-50%)}
 @keyframes monte{from{opacity:0;transform:translateY(22px) scale(.94)}}
 .halo{position:absolute;inset:-14% -40%;z-index:-1;background:radial-gradient(closest-side,rgba(233,169,191,.5),rgba(233,169,191,0));filter:blur(6px);animation:respire 4s ease-in-out infinite}
@@ -154,9 +154,9 @@ body.envoye .fin{display:block}body.envoye .avant{display:none}
   </div>
 </div>
 <script src="vendor/supabase.js"></script>
-<script src="fini/manque-commun.js?v=1811b"></script>
-<script src="fini/teintes-fonds.js?v=1811b"></script>
-<script src="fini/fini-commun.js?v=1811b"></script>
+<script src="fini/manque-commun.js?v=1811c"></script>
+<script src="fini/teintes-fonds.js?v=1811c"></script>
+<script src="fini/fini-commun.js?v=1811c"></script>
 <script>
 const $ = id => document.getElementById(id);
 const DEMO = /[?&]demo/.test(location.search);   /* ?demo : la page avec le site d'exemple, pour la montrer (aucun compte créé) */

@@ -11,11 +11,15 @@ window.FINI = (() => {
     const echelle = () => { const k = c.clientWidth / 390; f.style.transform = `scale(${k})`; c.style.height = Math.round(844 * k) + "px"; };
     echelle(); new ResizeObserver(echelle).observe(c);   /* le téléphone suit sa taille (il rétrécit aux étapes suivantes) */
     f.addEventListener("load", () => { try { const d = f.contentDocument, s = d.createElement("style");
-      s.textContent = ".pret,.langues,.indiceD,.act{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(s); } catch (e) {} });
+      s.textContent = ".pret,.langues,.indiceD,.act{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}"; d.head.appendChild(s);
+      /* 18/11 (Marie : « qu'elle puisse le faire coulisser elle aussi ») : elle fait défiler son site au doigt ; on arrête le défilement tout seul,
+         et les boutons du site ne mènent nulle part (on reste sur cette page) */
+      ["pointerdown", "touchstart", "wheel"].forEach(t => d.addEventListener(t, () => { f._touche = true; }, { passive: true, capture: true }));
+      d.addEventListener("click", e => { e.preventDefault(); e.stopPropagation(); }, true); } catch (e) {} });
     return f;
   }
   /* un petit défilement automatique du site, pour montrer qu'il est vivant */
-  function defile(f) { let t = 0; const go = () => { try { const d = f.contentDocument, b = d.querySelector(".defile") || d.scrollingElement; if (!b) return;
+  function defile(f) { let t = 0; const go = () => { if (f._touche) return; try { const d = f.contentDocument, b = d.querySelector(".defile") || d.scrollingElement; if (!b) return;
       const max = Math.min(b.scrollHeight - b.clientHeight, 900); t = (t + 1) % 3; b.scrollTo({ top: [0, max * .45, max][t], behavior: "smooth" }); } catch (e) {} };
     setTimeout(() => { go(); setInterval(go, 3200); }, 2600); }
   const mailOk = v => /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.trim());
