@@ -1207,7 +1207,11 @@ const versLook = s => { const q = new URLSearchParams(s), pos = {};
   return { f: q.get("fond") || "", p: q.get("police"), co: q.get("couleur"), v: q.get("vif"), c: (q.get("charm") || "").split(",").filter(Boolean), pos }; };
 const LOOKS = UNIV.map(([n, d, img, s]) => ({ n, d, img, ...versLook(s) }));
 const MES = (() => { try { return JSON.parse(localStorage.getItem("lgnMesLooks") || "[]"); } catch (e) { return []; } })();
-const tousLooks = () => [...MES, ...(window.LOOKS_MARIE || []), ...LOOKS];
+/* 18/11 (Marie : « les looks avec les anciennes en-têtes qui n'y sont plus, tu me les enlèves ») : les 8 univers montraient
+   un ancien en-tête (photo en plein écran) qui n'existe plus, et l'en-tête de la pro ne changeait pas → retirés.
+   On ne garde que les looks dont l'en-tête existe encore (ou qui n'en imposent pas). */
+const enteteExiste = L => !L.e || P.ENT.some(x => x[0] === L.e);
+const tousLooks = () => [...MES, ...(window.LOOKS_MARIE || [])].filter(enteteExiste);
 let lookOn = -1;
 ORDRE.unshift("look"); document.body.classList.add("looks6");
 TXT.look = ["Votre <em>look</em>", "Un toucher : tout votre site change. Vous affinerez ensuite si vous voulez."];
