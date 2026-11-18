@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20 nouvelles écritures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&family=Alex+Brush&family=Monsieur+La+Doulaise&family=Bonheur+Royale&family=Corinthia:wght@700&family=Italianno&family=Ms+Madi&family=Cookie&family=Caveat:wght@600&family=Fraunces:ital,opsz,wght@1,9..144,600&family=Rozha+One&family=Poiret+One&family=Forum&family=Tenor+Sans&family=Syne:wght@800&family=Unbounded:wght@600&family=Chicle&family=Modak&family=Nabla&family=Bungee+Spice&family=Jost:wght@400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#B5475E;--brun:#2A1B1E;--creme:#FFF8F6}
+*{box-sizing:border-box;margin:0}
+body{background:#FBF1EF;font-family:Jost,sans-serif;color:var(--brun);padding:28px 16px 60px}
+header{max-width:1240px;margin:0 auto 26px;text-align:center}
+h1.t{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-size:38px}
+header p{color:#7a5f64;margin-top:6px;font-size:15px}
+.grille{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.carte{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 6px 22px rgba(90,40,50,.09);transition:transform .25s,opacity .25s;cursor:pointer;position:relative}
+.carte:hover{transform:translateY(-3px)}
+.vue{height:170px;background:url(../loginail-site/fonds-img/cerises-vichy.webp) center/200px;display:flex;align-items:center;justify-content:center;padding:14px;position:relative}
+.vue::before{content:"";position:absolute;inset:14px;background:rgba(255,248,246,.9);border-radius:14px}
+.nom{position:relative;color:var(--rose);text-align:center;line-height:1.05;font-size:34px;padding:0 8px}
+.ch{position:absolute;width:40px;z-index:2;animation:fl 3s ease-in-out infinite}
+.ch.a{top:4px;left:6px;transform:rotate(-12deg)}.ch.b{bottom:4px;right:6px;animation-delay:-1.5s}
+@keyframes fl{50%{translate:0 -4px}}
+.info{padding:12px 16px 14px;display:flex;align-items:center;gap:12px}
+.num{width:34px;height:34px;border-radius:50%;background:var(--brun);color:#fff;display:grid;place-items:center;font-weight:500;flex:none}
+.info b{font-weight:500;font-size:17px;display:block}
+.info small{color:#8d7277;font-size:13px}
+.m2{font-size:22px;color:var(--brun);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.carte.non{opacity:.3}.carte.non::after{content:"Pas gardée";position:absolute;top:12px;right:12px;background:var(--brun);color:#fff;font-size:12px;padding:4px 10px;border-radius:20px;z-index:3}
+</style></head><body>
+<header><h1 class="t">20 nouvelles écritures</h1><p>Dites-moi les numéros que vous ne gardez pas. (Touchez une carte pour la griser, c'est juste pour vous aider.)</p></header>
+<div class="grille" id="g"></div>
+<script>
+// [nom, police, taille, poids/style]
+var E=[
+["Plume","'Tangerine'",54,"700"],
+["Signature","'Alex Brush'",40,""],
+["Boudoir","'Monsieur La Doulaise'",42,""],
+["Royale","'Bonheur Royale'",40,""],
+["Dentelle","'Corinthia'",50,"700"],
+["Riviera","'Italianno'",50,""],
+["Ruban","'Ms Madi'",42,""],
+["Biscuit","'Cookie'",42,""],
+["Carnet","'Caveat'",40,"600"],
+["Gourmande","'Fraunces'",33,"600;italic"],
+["Vogue","'Rozha One'",34,""],
+["Années folles","'Poiret One'",33,""],
+["Palais","'Forum'",34,""],
+["Épurée","'Tenor Sans'",28,""],
+["Galerie","'Syne'",27,"800"],
+["Futur","'Unbounded'",23,"600"],
+["Chewing-gum","'Chicle'",40,""],
+["Gloss","'Modak'",36,""],
+["Arc-en-ciel","'Nabla'",28,""],
+["Dégradé","'Bungee Spice'",24,""]];
+var CH=["cerises.png","ceriseruban.png","cerisecoeur.png","biscuitcoeurnoeud.png","cerisedisco.png"];
+var g=document.getElementById("g");
+E.forEach(function(e,i){
+  var w=e[3].split(";"),st="font-family:"+e[1]+";font-size:"+e[2]+"px;"+(w[0]?"font-weight:"+w[0]+";":"")+(w[1]?"font-style:italic;":"");
+  var c=document.createElement("div");c.className="carte";
+  c.innerHTML='<div class="vue"><img class="ch a" src="../loginail-site/charms/'+CH[i%5]+'" alt=""><img class="ch b" src="../loginail-site/charms/'+CH[(i+2)%5]+'" alt=""><div class="nom" style="'+st+'">les Ongles<br>de Cerise</div></div>'+
+   '<div class="info"><span class="num">'+(i+1)+'</span><div style="min-width:0"><b>'+e[0]+'</b><div class="m2" style="'+st.replace(/font-size:\d+px/,"font-size:"+Math.round(e[2]*.6)+"px")+'">Marie Onglerie</div></div></div>';
+  c.onclick=function(){c.classList.toggle("non")};
+  g.appendChild(c);
+});
+</script></body></html>

@@ -44,11 +44,30 @@ var POLICES=[
  ["couture","Couture","Gloock",0.88,""],
  ["arrondie","Arrondie","Righteous",0.86,""],
  ["douce","Douce","Corben",0.82,""],
- ["gala","Gala","Playball",1.05,""]];   /* 06/11 : 2 écritures en plus (déjà chez nous) */
+ ["gala","Gala","Playball",1.05,""],
+ /* 19/11 (Marie, D35) : 18 écritures en plus, hébergées chez nous (polices-sites.css) */
+ ["plume","Plume","Tangerine",1.35,""],
+ ["dentelle","Dentelle","Corinthia",1.3,""],
+ ["gourmande","Gourmande","'Fraunces Italique'",0.9,""],
+ ["futur","Futur","Unbounded",0.68,""],
+ ["sucree","Sucrée","Agbalumo",0.95,""],
+ ["dolce","Dolce","'Oleo Script'",1,""],
+ ["hautecouture","Haute couture","'Gravitas One'",0.78,""],
+ ["contour3d","Contour 3D","'Rampart One'",0.86,""],
+ ["gonflee","Gonflée","'Tilt Warp'",0.9,""],
+ ["artnouveau","Art nouveau","'Grandiflora One'",0.92,""],
+ ["cartoon","Cartoon","'Titan One'",0.88,""],
+ ["bombee","Bombée","Chango",0.72,""],
+ ["pinceau","Pinceau","'Kaushan Script'",1,""],
+ ["bijou","Bijou","'Rubik Gemstones'",0.88,""],
+ ["monstre","Monstre mignon","'Rubik Beastly'",0.88,""],
+ ["contedefees","Conte de fées","'Henny Penny'",0.88,""],
+ ["piment","Piment","'Spicy Rice'",0.88,""],
+ ["peinture","Bombe de peinture","'Rubik Spray Paint'",0.88,""]];   /* 06/11 : 2 écritures en plus (déjà chez nous) */
 var charge=false;
 function polices(doc){doc=doc||document;if(doc.__polOpt)return;doc.__polOpt=1;
   var g=POLICES.filter(function(p){return p[4]&&p[4].indexOf("loc:")<0}).map(function(p){return "family="+p[4]}).join("&");
-  var l=doc.createElement("link");l.rel="stylesheet";l.href=base+"polices-sites.css";doc.head.appendChild(l);
+  var l=doc.createElement("link");l.rel="stylesheet";l.href=base+"polices-sites.css?v=1911";doc.head.appendChild(l);
   var st=doc.createElement("style");st.textContent=POLICES.filter(function(p){return p[4].indexOf("loc:")==0}).map(function(p){return "@font-face{font-family:"+p[2]+";font-display:swap;src:url("+base+"polices/"+p[4].slice(4)+".woff2) format('woff2')}"}).join("")
     +".pail-o{position:fixed;pointer-events:none;z-index:9999;animation:pailO 1.1s cubic-bezier(.2,.7,.3,1) forwards;filter:drop-shadow(0 0 2px rgba(255,255,255,.6))}.pail-o svg{width:100%;height:100%;display:block}"
     +"@keyframes pailO{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}15%{opacity:1}60%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(var(--r));opacity:0}}"
