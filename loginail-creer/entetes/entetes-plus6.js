@@ -183,7 +183,7 @@ const st=document.createElement("style");st.id="entetes-plus6";st.textContent=cs
 const vieux=window.entete;
 window.entete=function(k,t,lang){
   if(!NOUV.some(e=>e[0]===k))return vieux(k,t,lang);
-  const ph=x=>`<div class="he-ph" style="background-image:url('${P(x)}')"></div>`,N=(D.nails&&D.nails.length?D.nails:[D.hero]),n=i=>N[i%N.length];
+  const ph=x=>`<div class="he-ph" style="background-image:url('${P(x)}')"></div>`,N=(()=>{const vu=new Set([P(D.hero)]),L=(D.nails||[]).filter(x=>{const u=P(x);if(!u||/undefined|null/.test(u)||vu.has(u))return false;vu.add(u);return true});return L.length?L:[D.hero]})(),n=i=>N[i%N.length];
   const kick=`<div class="kick">${t.type} · ${D.ville}</div>`,note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";
   const btn=`<button class="he-btn" data-res>${t.creneau}${creneau(t)?`<small>${t.dispo} : ${creneau(t)}</small>`:""}</button>`;
   const nom=`<h1>${D.nom}</h1>`,txt=(h=true)=>`<div class="he-txt">${kick}${h?nom:""}${note}${btn}</div>`,txt2=`<div class="he-txt">${kick}${note}${btn}</div>`;

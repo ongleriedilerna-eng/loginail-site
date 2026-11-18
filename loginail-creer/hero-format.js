@@ -211,7 +211,7 @@
   /* dans « Personnaliser » : les couleurs vives (elles remplacent la couleur des boutons ; une couleur normale les enlève) */
   css.textContent += `.pf-vifk{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin:12px 0 6px;text-align:center}.pf-vifs .pf-d.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1E1C1B}`;
   const marque = () => document.querySelectorAll("[data-vif]").forEach(b => b.classList.toggle("on", typeof BR !== "undefined" && BR && BR.vif === b.dataset.vif));
-  document.addEventListener("click", ev => { const b = ev.target.closest("[data-vif],[data-co]"); if (!b || typeof BR === "undefined" || !BR) return;
+  document.addEventListener("click", ev => { const b = ev.target.closest("[data-vif],[data-co]"); if (!b || b.classList.contains("ecran") || typeof BR === "undefined" || !BR) return;   /* 18/11 (Marie : « en bougeant les charms, le prénom change de couleur ») : le site porte lui-même data-vif="1" (marque posée par pose()) ; un clic n'importe où dedans était pris pour un choix de couleur vive → BR.vif = "1" */
     if (b.dataset.vif) BR.vif = BR.vif === b.dataset.vif ? "" : b.dataset.vif; else BR.vif = "";
     marque(); setTimeout(tout, 30); }, true);
   setTimeout(marque, 600);

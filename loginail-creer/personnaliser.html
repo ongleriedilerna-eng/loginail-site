@@ -1008,7 +1008,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=1811c"></script>
+<script src="perso/perso-pilote.js?v=1811e"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1073,15 +1073,15 @@ function rend(o) {
     $("lNom").innerHTML = Object.entries(P.NOMC).map(([k, bg]) => `<button class="dot${k === P.etat.nomc ? " on" : ""}" data-nc="${k}" style="background:${bg}" aria-label="${k}" title="${k}"></button>`).join("");
     $("blocsC").querySelectorAll("[data-bl]").forEach(b => b.classList.toggle("on", b.dataset.bl === P.etat.blocs));
     $("assortir").hidden = !P.etat.fond; rendCouleursG(); }
-  if (o === "charms") { const fams = [...(FAV.length ? ["Favoris"] : []), "Populaires", ...P.familles().filter(f => f !== "Populaires")];
+  if (o === "charms") { const fams = [...(FAV.length ? ["Favoris"] : []), "Tous", "Populaires", ...P.familles().filter(f => f !== "Populaires" && f !== "Tous")];   /* 18/11 (Marie : « il n'y a pas voir tous les charms, comme pour les fonds ») */
     if (catCharm === "Favoris" && !FAV.length) catCharm = "Populaires";
     /* 17/11 (Marie) : la barre des catégories, chacune avec son petit charm (comme l'ancienne page) */
-    $("catC").innerHTML = fams.map(f => { const ic = f === "Favoris" ? `<i class="cfav">♥</i>` : `<img src="${P.imgCharm(P.charmsDe(f)[0] || "cerisedisco")}" alt="" loading="lazy">`;
-      return `<button class="catI${f === catCharm ? " on" : ""}" data-c="${f}">${ic}<span>${f === "Populaires" ? "Pour vous" : f}</span></button>`; }).join("");   /* 17/11 (Marie) : « Populaires » s'appelle « Pour vous », comme dans l'ancienne page */
+    $("catC").innerHTML = fams.map(f => { const ic = f === "Favoris" ? `<i class="cfav">♥</i>` : `<img src="${P.imgCharm((f === "Tous" ? P.charmsTous() : P.charmsDe(f))[f === "Tous" ? 40 : 0] || "cerisedisco")}" alt="" loading="lazy">`;
+      return `<button class="catI${f === catCharm ? " on" : ""}" data-c="${f}">${ic}<span>${f === "Populaires" ? "Pour vous" : f === "Tous" ? "Tous les charms" : f}</span></button>`; }).join("");   /* 17/11 (Marie) : « Populaires » s'appelle « Pour vous », comme dans l'ancienne page */
     const poses = P.poses(), q = sansAcc($("chercheC").value);
-    const liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n)) : P.charmsDe(catCharm);
+    const liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n)) : catCharm === "Tous" ? P.charmsTous() : P.charmsDe(catCharm);
     $("catBox").style.display = q ? "none" : "";
-    $("lCh").innerHTML = liste.length ? liste.slice(0, 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`;
+    $("lCh").innerHTML = liste.length ? liste.slice(0, catCharm === "Tous" && !q ? 9999 : 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`;
     majCompte(); }
 }
 const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
@@ -1154,13 +1154,13 @@ const ouvre0 = ouvre;
 /* 17/11 soir (Marie) : la photo a SON onglet, plus mélangée aux en-têtes (?photo=entete = ancienne façon, ?photo=ensemble pour la garder) */
 const MODE = ({ entete: "onglet", ensemble: "entete" })[new URLSearchParams(location.search).get("photo")] || "onglet";
 if (MODE) document.body.classList.add("m-" + MODE);
-const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : `<label class="ph ajout" title="Ajouter ma photo"><input type="file" accept="image/*" hidden class="fichierP">+<small>Ajouter<br>ma photo</small></label>` + P.photos().slice(0, 5).map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
+const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : `<label class="ph ajout" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP">+<small>Ajouter<br>des photos</small></label>` + P.photos().map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
 /* 17/11 (Marie) : une croix pour retirer une photo, et « Annuler » pendant 5 s */
 let retiree = null;
 function annule(r) { retiree = r; const a = $("annuleP"); a.classList.add("on"); clearTimeout(annule.t); annule.t = setTimeout(() => { a.classList.remove("on"); retiree = null; }, 5000); }
 function brancheP(l) { l.onclick = e => { const x = e.target.closest("button.sup"); if (x) { const r = P.retirePhoto(x.dataset.u); if (r) { const w = x.closest(".phw"); w.classList.add("part"); setTimeout(rendPhotos, 260); annule(r); } return; }
     const b = e.target.closest("button.ph"); if (!b) return; P.choisitPhoto(b.dataset.u); l.querySelectorAll("button.ph").forEach(y => y.classList.toggle("on", y === b)); };
-  l.querySelector(".fichierP").onchange = e => { const f = e.target.files && e.target.files[0]; if (f) { P.litPhoto(f); setTimeout(() => rendPhotos(), 600); } };
+  l.querySelector(".fichierP").onchange = async e => { const fs = e.target.files; if (!fs || !fs.length) return; const n = await P.litPhotos(fs); setTimeout(() => rendPhotos(), 600); if (n > 1) bulle(n + " photos ajoutées ✓"); };
   l.onscroll = majFleche; setTimeout(majFleche, 50); }
 function majFleche() { const l = $("lPh"), f = $("flecheP"); if (!l || !f) return; const reste = l.scrollWidth - l.clientWidth - l.scrollLeft; f.hidden = reste < 8; l.parentElement.classList.toggle("deborde", reste >= 8); }
 function rendPhotos() { if (MODE === "entete") { const l = $("lPh"); l.innerHTML = phHtml(); brancheP(l); } if (MODE === "onglet") { const l = $("lPhG"); l.innerHTML = phHtml(true); brancheP(l); } }

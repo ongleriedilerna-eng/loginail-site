@@ -450,6 +450,13 @@
   P.remetPhoto = r => { if (!r) return; try { P.W.eval(`(()=>{const r=${JSON.stringify(r)};BR.photos.splice(r.i,0,r.p);BR.principale=r.une;const i0=r.une,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) {} signale("photo"); };
   P.litPhoto = fi => { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
     cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); P.choisitPhoto(cv.toDataURL("image/jpeg", .85)); }; im.src = r.result; }; r.readAsDataURL(fi); };
+  /* 18/11 (Marie : « si elle appuie sur plusieurs photos, elle doit pouvoir en ajouter plusieurs ») : la 1re devient la photo du haut,
+     les autres s'ajoutent à ses photos (grilles, réalisations…) sans changer la photo du haut */
+  const enImage = fi => new Promise(ok => { const r = new FileReader(); r.onerror = () => ok(null); r.onload = () => { const im = new Image(); im.onerror = () => ok(null); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
+    cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); ok(cv.toDataURL("image/jpeg", .85)); }; im.src = r.result; }; r.readAsDataURL(fi); });
+  P.litPhotos = async fichiers => { const L = (await Promise.all([...fichiers].slice(0, 12).map(enImage))).filter(Boolean); if (!L.length) return 0;
+    if (L.length > 1) try { P.W.eval(`(()=>{const L=${JSON.stringify(L.slice(1))};L.forEach(u=>BR.photos.push({url:u,auteurs:[]}))})()`); } catch (e) { console.warn(e); }
+    P.choisitPhoto(L[0]); return L.length; };
   P.enHaut = () => { try { const b = P.D.querySelector(".defile") || P.D.scrollingElement; b.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {} };
 
   window.Pilote = P;
