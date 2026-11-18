@@ -229,6 +229,69 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
 .c-maison{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:140px;height:5px;border-radius:3px;background:var(--noir);opacity:.85;z-index:96;pointer-events:none}
 @media (max-height:760px){#lien h1{margin-top:12px!important;font-size:clamp(34px,9.5vw,42px)!important}#lien .sous{margin-top:8px!important}.tels{height:120px!important;margin-top:8px!important}.tels .t{width:52px!important}#lien .aide{margin-top:10px!important}#sansGoogle{padding:13px!important;margin-top:8px!important}}
 </style>
+<style>
+/* ===== 18/11 nuit (Marie : « on garde la A, une chose à la fois ») — la page « Il manque… » / « Je le remplis moi-même »,
+   dans le style de la page 1 et du chargement : l'anneau qui avance, UNE question en grand (Cormorant), la case arrondie,
+   ce qui est fait se range en petites étiquettes roses (touchées = on corrige), un bouton noir « Suivant ». Maquette : idees/manque-A.html ===== */
+#manque.unA{--rose:#B5475E}
+#manque.unA{padding-top:calc(var(--sat) + 16px)}
+#manque.unA .logo{width:104px}
+#manque.unA>h1,#manque.unA>.sous{display:none}
+.mA-haut{flex:none;display:flex;flex-direction:column;align-items:center;margin-top:16px}
+.mA-etape{margin:0;font:400 13px Jost,sans-serif;color:#8A817A}
+.mA-anneau{position:relative;width:88px;aspect-ratio:1;margin-top:10px}
+.mA-anneau svg{width:100%;height:100%;transform:rotate(-90deg)}
+.mA-anneau .f{fill:none;stroke:#E7E0D8;stroke-width:3}
+.mA-anneau .p{fill:none;stroke:var(--noir);stroke-width:3.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));transition:stroke-dashoffset .7s cubic-bezier(.22,1,.36,1),stroke .4s}
+#manque.pretA .mA-anneau .p{stroke:#D97A9C}
+.mA-c{position:absolute;inset:0;display:grid;place-items:center;font:400 21px "Cormorant Garamond",serif}
+.mA-c small{font:400 11px Jost,sans-serif;color:#8A817A}
+.mA-comete{position:absolute;inset:0;transform:rotate(calc(var(--p,0)*360deg));transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.mA-comete i{position:absolute;left:50%;top:1.5%;transform:translate(-50%,-50%);font-style:normal;font-size:13px;color:#fff;text-shadow:0 0 6px rgba(240,130,175,1),0 0 14px rgba(255,170,205,.9)}
+.mA-q{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:14px;animation:mAentre .45s cubic-bezier(.22,1,.36,1) both}
+.mA-q.retour{animation-name:mAretour}
+@keyframes mAentre{from{opacity:0;transform:translateX(36px)}}
+@keyframes mAretour{from{opacity:0;transform:translateX(-36px)}}
+.mA-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 6px 14px -6px rgba(176,53,98,.4)}
+.mA-ic svg{width:21px;height:21px}
+.mA-q h2{margin:12px 0 0;font:400 34px/1.05 "Cormorant Garamond",serif;letter-spacing:-.01em}
+.mA-q h2 em{font-style:italic}
+#manque.unA .liste{margin-top:10px;background:none;padding:0;border-radius:0}
+#manque.unA .ligne{border:0;padding:0}
+#manque.unA .ligne .haut{display:none}
+#manque.unA .ligne .corps{display:block;padding:0}
+#manque.unA .ligne .q{margin:6px auto 0;max-width:32ch;text-align:center;font:300 15px/1.45 Jost,sans-serif;color:#6B625C}
+#manque.unA .saisie{margin-top:18px}
+#manque.unA .saisie .champ{width:100%;height:58px;border:1px solid rgba(30,28,27,.24);border-radius:999px;padding:0 22px;background:#fff;font:400 17px Jost,sans-serif;text-align:center;outline:none}
+#manque.unA .saisie .champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.06)}
+#manque.unA [data-ajoute],#manque.unA .colle-bas{display:none!important}
+#manque.unA .lire,#manque.unA .pr{background:#fff;box-shadow:0 0 0 1px var(--ligne)}
+#manque.unA .puces{margin:0;padding:2px 0 6px}
+#manque.unA .ph,#manque.unA .phx{margin-top:14px}
+.mA-photos{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:18px}
+.mA-photos .apercus{display:flex;gap:8px;justify-content:center}
+.mA-photos .apercus img{width:62px;height:82px;object-fit:cover;border-radius:12px}
+.mA-photos button{height:50px;padding:0 26px;border:0;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1.2px var(--noir);font:400 15px Jost,sans-serif}
+.mA-faits{flex:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;min-height:30px;margin:14px 0 10px}
+.mA-faits button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px 0 5px;border:0;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 6px 12px -10px rgba(80,30,50,.5);font:400 12px Jost,sans-serif;max-width:170px;animation:mApop .45s cubic-bezier(.3,1.5,.5,1) both}
+.mA-faits button.on{box-shadow:0 0 0 1.5px var(--noir)}
+.mA-faits button i{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD)}
+.mA-faits button i svg{width:11px;height:11px}
+.mA-faits button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes mApop{from{opacity:0;transform:scale(.6)}}
+#manque.unA .bas{padding-top:6px;align-items:center}
+#manque.unA .go{height:58px;padding:0;letter-spacing:.14em;box-shadow:0 14px 26px -14px rgba(0,0,0,.6);transition:transform .15s,background .3s}
+#manque.unA .go:active{transform:scale(.97)}
+#manque.pretA #fini{background:#B5475E}
+.mA-retour{border:0;background:none;font:400 13.5px Jost,sans-serif;color:#8A817A;text-decoration:underline;text-underline-offset:3px;min-height:20px}
+.mA-retour.cache{visibility:hidden}
+.mA-secoue{animation:mAsecoue .4s}
+@keyframes mAsecoue{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.mA-etoile{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+@media (min-width:900px){.mA-anneau{width:104px}.mA-q h2{font-size:46px}body{background:var(--fond)}#tel{max-width:620px}}   /* ordinateur : toute la page dans le beige, comme la page 1 */
+@media (max-height:700px){.mA-anneau{width:70px}.mA-q h2{font-size:29px}.mA-ic{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){.mA-q,.mA-faits button{animation:none}}
+</style>
 </head>
 <body>
 <div id="tel">
@@ -550,7 +613,8 @@ function corps(m) {
   return `<p class="q">${m.q}</p><div class="saisie"><input class="champ" type="${m.type || "text"}" placeholder="${m.ph}" data-champ="${m.k}" enterkeyhint="done" value="${esc(m.k === "adr" ? [B.rue, B.cp, B.ville].filter(Boolean).join(" ") : m.k === "insta" ? (B.insta || "").replace(/^@/, "") : B[m.champ] || "")}"></div>`;
 }
 let modeTarifs = false;   // elle revient de son site pour vérifier les tarifs trouvés
-function rendManque() {
+function rendManque() { if (!modeTarifs) return rendManqueA(); return rendManqueListe(); }
+function rendManqueListe() {
   const n = reste();
   $("titreM").textContent = modeTarifs ? "Vos tarifs" : titre(n);
   $("sousM").textContent = modeTarifs ? "Tout ce que vous changez est gardé." : (n ? "Touchez une ligne pour l’ajouter." : "Votre site a tout ce qu’il faut.") + " Tout ce que vous remplissez est gardé.";
@@ -660,6 +724,57 @@ function reduit(f, max = 1000) {
 }
 let tDit;
 function dit(t) { const q = document.querySelector(".ouvert .q"); if (!q) return; q.textContent = t; q.style.color = "var(--noir)"; clearTimeout(tDit); tDit = setTimeout(() => { if (!document.querySelector(".ouvert .q")) return; relit(); rendManque(); }, 2600); }
+
+
+/* ===== 18/11 nuit (Marie : « on garde la A, une chose à la fois ») — UNE question à la fois ; ce qui est fait = étiquettes roses ===== */
+const ORDRE_A = ["nom", "prenom", "insta", "adr", "tel", "hor", "photos", "choixph", "presta"];   // D16 : Instagram tôt, les prix TOUJOURS en dernier
+const TITRES_A = { nom: "Le nom de <em>votre salon</em>", prenom: "Votre <em>prénom</em>", insta: "Votre <em>Instagram</em>", adr: "Votre <em>adresse</em>", tel: "Votre <em>téléphone</em>", hor: "Vos <em>horaires</em>", photos: "Vos <em>photos</em>", choixph: "Vos <em>photos</em>", presta: "Vos <em>prix</em>" };
+const ICO_A = { nom: '<path d="M4 10l1.5-5h13L20 10M4 10v9.5h16V10M4 10c0 1.7 1.8 2.5 4 2.5S12 11.7 12 10c0 1.7 1.8 2.5 4 2.5s4-.8 4-2.5M10 19.5v-4h4v4"/>', prenom: '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c.8-3.8 3.8-6 7.5-6s6.7 2.2 7.5 6"/>', insta: '<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r=".6" fill="currentColor"/>', adr: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>', tel: '<path d="M6.5 3.5h3l1.5 4-2 1.3a10.5 10.5 0 0 0 6.2 6.2l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2C10.5 19 5 13.5 4.5 5.7a2 2 0 0 1 2-2.2z"/>', hor: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', photos: '<rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 15.5l-4.5-4.5-8 8"/>', presta: '<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3-8.7 8.7z"/><circle cx="8" cy="8" r="1.4"/>' };
+ICO_A.choixph = ICO_A.photos;
+const icoA = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICO_A[k] || ICO_A.nom}</svg>`;
+let voirA = null, sensA = 1, dernierA = null, afficheA = null;   /* afficheA = la question à l'écran (taper marque déjà la case « faite ») */
+function preparerA() {
+  const M = $("manque"); if (M.classList.contains("unA")) return; M.classList.add("unA");
+  $("titreM").insertAdjacentHTML("beforebegin", `<div class="mA-haut"><p class="mA-etape">Étape 1 sur 4 · Votre salon</p><div class="mA-anneau" id="mAanneau"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="f" cx="60" cy="60" r="55"/><circle class="p" cx="60" cy="60" r="55" pathLength="1"/></svg><div class="mA-comete" aria-hidden="true"><i>✦</i></div><div class="mA-c" id="mAcompte"></div></div></div><div id="mAq"></div>`);
+  $("liste").insertAdjacentHTML("afterend", `<div class="mA-faits" id="mAfaits"></div>`);
+  const bas = M.querySelector(".bas"); bas.insertAdjacentHTML("afterbegin", `<button class="go" type="button" id="mAsuiv">SUIVANT</button>`); bas.insertAdjacentHTML("beforeend", `<button class="mA-retour" type="button" id="mAretour">Revenir à la question d’avant</button>`);
+  $("mAsuiv").onclick = suivantA; $("mAretour").onclick = () => { const L = ordreA(), i = L.findIndex(x => x.k === afficheA); if (i > 0) { sensA = -1; voirA = L[i - 1].k; rendManque(); } };
+  $("mAfaits").onclick = e => { const b = e.target.closest("[data-va]"); if (!b) return; relit(); sensA = -1; voirA = b.dataset.va; if (voirA === "choixph") { ouvrePhotos(); return; } rendManque(); };
+}
+const ordreA = () => MQ.slice().sort((a, b) => ORDRE_A.indexOf(a.k) - ORDRE_A.indexOf(b.k));
+const courantA = () => { const L = ordreA(); if (voirA && L.some(m => m.k === voirA)) return L.find(m => m.k === voirA); return L.find(m => !m.fait) || null; };
+function rendManqueA() {
+  preparerA(); const L = ordreA(), m = courantA(), n = L.length, faits = L.filter(x => x.fait).length;
+  ouvert = m ? m.k : null; afficheA = m ? m.k : null;
+  $("manque").classList.toggle("pretA", !m);
+  $("mAanneau").style.setProperty("--p", faits / n);
+  $("mAcompte").innerHTML = m ? `<span>${L.indexOf(m) + 1}<small> / ${n}</small></span>` : '<span style="color:#D97A9C">✓</span>';
+  if (dernierA !== (m ? m.k : "fin")) { dernierA = m ? m.k : "fin";
+    $("mAq").innerHTML = `<div class="mA-q${sensA < 0 ? " retour" : ""}"><span class="mA-ic">${icoA(m ? m.k : "nom")}</span><h2>${m ? TITRES_A[m.k] : "Tout est <em>prêt</em>."}</h2></div>`; }
+  if (!m) $("liste").innerHTML = `<div class="ligne ouvert"><div class="corps"><p class="q">Votre site a tout ce qu’il faut. Il ne reste qu’à le personnaliser.</p></div></div>`;
+  else if (m.k === "choixph") $("liste").innerHTML = `<div class="ligne ouvert" data-k="choixph"><div class="corps"><p class="q">Choisissez la photo en grand en haut de votre site, puis celle de votre salon.</p><div class="mA-photos"><div class="apercus">${B.photos.slice(0, 3).map(p => `<img src="${esc(p.url)}" alt="">`).join("")}</div><button type="button" id="mAphotos">Choisir mes photos</button></div></div></div>`;
+  else $("liste").innerHTML = `<div class="ligne ouvert" data-k="${m.k}"><div class="corps">${corps(m)}</div></div>`;
+  if (m && m.k === "insta") { const q = $("liste").querySelector(".q"); if (q) q.textContent = "Vos clientes vous suivent depuis votre site."; }
+  if (m && m.k === "presta" && !B.prestationsTrouvees) { const q = $("liste").querySelector(".q"); if (q) q.textContent = "Toujours en dernier : vos prestations et vos prix."; }
+  if ($("mAphotos")) $("mAphotos").onclick = ouvrePhotos;
+  $("mAfaits").innerHTML = L.filter(x => x.fait).map(x => `<button type="button" data-va="${x.k}" class="${m && x.k === m.k ? "on" : ""}" title="Corriger"><i>${icoA(x.k)}</i><span>${esc(x.k === "prenom" ? B.prenom : String(resume(x) || x.t))}</span></button>`).join("");
+  $("mAsuiv").hidden = !m; $("fini").hidden = !!m; $("fini").disabled = false; $("fini").textContent = "PERSONNALISER MON SITE ✦";
+  $("mAsuiv").textContent = m && m.k === "presta" ? "C’EST BON POUR MES PRIX" : m && m.k === "insta" && !B.insta ? "SUIVANT" : "SUIVANT";
+  $("mAretour").classList.toggle("cache", !m || L.indexOf(m) === 0);
+  sensA = 1;
+  if (m && matchMedia("(min-width:900px)").matches) setTimeout(() => $("liste").querySelector("input.champ")?.focus({ preventScroll: true }), 120);
+}
+function secoueA() { const q = $("liste"); q.classList.remove("mA-secoue"); void q.offsetWidth; q.classList.add("mA-secoue"); }
+function suivantA() { relit(); const m = MQ.find(x => x.k === afficheA); if (!m) return;
+  if (m.k === "photos" && !brouillonPh.length) { secoueA(); return; }
+  if (["presta", "hor", "photos"].includes(m.k)) { const b = $("liste").querySelector(`[data-ajoute="${m.k}"]`); if (b) { const avant = m.fait; m.fait = false; b.click(); if (!m.fait) { m.fait = avant; secoueA(); return; } } voirA = null; rendManque(); return; }
+  if (m.k === "choixph") { ouvrePhotos(); return; }
+  const v = ($("liste").querySelector(`[data-champ="${m.k}"]`)?.value || "").trim();
+  if (!v) { if (m.k === "insta") { m.fait = true; m.passe = true; voirA = null; rendManque(); return; } secoueA(); $("liste").querySelector("input.champ")?.focus(); return; }   // pas d'Instagram : on passe (point ouvert de D16)
+  prendChamp(m.k, v); m.fait = true; voirA = null; rendManque(); }
+$("liste").addEventListener("keydown", e => { if (!modeTarifs && e.key === "Enter" && e.target.matches("[data-champ]")) { e.preventDefault(); e.stopImmediatePropagation(); suivantA(); } }, true);
+/* après le choix des photos en plein écran : on passe à la suite */
+{ const ppFinAvant = ppFin; ppFin = salon => { voirA = null; ppFinAvant(salon); }; }
 
 /* ---------- Vos photos : en plein écran, comme son site (choix 2A du 03/11) ----------
    Étape 1 : la photo principale ; étape 2 : celle du salon (ou « Je n'ai pas de photo de mon salon »).
