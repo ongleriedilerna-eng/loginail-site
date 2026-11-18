@@ -12,7 +12,8 @@
   var p = location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
   try { p = decodeURIComponent(p); } catch (e) {}
   if (/^[a-z0-9-]{3,40}$/.test(p)) {
-    location.replace("/loginail-creer/pret.html?public&s=" + p + location.hash);
+    var r = ""; try { r = document.referrer ? "&r=" + encodeURIComponent(new URL(document.referrer).hostname) : ""; } catch (e) {}   /* 18/11 : d'où vient la personne (Google…), pour « Visites ce mois » */
+    location.replace("/loginail-creer/pret.html?public&s=" + p + r + location.hash);
   }
 })();
 </script>

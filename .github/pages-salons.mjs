@@ -41,7 +41,7 @@ ${MARQUE}
 ${img ? `<meta property="og:image" content="${esc(img)}">\n<meta name="twitter:image" content="${esc(img)}">\n` : ""}<meta name="twitter:card" content="${img ? "summary_large_image" : "summary"}">
 <meta name="twitter:title" content="${esc(titre)}">
 <meta name="twitter:description" content="${esc(desc)}">
-<script>location.replace(${JSON.stringify(vers)} + location.hash);</script>
+<script>var r="";try{r=document.referrer?"&r="+encodeURIComponent(new URL(document.referrer).hostname):""}catch(e){}location.replace(${JSON.stringify(vers)}+r+location.hash);</script>
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F6F3EF;color:#1E1C1B;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;text-align:center;padding:16px}a{color:inherit}</style>
 </head>
 <body><p><a href="${vers}">${esc(nom)} · Réserver en ligne</a></p></body>

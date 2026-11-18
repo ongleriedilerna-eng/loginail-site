@@ -3462,5 +3462,11 @@ if(new URLSearchParams(location.search).has("activer"))setTimeout(()=>{try{ouvre
   new MutationObserver(pose).observe(document.documentElement,{childList:true,subtree:true}); addEventListener("load",pose);
 })();
 </script>
+<script>/* 18/11 (Marie) : « Visites ce mois » — on compte les visites et les touchers sur « Réserver » du site EN LIGNE, et d'où vient la personne.
+   Sans cookie, sans rien enregistrer sur le téléphone, sans adresse IP : juste +1 dans un compteur du jour (serveur/sql/22-visites.sql). */
+(function(){var S=window.LOGI_SLUG,h=document.documentElement;if(!S||!h.classList.contains("public")||h.classList.contains("dansappli")||h.classList.contains("vuappli")||/[?&]apercu/.test(location.search))return;
+var rq=(location.search.match(/[?&]r=([^&#]*)/)||[])[1],r=(rq?decodeURIComponent(rq)+".":document.referrer||"").toLowerCase(),src=!r||r.indexOf(location.host)>=0?"direct":/google\./.test(r)?"google":/instagram\./.test(r)?"instagram":/facebook\.|fb\./.test(r)?"facebook":/tiktok\./.test(r)?"tiktok":"autre";
+var compte=function(q){try{fetch("https://scfhaombuptmrlkdhcsl.supabase.co/rest/v1/rpc/compte_visite",{method:"POST",keepalive:true,headers:{apikey:"sb_publishable_lYx1ZH0k3EFrUhZ3v0W8gw_yhGPOhbq","Content-Type":"application/json"},body:JSON.stringify({s:S,src:src,q:q})}).catch(function(){})}catch(e){}};
+compte("visite");var deja=false;document.addEventListener("click",function(e){if(!deja&&e.target.closest&&e.target.closest("[data-res]")){deja=true;compte("reserver")}},true);})();</script>
 </body>
 </html>
