@@ -266,7 +266,12 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
 #manque.unA .saisie .champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.06)}
 #manque.unA [data-ajoute],#manque.unA .colle-bas{display:none!important}
 #manque.unA .lire,#manque.unA .pr{background:#fff;box-shadow:0 0 0 1px var(--ligne)}
-#manque.unA .puces{margin:0;padding:2px 0 6px}
+#manque.unA .puces{margin:0;padding:2px 0 6px;flex-wrap:wrap;overflow:visible;-webkit-mask:none;mask:none}
+#manque.unA .colP .titreP{margin:18px 0 2px;font:400 14px Jost,sans-serif;color:var(--noir)}
+#manque.unA .colP .titreP small{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:4px;padding:0 6px;border-radius:999px;background:#F6DCE6;color:#B5475E;font:500 11.5px Jost,sans-serif;vertical-align:1px}
+#manque.unA .colP .videP{margin-top:8px;padding:18px;border:1.5px dashed rgba(217,122,156,.45);border-radius:18px;text-align:center;font:300 14px/1.4 Jost,sans-serif;color:var(--muted)}
+#manque.unA .colP .pastille{box-shadow:0 0 0 1px var(--ligne)}
+#manque.unA .colP .pastille b{font-size:14px;color:var(--noir)}
 #manque.unA .ph,#manque.unA .phx{margin-top:14px}
 #manque.unA .sugA{margin-top:8px;display:grid;gap:2px;background:#fff;border-radius:22px;box-shadow:0 0 0 1px var(--ligne),0 14px 30px -18px rgba(0,0,0,.35);overflow:hidden}
 #manque.unA .sugA:empty{display:none}
@@ -292,6 +297,13 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
 #manque.unA .hcom input,#manque.unA .hl input{border:1px solid rgba(30,28,27,.24);border-radius:999px;padding:9px 12px;background:#fff;font:400 15px Jost,sans-serif;color:var(--noir)}
 #manque.unA .hdiff{display:block;margin:10px auto 0;background:none;border:0;font:300 13px Jost,sans-serif;color:#6B625C;text-decoration:underline;text-underline-offset:3px}
 #manque.unA .hdet{margin-top:12px;display:grid;gap:4px}
+#manque.unA .hpause{display:flex;align-items:center;gap:10px;margin:14px auto 0;background:none;border:0;font:400 14px Jost,sans-serif;color:var(--noir)}
+#manque.unA .hpause .mini{flex:none;width:40px;height:24px}
+#manque.unA .hpause .mini i{width:16px;height:16px;top:2.5px;left:3px}
+#manque.unA .hpause .mini.on i{transform:translateX(15px)}
+#manque.unA .hcp{margin-top:10px}
+#manque.unA .hlp{margin-top:-2px}
+#manque.unA .hlp b{font:300 12px Jost,sans-serif;color:var(--muted);text-align:right;padding-right:6px}
 #manque.unA .hl{display:grid;grid-template-columns:80px 1fr auto 1fr;align-items:center;gap:6px;font:300 14px Jost,sans-serif;color:#6B625C}
 #manque.unA .hl b{font:400 14px Jost,sans-serif;color:var(--noir)}
 #manque.unA .hl input{padding:5px 6px;font-size:14px;min-width:0}
@@ -317,6 +329,21 @@ html.cadre #tel{width:402px;height:874px;max-width:none;border-radius:55px;margi
 .mA-secoue{animation:mAsecoue .4s}
 @keyframes mAsecoue{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .mA-etoile{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+/* 18/11 (Marie : « prendre toute la page, pas tout au milieu ») : sur ordinateur, la page s'ouvre en large ; les 7 jours et les heures tiennent sur une ligne */
+@media (min-width:900px){#tel{max-width:1060px!important}
+  #manque.unA{padding-left:48px;padding-right:48px}
+  #manque.unA .saisie,#manque.unA .sugA,#manque.unA .carteA{max-width:640px;margin-left:auto;margin-right:auto}
+  #manque.unA .carteA{height:190px}
+  #manque.unA .jours2{max-width:none;flex-wrap:nowrap;gap:10px;margin-top:22px}
+  #manque.unA .jours2 button{flex:1 1 0;height:54px;font-size:16px}
+  #manque.unA .hligne{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:20px;padding:12px 22px;background:#fff;border-radius:999px;box-shadow:0 0 0 1px var(--ligne)}
+  #manque.unA .hligne>*{margin:0!important}
+  #manque.unA .hdet{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));column-gap:26px}
+  #manque.unA .bas>.go{max-width:640px;width:100%}
+  #manque.unA .ligne[data-k=presta] .grilleP{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;margin-top:6px}
+  #manque.unA .colP .titreP{margin-top:12px}
+  #manque.unA .ligne .q{max-width:none}}
+@media (min-width:900px){body.largeA #manque.unA .grilleP{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;margin-top:6px}body.largeA #manque.unA .colP .titreP{margin-top:12px}body.largeA #manque.unA .ligne .q{max-width:none}}
 @media (min-width:900px){.mA-anneau{width:104px}.mA-q h2{font-size:46px}body{background:var(--fond)}#tel{max-width:620px}}   /* ordinateur : toute la page dans le beige, comme la page 1 */
 @media (max-height:700px){.mA-anneau{width:70px}.mA-q h2{font-size:29px}.mA-ic{width:40px;height:40px}}
 @media (prefers-reduced-motion:reduce){.mA-q,.mA-faits button{animation:none}}
@@ -637,10 +664,12 @@ function corps(m) {
     /* 18/11 (Marie : « le Suivant, on ne doit pas avoir à descendre ») : les jours sur 2 lignes, puis UNE ligne d'heures pour tous ;
        « Des heures différentes selon les jours » ouvre le détail, jour par jour */
     const ouv = h.map((x, i) => x ? i : -1).filter(i => i >= 0), un = ouv.length ? h[ouv[0]] : { d: "09:00", f: "19:00" };
-    const diff = horDetail || ouv.some(i => h[i].d !== un.d || h[i].f !== un.f);
+    const diff = horDetail || ouv.some(i => h[i].d !== un.d || h[i].f !== un.f || h[i].pd !== un.pd || h[i].pf !== un.pf);
+    const pause = ouv.some(i => h[i].pd);   /* 18/11 (Marie : « des salons font 8 h – 12 h et 13 h – 15 h ») : la pause du midi, si elle en fait une */
+    const interPause = `<button type="button" class="hpause ${pause ? "on" : ""}" data-hpause aria-pressed="${pause}"><span class="mini ${pause ? "on" : ""}"><i></i></span>Je ferme le midi</button>`;
     return `<p class="q">${m.q}</p><div class="jours2">${h.map((x, i) => `<button type="button" class="${x ? "on" : ""}" data-hj="${i}" aria-pressed="${!!x}">${JOURS[i].slice(0, 3)}</button>`).join("")}</div>
-      ${!ouv.length ? "" : diff ? `<div class="hdet">${ouv.map(i => `<div class="hl"><b>${JOURS[i]}</b><input type="time" data-hd="${i}" value="${h[i].d}"><span>à</span><input type="time" data-hf="${i}" value="${h[i].f}"></div>`).join("")}</div>`
-        : `<div class="hcom"><span>De</span><input type="time" data-hcd value="${un.d}"><span>à</span><input type="time" data-hcf value="${un.f}"></div><button type="button" class="hdiff" data-hdet>Des heures différentes selon les jours ?</button>`}
+      ${!ouv.length ? "" : diff ? `<div class="hdet">${ouv.map(i => `<div class="hl"><b>${JOURS[i]}</b><input type="time" data-hd="${i}" value="${h[i].d}"><span>à</span><input type="time" data-hf="${i}" value="${h[i].f}"></div>${h[i].pd ? `<div class="hl hlp"><b>pause</b><input type="time" data-hpd="${i}" value="${h[i].pd}"><span>à</span><input type="time" data-hpf="${i}" value="${h[i].pf}"></div>` : ""}`).join("")}</div>${interPause}`
+        : `<div class="hligne"><div class="hcom"><span>De</span><input type="time" data-hcd value="${un.d}"><span>à</span><input type="time" data-hcf value="${un.f}"></div>${interPause}${pause ? `<div class="hcom hcp"><span>Pause de</span><input type="time" data-hcpd value="${un.pd}"><span>à</span><input type="time" data-hcpf value="${un.pf}"></div>` : ""}</div><button type="button" class="hdiff" data-hdet>Des heures différentes selon les jours ?</button>`}
       <button class="ajouter valider" type="button" data-ajoute="hor">AJOUTER</button>`; }
   if (m.k === "photos") return `<p class="q">${m.q}</p><div class="ph">${brouillonPh.map(u => `<img src="${u}" alt="">`).join("")}${brouillonPh.length < 6 ? `<label>+<input type="file" accept="image/*" multiple data-fichiers></label>` : ""}</div>
       <button class="ajouter valider" type="button" data-ajoute="photos">AJOUTER</button>`;
@@ -668,6 +697,10 @@ function relit() {
   document.querySelectorAll("[data-hf]").forEach(i => { const x = brouillonH[+i.dataset.hf]; if (x) x.f = i.value; });
   const hcd = document.querySelector("[data-hcd]"), hcf = document.querySelector("[data-hcf]");
   if (hcd && brouillonH) brouillonH.forEach(x => { if (x) { x.d = hcd.value; x.f = hcf.value; } });
+  const hcpd = document.querySelector("[data-hcpd]"), hcpf = document.querySelector("[data-hcpf]");
+  if (hcpd && brouillonH) brouillonH.forEach(x => { if (x) { x.pd = hcpd.value; x.pf = hcpf.value; } });
+  document.querySelectorAll("[data-hpd]").forEach(i => { const x = brouillonH[+i.dataset.hpd]; if (x) x.pd = i.value; });
+  document.querySelectorAll("[data-hpf]").forEach(i => { const x = brouillonH[+i.dataset.hpf]; if (x) x.pf = i.value; });
 }
 const prixOk = v => String(v ?? "").trim() === "" || /^\d+([.,]\d{1,2})?$/.test(String(v).trim());   // vide = « Sur devis »
 /* la prestation qu'elle vient d'écrire se range en pastille (« Remplissage · 30 € · 1 h 15 ») ; une vide s'en va */
@@ -696,7 +729,8 @@ $("liste").addEventListener("click", e => {
   if (t.hasAttribute("data-tariflien")) { lienOuvert = !lienOuvert; rendManque(); $("lienTarifs")?.focus(); return; }
   if (t.hasAttribute("data-lirelien")) { const l = ($("lienTarifs")?.value || "").trim().match(/https?:\/\/\S+/)?.[0]; if (!l) { $("lienTarifs")?.focus(); return; } litPrix({ site: l }); return; }
   if (t.hasAttribute("data-hdet")) { horDetail = true; rendManque(); return; }
-  if (t.dataset.hj) { const i = +t.dataset.hj, prec = brouillonH.filter(Boolean).pop(); brouillonH[i] = brouillonH[i] ? null : { d: prec?.d || "09:00", f: prec?.f || "19:00" }; rendManque(); return; }
+  if (t.hasAttribute("data-hpause")) { const on = brouillonH.some(x => x && x.pd); brouillonH.forEach(x => { if (!x) return; if (on) { delete x.pd; delete x.pf; } else { x.pd = "12:00"; x.pf = "14:00"; } }); rendManque(); return; }
+  if (t.dataset.hj) { const i = +t.dataset.hj, prec = brouillonH.filter(Boolean).pop(); brouillonH[i] = brouillonH[i] ? null : { d: prec?.d || "09:00", f: prec?.f || "19:00", ...(prec?.pd ? { pd: prec.pd, pf: prec.pf } : {}) }; rendManque(); return; }
   const k = t.dataset.ajoute; if (!k) return;
   const m = MQ.find(x => x.k === k);
   if (k === "presta") {
@@ -707,7 +741,7 @@ $("liste").addEventListener("click", e => {
     B.prestations = ps.map(p => ({ nom: p.nom.trim(), prix: String(p.prix ?? "").trim() === "" ? null : +String(p.prix).replace(",", "."), duree: p.duree }));
   } else if (k === "hor") {
     if (!brouillonH.some(Boolean)) return dit("Touchez au moins un jour.");
-    B.horaires = brouillonH.map(x => x && { d: x.d, f: x.f });
+    B.horaires = brouillonH.map(x => x && (x.pd && x.pf && x.pd < x.pf && x.pd > x.d && x.pf < x.f ? { d: x.d, f: x.f, pd: x.pd, pf: x.pf } : { d: x.d, f: x.f }));
   } else if (k === "photos") {
     B.photos = brouillonPh.map(u => ({ url: u, auteurs: [] }));
   } else if (k === "choixph") {
@@ -796,6 +830,14 @@ function rendManqueA() {
   if (m && m.k === "presta" && !B.prestationsTrouvees) { const q = $("liste").querySelector(".q"); if (q) q.textContent = "Toujours en dernier : vos prestations et vos prix."; }
   if ($("mAphotos")) $("mAphotos").onclick = ouvrePhotos;
   if (m && m.k === "adr") brancheAdr();
+  /* 18/11 (Marie : « la page est grande, profitons-en ») : les prix en 2 colonnes — à gauche la capture et les prestations à toucher,
+     à droite SES prix ; sur ordinateur la page s'élargit, sur téléphone les 2 colonnes se suivent */
+  document.body.classList.toggle("largeA", !!m && m.k === "presta");
+  if (m && m.k === "presta") { const c = $("liste").querySelector(".corps"), g = document.createElement("div"), a = document.createElement("div"), b = document.createElement("div");
+    g.className = "grilleP"; a.className = "colG"; b.className = "colP";
+    [...c.children].forEach(x => { if (x.matches(".q")) return; (x.matches(".pastille,.pr,.autre,.colle-bas") ? b : a).appendChild(x); });
+    b.insertAdjacentHTML("afterbegin", `<p class="titreP">Vos prix${brouillonP.length ? ` <small>${brouillonP.length}</small>` : ""}</p>${brouillonP.length ? "" : `<p class="videP">Touchez une prestation : elle s’ajoute ici avec son prix.</p>`}`);
+    g.append(a, b); c.appendChild(g); }
   $("mAfaits").innerHTML = L.filter(x => x.fait).map(x => `<button type="button" data-va="${x.k}" class="${m && x.k === m.k ? "on" : ""}" title="Corriger"><i>${icoA(x.k)}</i><span>${esc(x.k === "prenom" ? B.prenom : String(resume(x) || x.t))}</span></button>`).join("");
   $("mAsuiv").hidden = !m; $("fini").hidden = !!m; $("fini").disabled = false; $("fini").textContent = "PERSONNALISER MON SITE ✦";
   $("mAsuiv").textContent = m && m.k === "presta" ? "C’EST BON POUR MES PRIX" : m && m.k === "insta" && !B.insta ? "SUIVANT" : "SUIVANT";

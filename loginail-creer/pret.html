@@ -2251,11 +2251,11 @@ else{
   const familles=its=>{const t=its.length>3&&parTechnique(its);if(t)return t;
     const g=FAMILLES.map(([k])=>({cat:k,items:its.filter(it=>famille(L.fr[it.k])===k)})).filter(x=>x.items.length);
     return its.length>6&&g.length>1?g:[{cat:"ongles",items:its}]};
-  Object.assign(L.fr,{type:"Prothésiste ongulaire",ongles:"Ongles",remP:"",h:(a,b)=>`${hFr(a)} – ${hFr(b)}`,hh:hFr});
-  Object.assign(L.en,{type:"Nail technician",ongles:"Nails",remP:"",h:(a,b)=>`${hEn(a)} – ${hEn(b)}`,hh:hEn});
-  Object.assign(L.it,{type:"Onicotecnica",ongles:"Unghie",remP:"",h:(a,b)=>`${hEn(a)} – ${hEn(b)}`,hh:hEn});
-  Object.assign(L.es,{type:"Técnica de uñas",ongles:"Uñas",remP:"",h:(a,b)=>`${hEn(a)} – ${hEn(b)}`,hh:hEn});
-  Object.assign(L.de,{type:"Nageldesignerin",ongles:"Nägel",remP:"",h:(a,b)=>`${hEn(a)} – ${hEn(b)}`,hh:hEn});
+  Object.assign(L.fr,{type:"Prothésiste ongulaire",ongles:"Ongles",remP:"",h:(a,b,c,d)=>c!=null?`${hFr(a)} – ${hFr(c)} · ${hFr(d)} – ${hFr(b)}`:`${hFr(a)} – ${hFr(b)}`,hh:hFr});
+  Object.assign(L.en,{type:"Nail technician",ongles:"Nails",remP:"",h:(a,b,c,d)=>c!=null?`${hEn(a)} – ${hEn(c)} · ${hEn(d)} – ${hEn(b)}`:`${hEn(a)} – ${hEn(b)}`,hh:hEn});
+  Object.assign(L.it,{type:"Onicotecnica",ongles:"Unghie",remP:"",h:(a,b,c,d)=>c!=null?`${hEn(a)} – ${hEn(c)} · ${hEn(d)} – ${hEn(b)}`:`${hEn(a)} – ${hEn(b)}`,hh:hEn});
+  Object.assign(L.es,{type:"Técnica de uñas",ongles:"Uñas",remP:"",h:(a,b,c,d)=>c!=null?`${hEn(a)} – ${hEn(c)} · ${hEn(d)} – ${hEn(b)}`:`${hEn(a)} – ${hEn(b)}`,hh:hEn});
+  Object.assign(L.de,{type:"Nageldesignerin",ongles:"Nägel",remP:"",h:(a,b,c,d)=>c!=null?`${hEn(a)} – ${hEn(c)} · ${hEn(d)} – ${hEn(b)}`:`${hEn(a)} – ${hEn(b)}`,hh:hEn});
   if(BR.presentation){
     const sur=x=>x.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     const tx=String(BR.presentation).replace(/\s+/g," ").trim();let c=tx;
@@ -2275,7 +2275,7 @@ else{
   const APERCU=!location.search.includes("public");
   Object.assign(DPLEIN,{nom:nomCourt(BR.nom,BR.ville),ville:BR.ville,note:BR.note?BR.note.toFixed(1).replace(".",","):"",nb:BR.nbAvis||0,
     presta:familles(items),avisEx:!BR.avis.length&&APERCU,avis:BR.avis.length||!APERCU?BR.avis.map(a=>({n:a.auteur||"",t:court(a.texte)})):[{n:"Exemple · votre cliente",t:"Pose magnifique, très soignée. Je recommande !"},{n:"Exemple · votre cliente",t:"Accueil adorable et salon très propre."},{n:"Exemple · votre cliente",t:"Mes ongles ont tenu plus de trois semaines."}],
-    horaires:(BR.horaires||Array(7).fill(null)).map(h=>h?[heure(h.d),heure(h.f)]:null),
+    horaires:(BR.horaires||Array(7).fill(null)).map(h=>h?(h.pd&&h.pf?[heure(h.d),heure(h.f),heure(h.pd),heure(h.pf)]:[heure(h.d),heure(h.f)]):null),   /* 18/11 : pause du midi (pd → pf) si elle en a une */
     rue:BR.rue,cp:`${BR.cp} ${BR.ville}`.trim(),tel:BR.telephone||"",insta:BR.insta||(APERCU?"@votre.instagram":null),instaEx:!BR.insta&&APERCU,
     gps:BR.position?`${BR.position.latitude},${BR.position.longitude}`:"",
     fiche:BR.placeId?`https://search.google.com/local/writereview?placeid=${BR.placeId}`:(BR.lienGoogle||"#"),
@@ -2337,13 +2337,13 @@ function avisListe(t,TI){if(!D.avis.length)return "";return `<div class="sec">${
 /* 06/11 (Marie) : « Première visite ? » : comment ça se passe, en 3 étapes (vrai pour tous les sites Loginail) */
 function VISITE(t){return `<ol class="visite">${[t.vis1,t.vis2,t.vis3].map((x,i)=>`<li class="r"><b>${i+1}</b><span>${x}</span></li>`).join("")}</ol>`}
 function prestaCartes(t){const N=D.nails;let k=0;return D.presta.map(p=>`${D.presta.length>1?`<div class="pc">${t[p.cat]}</div>`:""}<div class="pk">${p.items.map(it=>{const im="";k++;   /* 06/11 (Marie) : pas d’image dans les prestations, ça fait plus chic */return `<div class="pk-c r" data-res>${im}<div class="pk-t"><b>${t[it.k]}</b>${it.d?`<small>${it.d}</small>`:""}${it.p?`<span class="pp">${it.p}</span>`:`<span class="pp vide">${t.tarif}</span>`}</div></div>`}).join("")}</div>`).join("")}
-function horairesPastilles(t){const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
+function horairesPastilles(t){const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]&&!(hj[2]!=null&&hn>=hj[2]&&hn<hj[3]));
   let proch="";for(let k=1;k<=7;k++){const j=(auj+k)%7;if(H7[j]){proch=`${t.ouvre} ${t.jours[j].toLowerCase()} ${t.hh(H7[j][0])}`;break}}
-  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
+  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[2]!=null&&hn<hj[2]?hj[2]:hj[1])}`:(hj&&(hn<hj[0]||hj[2]!=null&&hn>=hj[2]&&hn<hj[3])?`${t.ouvreAuj} ${t.hh(hn<hj[0]?hj[0]:hj[3])}`:`${t.fermeA} · ${proch}`);
   const ref=hj||H7.find(Boolean),grp=[];
-  H7.forEach((h,i)=>{const k=h?t.h(h[0],h[1]):null,g=grp[grp.length-1];if(g&&g.k===k)g.f=i;else grp.push({k,d:i,f:i})});
+  H7.forEach((h,i)=>{const k=h?t.h(...h):null,g=grp[grp.length-1];if(g&&g.k===k)g.f=i;else grp.push({k,d:i,f:i})});
   const resume=grp.filter(g=>g.k).map(g=>`<div><span>${t.jours[g.d].slice(0,3)}.${g.f>g.d?` – ${t.jours[g.f].slice(0,3)}.`:""}</span><span>${g.k}</span></div>`).join("");
-  return `<div class="hp r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="hp-h">${ref?t.h(ref[0],ref[1]):t.ferme}</div><div class="hp-j">${H7.map((h,i)=>`<span class="${h?"ouv":""}${i===auj?" auj":""}">${t.jours[i][0]}</span>`).join("")}</div><div class="hp-r">${resume}</div></div><div class="plan hp-plan r"><span class="pin"></span><em class="sans">${t.planSans}</em></div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div>`}
+  return `<div class="hp r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="hp-h">${ref?t.h(...ref):t.ferme}</div><div class="hp-j">${H7.map((h,i)=>`<span class="${h?"ouv":""}${i===auj?" auj":""}">${t.jours[i][0]}</span>`).join("")}</div><div class="hp-r">${resume}</div></div><div class="plan hp-plan r"><span class="pin"></span><em class="sans">${t.planSans}</em></div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div>`}
 function heroMag(t){const note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";const mots=D.nom.split(/\s+/).filter(Boolean),lg=Math.max(...mots.map(w=>w.length)),fs=Math.max(34,Math.min(96,Math.floor(340/(lg*.64))));
   return `<div class="hmag" data-s="accueil"><div class="hmg-l"><span>N° 01</span><span>${D.ville}</span></div>${dispoT(t)}<h1 class="hmg-n" style="font-size:${fs}px">${mots.join("<br>")}.</h1><div class="hmg-ph"><img src="${P(D.hero)}" alt=""></div><div class="hmg-b"><div class="kick">${t.type} · ${D.ville}</div>${note}<button class="hmg-btn" data-res>${t.creneau}</button></div></div>`}
 function realMosaique(){return `<div class="rmos">${D.nails.map((n,i)=>`<img class="r" src="${P(n)}" data-i="${i}" alt="">`).join("")}</div>`}
@@ -2395,10 +2395,10 @@ function site3(t,v,lang){
   /* questions : bulles (gardé pour le n°3) */
   const faq=D.faq.length?`<div class="sec">${T(t.faq)}${D.faq.map((f,i)=>`<div class="bul q-b r" style="--d:${i*.1}s">${f.q}</div><div class="bul r-b r" style="--d:${i*.1+.08}s">${f.r}</div>`).join("")}<div class="rem vide">${t.exPlus}</div></div>`:"";
   /* horaires : le plan en fond, la carte posée dessus (gardé pour le n°3) */
-  const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
+  const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]&&!(hj[2]!=null&&hn>=hj[2]&&hn<hj[3]));
   let proch="";for(let j=1;j<=7;j++){const q=(auj+j)%7;if(H7[q]){proch=`${t.ouvre} ${t.jours[q].toLowerCase()} ${t.hh(H7[q][0])}`;break}}
-  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
-  const horaires=VAR==="s3c"?horairesPastilles(t):`<div class="planfond"><div class="plan"><span class="pin"></span></div><div class="flottante r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(h[0],h[1]):t.ferme}</span></div>`).join("")}</div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div></div></div>`;
+  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[2]!=null&&hn<hj[2]?hj[2]:hj[1])}`:(hj&&(hn<hj[0]||hj[2]!=null&&hn>=hj[2]&&hn<hj[3])?`${t.ouvreAuj} ${t.hh(hn<hj[0]?hj[0]:hj[3])}`:`${t.fermeA} · ${proch}`);
+  const horaires=VAR==="s3c"?horairesPastilles(t):`<div class="planfond"><div class="plan"><span class="pin"></span></div><div class="flottante r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div><div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(...h):t.ferme}</span></div>`).join("")}</div><div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div></div></div>`;
   /* instagram : A bande, B une grande + deux, C quatre carrés + Suivre au milieu */
   let insta="";
   if(D.insta){const lien=`<a href="https://instagram.com/${D.insta.slice(1)}" target="_blank" rel="noopener">${t.suivre}</a>`;
@@ -2508,16 +2508,16 @@ function site2(t,v,lang){
   }
   /* horaires : pastilles (07/11) */
   X="p";
-  const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]);
+  const H7=D.horaires,hj=H7[auj],now=new Date(),hn=now.getHours()+now.getMinutes()/60,ouv=!!(hj&&hn>=hj[0]&&hn<hj[1]&&!(hj[2]!=null&&hn>=hj[2]&&hn<hj[3]));
   let proch="";for(let k=1;k<=7;k++){const j=(auj+k)%7;if(H7[j]){proch=`${t.ouvre} ${t.jours[j].toLowerCase()} ${t.hh(H7[j][0])}`;break}}
-  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[1])}`:(hj&&hn<hj[0]?`${t.ouvreAuj} ${t.hh(hj[0])}`:`${t.fermeA} · ${proch}`);
+  const statut=ouv?`${t.ouvertJ} ${t.hh(hj[2]!=null&&hn<hj[2]?hj[2]:hj[1])}`:(hj&&(hn<hj[0]||hj[2]!=null&&hn>=hj[2]&&hn<hj[3])?`${t.ouvreAuj} ${t.hh(hn<hj[0]?hj[0]:hj[3])}`:`${t.fermeA} · ${proch}`);
   const adr=`<div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div><div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div>`;
   const plan=c=>`<div class="plan ${c}"><span class="pin"></span><em class="sans">${t.planSans}</em></div>`;
-  const deuxcol=`<div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(h[0],h[1]):t.ferme}</span></div>`).join("")}</div>`;
+  const deuxcol=`<div class="deuxcol">${H7.map((h,i)=>`<div class="${i===auj?"auj":""}"><span>${t.jours[i].slice(0,3)}.</span><span>${h?t.h(...h):t.ferme}</span></div>`).join("")}</div>`;
   let horaires;
   if(X==="p") horaires=horairesPastilles(t);
   else if(X==="a"){const ok=H7.filter(Boolean),mn=Math.min(...ok.map(h=>h[0]))-1,mx=Math.max(...ok.map(h=>h[1]))+1;
-    horaires=`<div class="statut ${ouv?"o":""} r"><i></i>${statut}</div><div class="barres r">${H7.map((h,i)=>`<div class="j ${i===auj?"auj":""}"><span>${t.jours[i]}</span>${h?`<div class="tr"><i style="left:${(h[0]-mn)/(mx-mn)*100}%;width:${(h[1]-h[0])/(mx-mn)*100}%"></i></div><span class="hr">${t.h(h[0],h[1])}</span>`:`<span class="fe">${t.ferme}</span>`}</div>`).join("")}</div>${adr}${plan("planlarge r")}`}
+    horaires=`<div class="statut ${ouv?"o":""} r"><i></i>${statut}</div><div class="barres r">${H7.map((h,i)=>`<div class="j ${i===auj?"auj":""}"><span>${t.jours[i]}</span>${h?`<div class="tr"><i style="left:${(h[0]-mn)/(mx-mn)*100}%;width:${(h[1]-h[0])/(mx-mn)*100}%"></i></div><span class="hr">${t.h(...h)}</span>`:`<span class="fe">${t.ferme}</span>`}</div>`).join("")}</div>${adr}${plan("planlarge r")}`}
   else if(X==="b") horaires=`<p class="grand-statut r">${statut}</p><div class="r">${deuxcol}</div>${adr}${plan("planrond r")}`;
   else horaires=`<div class="planfond">${plan("")}<div class="flottante r"><div class="statut ${ouv?"o":""}"><i></i>${statut}</div>${deuxcol}${adr}</div></div>`;
   /* instagram : choix C */
@@ -2657,7 +2657,7 @@ function site(t,v,lang){
   <div class="sec">${ti(t.savoir)}${savoir.map(s=>`<div class="puce r">${s[0]}${s[1]?`<span class="vide">${s[1]}</span>`:""}</div>`).join("")}${D.savoirPlus.map(s=>`<div class="puce r">${s}</div>`).join("")}</div>
   ${D.faq.length?`<div class="sec">${ti(t.faq)}${D.faq.map(f=>`<div class="q r"><button>${f.q}<i></i></button><div class="rep">${f.r}</div></div>`).join("")}<div class="rem vide">${t.exPlus}</div></div>`:""}
   <div class="sec">${ti(t.horaires,"horaires")}
-    <div class="infos r">${D.horaires.map((h,i)=>`<div class="h ${i===auj?"auj":""}"><span data-auj="${t.auj}">${t.jours[i]}</span><span>${h?t.h(h[0],h[1]):t.ferme}</span></div>`).join("")}
+    <div class="infos r">${D.horaires.map((h,i)=>`<div class="h ${i===auj?"auj":""}"><span data-auj="${t.auj}">${t.jours[i]}</span><span>${h?t.h(...h):t.ferme}</span></div>`).join("")}
     <div class="adr">${D.rue}, ${D.cp}<br>${D.tel}</div>
     <div class="btns"><a href="${itin}" target="_blank" rel="noopener">${t.itin}</a><a class="plein" href="tel:${telBrut}">${t.appeler}</a></div></div>
     <div class="carteg plan r"><span class="pin"></span><em class="avec">Ici, le plan Google Maps du salon</em><em class="sans">${t.planSans}</em><div class="masque"><p>${t.planM}</p><button data-plan>${t.afficher}</button></div></div></div>
