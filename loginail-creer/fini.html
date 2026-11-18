@@ -159,7 +159,8 @@ body.envoye .fin{display:block}body.envoye .avant{display:none}
 <script src="fini/fini-commun.js?v=1811a"></script>
 <script>
 const $ = id => document.getElementById(id);
-if (!FINI.aDuSite) location.replace("index.html");
+const DEMO = /[?&]demo/.test(location.search);   /* ?demo : la page avec le site d'exemple, pour la montrer (aucun compte créé) */
+if (!FINI.aDuSite && !DEMO) location.replace("index.html");
 $("logo").innerHTML = LOGO;
 $("slug").textContent = FINI.slug;
 $("kick").textContent = `✦ C'EST FAIT, ${FINI.prenom.toUpperCase()}`;
@@ -180,6 +181,7 @@ const coffre = window.supabase ? supabase.createClient("https://scfhaombuptmrlkd
 const SIMU = (() => { try { return localStorage.getItem("loginail-simu") === "1"; } catch (e) { return false; } })();
 async function envoie() {
   const adr = $("mail").value.trim(), BR = FINI.br; $("go").disabled = true; $("msgA").textContent = "";
+  if (DEMO && !FINI.aDuSite) { montreMails(adr); return; }
   if (SIMU) { BR.email = adr; try { localStorage.setItem("loginail-brouillon", JSON.stringify(BR)); } catch (e) {} montreMails(adr); return; }
   if (!coffre) { $("msgA").textContent = "Pas de connexion. Vérifiez votre internet et réessayez."; verif(); return; }
   $("go").textContent = "Un instant…";
