@@ -2441,7 +2441,8 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) section.styles .rangee{background:none!important;padding-bottom:44px!important;margin-bottom:-14px!important}
   html body:not(#_) section.styles .rangee .tel{box-shadow:0 14px 22px -12px rgba(60,20,40,.32)!important;width:166px!important}
   html body:not(#_) section.appli{padding-bottom:84px!important}
-  html body:not(#_) section.styles{padding-top:46px!important;padding-bottom:36px!important}
+  html body:not(#_) section.styles{padding-top:46px!important;padding-bottom:12px!important}
+  html body:not(#_) section.styles .rangee{margin-top:54px!important}
   html body:not(#_) section.marie{padding-top:34px!important}
   html body:not(#_) .marie-tel h2{font-size:min(6.3vw,25px)!important;line-height:1.28}
 }
@@ -2459,7 +2460,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
   html body:not(#_) .appli .tete,html body:not(#_) .appli .bento{display:none}
   .ape{display:grid;grid-template-columns:340px 1fr;grid-template-areas:"t t" "b r";column-gap:44px;align-items:center;padding:20px 0 10px;min-width:0}
-  .ape .t{grid-area:t;display:block;text-align:center;font-family:'Abril Fatface',serif;font-weight:400;font-size:clamp(40px,4.4vw,58px);line-height:1.08;margin:0 0 34px;color:#1E1C1B}
+  .ape .t{grid-area:t;display:block;text-align:center;font-family:'Abril Fatface',serif;font-weight:400;font-size:clamp(40px,4.4vw,58px);line-height:1.08;margin:0 0 6px;color:#1E1C1B}
   .ape .t em{font-style:normal;color:#B03562}
   .bzt{grid-area:b;display:block;position:relative;height:400px;width:340px;pointer-events:none}
   .bzt .b{position:absolute;left:0;width:330px;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:10px 14px 10px 10px;white-space:nowrap;
@@ -2496,12 +2497,11 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .np .np-hero{margin-top:-58px}
   html body:not(#_) .np .np-nav .np-go{height:38px;padding:0 18px;font-size:13.5px}
   html body:not(#_) .np .np-login{padding:7px 12px;font-size:14px}
-  .ape .ecran{position:relative;z-index:1;transform-origin:50% 12%;transition:translate .35s cubic-bezier(.2,.8,.2,1),scale .35s cubic-bezier(.2,.8,.2,1)}
-  .ape .ecran:hover,.ape .ecran:nth-child(even):hover{scale:1.4;z-index:5}
-  .ape .ecran:hover{translate:0 -10px}
-  .ape .ecran:nth-child(even):hover{translate:0 16px}
-  .ape .ecran:hover figcaption{opacity:0}
-  .ape figcaption{transition:opacity .2s}
+  /* 20/11 : le téléphone sous la souris grandit pour de vrai (sa vraie taille change, pas un zoom) → toujours net, jamais flou ; les autres se serrent un peu */
+  .ape .ecran{position:relative;z-index:1;transition:flex-grow .4s cubic-bezier(.2,.8,.2,1),max-width .4s cubic-bezier(.2,.8,.2,1),translate .35s cubic-bezier(.2,.8,.2,1)}
+  .ape .rail{align-items:center;height:620px}
+  .ape .rail:hover .ecran{max-width:150px}
+  .ape .rail .ecran:hover{flex-grow:1.9;max-width:250px;z-index:5}
   html body:not(#_) footer.pied{background:linear-gradient(180deg,#F4E1EA 0,rgba(244,225,234,0) 240px)}
   .fil-fin{display:flex;align-items:center;justify-content:center;gap:14px;width:260px;margin:64px auto 0;color:#E0628C;font-size:13px}
   .fil-fin::before,.fil-fin::after{content:"";flex:1;height:4px;background:radial-gradient(circle,rgba(224,98,140,.55) 1.4px,transparent 2px) 0 0/12px 4px repeat-x}
