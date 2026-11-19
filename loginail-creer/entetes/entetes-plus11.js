@@ -18,7 +18,7 @@ const DEF=["coeurchrome","etoilechrome","coeurcristal","coeurgeleerose","collier
 const ses=()=>{let l=[];try{l=(window.__pzEtat?window.__pzEtat().charms:(typeof BR!=="undefined"&&BR&&BR.charms))||[]}catch(e){}
   if(!l.length)try{l=(new URLSearchParams(location.search).get("charm")||"").split(",").filter(Boolean)}catch(e){}
   if(!l.length)l=DEF;return l};
-const src=k=>{try{if(typeof CHI!=="undefined"&&CHI[k])return CHI[k]}catch(e){}return CHB+k+".png"};
+const src=k=>{try{if(typeof CHI!=="undefined"&&CHI[k])return CHI[k]}catch(e){}return CHB+k+".webp"};   /* 19/11 nuit : .webp (les .png ne sont pas en ligne) */
 const ch=(i)=>{const l=ses();return src(l[i%l.length])};
 
 const css=`
@@ -191,7 +191,7 @@ window.entete=function(k,t,lang){
   case "xcollier":return H(`<i class="x-col"></i>`+susp(22,14,0,2.6,0,50,96)+susp(46,14,1,3,1,56,104)+susp(70,14,2,2.8,.5,50,96));
   case "xlustre":return H(R(16,i=>`<i class="x-lu" style="left:${4+i*6}%;height:${50+Math.sin(i/15*Math.PI)*150}px;animation-duration:${rx(2.5,4)}s;animation-delay:-${rx(0,3)}s"></i>`));
   case "xlecteur":return H(`<div class="x-lect"><div class="x-h"><span class="x-pho" style="background-image:url('${img}')"></span><div><b>Ongles parfaits</b><br><span style="opacity:.8">${D.nom}</span></div></div><div class="x-onde">${R(24,()=>`<i style="animation-delay:-${rx(0,.7)}s"></i>`)}</div><div class="x-barre"><i></i></div></div>`);
-  case "xbonbons":return H(R(10,i=>`<img class="x-bon" src="${CHB+["bonbon","bonbonvert","anneaubonbon","coeurgeleerose","coeurgeleejaune"][i%5]}.png" style="left:${rx(2,86)}%;width:${rx(30,48)}px;animation-duration:${rx(5,8)}s;animation-delay:-${rx(0,8)}s" alt="">`));
+  case "xbonbons":return H(R(10,i=>`<img class="x-bon" src="${CHB+["bonbon","bonbonvert","anneaubonbon","coeurgeleerose","coeurgeleejaune"][i%5]}.webp" style="left:${rx(2,86)}%;width:${rx(30,48)}px;animation-duration:${rx(5,8)}s;animation-delay:-${rx(0,8)}s" alt="">`));
   case "xtap":return H(`<i class="x-onde2"></i><i class="x-onde2" style="animation-delay:.25s"></i><i class="x-pt"></i><i class="x-cp2"></i>`);
   case "xreac":return H(`<div class="x-rb">${["😍","🔥","💅","✨","❤️","😮"].map((e,i)=>`<span style="animation-delay:${i*.08}s">${e}</span>`).join("")}</div>`+[["😍","20%","-30px"],["💅","48%","10px"],["✨","72%","-20px"]].map((v,i)=>`<span class="x-vole" style="left:${v[1]};--dx:${v[2]};animation-delay:${i*.3}s">${v[0]}</span>`).join(""));
   case "xnuancier":{const C=["var(--acc,#B5475E)","#E8C4B8","#9CAF88","#B9A3D6","#4A4A4F","#C8693F","#2E3A5C","#FF8FB1"];
