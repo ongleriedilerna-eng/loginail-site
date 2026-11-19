@@ -115,6 +115,47 @@ const css=`
 .x-nu{left:50%;top:38%;width:0;height:0;animation:xTourne 14s linear infinite}
 .x-nu i{position:absolute;width:42px;height:42px;margin:-21px;border-radius:50%;border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.3),inset -5px -6px 0 rgba(0,0,0,.12),inset 5px 5px 0 rgba(255,255,255,.35)}
 @media (prefers-reduced-motion:reduce){.hent[class*="he-w-x"] *{animation-duration:0s!important;animation-iteration-count:1!important}}
+
+/* 19/11 nuit (Marie : « dans les petites vignettes, on dirait la photo seule ») : SEULEMENT dans les vignettes de l'onglet
+   En-tête de Personnaliser (:root>.a-entete = la copie en miniature, perso-pilote.js miniEntete) : l'effet est figé au moment où
+   il se voit le mieux, et en plus gros. Le site en grand ne change pas. */
+:root>.a-entete .hent[class*="he-w-x"] .x-fx *,:root>.a-entete .hent[class*="he-w-x"] .x-fx *::after{animation-play-state:paused!important}
+/* Bokeh : ronds de lumière pleins et 2 × plus gros */
+:root>.a-entete .he-w-xbokeh .x-bk{opacity:1!important;scale:2.1;filter:blur(2.5px);mix-blend-mode:normal;background:radial-gradient(circle,rgba(255,240,248,.95),rgba(255,150,200,.6) 60%,transparent 71%)}
+/* Scintillement : étoiles allumées, 2,4 × plus grosses */
+:root>.a-entete .he-w-xscint .x-sc{opacity:1!important;scale:2.4!important;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 4px #fff)}
+/* Bulles de savon / charms dans des bulles : bulles bien visibles, réparties sur la photo */
+:root>.a-entete .he-w-xsavon .x-sav{opacity:1!important;scale:1.7;box-shadow:0 0 8px rgba(255,255,255,.85);background:radial-gradient(circle at 30% 30%,#fff 0 9%,transparent 11%),radial-gradient(circle,rgba(255,255,255,.12) 52%,rgba(255,150,210,.8) 68%,rgba(150,210,255,.9) 84%,#fff 100%)}
+:root>.a-entete .he-w-xbulch .x-bch{opacity:1!important;scale:1.25}
+:root>.a-entete .he-w-xsavon .x-sav,:root>.a-entete .he-w-xbulch .x-bch{animation:none!important;transform:none!important}
+:root>.a-entete .he-w-xsavon .x-sav:nth-child(1){bottom:6%}:root>.a-entete .he-w-xsavon .x-sav:nth-child(2){bottom:60%}:root>.a-entete .he-w-xsavon .x-sav:nth-child(3){bottom:30%}
+:root>.a-entete .he-w-xsavon .x-sav:nth-child(4){bottom:78%}:root>.a-entete .he-w-xsavon .x-sav:nth-child(5){bottom:16%}:root>.a-entete .he-w-xsavon .x-sav:nth-child(6){bottom:46%}
+:root>.a-entete .he-w-xsavon .x-sav:nth-child(7){bottom:70%}:root>.a-entete .he-w-xsavon .x-sav:nth-child(8){bottom:36%}:root>.a-entete .he-w-xsavon .x-sav:nth-child(9){bottom:86%}
+:root>.a-entete .he-w-xbulch .x-bch:nth-child(1){bottom:8%}:root>.a-entete .he-w-xbulch .x-bch:nth-child(2){bottom:56%}:root>.a-entete .he-w-xbulch .x-bch:nth-child(3){bottom:30%}
+:root>.a-entete .he-w-xbulch .x-bch:nth-child(4){bottom:74%}:root>.a-entete .he-w-xbulch .x-bch:nth-child(5){bottom:18%}:root>.a-entete .he-w-xbulch .x-bch:nth-child(6){bottom:44%}
+/* Bubble-gum : la bulle à son plus gros, juste avant d'éclater */
+:root>.a-entete .he-w-xgum .x-gb{scale:1.12!important;opacity:.95!important}
+/* Rideau de perles : perles 2 × plus grosses */
+:root>.a-entete .he-w-xperles .x-pl{width:20px;background:radial-gradient(circle,#fff 0 6px,#f4dfe6 7.5px,transparent 9px) 0 0/20px 24px repeat-y;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
+/* Guirlande lumineuse : ampoules allumées, plus grosses */
+:root>.a-entete .he-w-xguirlande .x-amp{opacity:1!important;scale:1.5;box-shadow:0 0 16px 7px rgba(255,220,130,.9)}
+/* Lustre : fils plus épais, pampilles 2 × plus grosses et allumées */
+:root>.a-entete .he-w-xlustre .x-lu{width:2px;overflow:visible!important}
+:root>.a-entete .he-w-xlustre .x-lu::after{opacity:1!important;width:34px;height:44px;left:-16px;bottom:-40px;filter:drop-shadow(0 0 8px #fff)}
+/* Tap ♡ : le cœur au moment où il apparaît, avec ses ondes */
+:root>.a-entete .he-w-xtap .x-cp2{opacity:1!important;scale:1.7!important;translate:0 -10px!important}
+:root>.a-entete .he-w-xtap .x-onde2{opacity:.95!important;scale:2.6!important;border-width:3px}
+:root>.a-entete .he-w-xtap .x-onde2+.x-onde2{opacity:.55!important;scale:4.2!important}
+:root>.a-entete .he-w-xtap .x-pt{opacity:1!important;scale:1.3!important}
+/* Réactions : barre plus grande + 3 émojis qui volent, visibles */
+:root>.a-entete .he-w-xreac .x-rb{font-size:34px;padding:10px 4px}
+:root>.a-entete .he-w-xreac .x-rb span{transform:none!important}
+:root>.a-entete .he-w-xreac .x-vole{opacity:1!important;font-size:58px;transform:translate(var(--dx),90px)!important}
+/* Pluie de bonbons : bonbons 1,8 × plus gros */
+:root>.a-entete .he-w-xbonbons .x-bon{scale:1.8}
+/* Nuancier : la roue était coupée (le cadre de la vignette cache ce qui dépasse) : on la montre, un peu plus grande */
+:root>.a-entete .he-w-xnuancier .x-nu{overflow:visible!important;scale:1.25}
+:root>.a-entete .he-w-xnuancier .x-nu i{width:52px;height:52px;margin:-26px}
 `;
 const st=document.createElement("style");st.id="entetes-plus11";st.textContent=css;document.head.appendChild(st);
 
