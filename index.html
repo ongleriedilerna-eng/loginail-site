@@ -2184,6 +2184,19 @@ document.addEventListener("DOMContentLoaded",function(){
 @keyframes apeCoucou{0%,55%,100%{translate:0 0}20%,35%{translate:-46px 0}}
 @media (prefers-reduced-motion:reduce){.ape.coucou .rail{animation:none}}
 </style>
+<style id="ordi-retouches-1911d">
+/* 19/11 (Marie) : ORDINATEUR seulement.
+   a) le même passage flou et rosé que sur téléphone entre « Loginail, c'est quoi ? » et « L'appli qui gère tout »
+   b) « Ton agenda, d'un coup d'œil » : le téléphone n'est plus coupé en bas, on le voit en entier */
+@media (min-width:761px){
+  html body:not(#_) section.appli{position:relative;isolation:isolate;overflow-x:clip;overflow-y:visible;background:linear-gradient(180deg,#FBF1F4 0,#FBEFF3 180px,#FBF3F5 70%,rgba(251,243,245,0) 100%)}
+  html body:not(#_) section.appli::before{content:"";position:absolute;z-index:-1;left:-10%;right:-10%;top:-60px;height:560px;pointer-events:none;
+     background:radial-gradient(34% 45% at 18% 58%,rgba(236,150,182,.85),transparent 72%),radial-gradient(32% 42% at 82% 52%,rgba(205,150,228,.65),transparent 72%),radial-gradient(26% 36% at 52% 74%,rgba(255,200,170,.75),transparent 72%),linear-gradient(180deg,#FBF1F4 0,#FBEFF3 100%);
+     filter:blur(30px)}
+  html body:not(#_) .appli .case.grande{justify-content:flex-start;gap:18px}
+  html body:not(#_) .appli .case.grande .tel{width:180px;margin:auto 0 4px}
+}
+</style>
 <style id="tel-retouches-1911c">
 /* 19/11 tard (Marie) : TÉLÉPHONE seulement.
    a) un passage flou et rosé entre la carte « Créer mon site » et « L'appli qui gère tout, dans ta poche » : la partie appli change d'ambiance
