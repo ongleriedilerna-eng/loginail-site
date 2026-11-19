@@ -2517,6 +2517,15 @@ document.addEventListener("DOMContentLoaded",function(){
 @media (max-width:760px){.fil-fin,.k2c.k2c-ordi{display:none!important}}
 @media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
 </style>
+<style id="points-styles-tel">/* 20/11 (Marie) : téléphone seulement — petits points sous « Classe ou baddie », comme sous les écrans de l'appli,
+   pour montrer qu'on peut glisser à gauche et à droite ; le point du site regardé devient un trait rose. Ordinateur : caché. */
+.pts-styles{display:none}
+@media (max-width:760px){
+  html body:not(#_) .pts-styles{display:flex;justify-content:center;gap:7px;margin:22px 0 0;position:relative;z-index:2}
+  html body:not(#_) .pts-styles span{width:7px;height:7px;border-radius:50%;background:#E8D9D4;transition:background .3s,width .3s}
+  html body:not(#_) .pts-styles span.ici{background:#B03562;width:20px;border-radius:4px}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -3946,8 +3955,9 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
     e.innerHTML='<i>'+it[0]+'</i><div><b>'+it[1]+'</b><small>'+it[2]+'</small></div>';e.style.top='-40px';e.style.opacity='0';e.style.scale='.92';z.appendChild(e);pile.unshift(e);
     requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*(innerWidth>760?68:H))+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
     if(pile.length>6){const v=pile.pop();setTimeout(()=>v.remove(),600)}};
-  let parti=false;const go=()=>{if(parti)return;parti=true;for(let k=0;k<4;k++)setTimeout(ajoute,k*350);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),1800)};
-  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:.3}).observe(z);else go();
+  let parti=false;const go=()=>{if(parti)return;parti=true;for(let k=0;k<4;k++)setTimeout(ajoute,k*160);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),900)};
+  /* 20/11 (Marie) : les bulles démarrent AVANT d'arriver à l'écran (300 px plus tôt) → elles sont déjà là quand on voit les téléphones */
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:0,rootMargin:'0px 0px 300px 0px'}).observe(z);else go();
 })();
 </script>
 <script id="pied-chute-js">/* 19/11 (Marie) : téléphone — les charms du pied tombent du ciel, roulent et se posent quand on arrive en bas */
@@ -4101,6 +4111,18 @@ const V=1;let raf=0,vu=true;
   new IntersectionObserver(es=>es.forEach(e=>{vu=e.isIntersecting;if(vu&&!raf)raf=requestAnimationFrame(pas)}),{threshold:0}).observe(Z);
   raf=requestAnimationFrame(pas);
   }
+})();
+</script>
+<script id="points-styles-tel-js">/* 20/11 (Marie) : les petits points suivent le site du milieu dans « Classe ou baddie » (téléphone) */
+(function(){
+  const r=document.getElementById('rangee');if(!r)return;
+  const pts=document.createElement('div');pts.className='pts-styles';pts.setAttribute('aria-hidden','true');r.after(pts);
+  const maj=()=>{const t=[...r.children];if(pts.children.length!==t.length)pts.innerHTML=t.map(()=>'<span></span>').join('');
+    const R=r.getBoundingClientRect(),c=R.left+R.width/2;let best=0,dmin=1e9;
+    t.forEach((e,i)=>{const b=e.getBoundingClientRect(),d=Math.abs(b.left+b.width/2-c);if(d<dmin){dmin=d;best=i}});
+    [...pts.children].forEach((p,i)=>p.classList.toggle('ici',i===best))};
+  r.addEventListener('scroll',maj,{passive:true});new MutationObserver(()=>requestAnimationFrame(maj)).observe(r,{childList:true});
+  addEventListener('resize',maj);maj();
 })();
 </script>
 </body></html>
