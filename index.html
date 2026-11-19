@@ -2322,6 +2322,25 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .marie .texte-court p b{color:#1E1C1B;font-weight:500}
 }
 </style>
+<style id="marie-tel">
+/* 19/11 nuit (Marie) : TÉLÉPHONE seulement — le bloc de Marie : « Qui a créé Loginail ? » / « Une prothésiste ongulaire,
+   pour les prothésistes ongulaires. » / texte sans « comme toi » répété / « Marie. » / son Instagram à toucher.
+   Pas de photo pour l'instant (Marie : beaucoup plus tard). Ordinateur inchangé. */
+.marie-tel{display:none}
+@media (max-width:760px){
+  html body:not(#_) .marie .vu > .k,html body:not(#_) .marie .vu > blockquote,html body:not(#_) .marie .texte-court,html body:not(#_) .marie .texte-long,html body:not(#_) .marie .vu > .signature{display:none!important}
+  .marie-tel{display:block;text-align:center}
+  .marie-tel .k{color:var(--fram,#B03562)}
+  .marie-tel h2{font-family:'Abril Fatface',serif;font-weight:400;font-size:min(7vw,27px);line-height:1.2;margin:14px auto 20px;max-width:330px;text-wrap:balance;color:#1E1C1B}
+  .marie-tel h2 em{font-style:normal;color:#B03562}
+  .marie-tel p{font-size:17px;line-height:1.65;color:#4a4440;max-width:340px;margin:0 auto 16px}
+  .marie-tel p b{color:#1E1C1B;font-weight:500}
+  .marie-tel .sign{font-family:'Abril Fatface',serif;font-size:40px;color:#B03562;margin:18px 0 12px}
+  .marie-tel .marie-ig{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px 0 12px;border-radius:99px;background:#fff;color:#1E1C1B;text-decoration:none;
+     font:500 14px Jost,sans-serif;box-shadow:0 10px 24px -14px rgba(60,30,40,.4),inset 0 0 0 1px rgba(30,28,27,.06)}
+  .marie-tel .marie-ig svg{width:20px;height:20px}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2495,6 +2514,14 @@ document.addEventListener("DOMContentLoaded",function(){
       <p>Loginail, c’est l’outil que j’aurais aimé avoir : tu colles ton lien, ton site est prêt, et l’appli s’occupe du reste. Toi, tu t’occupes des ongles.</p>
       </div>
       <div class="signature">Marie</div>
+      <div class="marie-tel">
+        <div class="k">Qui a créé Loginail ?</div>
+        <h2>Une prothésiste ongulaire, <em>pour les prothésistes ongulaires.</em></h2>
+        <p>Je passe mes journées à poser des ongles.</p>
+        <p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, <b>sans commission</b>. Il n’existait pas. Alors je l’ai créé.</p>
+        <div class="sign">Marie.</div>
+        <a class="marie-ig" href="https://www.instagram.com/ongleriedilerna/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#B03562" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#B03562" stroke="none"/></svg>@ongleriedilerna</a>
+      </div>
     </div>
   </div>
 </section>
