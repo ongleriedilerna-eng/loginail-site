@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Loginail · les lettres-bocaux</title>
+<!-- Page d'essai Design (19/11 nuit, idée de Marie) : les lettres de LOGINAIL en bocaux de verre remplis de charms.
+     Secouer le téléphone = secouer les bocaux ; pencher = les charms glissent ; toucher = secouer. Les charms ne sortent JAMAIS des lettres.
+     Sur iPhone, Apple demande la permission « mouvement et orientation » au premier toucher. Rien n'est sur l'accueil. -->
+<style>
+  @font-face{font-family:Bagel;src:url(../loginail-site/polices/BagelFatOne-400-latin.woff2) format("woff2")}
+  @font-face{font-family:Jost;font-weight:400;src:url(../loginail-site/polices/Jost-400-latin.woff2) format("woff2")}
+  @font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format("woff2")}
+  html,body{margin:0;min-height:100%;background:#F4E1EA;font-family:Jost,system-ui,sans-serif;color:#1E1C1B;-webkit-tap-highlight-color:transparent}
+  body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;padding:24px 16px;box-sizing:border-box;overscroll-behavior:none}
+  .k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#B03562;font-weight:500;margin-bottom:14px;text-align:center;line-height:1.6}
+  canvas{display:block;touch-action:none;cursor:pointer;filter:drop-shadow(0 18px 26px rgba(120,40,70,.18))}
+  .aide{margin-top:16px;font-size:14px;color:#5b524d;text-align:center;min-height:20px}
+  .aide b{color:#B03562;font-weight:500}
+  .bt{margin-top:12px;display:none;height:44px;padding:0 20px;border-radius:99px;border:0;background:#1E1C1B;color:#fff;font:500 14px Jost,sans-serif}
+  .bt.on{display:inline-block}
+</style>
+</head>
+<body>
+  <div class="k">Pensé par une prothésiste, pour les prothésistes</div>
+  <canvas id="c" aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas>
+  <div class="aide" id="aide">Touche les lettres, puis <b>secoue ton téléphone</b> ✦</div>
+  <button class="bt" id="bt" type="button">Activer le secouage</button>
+<script>
+(async function(){
+  const NOMS=['cerisedisco','ceriseruban','cerisecoeur','cerisesrouges','cerisesor','ceriseslanternes','cerisesverre','noeudcerise','perle','bouledisco','boulefacettes','boule8','boule8or','boulecristallune',
+    'coeurchrome','coeurajoure','coeurrubis','coeurperles','coeurroseclair','coeurcristal','coeurcousurose','coeurpixel','coeurleopard','coeurchoco','etoilecristal','etoilebleuciel','etoile4','etoilelumineuse',
+    'etoilecerise','diamant','cristal','sucettecoeur','bonbon','bonbonvert','bagueastres','saturne','papilloncyber','arcenciel','arcencielperles','chatlune','fleurivoire','coquillagefrangipanier','baguettemagique'];
+  const cv=document.getElementById('c'),ctx=cv.getContext('2d'),DPR=Math.min(2,window.devicePixelRatio||1);
+  await document.fonts.load('100px Bagel');
+  // ---- les lettres : LOGI / NAIL sur deux lignes, chaque lettre séparée (un charm ne peut pas passer d'une lettre à l'autre)
+  const W=Math.min(innerWidth-32,440),L1='LOGI',L2='NAIL',GAP=8;
+  const mesure=(t,fs)=>{ctx.font=fs+'px Bagel';return [...t].reduce((s,ch)=>s+ctx.measureText(ch).width,0)+GAP*(t.length-1)};
+  let FS=200;while(Math.max(mesure(L1,FS),mesure(L2,FS))>W-8&&FS>40)FS-=2;
+  const LH=FS*.92,H=Math.round(LH*2+24);
+  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);
+  const lettres=[];
+  [[L1,LH*.86],[L2,LH*1.86]].forEach(([t,y])=>{ctx.font=FS+'px Bagel';let x=(W-mesure(t,FS))/2;
+    for(const ch of t){lettres.push({ch,x,y});x+=ctx.measureText(ch).width+GAP}});
+  // le masque (où les charms ont le droit d'être), un peu rétréci pour qu'ils restent bien dans le verre
+  const M=document.createElement('canvas');M.width=W;M.height=H;const m=M.getContext('2d');m.font=FS+'px Bagel';m.fillStyle='#000';
+  lettres.forEach(l=>m.fillText(l.ch,l.x,l.y));
+  m.globalCompositeOperation='destination-out';m.lineWidth=7;m.strokeStyle='#000';lettres.forEach(l=>m.strokeText(l.ch,l.x,l.y)); // paroi de verre
+  const A=m.getImageData(0,0,W,H).data;const dedans=(x,y)=>{x|=0;y|=0;return x>=0&&y>=0&&x<W&&y<H&&A[(y*W+x)*4+3]>128};
+  const libre=(x,y,r)=>{if(!dedans(x,y))return false;for(let k=0;k<8;k++){const a=k*Math.PI/4;if(!dedans(x+Math.cos(a)*r,y+Math.sin(a)*r))return false}return true};
+  // ---- les charms : on remplit chaque lettre en tirant des places au hasard à l'intérieur
+  const imgs={};await Promise.all(NOMS.map(n=>new Promise(ok=>{const i=new Image();i.onload=i.onerror=ok;i.src='../loginail-site/charms-mini/'+n+'.webp';imgs[n]=i})));
+  const R0=Math.max(6.5,FS*.064),B=[];let essais=0;
+  while(B.length<90&&essais<60000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.75+Math.random()*.55);
+    if(!libre(x,y,r))continue;if(B.some(b=>Math.hypot(b.x-x,b.y-y)<(b.r+r)*.95))continue;
+    B.push({x,y,r,vx:0,vy:0,a:Math.random()*6.28,va:0,im:imgs[NOMS[B.length%NOMS.length]]})}
+  // ---- le mouvement
+  let gx=0,gy=.32,secousse=0;
+  function pas(){
+    for(const b of B){b.vx+=gx;b.vy+=gy;if(secousse>0){b.vx+=(Math.random()-.5)*secousse;b.vy+=(Math.random()-.5)*secousse-secousse*.25}
+      b.vx*=.985;b.vy*=.985;
+      // on avance sur x puis sur y : si ça sortirait du verre, on rebondit (rien ne sort jamais)
+      const nx=b.x+b.vx;if(libre(nx,b.y,b.r))b.x=nx;else{b.vx*=-.35;b.va+=b.vy*.02}
+      const ny=b.y+b.vy;if(libre(b.x,ny,b.r))b.y=ny;else{b.vy*=-.35;b.vx*=.9;b.va=b.vx/b.r}
+      b.a+=b.va;b.va*=.96}
+    for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const p=B[i],q=B[j],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||1,mn=(p.r+q.r)*.92;
+      if(d<mn){const k=(mn-d)/d/2,ux=dx*k,uy=dy*k;if(libre(p.x-ux,p.y-uy,p.r)){p.x-=ux;p.y-=uy}if(libre(q.x+ux,q.y+uy,q.r)){q.x+=ux;q.y+=uy}
+        const rv=(q.vx-p.vx)*dx/d+(q.vy-p.vy)*dy/d;if(rv<0){const im=-rv*.5;p.vx-=im*dx/d;p.vy-=im*dy/d;q.vx+=im*dx/d;q.vy+=im*dy/d}}}
+    secousse*=.85;if(secousse<.05)secousse=0;
+    dessine();requestAnimationFrame(pas)}
+  // ---- le dessin : le verre (fond), les charms, puis les reflets et le contour par-dessus (ils sont DANS le verre)
+  function dessine(){ctx.clearRect(0,0,W,H);ctx.font=FS+'px Bagel';
+    ctx.fillStyle='rgba(255,255,255,.42)';lettres.forEach(l=>ctx.fillText(l.ch,l.x,l.y));
+    for(const b of B){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.a);const s=b.r*2.3;if(b.im.complete&&b.im.naturalWidth)ctx.drawImage(b.im,-s/2,-s/2,s,s);ctx.restore()}
+    ctx.save();ctx.globalCompositeOperation='source-over';ctx.lineWidth=3;ctx.strokeStyle='rgba(255,255,255,.95)';lettres.forEach(l=>ctx.strokeText(l.ch,l.x,l.y));
+    ctx.lineWidth=1.2;ctx.strokeStyle='rgba(176,53,98,.35)';lettres.forEach(l=>ctx.strokeText(l.ch,l.x,l.y));ctx.restore();
+    // reflet de verre : une bande claire en biais, seulement à l'intérieur des lettres
+    ctx.save();ctx.beginPath();ctx.rect(0,0,W,H);ctx.clip();ctx.globalCompositeOperation='source-atop';const g=ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(.18,'rgba(255,255,255,0)');g.addColorStop(.26,'rgba(255,255,255,.35)');g.addColorStop(.32,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.restore()}
+  // ---- toucher = secouer ; secouer le téléphone = secouer ; pencher = les charms glissent
+  const aide=document.getElementById('aide'),bt=document.getElementById('bt');let capteurs=false;
+  function ecoute(){if(capteurs)return;capteurs=true;
+    addEventListener('devicemotion',e=>{const a=e.acceleration||{};const f=Math.hypot(a.x||0,a.y||0,a.z||0);if(f>9)secousse=Math.min(9,f*.45)});
+    addEventListener('deviceorientation',e=>{if(e.gamma==null)return;const gm=Math.max(-60,Math.min(60,e.gamma)),bt2=Math.max(-10,Math.min(80,e.beta||45));
+      gx=Math.sin(gm*Math.PI/180)*.42;gy=Math.max(.08,Math.sin(bt2*Math.PI/180))*.42});
+    aide.innerHTML='Secoue ou penche ton téléphone ✦'}
+  async function demande(){try{if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
+      const r=await DeviceMotionEvent.requestPermission();if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission)await DeviceOrientationEvent.requestPermission().catch(()=>{});
+      if(r==='granted'){ecoute();bt.classList.remove('on')}else{aide.innerHTML='Touche les lettres pour les secouer ✦'}}else ecoute()}catch(e){aide.innerHTML='Touche les lettres pour les secouer ✦'}}
+  cv.addEventListener('pointerdown',e=>{secousse=7;if(!capteurs)demande()});
+  bt.addEventListener('click',demande);
+  if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function')bt.classList.add('on');else if('ondevicemotion' in window)ecoute();
+  window._bocal={B,libre,dedans,secoue:v=>{secousse=v}};
+  pas();
+})();
+</script>
+</body>
+</html>
