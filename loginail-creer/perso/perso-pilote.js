@@ -251,7 +251,15 @@
   function feuilleSite() { if (feuille) return feuille; const regles = [];
     for (const sh of P.D.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; } const base = sh.href || P.D.baseURI;
       const abs = t => t.replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (m, q, u) => `url("${new URL(u, base).href}")`);
-      for (const r of rs) { if (r.type === 3 || r.type === 5) continue; regles.push(abs(r.cssText).replace(/:root/g, ":host")); } }
+      /* 19/11 (Marie : « les looks ne sont pas en format téléphone, ça dénature mes créations ») : les petits téléphones (looks,
+         en-têtes) prenaient les tailles de l'ÉCRAN de l'ordinateur (règles « téléphone » sautées, hauteurs en vh de l'ordinateur).
+         On les calcule comme dans le vrai téléphone du milieu (390 × 844) : même rendu sur ordinateur et sur téléphone. */
+      const W = P.W, vw = (W && W.innerWidth) || 390, vh = (W && W.innerHeight) || 844;
+      const unites = t => t.replace(/(^|[^\w.-])(\d*\.?\d+)[dsl]?v(h|w|min|max)\b/g, (m, a, n, u) => a + (+n * (u === "h" ? vh : u === "w" ? vw : u === "min" ? Math.min(vw, vh) : Math.max(vw, vh)) / 100).toFixed(2) + "px");
+      const ajoute = liste => { for (const r of liste) { if (r.type === 3 || r.type === 5) continue;
+        if (r.type === 4) { let ok = false; try { ok = (W || window).matchMedia(r.conditionText || r.media.mediaText).matches; } catch (e) {} if (ok) ajoute(r.cssRules); continue; }
+        regles.push(unites(abs(r.cssText)).replace(/:root/g, ":host")); } };
+      ajoute(rs); }
     P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n:host *{overflow:hidden!important;scroll-behavior:auto!important}\n.ile{display:none!important}"); return feuille; }
   /* 17/11 (Marie : « ça met grave du temps ») : la mise en forme du site est recopiée UNE fois par tournée, plus 37 fois */
   P.nouvelleFeuille = () => { feuille = null; };
