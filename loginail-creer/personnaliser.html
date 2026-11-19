@@ -1278,7 +1278,9 @@ const MES = (() => { try { return JSON.parse(localStorage.getItem("lgnMesLooks")
    un ancien en-tête (photo en plein écran) qui n'existe plus, et l'en-tête de la pro ne changeait pas → retirés.
    On ne garde que les looks dont l'en-tête existe encore (ou qui n'en imposent pas). */
 const enteteExiste = L => !L.e || P.ENT.some(x => x[0] === L.e);
-const tousLooks = () => [...MES, ...(window.LOOKS_MARIE || [])].filter(enteteExiste);
+/* 19/11 (Marie : « j'ai pas la croix, je veux les enlever ») : les looks tout prêts ont aussi leur croix ; on les retire de la liste (gardé dans ce navigateur) */
+var LOOKS_CACHES = (() => { try { return JSON.parse(localStorage.getItem("lgnLooksCaches") || "[]"); } catch (e) { return []; } })();
+const tousLooks = () => [...MES, ...(window.LOOKS_MARIE || []).filter(L => !LOOKS_CACHES.includes(L.n))].filter(enteteExiste);
 let lookOn = -1;
 ORDRE.unshift("look"); document.body.classList.add("looks6");
 TXT.look = ["Votre <em>look</em>", "Un toucher : tout votre site change. Vous affinerez ensuite si vous voulez."];
@@ -1325,7 +1327,7 @@ const idxFond = nom => P.fonds().findIndex(x => x[0] === nom);
 function rendLooks() { const l = $("lLook");
   l.innerHTML = `<button class="look surp" data-i="s"><span class="vis"><b><i>✦</i>Surprends-moi</b></span>Au hasard</button><button class="look ajout" data-i="plus"><span class="vis"><b><i>+</i>Enregistrer ce look</b></span>Mon site tel qu’il est</button>` + tousLooks().map((L, i) => { const k = idxFond(L.f);
     const vis = L.img ? `<img class="cap" src="../loginail-site/apercus-univers/${L.img}.webp" alt="" loading="lazy">` : L.ph ? `<span class="miniS"></span>` : (k >= 0 ? P.vignetteFond(k) : "") + `<b style="font-family:${P.famille(L.p).replace(/"/g, "'")}">${L.n}</b>`;
-    return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span>${i < MES.length ? `<span class="supL" role="button" aria-label="Supprimer ce look">✕</span>` : ""}${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join("");
+    return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span><span class="supL" role="button" aria-label="Supprimer ce look">✕</span>${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join("");
   /* 17/11 (Marie) : les looks enregistrés montrent une vraie copie de SON site ; les favoris passent en premier (comme les en-têtes) */
   requestAnimationFrame(() => l.querySelectorAll(".look.mien").forEach(b => { const L = tousLooks()[+b.dataset.i], m = b.querySelector(".miniS"); if (L && L.ph && m) { P.montreSite(m, L.ph, m.offsetWidth || 140); charmsMini(m, L); } }));
   const ajout = l.querySelector(".look.ajout"); let fv = []; try { fv = FAVS.look; } catch (e) {} fv.slice().reverse().forEach(n => { const i = tousLooks().findIndex(L => L.n === n), b = i >= 0 && l.querySelector(`.look[data-i="${i}"]`); if (b && ajout) ajout.after(b); }); }
@@ -1417,12 +1419,13 @@ async function enregistre() { const nom = prompt("Nom de ce look :", "Mon look "
   lookOn = 0; rendLooks(); bulle("Look « " + nom + " » enregistré ✦"); }
 /* la croix d'un look enregistré : on demande avant de supprimer */
 $("lLook").addEventListener("click", e => { const x = e.target.closest(".supL"); if (!x) return; e.preventDefault(); e.stopImmediatePropagation();
-  const i = +x.closest(".look").dataset.i, L = MES[i]; if (!L) return;
+  const i = +x.closest(".look").dataset.i, L = tousLooks()[i], perso = i < MES.length; if (!L) return;
   const d = document.createElement("div"); d.className = "supFond";
-  d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Supprimer ce look ?</h4><p>« ${L.n.replace(/</g, "&lt;")} » sera effacé.<br>Votre site ne change pas.</p><div><button class="non">Non</button><button class="oui">Oui, supprimer</button></div></div>`;
+  d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Supprimer ce look ?</h4><p>« ${L.n.replace(/</g, "&lt;")} » ${perso ? "sera effacé" : "sera retiré de vos looks"}.<br>Votre site ne change pas.</p><div><button class="non">Non</button><button class="oui">Oui, supprimer</button></div></div>`;
   const ferme = () => d.remove();
   d.onclick = ev => { if (ev.target === d || ev.target.closest(".non")) return ferme();
-    if (ev.target.closest(".oui")) { MES.splice(i, 1); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (er) {}
+    if (ev.target.closest(".oui")) { if (perso) { MES.splice(i, 1); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (er) {} }
+      else { LOOKS_CACHES.push(L.n); try { localStorage.setItem("lgnLooksCaches", JSON.stringify(LOOKS_CACHES)); } catch (er) {} }
       if (lookOn === i) lookOn = -1; else if (lookOn > i) lookOn--; ferme(); rendLooks(); rend("look"); bulle("Look supprimé"); } };
   document.body.appendChild(d); d.querySelector(".non").focus(); }, true);
 $("lLook").onclick = async e => { const b = e.target.closest(".look"); if (!b) return;
