@@ -1,4 +1,10 @@
 /* Les looks fabriqués par Marie (onglet « ✦ Looks » de Personnaliser). Rangés ici par Claude depuis la maquette.
    Chaque look : n nom, e en-tête, f fond, p écriture, co couleur du site, v boutons, nc nom, bl blocs,
-   c charms, pos { charm: [x %, y %, taille, inclinaison, miroir] }, et étoiles [[x %, y %, taille]]. */
-window.LOOKS_MARIE = [];
+   c charms, pos { charm: [x %, y %, taille, inclinaison, miroir] }, et étoiles [[x %, y %, taille]].
+   19/11 : sur les 15 looks proposés (looks-1911.js + les 4 Y2K du 18/11), Marie garde SEULEMENT Néon acidulé, Pixel girl
+   et Baddie léopard ; les autres sont retirés. Elle fait les suivants elle-même (bouton « Enregistrer ce look »). */
+window.LOOKS_MARIE = [
+  {"n":"Néon acidulé","d":"Axolotl, cœur qui fond et champignons fluo","e":"bulles","f":"Marbrure holographique irisée scintillante","p":"bombee","co":"fuchsia","v":"violet","et":[[31,10,26],[63,31,20]],"c":["axolotlneon","coeurfonduneon","champignonsneon","hippocampeneon","spiraleneon","cactusfleurneon","grenadeneon"],"pos":{"axolotlneon":[4,4,100,-12,1],"coeurfonduneon":[71,4,102,12,1],"champignonsneon":[77,22,82,-8,1],"hippocampeneon":[1,24,84,10,1],"spiraleneon":[-2,52,56,-14,1],"cactusfleurneon":[86,50,58,10,1],"grenadeneon":[42,2,60,0,1]}},
+  {"n":"Pixel girl","d":"Manette, ourson et cerises en pixels","e":"viseur","f":"Étoiles holographiques","p":"pixel","co":"fuchsia","v":"fuchsia","et":[[31,10,24]],"c":["manettepixel","oursonpixel","cerisespixelrouges","papillonpixel","notepixel","cadenaspixel","champignonpixel"],"pos":{"manettepixel":[4,4,100,-12,1],"oursonpixel":[71,4,102,12,1],"cerisespixelrouges":[77,22,82,-8,1],"papillonpixel":[1,24,84,10,1],"notepixel":[-2,52,56,-14,1],"cadenaspixel":[86,50,58,10,1],"champignonpixel":[42,2,60,0,1]}},
+  {"n":"Baddie léopard","d":"Talons, lisseur et lunettes léopard rose","e":"coeurparticules","f":"Léopard rose","p":"graffiti","co":"fuchsia","v":"noirb","et":[[31,10,28],[63,31,20]],"c":["escarpinleopard","bottineleopardrose","lunettespapillonleopard","lisseurleopard","pinceleopard","poudriercoeurleopard","appareilphotoleopard"],"pos":{"escarpinleopard":[4,4,100,-12,1],"bottineleopardrose":[71,4,102,12,1],"lunettespapillonleopard":[77,22,82,-8,1],"lisseurleopard":[1,24,84,10,1],"pinceleopard":[-2,52,56,-14,1],"poudriercoeurleopard":[86,50,58,10,1],"appareilphotoleopard":[42,2,60,0,1]}},
+];

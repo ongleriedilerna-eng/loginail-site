@@ -7,7 +7,8 @@
 <link href="../polices.css" rel="stylesheet">
 <script src="../charms-cat.js?v=1"></script>
 <script src="charms-noms.js?v=1711"></script>
-<script src="looks-marie.js?v=1711b"></script>
+<script src="charms-couleurs.js?v=1911"></script>
+<script src="looks-marie.js?v=1911a"></script>
 <style>
 /* 16/11 · Pôle Design · Personnaliser, version A « L'atelier ».
    Les 5 choses à régler sont TOUJOURS visibles (En-tête · Fond · Écriture · Couleurs · Charms) : on va où on veut,
@@ -891,6 +892,17 @@ body.ep1 .choix:after{display:none!important}
 .chDeux #catC .catI span{max-width:84px}
 .chDeux #lCh{flex:1;min-width:0;display:grid!important;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px!important;align-content:start;overflow-x:hidden!important;overflow-y:auto!important;padding:3px 3px 30px!important;scrollbar-width:none;overscroll-behavior:contain;flex-wrap:wrap}
 .chDeux #lCh .ch{width:100%!important;height:auto!important;aspect-ratio:1}
+/* 19/11 : « Par couleur » — le rond arc-en-ciel dans les thèmes, et la rangée de pastilles au-dessus des charms */
+.cfav.ccoul{background:conic-gradient(#F29BC0,#F28A3A,#F5D33F,#5DB36A,#4A8FE0,#9B6BD6,#F29BC0)!important;box-shadow:inset 0 0 0 5px var(--fond),0 0 0 1px rgba(0,0,0,.06)!important}
+.chDeux #catC .catI.on .cfav.ccoul{box-shadow:inset 0 0 0 5px var(--fond),0 0 0 2px #fff,0 0 0 4px var(--noir)!important}
+#lCh .coulC{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 4px;padding:2px 0 8px;border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:2px}
+#lCh .cc{display:flex;flex-direction:column;align-items:center;gap:3px;width:52px;padding:3px 0;border:0;background:none;font:inherit;font-size:10.5px;color:var(--muted);cursor:pointer;border-radius:12px;transition:transform .15s}
+#lCh .cc i{width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:box-shadow .2s,transform .2s}
+#lCh .cc:hover i{transform:scale(1.08)}
+#lCh .cc:active{transform:scale(.94)}
+#lCh .cc.on{color:var(--noir);font-weight:500}
+#lCh .cc.on i{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+@media (max-width:899px){#lCh .cc{width:44px;font-size:9.5px}#lCh .cc i{width:24px;height:24px}}
 .chDeux #lCh.entre{animation:fdEntre .28s cubic-bezier(.2,.8,.2,1)}
 body.cat2 .chDeux ~ .catMenu,.panneau[data-p="charms"] .catMenu,.panneau[data-p="charms"] .catPop{display:none!important}
 @media (max-width:899px){.chDeux #catBox{width:80px}.chDeux #catC .catI{width:74px;font-size:9.5px;padding:3px 2px}.chDeux #catC .catI img,.chDeux #catC .catI .cfav{width:36px!important;height:36px!important;padding:4px}
@@ -1018,7 +1030,11 @@ const TXT = {
   couleurs: ["Vos <em>couleurs</em>", "Un toucher pour des couleurs assorties. Ou choisissez une partie, puis sa couleur."],
   charms: ["Vos <em>charms</em>", "Touchez un charm : il se pose sur votre site. Glissez-le, agrandissez-le, penchez-le."] };
 const SUITE = { entete: "Ensuite : l’écriture", fond: "Ensuite : l’en-tête", ecriture: "Ensuite : les couleurs", couleurs: "Ensuite : les charms", charms: "C’est parfait ✦" };
-let onglet = "entete", catFond = "Tous", catCharm = "Populaires", toutesCouleurs = false;
+let onglet = "entete", catFond = "Tous", catCharm = "Populaires", toutesCouleurs = false, coulOn = 0;
+/* 19/11 : les couleurs de « Par couleur » (même ordre que charms-couleurs.js) */
+const COULS = [["Rose", "#F29BC0"], ["Rouge", "#D3243A"], ["Orange", "#F28A3A"], ["Jaune", "#F5D33F"], ["Vert", "#5DB36A"], ["Bleu", "#4A8FE0"], ["Violet", "#9B6BD6"],
+  ["Beige", "linear-gradient(135deg,#E8D3B5,#8A5A34)"], ["Doré", "linear-gradient(135deg,#F7E08A,#C9962E)"], ["Noir", "#1E1C1B"], ["Argent", "linear-gradient(135deg,#FFFFFF,#BFC4CC)"],
+  ["Multi", "conic-gradient(#F29BC0,#F5D33F,#5DB36A,#4A8FE0,#9B6BD6,#F29BC0)"]];
 const vus = new Set(["entete"]);
 const bulle = (t, ms = 2200) => { const b = $("bulle"); b.textContent = t; b.classList.add("on"); clearTimeout(bulle.t); bulle.t = setTimeout(() => b.classList.remove("on"), ms); };
 
@@ -1072,15 +1088,20 @@ function rend(o) {
     $("lNom").innerHTML = Object.entries(P.NOMC).map(([k, bg]) => `<button class="dot${k === P.etat.nomc ? " on" : ""}" data-nc="${k}" style="background:${bg}" aria-label="${k}" title="${k}"></button>`).join("");
     $("blocsC").querySelectorAll("[data-bl]").forEach(b => b.classList.toggle("on", b.dataset.bl === P.etat.blocs));
     $("assortir").hidden = !P.etat.fond; rendCouleursG(); }
-  if (o === "charms") { const fams = [...(FAV.length ? ["Favoris"] : []), "Populaires", ...P.familles().filter(f => f !== "Populaires")];
+  if (o === "charms") { const fams = [...(FAV.length ? ["Favoris"] : []), "Populaires", "Couleurs", ...P.familles().filter(f => f !== "Populaires")];   /* 19/11 (Marie) : « Par couleur » juste sous « Pour vous » */
     if (catCharm === "Favoris" && !FAV.length) catCharm = "Populaires";
     /* 17/11 (Marie) : la barre des catégories, chacune avec son petit charm (comme l'ancienne page) */
-    $("catC").innerHTML = fams.map(f => { const ic = f === "Favoris" ? `<i class="cfav">♥</i>` : `<img src="${P.imgCharm(P.charmsDe(f)[0] || "cerisedisco")}" alt="" loading="lazy">`;
-      return `<button class="catI${f === catCharm ? " on" : ""}" data-c="${f}">${ic}<span>${f === "Populaires" ? "Pour vous" : f}</span></button>`; }).join("");   /* 17/11 (Marie) : « Populaires » s'appelle « Pour vous », comme dans l'ancienne page */
+    $("catC").innerHTML = fams.map(f => { const ic = f === "Favoris" ? `<i class="cfav">♥</i>` : f === "Couleurs" ? `<i class="cfav ccoul"></i>` : `<img src="${P.imgCharm(P.charmsDe(f)[0] || "cerisedisco")}" alt="" loading="lazy">`;
+      return `<button class="catI${f === catCharm ? " on" : ""}" data-c="${f}">${ic}<span>${f === "Populaires" ? "Pour vous" : f === "Couleurs" ? "Par couleur" : f}</span></button>`; }).join("");   /* 17/11 (Marie) : « Populaires » s'appelle « Pour vous », comme dans l'ancienne page */
     const poses = P.poses(), q = sansAcc($("chercheC").value);
-    const liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n)) : P.charmsDe(catCharm);
+    /* 19/11 (Marie : « trier par couleur ») : « Par couleur » = une rangée de pastilles, puis tous les charms de cette couleur ;
+       et dans chaque thème, les charms sont rangés par couleur (rose, rouge, orange… argent, multicolore) */
+    const CC = window.CH_COUL || {}, coulDe = n => (n in CC ? CC[n] : 99999), parCoul = l => l.slice().sort((a, b) => coulDe(a) - coulDe(b));
+    let liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n))
+      : catCharm === "Couleurs" ? parCoul(P.charmsTous().filter(n => Math.floor(coulDe(n) / 1000) === coulOn)) : parCoul(P.charmsDe(catCharm));
+    const puces = !q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "";
     $("catBox").style.display = q ? "none" : "";
-    $("lCh").innerHTML = liste.length ? liste.slice(0, 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`;
+    $("lCh").innerHTML = puces + (liste.length ? liste.slice(0, catCharm === "Couleurs" ? 900 : 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`);
     majCompte(); }
 }
 const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
@@ -1134,6 +1155,8 @@ $("vueCliente").onclick = () => { cliente = !cliente; P.modeCliente(cliente); do
   if (innerWidth < 900) { $("app").classList.toggle("agrandi", cliente); $("revenir").textContent = "REVENIR AUX RÉGLAGES"; setTimeout(taille, 420); }
   if (cliente) bulle("Voici votre site comme vos clientes le verront ✦"); };
 $("revenir").addEventListener("click", () => { if (cliente) { cliente = false; P.modeCliente(false); document.body.classList.remove("enCliente"); $("vueCliente").querySelector("span").textContent = "Voir comme ma cliente"; } });
+/* 19/11 : les pastilles de « Par couleur » */
+$("lCh").addEventListener("click", e => { const c = e.target.closest(".cc"); if (!c) return; e.stopImmediatePropagation(); coulOn = +c.dataset.g; rend("charms"); $("lCh").scrollTop = 0; }, true);
 $("lCh").onclick = e => { const b = e.target.closest(".ch"); if (!b) return; const r = P.charm(b.dataset.n); b.classList.toggle("on", r === true);
   if (r === true && P.poses().length === 1) bulle(matchMedia("(hover:hover)").matches ? "Cliquez dessus : tirez ⤡ pour l’agrandir et le pencher" : "Deux doigts pour l’agrandir et le pencher ✦");
   if (r === false && !b.classList.contains("on") && P.poses().length >= P.MAX) bulle(P.MAX + " charms maximum : enlevez-en un d’abord"); majCompte(); };
