@@ -2439,7 +2439,7 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .cq-vch{filter:none!important}
   html body:not(#_) section.styles{background:none!important}
   html body:not(#_) section.styles .rangee{background:none!important;padding-bottom:44px!important;margin-bottom:-14px!important}
-  html body:not(#_) section.styles .rangee .tel{box-shadow:0 14px 22px -12px rgba(60,20,40,.32)!important}
+  html body:not(#_) section.styles .rangee .tel{box-shadow:0 14px 22px -12px rgba(60,20,40,.32)!important;width:150px!important}
   html body:not(#_) .marie-tel h2{font-size:min(6.3vw,25px)!important;line-height:1.28}
 }
 </style>
@@ -4030,7 +4030,7 @@ const V=1;let raf=0,vu=true;
   // ---- les charms
   const imgs={};await Promise.all(NOMS.map(n=>new Promise(ok=>{const i=new Image();i.onload=i.onerror=ok;i.src='loginail-site/charms-mini/'+n+'.webp';imgs[n]=i})));
   const R0=Math.max(4.2,FS*.064),B=[];let essais=0;
-  while(B.length<34&&essais<60000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.78+Math.random()*.5);
+  while(B.length<(SOURIS?72:34)&&essais<90000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.78+Math.random()*.5);
     if(!libre(x,y,r))continue;if(B.some(b=>Math.hypot(b.x-x,b.y-y)<(b.r+r)*.95))continue;
     B.push({x,y,r,vx:0,vy:0,a:Math.random()*6.28,va:0,im:imgs[NOMS[B.length%NOMS.length]]})}
   // ---- le mouvement (le même que la 1re version : rien ne sort jamais)
