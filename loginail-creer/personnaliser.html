@@ -8,6 +8,7 @@
 <script src="../charms-cat.js?v=11191412"></script>
 <script src="perso/charms-noms.js?v=11191412"></script>
 <script src="perso/charms-couleurs.js?v=1911a"></script>
+<script src="perso/charms-styles.js?v=1911a"></script>
 <script src="perso/looks-marie.js?v=1911a"></script>
 <style>
 /* 16/11 · Pôle Design · Personnaliser, version A « L'atelier ».
@@ -406,6 +407,13 @@ body.ecr2 .ecr-c.on .ok{display:grid;place-items:center;position:absolute;top:7p
 .etoB span[hidden]{display:none}
 .compteC{font:600 13px Jost,sans-serif;color:var(--noir);white-space:nowrap}   /* 18/11 soir (Marie) : plus voyant, en gras */
 .compteC.plein{color:var(--rose);font-weight:500}
+/* 19/11 (Marie : « à côté de 0 / 21, un peu plus loin, sur la même ligne : Trier par ») */
+.compteL{display:flex;align-items:center;gap:16px;justify-self:end;white-space:nowrap}
+.triC{display:flex;align-items:center;gap:6px;font:400 12.5px Jost,sans-serif;color:var(--muted)}
+.triC select{appearance:none;-webkit-appearance:none;height:30px;padding:0 26px 0 12px;border:0;border-radius:999px;background:var(--fond) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23777' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;font:500 13px Jost,sans-serif;color:var(--noir);cursor:pointer;transition:transform .15s}
+.triC select:active{transform:scale(.96)}
+#lCh .titreTh{grid-column:1/-1;margin:8px 0 0;font:600 12px Jost,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+#lCh .titreTh:first-child{margin-top:0}
 .rienC{font:400 14px Jost,sans-serif;color:var(--muted);padding:6px 2px}
 @media (min-width:900px){.outilsC{padding:0}}
 /* catégories de charms avec leur petite image */
@@ -483,7 +491,7 @@ body.cat2 .catMenu.ouvert i{rotate:180deg}
 .etoN .pill{display:flex;gap:2px;padding:3px;border-radius:999px;background:#1E1C1B}
 .etoN .pill button{height:30px;padding:0 16px;border-radius:999px;font:400 12.5px Jost,sans-serif;color:rgba(255,255,255,.75)}
 .etoN .pill button.on{background:#fff;color:#1E1C1B;font-weight:500}
-@media (max-width:899px){ .outilsC{grid-template-columns:1fr auto}.outilsC .compteC{grid-column:1/-1;justify-self:end;margin-top:-4px} }
+@media (max-width:899px){ .outilsC{grid-template-columns:1fr auto}.outilsC .compteL{grid-column:1/-1;justify-self:end;margin-top:-4px} }
 /* 17/11 (Marie : « c'est lent ») : les 37 petits téléphones animés ne travaillent que quand l'onglet En-tête est ouvert */
 .panneau:not(.on) #lEnt,.panneau:not(.on) #lLook,.panneau:not(.on) #lFond,.panneau:not(.on) #lPol{content-visibility:hidden}
 /* seules les vignettes visibles à l'écran sont dessinées (509 fonds, 39 écritures) */
@@ -704,7 +712,7 @@ body.coul2 .rangC .ligne{gap:8px}
   .panneau[data-p=charms] .basC .grandCh{height:30px;font-size:12px;padding:0 12px}
   .panneau[data-p=charms]{gap:8px!important}
   .catI{height:32px;font-size:12px}.catI img{width:24px;height:24px}
-  .outilsC{gap:6px!important}.outilsC .compteC{margin-top:-2px!important}
+  .outilsC{gap:6px!important}.outilsC .compteL{margin-top:-2px!important}
 }
 @media (min-width:900px) and (max-height:820px){ #lCh .ch{width:54px!important;height:54px!important}#lCh .ch img{width:42px!important;height:42px!important} }
 /* catégories de fonds : même barre que les charms (image + nom, une ligne qui glisse, flèches) */
@@ -1017,7 +1025,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
         <div class="rangC"><b>Les boutons</b><div class="ligne" id="lVif"></div></div></div>
         <div class="basC" hidden><button class="puce assort" id="assortir"><b>✦</b> Assortir à mon fond</button></div>
       </div>
-      <div class="panneau" data-p="charms"><div class="basC"><button class="puce grandCh" id="grandCh">⤢ Placer mes charms en grand</button></div><div class="outilsC"><label class="cherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="chercheC" placeholder="Chercher un charm : cœur, cerise, nœud…" autocomplete="off" enterkeyhint="search"></label><div class="etoN" id="etoN" role="radiogroup" aria-label="Étoiles qui brillent"><span class="etoT"><b>✦</b> Étoiles qui brillent</span><span class="pill"><button data-n="3">Avec</button><button data-n="0" class="on">Sans</button></span><span id="etoX" hidden></span></div><button class="catMenu" id="catMenu" aria-haspopup="true"><span id="catMenuT">Populaires</span><i>▾</i></button><span class="compteC" id="compteC"></span></div>
+      <div class="panneau" data-p="charms"><div class="basC"><button class="puce grandCh" id="grandCh">⤢ Placer mes charms en grand</button></div><div class="outilsC"><label class="cherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="chercheC" placeholder="Chercher un charm : cœur, cerise, nœud…" autocomplete="off" enterkeyhint="search"></label><div class="etoN" id="etoN" role="radiogroup" aria-label="Étoiles qui brillent"><span class="etoT"><b>✦</b> Étoiles qui brillent</span><span class="pill"><button data-n="3">Avec</button><button data-n="0" class="on">Sans</button></span><span id="etoX" hidden></span></div><button class="catMenu" id="catMenu" aria-haspopup="true"><span id="catMenuT">Populaires</span><i>▾</i></button><span class="compteL"><span class="compteC" id="compteC"></span><label class="triC"><span>Trier par</span><select id="triC" aria-label="Trier les charms par"><option value="coul">couleur</option><option value="theme">thème</option><option value="style">style</option></select></label></span></div>
       <div class="catPop" id="catPop" hidden></div><div class="catBox" id="catBox"><button class="catF g" id="catG" aria-label="Catégories précédentes">‹</button><div class="puces" id="catC"></div><button class="catF d" id="catD" aria-label="Catégories suivantes">›</button></div><div class="ligne" id="lCh"></div></div>
       <button class="encoreF" id="encoreF" aria-label="Voir la suite des choix">↓</button>
     </div>
@@ -1106,10 +1114,17 @@ function rend(o) {
     /* 19/11 (Marie : « trier par couleur ») : « Par couleur » = une rangée de pastilles, puis tous les charms de cette couleur ;
        et dans chaque thème, les charms sont rangés par couleur (rose, rouge, orange… argent, multicolore) */
     const CC = window.CH_COUL || {}, coulDe = n => (n in CC ? CC[n] : 99999), parCoul = l => l.slice().sort((a, b) => coulDe(a) - coulDe(b));
-    const liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Poses" ? P.poses().slice().reverse() : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n))
-      : catCharm === "Couleurs" ? parCoul(P.charmsTous().filter(n => Math.floor(coulDe(n) / 1000) === coulOn)) : catCharm === "Tous" ? parCoul(P.charmsTous()) : parCoul(P.charmsDe(catCharm));
+    /* 19/11 (Marie) : « Trier par » couleur ou thème (le choix est gardé) ; par thème = les charms d'une même famille ensemble, avec son petit titre */
+    const CAT = window.CH_CAT || {}, FA = P.familles(), famDe = n => { const i = FA.indexOf(CAT[n]); return i < 0 ? 999 : i; };
+    /* 19/11 (Marie : « version bébé, version pixel… ») : par style = mignon, pixel, néon, chrome… (étiquetés image par image, perso/charms-styles.js) */
+    const ST = window.CH_STYLE || {}, SO = Object.keys(window.STYLES_CH || {}), styDe = n => { const i = SO.indexOf(ST[n]); return i < 0 ? 999 : i; };
+    const trie = l => triCh === "theme" ? l.slice().sort((a, b) => famDe(a) - famDe(b) || coulDe(a) - coulDe(b)) : triCh === "style" ? l.slice().sort((a, b) => styDe(a) - styDe(b) || coulDe(a) - coulDe(b)) : parCoul(l);
+    const liste = q ? trie(P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q))) : catCharm === "Poses" ? P.poses().slice().reverse() : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n))
+      : catCharm === "Couleurs" ? trie(P.charmsTous().filter(n => Math.floor(coulDe(n) / 1000) === coulOn)) : catCharm === "Tous" ? trie(P.charmsTous()) : trie(P.charmsDe(catCharm));
+    const avecTitres = triCh !== "coul" && catCharm !== "Poses" && catCharm !== "Favoris" && (q || triCh === "style" ||catCharm === "Tous" || catCharm === "Couleurs" || catCharm === "Populaires");
+    let famAv = null; const titre = n => { if (!avecTitres) return ""; const f = triCh === "style" ? ((window.STYLES_CH || {})[ST[n]] || "Autres") : (CAT[n] || "Autres"); if (f === famAv) return ""; famAv = f; return `<p class="titreTh">${f}</p>`; };
     $("catBox").style.display = q ? "none" : "";
-    $("lCh").innerHTML = (!q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "") + (liste.length ? liste.slice(0, (catCharm === "Tous" || catCharm === "Couleurs") && !q ? 9999 : 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
+    $("lCh").innerHTML = (!q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "") + (liste.length ? liste.slice(0, (catCharm === "Tous" || catCharm === "Couleurs") && !q ? 9999 : 120).map(n => titre(n) + `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
     majCompte(); }
 }
 const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
@@ -1146,6 +1161,9 @@ $("etoN").onclick = e => { const b = e.target.closest("[data-n]"); if (!b) retur
   while (P.nbEtoiles()) P.enleveEtoiles(); for (let i = 0; i < n; i++) P.etoiles(); majEtoN(); if (n) msgTel("Glissez les étoiles<br>où vous voulez ✦", 5200); };   /* 17/11 (Marie : « il faut qu'il reste plus longtemps ») */
 P.change(q => { if (q === "charms") { majCompte(); if (onglet === "charms") $("lCh").querySelectorAll(".ch").forEach(b => b.classList.toggle("on", P.poses().includes(b.dataset.n))); } });
 /* 17/11 (Marie) : appui long sur un charm = favori (♥), une catégorie « Favoris » apparaît en premier */
+var triCh = (() => { try { const v = localStorage.getItem("lgnTriCharms"); return v === "theme" || v === "style" ? v : "coul"; } catch (e) { return "coul"; } })();
+$("triC").value = triCh;
+$("triC").onchange = e => { triCh = e.target.value; try { localStorage.setItem("lgnTriCharms", triCh); } catch (x) {} rend("charms"); $("lCh").scrollTop = 0; };
 const FAV = (() => { try { return JSON.parse(localStorage.getItem("charmsFavoris") || "[]"); } catch (e) { return []; } })();
 let longC = false;
 $("lCh").addEventListener("pointerdown", e => { const b = e.target.closest(".ch"); if (!b) return; longC = false; clearTimeout(b._tf);
