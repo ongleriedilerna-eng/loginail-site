@@ -410,8 +410,19 @@ body.ecr2 .ecr-c.on .ok{display:grid;place-items:center;position:absolute;top:7p
 /* 19/11 (Marie : « à côté de 0 / 21, un peu plus loin, sur la même ligne : Trier par ») */
 .compteL{display:flex;align-items:center;gap:16px;justify-self:end;white-space:nowrap}
 .triC{display:flex;align-items:center;gap:6px;font:400 12.5px Jost,sans-serif;color:var(--muted)}
-.triC select{appearance:none;-webkit-appearance:none;height:30px;padding:0 26px 0 12px;border:0;border-radius:999px;background:var(--fond) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23777' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;font:500 13px Jost,sans-serif;color:var(--noir);cursor:pointer;transition:transform .15s}
-.triC select:active{transform:scale(.96)}
+.triC{position:relative}
+/* 19/11 (Marie : « quand je clique, je veux pas un rond tout moche ») : un petit menu Loginail, plus la liste du téléphone */
+.triB{display:flex;align-items:center;gap:7px;height:30px;padding:0 12px;border-radius:999px;background:var(--fond);font:500 13px Jost,sans-serif;color:var(--noir);outline:none;-webkit-tap-highlight-color:transparent;transition:transform .15s var(--pop)}
+.triB:after{content:"";width:6px;height:6px;margin-top:-3px;border:solid var(--muted);border-width:0 1.5px 1.5px 0;rotate:45deg;transition:rotate .25s var(--ressort),margin .25s}
+.triB[aria-expanded=true]:after{rotate:225deg;margin-top:3px}
+.triB:active{transform:scale(.95)}
+.triPop{position:absolute;right:0;top:calc(100% + 6px);z-index:40;min-width:140px;padding:5px;border-radius:16px;background:#fff;box-shadow:0 14px 34px -14px rgba(0,0,0,.4),0 0 0 1px rgba(0,0,0,.04);display:flex;flex-direction:column;gap:2px;transform-origin:top right;animation:triIn .18s var(--ressort)}
+.triPop[hidden]{display:none}
+@keyframes triIn{from{opacity:0;transform:scale(.92) translateY(-4px)}}
+.triPop button{display:flex;align-items:center;justify-content:space-between;gap:12px;height:36px;padding:0 12px;border-radius:11px;font:400 13.5px Jost,sans-serif;color:var(--noir);text-align:left;outline:none;-webkit-tap-highlight-color:transparent}
+.triPop button:hover{background:var(--fond)}
+.triPop button.on{font-weight:600}
+.triPop button.on:after{content:"✓";color:var(--rose);font-weight:600}
 #lCh .titreTh{grid-column:1/-1;margin:8px 0 0;font:600 12px Jost,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 #lCh .titreTh:first-child{margin-top:0}
 .rienC{font:400 14px Jost,sans-serif;color:var(--muted);padding:6px 2px}
@@ -1025,7 +1036,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
         <div class="rangC"><b>Les boutons</b><div class="ligne" id="lVif"></div></div></div>
         <div class="basC" hidden><button class="puce assort" id="assortir"><b>✦</b> Assortir à mon fond</button></div>
       </div>
-      <div class="panneau" data-p="charms"><div class="basC"><button class="puce grandCh" id="grandCh">⤢ Placer mes charms en grand</button></div><div class="outilsC"><label class="cherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="chercheC" placeholder="Chercher un charm : cœur, cerise, nœud…" autocomplete="off" enterkeyhint="search"></label><div class="etoN" id="etoN" role="radiogroup" aria-label="Étoiles qui brillent"><span class="etoT"><b>✦</b> Étoiles qui brillent</span><span class="pill"><button data-n="3">Avec</button><button data-n="0" class="on">Sans</button></span><span id="etoX" hidden></span></div><button class="catMenu" id="catMenu" aria-haspopup="true"><span id="catMenuT">Populaires</span><i>▾</i></button><span class="compteL"><span class="compteC" id="compteC"></span><label class="triC"><span>Trier par</span><select id="triC" aria-label="Trier les charms par"><option value="coul">couleur</option><option value="theme">thème</option><option value="style">style</option></select></label></span></div>
+      <div class="panneau" data-p="charms"><div class="basC"><button class="puce grandCh" id="grandCh">⤢ Placer mes charms en grand</button></div><div class="outilsC"><label class="cherche"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="chercheC" placeholder="Chercher un charm : cœur, cerise, nœud…" autocomplete="off" enterkeyhint="search"></label><div class="etoN" id="etoN" role="radiogroup" aria-label="Étoiles qui brillent"><span class="etoT"><b>✦</b> Étoiles qui brillent</span><span class="pill"><button data-n="3">Avec</button><button data-n="0" class="on">Sans</button></span><span id="etoX" hidden></span></div><button class="catMenu" id="catMenu" aria-haspopup="true"><span id="catMenuT">Populaires</span><i>▾</i></button><span class="compteL"><span class="compteC" id="compteC"></span><span class="triC"><span>Trier par</span><button class="triB" id="triC" aria-haspopup="listbox" aria-expanded="false">couleur</button><span class="triPop" id="triPop" role="listbox" hidden><button data-v="coul" role="option">Couleur</button><button data-v="style" role="option">Style</button></span></span></span></div>
       <div class="catPop" id="catPop" hidden></div><div class="catBox" id="catBox"><button class="catF g" id="catG" aria-label="Catégories précédentes">‹</button><div class="puces" id="catC"></div><button class="catF d" id="catD" aria-label="Catégories suivantes">›</button></div><div class="ligne" id="lCh"></div></div>
       <button class="encoreF" id="encoreF" aria-label="Voir la suite des choix">↓</button>
     </div>
@@ -1161,9 +1172,15 @@ $("etoN").onclick = e => { const b = e.target.closest("[data-n]"); if (!b) retur
   while (P.nbEtoiles()) P.enleveEtoiles(); for (let i = 0; i < n; i++) P.etoiles(); majEtoN(); if (n) msgTel("Glissez les étoiles<br>où vous voulez ✦", 5200); };   /* 17/11 (Marie : « il faut qu'il reste plus longtemps ») */
 P.change(q => { if (q === "charms") { majCompte(); if (onglet === "charms") $("lCh").querySelectorAll(".ch").forEach(b => b.classList.toggle("on", P.poses().includes(b.dataset.n))); } });
 /* 17/11 (Marie) : appui long sur un charm = favori (♥), une catégorie « Favoris » apparaît en premier */
-var triCh = (() => { try { const v = localStorage.getItem("lgnTriCharms"); return v === "theme" || v === "style" ? v : "coul"; } catch (e) { return "coul"; } })();
-$("triC").value = triCh;
-$("triC").onchange = e => { triCh = e.target.value; try { localStorage.setItem("lgnTriCharms", triCh); } catch (x) {} rend("charms"); $("lCh").scrollTop = 0; };
+/* 19/11 (Marie) : seulement couleur ou style — « thème » faisait doublon avec les ronds des thèmes à gauche */
+var triCh = (() => { try { return localStorage.getItem("lgnTriCharms") === "style" ? "style" : "coul"; } catch (e) { return "coul"; } })();
+const majTri = () => { $("triC").textContent = triCh === "style" ? "style" : "couleur"; $("triPop").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === triCh)); };
+const fermeTri = () => { $("triPop").hidden = true; $("triC").setAttribute("aria-expanded", "false"); };
+majTri();
+$("triC").onclick = e => { e.stopPropagation(); const p = $("triPop"); p.hidden = !p.hidden; $("triC").setAttribute("aria-expanded", String(!p.hidden)); };
+$("triPop").onclick = e => { e.stopPropagation(); const b = e.target.closest("button"); if (!b) return; fermeTri(); if (b.dataset.v === triCh) return;
+  triCh = b.dataset.v; try { localStorage.setItem("lgnTriCharms", triCh); } catch (x) {} majTri(); rend("charms"); $("lCh").scrollTop = 0; };
+document.addEventListener("click", e => { if (!$("triPop").hidden && !e.target.closest(".triC")) fermeTri(); });
 const FAV = (() => { try { return JSON.parse(localStorage.getItem("charmsFavoris") || "[]"); } catch (e) { return []; } })();
 let longC = false;
 $("lCh").addEventListener("pointerdown", e => { const b = e.target.closest(".ch"); if (!b) return; longC = false; clearTimeout(b._tf);

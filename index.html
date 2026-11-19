@@ -2047,6 +2047,22 @@ html body:not(#_) h2.t2 em, html body:not(#_) #semaine > h2 em{padding-right:0!i
   .cq .cq-sig{margin-top:22px}
 }
 @media (prefers-reduced-motion:reduce){.cq .cq-charm,.cq .cq-etoile,.cq .cq-carte,.cq .cq-sms{animation:none}}
+
+/* 19/11 (Marie choisit le test 7 « La vague », maquette idees/accueil-jonction.html?v=7) :
+   sous l'arc de téléphones on enlève « Plus de 30 univers / Choisis ton style / 3 coches / Créer le mien » ;
+   le bloc « c'est quoi ? » monte en vague rose, 3 charms posés dessus. */
+html body .np .np-inarc{display:none!important}
+html body .np .np-arc{height:500px!important}
+.cq{overflow:visible;background:#FBF1F4;margin-top:-70px;z-index:2}
+.cq .cq-vague{position:absolute;left:0;right:0;top:-69px;height:70px;width:100%;display:block;pointer-events:none}
+.cq .cq-vch{position:absolute;z-index:3;filter:drop-shadow(0 8px 10px rgba(80,30,50,.22));pointer-events:none}
+.cq .cq-in{padding-top:3vh}
+@media (max-width:820px){.cq .cq-in{padding-top:40px}}
+@media (max-width:760px){
+  html body .np .np-arc{height:380px!important}
+  .cq{margin-top:-40px}.cq .cq-vague{top:-39px;height:40px}.cq .cq-vch{width:40px!important;top:-16px!important}
+  .np .np-charm.np-m:nth-child(5),.np .np-charm.np-m:nth-child(10){display:none!important}
+}
 </style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
@@ -2125,9 +2141,12 @@ html body:not(#_) h2.t2 em, html body:not(#_) #semaine > h2 em{padding-right:0!i
   <form class="creer" action="loginail-creer/index.html" method="get"><input name="lien" placeholder="Ton lien Maps, Planity, Booksy…" aria-label="Le lien de ton salon (Google Maps, Planity, Booksy ou ton site)"><button class="btn" type="submit">Créer mon site</button></form>
   <div class="sous"><b>1 mois offert</b> · <b>sans engagement</b> · 0 % de commission</div>
 </section>
-<section class="cq" id="cest-quoi" aria-labelledby="cq-titre"><div class="cq-in">
-  <img class="cq-charm" src="loginail-site/charms/cerisedisco.webp" style="width:clamp(60px,9vh,86px);left:3%;top:3vh;--r:-12deg" alt="" loading="lazy">
-  <img class="cq-charm" src="loginail-site/charms/ceriseruban.webp" style="width:clamp(50px,7.5vh,70px);right:4%;top:5vh;--r:10deg;animation-delay:-2s" alt="" loading="lazy">
+<section class="cq" id="cest-quoi" aria-labelledby="cq-titre">
+  <svg class="cq-vague" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C 240 10, 520 0, 720 22 C 940 46, 1180 8, 1440 30 L1440 70 Z" fill="#FBF1F4"/></svg>
+  <img class="cq-vch" src="loginail-site/charms/cerisedisco.webp" style="width:70px;left:12%;top:-74px;transform:rotate(-10deg)" alt="" loading="lazy">
+  <img class="cq-vch" src="loginail-site/charms/ceriseruban.webp" style="width:58px;left:47%;top:-58px;transform:rotate(8deg)" alt="" loading="lazy">
+  <img class="cq-vch" src="loginail-site/charms/bouledisco-rose.webp" style="width:52px;right:12%;top:-66px" alt="" loading="lazy">
+<div class="cq-in">
   <span class="cq-etoile" style="left:18%;top:15vh;font-size:20px" aria-hidden="true">✦</span>
   <span class="cq-etoile" style="right:20%;top:3vh;font-size:14px;animation-delay:-1s" aria-hidden="true">✦</span>
   <div class="cq-haut">
