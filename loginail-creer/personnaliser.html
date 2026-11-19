@@ -952,6 +952,7 @@ body.surCharms .pied .etoN .etoT{white-space:nowrap}
 <script src="perso/ronds-themes.js?v=1811c"></script>
 <script src="perso/teintes-fonds.js?v=1811c"></script>
 <script src="perso/ordre-ecritures.js?v=1911"></script>
+<script src="perso/familles-ecritures.js?v=2011"></script>
 <script src="perso/vedettes-fonds.js?v=1911d"></script>
 <script>/* 17/11 (Marie : « en choisir quelques-uns, les plus jolis, sur les 4 premières lignes ») : dans « Tous les fonds », ses fonds vedettes
    passent en premier (dans son ordre), puis tous les autres triés par couleur. Mode choix : ?vedettes=1 */
@@ -971,6 +972,14 @@ function ordonnePol(L) { const O = window.ORDRE_ECRITURES || [];
    Mode choix : ajouter ?ronds=1 à l'adresse → touchez un thème, puis le fond qui ira dans son rond. */
 var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, JSON.parse(localStorage.getItem("lgnRondsThemes") || "{}")); } catch (e) { return {}; } })();
 </script>
+<style>/* 20/11 (D60) : pastilles des familles d'écritures */
+.famE{flex:none}
+.famE[hidden]{display:none}
+#lPol.famAnim{animation:famMonte .22s ease}
+@keyframes famMonte{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (min-width:900px){.famE{position:sticky;top:0;z-index:3;background:var(--fondReg,#FAF6F2);padding-top:4px;padding-bottom:10px;margin-bottom:-4px}}
+@media (prefers-reduced-motion:reduce){#lPol.famAnim{animation:none}}
+</style>
 <style>/* 18/11 production */#retour,#retourT,.maquette{display:none!important}</style>
 </head>
 <body>
@@ -1008,7 +1017,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
       <div class="panneau on" data-p="look"><div class="looks" id="lLook"></div></div>
       <div class="panneau" data-p="entete"><div class="ligne" id="lEnt"></div></div>
       <div class="panneau" data-p="fond"><div class="basC"><button class="puce assort assortF assortV" id="assortirF"><b>✦</b> Assortir les couleurs à mon fond</button></div><div class="catBox catBoxF"><button class="catF g" id="catFG" aria-label="Catégories précédentes">‹</button><div class="puces" id="catF"></div><button class="catF d" id="catFD" aria-label="Catégories suivantes">›</button></div><div class="ligne" id="lFond"></div></div>
-      <div class="panneau" data-p="ecriture"><div class="grille2" id="lPol"></div></div>
+      <div class="panneau" data-p="ecriture"><div class="puces famE" id="famE"></div><div class="grille2" id="lPol"></div></div>
       <div class="panneau" data-p="couleurs">
         <!-- 17/11 soir (Marie : « B, la grille ») : Assortir + ambiances en haut, 3 parties alignées, grille façon iPhone -->
         <div class="hautG" id="hautG"></div>
@@ -1497,9 +1506,22 @@ function mesureFond(nom) { return new Promise(ok => { const x = P.fonds().find(f
   im.onerror = () => { fondFonce[nom] = sombre || parHex() < .45; ok(); }; im.src = new URL(u.replace(/fonds-img\//, "fonds-mini/"), P.D.baseURI).href; }); }
 function ajusteNoms(l) { l.querySelectorAll(".ecr-c span").forEach(s => { let f = parseFloat(getComputedStyle(s).fontSize), n = 0; s.style.fontSize = "";
   f = parseFloat(getComputedStyle(s).fontSize); while (s.scrollWidth > s.clientWidth + 1 && n++ < 30) { f -= 1; s.style.fontSize = f + "px"; } }); }
+/* 20/11 (Marie, D60, version A « Rayons ») : les écritures rangées par familles — des pastilles en haut, une famille à la fois.
+   Au départ : la famille de l'écriture déjà choisie. Mode ?ordre=1 : toutes les écritures, comme avant. */
+var famEcr = null;
+function familleEcr(k) { const F = window.FAMILLES_ECRITURES || []; for (let i = 0; i < F.length; i++) if (F[i][2].includes(k)) return i; return -1; }
+function dansFamE(k) { const F = window.FAMILLES_ECRITURES; if (MODE_ORDRE || !F || !F.length) return true; const i = familleEcr(k); return (i < 0 ? F.length - 1 : i) === famEcr; }
+function dessineFamE() { const F = window.FAMILLES_ECRITURES || [], b = $("famE"); if (!b) return; b.hidden = MODE_ORDRE || !F.length;
+  if (famEcr === null) { const i = familleEcr(P.etat.police); famEcr = i < 0 ? 0 : i; }
+  if (!b.children.length) b.innerHTML = F.map((f, i) => `<button class="puce" data-i="${i}" title="${f[1]}">${f[0]}</button>`).join("");
+  b.querySelectorAll(".puce").forEach(x => x.classList.toggle("on", +x.dataset.i === famEcr)); }
+$("famE").onclick = e => { const x = e.target.closest(".puce"); if (!x || +x.dataset.i === famEcr) return; famEcr = +x.dataset.i; const l = $("lPol");
+  rend("ecriture"); l.scrollLeft = 0; const pan = l.closest(".panneau"); if (pan && pan.scrollTop > $("famE").offsetTop) pan.scrollTop = $("famE").offsetTop;
+  l.classList.remove("famAnim"); void l.offsetWidth; l.classList.add("famAnim");
+  if (x.scrollIntoView) { const c = $("famE"); c.scrollTo({ left: x.offsetLeft - c.clientWidth / 2 + x.offsetWidth / 2, behavior: "smooth" }); } };
 const rendAvantEcr = rend;
 rend = o => { if (o !== "ecriture" || !P.pret) return rendAvantEcr(o);
-  P.policesCss(); const cleE = [P.etat.fond, P.etat.nomc, P.libre && P.libre.nm, P.etat.couleur, P.etat.blocs, EC, $("lPol").clientWidth].join("|");
+  dessineFamE(); P.policesCss(); const cleE = [P.etat.fond, P.etat.nomc, P.libre && P.libre.nm, P.etat.couleur, P.etat.blocs, EC, $("lPol").clientWidth, famEcr].join("|");
   if ($("lPol").dataset.cle === cleE && $("lPol").children.length && (P.etat.fond in fondFonce || !P.etat.fond)) { $("lPol").querySelectorAll(".ecr-c").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.police)); return; }
   $("lPol").dataset.cle = cleE;
   const l = $("lPol"), k0 = idxFond(P.etat.fond), fond = EC === "2" && k0 >= 0 ? P.vignetteFond(k0) : "", bloc = EC === "2" && !fond ? couleurBlocs() : "";
@@ -1507,7 +1529,7 @@ rend = o => { if (o !== "ecriture" || !P.pret) return rendAvantEcr(o);
   const encre = () => { if (EC !== "2") return ""; if (fond && fondFonce[P.etat.fond]) return "color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35)";
     if (fond && P.etat.nomc === "blanc") return "color:#1E1C1B;text-shadow:0 1px 10px rgba(255,255,255,.6)"; return encreNom() + (fond ? ";text-shadow:0 1px 10px rgba(255,255,255,.55)" : ""); };
   l.classList.toggle("surFonce", !!(fond && fondFonce[P.etat.fond]));
-  l.innerHTML = ordonnePol(P.polices()).map(([k, n]) => `<button class="ecr-c${k === P.etat.police ? " on" : ""}" data-k="${k}"${bloc ? ` style="background:${bloc}"` : ""}>${fond ? `<span class="fd">${fond}</span>` : ""}<span style="font-family:${P.famille(k).replace(/"/g, "'")};${encre()}">${P.nomSalon()}</span><small>${n}</small><i class="ok">✓</i></button>`).join("");
+  l.innerHTML = ordonnePol(P.polices()).filter(([k]) => dansFamE(k)).map(([k, n]) => `<button class="ecr-c${k === P.etat.police ? " on" : ""}" data-k="${k}"${bloc ? ` style="background:${bloc}"` : ""}>${fond ? `<span class="fd">${fond}</span>` : ""}<span style="font-family:${P.famille(k).replace(/"/g, "'")};${encre()}">${P.nomSalon()}</span><small>${n}</small><i class="ok">✓</i></button>`).join("");
   if (fond && !(P.etat.fond in fondFonce)) mesureFond(P.etat.fond).then(() => { if (onglet === "ecriture") rend("ecriture"); });
   requestAnimationFrame(() => ajusteNoms(l)); [300, 900, 2000].forEach(ms => setTimeout(() => ajusteNoms(l), ms)); try { document.fonts.ready.then(() => ajusteNoms(l)); } catch (e) {} };
 
