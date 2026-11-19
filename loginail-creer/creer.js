@@ -2,7 +2,7 @@
    Le dessin et les mouvements viennent de la maquette validée par Marie (idees/creer-1-v1f.html + creer-1-v.js) ;
    la lecture du lien vient de l'ancienne page (remplir.html) : fonction Supabase « lire-fiche », Google Maps, Planity, Booksy, son site ; jamais Instagram.
    À la fin : les charms et les cartes sont avalés par l'anneau, halo rose, et Personnaliser s'ouvre en cercle depuis l'anneau (plus de bouton).
-   ?demo : un faux salon (les Ongles de Cerise ; ?salon=moka → Marie Onglerie), rien n'est lu sur internet, Personnaliser en exemple.
+   ?demo : un faux salon (Nails by Drimf ; ?salon=moka → Marie Onglerie), rien n'est lu sur internet, Personnaliser en exemple.
    ?lien=… : le lien collé sur l'accueil de loginail.fr (la création démarre toute seule). */
 (() => {
 const $ = id => document.getElementById(id), $$ = s => [...document.querySelectorAll(s)];
@@ -18,7 +18,7 @@ const FONCTION = "https://scfhaombuptmrlkdhcsl.supabase.co/functions/v1/lire-fic
 const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZmhhb21idXB0bXJsa2RoY3NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MTg0NzQsImV4cCI6MjEwOTE5NDQ3NH0.CYfWbG_UmTsqCeRDyab6HN5oZKveoiFlNMZcMYkYYjc";
 
 /* ---------- après le chargement : Personnaliser (son site, au style de départ « classique » ; le style se change dans « Looks ») ---------- */
-const DEMOS = { cerise: { nom: "Les Ongles de Cerise", ville: "Lille", note: "4,9", nbAvis: 48, nbPhotos: 12, horaires: "Du mardi au samedi", hCourt: "Mar → sam", prix: 9 },
+const DEMOS = { cerise: { nom: "Nails by Drimf", ville: "Lille", note: "4,9", nbAvis: 48, nbPhotos: 12, horaires: "Du mardi au samedi", hCourt: "Mar → sam", prix: 9 },
   moka: { nom: "Marie Onglerie", ville: "Lyon", note: "4,8", nbAvis: 112, nbPhotos: 9, horaires: "Du lundi au samedi", hCourt: "Lun → sam", prix: 14 } };
 const SD = DEMOS[Q.get("salon")] || DEMOS.cerise;
 const PERSO = DEMO ? "personnaliser.html" + (Q.get("salon") === "moka" ? "?salon=marie" : "")
@@ -431,7 +431,7 @@ $$("[data-aide]").forEach(b => b.onclick = () => aide(b.dataset.aide || "google"
    ===================================================================== */
 /* retour arrière (Safari garde la page en mémoire) : on repart de la page 1 */
 addEventListener("pageshow", e => { if (e.persisted && BODY.dataset.e !== "lien" && !BODY.classList.contains("ouvert")) { jeton++; reset(); BODY.dataset.e = "lien"; } });
-if (DEMO) { champ.value = "https://maps.app.goo.gl/lesonglesdecerise"; verifie(); }
+if (DEMO) { champ.value = "https://maps.app.goo.gl/nailsbydrimf"; verifie(); }
 const venu = Q.get("lien");   // le lien collé sur l'accueil
 if (venu) { champ.value = venu; verifie(); $("creer").click(); }
 })();

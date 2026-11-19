@@ -2,11 +2,11 @@
    Ce fichier pilote le VRAI site de la prothésiste (loginail-creer/pret.html dans une iframe),
    avec les mêmes boutons cachés que la page actuelle (maquette-perso.html) : rien n'est inventé,
    les écritures, fonds, couleurs, en-têtes et charms sont les vrais.
-   ?salon=marie → « Marie Onglerie » (photos moka) au lieu des Ongles de Cerise. */
+   ?salon=marie → « Marie Onglerie » (photos moka) au lieu de Nails by Drimf. */
 (function () {
   const Q = new URLSearchParams(location.search);
   const SALONS = {
-    cerise: { nom: "les Ongles de Cerise", src: "photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise" },
+    cerise: { nom: "Nails by Drimf", src: "photos=cerise-5&photoune=haut&photosalon=1&portrait=cerise" },
     marie: { nom: "Marie Onglerie", vrai: "Maison Moka", src: "photos=moka-4&photosalon=1&portrait=moka" }
   };
   const SALON = SALONS[Q.get("salon")] || SALONS.cerise;

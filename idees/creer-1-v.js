@@ -13,7 +13,7 @@ const B = document.body;
 /* ---------- les deux salons d'essai ---------- */
 const P = "../loginail-site/univers-photos/";
 const SALONS = {
-  cerise: { nom: "Les Ongles de Cerise", ville: "Lille", note: "4,9", nbAvis: 48, nbPhotos: 12, horaires: "Du mardi au samedi", hCourt: "Mar → sam", prix: 9,
+  cerise: { nom: "Nails by Drimf", ville: "Lille", note: "4,9", nbAvis: 48, nbPhotos: 12, horaires: "Du mardi au samedi", hCourt: "Mar → sam", prix: 9,
     photos: ["1", "2", "3", "4", "5"].map(n => P + "cerise/" + n + ".webp") },
   moka: { nom: "Marie Onglerie", ville: "Lyon", note: "4,8", nbAvis: 112, nbPhotos: 9, horaires: "Du lundi au samedi", hCourt: "Lun → sam", prix: 14,
     photos: ["1", "2", "3", "4", "salon"].map(n => P + "moka/" + n + ".webp") }

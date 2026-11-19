@@ -152,7 +152,7 @@ const STYLES = {
     cats: ["Y2K", "Mignons", "Tout rose", "Vintage", "Bohème", "Rock", "Animaux", "Mer", "Qui bougent", "Fêtes"], pail: ["or", "argent", "holo", "nacre"], charms: [3, 5] } };
 const CHARMS = ["fraisegelee", "oeilbleu", "fleursixties", "couronnestrass", "consoleviolette", "perle", "canard", "levresgrillz", "boule8", "etoiledemerperles", "cristal", "chocolat", "hibiscus", "minaudiere", "cerisesor", "bouledisco", "ceriseruban", "fraiseperle", "noeudgelee", "coeurchrome", "martien", "planete", "papillondore", "soleil", "coeurlilas", "oursonlilas", "etoilelilas", "levres", "coeurleopard", "coeurzebre", "cerisesbordeaux", "fleurgelee", "soleilvisage", "lunesoleil", "coeursoleil", "cerisedisco"];
 const BASE_STYLE = { classique: "style=1&couleur=lin&police=elegante&paillettes=non", ouf: "style=2&couleur=rose&police=bonbon&paillettes=nacre", mix: "style=1&couleur=poudre&police=chic&paillettes=non" };
-/* 09/11 (Marie) : ?vrai — elle arrive de « Créer mon site » : les cartes montrent SON salon (son nom, ses photos, ses prix), sinon l'exemple des Ongles de Cerise */
+/* 09/11 (Marie) : ?vrai — elle arrive de « Créer mon site » : les cartes montrent SON salon (son nom, ses photos, ses prix), sinon l'exemple de Nails by Drimf */
 const VRAI = new URLSearchParams(location.search).has("vrai") && (() => { try { return !!localStorage.getItem("loginail-brouillon"); } catch (e) { return false; } })();
 if (VRAI) document.documentElement.classList.add("vrai");
 const APPLI = new URLSearchParams(location.search).has("appli");

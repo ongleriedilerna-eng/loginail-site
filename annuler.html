@@ -91,7 +91,7 @@ h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:36px;line-he
 
   if (ESSAI) { const e = q.get("etat") || "", deb = new Date(Date.now() + (e === "tard" ? 20 : 4 * 24) * 3600e3); deb.setMinutes(0, 0, 0);
     if (e === "introuvable") return introuvable();
-    return dessine({ prenom: "Léa", presta: "Pose gel · Remplissage", debut: deb.toISOString(), statut: e === "deja" ? "annule" : e === "passe" ? "fini" : "prevu", salon: "Les Ongles de Cerise", tel: "06 00 00 00 00", slug: "", delai: "48 h avant",
+    return dessine({ prenom: "Léa", presta: "Pose gel · Remplissage", debut: deb.toISOString(), statut: e === "deja" ? "annule" : e === "passe" ? "fini" : "prevu", salon: "Nails by Drimf", tel: "06 00 00 00 00", slug: "", delai: "48 h avant",
       limite: new Date(deb.getTime() - 48 * 3600e3).toISOString(), possible: e !== "tard" }); }
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(J)) return introuvable();
   rpc("rdv_annulation", { j: J }).then(d => d && d.debut ? dessine(d) : introuvable())

@@ -183,7 +183,7 @@ if(V==="5"){s.innerHTML=`<div class="k">Avec votre lien</div><h2>Collez votre li
  <div class="tel" id="t"><img class="l" src="${P}s1.webp"><img class="l f" src="${P}o2.webp"><img class="l f" src="${P}o3.webp"><img class="l f" src="${P}s5.webp">${charms()}${pail()}<div class="eclat" id="ec"></div></div>
  <p class="leg">Google, Planity, Booksy… <b>Pas de lien ? On part de zéro, c’est aussi simple.</b></p>${CTA}`;
  const t=document.getElementById("t"),L=[...t.querySelectorAll("img.f")],ln=document.getElementById("ln");
- const tour=()=>{L.forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");ln.textContent="";const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;
+ const tour=()=>{L.forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");ln.textContent="";const txt="maps.app.goo.gl/nailsbydrimf";let i=0;
   const tape=setInterval(()=>{ln.textContent=txt.slice(0,++i);ln.style.color="#1E1C1B";if(i>=txt.length){clearInterval(tape);L.forEach((l,j)=>setTimeout(()=>l.classList.add("on"),400+j*450));setTimeout(()=>{t.querySelector(".ch").classList.add("on");t.querySelector(".pa").classList.add("on");eclate(document.getElementById("ec"))},1900);setTimeout(tour,6000)}},45)};
  vu(t,()=>setTimeout(tour,300))}
 
@@ -242,11 +242,11 @@ if(V==="11"){s.innerHTML=`<div class="k">Grattez !</div><h2>Grattez pour<br>déc
 
 /* 12 — rien à voir : votre nom, en direct */
 if(V==="12"){s.innerHTML=`<div class="k">Essayez</div><h2>Écrivez le nom<br>de votre salon.</h2>
- <div class="lien"><span id="ln" contenteditable="true" style="color:#1E1C1B;outline:none">les Ongles de Cerise</span></div>
- <div class="tel" id="t"><img class="l" src="${P}o2.webp"><div id="nom" style="position:absolute;left:8%;right:8%;top:68%;height:14%;display:flex;align-items:center;justify-content:center;background:#fff;font:400 21px/1.02 'Cherry Bomb One',Jost,sans-serif;color:#F2A7BF;text-align:center;overflow:hidden">les Ongles de Cerise</div>${charms(1)}${pail(1)}</div>
+ <div class="lien"><span id="ln" contenteditable="true" style="color:#1E1C1B;outline:none">Nails by Drimf</span></div>
+ <div class="tel" id="t"><img class="l" src="${P}o2.webp"><div id="nom" style="position:absolute;left:8%;right:8%;top:68%;height:14%;display:flex;align-items:center;justify-content:center;background:#fff;font:400 21px/1.02 'Cherry Bomb One',Jost,sans-serif;color:#F2A7BF;text-align:center;overflow:hidden">Nails by Drimf</div>${charms(1)}${pail(1)}</div>
  <p class="leg">Votre nom, vos couleurs, vos charms. <b>Votre site.</b></p>${CTA}`;
  const ln=document.getElementById("ln"),nom=document.getElementById("nom");ln.oninput=()=>nom.textContent=ln.textContent||"Votre salon";
- const NOMS=["Studio Lila","Chez Inès","Nail Bar Sofia","les Ongles de Cerise"];let i=0,touche=false;ln.addEventListener("focus",()=>touche=true);setInterval(()=>{if(touche)return;i=(i+1)%NOMS.length;ln.textContent=nom.textContent=NOMS[i]},1800)}
+ const NOMS=["Studio Lila","Chez Inès","Nail Bar Sofia","Nails by Drimf"];let i=0,touche=false;ln.addEventListener("focus",()=>touche=true);setInterval(()=>{if(touche)return;i=(i+1)%NOMS.length;ln.textContent=nom.textContent=NOMS[i]},1800)}
 
 /* 13 — l'idée 5 avec la construction « de base » : le lien s'écrit, puis les 6 étapes avec leurs textes ; rien ne bloque */
 if(V==="13"){const LG=[["Personnalisez votre site en 15 secondes chrono.","Un site classique, élégant, à votre nom. Déjà en ligne."],["Un fond.","Des cerises, du léopard, de la lavande… Plus de 300 fonds."],["Votre écriture. Vos couleurs.","Et voilà : votre univers. Le même site, que personne n’a."],["Vos photos.","Vos plus belles poses, en grand. Vous les changez en 2 secondes."],["Vos charms.","Plus de 1 000 charms. Sur votre site, vos clientes les attrapent."],["Et tout le reste.","Vos prestations, vos prix, vos réalisations, vos avis. <em>Elle se voit déjà chez vous.</em>"]],NO=["votre site","un fond","votre univers","vos photos","vos charms","tout le reste"];
@@ -260,7 +260,7 @@ if(V==="13"){const LG=[["Personnalisez votre site en 15 secondes chrono.","Un si
  const etape=k=>{document.getElementById("cpt").textContent=(k+1)+" / 5 · "+NO[k];document.getElementById("br").style.width=((k+1)/5*100)+"%";LGd.forEach((d,i)=>d.classList.toggle("on",i===k))};
  const raz=()=>{clearInterval(tp);T.forEach(clearTimeout);T=[];L.forEach(l=>l.classList.remove("on"));t.querySelector(".ch").classList.remove("on");t.querySelector(".pa").classList.remove("on");lo.style.transition="opacity .4s";lo.style.opacity=0;lo.style.transform="";HO.forEach(h=>{h.getAnimations().forEach(a=>a.cancel());h.style.opacity=0});etape(0);ln.textContent="Votre lien Google, Planity…";ln.style.color=""};
  const POS=[[2,10],[84,30],[-2,62],[86,78]];
- const joue=()=>{raz();const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;ln.style.color="#1E1C1B";
+ const joue=()=>{raz();const txt="maps.app.goo.gl/nailsbydrimf";let i=0;ln.style.color="#1E1C1B";
   tp=setInterval(()=>{i+=4;ln.textContent=txt.slice(0,i);if(i>=txt.length){clearInterval(tp);
    const at=(ms,f)=>T.push(setTimeout(f,ms));
    at(250,()=>{etape(1);L[0].classList.add("on")});
@@ -286,7 +286,7 @@ if(V==="14"){const CU={"cerise": ["noeudcerise", "framboise", "cerisedisco", "ce
   bd.animate([{transform:"translateY(0)",filter:"blur(0)"},{transform:`translateY(${-h*c*.85}px)`,filter:"blur(3px)",offset:.7},{transform:`translateY(${-h*c}px)`,filter:"blur(0)"}],{duration:1700,easing:"cubic-bezier(.2,.7,.2,1)",fill:"forwards"}).onfinish=()=>{court=false;eclate(document.getElementById("ec"));sortent(U[k])}};
  document.getElementById("go").onclick=tourne;vu(t,()=>setTimeout(tourne,600))}
 
-/* 15 — « À vous de le créer » (Marie, 10/11) : le site les Ongles de Cerise est prêt ; les charms sont sur les côtés et c'est ELLE qui les pose ; au dernier, le waouh (étoiles, paillettes, « C'est votre site ! ») */
+/* 15 — « À vous de le créer » (Marie, 10/11) : le site Nails by Drimf est prêt ; les charms sont sur les côtés et c'est ELLE qui les pose ; au dernier, le waouh (étoiles, paillettes, « C'est votre site ! ») */
 if(V==="15"){const G=[0,2,4,6],D=[1,3,5];
  s.innerHTML=`<div class="k">Petit jeu</div><h2>À vous de le créer.</h2>
  <div class="jeu15"><div class="bac15" id="bg">${G.map(i=>`<button data-i="${i}"><img src="loginail-site/charms-mini/${CH[i][0]}.webp"></button>`).join("")}</div>
@@ -329,7 +329,7 @@ if(V==="16"){const LG=[["Votre lien, et c’est parti.","Un site classique, él�
    if(n===HC.length){jeu=false;etape(5);t.querySelector(".pa").classList.add("on");CI.forEach((c,i)=>{if(c.style.opacity!=="1"){c.style.transition="opacity .25s,transform .55s cubic-bezier(.3,1.5,.5,1)";c.style.transform="translateY(-40px) rotate(-20deg) scale(.6)";requestAnimationFrame(()=>{c.style.opacity=1;c.style.transform="none"})}});
     eclate(ec,40);t.classList.add("brille");document.getElementById("wa").classList.add("on");T.push(setTimeout(()=>document.getElementById("wa").classList.remove("on"),2200))}}};
  HO.forEach(h=>h.addEventListener("click",()=>pose(h)));
- const joue=()=>{raz();const txt="maps.app.goo.gl/lesonglesdecerise";let i=0;ln.style.color="#1E1C1B";
+ const joue=()=>{raz();const txt="maps.app.goo.gl/nailsbydrimf";let i=0;ln.style.color="#1E1C1B";
   tp=setInterval(()=>{i+=4;ln.textContent=txt.slice(0,i);if(i>=txt.length){clearInterval(tp);const at=(ms,f)=>T.push(setTimeout(f,ms));
    at(250,()=>{etape(1);L[0].classList.add("on")});at(700,()=>{etape(2);L[1].classList.add("on")});at(1150,()=>{etape(3);L[2].classList.add("on")});
    at(1650,()=>{etape(4);jeu=true;ho.classList.add("jouer");
@@ -350,7 +350,7 @@ if(V==="17"){const LG=[["Votre lien.","Google, Planity, Booksy… ou rien du tou
  <div class="lg17" id="lg">${LG.map((l,i)=>`<div${i?"":' class="on"'}><b>${l[0]}</b><span>${l[1]}</span></div>`).join("")}</div>
  <p class="leg" style="margin-top:2px"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>${CTA}<button class="rej" id="rj">↻ Revoir</button></div>`;
  const t=document.getElementById("t"),IM=[...t.querySelectorAll("img.l")].slice(1),CI=[...t.querySelectorAll(".ch img")],HO=[...document.querySelectorAll("#ho img")],LGd=[...document.querySelectorAll("#lg div")],ln=document.getElementById("ln"),br=document.getElementById("br"),pa=t.querySelector(".pa");
- const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false;
+ const txt="maps.app.goo.gl/nailsbydrimf",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false;
  CI.forEach(c=>{c.style.transition="none"});
  const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.14)))||"Votre lien…";
   IM[0].style.opacity=seg(x,.14,.34);IM[1].style.opacity=seg(x,.34,.54);IM[2].style.opacity=seg(x,.52,.72);
@@ -395,7 +395,7 @@ if(V==="19"){const LG=[["Votre lien.","Google, Planity, Booksy… ou rien du tou
  <div class="lg17" id="lg">${LG.map((l,i)=>`<div${i?"":' class="on"'}><b>${l[0]}</b><span id="${i===5?"cp":""}">${l[1]}</span></div>`).join("")}</div>
  <p class="leg" style="margin-top:2px"><b>Pas de lien ?</b> On part de zéro, c’est aussi simple.</p>${CTA}<button class="rej" id="rj">↻ Revoir</button></div><div class="pluie18" id="pl"></div>`;
  const t=document.getElementById("t"),IM=[...t.querySelectorAll("img.l")].slice(1),CI=[...t.querySelectorAll(".ch img")],HO=[...document.querySelectorAll("#ho img")],LGd=[...document.querySelectorAll("#lg div")],ln=document.getElementById("ln"),br=document.getElementById("br"),pa=t.querySelector(".pa"),pl=document.getElementById("pl"),mes=document.getElementById("mes"),ec=document.getElementById("ec");
- const txt="maps.app.goo.gl/lesonglesdecerise",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0;
+ const txt="maps.app.goo.gl/nailsbydrimf",DUR=3000,doux=x=>x<0?0:x>1?1:x*x*(3-2*x),seg=(x,a,b)=>doux((x-a)/(b-a));let raf=0,t0=0,vu2=-1,fini=false,pluie=0,n=0,k=0,touche=false,demo=0;
  CI.forEach(c=>{c.style.transition="none"});pa.classList.add("on");
  const lgOn=e=>{if(e!==vu2){vu2=e;LGd.forEach((d,i)=>d.classList.toggle("on",i===e))}};
  const pose=x=>{ln.textContent=txt.slice(0,Math.round(txt.length*seg(x,0,.14)))||"Votre lien…";

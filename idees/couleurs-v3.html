@@ -65,7 +65,7 @@ const hsl2hex = (h, s, l) => { s /= 100; l /= 100; const k = n => (n + h / 30) %
  ["B", "La roue", "On pose le doigt sur la roue pour la teinte, et la réglette dessous règle plus clair ou plus foncé. Choix infini."]].forEach(([L, tt, idee]) => {
   const c = document.createElement("section"); c.className = "carte"; g.appendChild(c);
   c.innerHTML = `<h2><i>${L}</i>${tt}</h2><p class="idee">${idee}</p>
-   <div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Les ongles de Cerise</div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
+   <div class="ap"><div class="fiche"><small>Prothésiste ongulaire · Marseille</small><div class="nom">Nails by Drimf</div><div class="res">RÉSERVER UN CRÉNEAU</div></div></div>
    <div class="parts"><button data-q="bl" class="on"><i></i>Encadrés</button><button data-q="nm"><i></i>Nom</button><button data-q="bt"><i></i>Bouton Réserver</button></div>
    ${L === "A" ? `<div class="fams"></div><div class="teintes"></div>` : `<div class="roueBox"><div class="roue"><span class="pt"></span></div><div class="regl"><input type="range" min="12" max="92" value="55"><label><span>Plus foncé</span><span>Plus clair</span></label></div></div>`}`;
   const fiche = c.querySelector(".fiche"), val = { bl: "#F2D3D6", nm: "#1E1C1B", bt: "#B5475E" }; let q = "bl", fam = "Roses";

@@ -525,7 +525,7 @@ function resumeHoraires(h) {
 }
 const LIGNES = [["salon", "Votre salon"], ["photos", "Vos photos"], ["avis", "Vos avis"], ["horaires", "Vos horaires"], ["prix", "Vos prix"]];
 $("mdp").outerHTML = `<div class="lc" id="lc">${LIGNES.map(([k, t]) => `<div class="lcl" data-k="${k}"><i class="r"></i><span>${t}<small></small></span></div>`).join("")}</div>`;
-const EXEMPLE = { salon: "Les Ongles de Cerise · Lille", photos: "12 photos", avis: "4,9 ★ · 48 avis", horaires: "Du mardi au samedi", prix: "9 prestations" };
+const EXEMPLE = { salon: "Nails by Drimf · Lille", photos: "12 photos", avis: "4,9 ★ · 48 avis", horaires: "Du mardi au samedi", prix: "9 prestations" };
 /* ce qu'on a trouvé (texte) ; "" = pas trouvé : elle l'ajoutera ensuite */
 function trouve(k) {
   if (DEMO) return EXEMPLE[k];
@@ -962,9 +962,9 @@ $("fini").onclick = () => {
   if (modeTarifs) { if (history.length > 1) history.back(); else location.href = PERSO; return; }   // elle revient sur son site
   location.href = PERSO;   // 18/11 (D26/D31) : ensuite, directement Personnaliser (le style se choisit dans « Looks »)
 };
-/* 09/11 (Marie) : ?demo — pour montrer Loginail : un faux lien (les Ongles de Cerise, exemple), rien n'est lu sur Google ;
+/* 09/11 (Marie) : ?demo — pour montrer Loginail : un faux lien (Nails by Drimf, exemple), rien n'est lu sur Google ;
    après « Votre site est prêt », on enchaîne sur le choix du style, la personnalisation et les charms */
-if (DEMO) { champLien.value = "https://maps.app.goo.gl/lesonglesdecerise"; verifie(); }
+if (DEMO) { champLien.value = "https://maps.app.goo.gl/nailsbydrimf"; verifie(); }
 /* ?lien=… : le lien collé sur la page d'accueil de loginail.fr */
 const venu = new URLSearchParams(location.search).get("lien");
 if (venu) { champLien.value = venu; $("creer").click(); }

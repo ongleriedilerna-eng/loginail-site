@@ -118,7 +118,7 @@ footer{text-align:center;color:#8a8079;font-size:12px;padding:44px 20px 70px}
 <div class="g"><div class="k">Pour les prothésistes ongulaires · prêt en une minute</div><div class="h">Un site pour <span class="mot" id="cMot"><span class="mt">briller</span><img alt="" src="loginail-site/charms-mini/cerisedisco.webp"></span>.<br>Une appli pour<br>tout gérer.</div>
 <div class="ligne">Site <i></i> Réservation <i></i> Rappels SMS <i></i> Caisse</div><div class="form"><div class="in">Votre lien Maps, Planity, Booksy…</div><div class="bt">Créer mon site</div></div><div class="sous"><b>1 mois offert</b> · sans engagement · 0 % de commission</div></div>
 <div class="tel"><div class="e" id="cTel"></div></div></div>
-<div class="avis">Le format 5, mais vivant : chaque fois que « <b>briller</b> » change d’écriture, la grande photo et le site dans le téléphone changent aussi, pour aller ensemble (Maison Noire en lettres chic, les Ongles de Cerise en lettres rondes, Emma en lettres fines…). On comprend tout de suite : un style, un site.</div></div>
+<div class="avis">Le format 5, mais vivant : chaque fois que « <b>briller</b> » change d’écriture, la grande photo et le site dans le téléphone changent aussi, pour aller ensemble (Maison Noire en lettres chic, Nails by Drimf en lettres rondes, Emma en lettres fines…). On comprend tout de suite : un style, un site.</div></div>
 
 <h2 class="part">2 · Le 4A, à sa place</h2>
 <div class="v"><div class="tit"><b>D</b><span>Dans « Elle vous cherche », à la place de la recherche Google</span></div>
@@ -162,7 +162,7 @@ footer{text-align:center;color:#8a8079;font-size:12px;padding:44px 20px 70px}
 const P="loginail-site/";
 /* « briller » qui change d'écriture */
 const F=[["'Cormorant Garamond',serif","cerisedisco"],["Cinzel,serif","perle"],["'Bagel Fat One',sans-serif","fraisegelee"],["'Pinyon Script',cursive","noeudgelee"],["Shrikhand,serif","bouledisco"],["'Playfair Display',serif","coeurchrome"]];
-const U=[["noire","tpl-maisonnoire","Maison Noire"],["noire","tpl-maisonnoire","Maison Noire"],["cerise","cerise","les Ongles de Cerise"],["emma","tpl-onglesdemma","les Ongles d’Emma"],["bling","bling","Bling"],["poudre","tpl-studiopoudre","Studio Poudré"]];
+const U=[["noire","tpl-maisonnoire","Maison Noire"],["noire","tpl-maisonnoire","Maison Noire"],["cerise","cerise","Nails by Drimf"],["emma","tpl-onglesdemma","les Ongles d’Emma"],["bling","bling","Bling"],["poudre","tpl-studiopoudre","Studio Poudré"]];
 let i=0;const mots=[...document.querySelectorAll(".mot")];
 const pose=()=>{mots.forEach(m=>{m.querySelector(".mt").style.fontFamily=F[i][0];m.querySelector("img").src=P+"charms-mini/"+F[i][1]+".webp"});
  const u=U[i];document.getElementById("cPh").style.backgroundImage=`url(${P}univers-photos/${u[0]}/1.webp)`;document.getElementById("cTel").style.backgroundImage=`url(${P}apercus-mini/${u[1]}.webp)`;document.getElementById("cLab").textContent=u[2]};

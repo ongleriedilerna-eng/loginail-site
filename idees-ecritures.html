@@ -69,7 +69,7 @@ const PH=[["q1","L’appareil photo","tout petit, très sobre",'<div><svg viewBo
  ["q4","Un ongle dessiné","sans texte",'<svg viewBox="0 0 60 90"><path d="M18 88V40c0-14 5-30 12-34 7 4 12 20 12 34v48"/><path d="M22 40c0-10 3-20 8-23 5 3 8 13 8 23"/></svg>'],
  ["q5","L’initiale","comme un logo",'<div><b>C</b>Votre photo ici</div>'],
  ["q6","Juste une info","« ajoutez votre photo »",'<div><b>Votre photo</b>Ajoutez votre plus<br>belle pose</div>']];
-document.getElementById("grP").innerHTML=PH.map((p,k)=>`<div class="c" data-v="${k+1}"><div class="lab"><i>${k+1}</i>${p[1]} <span>· ${p[2]}</span></div><div class="tel"><div class="ec"><div class="pill">les Ongles de Cerise</div><div class="ph ${p[0]}" ${p[0]==="q3"?'style="background-image:url(loginail-site/univers-photos/moka/1.webp)"':""}>${p[3]}</div><div class="nom"><small>Prothésiste ongulaire · Marseille</small><b>les Ongles de Cerise</b><u>Réserver</u></div></div></div></div>`).join("");
+document.getElementById("grP").innerHTML=PH.map((p,k)=>`<div class="c" data-v="${k+1}"><div class="lab"><i>${k+1}</i>${p[1]} <span>· ${p[2]}</span></div><div class="tel"><div class="ec"><div class="pill">Nails by Drimf</div><div class="ph ${p[0]}" ${p[0]==="q3"?'style="background-image:url(loginail-site/univers-photos/moka/1.webp)"':""}>${p[3]}</div><div class="nom"><small>Prothésiste ongulaire · Marseille</small><b>Nails by Drimf</b><u>Réserver</u></div></div></div></div>`).join("");
 const NOMS={titres:"Écriture des titres",photo:"Case photo"},choix={};
 try{Object.assign(choix,JSON.parse(localStorage.getItem("idees-ecritures")||"{}"))}catch(_){}
 const maj=()=>{document.querySelectorAll("section[data-s]").forEach(s=>s.querySelectorAll(".c").forEach(c=>c.classList.toggle("on",choix[s.dataset.s]===c.dataset.v)));
