@@ -1912,6 +1912,62 @@ html.np-stage .np .np-f3{top:60%}html.np-stage .np .np-f4{top:58%}
 header.top,section.hero:not(#hero){display:none!important}
 html{scroll-padding-top:84px}
 </style>
+<style id="ecritures-d38">
+/* 19/11 (Marie, D38 version D) : tous les grands titres de Loginail écrits comme le haut (Abril Fatface),
+   le mot mis en avant en rose, sans italique ; texte, boutons et petits sur-titres restent en Jost.
+   Ne touche pas les écritures DANS les sites d'exemple. Maquette : idees/ecritures-accueil.html?v=D */
+html body:not(#_) #arc h2, html body:not(#_) #semaine > h2, html body:not(#_) .carte-ch .ch-petit, html body:not(#_) .carte-ch h2.t2, html body:not(#_) .carte-ch h2.t2 em, html body:not(#_) .fp-carte h2.t2 em, html body:not(#_) #bio h2, html body:not(#_) #bio h2 .scr b, html body:not(#_) #bio h2 .scr, html body:not(#_) .chif b,
+html body:not(#_) .fp-carte h2.t2, html body:not(#_) #styles-gal .q h2, html body:not(#_) #styles-gal .q h2 *, html body:not(#_) h2.t2, html body:not(#_) .st-t h2,
+html body:not(#_) #duo .mini b, html body:not(#_) #jaLg b, html body:not(#_) .chif .lever b, html body:not(#_) .legs .leg b, html body:not(#_) #resa-t{
+  font-family:'Abril Fatface',serif!important; font-weight:400!important; text-transform:none!important; letter-spacing:-.01em!important}
+html body:not(#_) #semaine > h2 em, html body:not(#_) .carte-ch h2.t2 em, html body:not(#_) .fp-carte h2.t2 em, html body:not(#_) h2.t2 em, html body:not(#_) .st-t h2 em,
+html body:not(#_) #styles-gal .q h2 em, html body:not(#_) #styles-gal .q h2 em *, html body:not(#_) #bio h2 .scr b, html body:not(#_) #bio h2 .scr{font-style:normal!important; color:#B03562!important; -webkit-text-fill-color:#B03562}
+html body:not(#_) #styles-gal .q h2 .bd2{margin-left:.22em}
+html body:not(#_) h2.t2 em, html body:not(#_) #semaine > h2 em{padding-right:0!important}
+@media (max-width:999px){
+  html body:not(#_) #arc h2{font-size:26px!important; line-height:1.15!important}
+  html body:not(#_) #semaine > h2{font-size:36px!important; line-height:1.08!important}
+  html body:not(#_) .carte-ch .ch-petit, html body:not(#_) .carte-ch h2.t2{font-size:30px!important; line-height:1.1!important}
+  html body:not(#_) #bio h2{font-size:28px!important; line-height:1.2!important}
+  html body:not(#_) .fp-carte h2.t2{font-size:28px!important; line-height:1.15!important}
+  html body:not(#_) #styles-gal .q h2{font-size:38px!important; line-height:1.05!important}
+}
+@media (min-width:1000px){
+  html body:not(#_) #arc h2{font-size:34px!important; line-height:1.15!important}
+  html body:not(#_) #semaine > h2{font-size:56px!important; line-height:1.05!important}
+  html body:not(#_) .carte-ch .ch-petit, html body:not(#_) .carte-ch h2.t2{font-size:46px!important; line-height:1.08!important}
+  html body:not(#_) #bio h2{font-size:44px!important; line-height:1.15!important}
+  html body:not(#_) .fp-carte h2.t2{font-size:42px!important; line-height:1.12!important}
+  html body:not(#_) #styles-gal .q h2{font-size:60px!important; line-height:1.05!important}
+}
+</style>
+<style id="notifs-tel">
+/* 19/11 (Marie) : TÉLÉPHONE seulement — les 4 petites notifications (Léa · nouveau RDV, Rappel SMS envoyé,
+   Journée complète ?, tonsalon.fr) passent l'une après l'autre au même endroit : elle arrive, reste ~3 s, s'en va,
+   la suivante arrive. Ordinateur inchangé (le script ne fait rien au-dessus de 760 px). Maquette : idees/telephone.html?v=B */
+@media (max-width:760px){
+  .np .np-tourne{position:relative;order:7;width:100%;display:flex;justify-content:center;margin:22px 0 0;z-index:4}
+  .np .np-tourne .np-float{display:flex;position:absolute;left:50%;top:0;right:auto;margin:0;width:max-content;
+     transform:translate(-50%,10px);opacity:0;visibility:hidden;pointer-events:none;
+     transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1),visibility 0s linear .5s}
+  .np .np-tourne .np-float.np-la{transform:translate(-50%,0);opacity:1;visibility:visible;pointer-events:auto;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+  .np .np-tourne .np-float.np-part{transform:translate(-50%,-10px);opacity:0}
+  .np .np-tourne:has(.np-active){z-index:30} /* au-dessus du voile flou quand elle a ouvert un carré */
+}
+/* 19/11 (Marie) : TÉLÉPHONE seulement — le haut moins tassé (plus d'air entre le titre, la phrase rose,
+   la phrase grise et « Prêt en 1 minute ») + « 1 mois offert · Sans engagement · 0 % de commission » sur UNE ligne */
+@media (max-width:760px){
+  html body:not(#_) .np h1.serif{margin-top:26px;line-height:1.1}
+  html body:not(#_) .np h1.serif .np-l2{margin-top:18px}
+  html body:not(#_) .np .np-lead{margin-top:20px}
+  html body:not(#_) .np .np-paste{margin-top:32px}
+  html body:not(#_) .np .np-micro{margin-top:16px;flex-wrap:nowrap;gap:0 10px;font-size:12.5px;white-space:nowrap;justify-content:center}
+  html body:not(#_) .np .np-micro svg{width:13px;height:13px}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  .np .np-tourne .np-float,.np .np-tourne .np-float.np-la,.np .np-tourne .np-float.np-part{transform:translate(-50%,0);transition:opacity .2s linear,visibility 0s linear .2s}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -3232,4 +3288,35 @@ function placeBulles(){const fl=[...document.querySelectorAll('.np-float')];fl.f
 placeBulles();addEventListener('load',placeBulles);addEventListener('resize',placeBulles);if(document.fonts)document.fonts.ready.then(placeBulles);
 
 })();</script>
+<script id="notifs-tel-js">/* 19/11 (Marie) : voir <style id="notifs-tel"> — téléphone seulement */
+(function(){
+  const mq=matchMedia('(max-width:760px)');const ids=['.np-f2','.np-f3','.np-f4','.np-f1'];
+  let box=null,minuteur=null,i=0,orig=[];
+  function monte(){
+    if(box)return;const f=ids.map(s=>document.querySelector(s)).filter(Boolean);if(f.length<2)return;
+    orig=f.map(e=>[e,e.parentNode,e.nextSibling]);
+    box=document.createElement('div');box.className='np-tourne';f[0].parentNode.insertBefore(box,f[0]);
+    f.forEach(e=>box.appendChild(e));
+    const h=()=>{box.style.height=Math.max(...f.map(e=>e.offsetHeight))+'px'};h();setTimeout(h,800);
+    i=0;f[0].classList.add('np-la');
+    minuteur=setInterval(()=>{
+      if(document.hidden||f.some(e=>e.classList.contains('np-active')))return; // on attend si elle a ouvert un carré
+      const a=f[i];a.classList.remove('np-la');a.classList.add('np-part');setTimeout(()=>a.classList.remove('np-part'),520);
+      i=(i+1)%f.length;setTimeout(()=>{if(!f.some(e=>e.classList.contains('np-active')))f[i].classList.add('np-la')},350);
+    },3400);
+    // celle qu'elle touche reste affichée (même si elle était en train de partir)
+    box.addEventListener('click',ev=>{const t=ev.target.closest('.np-float');if(!t)return;
+      f.forEach(x=>x.classList.remove('np-la','np-part'));t.classList.add('np-la');i=f.indexOf(t);box.style.zIndex=30},true);
+    document.addEventListener('click',()=>setTimeout(()=>{if(box&&!f.some(e=>e.classList.contains('np-active')))box.style.zIndex=''},0));
+  }
+  function demonte(){ // retour à l'ordinateur : tout revient comme avant
+    if(!box)return;clearInterval(minuteur);
+    orig.forEach(([e,par,next])=>{e.classList.remove('np-la','np-part');par.insertBefore(e,next&&next.parentNode===par?next:null)});
+    box.remove();box=null;
+  }
+  const choisit=()=>mq.matches?monte():demonte();
+  if(document.readyState==='loading')addEventListener('DOMContentLoaded',choisit);else choisit();
+  (mq.addEventListener?mq.addEventListener('change',choisit):mq.addListener(choisit));
+})();
+</script>
 </body></html>
