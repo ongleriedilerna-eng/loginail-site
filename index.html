@@ -2406,6 +2406,36 @@ document.addEventListener("DOMContentLoaded",function(){
   .k2c .ch{position:absolute;width:52px;right:-10px;top:-22px;rotate:12deg;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(80,30,45,.22))}
 }
 </style>
+<style id="tel-retouches-2011">
+/* 20/11 (Marie) : TÉLÉPHONE seulement — ordinateur inchangé.
+   1) « L'appli qui gère tout » : les 3 écrans tiennent côte à côte, en entier (plus de 2e téléphone coupé), et ne bougent plus tout seuls
+   3) passage plus doux entre la carte du prix et « Classe ou baddie », et plus de « Plus de 30 univers » (il y en a bien plus)
+   4) « Qui a créé Loginail ? » plus grand (il remplit l'écran), sur un fond un peu différent, avec un passage flou depuis « Exemples… créés par IA » */
+@media (max-width:760px){
+  html body:not(#_) .ape.coucou .rail,html body:not(#_) .ape .rail{animation:none!important;translate:none!important}
+  html body:not(#_) .ape .rail{display:grid;grid-template-columns:1fr 1.12fr 1fr;align-items:end;gap:10px;overflow:visible;scroll-snap-type:none;padding:22px 0 4px;margin:0}
+  html body:not(#_) .ape .ecran{width:auto;scale:1!important;opacity:1!important;transition:none}
+  html body:not(#_) .ape .cadre{border-radius:22px;padding:5px}
+  html body:not(#_) .ape .cadre img{border-radius:18px}
+  html body:not(#_) .ape .cadre::before{top:9px;height:8px}
+  html body:not(#_) .ape figcaption{font-size:12.5px;margin-top:10px}
+  html body:not(#_) .ape figcaption small{font-size:10.5px;line-height:1.3}
+  html body:not(#_) .ape .points{display:none}
+  html body:not(#_) section.styles .wrap > .k{display:none}
+  html body:not(#_) section.styles{position:relative;padding-top:56px;background:linear-gradient(180deg,rgba(251,241,244,0) 0,rgba(251,241,244,.9) 90px,rgba(246,239,234,0) 260px)}
+  html body:not(#_) section.styles .rangee{scrollbar-width:none}
+  html body:not(#_) section.styles .rangee::-webkit-scrollbar{display:none}
+  html body:not(#_) section.marie{position:relative;isolation:isolate;min-height:calc(100svh - 64px);display:flex;align-items:center;padding:70px 0 60px;
+     background:linear-gradient(180deg,rgba(246,239,234,0) 0,#F8EBEF 120px,#F8EBEF calc(100% - 80px),rgba(248,235,239,0) 100%)}
+  html body:not(#_) section.marie::before{content:"";position:absolute;z-index:-1;left:-15%;right:-15%;top:0;height:300px;pointer-events:none;
+     background:radial-gradient(40% 45% at 20% 55%,rgba(236,150,182,.45),transparent 72%),radial-gradient(40% 42% at 82% 45%,rgba(205,150,228,.35),transparent 72%);filter:blur(24px)}
+  html body:not(#_) section.marie .wrap{width:100%}
+  html body:not(#_) .marie-tel h2{margin:18px auto 28px}
+  html body:not(#_) .marie-tel p{font-size:20px;line-height:1.6;max-width:350px;margin:0 auto 20px}
+  html body:not(#_) .marie-tel .sign{font-size:58px;margin:26px 0 18px}
+  html body:not(#_) .marie-tel .marie-ig{height:48px;font-size:15px;padding:0 18px 0 14px}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2539,7 +2569,7 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="cq-logo">Logi<span>nail</span></div>
       <div class="cq-prix">49,99 € <small>/ mois</small></div>
       <div class="cq-offert">1er mois offert</div>
-      <div class="cq-pt">Sans engagement<br>Rien à installer</div>
+      <div class="cq-pt">Sans engagement</div>
       <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
       <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
     </div>
