@@ -2331,7 +2331,8 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .marie .vu > .k,html body:not(#_) .marie .vu > blockquote,html body:not(#_) .marie .texte-court,html body:not(#_) .marie .texte-long,html body:not(#_) .marie .vu > .signature{display:none!important}
   .marie-tel{display:block;text-align:center}
   .marie-tel .k{color:var(--fram,#B03562)}
-  .marie-tel h2{font-family:'Abril Fatface',serif;font-weight:400;font-size:min(7vw,27px);line-height:1.2;margin:14px auto 20px;max-width:330px;text-wrap:balance;color:#1E1C1B}
+  .marie-tel h2{font-family:'Abril Fatface',serif;font-weight:400;font-size:min(5.4vw,22px);line-height:1.3;margin:14px auto 20px;color:#1E1C1B}
+  .marie-tel h2 .l{display:block;white-space:nowrap}
   .marie-tel h2 em{font-style:normal;color:#B03562}
   .marie-tel p{font-size:17px;line-height:1.65;color:#4a4440;max-width:340px;margin:0 auto 16px}
   .marie-tel p b{color:#1E1C1B;font-weight:500}
@@ -2389,6 +2390,20 @@ document.addEventListener("DOMContentLoaded",function(){
   .pied-bocaux .pb-aide{margin-top:8px;font-size:12px;color:#7a6f69;text-align:center}
   .pied-bocaux .pb-bt{display:none;margin-top:8px;height:36px;padding:0 16px;border-radius:99px;border:0;background:#1E1C1B;color:#fff;font:500 13px Jost,sans-serif}
   .pied-bocaux .pb-bt.on{display:inline-block}
+}
+</style>
+<style id="tout-inclus-tel">
+/* 19/11 nuit (Marie, version K2) : TÉLÉPHONE seulement — sous la frise du prix, une carte « Tout est inclus. » (6 choses, un charm devant
+   chacune, une cerise posée sur le coin) pour ne plus avoir de vide avant « Bon à savoir », sans répéter le prix. Ordinateur inchangé. */
+.k2c{display:none}
+@media (max-width:760px){
+  .k2c{display:block;background:#fff;border-radius:26px;padding:24px 20px 22px;margin:26px 0 6px;position:relative;box-shadow:0 30px 60px -34px rgba(120,40,70,.45);text-align:left}
+  .k2c h3{font-family:'Abril Fatface',serif;font-weight:400;font-size:24px;margin:0 0 14px;color:#1E1C1B;text-align:center}
+  .k2c h3 em{font-style:normal;color:#B03562}
+  .k2c ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}
+  .k2c li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#3d3632;line-height:1.3}
+  .k2c li img{width:28px;height:28px;object-fit:contain;flex:none}
+  .k2c .ch{position:absolute;width:52px;right:-10px;top:-22px;rotate:12deg;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(80,30,45,.22))}
 }
 </style>
 </head><body>
@@ -2566,7 +2581,7 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="signature">Marie</div>
       <div class="marie-tel">
         <div class="k">Qui a créé Loginail ?</div>
-        <h2>Une prothésiste ongulaire, <em>pour les prothésistes ongulaires.</em></h2>
+        <h2><span class="l">Une prothésiste ongulaire,</span> <span class="l"><em>pour les prothésistes ongulaires.</em></span></h2>
         <p>Je passe mes journées à poser des ongles.</p>
         <p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, <b>sans commission</b>. Il n’existait pas. Alors je l’ai créé.</p>
         <div class="sign">Marie.</div>
@@ -2589,6 +2604,7 @@ document.addEventListener("DOMContentLoaded",function(){
         <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si tu restes.</span></li>
         <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
       </ul>
+      <div class="k2c"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
       <div class="fin-go"><a href="loginail-creer/index.html">Créer mon site gratuitement →</a><small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small></div>
     </div>
     <div class="v3carte vu">
