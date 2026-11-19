@@ -5,7 +5,7 @@
    (métier · ville, nom sur UNE ligne, avis, « Réserver un créneau »), « mouvements réduits » = image fixe, on n'anime que
    translate / rotate / scale / opacity (+ offset-distance pour les charms qui suivent un tracé : il y en a 12 au plus par en-tête). */
 (function(){
-const NOUV=[["wenseigne","Enseigne lumineuse"],["wtele","Télécabine de charms"],["wfil","Fil de lumière"],["wronde","Ronde de charms"],["whuit","Grand huit"],["wtourb","Tourbillon"],["wetor","Étoiles d'or"],["wetoile","Étoile de charms"],["wcachet","Cachet rond"],["wnotif","Notification"]];
+const NOUV=[["wenseigne","Enseigne lumineuse"],["wtele","Télécabine de charms"],["wfil","Fil de lumière"],["wronde","Ronde de charms"],["whuit","Grand huit"],["wtourb","Tourbillon"],["wetor","Étoiles d'or"],["wetoile","Étoile de charms"],["wcachet","Cachet rond"],["wnotif","Notification"],["wfeuille","Feuille du bas"],["wverrou","Écran verrouillé"],["wcachet2","Cachet et étoiles"]];
 try{NOUV.forEach(e=>{if(!ENTETES.some(x=>x[0]===e[0]))ENTETES.push(e)})}catch(e){}
 
 let g=57;const r=()=>{g=(g*9301+49297)%233280;return g/233280},rx=(a,b)=>a+r()*(b-a),R=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join(""),f1=n=>Math.round(n*10)/10;
@@ -74,29 +74,42 @@ const css=`
 .pz-etd{top:-50px;color:#ffd24a;text-shadow:0 0 8px rgba(255,210,74,.9);line-height:1;will-change:transform;animation:pwChute linear infinite}
 .pz-etd b{display:block;font-weight:400;animation:pwTwk ease-in-out infinite}
 /* 53 Cachet rond : le bloc d'infos est un grand rond */
-.ecran .hent.pzh.he-w-wcachet>.pz-blk{left:50%;top:48.7%;right:auto;width:328px;margin-left:-164px!important;translate:0 -50%}
-.he-w-wcachet .pz-cd{margin:0;width:328px;height:328px}
-.ecran .hent.pzw.he-w-wcachet .pz-cd>.he-txt{width:100%!important;height:100%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 34px;text-align:center}
-.he-w-wcachet .he-txt .he-btn{height:42px;padding:0 22px;margin-top:10px}
-.he-w-wcachet .he-txt .he-btn small{display:none}
-.he-w-wcachet .he-txt h1{margin:5px 0 5px!important}
+.ecran .hent.pzh:is(.he-w-wcachet,.he-w-wcachet2)>.pz-blk{left:50%;top:48.7%;right:auto;width:328px;margin-left:-164px!important;translate:0 -50%}
+:is(.he-w-wcachet,.he-w-wcachet2) .pz-cd{margin:0;width:328px;height:328px}
+.ecran .hent.pzw:is(.he-w-wcachet,.he-w-wcachet2) .pz-cd>.he-txt{width:100%!important;height:100%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 34px;text-align:center}
+:is(.he-w-wcachet,.he-w-wcachet2) .he-txt .he-btn{height:42px;padding:0 22px;margin-top:10px}
+:is(.he-w-wcachet,.he-w-wcachet2) .he-txt .he-btn small{display:none}
+:is(.he-w-wcachet,.he-w-wcachet2) .he-txt h1{margin:5px 0 5px!important}
 .he-w-wcachet .pz-st .he-ph{filter:brightness(.78)}
 .pz-dash{position:absolute;inset:-7px;border-radius:50%;border:2px dashed rgba(255,255,255,.92);will-change:transform;animation:pwTourne 30s linear infinite;z-index:1}
 .pz-ring2{position:absolute;left:50%;top:50%;width:0;height:0;will-change:transform;animation:pwTourne 30s linear infinite;z-index:1}
 .pz-ring2 img{position:absolute;margin:-24px 0 0 -24px;width:48px;animation:pwTourne 30s linear infinite reverse}
 /* 57 Notification : le bloc est une notification qui descend du haut, avec le bouton dedans */
 .ecran .hent.pzh.he-w-wnotif>.pz-blk{top:64px;animation:pwNotif 7s infinite}
-.he-w-wnotif .pz-cd{margin:0 14px}
-.ecran .hent.pzw.he-w-wnotif .pz-cd>.he-txt{border-radius:26px;padding:14px 16px 16px;background:color-mix(in srgb,var(--papier,#fff) 94%,transparent);text-align:left;align-items:stretch}
-.he-w-wnotif .pz-ic{position:absolute;left:16px;top:14px;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--acc,#1E1C1B) 40%,#fff),var(--acc,#1E1C1B));display:grid;place-items:center}
-.he-w-wnotif .pz-ic img{width:32px;height:32px;object-fit:contain}
-.he-w-wnotif .he-txt{padding-left:72px!important}
-.he-w-wnotif .he-txt .kick{text-align:left;text-transform:none;letter-spacing:.02em;font-size:11px}
-.he-w-wnotif .he-txt h1{margin:2px 0 2px!important;text-align:left}
-.he-w-wnotif .he-txt .note{justify-content:flex-start;margin:0}
-.he-w-wnotif .he-txt .he-btn{margin:12px 0 0 -56px;align-self:stretch;width:auto;border-radius:14px;height:46px}
+:is(.he-w-wnotif,.he-w-wverrou) .pz-cd{margin:0 14px}
+.ecran .hent.pzw:is(.he-w-wnotif,.he-w-wverrou) .pz-cd>.he-txt{border-radius:26px;padding:14px 16px 16px;background:color-mix(in srgb,var(--papier,#fff) 94%,transparent);text-align:left;align-items:stretch}
+:is(.he-w-wnotif,.he-w-wverrou) .pz-ic{position:absolute;left:16px;top:14px;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--acc,#1E1C1B) 40%,#fff),var(--acc,#1E1C1B));display:grid;place-items:center}
+:is(.he-w-wnotif,.he-w-wverrou) .pz-ic img{width:32px;height:32px;object-fit:contain}
+:is(.he-w-wnotif,.he-w-wverrou) .he-txt{padding-left:72px!important}
+:is(.he-w-wnotif,.he-w-wverrou) .he-txt .kick{text-align:left;text-transform:none;letter-spacing:.02em;font-size:11px}
+:is(.he-w-wnotif,.he-w-wverrou) .he-txt h1{margin:2px 0 2px!important;text-align:left}
+:is(.he-w-wnotif,.he-w-wverrou) .he-txt .note{justify-content:flex-start;margin:0}
+:is(.he-w-wnotif,.he-w-wverrou) .he-txt .he-btn{margin:12px 0 0 -56px;align-self:stretch;width:auto;border-radius:14px;height:46px}
 .pz-ghost{position:absolute;inset:10px 12px -9px;border-radius:26px;background:rgba(255,255,255,.55);z-index:0}
 .he-w-wnotif .pz-st .he-ph{filter:brightness(.85)}
+/* 65 Feuille du bas : une feuille blanche remonte du bas avec les 4 infos, la photo reste visible au-dessus */
+@keyframes pwFeuille{0%{translate:0 400px;animation-timing-function:cubic-bezier(.2,1.3,.4,1)}12%{translate:0 0}88%{translate:0 0;animation-timing-function:ease-in}100%{translate:0 400px}}
+.ecran .hent.pzh.he-w-wfeuille .he-txt{left:0;right:0;bottom:0;top:auto;border-radius:30px 30px 0 0;padding:12px 24px calc(26px + env(safe-area-inset-bottom,0px));box-shadow:0 -14px 34px rgba(0,0,0,.4);animation:pwFeuille 8s infinite}
+.he-w-wfeuille .he-txt::before{content:"";width:44px;height:5px;border-radius:3px;background:#d8cdd0;margin:0 auto 6px;flex:none}
+.pz-degrade{inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.35))}
+/* 66 Écran verrouillé : l'heure en grand, la notification arrive dessous, la barre d'accueil en bas */
+@keyframes pwVerrou{0%{translate:0 100px;opacity:0;scale:.92}8%{translate:0 0;opacity:1;scale:1}88%{opacity:1}96%,100%{translate:0 0;opacity:0}}
+.ecran .hent.pzh.he-w-wverrou>.pz-blk{top:41%;animation:pwVerrou 8s infinite}
+.he-w-wverrou .pz-st .he-ph{filter:brightness(.8)}
+.pz-lk{left:0;right:0;top:70px;text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45);z-index:3}
+.pz-lk .d{font:500 15px Jost,sans-serif;letter-spacing:.02em}
+.pz-lk .h{font:300 92px/1 Jost,sans-serif;margin-top:4px}
+.pz-hb{left:50%;bottom:10px;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:rgba(255,255,255,.9);z-index:3}
 @media (prefers-reduced-motion:reduce){.hent.pzh.pzw *,.hent.pzh.pzw *::after{animation:none!important}.hent.pzw .pz-etd,.hent.pzw .pz-tc,.hent.pzw .pz-ts{display:none}.hent.pzw .pz-bg{opacity:1}}
 `;
 const st=document.createElement("style");st.id="entetes-plus13";st.textContent=css;document.head.appendChild(st);
@@ -115,7 +128,7 @@ window.entete=function(k,t,lang){
   const ph=u=>`<div class="he-ph" style="background-image:url('${U(u)}')"></div>`;
   const kick=`<div class="kick">${t.type} · ${D.ville}</div>`,note=D.nb?`<div class="note"><span class="et">${etoiles}</span>${D.note} · ${D.nb} ${t.avisG}</div>`:"";
   const btn=`<button class="he-btn" data-res>${t.creneau}${creneau(t)?`<small>${t.dispo} : ${creneau(t)}</small>`:""}</button>`;
-  const f0=Math.max(18,Math.min(k==="wcachet"?34:k==="wnotif"?30:44,Math.floor((k==="wcachet"?250:k==="wnotif"?240:300)/(String(D.nom||"").length*.58||1))));
+  const f0=Math.max(18,Math.min(/^wcachet/.test(k)?34:/^w(notif|verrou)$/.test(k)?30:44,Math.floor((/^wcachet/.test(k)?250:/^w(notif|verrou)$/.test(k)?240:300)/(String(D.nom||"").length*.58||1))));
   const txt=`<div class="he-txt">${kick}<h1 data-f0="${f0}" style="font-size:${f0}px">${D.nom}</h1>${note}${btn}</div>`;
   /* rectangle (avec ses décors) + décor du fond */
   const W=(top,arriere,avant,fond)=>`<div class="hent he-w-${k} pzh pzw" data-s="accueil"><div class="pz-blk" style="top:${top}"><div class="pz-cd">${arriere?`<div class="pz-ar">${arriere}</div>`:""}${txt}${avant?`<div class="pz-av">${avant}</div>`:""}</div></div><div class="pz-st">${fond}</div></div>`;
@@ -139,6 +152,10 @@ window.entete=function(k,t,lang){
   case "wetor":return W("64px","","",ph(h2)+R(15,()=>{const s=Math.round(rx(20,44));return `<div class="pz-etd" style="z-index:8;left:${f1(rx(0,92))}%;font-size:${s}px;animation-duration:${f1(rx(5,9))}s;animation-delay:-${f1(rx(0,9))}s"><b style="animation-duration:${f1(rx(1,2.2))}s;animation-delay:-${f1(rx(0,2))}s">★</b></div>`}));
   case "wetoile":return W("39.5%","","",ph(h1)+`<div class="pz-box">${trait(ETO)}${tc(ETO,15,18,0)}</div>`);
   case "wcachet":{const Rr=164+26;return W("48.7%",`<i class="pz-dash"></i>`,`<div class="pz-ring2">${R(9,i=>{const a=i/9*Math.PI*2;return `<img src="${ch(i)}" alt="" style="left:${Math.round(Math.cos(a)*Rr)}px;top:${Math.round(Math.sin(a)*Rr)}px">`})}</div>`,ph(h2)+etinc(8));}
+  case "wfeuille":return `<div class="hent he-w-${k} pzh" data-s="accueil">${txt}<div class="pz-st">${ph(h2)}<div class="pz-degrade"></div></div></div>`;
+  case "wverrou":{let dt="",hh="";try{const n=new Date();dt=n.toLocaleDateString(lang||"fr",{weekday:"long",day:"numeric",month:"long"});hh=n.toLocaleTimeString(lang||"fr",{hour:"numeric",minute:"2-digit",hour12:false}).replace(/^(\d):/,"$1:")}catch(e){dt="";hh="9:41"}
+    return `<div class="hent he-w-${k} pzh pzw" data-s="accueil"><div class="pz-blk"><div class="pz-cd">${txt.replace('<div class="he-txt">','<div class="he-txt"><span class="pz-ic"><img src="'+ch(2)+'" alt=""></span>')}</div></div><div class="pz-st">${ph(h3)}<div class="pz-lk"><div class="d">${dt}</div><div class="h">${hh}</div></div><i class="pz-hb"></i></div></div>`;}
+  case "wcachet2":return W("48.7%","","",ph(h2)+etinc(14));
   case "wnotif":return `<div class="hent he-w-${k} pzh pzw" data-s="accueil"><div class="pz-blk" style="top:64px"><div class="pz-cd"><div class="pz-ghost"></div>${txt.replace('<div class="he-txt">','<div class="he-txt"><span class="pz-ic"><img src="'+ch(2)+'" alt=""></span>')}</div></div><div class="pz-st">${ph(h2)}</div></div>`;
   }
   return "";
