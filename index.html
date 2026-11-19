@@ -2488,7 +2488,23 @@ document.addEventListener("DOMContentLoaded",function(){
   .pied-bocaux{display:flex;flex-direction:column;align-items:center;margin:0 auto 14px;width:100%;max-width:640px}
   .pied-bocaux canvas{display:block}
   .pied-bocaux .pb-aide{margin-top:8px;font-size:12.5px;color:#7a6f69;text-align:center}
+  /* 20/11 (Marie, 2e passage) */
+  html body:not(#_) .np .np-nav .np-bar{height:58px}
+  html body:not(#_) .np .np-hero{margin-top:-58px}
+  html body:not(#_) .np .np-nav .np-go{height:38px;padding:0 18px;font-size:13.5px}
+  html body:not(#_) .np .np-login{padding:7px 12px;font-size:14px}
+  .ape .ecran{position:relative;z-index:1;transform-origin:50% 12%;transition:translate .35s cubic-bezier(.2,.8,.2,1),scale .35s cubic-bezier(.2,.8,.2,1)}
+  .ape .ecran:hover,.ape .ecran:nth-child(even):hover{scale:1.4;z-index:5}
+  .ape .ecran:hover{translate:0 -10px}
+  .ape .ecran:nth-child(even):hover{translate:0 16px}
+  .ape .ecran:hover figcaption{opacity:0}
+  .ape figcaption{transition:opacity .2s}
+  html body:not(#_) footer.pied{background:linear-gradient(180deg,#F4E1EA 0,rgba(244,225,234,0) 240px)}
+  .fil-fin{display:flex;align-items:center;justify-content:center;gap:14px;width:260px;margin:64px auto 0;color:#E0628C;font-size:13px}
+  .fil-fin::before,.fil-fin::after{content:"";flex:1;height:4px;background:radial-gradient(circle,rgba(224,98,140,.55) 1.4px,transparent 2px) 0 0/12px 4px repeat-x}
+  html body:not(#_) section.styles{padding-bottom:70px}
 }
+@media (max-width:760px){.fil-fin{display:none}}
 @media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
 </style>
 </head><body>
@@ -2650,6 +2666,7 @@ document.addEventListener("DOMContentLoaded",function(){
   </div>
   <div class="rangee" id="rangee"></div>
   <p class="note-ia">Exemples · salons, personnes et photos créés par IA</p>
+  <div class="fil-fin" aria-hidden="true">✦</div>
 </section>
 
 <!-- 6 · MARIE -->
@@ -4030,7 +4047,7 @@ const V=1;let raf=0,vu=true;
   // ---- les charms
   const imgs={};await Promise.all(NOMS.map(n=>new Promise(ok=>{const i=new Image();i.onload=i.onerror=ok;i.src='loginail-site/charms-mini/'+n+'.webp';imgs[n]=i})));
   const R0=Math.max(4.2,FS*.064),B=[];let essais=0;
-  while(B.length<(SOURIS?72:34)&&essais<90000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.78+Math.random()*.5);
+  while(B.length<(SOURIS?46:34)&&essais<90000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.78+Math.random()*.5);
     if(!libre(x,y,r))continue;if(B.some(b=>Math.hypot(b.x-x,b.y-y)<(b.r+r)*.95))continue;
     B.push({x,y,r,vx:0,vy:0,a:Math.random()*6.28,va:0,im:imgs[NOMS[B.length%NOMS.length]]})}
   // ---- le mouvement (le même que la 1re version : rien ne sort jamais)
