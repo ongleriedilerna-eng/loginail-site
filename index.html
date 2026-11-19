@@ -2438,9 +2438,58 @@ document.addEventListener("DOMContentLoaded",function(){
 @media (max-width:760px){
   html body:not(#_) .cq-vch{filter:none!important}
   html body:not(#_) section.styles{background:none!important}
-  html body:not(#_) section.styles .rangee{background:none!important}
+  html body:not(#_) section.styles .rangee{background:none!important;padding-bottom:44px!important;margin-bottom:-14px!important}
+  html body:not(#_) section.styles .rangee .tel{box-shadow:0 14px 22px -12px rgba(60,20,40,.32)!important}
   html body:not(#_) .marie-tel h2{font-size:min(6.3vw,25px)!important;line-height:1.28}
 }
+</style>
+<style id="ordi-comme-tel-2011">
+/* 20/11 (Marie) : ORDINATEUR — on reprend 4 choses du téléphone (plus jolies) ; téléphone inchangé.
+   1) « Rappel SMS · tout seul » : la bulle blanche penchée du téléphone (titre rose)
+   2) « L'appli qui gère tout, dans ta poche. » : les bulles qui s'empilent + les 4 écrans de l'appli (à la place des cases)
+   3) « Tout est inclus. » sous la frise de « Le premier mois, c'est cadeau » (la carte 49,99 € reste en face)
+   4) en bas : LOGINAIL en bocaux de charms, qui bougent quand la souris passe dessus */
+@media (min-width:761px){
+  html body:not(#_) .cq .cq-sms{background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;padding:11px 15px;rotate:5deg;
+     box-shadow:0 16px 30px -12px rgba(60,30,40,.35)}
+  html body:not(#_) .cq .cq-sms .de{color:#B03562}
+
+  html body:not(#_) .appli .tete,html body:not(#_) .appli .bento{display:none}
+  .ape{display:grid;grid-template-columns:340px 1fr;grid-template-areas:"t t" "b r";column-gap:44px;align-items:center;padding:20px 0 10px;min-width:0}
+  .ape .t{grid-area:t;display:block;text-align:center;font-family:'Abril Fatface',serif;font-weight:400;font-size:clamp(40px,4.4vw,58px);line-height:1.08;margin:0 0 34px;color:#1E1C1B}
+  .ape .t em{font-style:normal;color:#B03562}
+  .bzt{grid-area:b;display:block;position:relative;height:400px;width:340px;pointer-events:none}
+  .bzt .b{position:absolute;left:0;width:330px;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:10px 14px 10px 10px;white-space:nowrap;
+     box-shadow:0 16px 32px -14px rgba(60,30,40,.3),0 2px 6px rgba(60,30,40,.05);transition:top .55s cubic-bezier(.2,.8,.2,1),opacity .45s ease,scale .45s ease;text-align:left}
+  .bzt .b i{width:34px;height:34px;border-radius:10px;background:#FBEFF3;color:#B03562;display:grid;place-items:center;font-style:normal;font-size:16px;flex:none;font-weight:600}
+  .bzt .b b{display:block;font-size:14px;font-weight:500;color:#1E1C1B}
+  .bzt .b small{display:block;font-size:12px;color:#6b625c;margin-top:1px}
+  .ape .rail{grid-area:r;display:flex;gap:18px;justify-content:center;overflow:visible;padding:0}
+  .ape .ecran{flex:1 1 0;max-width:170px;margin:0;text-align:center;transition:translate .35s cubic-bezier(.2,.8,.2,1)}
+  .ape .ecran:nth-child(even){translate:0 26px}
+  .ape .ecran:hover{translate:0 -8px}
+  .ape .ecran:nth-child(even):hover{translate:0 18px}
+  .ape .cadre{border-radius:30px;background:#111;padding:6px;box-shadow:0 30px 60px -22px rgba(60,30,40,.4),0 6px 18px rgba(0,0,0,.08);position:relative}
+  .ape .cadre img{display:block;width:100%;border-radius:25px;aspect-ratio:600/1298;object-fit:cover;object-position:top}
+  .ape .cadre::before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:28%;height:11px;border-radius:9px;background:#111;z-index:2}
+  .ape figcaption{margin-top:14px;font-size:14.5px;font-weight:500;color:#1E1C1B}
+  .ape figcaption small{display:block;font-weight:400;font-size:12.5px;color:#6b625c;margin-top:2px}
+  .ape .points{display:none}
+
+  .k2c{display:block;background:#fff;border-radius:26px;padding:26px 26px 24px;margin:34px 0 0;max-width:520px;position:relative;box-shadow:0 30px 60px -34px rgba(120,40,70,.45);text-align:left}
+  .k2c h3{font-family:'Abril Fatface',serif;font-weight:400;font-size:28px;margin:0 0 16px;color:#1E1C1B;text-align:center}
+  .k2c h3 em{font-style:normal;color:#B03562}
+  .k2c ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:14px 14px}
+  .k2c li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:#3d3632;line-height:1.3}
+  .k2c li img{width:30px;height:30px;object-fit:contain;flex:none}
+  html body:not(#_) .k2c .ch{position:absolute;width:56px;right:-14px;top:-24px;rotate:12deg;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(80,30,45,.22));animation:none;scale:1}
+
+  html body:not(#_) .pied-ch{display:none!important}
+  .pied-bocaux{display:flex;flex-direction:column;align-items:center;margin:0 auto 14px;width:100%;max-width:640px}
+  .pied-bocaux canvas{display:block}
+  .pied-bocaux .pb-aide{margin-top:8px;font-size:12.5px;color:#7a6f69;text-align:center}
+}
+@media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
 </style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
@@ -3858,14 +3907,14 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
 </script>
 <script id="bulles-tel-js">/* 19/11 (Marie, B1 « la pile ») : téléphone — la nouvelle bulle arrive en haut et pousse les autres vers le bas */
 (function(){
-  const z=document.getElementById('bulles');if(!z||!matchMedia('(max-width:760px)').matches)return;
+  const z=document.getElementById('bulles');if(!z)return;
   const L=[['☾','Nouvelle réservation · 2 h','elle réserve pendant que tu dors'],['✉','Rappel SMS envoyé','inclus, sans limite'],['◉','128 vues cette semaine','tu sais combien l’ont vu'],
     ['◷','Une place se libère','la liste d’attente est prévenue'],['♡','Anniversaire d’Inès','un petit mot, en un clic'],['★','Fidélité · 6 sur 10','sa carte se remplit toute seule'],
     ['€','55 € encaissés','ta caisse du jour'],['↗','Instagram · 58 %','tu sais d’où elles viennent'],['✕','Annulation','la place se remet en ligne'],['%','0 % de commission','tout est pour toi']];
   const pile=[];let n=0;const H=62;
   const ajoute=()=>{const it=L[n++%L.length],e=document.createElement('div');e.className='b';e.setAttribute('aria-hidden','true');
     e.innerHTML='<i>'+it[0]+'</i><div><b>'+it[1]+'</b><small>'+it[2]+'</small></div>';e.style.top='-40px';e.style.opacity='0';e.style.scale='.92';z.appendChild(e);pile.unshift(e);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*H)+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*(innerWidth>760?68:H))+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
     if(pile.length>6){const v=pile.pop();setTimeout(()=>v.remove(),600)}};
   let parti=false;const go=()=>{if(parti)return;parti=true;for(let k=0;k<4;k++)setTimeout(ajoute,k*350);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),1800)};
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:.3}).observe(z);else go();
@@ -3927,7 +3976,7 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
 </script>
 <script id="pied-bocaux-js">/* 19/11 (Marie) : les lettres-bocaux du bas de l'accueil, téléphone seulement — démarre seulement quand on approche du bas */
 (function(){
-  const Z=document.getElementById('piedBocaux');if(!Z||!matchMedia('(max-width:760px)').matches||!('IntersectionObserver' in window))return;
+  const Z=document.getElementById('piedBocaux');if(!Z||!('IntersectionObserver' in window))return;const SOURIS=matchMedia('(hover:hover) and (pointer:fine)').matches;
   let parti=false;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!parti){parti=true;io.disconnect();lance()}}),{rootMargin:'400px 0px'});io.observe(Z);
   async function lance(){
 const V=1;let raf=0,vu=true;
@@ -3937,7 +3986,7 @@ const V=1;let raf=0,vu=true;
   const cv=Z.querySelector('canvas'),ctx=cv.getContext('2d'),DPR=Math.min(2,window.devicePixelRatio||1);
   await document.fonts.load('100px BagelBocal');
   // ---- LOGINAIL sur UNE ligne, lettres séparées par un petit espace
-  const T='LOGINAIL',W=Math.min(Z.clientWidth||innerWidth-32,420),GAP=Math.max(3,W*.012);
+  const T='LOGINAIL',W=Math.min(Z.clientWidth||innerWidth-32,SOURIS?620:420),GAP=Math.max(3,W*.012);
   const mes=fs=>{ctx.font=fs+'px BagelBocal';return [...T].reduce((s,ch)=>s+ctx.measureText(ch).width,0)+GAP*(T.length-1)};
   let FS=260;while(mes(FS)>W-4&&FS>30)FS-=1;
   const SY=1.32;ctx.font=FS+'px BagelBocal';const asc=Math.max(...[...T].map(ch=>ctx.measureText(ch).actualBoundingBoxAscent))*SY+Math.max(6,FS*.12);
@@ -4014,10 +4063,11 @@ const V=1;let raf=0,vu=true;
     for(const b of B){const dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d>RAY)continue;const k=(1-d/RAY)*fort,u=d||1;
       b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-k*5;b.va+=(Math.random()-.5)*k*.4}};
   let appui=false;
-  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6);if(!capteurs)demande()});
-  cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35)});
+  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6);if(!capteurs&&!SOURIS)demande()});
+  cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35);else if(e.pointerType==='mouse')pousse(e,.5)}); // ordinateur : la souris qui passe remue les charms
+  if(SOURIS){aide.innerHTML='Passe ta souris sur les bocaux ✦';cv.style.cursor='pointer'}
   addEventListener('pointerup',()=>{appui=false});addEventListener('pointercancel',()=>{appui=false});
-  if(!(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'))ecoute(); // Android : tout de suite
+  if(!SOURIS&&!(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'))ecoute(); // Android : tout de suite
   new IntersectionObserver(es=>es.forEach(e=>{vu=e.isIntersecting;if(vu&&!raf)raf=requestAnimationFrame(pas)}),{threshold:0}).observe(Z);
   raf=requestAnimationFrame(pas);
   }
