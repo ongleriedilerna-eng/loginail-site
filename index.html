@@ -2216,6 +2216,44 @@ document.addEventListener("DOMContentLoaded",function(){
 @keyframes piedEtoile{0%{opacity:1;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.pied-ch img.saute,.pied-etoile{animation:none!important}.pied-etoile{display:none}}
 </style>
+<style id="tel-retouches-1911d">
+/* 19/11 nuit (Marie) : TÉLÉPHONE seulement (ordinateur inchangé).
+   a) BUG : toucher « Rappel SMS envoyé », « Journée complète ? » ou « tonsalon.fr » n'ouvrait rien (seul « Léa » avait son aperçu sur téléphone)
+      → les 4 notifications qui tournent ouvrent leur aperçu au-dessus, centré, comme Léa
+   b) 4 charms dans le haut, comme sur ordinateur (cerise disco, saturne, collier de perles, sac matelassé), plus petits, sur les bords */
+@media (max-width:760px){
+  .np .np-tourne .np-float .np-pop{display:block;left:50%!important;right:auto!important;top:auto!important;bottom:calc(100% + 14px)!important;translate:-50% 0!important;width:min(300px,calc(100vw - 32px));transform-origin:50% 100%}
+  .np .np-tourne .np-float .np-pop .np-shot{height:min(250px,32vh)}
+  .np .np-tourne .np-float .np-pop::before{top:auto!important;bottom:-6px;left:50%!important;right:auto!important;transform:translateX(-50%) rotate(45deg)!important}
+  html body:not(#_) #hero>#charms{display:block!important}
+  html body:not(#_) #charms .np-charm:not(.np-m){display:none}
+  html body:not(#_) #charms .np-charm.np-m{display:block!important}
+  html body:not(#_) #charms .np-charm[src*="cerisedisco"]{width:52px!important;left:-6px!important;top:150px!important}
+  html body:not(#_) #charms .np-charm[src*="saturne"]{width:48px!important;left:calc(100% - 46px)!important;top:128px!important}
+  html body:not(#_) #charms .np-charm[src*="collierperles"]{width:46px!important;left:8px!important;top:318px!important}
+  html body:not(#_) #charms .np-charm[src*="sacmatelasse"]{width:46px!important;left:calc(100% - 54px)!important;top:322px!important}
+}
+</style>
+<style id="bulles-tel">
+/* 19/11 nuit (Marie, R4 + B1 « la pile ») : TÉLÉPHONE seulement — ordinateur inchangé.
+   Ordre : « Loginail, c'est quoi ? » (sans la carte du prix) → « L'appli qui gère tout, dans ta poche » → les bulles en pile
+   (comme l'écran verrouillé d'un iPhone : la nouvelle arrive en haut et pousse les autres) → les 3 écrans → la carte du prix
+   → Classe ou baddie. Les cartes « Pendant que tu dors… » sont retirées sur téléphone. Maquette : idees/telephone.html?v=B1&go=pop */
+.cq-bis,.bzt{display:none}
+@media (max-width:760px){
+  html body:not(#_) #cest-quoi .cq-res{display:none}
+  html body:not(#_) .appli .bento{display:none}
+  .cq.cq-bis{display:block;background:none;margin:0;padding:26px 0 8px;overflow:visible;z-index:auto}
+  .cq.cq-bis .cq-res{margin:0 auto}
+  .bzt{display:block;position:relative;height:370px;max-width:380px;margin:14px auto 0;pointer-events:none}
+  .bzt .b{position:absolute;left:50%;translate:-50% 0;width:300px;display:flex;align-items:center;gap:9px;background:#fff;border-radius:16px;padding:9px 13px 9px 9px;white-space:nowrap;
+     box-shadow:0 16px 32px -14px rgba(60,30,40,.3),0 2px 6px rgba(60,30,40,.05);transition:top .55s cubic-bezier(.2,.8,.2,1),opacity .45s ease,scale .45s ease;text-align:left}
+  .bzt .b i{width:32px;height:32px;border-radius:10px;background:#FBEFF3;color:#B03562;display:grid;place-items:center;font-style:normal;font-size:15px;flex:none;font-weight:600}
+  .bzt .b b{display:block;font-size:13px;font-weight:500;color:#1E1C1B}
+  .bzt .b small{display:block;font-size:11px;color:#6b625c;margin-top:1px}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){.bzt .b{transition:none}}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2336,12 +2374,23 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="tete vu"><div class="k">Et derrière</div><h2 class="serif titre" style="margin-top:12px">L’appli qui gère <em>tout.</em></h2></div>
     <div class="ape" id="ape" aria-label="L’appli en 3 écrans">
       <h2 class="t"><span class="l">L’appli qui gère tout,</span> <span class="l"><em>dans ta poche.</em></span></h2>
+      <div class="bzt" id="bulles" aria-label="Tout ce que fait l’appli : réservations la nuit, rappels SMS inclus, vues du site, liste d’attente, anniversaires, fidélité, caisse, provenance, annulations, 0 % de commission"></div>
       <div class="rail">
         <figure class="ecran ici"><div class="cadre"><img src="loginail-site/apercus-univers/app-accueil-1911.webp" alt="L’accueil de l’appli Loginail" decoding="async"></div><figcaption>Ton accueil<small>ta prochaine cliente en grand</small></figcaption></figure>
         <figure class="ecran"><div class="cadre"><img src="loginail-site/apercus-univers/app-agenda-1911.webp" alt="L’agenda de l’appli Loginail" decoding="async"></div><figcaption>Ton agenda<small>les réservations arrivent toutes seules</small></figcaption></figure>
         <figure class="ecran"><div class="cadre"><img src="loginail-site/apercus-univers/app-fiche-1911.webp" alt="La fiche d’une cliente dans l’appli" decoding="async"></div><figcaption>Tes clientes<small>visites, fidélité, historique</small></figcaption></figure>
       </div>
       <div class="points" aria-hidden="true"><span class="ici"></span><span></span><span></span></div>
+    </div>
+    <div class="cq cq-bis" aria-label="Le prix">
+    <div class="cq-res">
+      <div class="cq-logo">Logi<span>nail</span></div>
+      <div class="cq-prix">49,99 € <small>/ mois</small></div>
+      <div class="cq-offert">1er mois offert</div>
+      <div class="cq-pt">Sans engagement<br>Rien à installer</div>
+      <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
+      <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
+    </div>
     </div>
     <div class="bento">
       <div class="case grande vu"><div><div class="q">Ta journée</div><b>Ton agenda, d’un coup d’œil.</b><p>Elle réserve sur ton site, le rendez-vous arrive ici tout seul.</p></div><div class="tel"><img src="loginail-site/apercus-univers/app-accueil-1911.webp" alt="L’accueil de l’appli Loginail"></div></div>
@@ -3605,6 +3654,21 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
       const a=Math.PI*(1.1+.8*k/4),d=34+Math.random()*16;e.style.left=(r.left+r.width/2-6)+'px';e.style.top=(r.top+r.height/2-6)+'px';
       e.style.setProperty('--dx',Math.cos(a)*d+'px');e.style.setProperty('--dy',Math.sin(a)*d+'px');document.body.appendChild(e);setTimeout(()=>e.remove(),850)}
   }));
+})();
+</script>
+<script id="bulles-tel-js">/* 19/11 (Marie, B1 « la pile ») : téléphone — la nouvelle bulle arrive en haut et pousse les autres vers le bas */
+(function(){
+  const z=document.getElementById('bulles');if(!z||!matchMedia('(max-width:760px)').matches)return;
+  const L=[['☾','Nouvelle réservation · 2 h','elle réserve pendant que tu dors'],['✉','Rappel SMS envoyé','inclus, sans limite'],['◉','128 vues cette semaine','tu sais combien l’ont vu'],
+    ['◷','Une place se libère','la liste d’attente est prévenue'],['♡','Anniversaire d’Inès','un petit mot, en un clic'],['★','Fidélité · 6 sur 10','sa carte se remplit toute seule'],
+    ['€','55 € encaissés','ta caisse du jour'],['↗','Instagram · 58 %','tu sais d’où elles viennent'],['✕','Annulation','la place se remet en ligne'],['%','0 % de commission','tout est pour toi']];
+  const pile=[];let n=0;const H=62;
+  const ajoute=()=>{const it=L[n++%L.length],e=document.createElement('div');e.className='b';e.setAttribute('aria-hidden','true');
+    e.innerHTML='<i>'+it[0]+'</i><div><b>'+it[1]+'</b><small>'+it[2]+'</small></div>';e.style.top='-40px';e.style.opacity='0';e.style.scale='.92';z.appendChild(e);pile.unshift(e);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*H)+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
+    if(pile.length>6){const v=pile.pop();setTimeout(()=>v.remove(),600)}};
+  let parti=false;const go=()=>{if(parti)return;parti=true;for(let k=0;k<4;k++)setTimeout(ajoute,k*350);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),1800)};
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:.3}).observe(z);else go();
 })();
 </script>
 </body></html>
