@@ -1,0 +1,359 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Maquette · accueil V3 (table ronde)</title>
+<style>
+/* MAQUETTE 19/11 — accueil V3, décidée « autour de la table » (DA, marketing, une prothésiste sur Planity).
+   Règles : UN seul fond crème rosé (sauf le prix en noir), encre + framboise, Abril Fatface + Jost,
+   signature = des charms qui DÉBORDENT des cadres (3–4 par écran), 3 boutons seulement (haut, prix, barre). */
+@font-face{font-family:Abril;src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:400;src:url(../loginail-site/polices/Jost-400-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format("woff2")}
+@font-face{font-family:Shrikhand;src:url(../loginail-site/polices/Shrikhand-400-latin.woff2) format("woff2")}
+:root{--fond:#F6EFEA;--rosefond:#FBF1F4;--encre:#1E1C1B;--gris:#6b625c;--fram:#B03562;--rose:#E0628C;--pale:#FBE7EE;--ligne:rgba(30,28,27,.09)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--fond);color:var(--encre);font:400 16px/1.55 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
+.serif{font-family:Abril,serif;font-weight:400;letter-spacing:-.015em;line-height:1.02}
+.serif em,.serif i{font-style:normal;color:var(--fram)}
+.k{font:500 12px Jost;letter-spacing:.22em;text-transform:uppercase;color:var(--fram)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px;position:relative}
+.ch{position:absolute;pointer-events:none;z-index:6;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
+@keyframes fl{0%,100%{translate:0 0}50%{translate:0 -8px}}
+.vu{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}.vu.on{opacity:1;transform:none}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 26px;border-radius:99px;background:var(--encre);color:#fff;font:500 15px Jost;border:0;cursor:pointer;box-shadow:0 18px 34px -16px rgba(30,28,27,.55);transition:transform .2s}
+.cta:active{transform:scale(.97)}
+.lien{display:flex;align-items:center;gap:8px;max-width:520px;height:66px;margin:0 auto;padding:6px 6px 6px 22px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne),0 24px 44px -26px rgba(120,40,70,.45)}
+.lien input{flex:1;min-width:0;border:0;outline:0;background:none;font:400 16px Jost;color:var(--encre)}
+.lien input::placeholder{color:#9A8F88}
+.tel{position:relative;border-radius:30px;background:#111;padding:6px;box-shadow:0 30px 50px -24px rgba(60,20,40,.45)}
+.tel img{width:100%;border-radius:25px;aspect-ratio:600/1298;object-fit:cover;object-position:top}
+.tel::before{content:"";position:absolute;z-index:2;top:12px;left:50%;translate:-50% 0;width:28%;height:12px;border-radius:9px;background:#111}
+.bulle{position:absolute;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:16px;background:rgba(255,255,255,.96);box-shadow:0 18px 34px -16px rgba(80,20,40,.4);white-space:nowrap;text-align:left}
+.bulle b{display:block;font-weight:500;font-size:14.5px}.bulle span{font-size:12.5px;color:var(--gris)}
+.bulle .av{width:36px;height:36px;border-radius:50%;background:center/cover}
+.bulle .ic{width:36px;height:36px;border-radius:11px;background:var(--pale);display:grid;place-items:center;color:var(--fram);font-size:17px}
+section{position:relative;overflow-x:clip}
+html{overflow-x:clip}
+.titre{font-size:clamp(36px,4.6vw,60px)}
+.chapo{font-size:18px;color:#4a4440;max-width:520px}
+
+/* barre */
+.barre{position:sticky;top:0;z-index:50;background:rgba(246,239,234,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne)}
+.barre .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.marque{display:flex;align-items:center;gap:10px;font:500 13.5px Jost;letter-spacing:.32em}
+.marque img{width:30px;height:30px;border-radius:9px}
+.barre .cta{height:44px;padding:0 20px;font-size:14px;background:#fff;color:var(--encre);box-shadow:inset 0 0 0 1px var(--ligne)}
+
+/* 1 · haut */
+.haut{text-align:center;padding:54px 0 0;overflow:hidden;background:radial-gradient(50% 45% at 50% 22%,rgba(246,215,225,.9),transparent 70%)}
+.haut .k{display:inline-block;margin-bottom:16px}
+.haut h1{font-size:clamp(46px,6.4vw,86px)}
+.haut h1 .sw{position:relative;white-space:nowrap}
+.haut h1 .sw svg{position:absolute;left:-2%;bottom:-.06em;width:104%;height:.2em;color:var(--rose);overflow:visible}
+.haut h1 .l2{display:block;font-size:.46em;margin-top:.5em;color:var(--fram)}
+.haut .lien{margin-top:30px}
+.haut .sous{margin-top:14px;font-size:13.5px;color:var(--gris)}
+.haut .sous b{color:var(--encre);font-weight:500}
+.eventail{position:relative;height:330px;margin-top:10px}
+.eventail .tel{position:absolute;bottom:-150px;width:178px;transform-origin:50% 120%}
+
+/* vague (repris de l'accueil actuel, choisie par Marie) */
+.vague{display:block;width:100%;height:70px;margin-top:-69px;position:relative;z-index:3}
+
+/* 2 · tu colles, c'est prêt */
+.colle{background:var(--rosefond);padding:40px 0 90px;z-index:3}
+.colle .tete{text-align:center;margin-bottom:46px}
+.etapes{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;align-items:center}
+.etape{text-align:center}
+.etape .vis{height:330px;display:flex;align-items:center;justify-content:center;position:relative}
+.etape .tel{width:150px}
+.etape b{display:block;font-family:Abril;font-weight:400;font-size:24px;margin-top:18px}
+.etape p{font-size:15px;color:var(--gris);max-width:250px;margin:4px auto 0}
+.etape .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--encre);color:#fff;font:500 13px Jost;margin-top:18px}
+.fleche{color:var(--rose);font-family:Abril;font-size:34px;text-align:center}
+.mini-lien{width:250px;background:#fff;border-radius:99px;padding:14px 16px;box-shadow:0 20px 36px -20px rgba(120,40,70,.45);font-size:14px;color:var(--gris);text-align:left;display:flex;justify-content:space-between;align-items:center}
+.mini-lien i{font-style:normal;background:var(--encre);color:#fff;border-radius:99px;padding:6px 12px;font-size:11px;letter-spacing:.08em}
+.curseur{display:inline-block;width:1px;height:16px;background:var(--encre);vertical-align:-3px;margin-left:2px;animation:cl 1s steps(1) infinite}@keyframes cl{50%{opacity:0}}
+
+/* 3 · planity / bio */
+.bio{padding:110px 0}
+.bio .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.bio .chapo{margin-top:18px}
+.pts{list-style:none;margin-top:26px;display:grid;gap:12px}
+.pts li{display:flex;gap:12px;align-items:flex-start;font-size:16px}
+.pts li::before{content:"✦";color:var(--rose);flex:none}
+.scene-bio{position:relative;height:520px}
+.insta{position:absolute;left:0;top:30px;width:290px;background:#fff;border-radius:26px;padding:20px;box-shadow:0 30px 60px -28px rgba(60,20,40,.45);z-index:2}
+.insta .h{display:flex;gap:14px;align-items:center}
+.insta .pp{width:62px;height:62px;border-radius:50%;background:url(../loginail-site/insta/profil.webp) center/cover;box-shadow:0 0 0 3px #fff,0 0 0 5px var(--rose)}
+.insta .h b{display:block;font-size:15px}.insta .h span{font-size:12.5px;color:var(--gris)}
+.insta p{font-size:13.5px;line-height:1.45;margin-top:12px}
+.insta .ln{display:inline-flex;gap:6px;align-items:center;margin-top:8px;padding:6px 12px;border-radius:99px;background:var(--pale);color:var(--fram);font-weight:500;font-size:13.5px;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(224,98,140,.0)}50%{box-shadow:0 0 0 7px rgba(224,98,140,.18)}}
+.insta .g{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:14px}
+.insta .g i{aspect-ratio:1;background:center/cover;border-radius:4px}
+.scene-bio .tel{position:absolute;right:10px;top:0;width:230px;transform:rotate(4deg)}
+.scene-bio .fl{position:absolute;left:250px;top:250px;z-index:3;font-family:Abril;font-size:46px;color:var(--rose)}
+
+/* 4 · classe ou baddie */
+.styles{padding:30px 0 110px;text-align:center}
+.bascule{display:inline-flex;gap:4px;padding:5px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne);margin-top:22px}
+.bascule button{border:0;background:none;font:500 15px Jost;padding:10px 22px;border-radius:99px;cursor:pointer;color:var(--gris);transition:background .25s,color .25s}
+.bascule button.on{background:var(--encre);color:#fff}
+.rangee{display:flex;gap:22px;justify-content:center;margin-top:44px;padding:20px 0 30px}
+.rangee .tel{width:150px;flex:none;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.rangee .tel:nth-child(odd){transform:translateY(24px)}
+.rangee.change .tel{opacity:0;transform:translateY(40px) scale(.96)}
+.note-ia{font-size:12px;color:var(--gris);margin-top:8px}
+
+/* 5 · l'appli */
+.appli{padding:30px 0 110px}
+.appli .tete{text-align:center;margin-bottom:44px}
+.bento{display:grid;grid-template-columns:1.1fr 1fr 1fr;grid-template-rows:auto auto;gap:18px}
+.case{background:#fff;border-radius:24px;padding:24px;box-shadow:0 20px 40px -30px rgba(60,20,40,.35);position:relative;overflow:hidden}
+.case .q{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);font-weight:500}
+.case b{display:block;font-family:Abril;font-weight:400;font-size:24px;line-height:1.1;margin:10px 0 6px}
+.case p{font-size:14.5px;color:#4a4440}
+.case.grande{grid-row:span 2;background:var(--pale);display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center}
+.case.grande .tel{width:200px;margin-top:20px;margin-bottom:-90px}
+.notif{display:flex;gap:10px;align-items:center;background:var(--fond);border-radius:14px;padding:10px 12px;margin-top:14px}
+.notif .ic{width:32px;height:32px;border-radius:9px;background:url(../loginail-site/icone-appli.svg) center/cover;flex:none}
+.notif strong{display:block;font-weight:500;font-size:13.5px}.notif small{font-size:12px;color:var(--gris)}
+.chiffre{font-family:Abril;font-size:54px;line-height:1;color:var(--fram);margin-top:10px}
+
+/* 6 · Marie */
+.marie{padding:40px 0 120px}
+.marie .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.portrait{position:relative}
+.portrait .ph{aspect-ratio:4/5;border-radius:30px;background:url(../marie-portrait.webp) center 25%/cover,#eee;box-shadow:0 40px 70px -40px rgba(60,20,40,.55)}
+.portrait .etiquette{position:absolute;left:-18px;bottom:40px;background:#fff;border-radius:16px;padding:12px 18px;box-shadow:0 18px 34px -16px rgba(80,20,40,.4)}
+.portrait .etiquette b{display:block;font-weight:500}.portrait .etiquette span{font-size:13px;color:var(--gris)}
+.marie blockquote{font-family:Abril;font-size:clamp(28px,3vw,40px);line-height:1.15;margin:18px 0 22px}
+.marie blockquote em{font-style:normal;color:var(--fram)}
+.marie p{font-size:17px;color:#4a4440;max-width:520px;margin-bottom:12px}
+.signature{font-family:Shrikhand;font-size:34px;color:var(--fram);margin-top:14px}
+.brouillon{display:inline-block;margin-top:14px;font-size:12px;background:#FFF3C4;color:#6b5600;border-radius:8px;padding:4px 10px}
+
+/* 7 · prix (seul bloc noir) */
+.prix{background:var(--encre);color:#fff;padding:110px 0;border-radius:40px 40px 0 0}
+.prix .wrap{display:grid;grid-template-columns:1fr 420px;gap:70px;align-items:center}
+.prix .k{color:#F4A9C2}
+.prix .titre em{color:#F4A9C2}
+.frise{list-style:none;margin-top:34px;display:grid;gap:18px;border-left:1px solid rgba(255,255,255,.18);padding-left:24px}
+.frise li b{display:block;font-family:Abril;font-weight:400;font-size:22px}
+.frise li span{font-size:15px;color:rgba(255,255,255,.7)}
+.carte{background:#fff;color:var(--encre);border-radius:30px;padding:34px 30px;text-align:center;position:relative}
+.carte .p{font-family:Abril;font-size:64px;line-height:1}.carte .p small{font:400 18px Jost;color:var(--gris)}
+.carte .of{display:inline-block;margin:12px 0 18px;background:var(--pale);color:var(--fram);border-radius:99px;padding:8px 16px;font-weight:500}
+.carte ul{list-style:none;text-align:left;display:grid;gap:9px;font-size:15px;margin:6px 0 22px}
+.carte li::before{content:"✓  ";color:var(--fram);font-weight:500}
+.carte .cta{width:100%}
+.carte small.n{display:block;font-size:12.5px;color:var(--gris);margin-top:10px}
+
+/* 8 · questions */
+.faq{background:var(--encre);color:#fff;padding:20px 0 90px}
+.faq .grille{display:grid;grid-template-columns:1fr 1fr;gap:0 50px;margin-top:30px}
+.faq details{border-top:1px solid rgba(255,255,255,.14);padding:18px 0}
+.faq summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::after{content:"+";color:#F4A9C2;font-size:20px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:rgba(255,255,255,.72);font-size:15px;margin-top:8px}
+.pied{background:var(--encre);color:rgba(255,255,255,.55);text-align:center;font-size:13px;padding:0 20px 40px}
+
+/* téléphone */
+@media (max-width:820px){
+ .wrap{padding:0 18px}
+ .barre .wrap{height:62px}
+ .haut{padding-top:36px}
+ .haut h1{font-size:min(12vw,48px)}
+ .haut .lien{height:58px;padding-left:16px}.lien .cta{height:46px;padding:0 16px;font-size:14px}
+ .eventail{height:250px}.eventail .tel{width:128px;bottom:-110px}
+ .vague{height:40px;margin-top:-39px}
+ .colle{padding:30px 0 70px}
+ .etapes{grid-template-columns:1fr;gap:30px}.fleche{transform:rotate(90deg);font-size:28px}
+ .etape .vis{height:auto}
+ .bio{padding:70px 0}.bio .wrap{grid-template-columns:1fr;gap:30px}
+ .scene-bio{height:440px}.insta{width:230px;padding:14px;top:10px}.insta .pp{width:48px;height:48px}.insta p{font-size:12.5px}
+ .scene-bio .tel{width:170px;right:0}.scene-bio .fl{left:200px;top:300px;font-size:36px}
+ .styles{padding:10px 0 70px}
+ .rangee{justify-content:flex-start;overflow-x:auto;padding:20px 18px 30px;margin:30px -18px 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+ .rangee .tel{width:128px;scroll-snap-align:center}
+ .appli{padding:10px 0 70px}
+ .bento{grid-template-columns:1fr}.case.grande{grid-row:auto}
+ .marie{padding:10px 0 80px}.marie .wrap{grid-template-columns:1fr;gap:34px}
+ .portrait .etiquette{left:10px;bottom:16px}
+ .prix{padding:70px 0;border-radius:30px 30px 0 0}.prix .wrap{grid-template-columns:1fr;gap:40px}
+ .faq .grille{grid-template-columns:1fr}
+ .ch{scale:.75}
+ .haut>.ch{display:none}
+ .haut .k{font-size:10px;letter-spacing:.1em;white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.vu{opacity:1;transform:none}}
+</style></head><body>
+
+<header class="barre"><div class="wrap">
+  <a class="marque" href="#"><img src="../loginail-site/icone-appli-couleur.svg" alt="">LOGINAIL</a>
+  <a class="cta" href="../loginail-creer/index.html">Créer mon site</a>
+</div></header>
+
+<!-- 1 · HAUT -->
+<section class="haut">
+  <img class="ch" src="../loginail-site/charms/cerisedisco.webp" style="width:84px;left:6%;top:70px;rotate:-12deg" alt="">
+  <img class="ch" src="../loginail-site/charms-mini/saturne.webp" style="width:76px;right:7%;top:90px;rotate:12deg;animation-delay:-2s" alt="">
+  <div class="wrap">
+    <div class="k">Fait par une prothésiste, pour les prothésistes</div>
+    <h1 class="serif">Un site à <span class="sw">ton image.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="l2">L’appli pour tout gérer derrière.</span></h1>
+    <form class="lien" action="../loginail-creer/index.html" onsubmit="return false"><input placeholder="Colle ton lien Google Maps ou Planity" aria-label="Ton lien Google Maps ou Planity"><button class="cta" type="button">Créer mon site</button></form>
+    <p class="sous"><b>1er mois offert</b> · sans engagement · 0 % de commission</p>
+  </div>
+  <div class="eventail" id="eventail" aria-label="Exemples de sites Loginail"></div>
+</section>
+
+<!-- 2 · TU COLLES, C'EST PRÊT (la vague) -->
+<svg class="vague" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C 240 10, 520 0, 720 22 C 940 46, 1180 8, 1440 30 L1440 70 Z" fill="#FBF1F4"/></svg>
+<section class="colle">
+  <img class="ch" src="../loginail-site/charms/ceriseruban.webp" style="width:62px;left:48%;top:-56px;rotate:8deg" alt="">
+  <img class="ch" src="../loginail-site/charms/bouledisco-rose.webp" style="width:54px;right:12%;top:-62px;animation-delay:-3s" alt="">
+  <div class="wrap">
+    <div class="tete vu"><div class="k">Rien à écrire</div><h2 class="serif titre" style="margin-top:12px">Tu colles. <em>C’est prêt.</em></h2></div>
+    <div class="etapes">
+      <div class="etape vu"><div class="vis"><div class="mini-lien"><span>maps.app.goo.gl/…<span class="curseur"></span></span><i>CRÉER</i></div></div><span class="num">1</span><b>Ton lien</b><p>Google Maps ou Planity. Ou rien du tout : on part de zéro.</p></div>
+      <div class="fleche">→</div>
+      <div class="etape vu" style="transition-delay:.12s"><div class="vis"><div class="tel"><img src="../loginail-site/apercus-univers/o3.webp" alt=""></div></div><span class="num">2</span><b>Tout arrive seul</b><p>Ton nom, tes photos, tes avis, tes horaires et tes prix.</p></div>
+      <div class="fleche">→</div>
+      <div class="etape vu" style="transition-delay:.24s"><div class="vis"><div class="tel"><img src="../loginail-site/apercus-univers/s5.webp" alt=""></div><img class="ch" src="../loginail-site/charms-mini/cerisecoeur.webp" style="width:56px;right:14%;top:30px" alt=""></div><span class="num">3</span><b>À ton image</b><p>Ton fond, tes charms, ton écriture. Au doigt, quand tu veux.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · TU ES SUR PLANITY ? -->
+<section class="bio">
+  <div class="wrap">
+    <div class="vu">
+      <div class="k">Ton lien à toi</div>
+      <h2 class="serif titre" style="margin-top:12px">Tu es sur Planity ?<br><em>Garde-le si tu veux.</em></h2>
+      <p class="chapo">Loginail, c’est TA vitrine : dans ta bio Instagram, elle voit tes ongles, elle clique, elle réserve. Pas d’annuaire avec tes concurrentes juste à côté.</p>
+      <ul class="pts">
+        <li>On part de ton lien Planity : tes photos et tes prestations arrivent toutes seules.</li>
+        <li>0 % de commission sur tes réservations.</li>
+        <li>Ton adresse en .fr dès le 2e mois (le 1er mois : loginail.fr/tonsalon).</li>
+      </ul>
+    </div>
+    <div class="scene-bio vu">
+      <div class="insta">
+        <div class="h"><span class="pp"></span><div><b>tonsalon.nails</b><span>Prothésiste ongulaire</span></div></div>
+        <p>Des ongles qui prennent toute la place ✦<br>Sur rendez-vous · réserve ici ↓</p>
+        <span class="ln">🔗 tonsalon.fr</span>
+        <div class="g"><i style="background-image:url(../loginail-site/insta/1.webp)"></i><i style="background-image:url(../loginail-site/insta/2.webp)"></i><i style="background-image:url(../loginail-site/insta/3.webp)"></i><i style="background-image:url(../loginail-site/insta/4.webp)"></i><i style="background-image:url(../loginail-site/insta/5.webp)"></i><i style="background-image:url(../loginail-site/insta/6.webp)"></i></div>
+      </div>
+      <span class="fl">→</span>
+      <div class="tel"><img src="../loginail-site/apercus-univers/tpl-ateliermercure.webp" alt=""></div>
+      <div class="bulle" style="right:-10px;bottom:30px"><span class="av" style="background-image:url(../loginail-site/apercus-univers/avatar-lea.webp)"></span><div><b>Léa · nouveau RDV</b><span>réservé depuis ta bio</span></div></div>
+      <img class="ch" src="../loginail-site/charms-mini/coeurepinesmetal.webp" style="width:66px;right:200px;top:-20px" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- 4 · CLASSE OU BADDIE -->
+<section class="styles">
+  <img class="ch" src="../loginail-site/charms-mini/papilloncyber.webp" style="width:70px;left:8%;top:10px;rotate:-10deg" alt="">
+  <div class="wrap vu">
+    <div class="k">Plus de 30 univers</div>
+    <h2 class="serif titre" style="margin-top:12px">Classe <em>ou</em> baddie ?</h2>
+    <div class="bascule" role="tablist"><button class="on" data-s="baddie" role="tab">Baddie</button><button data-s="classe" role="tab">Classe</button></div>
+  </div>
+  <div class="rangee" id="rangee"></div>
+  <p class="note-ia">Exemples · salons, personnes et photos créés par IA</p>
+</section>
+
+<!-- 5 · L'APPLI -->
+<section class="appli">
+  <div class="wrap">
+    <div class="tete vu"><div class="k">Et derrière</div><h2 class="serif titre" style="margin-top:12px">L’appli qui gère <em>tout.</em></h2></div>
+    <div class="bento">
+      <div class="case grande vu"><div><div class="q">Ta journée</div><b>Ton agenda, d’un coup d’œil.</b><p>Elle réserve sur ton site, le rendez-vous arrive ici tout seul.</p></div><div class="tel"><img src="../loginail-site/apercus-univers/app-accueil-1911.webp" alt="L’accueil de l’appli Loginail"></div></div>
+      <div class="case vu"><div class="q">Pendant que tu dors</div><b>Elles réservent la nuit.</b><div class="notif"><span class="ic"></span><div><strong>Nouvelle réservation</strong><small>Léa · pose gel · samedi 10 h</small></div></div></div>
+      <div class="case vu"><div class="q">La veille</div><b>Le rappel SMS part seul.</b><div class="notif"><span class="ic"></span><div><strong>Rappel SMS envoyé</strong><small>Inès · demain 9 h · inclus, sans limite</small></div></div></div>
+      <div class="case vu"><div class="q">Une annulation ?</div><b>La place se reprend.</b><p>Liste d’attente : la cliente suivante est prévenue tout de suite.</p></div>
+      <div class="case vu"><div class="q">Ton site</div><b>Tu vois combien de fois il est vu.</b><div class="chiffre">128</div><p style="font-size:12.5px;color:var(--gris)">vues cette semaine · exemple</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · MARIE -->
+<section class="marie">
+  <div class="wrap">
+    <div class="portrait vu">
+      <div class="ph" role="img" aria-label="Marie, prothésiste ongulaire et créatrice de Loginail"></div>
+      <div class="etiquette"><b>Marie</b><span>Prothésiste · onglerie Dilerna</span></div>
+      <img class="ch" src="../loginail-site/charms/cerisedisco.webp" style="width:80px;right:-24px;top:-26px;rotate:14deg" alt="">
+    </div>
+    <div class="vu">
+      <div class="k">Qui est derrière</div>
+      <blockquote>« Je suis prothésiste, <em>comme toi.</em> »</blockquote>
+      <p>J’ai créé Loginail parce que je voulais un site aussi beau que nos ongles, sans payer une commission sur chaque rendez-vous.</p>
+      <p>Tout ce que tu vois ici, je l’ai pensé entre deux clientes, pour qu’il marche entre deux clientes.</p>
+      <div class="signature">Marie</div>
+      <span class="brouillon">Brouillon : ces phrases sont à toi, à réécrire avec tes mots</span>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · PRIX -->
+<section class="prix" id="prix">
+  <img class="ch" src="../loginail-site/charms/ceriseruban.webp" style="width:70px;right:6%;top:-30px;rotate:10deg" alt="">
+  <div class="wrap">
+    <div class="vu">
+      <div class="k">Combien ça coûte</div>
+      <h2 class="serif titre" style="margin-top:12px">Le premier mois,<br><em>c’est cadeau.</em></h2>
+      <ul class="frise">
+        <li><b>Aujourd’hui</b><span>Tu crées ton site et ton appli. 0 €.</span></li>
+        <li><b>Pendant 30 jours</b><span>Tout est à toi : réservations, SMS, agenda. Toujours 0 €.</span></li>
+        <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si tu restes.</span></li>
+        <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
+      </ul>
+    </div>
+    <div class="carte vu">
+      <div class="p">49,99 € <small>/ mois</small></div>
+      <div class="of">1er mois offert</div>
+      <ul><li>Ton site à ton nom, en ligne tout de suite</li><li>Réservation en ligne jour et nuit</li><li>0 % de commission</li><li>Agenda, fiches clientes, caisse</li><li>Rappel SMS la veille, sans limite</li><li>Ton adresse en .fr dès le 2e mois</li></ul>
+      <a class="cta" href="../loginail-creer/index.html">Créer mon site gratuitement →</a>
+      <small class="n">Sans engagement · tu arrêtes en 1 clic</small>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · QUESTIONS -->
+<section class="faq">
+  <div class="wrap">
+    <div class="k" style="color:#F4A9C2">Bon à savoir</div>
+    <div class="grille">
+      <details><summary>Je ne suis pas douée en informatique.</summary><p>Tu colles ton lien Google Maps, ton site se fait tout seul. Ensuite tout se change avec le doigt, dans l’appli.</p></details>
+      <details><summary>Mes clientes doivent télécharger quelque chose ?</summary><p>Non. Elles ouvrent ton site et réservent. L’appli, c’est pour toi.</p></details>
+      <details><summary>Et si je n’aime pas ?</summary><p>Tu ne paies rien pour créer ton site et le voir. Le premier mois est offert. Tu arrêtes en 1 clic, sans engagement.</p></details>
+      <details><summary>Les SMS sont payants ?</summary><p>Non. Le SMS de rappel, la veille du rendez-vous, est compris dans les 49,99 €, sans limite.</p></details>
+      <details><summary>Je travaille chez moi, sans salon.</summary><p>Justement. Un site à ton nom, oui. Ton adresse exacte est donnée à la cliente une fois le rendez-vous confirmé.</p></details>
+      <details><summary>J’ai mon adresse en .fr ?</summary><p>Oui, dès le 2e mois, incluse : tonsalon.fr. Le premier mois, ton site est sur loginail.fr/tonsalon, puis il passe tout seul sur ton .fr.</p></details>
+    </div>
+  </div>
+</section>
+<footer class="pied">Loginail · pensé par une prothésiste, pour les prothésistes · Les salons, personnes, photos et avis d’exemple sont créés par IA.</footer>
+
+<script>
+const U='../loginail-site/apercus-univers/',M='../loginail-site/apercus-mini/';
+/* éventail du haut */
+const EX=['ex-nailsbysab','ex-theslidesalon','chrome','ex-izinails','ex-yourfavnailtech'];
+const ev=document.getElementById('eventail'),m=innerWidth<820,pas=m?92:150;
+ev.innerHTML=EX.map((n,i)=>{const d=i-2;return `<div class="tel" style="left:calc(50% - ${m?64:89}px + ${d*pas}px);transform:rotate(${d*8}deg) translateY(${Math.abs(d)*(m?16:26)}px);z-index:${5-Math.abs(d)}"><img src="${U}${n}.webp" alt=""></div>`}).join('')+
+ `<div class="bulle" style="left:${m?'2%':'calc(50% - 470px)'};top:${m?'10px':'40px'}"><span class="ic">✓</span><div><b>Rappel SMS envoyé</b><span>Zéro lapin demain</span></div></div>`+
+ `<div class="bulle" style="right:${m?'2%':'calc(50% - 470px)'};top:${m?'70px':'70px'}"><span class="av" style="background-image:url(${U}avatar-lea.webp)"></span><div><b>Léa · nouveau RDV</b><span>Pose américaine · 10 h</span></div></div>`;
+/* classe ou baddie */
+const S={baddie:['baddie','y2k','pop','chrome','bling','emo','cerise'],classe:['tpl-maisonmoka','tpl-maisonnoire','tpl-atelierronce','tpl-studiopoudre','tpl-maisonlin','tpl-cristal','clean']};
+const r=document.getElementById('rangee');
+const montre=k=>{r.innerHTML=S[k].map(n=>`<div class="tel"><img src="${M}${n}.webp" alt="" loading="lazy"></div>`).join('')};montre('baddie');
+document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.classList.contains('on'))return;document.querySelectorAll('.bascule button').forEach(x=>x.classList.toggle('on',x===b));r.classList.add('change');setTimeout(()=>{montre(b.dataset.s);requestAnimationFrame(()=>r.classList.remove('change'))},260)});
+/* apparition au défilement */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.vu').forEach(e=>io.observe(e));
+</script>
+</body></html>
