@@ -15,7 +15,7 @@
     ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"],
     ["balcon", "Balcon"], ["devanture", "Devanture"], ["classique", "Classique"], ["couverture", "Couverture"], ["grandtitre", "Grand titre"]];
   /* D22 · les 39 en-têtes gardées par Marie, dans l'ordre (les anciennes d'abord, puis les nouvelles) */
-  const GARDEES = ["cadre", /* 19/11 (Marie, D36) : ses 23 nouvelles en-têtes */ "xperlecoeur", "xguirch", "xsusp", "xbracelet", "xgum", "xbulch", "xchrome", "xgeant", "xcollier", "xlustre", "xperles", "xloge", "xstrass", "xguirlande", "xbokeh", "xscint", "xsavon", "xmusique", "xlecteur", "xbonbons", "xtap", "xreac", "xnuancier", "medaillon", "bandeau",   /* 18/11 (Marie) : « Photo encadrée » en premier = l'en-tête de départ */ "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
+  const GARDEES = ["cadre", /* 19/11 (Marie, D54) : ses 8 en-têtes qui bougent */ "zpoints", "zpluie", "zbulles", "zdisco", "zetoiles", "zvagues", "zfeu", "ztombe", /* 19/11 (Marie, D36) : ses 23 nouvelles en-têtes */ "xperlecoeur", "xguirch", "xsusp", "xbracelet", "xgum", "xbulch", "xchrome", "xgeant", "xcollier", "xlustre", "xperles", "xloge", "xstrass", "xguirlande", "xbokeh", "xscint", "xsavon", "xmusique", "xlecteur", "xbonbons", "xtap", "xreac", "xnuancier", "medaillon", "bandeau",   /* 18/11 (Marie) : « Photo encadrée » en premier = l'en-tête de départ */ "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
     "tele", "carrousel", "viseur", "feuilleter", "swipe", "ondes", "confettis", "arcenciel", "ballons", "chromecadre", "enveloppe",   /* 18/11 soir : « Machine à écrire » retirée (Marie) */
     "aquarelle", "rayons", "popart", "etoile", "brume", "lueurs", "trace", "coeurparticules", "levitation", "live", "pendentif", "foil"];
   /* 17/11 soir : « Pour vous » = les 42 charms choisis par Marie (page idees/choix-pour-vous.html) */
@@ -67,7 +67,7 @@
       /* 17/11 soir (Marie : « on doit mettre toutes les en-têtes ») : les 23 nouvelles en-têtes gardées (D21, D22),
          code de maquette idees/entetes-nouvelles/, injectées dans son site comme dans la maquette des en-têtes */
       /* 18/11 (Produit) : les nouvelles en-têtes sont maintenant DANS le site (pret.html charge entetes/entetes-plus*.js) */
-      if (!W.ENTETES || W.ENTETES.length < 40) for (const n of ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]) await new Promise(r => { const s = D.createElement("script"); s.src = `entetes/entetes-plus${n}.js?v=1811b`; s.onload = s.onerror = r; D.body.appendChild(s); });
+      if (!W.ENTETES || W.ENTETES.length < 40) for (const n of ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]) await new Promise(r => { const s = D.createElement("script"); s.src = `entetes/entetes-plus${n}.js?v=1811b`; s.onload = s.onerror = r; D.body.appendChild(s); });
       try { const tous = W.eval("ENTETES"); const nom = k => (tous.find(x => x[0] === k) || [k, k])[1];
         P.ENT = GARDEES.filter(k => tous.some(x => x[0] === k)).map(k => [k, nom(k)]); } catch (e) { console.warn(e); }
       await attends(250); copieStyles();
@@ -260,7 +260,7 @@
         if (r.type === 4) { let ok = false; try { ok = (W || window).matchMedia(r.conditionText || r.media.mediaText).matches; } catch (e) {} if (ok) ajoute(r.cssRules); continue; }
         regles.push(unites(abs(r.cssText)).replace(/:root/g, ":host")); } };
       ajoute(rs); }
-    P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n:host *{overflow:hidden!important;scroll-behavior:auto!important}\n.ile{display:none!important}"); return feuille; }
+    P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n:host *{overflow:hidden!important;scroll-behavior:auto!important}\n.ile{display:none!important}\n:host(.off) *,:host(.off) *::after{animation-play-state:paused!important}"); return feuille; }
   /* 17/11 (Marie : « ça met grave du temps ») : la mise en forme du site est recopiée UNE fois par tournée, plus 37 fois */
   P.nouvelleFeuille = () => { feuille = null; };
   /* changer de fond / d'écriture / de couleur ne rejoue plus l'animation d'arrivée du site : on la termine tout de suite
@@ -289,7 +289,7 @@
     if (touche()) { const d = Math.ceil(b.getBoundingClientRect().bottom - (H - marge)); bloc.style.setProperty("translate", `0 -${d}px`); }
     } catch (e) {} };
   let tAj = 0; const ajusteBientot = () => { clearTimeout(tAj); tAj = setTimeout(() => P.ajusteBouton(), 80); };
-  P.miniEntete = (hote, k, largeur) => { const W = P.W, D = P.D; try {
+  P.miniEntete = (hote, k, largeur) => { const W = P.W, D = P.D; try { try { CSS.registerProperty({ name: "--pzr", syntax: "<length>", inherits: false, initialValue: "0px" }); } catch (e) {}   /* 19/11 (D54) : la trame de points anime ce réglage */
     const ec = D.querySelector(".ecran"); if (!ec || !W.entete || !W.__eT) return; const fs = feuilleSite(), root = D.documentElement.style.cssText, sc = largeur / 390;
     let acc = "#1E1C1B"; try { acc = W.eval('accDuFond()||"#1E1C1B"'); } catch (e) {}
     const nomV = D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"), police = nomV ? getComputedStyle(nomV).fontFamily : "";

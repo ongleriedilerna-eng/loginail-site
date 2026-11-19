@@ -1047,7 +1047,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=1911lk"></script>
+<script src="perso/perso-pilote.js?v=1911d54"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1094,6 +1094,9 @@ function rend(o) {
   if (!P.pret) return;
   if (o === "entete") { const l = $("lEnt"); if (!l.children.length) l.innerHTML = P.ENT.map(([k, n]) => `<button class="ent" data-k="${k}"><span class="mi"></span>${n}</button>`).join("");
     l.querySelectorAll(".ent").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.entete));
+    /* 19/11 (D54) : seules les vignettes VISIBLES bougent (les autres sont en pause) — sinon 69 petits téléphones animés = « ça bug » */
+    try { if (!window._ioEnt) window._ioEnt = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("off", !e.isIntersecting)), { rootMargin: "40px" });
+      l.querySelectorAll(".mi").forEach(m => { if (!m._io) { m._io = 1; m.classList.add("off"); window._ioEnt.observe(m); } }); } catch (e) {}
     /* 17/11 : on ne redessine les petits téléphones que si son site a changé (fond, écriture, couleurs, photo, largeur) */
     const larg = l.querySelector(".mi").clientWidth || 76, e = P.etat, cle = [e.fond, e.police, e.couleur, e.vif, e.nomc, e.blocs, P.photoUne(), larg].join("|");
     if (l.dataset.cle === cle) return; l.dataset.cle = cle; P.nouvelleFeuille();
