@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choisir l'habit du carré</title>
+<!-- 20/11 · Design (D51) : où la prothésiste choisit l'habit de son carré « Réserver » dans Personnaliser.
+     ?v=A  « Ligne Carré » : une rangée « Votre carré » en haut de l'onglet En-tête, les en-têtes dessous
+     ?v=B  « Habits dans les en-têtes » : les habits sont les premières vignettes de la liste des en-têtes
+     &ordi = format ordinateur. Aperçus : idees/carre-reserver.html et carre-reserver-2.html (maquettes D51). -->
+<style>
+:root{--encre:#1E1C1B;--doux:#6E6762;--rose:#B5475E;--fond:#F6EFEA;--carte:#fff;--trait:#E9DED8}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--fond);color:var(--encre);font:14px/1.4 Jost,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+body::before{content:"";position:fixed;inset:-20% -30% auto auto;width:90vw;height:90vw;border-radius:50%;border:60px solid rgba(201,90,128,.10);pointer-events:none}
+.titre{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500}
+.titre em{color:var(--rose)}
+.version{position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:30;background:var(--encre);color:#fff;border-radius:999px;padding:6px 14px;font-size:12px;letter-spacing:.04em;white-space:nowrap}
+
+/* ===== le téléphone qui montre son site ===== */
+.tel{position:relative;border:6px solid #1E1C1B;border-radius:34px;overflow:hidden;background:#000;box-shadow:0 18px 40px rgba(60,20,30,.18)}
+.tel iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none}
+
+/* ===== les vignettes ===== */
+.vg{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12.5px;color:var(--doux);-webkit-tap-highlight-color:transparent}
+.vg .mi{position:relative;width:78px;height:169px;border-radius:15px;overflow:hidden;border:3px solid #1E1C1B;background:#eee;transition:transform .15s}
+.vg .mi iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform:scale(.185);transform-origin:0 0;pointer-events:none}
+.vg .mi img{width:100%;height:100%;object-fit:cover;display:block}
+.vg:active .mi{transform:scale(.96)}
+.vg.choisi{color:var(--rose);font-weight:600}
+.vg.choisi .mi{outline:3px solid var(--rose);outline-offset:3px}
+.vg .neuf{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:var(--rose);color:#fff;font-size:9px;font-weight:600;padding:1px 6px;border-radius:999px;z-index:2;letter-spacing:.03em}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:16px 6px;justify-items:center}
+
+/* version A : la rangée « Votre carré » */
+.rangee{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.rangee::-webkit-scrollbar{display:none}
+.rangee .vg .mi{width:66px;height:143px}
+.rangee .vg .mi iframe{transform:scale(.157)}
+.sous{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--doux);margin:14px 0 8px;font-weight:600}
+.sous b{color:var(--rose)}
+.grise{opacity:.32;pointer-events:none;filter:grayscale(.6)}
+.mot{display:none;background:#FFF4F7;border:1px solid #F2C9D6;color:#7A2A44;border-radius:12px;padding:9px 12px;font-size:13px;margin:4px 0 10px}
+.mot.vu{display:block}
+
+/* ===== TÉLÉPHONE ===== */
+.ecran-tel{display:flex;flex-direction:column;height:100%}
+.ecran-tel .haut{flex:none;display:flex;justify-content:center;padding:58px 0 14px;position:relative}
+.ecran-tel .barre{position:absolute;left:14px;right:14px;top:12px;display:flex;justify-content:space-between;align-items:center}
+.ecran-tel .barre .pub{background:var(--rose);color:#fff;font-weight:700;letter-spacing:.06em;padding:10px 18px;border-radius:999px;font-size:13px}
+.ecran-tel .barre .logo{font-size:10px;letter-spacing:.3em;color:var(--doux)}
+.ecran-tel .tel{width:150px;height:300px;border-width:5px;border-radius:28px}
+.ecran-tel .tel iframe{transform:scale(.3615)}
+.ecran-tel .bas{flex:1;min-height:0;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -6px 20px rgba(60,20,30,.06);display:flex;flex-direction:column}
+.onglets{display:flex;gap:22px;padding:16px 16px 6px;overflow:hidden;white-space:nowrap;font-size:15px;color:var(--doux)}
+.onglets b{color:var(--encre);position:relative}
+.onglets b::after{content:"";position:absolute;left:50%;bottom:-8px;width:5px;height:5px;border-radius:50%;background:var(--encre);transform:translateX(-50%)}
+.ecran-tel .contenu{flex:1;overflow-y:auto;padding:8px 16px 70px}
+.ecran-tel .intro{margin:6px 0 4px;color:var(--doux)}
+
+/* ===== ORDINATEUR ===== */
+.ecran-ordi{display:none;height:100%;padding:18px 34px 0}
+.ordi .ecran-tel{display:none}
+.ordi .ecran-ordi{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;column-gap:46px}
+.ecran-ordi .barre{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ecran-ordi .etapes{display:flex;gap:22px;font-size:13px;color:var(--doux)}
+.ecran-ordi .etapes b{color:var(--encre)}
+.ecran-ordi .pub{background:var(--rose);color:#fff;font-weight:700;letter-spacing:.06em;padding:10px 20px;border-radius:999px;font-size:13px}
+.ecran-ordi .tel{width:calc((100vh - 120px) * .462);height:calc(100vh - 120px);align-self:start;margin-left:120px}
+.ecran-ordi .droite{min-height:0;overflow-y:auto;padding:0 6px 80px 26px;border-left:1px solid var(--trait)}
+.ecran-ordi .onglets{padding:0 0 10px;justify-content:center;font-size:14px}
+.ecran-ordi .onglets b{background:#fff;border-radius:999px;padding:6px 16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ecran-ordi .onglets b::after{display:none}
+.ecran-ordi h2{font-size:38px;margin:8px 0 2px}
+.ecran-ordi .intro{color:var(--doux);margin:0 0 6px}
+.ecran-ordi .grille{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:20px 12px}
+.ecran-ordi .vg .mi{width:100px;height:216px;border-radius:18px}
+.ecran-ordi .vg .mi iframe{transform:scale(.241)}
+.ecran-ordi .rangee .vg .mi{width:84px;height:182px}
+.ecran-ordi .rangee .vg .mi iframe{transform:scale(.2)}
+</style>
+</head>
+<body>
+<div class="ecran-tel">
+  <div class="haut">
+    <div class="barre"><span class="logo">● LOGINAIL</span><span class="pub">PUBLIER</span></div>
+    <div class="tel"><iframe class="apercu" title="Son site"></iframe></div>
+  </div>
+  <div class="bas">
+    <div class="onglets"><span>Photo</span><b>En-tête</b><span>Fond</span><span>Écriture</span><span>Couleurs</span><span>Charms</span></div>
+    <div class="contenu"></div>
+  </div>
+</div>
+<div class="ecran-ordi">
+  <div class="barre"><span class="logo" style="font-size:10px;letter-spacing:.3em;color:var(--doux)">● LOGINAIL</span>
+    <span class="etapes"><span>✓ Votre lien</span><span>✓ Votre style</span><b>3 Vos couleurs et votre fond</b><span>4 Vos charms</span></span><span class="pub">PUBLIER</span></div>
+  <div class="tel"><iframe class="apercu" title="Son site"></iframe></div>
+  <div class="droite">
+    <div class="onglets"><span>Photo</span><b>En-tête</b><span>Fond</span><span>Écriture</span><span>Couleurs</span><span>Charms</span></div>
+    <h2 class="titre">Votre <em>en-tête</em></h2>
+    <div class="contenu"></div>
+  </div>
+</div>
+<div class="version" id="version"></div>
+
+<script>
+var V=(location.search.match(/v=([AB])/)||[,"A"])[1], ORDI=/ordi/.test(location.search);
+if(ORDI)document.body.classList.add("ordi");
+/* les 5 habits (maquettes D51) */
+var HABITS=[
+ {n:"Aujourd'hui",u:"carre-reserver.html?v=0&seul"},
+ {n:"Ticket",u:"carre-reserver.html?v=2&seul"},
+ {n:"Flacon géant",u:"carre-reserver-2.html?v=1&seul",photo:1},
+ {n:"Arche",u:"carre-reserver-2.html?v=3&seul",photo:1},
+ {n:"Sans carré",u:"carre-reserver-2.html?v=4&seul",photo:1}];
+/* quelques en-têtes qui existent (vignettes réelles de Personnaliser) */
+var ENT=[["xscint","Scintillement"],["xsavon","Bulles de savon"],["xgum","Bubble-gum"],["xnuancier","Nuancier de vernis"],["xtap","Tap ♡"],["xreac","Réactions"],["xguirlande","Guirlande lumineuse"],["xperles","Rideau de perles"],["xmusique","Musique"],["xstrass","Cadre en strass"],["xbokeh","Bokeh"],["xgeant","Charm géant"]];
+
+function vgHabit(h,neuf){return '<button class="vg" data-h="'+h.n+'"><span class="mi">'+(neuf?'<span class="neuf">NOUVEAU</span>':'')+'<iframe loading="lazy" tabindex="-1" src="'+h.u+'"></iframe></span>'+h.n+'</button>'}
+function vgEnt(e){return '<button class="vg" data-e="'+e[0]+'"><span class="mi"><img src="choix-carre/'+e[0]+'.png" alt=""></span>'+e[1]+'</button>'}
+
+var html;
+if(V=="A"){
+  html='<p class="intro">Votre photo et votre nom, mis en scène.</p>'+
+   '<div class="sous">Votre <b>carré</b></div><div class="rangee">'+HABITS.map(function(h,i){return vgHabit(h,i>0)}).join("")+'</div>'+
+   '<div class="mot" id="mot"></div>'+
+   '<div class="sous">Votre <b>en-tête</b></div><div class="grille" id="ents">'+ENT.map(vgEnt).join("")+'</div>';
+}else{
+  html='<p class="intro">Votre photo et votre nom, mis en scène.</p>'+
+   '<div class="sous"><b>Nouveau</b> · votre carré change d\'habit</div><div class="grille">'+HABITS.slice(1).map(function(h){return vgHabit(h,1)}).join("")+'</div>'+
+   '<div class="sous">Toutes les en-têtes</div><div class="grille">'+vgHabit({n:"Photo encadrée",u:HABITS[0].u})+ENT.map(vgEnt).join("")+'</div>';
+}
+var zone=document.querySelector(ORDI?".ecran-ordi .contenu":".ecran-tel .contenu");zone.innerHTML=html;
+var ap=document.querySelector(ORDI?".ecran-ordi .apercu":".ecran-tel .apercu");
+function taille(){var t=ap.parentNode;ap.style.transform="scale("+(t.clientWidth/390)+")"}addEventListener("resize",taille);
+
+var habit=HABITS[0];
+function montre(u){if(ap.getAttribute("src")!==u)ap.setAttribute("src",u)}
+function choisis(b){
+  if(b.dataset.h){var h=HABITS.filter(function(x){return x.n==b.dataset.h})[0]||HABITS[0];habit=h;montre(h.u);
+    if(V=="A"){zone.querySelectorAll(".rangee .vg").forEach(function(x){x.classList.toggle("choisi",x===b)});
+      var g=document.getElementById("ents"),m=document.getElementById("mot");
+      g.classList.toggle("grise",!!h.photo);m.classList.toggle("vu",!!h.photo);
+      m.textContent=h.photo?"Avec « "+h.n+" », votre photo fait partie du carré : les en-têtes ne s'appliquent pas. Choisissez « Aujourd'hui » ou « Ticket » pour en mettre une.":"";}
+    else zone.querySelectorAll(".vg").forEach(function(x){x.classList.toggle("choisi",x===b)});
+  }else{ /* une en-tête : dans la maquette, l'aperçu garde le carré « Aujourd'hui » */
+    zone.querySelectorAll(V=="A"?"#ents .vg":".vg").forEach(function(x){x.classList.toggle("choisi",x===b)});
+    if(V=="B"){habit=HABITS[0];montre(HABITS[0].u)}
+  }
+}
+zone.addEventListener("click",function(e){var b=e.target.closest(".vg");if(b)choisis(b)});
+/* au départ : « Aujourd'hui » (A) / « Photo encadrée » (B) choisie */
+choisis(zone.querySelector('.vg[data-h="'+(V=="A"?"Aujourd'hui":"Photo encadrée")+'"]'));
+if(V=="A")choisis(zone.querySelector("#ents .vg"));
+taille();
+document.getElementById("version").textContent=(V=="A"?"Version A · ligne « Votre carré »":"Version B · les habits dans les en-têtes")+(ORDI?" · ordinateur":" · téléphone");
+document.title=(V=="A"?"A · Ligne Carré":"B · Habits dans les en-têtes")+(ORDI?" (ordinateur)":"");
+</script>
+</body>
+</html>
