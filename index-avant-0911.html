@@ -655,7 +655,7 @@ if(!("IntersectionObserver" in window))return go();var io=new IntersectionObserv
   <div class="faq-tete"><span class="kick r">Questions</span><h2 class="titre r">Bon à savoir.</h2></div>
   <div class="faq-haut r"><div class="faq-cats" id="faqCats"></div></div>
   <div class="melange r"><div class="somm-l" id="faq"></div>
-    <div class="fil"><div class="fil-tete"><img src="marie.jpg" alt=""><div><b>Marie</b>prothésiste ongulaire, créatrice de Loginail</div></div><div class="fil-in" id="faqFil"></div></div></div>
+    <div class="fil"><div class="fil-tete"><img src="loginail-site/marie-illustration-rond.jpg" alt=""><div><b>Marie</b>prothésiste ongulaire, créatrice de Loginail</div></div><div class="fil-in" id="faqFil"></div></div></div>
 </div></section>
 
 <div class="fin"><div class="wrap">
@@ -792,7 +792,7 @@ function faq(){$("faqCats").innerHTML=THEMES.map((t,i)=>`<button class="${i===th
 function dis(k){const l=THEMES[themeI][1];if(l[k]===undefined)return;clearTimeout(gT);
   [...$("faq").children].forEach((b,i)=>b.classList.toggle("on",i===k));
   $("faqFil").innerHTML=`<div class="bul q">${FAQ[l[k]][0]}</div><div class="ecrit" style="animation-delay:.45s"><i></i><i></i><i></i></div>`;
-  gT=setTimeout(()=>{$("faqFil").querySelector(".ecrit")?.remove();$("faqFil").insertAdjacentHTML("beforeend",`<div class="bul r"><img src="marie.jpg" alt=""><div><b>Marie</b>${FAQ[l[k]][1]}</div></div>`);
+  gT=setTimeout(()=>{$("faqFil").querySelector(".ecrit")?.remove();$("faqFil").insertAdjacentHTML("beforeend",`<div class="bul r"><img src="loginail-site/marie-illustration-rond.jpg" alt=""><div><b>Marie</b>${FAQ[l[k]][1]}</div></div>`);
     if(gAuto)gT=setTimeout(()=>dis((k+1)%l.length),5200)},1500)}
 faq();
 $("faqCats").onclick=e=>{const b=e.target.closest("button");if(!b)return;themeI=+b.dataset.t;faq()};
