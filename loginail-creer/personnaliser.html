@@ -1047,7 +1047,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=2011d59"></script>
+<script src="perso/perso-pilote.js?v=2011flu2"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1094,13 +1094,16 @@ function rend(o) {
   if (!P.pret) return;
   if (o === "entete") { const l = $("lEnt"); if (!l.children.length) l.innerHTML = P.ENT.map(([k, n]) => `<button class="ent" data-k="${k}"><span class="mi"></span>${n}</button>`).join("");
     l.querySelectorAll(".ent").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.entete));
-    /* 19/11 (D54) : seules les vignettes VISIBLES bougent (les autres sont en pause) — sinon 69 petits téléphones animés = « ça bug » */
-    try { if (!window._ioEnt) window._ioEnt = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("off", !e.isIntersecting)), { rootMargin: "40px" });
-      l.querySelectorAll(".mi").forEach(m => { if (!m._io) { m._io = 1; m.classList.add("off"); window._ioEnt.observe(m); } }); } catch (e) {}
-    /* 17/11 : on ne redessine les petits téléphones que si son site a changé (fond, écriture, couleurs, photo, largeur) */
+    /* 20/11 (Marie : « encore plus fluide ») : 81 petits téléphones dessinés d'un coup = 12 images/s (10 = 144). On ne dessine QUE ceux qu'on voit
+       (+ une marge), les autres sont vidés ; ceux qu'on voit bougent, les autres sont en pause. */
     const larg = l.querySelector(".mi").clientWidth || 76, e = P.etat, cle = [e.fond, e.police, e.couleur, e.vif, e.nomc, e.blocs, P.photoUne(), larg].join("|");
-    if (l.dataset.cle === cle) return; l.dataset.cle = cle; P.nouvelleFeuille();
-    const tous = [...l.querySelectorAll(".ent")]; let i = 0; const lot = () => { const t0 = performance.now(); while (i < tous.length && performance.now() - t0 < 24) { const b = tous[i++]; P.miniEntete(b.querySelector(".mi"), b.dataset.k, larg); } if (i < tous.length) setTimeout(lot, 16); }; lot(); }
+    try { if (!window._visE) window._visE = new Set(); if (!window._ioEnt) window._ioEnt = new IntersectionObserver(es => es.forEach(x => { const m = x.target, lst = $("lEnt");
+        if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { try { P.miniEntete(m, m.parentElement.dataset.k, lst._larg || 76); } catch (er) {} m.dataset.ok = lst.dataset.cle; } window._visE.add(m); }
+        else { window._visE.delete(m); m.classList.add("off"); if (m.shadowRoot && m.dataset.ok) { m.shadowRoot.innerHTML = ""; m.dataset.ok = ""; } }
+        /* au plus 6 vignettes bougent en même temps (les premières visibles) : les autres restent sur une image */
+        [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "160px" });
+      const nouveau = l.dataset.cle !== cle; if (nouveau) { l.dataset.cle = cle; l._larg = larg; P.nouvelleFeuille(); }
+      l.querySelectorAll(".mi").forEach(m => { if (!m._io) { m._io = 1; m.classList.add("off"); window._ioEnt.observe(m); } else if (nouveau) { m.dataset.ok = ""; window._ioEnt.unobserve(m); window._ioEnt.observe(m); } }); } catch (er) { console.warn(er); } }
   if (o === "fond" && $("lFond").dataset.cat === catFond && $("lFond").children.length) { $("lFond").querySelectorAll(".vg").forEach(b => b.classList.toggle("on", b.dataset.f === P.etat.fond)); $("catF").querySelectorAll(".puce").forEach(b => b.classList.toggle("on", b.dataset.c === catFond)); return rendAutres(o); }
   if (o === "fond") $("lFond").dataset.cat = catFond;
   if (o === "fond") { const ORDRE = ["Qui bougent", "Élégants", "Y2K", "Mignons", "Bohème"], cs = P.categories();
