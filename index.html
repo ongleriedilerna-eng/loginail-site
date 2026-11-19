@@ -2089,6 +2089,38 @@ html body .np .np-arc{height:500px!important}
   .np .np-charm.np-m:nth-child(5),.np .np-charm.np-m:nth-child(10){display:none!important}
 }
 </style>
+<style id="retouches-d46">
+/* 19/11 (Marie, D46) : téléphone + ordinateur — maquette idees/accueil-retouches.html?v=A */
+@media (max-width:760px){html body:not(#_) section.styles>img.ch{left:3%!important;top:-6px!important;width:52px!important}}
+html body:not(#_) footer.pied{padding-bottom:calc(34px + env(safe-area-inset-bottom))!important}
+.pied-ch{display:flex;justify-content:center;gap:clamp(10px,3vw,22px);margin:4px 0 14px}
+.pied-ch img{width:clamp(34px,9vw,44px);height:auto;animation:piedFlotte 3.2s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(80,30,45,.18))}
+.pied-ch img:nth-child(2){animation-delay:-.6s}.pied-ch img:nth-child(3){animation-delay:-1.2s}.pied-ch img:nth-child(4){animation-delay:-1.8s}.pied-ch img:nth-child(5){animation-delay:-2.4s}
+@keyframes piedFlotte{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-5px) rotate(4deg)}}
+@media (prefers-reduced-motion:reduce){.pied-ch img{animation:none}}
+</style>
+<style id="compteur-d46">
+/* 19/11 (Marie, D46) : le VRAI nombre de prothésistes qui ont leur site (fonction nombre_salons, serveur/sql/24) ;
+   rien ne s'affiche sous 20 ni si le serveur ne répond pas. Téléphone + ordinateur. Maquette : idees/accueil-retouches.html?v=A&n=23 */
+.np .np-compte{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;font-size:13.5px;color:var(--muted,#6d6663);order:6}
+.np .np-compte .pts{display:flex}.np .np-compte .pts i{width:20px;height:20px;border-radius:50%;border:2px solid #FBF3F4;margin-left:-6px;background:center/cover no-repeat}
+.np .np-compte .pts i:first-child{margin-left:0}
+.np .np-compte b{color:#1E1C1B;font-weight:600;display:inline-block;min-width:1.6em;text-align:right}
+</style>
+<script id="compteur-d46-js">
+document.addEventListener("DOMContentLoaded",function(){
+  var m=document.querySelector(".np .np-micro");if(!m||!window.fetch)return;
+  fetch("https://scfhaombuptmrlkdhcsl.supabase.co/rest/v1/rpc/nombre_salons",{method:"POST",headers:{apikey:"sb_publishable_lYx1ZH0k3EFrUhZ3v0W8gw_yhGPOhbq","Content-Type":"application/json"},body:"{}"})
+  .then(function(r){return r.ok?r.json():null}).then(function(n){
+    n=parseInt(n,10);if(!(n>=20))return;
+    var d=document.createElement("div");d.className="np-compte";
+    d.innerHTML='<span class="pts" aria-hidden="true"><i style="background-image:url(loginail-site/charms-mini/cerisedisco.webp);background-color:#F7DCE4"></i><i style="background-image:url(loginail-site/charms-mini/noeudcerise.webp);background-color:#F3E3D6"></i><i style="background-image:url(loginail-site/charms-mini/perle.webp);background-color:#EDE6F2"></i></span><span><b>0</b> prothésistes ont déjà leur site</span>';
+    m.insertAdjacentElement("afterend",d);var b=d.querySelector("b"),t0=null;
+    if(matchMedia("(prefers-reduced-motion:reduce)").matches){b.textContent=n;return}
+    (function pas(t){if(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1100);b.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k>=1)return}requestAnimationFrame(pas)})();
+  }).catch(function(){});
+});
+</script>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2183,9 +2215,9 @@ html body .np .np-arc{height:500px!important}
     <div class="cq-scene">
       <div class="cq-tel cq-appli"><img src="loginail-site/apercus-univers/app-accueil-1911.webp" alt="L'appli Loginail" loading="lazy"></div>
       <div class="cq-tel cq-site"><img src="loginail-site/apercus-univers/cerise.webp" alt="Le site Nails by Drimf" loading="lazy"></div>
-      <div class="cq-carte c-charms" style="left:0;top:4%;--r:-3deg"><div class="cq-ic"><img src="loginail-site/charms/cerisedisco.webp" alt=""></div><div><span class="cq-gros">2 700+</span><br><small>charms à poser</small></div></div>
-      <div class="cq-carte c-ecr" style="right:0;top:3%;--r:3deg;animation-delay:-1.5s"><div class="cq-ic" style="font-family:'Shrikhand'">Aa</div><div><span class="cq-gros">57</span><br><small>écritures pour ton nom</small></div></div>
-      <div class="cq-carte c-fonds" style="left:0;top:27%;--r:2deg;animation-delay:-2.6s"><div class="cq-ic" style="background:repeating-conic-gradient(#F4C9D6 0 25%,#fff 0 50%) 0 0/12px 12px"></div><div><span class="cq-gros">350+</span><br><small>fonds · 39 en-têtes</small></div></div>
+      <div class="cq-carte c-charms" style="left:0;top:4%;--r:-3deg"><div class="cq-ic"><img src="loginail-site/charms/cerisedisco.webp" alt=""></div><div><span class="cq-gros">5 000+</span><br><small>charms à poser</small></div></div>
+      <div class="cq-carte c-ecr" style="right:0;top:3%;--r:3deg;animation-delay:-1.5s"><div class="cq-ic" style="font-family:'Shrikhand'">Aa</div><div><span class="cq-gros">500+</span><br><small>écritures pour ton nom</small></div></div>
+      <div class="cq-carte c-fonds" style="left:0;top:27%;--r:2deg;animation-delay:-2.6s"><div class="cq-ic" style="background:repeating-conic-gradient(#F4C9D6 0 25%,#fff 0 50%) 0 0/12px 12px"></div><div><span class="cq-gros">500+</span><br><small>fonds · 61 en-têtes</small></div></div>
       <div class="cq-carte c-zero" style="right:0;top:47%;--r:-2deg;animation-delay:-4s"><div class="cq-ic" style="font-family:'Abril Fatface'">%</div><div><b>0 % de commission</b><small>tes réservations, ton argent</small></div></div>
       <div class="cq-carte c-attente" style="left:0;top:74%;--r:-2deg;animation-delay:-3.3s"><div class="cq-ic">◷</div><div><b>Liste d’attente</b><small>une place se libère, elle est prévenue</small></div></div>
       <div class="cq-sms"><div class="de">Rappel SMS · tout seul</div>Bonjour Inès ! RDV demain 09h00, 12 rue Paradis 13006 Marseille.</div>
@@ -2199,7 +2231,6 @@ html body .np .np-arc{height:500px!important}
       <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <p class="cq-sig"><b>Colle ton lien</b> : nom, photos, avis, horaires et prix se remplissent tout seuls.</p>
 </div></section>
 <!-- 19/11 : anciennes parties retirées (Attrape-les, Ta semaine, ancienne appli, ancienne galerie, charms, Dans ta bio, chiffres, ancien prix, anciennes questions) — copie : idees/accueil-avant-v5.html -->
 
@@ -2213,7 +2244,7 @@ html body .np .np-arc{height:500px!important}
       <div class="case vu"><div class="q">Pendant que tu dors</div><b>Elles réservent la nuit.</b><div class="notif"><span class="ic"></span><div><strong>Nouvelle réservation</strong><small>Léa · pose gel · samedi 10 h</small></div></div></div>
       <div class="case vu"><div class="q">La veille</div><b>Le rappel SMS part seul.</b><div class="notif"><span class="ic"></span><div><strong>Rappel SMS envoyé</strong><small>Inès · demain 9 h · inclus, sans limite</small></div></div></div>
       <div class="case vu"><div class="q">Une annulation ?</div><b>La place se reprend.</b><p>Liste d’attente : la cliente suivante est prévenue tout de suite.</p></div>
-      <div class="case vu"><div class="q">Ton site</div><b>Tu vois combien de fois il est vu.</b><div class="chiffre">128</div><p style="font-size:12.5px;color:var(--gris)">vues cette semaine · exemple</p></div>
+      <div class="case vu"><div class="q">Ton site</div><b>Tu sais combien de filles l’ont vu.</b><div class="chiffre">128</div><p style="font-size:12.5px;color:var(--gris)">vues cette semaine · exemple</p></div>
     </div>
   </div>
 </section>
@@ -2276,11 +2307,11 @@ html body .np .np-arc{height:500px!important}
     <div class="k" style="color:#F4A9C2">Bon à savoir</div>
     <div class="grille">
       <details><summary>Je ne suis pas douée en informatique.</summary><p>Tu colles ton lien Google Maps, ton site se fait tout seul. Ensuite tout se change avec le doigt, dans l’appli.</p></details>
-      <details><summary>Mes clientes doivent télécharger quelque chose ?</summary><p>Non. Elles ouvrent ton site et réservent. L’appli, c’est pour toi.</p></details>
-      <details><summary>Et si je n’aime pas ?</summary><p>Tu ne paies rien pour créer ton site et le voir. Le premier mois est offert. Tu arrêtes en 1 clic, sans engagement.</p></details>
-      <details><summary>Les SMS sont payants ?</summary><p>Non. Le SMS de rappel, la veille du rendez-vous, est compris dans les 49,99 €, sans limite.</p></details>
+      <details><summary>Mes clientes doivent télécharger quelque&nbsp;chose&nbsp;?</summary><p>Non. Elles ouvrent ton site et réservent. L’appli, c’est pour toi.</p></details>
+      <details><summary>Et si je n’aime pas&nbsp;?</summary><p>Tu ne paies rien pour créer ton site et le voir. Le premier mois est offert. Tu arrêtes en 1 clic, sans engagement.</p></details>
+      <details><summary>Les SMS sont payants&nbsp;?</summary><p>Non. Le SMS de rappel, la veille du rendez-vous, est compris dans les 49,99 €, sans limite.</p></details>
       <details><summary>Je travaille chez moi, sans salon.</summary><p>Justement. Un site à ton nom, oui. Ton adresse exacte est donnée à la cliente une fois le rendez-vous confirmé.</p></details>
-      <details><summary>J’ai mon adresse en .fr ?</summary><p>Oui, dès le 2e mois, incluse : tonsalon.fr. Le premier mois, ton site est sur loginail.fr/tonsalon, puis il passe tout seul sur ton .fr.</p></details>
+      <details><summary>J’ai mon adresse en .fr&nbsp;?</summary><p>Oui, dès le 2e mois, incluse : tonsalon.fr. Le premier mois, ton site est sur loginail.fr/tonsalon, puis il passe tout seul sur ton .fr.</p></details>
     </div>
   </div>
 </section>
@@ -2294,7 +2325,7 @@ document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.clas
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 })()</script>
-<footer class="pied">Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
+<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
 <div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
 
 <script>
@@ -3265,7 +3296,7 @@ document.querySelector(".resa-x").onclick=fermeResa;document.getElementById("res
 (()=>{const s=document.getElementById("semaine");if(!s)return;let __g=0;if(!s)return;
  const AV=[["23:12","Nouvelle réservation","Léa · Pose gel · samedi 10 h","la nuit"],["SMS","Rappel envoyé","Inès · demain 9 h · confirmé ✓","la veille"],["128","Ton site a été vu 128 fois","Cette semaine · 9 réservations en ligne","cette semaine"]];   /* 10/11 (Marie) : les vues du site, c'est important */
  const SA=[["23:12","3 messages non lus","« Tu as une place samedi ? »","la nuit"],["✕","Léa n’est pas venue","Rendez-vous oublié · 1 h perdue","ce matin"],["%","Commission prélevée","Sur une cliente que tu avais déjà","hier"]];
- const LA=["Tu vois combien de fois ton site est vu","Ton site à ton image, à ton nom","Un petit mot pour leur anniversaire","Agenda, clientes et caisse dans une appli","0 % de commission, tout est pour toi"];   /* 10/11 : 4 lignes (la nuit et le SMS sont déjà dans les notifications) */
+ const LA=["Tu sais combien de filles ont vu ton site","Ton site à ton image, à ton nom","Un petit mot pour leur anniversaire","Agenda, clientes et caisse dans une appli","0 % de commission, tout est pour toi"];   /* 10/11 : 4 lignes (la nuit et le SMS sont déjà dans les notifications) */
  const LS=["Aucune idée de qui regarde ton travail","Juste un Instagram, pas de vrai site","Les anniversaires, on les oublie","L’agenda est dans ta tête","Certaines plateformes prennent une commission"];
  const bl=document.getElementById("semBl"),l2=document.getElementById("semL"),BT=[...s.querySelectorAll("#semBs button")];let avec=true,touche=false,T=[],vu=false;
  const pop=()=>{T.forEach(clearTimeout);T=[];const N=avec?AV:SA;bl.className="sem-bulles"+(avec?"":" sans");bl.innerHTML=N.map(n=>`<div class="sem-bulle"><div class="ic">${n[0]}</div><div><b>${n[1]}</b><span>${n[2]}</span></div><small>${n[3]}</small></div>`).join("");

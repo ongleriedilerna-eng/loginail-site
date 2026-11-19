@@ -132,7 +132,7 @@ const estGoogle = l => /^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps|(www\.)?go
 function lienDe(t) { t = String(t || "").trim(); const h = t.match(/https?:\/\/\S+/)?.[0]; if (h) return h;
   const d = t.match(/(?:^|\s)((?:www\.)?[a-z0-9àâäéèêëîïôöùûüç-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:\/\S*)?)\s*$/i)?.[1]; return d ? "https://" + d.replace(/^\/+/, "") : ""; }
 const sorte = l => !l || estInsta(l) ? "" : estGoogle(l) ? "google" : /planity\.com/i.test(l) ? "planity" : /booksy\.com/i.test(l) ? "booksy" : /^https?:\/\/[^\s/]+\.[a-z]{2,}/i.test(l) ? "site" : "";
-const NOMS = { google: "<b>Fiche Google Maps</b> reconnue", planity: "<b>Page Planity</b> reconnue", booksy: "<b>Page Booksy</b> reconnue", site: "<b>Votre site</b> reconnu" };
+const NOMS = { google: "<b>Fiche Google Maps</b> reconnue", planity: "<b>Page Planity</b> reconnue", booksy: "<b>Page Booksy</b> reconnue", site: "<b>Ton site</b> reconnu" };
 const champ = $("champ"), boite = champ.closest(".lien"), msg = $("msg");
 const puce = document.createElement("div"); puce.className = "puce";
 puce.innerHTML = `<i class="ic">${PIN}</i><span></span><button type="button" class="chg">Changer</button><i class="ok">${COCHE}</i>`;
@@ -147,13 +147,13 @@ champ.addEventListener("keydown", e => { if (e.key === "Enter") $("creer").click
 $("coller").onclick = async () => {
   let t = ""; try { t = await navigator.clipboard.readText(); } catch (e) {}
   if (t && t.trim()) { champ.value = t.trim(); if (verifie()) return; }
-  champ.focus(); dit(t ? "Ce lien n’est pas reconnu. Touchez Google Maps, Planity… pour voir où le trouver." : "Restez appuyée dans la case, puis touchez « Coller ».");
+  champ.focus(); dit(t ? "Ce lien n’est pas reconnu. Touche Google Maps, Planity… pour voir où le trouver." : "Reste appuyée dans la case, puis touche « Coller ».");
 };
 $("creer").onclick = () => {
   const l = lienDe(champ.value);
-  if (!l) { dit("Collez d’abord votre lien.", "err"); champ.focus(); return; }
-  if (estInsta(l)) return dit("Instagram ne suffit pas : collez votre fiche Google Maps, votre page Planity ou Booksy, ou votre site.", "err");
-  if (!sorte(l)) return dit("Ce lien n’est pas reconnu. Touchez Google Maps, Planity… pour voir où le trouver.", "err");
+  if (!l) { dit("Colle d’abord ton lien.", "err"); champ.focus(); return; }
+  if (estInsta(l)) return dit("Instagram ne suffit pas : colle ta fiche Google Maps, ta page Planity ou Booksy, ou ton site.", "err");
+  if (!sorte(l)) return dit("Ce lien n’est pas reconnu. Touche Google Maps, Planity… pour voir où le trouver.", "err");
   dit(""); champ.blur(); charge(l);
 };
 /* « Je n'ai pas de lien, je le remplis moi-même » → la page où elle écrit tout (remplir.html) */
@@ -270,8 +270,8 @@ if (!RM) requestAnimationFrame(tick);
    5 · LE CHARGEMENT : l'anneau se remplit, une info à la fois ; chaque info trouvée devient une carte (pas trouvée = pas de carte)
    ===================================================================== */
 const K = ["salon", "photos", "avis", "horaires", "prix"];
-const LAB = { salon: "Votre salon", photos: "Vos photos", avis: "Vos avis", horaires: "Vos horaires", prix: "Vos prix" };
-const PHRASES = ["Recherche de votre salon…", "Vos photos arrivent…", "Lecture de vos avis…", "Lecture de vos horaires…", "Lecture de vos prix…"];
+const LAB = { salon: "Ton salon", photos: "Tes photos", avis: "Tes avis", horaires: "Tes horaires", prix: "Tes prix" };
+const PHRASES = ["Recherche de ton salon…", "Tes photos arrivent…", "Lecture de tes avis…", "Lecture de tes horaires…", "Lecture de tes prix…"];
 const phrase = $("phrase");
 function dire(t) { phrase.classList.add("change"); setTimeout(() => { phrase.textContent = t; phrase.classList.remove("change"); }, 170); }
 let jeton = 0;
@@ -293,7 +293,7 @@ function eclate(nb = 22) {
 
 /* Personnaliser se charge derrière (dès que son brouillon est écrit), puis s'ouvre en cercle depuis l'anneau */
 const port = document.createElement("div"); port.className = "portail"; port.setAttribute("aria-hidden", "true");
-port.innerHTML = '<iframe title="Personnaliser votre site"></iframe>';
+port.innerHTML = '<iframe title="Personnaliser mon site"></iframe>';
 app.appendChild(port);
 const ifr = port.querySelector("iframe"), flash = document.createElement("div"); flash.className = "flash"; app.appendChild(flash);
 let ifrPret = null;
@@ -313,7 +313,7 @@ async function charge(lien) {
     : fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON }, body: JSON.stringify({ lien }) })
       .then(r => r.json()).then(async g => { if (g.erreur) throw new Error(g.erreur); depuisGoogle(g); B.site = g.site || ""; gOk = true;
         await Promise.all([prechargePhotos(B.photos), litTarifs()]); })
-      .catch(e => { erreur = e.message && !/fetch|json/i.test(e.message) ? e.message : "Pas de connexion. Vérifiez votre réseau et réessayez."; })
+      .catch(e => { erreur = e.message && !/fetch|json/i.test(e.message) ? e.message : "Pas de connexion. Vérifie ton réseau et réessaie."; })
       .finally(() => { fini = true; });
   await attends(500);
   for (let i = 0; i < K.length; i++) {
@@ -375,11 +375,11 @@ async function fin(j) {
    6 · « OÙ TROUVER MON LIEN ? » : 5 boutons, chacun MONTRE le geste (mini téléphone + doigt)
    ===================================================================== */
 const AIDE = {
-  google: { nom: "Votre salon", t: ["Ouvrez <b>Google Maps</b> et touchez votre salon.", "Touchez <b>Partager</b>, puis <b>Copier le lien</b>.", "Revenez ici et touchez <b>Coller</b>."] },
-  planity: { nom: "Planity · Votre salon", t: ["Ouvrez <b>votre page Planity</b>.", "Touchez <b>Partager</b>, puis <b>Copier le lien</b>.", "Revenez ici et touchez <b>Coller</b>."] },
-  booksy: { nom: "Booksy · Votre salon", t: ["Ouvrez <b>votre page Booksy</b>.", "Touchez <b>Partager</b>, puis <b>Copier le lien</b>.", "Revenez ici et touchez <b>Coller</b>."] },
-  site: { nav: "votresalon.fr", t: ["Ouvrez <b>votre site</b>.", "Touchez <b>l’adresse en haut</b>, puis <b>Copier</b>.", "Revenez ici et touchez <b>Coller</b>."] },
-  autre: { nav: "fresha.com/votresalon", t: ["Ouvrez <b>votre page</b> : Fresha, Treatwell, iara…", "Touchez <b>l’adresse en haut</b>, puis <b>Copier</b>.", "Revenez ici et touchez <b>Coller</b>."] } };
+  google: { nom: "Ton salon", t: ["Ouvre <b>Google Maps</b> et touche ton salon.", "Touche <b>Partager</b>, puis <b>Copier le lien</b>.", "Reviens ici et touche <b>Coller</b>."] },
+  planity: { nom: "Planity · Ton salon", t: ["Ouvre <b>ta page Planity</b>.", "Touche <b>Partager</b>, puis <b>Copier le lien</b>.", "Reviens ici et touche <b>Coller</b>."] },
+  booksy: { nom: "Booksy · Ton salon", t: ["Ouvre <b>ta page Booksy</b>.", "Touche <b>Partager</b>, puis <b>Copier le lien</b>.", "Reviens ici et touche <b>Coller</b>."] },
+  site: { nav: "votresalon.fr", t: ["Ouvre <b>ton site</b>.", "Touche <b>l’adresse en haut</b>, puis <b>Copier</b>.", "Reviens ici et touche <b>Coller</b>."] },
+  autre: { nav: "fresha.com/votresalon", t: ["Ouvre <b>ta page</b> : Fresha, Treatwell, iara…", "Touche <b>l’adresse en haut</b>, puis <b>Copier</b>.", "Reviens ici et touche <b>Coller</b>."] } };
 const voile = document.createElement("div"); voile.className = "voile";
 const f = document.createElement("div"); f.className = "feuille"; f.setAttribute("role", "dialog"); f.setAttribute("aria-label", "Où trouver mon lien ?");
 f.innerHTML = `<div class="poignee"></div><h3>Où trouver mon lien ?</h3>
@@ -397,7 +397,7 @@ const appuie = async el => { el.classList.add("tap"); doigt.classList.add("appui
 async function aide(o) {
   if (o) src = o; const j = ++jA; const A = AIDE[src];
   f.querySelectorAll(".srcs button").forEach(b => b.classList.toggle("on", b.dataset.o === src));
-  f.querySelector(".mn").textContent = A.nom || "Votre salon"; li.forEach((l, i) => l.querySelector("span").innerHTML = A.t[i]);
+  f.querySelector(".mn").textContent = A.nom || "Ton salon"; li.forEach((l, i) => l.querySelector("span").innerHTML = A.t[i]);
   app.classList.add("aide"); await attends(450);
   const on = n => li.forEach((l, i) => l.classList.toggle("on", i === n));
   const mf = f.querySelector(".mf"), mok = f.querySelector(".mok"), nav = f.querySelector(".mnav");

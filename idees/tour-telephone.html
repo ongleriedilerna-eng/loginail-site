@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tour du téléphone · loginail.fr</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#B03562;--noir:#1E1C1B;--gris:#6d6663;--fond:#F6F1EE}
+*{box-sizing:border-box}body{margin:0;background:var(--fond);font-family:Jost,sans-serif;color:var(--noir)}
+.page{display:flex;gap:28px;padding:20px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.tel{position:sticky;top:16px;flex:none}
+.tel .cadre{width:414px;height:min(860px,calc(100vh - 70px));border-radius:46px;background:#111;padding:12px;box-shadow:0 20px 50px rgba(0,0,0,.18)}
+.tel iframe{width:390px;height:100%;border:0;border-radius:36px;background:#fff;display:block}
+.tel .choix{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.tel .choix button{font:500 13px Jost;border:1px solid #ddd;background:#fff;border-radius:99px;padding:6px 12px;cursor:pointer}
+.tel .choix button.on{background:var(--noir);color:#fff;border-color:var(--noir)}
+.liste{flex:1;min-width:300px;max-width:560px}
+h1{font:400 34px/1.1 'Abril Fatface';margin:6px 0 6px}h1 em{font-style:normal;color:var(--rose)}
+.sous{color:var(--gris);margin:0 0 18px;font-size:15px}
+h2{font:600 12px Jost;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin:22px 0 8px}
+.pt{background:#fff;border-radius:16px;padding:14px 16px;margin:0 0 10px;cursor:pointer;border:2px solid transparent;transition:border-color .2s,transform .2s}
+.pt:hover{transform:translateY(-2px)}.pt.on{border-color:var(--rose)}
+.pt b{display:block;font-size:16px;margin-bottom:3px}.pt b i{font-style:normal;color:var(--rose);margin-right:6px}
+.pt p{margin:0;font-size:14px;color:var(--gris);line-height:1.45}.pt p strong{color:var(--noir);font-weight:500}
+.ok{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;margin-top:6px}
+.ok.v{background:#E6F4EA;color:#1f6b35}.ok.r{background:#FBE6EC;color:var(--rose)}.ok.p{background:#EEE;color:#555}
+@media (max-width:900px){.tel{position:static}.tel .cadre{width:100%;max-width:414px}.tel iframe{width:100%}}
+</style></head><body>
+<div class="page">
+ <div class="tel">
+  <div class="cadre"><iframe id="f" src="../index.html?maj=1"></iframe></div>
+  <div class="choix"><button class="on" data-w="390">iPhone 390</button><button data-w="375">Petit iPhone 375</button><button data-p="../loginail-creer/index.html">Page « Créer mon site »</button></div>
+ </div>
+ <div class="liste">
+  <h1>Le tour du <em>téléphone</em></h1>
+  <p class="sous">À gauche, le vrai site, en taille téléphone. Touche un point : le téléphone descend au bon endroit et l'entoure en rose.</p>
+
+  <h2>Ce qui va bien</h2>
+  <div class="pt" data-q="h1"><b><i>✓</i>Le haut</b><p>Titre, bouton noir « Créer mon site gratuitement », notification qui passe, roue de téléphones. Propre, rien de coupé. Les petits carrés montrent déjà la nouvelle appli (fait le 19/11).</p><span class="ok v">je garde</span></div>
+
+  <h2>Ce qui fait amateur (ma liste)</h2>
+  <div class="pt" data-q=".cq-sms"><b><i>1</i>La bulle SMS grise est coupée</b><p>« Rappel SMS · tout seul » dépasse en bas de « Loginail, c'est quoi ? » et passe sous le prix. <strong>On croit à un bug.</strong> Correction : la remonter dans l'image, ou la retirer.</p></div>
+  <div class="pt" data-q="#cq-prix"><b><i>2</i>Le prix est écrit DEUX fois</b><p>Une carte 49,99 € juste après « c'est quoi ? », puis encore 49,99 € dans la partie noire en bas. <strong>Ça fait insister sur l'argent trop tôt.</strong> Correction : garder seulement celui du bas (plus complet).</p></div>
+  <div class="pt" data-q=".cq-sig"><b><i>3</i>« Colle ton lien » tout seul</b><p>Petite phrase sous la carte prix, qui parle d'un lien alors qu'il n'y a plus de case (D24). Correction : la retirer.</p></div>
+  <div class="pt" data-q="#case-vues"><b><i>4</i>« Tu vois combien de fois il est vu. »</b><p>Phrase lourde (« vois… vu »). Proposition : <strong>« Tu sais combien de filles l'ont vu. »</strong> ou « 128 visites cette semaine ».</p></div>
+  <div class="pt" data-q="#styles-gal"><b><i>5</i>Le papillon mord sur « Classe »</b><p>Le charm papillon est posé sur la première lettre du titre. Correction : le décaler à gauche, au-dessus.</p></div>
+  <div class="pt" data-q="#cq-chiffres"><b><i>6</i>Les chiffres ne sont plus justes</b><p>La page dit « 57 écritures », « 39 en-têtes », « Plus de 30 univers » ; tes listes disent 61 en-têtes. <strong>À recompter</strong>, et écrire les mêmes partout.</p></div>
+  <div class="pt" data-q="#faq-q"><b><i>7</i>Un « ? » tout seul sur sa ligne</b><p>« Mes clientes doivent télécharger quelque chose ? » : le point d'interrogation tombe seul en dessous. Petite correction invisible.</p></div>
+  <div class="pt" data-q="footer"><b><i>8</i>Un grand vide blanc tout en bas</b><p>Sous les liens légaux, un morceau de page vide. Correction : le pied de page s'arrête juste après les liens.</p></div>
+
+  <h2>Après « Créer mon site »</h2>
+  <div class="pt" data-p="../loginail-creer/index.html"><b><i>9</i>La page « Un lien suffit. »</b><p>Elle dit <strong>« vous »</strong> alors que l'accueil dit « tu » ; le titre est dans l'ancienne écriture (Cormorant) au lieu de celle de l'accueil ; le bouton est en MAJUSCULES espacées ; et il y a un trou vide au milieu. On passe d'une page à l'autre et on a l'impression de changer de site.</p></div>
+  <div class="pt" data-p="../loginail-creer/personnaliser.html"><b><i>10</i>Personnaliser</b><p>C'est encore l'ancienne page (bulle « Faites défiler », onglets coupés à droite). La nouvelle (« L'atelier », D27) est déjà validée et attend d'être codée : <strong>rien à redessiner</strong>, c'est pour le pôle Produit.</p><span class="ok p">déjà décidé</span></div>
+ </div>
+</div>
+<script>
+const f=document.getElementById('f');
+function marque(sel){
+  const d=f.contentDocument;if(!d)return;
+  const trouve={
+    '#cq-prix':()=>d.querySelector('.cq .cq-res'),
+    '#case-vues':()=>[...d.querySelectorAll('.case')].find(e=>/combien de fois/.test(e.textContent)),
+    '#styles-gal':()=>[...d.querySelectorAll('h2,h3,.titre,div,p')].reverse().find(e=>e.children.length<4&&/Classe\s*ou\s*baddie/.test(e.textContent)),
+    '#cq-chiffres':()=>d.querySelector('.c-ecr'),
+    '#faq-q':()=>[...d.querySelectorAll('*')].reverse().find(e=>e.children.length===0&&/télécharger quelque chose/.test(e.textContent)),
+  };
+  const el=trouve[sel]?trouve[sel]():d.querySelector(sel);
+  if(!el){d.body.scrollTo({top:0,behavior:'smooth'});return}
+  d.documentElement.style.scrollBehavior='auto';el.scrollIntoView({block:'center'});
+  d.querySelectorAll('[data-tour]').forEach(e=>{e.style.outline=e.dataset.tour;e.removeAttribute('data-tour')});
+  el.dataset.tour=el.style.outline||'';el.style.outline='3px solid #E0457B';el.style.outlineOffset='4px';
+}
+document.querySelectorAll('.pt').forEach(p=>p.onclick=()=>{
+  document.querySelectorAll('.pt').forEach(x=>x.classList.remove('on'));p.classList.add('on');
+  if(p.dataset.p){f.src=p.dataset.p;return}
+  if(!/\/index\.html$/.test(f.contentWindow.location.pathname)||/loginail-creer/.test(f.contentWindow.location.pathname)){f.src='../index.html';f.onload=()=>{f.onload=null;setTimeout(()=>marque(p.dataset.q),600)};return}
+  marque(p.dataset.q);
+});
+document.querySelectorAll('.choix button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.choix button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  if(b.dataset.p){f.src=b.dataset.p;return}
+  f.style.width=b.dataset.w+'px';if(/loginail-creer/.test(f.src))f.src='../index.html';
+});
+</script>
+</body></html>
