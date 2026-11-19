@@ -9,7 +9,7 @@
 <script src="perso/charms-noms.js?v=11191412"></script>
 <script src="perso/charms-couleurs.js?v=1911a"></script>
 <script src="perso/charms-styles.js?v=1911a"></script>
-<script src="perso/looks-marie.js?v=1911a"></script>
+<script src="perso/looks-marie.js?v=1911b"></script>
 <style>
 /* 16/11 · Pôle Design · Personnaliser, version A « L'atelier ».
    Les 5 choses à régler sont TOUJOURS visibles (En-tête · Fond · Écriture · Couleurs · Charms) : on va où on veut,
@@ -1327,8 +1327,40 @@ function rendLooks() { const l = $("lLook");
     const vis = L.img ? `<img class="cap" src="../loginail-site/apercus-univers/${L.img}.webp" alt="" loading="lazy">` : L.ph ? `<span class="miniS"></span>` : (k >= 0 ? P.vignetteFond(k) : "") + `<b style="font-family:${P.famille(L.p).replace(/"/g, "'")}">${L.n}</b>`;
     return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span>${i < MES.length ? `<span class="supL" role="button" aria-label="Supprimer ce look">✕</span>` : ""}${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join("");
   /* 17/11 (Marie) : les looks enregistrés montrent une vraie copie de SON site ; les favoris passent en premier (comme les en-têtes) */
-  requestAnimationFrame(() => l.querySelectorAll(".look.mien").forEach(b => { const L = tousLooks()[+b.dataset.i], m = b.querySelector(".miniS"); if (L && L.ph && m) P.montreSite(m, L.ph, m.offsetWidth || 140); }));
+  requestAnimationFrame(() => l.querySelectorAll(".look.mien").forEach(b => { const L = tousLooks()[+b.dataset.i], m = b.querySelector(".miniS"); if (L && L.ph && m) { P.montreSite(m, L.ph, m.offsetWidth || 140); charmsMini(m, L); } }));
   const ajout = l.querySelector(".look.ajout"); let fv = []; try { fv = FAVS.look; } catch (e) {} fv.slice().reverse().forEach(n => { const i = tousLooks().findIndex(L => L.n === n), b = i >= 0 && l.querySelector(`.look[data-i="${i}"]`); if (b && ajout) ajout.after(b); }); }
+/* 19/11 (Marie : « dans les looks, il n'y a pas les charms ni les étoiles qui bougent ») : la photo du carré ne gardait que le haut
+   du site et jetait les charms au passage. Les charms et les étoiles sont bien enregistrés dans le look (c, pos, et) :
+   on les redessine dans le carré, à leur place, à leur taille, et ils bougent comme sur le vrai site. Vaut pour les anciens looks aussi. */
+const CSS_MINI = `@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}@keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+  .miniCh{position:absolute;z-index:9000;pointer-events:none;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte 3.2s ease-in-out infinite}
+  .miniEt{position:absolute;z-index:9001;pointer-events:none;container-type:size;display:grid;place-items:center}
+  .miniEt i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){.miniCh,.miniEt i{animation:none}}`;
+function charmsMini(hote, L) { try { const sr = hote.shadowRoot; if (!sr || !L) return; const c = sr.firstElementChild; if (!c) return;
+  c.querySelectorAll(".lgn-sticker").forEach(x => x.remove());   /* une photo récente peut déjà en avoir : on repart des données */
+  const box = c.querySelector(".defile") || c, W = L.ph.w || 390, H = L.ph.ht || 844, ok = P.charmsTous();
+  const st = document.createElement("style"); st.textContent = CSS_MINI; sr.appendChild(st);
+  const places = [[8, 16], [70, 12], [74, 44], [6, 50], [40, 6], [78, 70], [10, 74], [50, 52]];
+  (L.c || []).filter(n => !ok.length || ok.includes(n)).slice(0, P.MAX).forEach((n, i) => { const xy = (L.pos || {})[n] || [...places[i % places.length], 74, 0, 1];
+    const im = document.createElement("img"); im.className = "miniCh"; im.alt = ""; im.src = new URL(P.imgCharm(n), P.D.baseURI).href; const s = xy[2] || 74;
+    Object.assign(im.style, { left: W * xy[0] / 100 + "px", top: H * xy[1] / 100 + "px", width: s + "px", height: s + "px", rotate: (xy[3] || 0) + "deg", scale: xy[4] === -1 ? "-1 1" : "", animationDelay: (-(i * .7) % 3.2).toFixed(2) + "s" });
+    box.appendChild(im); });
+  const et = L.et || []; et.forEach(s => { const e = document.createElement("div"); e.className = "miniEt"; e.innerHTML = `<i style="animation-delay:${(-Math.random() * 1.6).toFixed(2)}s">✦</i>`;
+    Object.assign(e.style, { left: W * s[0] / 100 + "px", top: H * s[1] / 100 + "px", width: (s[2] || 20) + "px", height: (s[2] || 20) + "px" }); box.appendChild(e); });
+  if (getComputedStyle(box).position === "static") box.style.position = "relative"; } catch (e) { console.warn("charms du carré", e); } }
+/* 19/11 (Marie : « mes photos dans l'image des looks, pas la photo de la cliente ») : le carré d'un look garde la photo qui était
+   sur le site AU MOMENT où le look a été enregistré (celle de Marie pour les looks tout prêts). Cliquer le look ne touche jamais
+   la photo de la pro. Ces photos étaient gardées en très grand (≈ 500 Ko par look : la mémoire du navigateur était pleine vers 7 looks) :
+   on les réduit à la taille du carré (≈ 30 Ko). Vaut aussi pour les looks déjà enregistrés. */
+const reduitImage = (src, maxi = 560) => new Promise(ok => { const im = new Image(); im.onload = () => { try { const k = Math.min(1, maxi / Math.max(im.naturalWidth, im.naturalHeight));
+    const c = document.createElement("canvas"); c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k); c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+    const r = c.toDataURL("image/jpeg", .82); ok(r.length < src.length ? r : src); } catch (e) { ok(src); } }; im.onerror = () => ok(src); im.src = src; });
+async function allegePhotos(ph) { if (!ph || !ph.h) return ph;
+  const gros = [...new Set(ph.h.match(/data:image\/[a-z+]+;base64,[A-Za-z0-9+/=]{60000,}/g) || [])]; if (!gros.length) return ph;
+  let h = ph.h; for (const s of gros) { const r = await reduitImage(s); if (r !== s) h = h.split(s).join(r); } return { ...ph, h }; }
+(async () => { let change = false; for (const L of MES) if (L.ph && L.ph.h && L.ph.h.length > 150000) { const p = await allegePhotos(L.ph); if (p.h.length < L.ph.h.length) { L.ph = p; change = true; } }
+  if (change) { try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (e) {} } })();
 const pause = ms => new Promise(r => setTimeout(r, ms));
 async function appliqueLook(L) {
   P.poses().forEach(n => P.charm(n)); while (P.nbEtoiles()) P.enleveEtoiles();
@@ -1375,11 +1407,12 @@ async function auHasard() { const pick = a => a[Math.floor(Math.random() * a.len
     pos[n] = [p[0] + Math.random() * 4 - 2, p[1] + Math.random() * 4 - 2, Math.round(mini + Math.random() * (maxi - mini)), Math.round(Math.random() * 56 - 28), Math.random() < .25 ? -1 : 1]; });
   const et = []; if (Math.random() < .8) { const nbB = 1 + Math.floor(Math.random() * 3); for (let k = 0; k < nbB; k++) { const p = places[(choisis.length + k) % places.length]; [[0, 0, 34], [9, -5, 20], [-7, 6, 15]].forEach(([dx, dy, sz]) => et.push([p[0] + dx, p[1] + dy, sz])); } }
   return { e: pick(P.ENT)[0], f: f[0], p: pick(pol)[0], c: choisis, pos, et }; }
-function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (MES.length + 1)); if (!nom) return;
+async function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (MES.length + 1)); if (!nom) return;
+  const ph = await allegePhotos(P.photoSite());
   const box = P.D.querySelector(".defile") || P.D.scrollingElement, W = box.clientWidth, H = box.clientHeight, r1 = v => Math.round(v * 10) / 10, pos = {}, et = [];
   P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").forEach(im => pos[im.dataset.n] = [r1(parseFloat(im.style.left) / W * 100), r1(parseFloat(im.style.top) / H * 100), Math.round(im._s || 74), Math.round(im._r || 0), im._f === -1 ? -1 : 1]);
   P.D.querySelectorAll(".lgn-etoile").forEach(x => et.push([r1(parseFloat(x.style.left) / W * 100), r1(parseFloat(x.style.top) / H * 100), Math.round(x._s || 20)]));
-  MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, lb: { ...P.libre }, c: P.poses(), pos, et, ph: P.photoSite(), quand: new Date().toISOString() });
+  MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, lb: { ...P.libre }, c: P.poses(), pos, et, ph, quand: new Date().toISOString() });
   try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (e) { MES.slice(3).forEach(L => delete L.ph); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (x) {} }
   lookOn = 0; rendLooks(); bulle("Look « " + nom + " » enregistré ✦"); }
 /* la croix d'un look enregistré : on demande avant de supprimer */
