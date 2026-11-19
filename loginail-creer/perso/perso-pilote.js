@@ -437,17 +437,26 @@
   /* 18/11 soir (Marie : « changer de photo, ça met 3 heures ») : toutes ses photos sont chargées d'avance ;
      au clic, on attend juste que LA photo soit prête, puis le changement se fait en moins d'une demi-seconde */
   const photoPrete = {}; P.prechargePhotos = () => { try { P.photos().forEach(u => { if (!photoPrete[u]) { const im = new Image(); im.decoding = "async"; im.src = u; photoPrete[u] = im; } }); } catch (e) {} };
+  /* 19/11 (Marie : « quand je change une photo, ça enlève les charms ») : changer, retirer ou remettre une photo redessine
+     tout l'écran du site, et les charms posés (et les étoiles) partaient avec. On les garde de côté et on les remet à leur place. */
+  const cleCh = x => [x.dataset.n, x.dataset.g || "", x.style.left, x.style.top].join("|");
+  const gardeCharms = fn => { const pris = [], vus = new Set();
+    try { P.D.querySelectorAll(".lgn-sticker").forEach(x => { const k = cleCh(x); if (vus.has(k)) x.remove(); else { vus.add(k); pris.push(x); } }); } catch (e) {}
+    /* le site peut aussi recopier les charms dans son nouvel écran : on garde les nôtres, on enlève les copies (sinon ils se dédoublent) */
+    const remet = () => { try { const box = boite(), k0 = new Set(pris.map(cleCh)); pris.forEach(x => { if (!x.isConnected) box.appendChild(x); });
+      P.D.querySelectorAll(".lgn-sticker").forEach(x => { if (!pris.includes(x) && k0.has(cleCh(x))) x.remove(); }); } catch (e) {} };
+    try { return fn(); } finally { if (pris.length) { remet(); [0, 60, 200, 500, 900].forEach(t => setTimeout(remet, t)); } } };
   P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false;
-    const go = () => { if (fait) return; fait = true; P._choisitPhoto(u); };
+    const go = () => { if (fait) return; fait = true; gardeCharms(() => P._choisitPhoto(u)); };
     if (im.complete) go(); else { im.onload = im.onerror = go; setTimeout(go, 1200); } };
   P._choisitPhoto = u => { P.rideau(600, 900); try {   /* le site remet ses couleurs ~0,5 s après une nouvelle photo : la copie reste jusque-là ; 18/11 : sa 1re photo remplace « Votre photo apparaîtra ici » partout */ P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0;if(BR.photos.length===1)PH.vide=u}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
     setTimeout(() => { if (P.etat.police) clique(`#pzPol [data-p="${P.etat.police}"]`); }, 120); P.calme(); ajusteBientot(); signale("photo"); };
   /* 17/11 (Marie) : elle peut retirer une photo (on en garde toujours au moins une) ; remetPhoto = « Annuler » */
-  P.retirePhoto = u => { try { return P.W.eval(`(()=>{const u=${JSON.stringify(u)};if(BR.photos.length<2)return null;const i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0)return null;
+  P.retirePhoto = u => gardeCharms(() => { try { return P.W.eval(`(()=>{const u=${JSON.stringify(u)};if(BR.photos.length<2)return null;const i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0)return null;
     const p=BR.photos.splice(i,1)[0];if(BR.salon!=null){if(BR.salon===i)BR.salon=null;else if(BR.salon>i)BR.salon--}const une=(BR.principale||0);if(une===i)BR.principale=0;else if(une>i)BR.principale=une-1;
-    const i0=BR.principale||0,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);delete PH["g"+BR.photos.length];const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1);return {p,i,une}})()`); } catch (e) { console.warn(e); return null; } finally { signale("photo"); } };
-  P.remetPhoto = r => { if (!r) return; try { P.W.eval(`(()=>{const r=${JSON.stringify(r)};BR.photos.splice(r.i,0,r.p);BR.principale=r.une;const i0=r.une,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) {} signale("photo"); };
+    const i0=BR.principale||0,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);delete PH["g"+BR.photos.length];const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1);return {p,i,une}})()`); } catch (e) { console.warn(e); return null; } finally { signale("photo"); } });
+  P.remetPhoto = r => { if (!r) return; gardeCharms(() => { try { P.W.eval(`(()=>{const r=${JSON.stringify(r)};BR.photos.splice(r.i,0,r.p);BR.principale=r.une;const i0=r.une,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) {} signale("photo"); }); };
   P.litPhoto = fi => { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
     cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); P.choisitPhoto(cv.toDataURL("image/jpeg", .85)); }; im.src = r.result; }; r.readAsDataURL(fi); };
   /* 18/11 (Marie : « si elle appuie sur plusieurs photos, elle doit pouvoir en ajouter plusieurs ») : la 1re devient la photo du haut,
