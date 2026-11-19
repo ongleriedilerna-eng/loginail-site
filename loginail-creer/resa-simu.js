@@ -73,6 +73,9 @@
   .rs .att u{text-decoration-color:rgba(30,28,27,.35);text-underline-offset:3px}
   .rs .complet{background:#fff;border-radius:20px;padding:18px 18px 4px;margin-top:8px;text-align:center;font:300 14.5px/1.5 Jost;color:#5d554e}
   .rs .complet b{display:block;font:300 18px Jost;color:#1E1C1B;margin-bottom:4px}
+  .rs .place{background:#fff;border-radius:20px;padding:14px 18px;margin:4px 0 6px;text-align:center;font:300 14px/1.45 Jost;color:#5d554e;box-shadow:inset 0 0 0 1.5px var(--rs)}
+  .rs .place small{display:block;font:400 10.5px Jost;letter-spacing:.22em;color:var(--rs);margin-bottom:4px}
+  .rs .place b{display:block;font:300 20px/1.25 Jost;color:#1E1C1B;margin-bottom:2px}
   .rs .ok{width:64px;height:64px;border-radius:50%;background:var(--rs);margin:16px auto 0;display:grid;place-items:center}
   .rs .ok::after{content:"";width:22px;height:11px;border-left:2px solid #F6F3EF;border-bottom:2px solid #F6F3EF;transform:rotate(-45deg) translate(2px,-3px)}`;
   document.head.append(css);
@@ -80,6 +83,11 @@
   const rs = document.getElementById("rs"), rf = document.getElementById("rf");
   let R = {}, etape = 1, jourChoisi = null, att = 0;   /* att : 0 = non, 1 = formulaire liste d'attente, 2 = « C'est noté » */
   let jourVoulu = (location.search.match(/[?&]resa=(\d{4}-\d{2}-\d{2})/) || [])[1] || "";
+  /* 19/11 (Marie) : depuis l'e-mail « Une place s'est libérée », on arrive DIRECTEMENT sur le jour et la place libérée,
+     prestation déjà choisie (&p=nom), seulement les heures de la place (&de=540&a=1020, minutes) + « Voir tous les horaires » */
+  const QS = new URLSearchParams(location.search);
+  let prestaVoulue = QS.get("p") || "";
+  let place = jourVoulu && /^\d+$/.test(QS.get("de") || "") && /^\d+$/.test(QS.get("a") || "") ? { cle: jourVoulu, d: +QS.get("de"), f: +QS.get("a"), tout: false } : null;
   const ferme = () => { rs.classList.remove("on"); document.documentElement.dataset.resa = etape >= 5 ? "5" : ""; };
   rs.querySelector("[data-rx]").onclick = ferme;
   if (typeof glisse === "function") glisse(rf, () => rf, (dx, dy) => { if (dy > 90) ferme(); }, false, e => !e.target.closest("input,button,a,label"));
@@ -115,11 +123,15 @@
       /* 18/11 : « &resa=2026-11-24 » (lien de l'e-mail de la liste d'attente) → ce jour-là directement */
       if (!jourChoisi && jourVoulu) { jourChoisi = P.find(x => cle(x.date) === jourVoulu && ouvertJ(x)) || null; jourVoulu = ""; }
       if (!jourChoisi) jourChoisi = P.find(x => creneaux(x, R.duree).length) || P.find(ouvertJ) || P[0];
-      const c = creneaux(jourChoisi, R.duree);
+      const ici = place && !place.tout && cle(jourChoisi.date) === place.cle;
+      const c = creneaux(jourChoisi, R.duree).filter(t => !ici || (t >= place.d && t + R.duree <= place.f));
+      const jt = jourChoisi.date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
       /* 18/11 (liste d'attente) : un jour complet n'est plus grisé, on peut le toucher pour demander à être prévenue ; seul un jour fermé reste grisé */
       rf.innerHTML = tete + `<div class="kick">2 / 4</div><h2>Le jour et l’heure</h2><div class="jours">${P.map((x, k) => { const n = creneaux(x, R.duree).length, o = ouvertJ(x);
           return `<button class="jr ${x.date.getTime() === jourChoisi.date.getTime() ? "on" : ""}${o && !n ? " plein" : ""}" data-j="${k}" ${o ? "" : "disabled"}>${JOURS[x.j].slice(0, 3)}<b>${x.date.getDate()}</b>${o && !n ? "<small>complet</small>" : x.date.toLocaleDateString("fr-FR", { month: "short" }).replace(".", "")}</button>`; }).join("")}</div>
-        ${c.length ? `<div class="h">${c.map(t => `<button data-t="${t}">${hm(t)}</button>`).join("")}</div><button class="att" data-att>Aucun horaire ne vous va ? <u>Prévenez-moi si une place se libère</u></button>`
+        ${ici ? `<div class="place"><small>UNE PLACE S’EST LIBÉRÉE</small><b>${esc(jt.charAt(0).toUpperCase() + jt.slice(1))}</b>${c.length ? `entre ${hm(place.d)} et ${hm(place.f)} · choisissez votre heure` : "elle vient d’être prise, désolée"}</div>` : ""}
+        ${c.length ? `<div class="h">${c.map(t => `<button data-t="${t}">${hm(t)}</button>`).join("")}</div>${ici ? `<button class="att" data-tout><u>Voir tous les horaires</u></button>` : `<button class="att" data-att>Aucun horaire ne vous va ? <u>Prévenez-moi si une place se libère</u></button>`}`
+          : ici ? `<button class="att" data-tout><u>Voir tous les horaires</u></button>`
           : ouvertJ(jourChoisi) ? `<div class="complet"><b>Ce jour est complet</b>Laissez vos coordonnées : si une place se libère, vous êtes prévenue par e-mail.<button class="go" data-att style="margin:14px 0">PRÉVENEZ-MOI</button></div>`
           : `<div class="rien">Pas de créneau ce jour-là.</div>`}`;
       rf._P = P; }
@@ -150,7 +162,11 @@
   async function chargeOcc() { if (!REEL) return; const a = new Date(), b = new Date(); b.setDate(b.getDate() + 15);
     try { const l = await rpc("moments_pris", { s: window.LOGI_SLUG, de: cle(a), a: cle(b) }); OCC = {};
       (l || []).forEach(m => { const d = new Date(m.debut), f = new Date(m.fin), k = cle(d); (OCC[k] = OCC[k] || []).push([d.getHours() * 60 + d.getMinutes(), f.getHours() * 60 + f.getMinutes() + (cle(f) !== k ? 1440 : 0)]); }); } catch (e) {} }
-  async function ouvre() { if (etape >= 5 || att === 2) { R = {}; etape = 1; jourChoisi = null; } att = 0; await chargeOcc(); dessine(); rs.classList.add("on"); }
+  async function ouvre() { if (etape >= 5 || att === 2) { R = {}; etape = 1; jourChoisi = null; } att = 0; await chargeOcc();
+    /* 19/11 : lien de l'e-mail → sa prestation est déjà choisie, on ouvre sur « Le jour et l'heure » */
+    if (prestaVoulue) { const i = BR.prestations.findIndex(p => String(p.nom).trim() === prestaVoulue.trim()); prestaVoulue = "";
+      if (i >= 0) { const p = BR.prestations[i]; R = { i, nom: p.nom, prix: p.prix || 0, duree: p.duree || 60, acompte: acompteDe(p.prix) }; jourChoisi = null; etape = 2; } }
+    dessine(); rs.classList.add("on"); }
   /* 18/11 : en arrivant par le lien « Réserver cette place » de l'e-mail, la réservation s'ouvre toute seule */
   if (jourVoulu) setTimeout(ouvre, 600);
   /* « Réserver » sur son site ouvre la réservation (au lieu du message « étape 5 ») */
@@ -161,6 +177,7 @@
     if (t.hasAttribute("data-ret")) { etape--; return dessine(); }
     /* 18/11 · liste d'attente */
     if (t.hasAttribute("data-att")) { att = 1; return dessine(); }
+    if (t.hasAttribute("data-tout")) { if (place) place.tout = true; return dessine(); }
     if (t.hasAttribute("data-att-ret")) { att = 0; return dessine(); }
     if (t.hasAttribute("data-att-fin")) { att = 0; R = {}; etape = 1; jourChoisi = null; return ferme(); }
     if (t.id === "ago") { const p = rf.querySelector("#ap").value.trim(), tl = rf.querySelector("#at").value.trim(), em = rf.querySelector("#ae").value.trim(), z = rf.querySelector(".aerr");
