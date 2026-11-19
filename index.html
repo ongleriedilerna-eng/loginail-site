@@ -2373,6 +2373,22 @@ document.addEventListener("DOMContentLoaded",function(){
   .pied-ch.physique img.tenu{cursor:grabbing;filter:drop-shadow(0 14px 14px rgba(80,30,45,.28))}
 }
 </style>
+<style id="pied-bocaux">
+/* 19/11 nuit (Marie, choix V1 « verre épais ») : TÉLÉPHONE seulement — en bas de l'accueil, LOGINAIL en lettres-bocaux de verre remplies de charms
+   (à la place des 5 charms qui tombent). Toucher = seuls les charms sous le doigt bougent ; secouer / pencher le téléphone = tout bouge
+   (sur iPhone, Apple demande la permission « mouvement » au 1er toucher). Rien ne sort jamais des lettres. Ordinateur inchangé.
+   Page d'essai : idees/bocaux.html?v=1 */
+@font-face{font-family:BagelBocal;src:url(loginail-site/polices/BagelFatOne-400-latin.woff2) format("woff2");font-display:block}
+.pied-bocaux{display:none}
+@media (max-width:760px){
+  html body:not(#_) .pied-ch{display:none!important}
+  .pied-bocaux{display:flex;flex-direction:column;align-items:center;margin:0 auto 10px;width:100%;max-width:420px}
+  .pied-bocaux canvas{display:block;touch-action:pan-y;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .pied-bocaux .pb-aide{margin-top:8px;font-size:12px;color:#7a6f69;text-align:center}
+  .pied-bocaux .pb-bt{display:none;margin-top:8px;height:36px;padding:0 16px;border-radius:99px;border:0;background:#1E1C1B;color:#fff;font:500 13px Jost,sans-serif}
+  .pied-bocaux .pb-bt.on{display:inline-block}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2607,7 +2623,7 @@ document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.clas
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 })()</script>
-<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
+<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div><div class="pied-bocaux" id="piedBocaux"><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide">Touche un bocal, puis secoue ton téléphone ✦</div><button class="pb-bt" type="button">Activer le secouage</button></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
 <div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
 
 <script>
@@ -3852,6 +3868,103 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
     im.addEventListener('pointerup',lache);im.addEventListener('pointercancel',lache)}
   // ils deviennent « vivants » juste après la chute ; la boucle tourne seulement quand le bas de la page est visible
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{vu=e.isIntersecting;if(vu){if(!actif)setTimeout(demarre,1500+ims.length*220+300);else reveille()}}),{threshold:.2}).observe(row);
+})();
+</script>
+<script id="pied-bocaux-js">/* 19/11 (Marie) : les lettres-bocaux du bas de l'accueil, téléphone seulement — démarre seulement quand on approche du bas */
+(function(){
+  const Z=document.getElementById('piedBocaux');if(!Z||!matchMedia('(max-width:760px)').matches||!('IntersectionObserver' in window))return;
+  let parti=false;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!parti){parti=true;io.disconnect();lance()}}),{rootMargin:'400px 0px'});io.observe(Z);
+  async function lance(){
+const V=1;let raf=0,vu=true;
+  const NOMS=['cerisedisco','ceriseruban','cerisecoeur','cerisesrouges','cerisesor','ceriseslanternes','cerisesverre','noeudcerise','perle','bouledisco','boulefacettes','boule8','boule8or','boulecristallune',
+    'coeurchrome','coeurajoure','coeurrubis','coeurperles','coeurroseclair','coeurcristal','coeurcousurose','coeurpixel','coeurleopard','coeurchoco','etoilecristal','etoilebleuciel','etoile4','etoilelumineuse',
+    'etoilecerise','diamant','cristal','sucettecoeur','bonbon','bonbonvert','bagueastres','saturne','papilloncyber','arcenciel','arcencielperles','chatlune','fleurivoire','coquillagefrangipanier','baguettemagique'];
+  const cv=Z.querySelector('canvas'),ctx=cv.getContext('2d'),DPR=Math.min(2,window.devicePixelRatio||1);
+  await document.fonts.load('100px BagelBocal');
+  // ---- LOGINAIL sur UNE ligne, lettres séparées par un petit espace
+  const T='LOGINAIL',W=Math.min(Z.clientWidth||innerWidth-32,420),GAP=Math.max(3,W*.012);
+  const mes=fs=>{ctx.font=fs+'px BagelBocal';return [...T].reduce((s,ch)=>s+ctx.measureText(ch).width,0)+GAP*(T.length-1)};
+  let FS=260;while(mes(FS)>W-4&&FS>30)FS-=1;
+  const SY=1.32;ctx.font=FS+'px BagelBocal';const asc=ctx.measureText('L').actualBoundingBoxAscent*SY;
+  const COUV=V>=2?FS*.17:0,BASE=Math.round(COUV+asc+FS*.06),H=Math.round(BASE+FS*.24);
+  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
+  const lettres=[];{let x=(W-mes(FS))/2;for(const ch of T){const m=ctx.measureText(ch);lettres.push({ch,x,y:BASE,w:m.width,top:BASE-m.actualBoundingBoxAscent*SY});x+=m.width+GAP}}
+  const calque=()=>{const c=document.createElement('canvas');c.width=W*DPR;c.height=H*DPR;const g=c.getContext('2d');g.setTransform(DPR,0,0,DPR,0,0);g.font=FS+'px BagelBocal';return [c,g]};
+  const lettresEn=(g,how)=>lettres.forEach(l=>{g.save();g.translate(l.x,l.y);g.scale(1,SY);g.lineWidth=g.lineWidth/Math.sqrt(SY);g[how](l.ch,0,0);g.restore()});
+  // ---- le masque : l'intérieur du verre (paroi épaisse) = là où les charms ont le droit d'être
+  const PAROI=Math.max(4,FS*.075),PM=Math.max(2,FS*.034);
+  const M=document.createElement('canvas');M.width=W;M.height=H;const m=M.getContext('2d');m.font=FS+'px BagelBocal';m.fillStyle='#000';lettresEn(m,'fillText');
+  m.globalCompositeOperation='destination-out';m.lineWidth=PM*2;m.lineJoin='round';m.strokeStyle='#000';lettresEn(m,'strokeText');
+  const A=m.getImageData(0,0,W,H).data;const dedans=(x,y)=>{x|=0;y|=0;return x>=0&&y>=0&&x<W&&y<H&&A[(y*W+x)*4+3]>128};
+  const libre=(x,y,r)=>{if(!dedans(x,y))return false;for(let k=0;k<8;k++){const a=k*Math.PI/4;if(!dedans(x+Math.cos(a)*r,y+Math.sin(a)*r))return false}return true};
+  // ---- calque du FOND (derrière les charms) : ombre au sol + verre teinté
+  const [FOND,f]=calque();
+  if(V!==2||true){f.save();lettres.forEach(l=>{const cx=l.x+l.w/2,gr=f.createRadialGradient(cx,BASE+FS*.08,1,cx,BASE+FS*.08,l.w*.62);gr.addColorStop(0,'rgba(120,40,70,.22)');gr.addColorStop(1,'rgba(120,40,70,0)');
+    f.fillStyle=gr;f.beginPath();f.ellipse(cx,BASE+FS*.08,l.w*.62,FS*.07,0,0,Math.PI*2);f.fill()});f.restore()}
+  const teinte=V===3?['rgba(255,214,230,.75)','rgba(244,170,200,.55)']:['rgba(255,255,255,.62)','rgba(255,240,246,.4)'];
+  {const gr=f.createLinearGradient(0,BASE-asc,0,BASE);gr.addColorStop(0,teinte[0]);gr.addColorStop(1,teinte[1]);f.fillStyle=gr;lettresEn(f,'fillText');}
+  // ---- calque du DESSUS (devant les charms) : paroi épaisse, reflets, fond du bocal, couvercles
+  const [HAUT,h]=calque();
+  // paroi : un verre épais = bord blanc large et semi-transparent, puis un fil plus net
+  h.lineJoin='round';h.lineWidth=PAROI*1.6;h.strokeStyle=V===3?'rgba(255,236,244,.7)':'rgba(255,255,255,.62)';lettresEn(h,'strokeText');
+  h.lineWidth=1.6;h.strokeStyle='rgba(255,255,255,.98)';lettresEn(h,'strokeText');
+  h.lineWidth=1;h.strokeStyle=V===3?'rgba(176,53,98,.45)':'rgba(150,90,110,.35)';lettresEn(h,'strokeText');
+  // reflets : une grande traînée claire à gauche de chaque lettre + un petit point brillant, gardés DANS la lettre
+  {const [R,r]=calque();lettres.forEach(l=>{const top=l.top;r.save();r.translate(l.x+l.w*.24,top+FS*.18);r.rotate(-.12);
+      const gr=r.createLinearGradient(-6,0,8,0);gr.addColorStop(0,'rgba(255,255,255,0)');gr.addColorStop(.5,'rgba(255,255,255,.85)');gr.addColorStop(1,'rgba(255,255,255,0)');
+      r.fillStyle=gr;r.beginPath();r.roundRect(-FS*.035,0,FS*.07,(BASE-top)*.55,FS*.035);r.fill();r.restore();
+      r.fillStyle='rgba(255,255,255,.95)';r.beginPath();r.arc(l.x+l.w*.72,top+FS*.14,FS*.025,0,Math.PI*2);r.fill();
+      // fond du bocal : une ombre douce en bas de la lettre
+      const gb=r.createLinearGradient(0,BASE-FS*.16,0,BASE);gb.addColorStop(0,'rgba(120,40,70,0)');gb.addColorStop(1,'rgba(120,40,70,.18)');r.fillStyle=gb;r.fillRect(l.x,BASE-FS*.16,l.w,FS*.16)});
+    r.setTransform(1,0,0,1,0,0);r.globalCompositeOperation='destination-in';r.drawImage(M,0,0,W*DPR,H*DPR);h.drawImage(R,0,0,W,H)}
+  // couvercles vissés sur le haut de chaque lettre (versions 2 et 3)
+  if(V>=2){lettres.forEach(l=>{const lw=Math.min(l.w*.62,FS*.5),x=l.x+(l.w-lw)/2,y=l.top-COUV*.62,hh=COUV*.78,gr=h.createLinearGradient(0,y,0,y+hh);
+      if(V===2){gr.addColorStop(0,'#F6DFA4');gr.addColorStop(.45,'#D9A94F');gr.addColorStop(1,'#A9772C')}else{gr.addColorStop(0,'#F9C9DA');gr.addColorStop(.5,'#E58BAE');gr.addColorStop(1,'#B9577E')}
+      h.fillStyle=gr;h.beginPath();h.roundRect(x,y,lw,hh,hh*.35);h.fill();
+      h.strokeStyle='rgba(255,255,255,.45)';h.lineWidth=1;for(let k=1;k<6;k++){const xx=x+lw*k/6;h.beginPath();h.moveTo(xx,y+2);h.lineTo(xx,y+hh-2);h.stroke()} // les stries du couvercle
+      h.fillStyle='rgba(255,255,255,.55)';h.beginPath();h.roundRect(x+3,y+2,lw-6,hh*.25,hh*.12);h.fill()})}
+  // ---- les charms
+  const imgs={};await Promise.all(NOMS.map(n=>new Promise(ok=>{const i=new Image();i.onload=i.onerror=ok;i.src='loginail-site/charms-mini/'+n+'.webp';imgs[n]=i})));
+  const R0=Math.max(3.8,FS*.058),B=[];let essais=0;
+  while(B.length<120&&essais<90000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.78+Math.random()*.5);
+    if(!libre(x,y,r))continue;if(B.some(b=>Math.hypot(b.x-x,b.y-y)<(b.r+r)*.95))continue;
+    B.push({x,y,r,vx:0,vy:0,a:Math.random()*6.28,va:0,im:imgs[NOMS[B.length%NOMS.length]]})}
+  // ---- le mouvement (le même que la 1re version : rien ne sort jamais)
+  let gx=0,gy=.3,secousse=0;
+  function pas(){
+    for(const b of B){b.vx+=gx;b.vy+=gy;if(secousse>0){b.vx+=(Math.random()-.5)*secousse;b.vy+=(Math.random()-.5)*secousse-secousse*.25}
+      b.vx*=.985;b.vy*=.985;
+      const nx=b.x+b.vx;if(libre(nx,b.y,b.r))b.x=nx;else{b.vx*=-.35;b.va+=b.vy*.02}
+      const ny=b.y+b.vy;if(libre(b.x,ny,b.r))b.y=ny;else{b.vy*=-.35;b.vx*=.9;b.va=b.vx/b.r}
+      b.a+=b.va;b.va*=.96}
+    for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const p=B[i],q=B[j],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||1,mn=(p.r+q.r)*.92;
+      if(d<mn){const k=(mn-d)/d/2,ux=dx*k,uy=dy*k;if(libre(p.x-ux,p.y-uy,p.r)){p.x-=ux;p.y-=uy}if(libre(q.x+ux,q.y+uy,q.r)){q.x+=ux;q.y+=uy}
+        const rv=(q.vx-p.vx)*dx/d+(q.vy-p.vy)*dy/d;if(rv<0){const im=-rv*.5;p.vx-=im*dx/d;p.vy-=im*dy/d;q.vx+=im*dx/d;q.vy+=im*dy/d}}}
+    secousse*=.85;if(secousse<.05)secousse=0;dessine();raf=vu?requestAnimationFrame(pas):0}
+  function dessine(){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(FOND,0,0);ctx.setTransform(DPR,0,0,DPR,0,0);
+    for(const b of B){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.a);const s=b.r*2.5;if(b.im.naturalWidth)ctx.drawImage(b.im,-s/2,-s/2,s,s);ctx.restore()}
+    ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(HAUT,0,0)}
+  // ---- toucher / secouer / pencher
+  const aide=Z.querySelector('.pb-aide'),bt=Z.querySelector('.pb-bt');let capteurs=false;
+  function ecoute(){if(capteurs)return;capteurs=true;
+    addEventListener('devicemotion',e=>{const a=e.acceleration||{};const fo=Math.hypot(a.x||0,a.y||0,a.z||0);if(fo>9)secousse=Math.min(9,fo*.45)});
+    addEventListener('deviceorientation',e=>{if(e.gamma==null)return;const gm=Math.max(-60,Math.min(60,e.gamma)),be=Math.max(-10,Math.min(80,e.beta||45));
+      gx=Math.sin(gm*Math.PI/180)*.42;gy=Math.max(.08,Math.sin(be*Math.PI/180))*.42});aide.innerHTML='Secoue ou penche ton téléphone ✦'}
+  async function demande(){try{if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
+      const r=await DeviceMotionEvent.requestPermission();if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission)await DeviceOrientationEvent.requestPermission().catch(()=>{});
+      if(r==='granted'){ecoute();bt.classList.remove('on')}else aide.innerHTML='Touche les bocaux pour les secouer ✦'}else ecoute()}catch(e){aide.innerHTML='Touche les bocaux pour les secouer ✦'}}
+  // toucher : seuls les charms autour du doigt bougent (ils s'écartent et sautent), le reste ne bouge pas ; glisser le doigt les remue au passage
+  const pousse=(e,fort)=>{const R=cv.getBoundingClientRect(),x=e.clientX-R.left,y=e.clientY-R.top,RAY=FS*.55;
+    for(const b of B){const dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d>RAY)continue;const k=(1-d/RAY)*fort,u=d||1;
+      b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-k*5;b.va+=(Math.random()-.5)*k*.4}};
+  let appui=false;
+  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6);if(!capteurs)demande()});
+  cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35)});
+  addEventListener('pointerup',()=>{appui=false});addEventListener('pointercancel',()=>{appui=false});bt.addEventListener('click',demande);
+  if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'&&/iPhone|iPad|iPod/.test(navigator.userAgent))bt.classList.add('on');
+  new IntersectionObserver(es=>es.forEach(e=>{vu=e.isIntersecting;if(vu&&!raf)raf=requestAnimationFrame(pas)}),{threshold:0}).observe(Z);
+  raf=requestAnimationFrame(pas);
+  }
 })();
 </script>
 </body></html>
