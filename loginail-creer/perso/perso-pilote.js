@@ -429,7 +429,7 @@
       majS(e); box.appendChild(e); });
     signale("charms"); return true; };
   P.enleveEtoiles = () => { const l = [...P.D.querySelectorAll(".lgn-etoile")]; if (!l.length) return; const g = l[l.length - 1].dataset.g; l.filter(e => e.dataset.g === g).forEach(e => e.remove()); signale("charms"); };
-  P.nomCharm = n => (window.CHNOM || {})[n] || n;
+  P.nomCharm = n => (window.CHNOM || {})[n] || (window.NOM || {})[n] || n;   /* 20/11 : les noms de charms-cat.js en secours (charms-noms.js peut être en retard) */
 
   /* sa photo du haut (même méthode que la page actuelle : choisitPhoto / litPhoto) */
   P.photos = () => { try { return P.W.eval("(BR.photos||[]).map(p=>p.url)").map(u => new URL(u, P.D.baseURI).href); } catch (e) { return []; } };
