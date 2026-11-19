@@ -772,6 +772,14 @@ body.ep1 .choix:after{display:none!important}
 .supBoite p{margin:0 0 18px;font:400 14px Jost,sans-serif;color:var(--muted)}
 .supBoite div{display:flex;gap:10px}.supBoite button{flex:1;height:44px;border-radius:999px;border:0;font:500 14px Jost,sans-serif;cursor:pointer}
 .supBoite .non{background:var(--fond);color:var(--noir)}.supBoite .oui{background:#B5475E;color:#fff}
+/* 19/11 (Marie) : « Tout recommencer à zéro » — discret, sous les astuces (ordinateur) / en bas à gauche des réglages (téléphone) */
+.zeroB{display:inline-flex;align-items:center;gap:7px;border:0;background:none;cursor:pointer;font:400 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(0,0,0,.2);padding:8px 2px;transition:color .15s,transform .15s}
+.zeroB span{text-decoration:none;font-size:15px;transition:transform .35s var(--ressort,ease)}
+.zeroB:hover{color:#B5475E}.zeroB:hover span{transform:rotate(-200deg)}.zeroB:active{transform:scale(.96)}
+.zeroOrdi{position:absolute;left:4px;top:var(--zeroY,100%)}
+.zeroTel{margin-right:auto;margin-left:40px;font-size:12.5px;white-space:nowrap}   /* 40 px : la petite flèche « voir la suite » est à gauche */
+@media (min-width:900px){.zeroTel{display:none}}
+@media (max-width:899px){body.surCharms .zeroTel{display:none}}
 @keyframes supF{from{opacity:0}}@keyframes supB{from{opacity:0;transform:scale(.92) translateY(8px)}}
 
 /* 17/11 v2 (Marie : « on ne voit pas qu'on peut descendre » + « ça se fond avec les fonds ») :
@@ -1683,7 +1691,7 @@ function rendAstuces(o) { const a = $("astuces"); if (!a) return; const L = (AST
 function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || innerWidth < 900) return; const libre = Math.round(T.getBoundingClientRect().left - a.parentElement.getBoundingClientRect().left - 48 - 28); a.style.setProperty("--astW", Math.max(0, Math.min(260, libre)) + "px");   /* mesuré à l'écran : jamais sur le téléphone */ a.classList.toggle("cache", libre < 170 || $("app").classList.contains("agrandi"));
   /* on n'affiche que les astuces qui tiennent dans la hauteur du téléphone */
   const bas = T.offsetTop + T.offsetHeight; /* 17/11 (Marie : « plus smooth quand ça se ferme ») : une astuce qui ne tient plus s'efface en douceur au lieu de disparaître d'un coup */
-  [...a.querySelectorAll(".astuce")].forEach(x => x.classList.toggle("loin", a.offsetTop + x.offsetTop + x.offsetHeight > bas)); }
+  [...a.querySelectorAll(".astuce")].forEach(x => x.classList.toggle("loin", a.offsetTop + x.offsetTop + x.offsetHeight > bas - 46)); a.style.setProperty("--zeroY", Math.round(bas - a.offsetTop - 38) + "px"); }   /* 19/11 : « Tout recommencer » posé tout en bas, à la hauteur du bas du téléphone ; : 46 px gardés pour « Tout recommencer à zéro » */
 { const ouvreAvantAst = ouvre; ouvre = o => { ouvreAvantAst(o); rendAstuces(o); }; }
 /* la flèche de l'onglet En-tête : descend d'un écran ; en bas elle se retourne et remonte ; cachée sur les autres onglets */
 (() => { const ch = document.querySelector(".choix"); if (!ch) return; const fl = document.createElement("button"); fl.type = "button"; fl.className = "flecheEnt cache"; fl.setAttribute("aria-label", "Voir d'autres en-têtes");
@@ -1878,6 +1886,32 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
     const w = btn.offsetWidth || 90, x = T.offsetLeft - w - 12;
     btn.style.setProperty("--lkX", (x >= 8 ? x : T.offsetLeft + 12) + "px"); btn.style.setProperty("--lkY", (T.offsetTop + (x >= 8 ? 6 : 12)) + "px"); };
   addEventListener("resize", () => setTimeout(placeB, 60)); setInterval(placeB, 700); setTimeout(placeB, 100);
+})();
+
+/* 19/11 (Marie : « un bouton tout en bas, sous les astuces, pour qu'elle puisse tout supprimer si elle veut revenir à 0 »)
+   « Tout recommencer à zéro » : on remet le site comme Loginail l'a créé à son arrivée (fond, en-tête, écriture, couleurs, charms, photo).
+   Ordinateur : sous les astuces · téléphone : en bas à gauche des réglages. On demande toujours avant ; et la flèche « Annuler » peut tout remettre. */
+(() => {
+  let depart = null;
+  const prend = () => { if (!depart && P.pret) depart = etatMaintenant(); };
+  P.branche && setTimeout(function attend() { if (P.pret && $("attente").classList.contains("part")) setTimeout(prend, 900); else setTimeout(attend, 300); }, 300);
+  $("reglages").addEventListener("pointerdown", prend, true);   /* au cas où : avant son tout 1er choix */
+  const fais = (cls) => { const b = document.createElement("button"); b.type = "button"; b.className = "zeroB " + cls; b.innerHTML = `<span aria-hidden="true">↺</span> Tout recommencer à zéro`; b.onclick = demande; return b; };
+  function demande() { prend(); if (!depart) return bulle("Votre site arrive… un instant");
+    const d = document.createElement("div"); d.className = "supFond";
+    d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Tout recommencer ?</h4><p>Votre site redevient comme au début :<br>fond, en-tête, écriture, couleurs et charms.<br>Vos looks et vos favoris sont gardés.</p><div><button class="non">Non</button><button class="oui">Oui, à zéro</button></div></div>`;
+    const ferme = () => d.remove();
+    d.onclick = async ev => { if (ev.target === d || ev.target.closest(".non")) return ferme();
+      if (!ev.target.closest(".oui")) return; ferme();
+      dernier = 0; memo();   /* la flèche « Annuler » pourra tout remettre */
+      P.effaceLibre(); lookOn = -1; await remetEtat(depart);
+      setTimeout(() => { try { rendLooks(); } catch (e) {} rend(onglet); }, 400);
+      bulle("Votre site est revenu au début ↺"); };
+    document.body.appendChild(d); d.querySelector(".non").focus(); }
+  const surAst = fais("zeroOrdi"), surPied = fais("zeroTel");
+  const pose = () => { const a = $("astuces"); if (a && !a.contains(surAst)) a.appendChild(surAst); };   /* les astuces sont redessinées à chaque onglet */
+  new MutationObserver(pose).observe($("astuces"), { childList: true }); pose();
+  document.querySelector(".pied").prepend(surPied);
 })();
 </script>
 <script src="perso/perso-vrai.js?v=11191226"></script>
