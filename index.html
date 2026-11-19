@@ -2197,6 +2197,29 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .appli .case.grande .tel{width:180px;margin:auto 0 4px}
 }
 </style>
+<style id="ordi-prix-clair-1911e">
+/* 19/11 (Marie) : les liens du menu du haut mènent aux bonnes parties (ils visaient d'anciennes parties retirées) */
+#v3-appli,#v3-styles,#v3-prix,#v3-questions{scroll-margin-top:80px}
+/* 19/11 (Marie) : ORDINATEUR seulement — « Combien ça coûte », les questions et le pied passent du noir au rose poudré,
+   avec un bord festonné et une ligne de petits points pour marquer le passage (maquette idees/prix-feston.html, choix 2) */
+@media (min-width:761px){
+  html body:not(#_) .v3 .v3prix{background:linear-gradient(180deg,#F7E4EC 0,#F4E1EA 100%);color:var(--encre);border-radius:0;position:relative;overflow:visible;margin-top:40px}
+  html body:not(#_) .v3 .v3prix::before{content:"";position:absolute;left:0;right:0;top:-17px;height:18px;pointer-events:none;background:radial-gradient(circle at 50% 100%,#F7E4EC 17px,transparent 18px) 0 0/36px 18px repeat-x}
+  html body:not(#_) .v3 .v3prix::after{content:"";position:absolute;left:0;right:0;top:12px;height:4px;pointer-events:none;background:radial-gradient(circle,rgba(224,98,140,.55) 1.6px,transparent 2.2px) 9px 0/18px 4px repeat-x}
+  html body:not(#_) .v3 .v3prix .k{color:var(--fram)}
+  html body:not(#_) .v3 .v3prix .titre em{color:var(--fram)}
+  html body:not(#_) .v3 .v3frise{border-left-color:rgba(176,53,98,.25)}
+  html body:not(#_) .v3 .v3frise li span{color:#5b524d}
+  html body:not(#_) .v3 .v3carte{box-shadow:0 40px 70px -40px rgba(120,40,70,.45)}
+  html body:not(#_) .v3 .v3faq,html body:not(#_) .v3 .pied{background:#F4E1EA;color:var(--encre)}
+  html body:not(#_) .v3 .v3faq .k{color:var(--fram)!important}
+  html body:not(#_) .v3 .v3faq details{border-top-color:rgba(30,28,27,.1)}
+  html body:not(#_) .v3 .v3faq summary::after{color:var(--fram)}
+  html body:not(#_) .v3 .v3faq details p{color:#5b524d}
+  html body:not(#_) .v3 .pied{color:#7a6f69}
+  html body:not(#_) .v3 .pied a{color:#5b524d}
+}
+</style>
 <style id="tel-retouches-1911c">
 /* 19/11 tard (Marie) : TÉLÉPHONE seulement.
    a) un passage flou et rosé entre la carte « Créer mon site » et « L'appli qui gère tout, dans ta poche » : la partie appli change d'ambiance
@@ -2259,10 +2282,10 @@ document.addEventListener("DOMContentLoaded",function(){
   <div class="np-bar">
     <a class="np-brand" href="#"><img src="https://loginail.fr/favicon.svg" alt="" width="30" height="30">LOGINAIL</a>
     <nav class="np-links" aria-label="Principal">
-      <a href="#appli" data-sec="#appli" class="np-hint"><span class="np-hl">Fonctionnalités</span><span class="np-tip" id="tip">Découvre tout ce que fait l’appli</span></a>
-      <a href="#styles" data-sec="#styles">Univers</a>
-      <a href="#prix" data-sec="#prix">Tarif</a>
-      <a href="#questions" data-sec="#questions">FAQ</a>
+      <a href="#v3-appli" data-sec="#v3-appli" class="np-hint"><span class="np-hl">Fonctionnalités</span><span class="np-tip" id="tip">Découvre tout ce que fait l’appli</span></a>
+      <a href="#v3-styles" data-sec="#v3-styles">Univers</a>
+      <a href="#v3-prix" data-sec="#v3-prix">Tarif</a>
+      <a href="#v3-questions" data-sec="#v3-questions">FAQ</a>
     </nav>
     <a class="np-cta np-go" href="https://loginail.fr/loginail-creer/index.html">Créer mon site</a>
   </div>
@@ -2369,7 +2392,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 <div class="v3">
 <!-- 5 · L'APPLI -->
-<section class="appli">
+<section class="appli" id="v3-appli">
   <div class="wrap">
     <div class="tete vu"><div class="k">Et derrière</div><h2 class="serif titre" style="margin-top:12px">L’appli qui gère <em>tout.</em></h2></div>
     <div class="ape" id="ape" aria-label="L’appli en 3 écrans">
@@ -2403,7 +2426,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </section>
 
 <!-- 4 · CLASSE OU BADDIE -->
-<section class="styles">
+<section class="styles" id="v3-styles">
   <img class="ch" src="loginail-site/charms-mini/papilloncyber.webp" style="width:70px;left:8%;top:10px;rotate:-10deg" alt="">
   <div class="wrap vu">
     <div class="k">Plus de 30 univers</div>
@@ -2431,7 +2454,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </section>
 
 <!-- 7 · PRIX -->
-<section class="v3prix">
+<section class="v3prix" id="v3-prix">
   <img class="ch" src="loginail-site/charms/ceriseruban.webp" style="width:70px;right:6%;top:-30px;rotate:10deg" alt="">
   <div class="wrap">
     <div class="vu">
@@ -2455,7 +2478,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </section>
 
 <!-- 8 · QUESTIONS -->
-<section class="v3faq">
+<section class="v3faq" id="v3-questions">
   <div class="wrap">
     <div class="k" style="color:#F4A9C2">Bon à savoir</div>
     <div class="grille">
