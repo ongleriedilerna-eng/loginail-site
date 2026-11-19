@@ -1088,20 +1088,20 @@ function rend(o) {
     $("lNom").innerHTML = Object.entries(P.NOMC).map(([k, bg]) => `<button class="dot${k === P.etat.nomc ? " on" : ""}" data-nc="${k}" style="background:${bg}" aria-label="${k}" title="${k}"></button>`).join("");
     $("blocsC").querySelectorAll("[data-bl]").forEach(b => b.classList.toggle("on", b.dataset.bl === P.etat.blocs));
     $("assortir").hidden = !P.etat.fond; rendCouleursG(); }
-  if (o === "charms") { const fams = [...(FAV.length ? ["Favoris"] : []), "Populaires", "Couleurs", ...P.familles().filter(f => f !== "Populaires")];   /* 19/11 (Marie) : « Par couleur » juste sous « Pour vous » */
+  if (o === "charms") { const fams = ["Poses", ...(FAV.length ? ["Favoris"] : []), "Populaires", "Couleurs", ...P.familles().filter(f => f !== "Populaires")];   /* 19/11 (Marie) : « Par couleur » juste sous « Pour vous » */
     if (catCharm === "Favoris" && !FAV.length) catCharm = "Populaires";
     /* 17/11 (Marie) : la barre des catégories, chacune avec son petit charm (comme l'ancienne page) */
-    $("catC").innerHTML = fams.map(f => { const ic = f === "Favoris" ? `<i class="cfav">♥</i>` : f === "Couleurs" ? `<i class="cfav ccoul"></i>` : `<img src="${P.imgCharm(P.charmsDe(f)[0] || "cerisedisco")}" alt="" loading="lazy">`;
-      return `<button class="catI${f === catCharm ? " on" : ""}" data-c="${f}">${ic}<span>${f === "Populaires" ? "Pour vous" : f === "Couleurs" ? "Par couleur" : f}</span></button>`; }).join("");   /* 17/11 (Marie) : « Populaires » s'appelle « Pour vous », comme dans l'ancienne page */
+    $("catC").innerHTML = fams.map(f => { const ic = f === "Poses" ? (P.poses().length ? `<img src="${P.imgCharm(P.poses()[P.poses().length - 1])}" alt="" loading="lazy">` : `<i class="cfav">✦</i>`) : f === "Favoris" ? `<i class="cfav">♥</i>` : f === "Couleurs" ? `<i class="cfav ccoul"></i>` : `<img src="${P.imgCharm(P.charmsDe(f)[0] || "cerisedisco")}" alt="" loading="lazy">`;
+      return `<button class="catI${f === catCharm ? " on" : ""}" data-c="${f}">${ic}<span>${f === "Poses" ? "Vos charms" : f === "Populaires" ? "Pour vous" : f === "Couleurs" ? "Par couleur" : f}</span></button>`; }).join("");   /* 17/11 (Marie) : « Populaires » s'appelle « Pour vous », comme dans l'ancienne page */
     const poses = P.poses(), q = sansAcc($("chercheC").value);
     /* 19/11 (Marie : « trier par couleur ») : « Par couleur » = une rangée de pastilles, puis tous les charms de cette couleur ;
        et dans chaque thème, les charms sont rangés par couleur (rose, rouge, orange… argent, multicolore) */
     const CC = window.CH_COUL || {}, coulDe = n => (n in CC ? CC[n] : 99999), parCoul = l => l.slice().sort((a, b) => coulDe(a) - coulDe(b));
-    let liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n))
+    let liste = q ? P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q)) : catCharm === "Poses" ? P.poses().slice().reverse() : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n))
       : catCharm === "Couleurs" ? parCoul(P.charmsTous().filter(n => Math.floor(coulDe(n) / 1000) === coulOn)) : parCoul(P.charmsDe(catCharm));
     const puces = !q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "";
     $("catBox").style.display = q ? "none" : "";
-    $("lCh").innerHTML = puces + (liste.length ? liste.slice(0, catCharm === "Couleurs" ? 900 : 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`);
+    $("lCh").innerHTML = puces + (liste.length ? liste.slice(0, catCharm === "Couleurs" ? 900 : 120).map(n => `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
     majCompte(); }
 }
 const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
@@ -1158,6 +1158,8 @@ $("revenir").addEventListener("click", () => { if (cliente) { cliente = false; P
 /* 19/11 : les pastilles de « Par couleur » */
 $("lCh").addEventListener("click", e => { const c = e.target.closest(".cc"); if (!c) return; e.stopImmediatePropagation(); coulOn = +c.dataset.g; rend("charms"); $("lCh").scrollTop = 0; }, true);
 $("lCh").onclick = e => { const b = e.target.closest(".ch"); if (!b) return; const r = P.charm(b.dataset.n); b.classList.toggle("on", r === true);
+  /* 19/11 (Marie : « une partie où il y a tous ceux qu'on a choisis ») : « Vos charms » se remet à jour (son petit rond = le dernier posé) */
+  setTimeout(() => { const top = $("lCh").scrollTop, ct = $("catC").scrollTop; if (catCharm === "Poses") { rend("charms"); $("lCh").scrollTop = top; } else { const v = $("catC").querySelector('.catI[data-c="Poses"]'); if (v) { const l = P.poses(); v.querySelector("img,i").outerHTML = l.length ? `<img src="${P.imgCharm(l[l.length - 1])}" alt="">` : `<i class="cfav">✦</i>`; } } $("catC").scrollTop = ct; }, 60);
   if (r === true && P.poses().length === 1) bulle(matchMedia("(hover:hover)").matches ? "Cliquez dessus : tirez ⤡ pour l’agrandir et le pencher" : "Deux doigts pour l’agrandir et le pencher ✦");
   if (r === false && !b.classList.contains("on") && P.poses().length >= P.MAX) bulle(P.MAX + " charms maximum : enlevez-en un d’abord"); majCompte(); };
 
