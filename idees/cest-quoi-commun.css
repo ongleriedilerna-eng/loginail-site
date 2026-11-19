@@ -1,0 +1,23 @@
+@font-face{font-family:Abril;src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:300;src:url(../loginail-site/polices/Jost-300-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:400;src:url(../loginail-site/polices/Jost-400-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format("woff2")}
+@font-face{font-family:Shrikhand;src:url(../loginail-site/polices/Shrikhand-400-latin.woff2) format("woff2")}
+@font-face{font-family:Pacifico;src:url(../loginail-site/polices/Pacifico-400-latin.woff2) format("woff2")}
+@font-face{font-family:Italiana;src:url(../loginail-site/polices/Italiana-400-latin.woff2) format("woff2")}
+:root{--noir:#1E1C1B;--rose:#B03562;--rosepale:#FBEFF3;--creme:#F6F3EF;--gris:#6b625c;--ligne:#EFE7DF}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--creme);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+.surtitre{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gris);font-weight:500}
+h1,h2,.titre{font-family:Abril,serif;font-weight:400;line-height:1.05}
+h1 em,h2 em,.titre em{font-style:normal;color:var(--rose)}
+.tel{position:relative;border-radius:34px;background:#111;padding:7px;box-shadow:0 30px 60px -20px rgba(60,30,40,.35),0 6px 18px rgba(0,0,0,.08)}
+.tel img{display:block;width:100%;border-radius:28px;aspect-ratio:600/1298;object-fit:cover;object-position:top}
+.tel::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:28%;height:14px;border-radius:10px;background:#111;z-index:2}
+.charm{position:absolute;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(80,30,50,.18));animation:flotte 5s ease-in-out infinite}
+@keyframes flotte{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-10px) rotate(calc(var(--r,0deg) + 6deg))}}
+.etoile{position:absolute;color:#E0628C;pointer-events:none;animation:brille 2.6s ease-in-out infinite}
+@keyframes brille{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+@keyframes monte{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.entre{opacity:0;animation:monte .6s cubic-bezier(.2,.8,.2,1) forwards}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;opacity:1!important}}

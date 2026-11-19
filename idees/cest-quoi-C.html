@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loginail, c'est quoi ? — C (A + B)</title>
+<link rel="stylesheet" href="cest-quoi-commun.css">
+<style>
+/* 19/11 (Marie) : le grand titre de A, le petit titre de B, les 2 téléphones + bulles de B, la carte du prix de A.
+   Ordinateur : tout tient sur UN écran (tailles réglées sur la hauteur, vh).
+   ?v=1 : les chiffres sont dans les bulles (pas de bande).  ?v=2 : la bande des chiffres de A en bas, moins de bulles. */
+body{background:radial-gradient(ellipse at 40% 55%,#FBEFF3 0,var(--creme) 62%)}
+.page{max-width:1240px;margin:0 auto;padding:3vh 40px 2.2vh;min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.haut{text-align:center}
+.haut h1{font-size:clamp(40px,7vh,68px);margin:1vh 0 .6vh}
+.haut .sous{font-family:Abril,serif;font-size:clamp(18px,2.7vh,26px);color:var(--noir)}
+.haut .sous em{font-style:normal;color:var(--rose)}
+.milieu{display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:30px;margin-top:2vh}
+.scene{position:relative;height:var(--h);--h:min(60vh,600px)}
+.v2 .scene{--h:min(47vh,470px)}
+.scene .tel{position:absolute}
+.scene .site{width:calc(var(--h) * .42);left:calc(50% - var(--h) * .37);top:3%;z-index:3}
+.scene .appli{width:calc(var(--h) * .38);left:calc(50% + var(--h) * .02);top:9%;transform:rotate(5deg);z-index:2}
+.fondu{opacity:0;animation:fondu .7s ease forwards}@keyframes fondu{to{opacity:1}}
+.carte{position:absolute;z-index:4;background:#fff;border-radius:16px;padding:calc(var(--h) * .018) 14px calc(var(--h) * .018) 10px;display:flex;align-items:center;gap:10px;box-shadow:0 18px 36px -14px rgba(60,30,40,.3);animation:carte 5.5s ease-in-out infinite;white-space:nowrap}
+@keyframes carte{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-7px) rotate(var(--r,0deg))}}
+.carte .ic{width:calc(var(--h) * .068);height:calc(var(--h) * .068);min-width:32px;min-height:32px;border-radius:12px;background:var(--rosepale);display:grid;place-items:center;flex:none;font-size:18px;color:var(--rose);overflow:hidden}
+.carte .ic img{width:85%;height:85%;object-fit:contain}
+.carte b{display:block;font-size:clamp(13px,1.8vh,16px);font-weight:500}
+.carte small{font-size:clamp(11px,1.45vh,13px);color:var(--gris)}
+.carte .gros{font-family:Abril,serif;font-weight:400;font-size:clamp(18px,2.6vh,24px)}
+.sms{position:absolute;z-index:5;right:2%;bottom:1%;background:#E9E9EB;border-radius:18px;padding:10px 14px;font-size:clamp(12px,1.5vh,14px);line-height:1.4;max-width:250px;box-shadow:0 14px 30px -12px rgba(0,0,0,.25);animation:carte 6s ease-in-out infinite;animation-delay:-3s}
+.sms .de{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-bottom:3px;font-weight:500}
+.v2 .chiffreB{display:none}
+/* la carte du prix (de A) */
+.resultat{background:#fff;border-radius:26px;padding:3.4vh 26px;text-align:center;box-shadow:0 30px 60px -25px rgba(60,30,40,.3);max-width:380px;justify-self:center;width:100%}
+.resultat .logo{font-family:Abril,serif;font-size:clamp(30px,4.4vh,42px)}
+.resultat .logo span{color:var(--rose)}
+.resultat .prix{font-family:Abril,serif;font-size:clamp(36px,5.4vh,52px);margin:1.4vh 0 2px}
+.resultat .prix small{font-family:Jost;font-size:16px;color:var(--gris)}
+.resultat .offert{display:inline-block;margin:1.3vh 0 1.8vh;background:var(--rosepale);color:var(--rose);border-radius:99px;padding:8px 18px;font-weight:500;font-size:16px}
+.resultat .petit{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gris);line-height:2}
+.resultat .zero{margin-top:1.4vh;font-size:16px}
+.resultat .zero b{color:var(--rose)}
+.resultat .go{display:inline-flex;align-items:center;gap:8px;margin-top:2.2vh;height:50px;padding:0 24px;border-radius:99px;background:var(--noir);color:#fff;text-decoration:none;font-weight:500;font-size:15px}
+/* la bande des chiffres (de A), seulement en v2 */
+.chiffres{display:none}
+.v2 .chiffres{display:grid;margin-top:2.4vh;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:22px;padding:1.8vh 10px}
+.chiffre{text-align:center;border-right:1px solid var(--ligne);padding:0 10px}
+.chiffre:last-child{border:0}
+.chiffre b{display:block;font-family:Abril,serif;font-weight:400;font-size:clamp(28px,3.8vh,40px);line-height:1}
+.chiffre span{font-size:14px;color:var(--gris)}
+.chiffre .mini{display:flex;justify-content:center;gap:4px;margin-top:.8vh;height:clamp(22px,2.9vh,30px)}
+.chiffre .mini img{height:100%}
+.signature{text-align:center;margin-top:2vh;font-size:15px;color:var(--gris)}
+.signature b{color:var(--noir);font-weight:500}
+@media (max-width:820px){
+ .page{padding:64px 16px 48px;min-height:0;display:block}
+ .page>.charm{width:46px!important;top:8px!important}
+ .page>.etoile{display:none}
+ .surtitre{letter-spacing:.1em;font-size:10px;white-space:nowrap}
+ .haut h1{font-size:min(10vw,40px);white-space:nowrap}
+ .haut .sous{font-size:min(5.4vw,22px)}
+ .milieu{grid-template-columns:1fr;gap:18px;margin-top:10px}
+ .scene,.v2 .scene{--h:520px;height:520px}
+ .scene .site{width:170px;top:70px;left:calc(50% - 150px)}
+ .scene .appli{width:150px;top:100px;left:calc(50% + 5px)}
+ .carte{padding:8px 11px 8px 8px;gap:8px;border-radius:14px}
+ .carte .ic{width:34px;height:34px;min-width:0;min-height:0;border-radius:10px;font-size:16px}
+ .carte b{font-size:14px}.carte small{font-size:11px}.carte .gros{font-size:19px}
+ .sms{font-size:12px;max-width:200px;bottom:0;right:0}
+ .c-charms{left:0!important;top:0!important}
+ .c-ecr{right:0!important;left:auto!important;top:0!important}
+ .c-fonds{left:0!important;top:370px!important}
+ .c-zero{right:0!important;left:auto!important;top:300px!important}
+ .c-attente{display:none!important}
+ .v2 .c-zero{top:20px!important}.v2 .c-attente{display:flex!important;left:0!important;top:390px!important}
+ .resultat{padding:28px 20px}
+ .v2 .chiffres{grid-template-columns:1fr 1fr;row-gap:24px;margin-top:22px;padding:24px 10px}
+ .chiffre:nth-child(2){border:0}
+ .chiffre .mini{height:30px}
+ .signature{margin-top:26px}
+}
+</style></head><body>
+<div class="page" id="page">
+  <img class="charm" src="../loginail-site/charms/cerisedisco.webp" style="width:clamp(60px,9vh,86px);left:3%;top:3vh;--r:-12deg" alt="">
+  <img class="charm" src="../loginail-site/charms/ceriseruban.webp" style="width:clamp(50px,7.5vh,70px);right:4%;top:5vh;--r:10deg;animation-delay:-2s" alt="">
+  <span class="etoile" style="left:18%;top:15vh;font-size:20px">✦</span>
+  <span class="etoile" style="right:20%;top:3vh;font-size:14px;animation-delay:-1s">✦</span>
+
+  <div class="haut entre">
+    <div class="surtitre">Fait par une prothésiste, pour les prothésistes</div>
+    <h1>Loginail, c'est <em>quoi</em> ?</h1>
+    <p class="sous">Ton site <em>et</em> ton appli, au même endroit.</p>
+  </div>
+
+  <div class="milieu">
+    <div class="scene">
+      <div class="tel appli fondu" style="animation-delay:.3s"><img src="../loginail-site/apercus-univers/app-accueil-1911.webp" alt="L'appli Loginail"></div>
+      <div class="tel site fondu" style="animation-delay:.15s"><img src="../loginail-site/apercus-univers/cerise.webp" alt="Le site Nails by Drimf"></div>
+
+      <div class="carte c-charms chiffreB" style="left:0;top:4%;--r:-3deg">
+        <div class="ic"><img src="../loginail-site/charms/cerisedisco.webp" alt=""></div>
+        <div><span class="gros">2 700+</span><br><small>charms à poser</small></div></div>
+      <div class="carte c-ecr chiffreB" style="right:0;top:3%;--r:3deg;animation-delay:-1.5s">
+        <div class="ic" style="font-family:Shrikhand">Aa</div>
+        <div><span class="gros">57</span><br><small>écritures pour ton nom</small></div></div>
+      <div class="carte c-fonds chiffreB" style="left:0;top:27%;--r:2deg;animation-delay:-2.6s">
+        <div class="ic" style="background:repeating-conic-gradient(#F4C9D6 0 25%,#fff 0 50%) 0 0/12px 12px"></div>
+        <div><span class="gros">350+</span><br><small>fonds · 39 en-têtes</small></div></div>
+      <div class="carte c-zero" style="right:0;top:47%;--r:-2deg;animation-delay:-4s">
+        <div class="ic" style="font-family:Abril">%</div>
+        <div><b>0 % de commission</b><small>tes réservations, ton argent</small></div></div>
+      <div class="carte c-attente" style="left:0;top:74%;--r:-2deg;animation-delay:-3.3s">
+        <div class="ic">◷</div>
+        <div><b>Liste d'attente</b><small>une place se libère, elle est prévenue</small></div></div>
+      <div class="sms"><div class="de">Rappel SMS · tout seul</div>Bonjour Inès ! RDV demain 09h00, 12 rue Paradis 13006 Marseille.</div>
+    </div>
+
+    <div class="resultat entre" style="animation-delay:.4s">
+      <div class="logo">Logi<span>nail</span></div>
+      <div class="prix">49,99 € <small>/ mois</small></div>
+      <div class="offert">1er mois offert</div>
+      <div class="petit">Sans engagement<br>Rien à installer</div>
+      <div class="zero"><b>0 %</b> de commission sur tes réservations</div>
+      <a class="go" href="#">Créer mon site <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
+  <div class="chiffres entre" style="animation-delay:.6s">
+    <div class="chiffre"><b>2 700+</b><span>charms</span>
+      <div class="mini"><img src="../loginail-site/charms/cerises-roses.webp" alt=""><img src="../loginail-site/charms/bouledisco-rose.webp" alt=""><img src="../loginail-site/charms/cadenascoeurrose.webp" alt=""></div></div>
+    <div class="chiffre"><b>350+</b><span>fonds</span>
+      <div class="mini" style="gap:6px"><i style="width:26px;border-radius:7px;background:repeating-conic-gradient(#F4C9D6 0 25%,#fff 0 50%) 0 0/10px 10px"></i><i style="width:26px;border-radius:7px;background:linear-gradient(135deg,#E8B9C9,#C9A8E0)"></i><i style="width:26px;border-radius:7px;background:radial-gradient(circle at 30% 30%,#fff,#d9c3a5)"></i></div></div>
+    <div class="chiffre"><b>57</b><span>écritures</span>
+      <div class="mini" style="align-items:center;gap:10px;font-size:22px"><span style="font-family:Shrikhand;color:#E0628C">Léa</span><span style="font-family:Pacifico">Léa</span><span style="font-family:Italiana;color:var(--noir)">Léa</span></div></div>
+    <div class="chiffre"><b>39</b><span>en-têtes qui bougent</span>
+      <div class="mini" style="align-items:center;font-size:22px;color:#E0628C">✦ ✦ ✦</div></div>
+  </div>
+
+  <p class="signature"><b>Colle ton lien</b> : nom, photos, avis, horaires et prix se remplissent tout seuls.</p>
+</div>
+<script>if(new URLSearchParams(location.search).get('v')==='2')document.getElementById('page').classList.add('v2');</script>
+</body></html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loginail, c'est quoi ? — B « Le présentoir »</title>
+<link rel="stylesheet" href="cest-quoi-commun.css">
+<style>
+body{background:radial-gradient(ellipse at 70% 40%,#FBEFF3 0,var(--creme) 60%)}
+.page{max-width:1280px;margin:0 auto;padding:60px 48px;display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center;min-height:100vh;position:relative;overflow:hidden}
+.texte h1{font-size:62px;margin:16px 0 18px}
+.texte .sous{font-size:19px;font-weight:300;color:#4a4440;line-height:1.55;max-width:460px}
+.egal{margin:30px 0 26px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:17px}
+.egal .p{background:#fff;border-radius:99px;padding:10px 18px;box-shadow:0 6px 16px rgba(60,30,40,.07);font-weight:500}
+.egal .s{font-family:Abril,serif;font-size:26px;color:var(--rose)}
+.prix{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prix b{font-family:Abril,serif;font-weight:400;font-size:40px}
+.prix span{font-size:15px;color:var(--gris)}
+.prix .offert{background:var(--rose);color:#fff;border-radius:99px;padding:7px 15px;font-size:14px;font-weight:500}
+.scene{position:relative;height:640px}
+.scene .site{position:absolute;width:255px;left:calc(50% - 200px);top:30px;z-index:3}
+.scene .appli{position:absolute;width:230px;left:calc(50% + 20px);top:80px;transform:rotate(5deg);z-index:2}
+.fondu{opacity:0;animation:fondu .7s ease forwards}@keyframes fondu{to{opacity:1}}
+.carte{position:absolute;z-index:4;background:#fff;border-radius:18px;padding:12px 16px 12px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 18px 36px -14px rgba(60,30,40,.3);animation:carte 5.5s ease-in-out infinite;white-space:nowrap}
+@keyframes carte{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-8px) rotate(var(--r,0deg))}}
+.carte .ic{width:44px;height:44px;border-radius:13px;background:var(--rosepale);display:grid;place-items:center;flex:none;font-size:20px;color:var(--rose);overflow:hidden}
+.carte .ic img{width:40px;height:40px;object-fit:contain}
+.carte b{display:block;font-size:17px;font-weight:500}
+.carte small{font-size:13px;color:var(--gris)}
+.carte .gros{font-family:Abril,serif;font-weight:400;font-size:24px}
+.sms{position:absolute;z-index:5;right:0;bottom:20px;background:#E9E9EB;border-radius:20px;padding:12px 16px;font-size:14px;line-height:1.4;max-width:260px;box-shadow:0 14px 30px -12px rgba(0,0,0,.25);animation:carte 6s ease-in-out infinite;animation-delay:-3s}
+.sms .de{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-bottom:4px;font-weight:500}
+@media (max-width:900px){
+ .page{grid-template-columns:1fr;padding:40px 16px 48px;gap:10px;min-height:0}
+ .texte{text-align:center}
+ .texte h1{font-size:40px;margin:12px 0}
+ /* 19/11 (Marie) : sur téléphone, le titre sur DEUX lignes : « Ton site et ton appli, » / « au même endroit. » */
+ .texte h1{font-size:min(8.4vw,34px);line-height:1.15}
+ .texte h1 .l{display:block;white-space:nowrap}
+ .texte .sous{font-size:16px;margin:0 auto}
+ .egal{justify-content:center;margin:20px 0 16px;gap:6px;font-size:14.5px}
+ .egal .p{padding:8px 13px}
+ .egal .s{font-size:20px}
+ .prix{justify-content:center}
+ .prix b{font-size:32px}
+ .scene{height:520px;margin-top:6px}
+ .scene .site{width:170px;top:70px;left:calc(50% - 150px)}
+ .scene .appli{width:150px;top:100px;left:calc(50% + 5px)}
+ .carte{padding:8px 11px 8px 8px;gap:8px;border-radius:14px}
+ .carte .ic{width:34px;height:34px;border-radius:10px;font-size:16px}
+ .carte .ic img{width:30px;height:30px}
+ .carte b{font-size:14px}.carte small{font-size:11px}.carte .gros{font-size:19px}
+ .sms{font-size:12px;max-width:200px;bottom:0;right:0}
+ .c-fonds{left:0!important;top:370px!important}
+ .c-ecr{right:0!important;left:auto!important;top:0!important}
+ .c-charms{left:0!important;top:0!important}
+ .c-zero{right:0!important;left:auto!important;top:300px!important}
+ .c-attente{display:none!important}
+}
+</style></head><body>
+<div class="page">
+  <span class="etoile" style="left:4%;top:12%;font-size:18px">✦</span>
+  <span class="etoile" style="left:44%;top:6%;font-size:13px;animation-delay:-1.2s">✦</span>
+  <span class="etoile" style="right:3%;bottom:10%;font-size:20px;animation-delay:-.6s">✦</span>
+
+  <div class="texte entre">
+    <div class="surtitre">Loginail, c'est quoi ?</div>
+    <h1><span class="l">Ton site <em>et</em> ton appli,</span> <span class="l">au même endroit.</span></h1>
+    <p class="sous">Colle ton lien Google ou Planity : ton site se crée tout seul, à ton image. Puis l'appli gère ton agenda, tes clientes et tes rappels SMS.</p>
+    <div class="egal"><span class="p">Site</span><span class="s">+</span><span class="p">Appli</span><span class="s">+</span><span class="p">Rappels SMS</span></div>
+    <div class="prix"><b>49,99 €</b><span>par mois · sans engagement</span><span class="offert">1er mois offert</span></div>
+  </div>
+
+  <div class="scene">
+    <div class="tel appli fondu" style="animation-delay:.3s"><img src="../loginail-site/apercus-univers/app-accueil-1911.webp" alt="L'appli Loginail"></div>
+    <div class="tel site fondu" style="animation-delay:.15s"><img src="../loginail-site/apercus-univers/cerise.webp" alt="Le site Nails by Drimf"></div>
+
+    <div class="carte c-charms" style="left:0;top:20px;--r:-3deg">
+      <div class="ic"><img src="../loginail-site/charms/cerisedisco.webp" alt=""></div>
+      <div><span class="gros">2 700+</span><br><small>charms à poser</small></div></div>
+    <div class="carte c-ecr" style="right:0;top:20px;--r:3deg;animation-delay:-1.5s">
+      <div class="ic" style="font-family:Shrikhand">Aa</div>
+      <div><span class="gros">57</span><br><small>écritures pour ton nom</small></div></div>
+    <div class="carte c-fonds" style="left:0;top:140px;--r:2deg;animation-delay:-2.6s">
+      <div class="ic" style="background:repeating-conic-gradient(#F4C9D6 0 25%,#fff 0 50%) 0 0/12px 12px"></div>
+      <div><span class="gros">350+</span><br><small>fonds · 39 en-têtes</small></div></div>
+    <div class="carte c-zero" style="right:0;top:300px;--r:-2deg;animation-delay:-4s">
+      <div class="ic" style="font-family:Abril">%</div>
+      <div><b>0 % de commission</b><small>tes réservations, ton argent</small></div></div>
+    <div class="carte c-attente" style="left:0;top:520px;--r:-2deg;animation-delay:-3.3s">
+      <div class="ic">◷</div>
+      <div><b>Liste d'attente</b><small>une place se libère, elle est prévenue</small></div></div>
+
+    <div class="sms"><div class="de">Rappel SMS · tout seul</div>Bonjour Inès ! RDV demain 09h00, 12 rue Paradis 13006 Marseille.</div>
+  </div>
+</div>
+</body></html>
