@@ -3,3 +3,6 @@
 window.VEDETTES_FONDS = ["Strass qui tombent sur rose", "Cerises vichy", "Zèbre", "Mer et soleil", "Boules à facettes", "Reflets disco", "Vache noire et blanche", "Agrumes", "Soleils sur vert sapin", "Faon", "Pied-de-poule chocolat", "Tulipes médaillons", "Cerises qui tombent", "Damier rose et chrome", "Nacre irisée", "Boules disco sur velours", "Dalmatien aquarelle", "Léopard rose", "Mosaïque ondulée", "Traits crème sur bordeaux", "Vache marron peluche", "Bouquets de tulipes", "Vichy bleu et cœurs", "Cœurs de verre", "Bogolan", "Étoiles chromées sur noir charbon", "Shibori indigo", "Bandes de satin aux couleurs trans", "Papillons chromés émeraude sur fond pistache", "Rayures citron", "Damier ondulé fleuri"];
 /* 17/11 (Marie : « il y en a deux 18, celui de gauche bug, on l'enlève ») : fonds retirés de la maquette (numéro dans la liste du site) */
 window.FONDS_ENLEVES = [109];   /* le 1er « Léopard rose » (flou) ; on garde l'autre */
+
+/* 19/11 (Marie : « en tête ») : les 7 nouveaux fonds qui bougent (D41) passent en premier dans le thème « Qui bougent », dans cet ordre */
+window.TETE_THEMES = { "Qui bougent": ["Boules disco", "Nœuds qui s’envolent", "Fraises qui tombent", "Cerises qui tombent sur vichy", "Cœurs de verre qui volent", "Fraises qui tombent · couleur", "Tempête de pétales · couleur"] };

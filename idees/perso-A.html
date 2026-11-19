@@ -925,12 +925,12 @@ body.surCharms .pied .etoN .etoT{white-space:nowrap}
 <script src="ronds-themes.js?v=1711"></script>
 <script src="teintes-fonds.js?v=1711"></script>
 <script src="ordre-ecritures.js?v=1711b"></script>
-<script src="vedettes-fonds.js?v=1711b"></script>
+<script src="vedettes-fonds.js?v=1911d"></script>
 <script>/* 17/11 (Marie : « en choisir quelques-uns, les plus jolis, sur les 4 premières lignes ») : dans « Tous les fonds », ses fonds vedettes
    passent en premier (dans son ordre), puis tous les autres triés par couleur. Mode choix : ?vedettes=1 */
 var MODE_VED = /[?&]vedettes=1/.test(location.search);
 var VED_CHOIX = (() => { try { const x = JSON.parse(localStorage.getItem("lgnVedettes") || "null"); return x || (window.VEDETTES_FONDS || []).slice(); } catch (e) { return (window.VEDETTES_FONDS || []).slice(); } })();
-function rangVedette(n) { if (MODE_VED || typeof catFond === "undefined" || catFond !== "Tous") return 0; const L = window.VEDETTES_FONDS || [], i = L.indexOf(n); return i < 0 ? 1e4 : i; }
+function rangVedette(n) { if (!MODE_VED && typeof catFond !== "undefined" && (window.TETE_THEMES || {})[catFond]) { const T = window.TETE_THEMES[catFond], k = T.indexOf(n); return k < 0 ? 1e4 : k; } if (MODE_VED || typeof catFond === "undefined" || catFond !== "Tous") return 0; const L = window.VEDETTES_FONDS || [], i = L.indexOf(n); return i < 0 ? 1e4 : i; }
 /* 17/11 (Marie : « pour les écritures, je veux choisir moi l'ordre ») : l'ordre vient de ordre-ecritures.js ;
    mode choix (?ordre=1 dans l'adresse) : elle touche les écritures dans l'ordre voulu, un numéro s'affiche sur chacune */
 var MODE_ORDRE = /[?&]ordre=1/.test(location.search);
