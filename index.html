@@ -2220,6 +2220,21 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .v3 .pied a{color:#5b524d}
 }
 </style>
+<style id="se-connecter-1911f">
+/* 19/11 (Marie) : « Se connecter » dans la barre du haut, à côté de « Créer mon site » → l'espace pro app.loginail.fr
+   (pour les abonnées sans iPhone, ou qui veulent gérer depuis l'ordinateur) */
+.np-droite{display:flex;align-items:center;gap:6px}
+.np-login{padding:9px 14px;border-radius:999px;text-decoration:none;font-size:14.5px;color:#1E1C1B;font-weight:500;white-space:nowrap;transition:background .2s ease}
+.np-login:hover{background:rgba(30,28,27,.05)}
+.np-login:active{background:rgba(30,28,27,.09);transition-duration:.08s}
+@media (max-width:760px){
+  .np-droite{gap:8px}
+  html body:not(#_) .np-bar .np-go{white-space:nowrap}
+  /* sur téléphone : une petite icône de profil au lieu du texte, pour que « Créer mon site » reste sur une ligne */
+  .np-login{width:40px;height:40px;padding:0;font-size:0;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(30,28,27,.09)}
+  .np-login::before{content:"";width:19px;height:19px;background:#1E1C1B;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6'/%3E%3C/svg%3E") center/contain no-repeat}
+}
+</style>
 <style id="tel-retouches-1911c">
 /* 19/11 tard (Marie) : TÉLÉPHONE seulement.
    a) un passage flou et rosé entre la carte « Créer mon site » et « L'appli qui gère tout, dans ta poche » : la partie appli change d'ambiance
@@ -2277,6 +2292,36 @@ document.addEventListener("DOMContentLoaded",function(){
 }
 @media (max-width:760px) and (prefers-reduced-motion:reduce){.bzt .b{transition:none}}
 </style>
+<style id="fin-tel-f2">
+/* 19/11 nuit (Marie, version F2) : TÉLÉPHONE seulement — la fin de l'accueil en rose poudré avec le bord festonné (comme l'ordinateur),
+   plus de 2e carte « 49,99 € » (elle est déjà juste après l'appli) : la frise + un seul bouton, et le texte de Marie raccourci.
+   Ordinateur inchangé. Maquette : idees/telephone.html?v=F2&go=fin */
+.fin-go,.texte-court{display:none}
+@media (max-width:760px){
+  html body:not(#_) .v3 .v3prix{background:linear-gradient(180deg,#F7E4EC 0,#F4E1EA 100%);color:var(--encre);border-radius:0;position:relative;overflow:visible;margin-top:40px;padding:60px 0 30px}
+  html body:not(#_) .v3 .v3prix::before{content:"";position:absolute;left:0;right:0;top:-17px;height:18px;pointer-events:none;background:radial-gradient(circle at 50% 100%,#F7E4EC 17px,transparent 18px) 0 0/36px 18px repeat-x}
+  html body:not(#_) .v3 .v3prix::after{content:"";position:absolute;left:0;right:0;top:12px;height:4px;pointer-events:none;background:radial-gradient(circle,rgba(224,98,140,.55) 1.6px,transparent 2.2px) 9px 0/18px 4px repeat-x}
+  html body:not(#_) .v3 .v3prix .k{color:var(--fram)}
+  html body:not(#_) .v3 .v3prix .titre em{color:var(--fram)}
+  html body:not(#_) .v3 .v3frise{border-left-color:rgba(176,53,98,.25)}
+  html body:not(#_) .v3 .v3frise li span{color:#5b524d}
+  html body:not(#_) .v3 .v3carte{display:none}
+  html body:not(#_) .v3 .v3faq,html body:not(#_) .v3 .pied,html body:not(#_) footer.pied{background:#F4E1EA;color:var(--encre)}
+  html body:not(#_) .v3 .v3faq .k{color:var(--fram)!important}
+  html body:not(#_) .v3 .v3faq details{border-top-color:rgba(30,28,27,.1)}
+  html body:not(#_) .v3 .v3faq summary::after{color:var(--fram)}
+  html body:not(#_) .v3 .v3faq details p{color:#5b524d}
+  html body:not(#_) footer.pied{color:#7a6f69}
+  html body:not(#_) footer.pied a{color:#5b524d}
+  .fin-go{display:flex;flex-direction:column;align-items:center;gap:10px;margin:30px 0 10px}
+  .fin-go a{display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 26px;border-radius:99px;background:#1E1C1B;color:#fff;font:500 15px Jost,sans-serif;text-decoration:none;box-shadow:0 16px 30px -14px rgba(30,28,27,.5)}
+  .fin-go small{font-size:12.5px;color:#6b625c}
+  html body:not(#_) .marie .texte-long{display:none}
+  html body:not(#_) .marie .texte-court{display:block}
+  html body:not(#_) .marie .texte-court p{font-size:17px;line-height:1.65;color:#4a4440;max-width:560px;margin:0 auto 16px}
+  html body:not(#_) .marie .texte-court p b{color:#1E1C1B;font-weight:500}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2287,7 +2332,7 @@ document.addEventListener("DOMContentLoaded",function(){
       <a href="#v3-prix" data-sec="#v3-prix">Tarif</a>
       <a href="#v3-questions" data-sec="#v3-questions">FAQ</a>
     </nav>
-    <a class="np-cta np-go" href="https://loginail.fr/loginail-creer/index.html">Créer mon site</a>
+    <div class="np-droite"><a class="np-login" href="https://app.loginail.fr/" aria-label="Se connecter à mon espace pro">Se connecter</a><a class="np-cta np-go" href="https://loginail.fr/loginail-creer/index.html">Créer mon site</a></div>
   </div>
 </header></div>
 <div class="np" style="display:contents"><section class="np-hero" id="hero">
@@ -2443,6 +2488,7 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="vu">
       <div class="k">Qui est derrière</div>
       <blockquote><span class="l">« Je suis prothésiste,</span> <span class="l"><em>comme toi.</em> »</span></blockquote>
+      <div class="texte-court"><p>Je passe mes journées à poser des ongles, comme toi.</p><p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, <b>sans commission</b>. Il n’existait pas. Alors je l’ai créé.</p></div>
       <div class="texte-long">
       <p>Je passe mes journées à poser des ongles. Et comme toi, je sais ce que c’est de répondre aux messages entre deux clientes pour caler un rendez-vous.</p>
       <p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, et <b>sans payer une commission</b> sur chaque cliente. Il n’existait pas. Alors je l’ai créé.</p>
@@ -2466,6 +2512,7 @@ document.addEventListener("DOMContentLoaded",function(){
         <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si tu restes.</span></li>
         <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
       </ul>
+      <div class="fin-go"><a href="loginail-creer/index.html">Créer mon site gratuitement →</a><small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small></div>
     </div>
     <div class="v3carte vu">
       <div class="p">49,99 € <small>/ mois</small></div>
