@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Photo et carré ensemble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Dancing+Script:wght@700&family=Jost:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F7F3EF;color:#1E1C1B;font:15px/1.45 Jost,-apple-system,"Segoe UI",sans-serif}
+header,main{max-width:1240px;margin:auto;padding:24px 16px 4px}
+h1{font-size:24px;margin:0 0 6px}header p{margin:0;color:#6E6762}
+main{padding-bottom:60px}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.choix{all:unset;cursor:pointer;display:flex;flex-direction:column}
+.choix:focus-visible .scene{outline:3px solid #C2506E;outline-offset:3px}
+.choix span{font-weight:600;margin-top:8px}.choix small{color:#6E6762;font-size:13px}
+
+.scene{position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background-size:cover;background-position:center;
+  box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 22px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center}
+/* .k = la zone du haut du site ; tout est dessiné en % de cette zone */
+.k{position:relative;width:100%;height:100%;container-type:size;--u:calc(min(100cqw,56cqh)/100);--a:#C2506E}
+.k *{position:absolute}
+.k .t{position:static}
+.metier{font:600 calc(var(--u)*2.8)/1.2 Jost,sans-serif;letter-spacing:.13em;text-transform:uppercase;opacity:.75}
+.nom{font:calc(var(--u)*10)/1.15 "Abril Fatface",serif;white-space:nowrap;margin:calc(var(--u)*1.2) 0}
+.etoiles{font-size:calc(var(--u)*3);opacity:.8}
+.btn{display:inline-block;background:var(--a);color:#fff;font:600 calc(var(--u)*3.4)/1 Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  padding:calc(var(--u)*3.6) calc(var(--u)*6.5);border-radius:999px;box-shadow:0 calc(var(--u)*1) calc(var(--u)*3) rgba(0,0,0,.2);white-space:nowrap}
+.dispo{font-size:calc(var(--u)*2.7);opacity:.85}
+.ph{background-size:cover;background-position:center}
+
+/* 1 · FLACON GÉANT : la photo est dans le flacon et dépasse sur les côtés */
+.f1 .bouchon{left:35%;width:30%;top:3%;height:13%;border-radius:calc(var(--u)*3) calc(var(--u)*3) calc(var(--u)*1) calc(var(--u)*1);
+  background:linear-gradient(90deg,#141210,#55504C 28%,#1E1C1B 55%,#0E0C0B);box-shadow:0 calc(var(--u)*1) calc(var(--u)*2) rgba(0,0,0,.3)}
+.f1 .bague{left:32%;width:36%;top:15.5%;height:3.2%;border-radius:calc(var(--u)*1);background:linear-gradient(90deg,#BFBFC9,#F4F4F8 40%,#A9A9B6)}
+.f1 .verre{left:9%;right:9%;top:18%;bottom:4%;border-radius:calc(var(--u)*16);background:var(--teinte);
+  box-shadow:inset 0 0 0 calc(var(--u)*1.4) rgba(255,255,255,.75),0 calc(var(--u)*3) calc(var(--u)*9) rgba(0,0,0,.25)}
+.f1 .photo{left:2%;right:2%;top:23%;height:40%;border-radius:calc(var(--u)*4);box-shadow:0 0 0 calc(var(--u)*1.2) #fff,0 calc(var(--u)*2) calc(var(--u)*5) rgba(0,0,0,.25);transform:rotate(-3deg)}
+.f1 .reflet{left:9%;right:9%;top:18%;bottom:4%;border-radius:calc(var(--u)*16);pointer-events:none;
+  background:linear-gradient(105deg,rgba(255,255,255,.55) 0 7%,rgba(255,255,255,0) 16%,rgba(255,255,255,0) 82%,rgba(255,255,255,.3) 90%)}
+.f1 .etiq{left:17%;right:17%;top:65%;background:#FFFBF5;border-radius:calc(var(--u)*3);padding:calc(var(--u)*3) calc(var(--u)*2.5);text-align:center;
+  box-shadow:0 calc(var(--u)*1) calc(var(--u)*2) rgba(0,0,0,.12)}
+.f1 .etiq .nom{font-size:calc(var(--u)*7.4)}
+.f1 .action{left:0;right:0;top:85.5%;text-align:center}
+.f1 .action .btn{position:static}
+
+/* 2 · STICKERS : la photo est un gros autocollant, le carré un 2e collé dessus */
+.f2 .photo{left:9%;width:82%;top:7%;height:52%;border-radius:calc(var(--u)*5);border:calc(var(--u)*2.4) solid #fff;transform:rotate(4deg);
+  box-shadow:0 calc(var(--u)*2) calc(var(--u)*5) rgba(0,0,0,.28)}
+.f2 .rond{right:4%;top:3%;width:calc(var(--u)*20);height:calc(var(--u)*20);border-radius:50%;background:var(--a);color:#fff;border:calc(var(--u)*1.6) solid #fff;
+  transform:rotate(12deg);display:flex;align-items:center;justify-content:center;text-align:center;font:calc(var(--u)*3.6)/1.05 "Dancing Script",cursive;box-shadow:0 calc(var(--u)*1) calc(var(--u)*3) rgba(0,0,0,.25)}
+.f2 .carte{left:6%;right:10%;top:53%;background:var(--clair);border:calc(var(--u)*2.2) solid #fff;border-radius:calc(var(--u)*6);transform:rotate(-4deg);
+  padding:calc(var(--u)*5) calc(var(--u)*4);text-align:center;box-shadow:0 calc(var(--u)*2) calc(var(--u)*5) rgba(0,0,0,.25)}
+.f2 .carte .nom{font-family:"Dancing Script",cursive;font-size:calc(var(--u)*12)}
+.f2 .carte .btn{position:static;transform:rotate(3deg);border:calc(var(--u)*1.1) solid #fff;margin-top:calc(var(--u)*3)}
+.f2 .dispo{position:static;display:block;margin-top:calc(var(--u)*2)}
+
+/* 3 · ARCHE : la photo en grand se fond dans le fond, l'arche monte par-dessus */
+.f3 .photo{left:0;right:0;top:0;height:62%;-webkit-mask:linear-gradient(#000 70%,transparent);mask:linear-gradient(#000 70%,transparent)}
+.f3 .arche{left:13%;right:13%;top:42%;bottom:5%;background:#FFF8F2;border-radius:calc(var(--u)*40) calc(var(--u)*40) calc(var(--u)*4) calc(var(--u)*4);
+  box-shadow:inset 0 0 0 calc(var(--u)*1.4) var(--a),inset 0 0 0 calc(var(--u)*2.8) #FFF8F2,inset 0 0 0 calc(var(--u)*3.3) var(--a),0 calc(var(--u)*3) calc(var(--u)*9) rgba(0,0,0,.2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(var(--u)*14) calc(var(--u)*4) calc(var(--u)*5)}
+.f3 .arche>*{position:static}
+.f3 .arche .nom{font-size:calc(var(--u)*8.6)}
+.f3 .arche .btn{border-radius:calc(var(--u)*2);margin:calc(var(--u)*4) 0 calc(var(--u)*2)}
+
+/* 4 · SANS CARRÉ : photo presque plein écran, bord festonné, le nom en énorme */
+.f4 .photo{left:0;right:0;top:0;height:76%;
+  -webkit-mask:radial-gradient(circle calc(var(--u)*5.2) at 50% 100%,transparent 98%,#000) 0 0/calc(var(--u)*10.4) 100% repeat-x;
+          mask:radial-gradient(circle calc(var(--u)*5.2) at 50% 100%,transparent 98%,#000) 0 0/calc(var(--u)*10.4) 100% repeat-x}
+.f4 .ombre{left:0;right:0;top:30%;height:46%;background:linear-gradient(transparent,rgba(0,0,0,.45))}
+.f4 .haut{left:0;right:0;top:44%;text-align:center}
+.f4 .haut>*{position:static}
+.f4 .pastille{display:inline-block;background:#fff;border-radius:999px;padding:calc(var(--u)*1.5) calc(var(--u)*4);opacity:1}
+.f4 .nom{display:block;color:#fff;font-size:calc(var(--u)*14);text-shadow:0 calc(var(--u)*.8) calc(var(--u)*3) rgba(0,0,0,.4)}
+.f4 .etoiles{display:inline-block;color:#fff;opacity:1;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.f4 .bas{left:0;right:0;top:78.5%;text-align:center}
+.f4 .bas>*{position:static}
+.f4 .btn{font-size:calc(var(--u)*4);padding:calc(var(--u)*4.4) calc(var(--u)*8);box-shadow:0 0 0 calc(var(--u)*1.4) #fff,0 calc(var(--u)*2) calc(var(--u)*6) rgba(0,0,0,.3)}
+.f4 .dispo{display:block;margin-top:calc(var(--u)*3)}
+.f4 .dispo b{background:#fff;border-radius:999px;padding:calc(var(--u)*1) calc(var(--u)*3);font-weight:400}
+
+/* grand aperçu */
+.ap{position:fixed;inset:0;z-index:9;background:#2B2622;display:none;align-items:center;justify-content:center;padding:70px 16px 84px}
+.ap.ouvert{display:flex}
+#az{height:100%;width:100%;display:flex;align-items:center;justify-content:center}
+.ap .scene{border-radius:24px;height:100%;aspect-ratio:9/19.5;max-width:100%}
+.ap.ordi .scene{aspect-ratio:16/10;height:auto;width:min(100%,calc((100vh - 160px)*1.6));border-radius:12px}
+.ap.ordi .k{height:100%;width:auto;aspect-ratio:3/4}
+.ap.ordi .f3 .photo{-webkit-mask:linear-gradient(#000 70%,transparent),linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);-webkit-mask-composite:source-in;
+  mask:linear-gradient(#000 70%,transparent),linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-composite:intersect}
+.barre{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.barre>span{color:#fff;font-weight:600}
+.r{all:unset;cursor:pointer;background:#fff;color:#1E1C1B;border-radius:999px;font-weight:600;padding:9px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.r[aria-pressed=true]{background:#C2506E;color:#fff}
+.bas-ap{position:absolute;left:0;right:0;bottom:20px;display:flex;justify-content:center;gap:12px}
+.seul header,.seul main,.seul .barre,.seul .bas,.seul .bas-ap{display:none}.seul .ap{padding:0;background:transparent}.seul #az{height:100%}.seul .ap .scene{border-radius:0;height:100%;width:100%;aspect-ratio:auto;box-shadow:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>La photo et le carré, ensemble</h1>
+  <p>4 nouvelles mises en scène : la photo fait partie de l'habit. Touche-en une pour la voir en grand, sur téléphone ou sur ordinateur.</p>
+</header>
+<main><div class="grille" id="g"></div></main>
+
+<div class="ap" id="ap" role="dialog" aria-modal="true" aria-label="Aperçu en grand">
+  <div class="barre"><span id="an"></span><span style="display:flex;gap:8px"><button class="r" id="bt" aria-pressed="true">Téléphone</button><button class="r" id="bo" aria-pressed="false">Ordinateur</button><button class="r" id="bx" aria-label="Fermer">×</button></span></div>
+  <div id="az"></div>
+  <div class="bas-ap"><button class="r" id="bp">← Avant</button><button class="r" id="bs">Après →</button></div>
+</div>
+
+<script>
+var F="nouveaux-fonds-1911/",P="../loginail-site/univers-photos/";
+var M='<div class="metier t">Prothésiste ongulaire · Marseille</div>',N='<div class="nom t">Nails by Drimf</div>',E='<div class="etoiles t">★★★★★ 5,0 · 3 avis</div>',
+    B='<span class="btn t">Réserver un créneau</span>',D='<div class="dispo t">Prochain créneau : demain · 9h</div>';
+var T=[
+ {n:"Flacon géant",d:"ta photo dans le flacon, elle dépasse sur les côtés",f:"teckels-pied-de-poule",ph:"cerise",a:"#8E1F3C",
+  h:function(){return '<div class="bouchon"></div><div class="bague"></div><div class="verre"></div><div class="photo ph" style="background-image:url('+P+'cerise/1.webp)"></div><div class="reflet"></div><div class="etiq">'+M+N+E+'</div><div class="action">'+B+'</div>'},teinte:"rgba(231,163,176,.7)"},
+ {n:"Stickers",d:"la photo et le carré, deux autocollants collés",f:"lunettes-papillons-orange",ph:"bling",a:"#E8357A",clair:"#FFE6EF",
+  h:function(){return '<div class="photo ph" style="background-image:url('+P+'bling/1.webp)"></div><div class="rond">nouveau<br>set ✦</div><div class="carte">'+M+N+E+B+D+'</div>'}},
+ {n:"Arche",d:"la photo en grand se fond dans le fond, l'arche monte dessus",f:"faons-champignons",ph:"boheme",a:"#9A6234",
+  h:function(){return '<div class="photo ph" style="background-image:url('+P+'boheme/1.webp)"></div><div class="arche">'+M+N+E+B+D+'</div>'}},
+ {n:"Sans carré",d:"la photo presque plein écran, le nom en énorme",f:"patins-glace",ph:"cristal",a:"#4E7FB8",
+  h:function(){return '<div class="photo ph" style="background-image:url('+P+'cristal/1.webp)"></div><div class="ombre"></div><div class="haut"><div class="metier pastille">Prothésiste ongulaire · Marseille</div>'+N+E+'</div><div class="bas">'+B+'<div class="dispo"><b>Prochain créneau : demain · 9h</b></div></div>'}}
+];
+function scene(t,i){return '<div class="scene" style="background-image:url('+F+t.f+'.webp)"><div class="k f'+(i+1)+'" style="--a:'+t.a+';'+(t.teinte?'--teinte:'+t.teinte+';':'')+(t.clair?'--clair:'+t.clair+';':'')+'">'+t.h()+'</div></div>'}
+/* le nom tient TOUJOURS sur une ligne (D36) */
+function ajuste(){document.querySelectorAll('.nom').forEach(function(n){n.style.fontSize='';n.style.display='block';var f=parseFloat(getComputedStyle(n).fontSize),k=0;
+  while(n.scrollWidth>n.clientWidth+1&&k++<40){f*=.95;n.style.fontSize=f+'px'}})}
+var g=document.getElementById("g"),ap=document.getElementById("ap"),cur=0,ordi=false;
+T.forEach(function(t,i){var b=document.createElement("button");b.className="choix";b.innerHTML=scene(t,i)+'<span>'+t.n+'</span><small>'+t.d+'</small>';b.onclick=function(){ouvre(i)};g.appendChild(b)});
+document.fonts.ready.then(ajuste);addEventListener("resize",ajuste);
+function ouvre(i){cur=(i+T.length)%T.length;document.getElementById("az").innerHTML=scene(T[cur],cur);document.getElementById("an").textContent=T[cur].n;document.title=T[cur].n;
+  ap.classList.toggle("ordi",ordi);ap.classList.add("ouvert");ajuste()}
+document.getElementById("bt").onclick=function(){ordi=false;this.setAttribute("aria-pressed","true");document.getElementById("bo").setAttribute("aria-pressed","false");ouvre(cur)};
+document.getElementById("bo").onclick=function(){ordi=true;this.setAttribute("aria-pressed","true");document.getElementById("bt").setAttribute("aria-pressed","false");ouvre(cur)};
+document.getElementById("bx").onclick=function(){ap.classList.remove("ouvert");document.title="Photo et carré ensemble"};
+document.getElementById("bp").onclick=function(){ouvre(cur-1)};document.getElementById("bs").onclick=function(){ouvre(cur+1)};
+addEventListener("keydown",function(e){if(!ap.classList.contains("ouvert"))return;if(e.key=="Escape")document.getElementById("bx").click();if(e.key=="ArrowRight")ouvre(cur+1);if(e.key=="ArrowLeft")ouvre(cur-1)});
+var m=location.search.match(/v=(\d)/);if(m)ouvre(+m[1]-1);if(/ordi/.test(location.search))document.getElementById("bo").click();
+
+if(/seul/.test(location.search))document.body.classList.add('seul');
+</script>
+</body>
+</html>

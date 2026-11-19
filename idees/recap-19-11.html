@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gardé le 19/11</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F7F3EF;color:#1E1C1B;font:15px/1.45 -apple-system,"Segoe UI",Roboto,sans-serif}
+header,section{max-width:1240px;margin:auto;padding:0 16px}
+header{padding-top:28px}
+h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:#6E6762;max-width:640px}
+.chiffres{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+.chiffres b{display:block;font-size:26px;line-height:1}
+.chiffres div{background:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.chiffres small{color:#6E6762}
+h2{font-size:19px;margin:34px 0 4px}
+h2 em{font-style:normal;background:#1E1C1B;color:#fff;border-radius:999px;font-size:13px;padding:2px 9px;margin-left:6px;vertical-align:3px}
+section>p{margin:0 0 14px;color:#6E6762}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.carre .grille{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+figure{margin:0}
+.cadre{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#EDE6E0;box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.06)}
+.cadre iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.cadre img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cadre a{position:absolute;inset:0}
+.cadre a:focus-visible{outline:3px solid #C2506E;outline-offset:-3px;border-radius:14px}
+figcaption{font-size:13px;font-weight:600;margin-top:6px}
+figcaption small{display:block;font-weight:400;color:#6E6762}
+footer{max-width:1240px;margin:40px auto 60px;padding:0 16px;color:#6E6762;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Tout ce que tu as gardé aujourd'hui</h1>
+  <p>Session « nouveaux fonds » du 19/11. Rien de tout ça n'est encore sur les vrais sites : c'est noté pour le pôle Produit. Touche une vignette pour l'ouvrir en grand.</p>
+  <div class="chiffres">
+    <div><b>11</b><small>fonds qui bougent</small></div>
+    <div><b>8</b><small>fonds images</small></div>
+    <div><b>5</b><small>habits du carré « Réserver »</small></div>
+  </div>
+</header>
+
+<section>
+  <h2>Fonds qui bougent <em>11</em></h2>
+  <p>Séries 3, 4 et 5 (décisions D47, D48, D49).</p>
+  <div class="grille" id="bougent"></div>
+</section>
+
+<section>
+  <h2>Fonds images <em>8</em></h2>
+  <p>Tes images de charms (décision D50). Tu en referas d'autres.</p>
+  <div class="grille" id="images"></div>
+</section>
+
+<section class="carre">
+  <h2>Le carré « Réserver » : ses habits <em>5</em></h2>
+  <p>La photo de l'en-tête reste toujours là, le contenu du carré ne change pas (décision D51).</p>
+  <div class="grille" id="carre"></div>
+</section>
+
+<footer>Maquettes : fonds-qui-bougent-3.html, -4.html, -5.html · nouveaux-fonds-1911.html · carre-reserver.html et carre-reserver-2.html.</footer>
+
+<script>
+var BOUGENT=[
+ ["fonds-qui-bougent-3.html?f=1","Téléphones à clapet","plein de petits tél qui tombent"],
+ ["fonds-qui-bougent-3.html?f=3","Dés en verre","ils tombent en roulant"],
+ ["fonds-qui-bougent-3.html?f=5","Trousse de fille","tél, dés, miroirs et gloss"],
+ ["fonds-qui-bougent-3.html?f=6","Baladeurs CD","baladeurs, casques, CD holo"],
+ ["fonds-qui-bougent-4.html?f=1","Bonbons qui flottent","rayures qui glissent"],
+ ["fonds-qui-bougent-4.html?f=2","Talons et bisous","ils glissent sur le zèbre"],
+ ["fonds-qui-bougent-4.html?f=3","Charms qui scintillent","sur le damier ondulé"],
+ ["fonds-qui-bougent-4.html?f=4","Le téléphone sonne","téléphones verts qui vibrent"],
+ ["fonds-qui-bougent-5.html?f=2","Flacons qui sautillent","des vernis qui sautent"],
+ ["fonds-qui-bougent-5.html?f=4","Strass qui roulent","sur du velours noir"],
+ ["fonds-qui-bougent-5.html?f=5","Lettres d'amour","elles traversent en volant"]
+];
+var IMAGES=[["telephones-holo-lilas","Téléphones holo lilas"],["teckels-pied-de-poule","Teckels et pied-de-poule"],["faons-champignons","Faons et champignons"],["musique-holo-lilas","Musique holo lilas"],
+ ["lunettes-papillons-orange","Lunettes et papillons orange"],["patins-glace","Patins sur la glace"],["citrons-coquillages","Citrons et coquillages"],["martini-olives","Martini et olives"]];
+var CARRE=[
+ ["carre-reserver.html?v=0","Aujourd'hui","la carte actuelle"],
+ ["carre-reserver.html?v=2","Ticket","bords découpés"],
+ ["carre-reserver-2.html?v=1","Flacon géant","la photo dans le flacon"],
+ ["carre-reserver-2.html?v=3","Arche","la photo se fond dans le fond"],
+ ["carre-reserver-2.html?v=4","Sans carré","le nom en énorme sur la photo"]
+];
+function vignette(el,src,titre,sous,img){var f=document.createElement("figure");
+  f.innerHTML='<div class="cadre">'+(img?'<img src="'+src+'" alt="" loading="lazy">':'<iframe src="'+src+'&seul" loading="lazy" tabindex="-1" title="'+titre+'"></iframe>')+
+   '<a href="'+src+'" target="_blank" rel="noopener" aria-label="Ouvrir '+titre+' en grand"></a></div><figcaption>'+titre+(sous?'<small>'+sous+'</small>':'')+'</figcaption>';el.appendChild(f)}
+BOUGENT.forEach(function(b){vignette(document.getElementById("bougent"),b[0],b[1],b[2])});
+IMAGES.forEach(function(b){vignette(document.getElementById("images"),"nouveaux-fonds-1911/"+b[0]+".webp",b[1],"",1)});
+CARRE.forEach(function(b){vignette(document.getElementById("carre"),b[0],b[1],b[2])});
+</script>
+</body>
+</html>

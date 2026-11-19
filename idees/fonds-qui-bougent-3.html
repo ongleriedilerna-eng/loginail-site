@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fonds qui bougent · série 3</title>
+<style>
+:root{--encre:#1E1C1B;--doux:#6E6762;--fond:#F7F3EF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:15px/1.45 -apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:28px 16px 6px;max-width:1240px;margin:auto}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--doux)}
+main{padding:16px 16px 60px;max-width:1240px;margin:auto}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.carte{all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-start}
+.carte span{display:block;font-size:13px;font-weight:600;margin-top:6px}
+.carte small{display:block;font-size:12px;color:var(--doux)}
+.carte:focus-visible .tuile{outline:3px solid #C2506E;outline-offset:2px}
+.carte .gard{display:inline-block;background:#1E1C1B;color:#fff;font-size:11px;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:1px}
+
+.tuile{position:relative;overflow:hidden;aspect-ratio:170/220;border-radius:14px;container-type:size;
+  box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.06)}
+.tuile .img{position:absolute;inset:0;background-size:cover;background-position:center}
+.tuile .pa{position:absolute;display:block;pointer-events:none;will-change:transform,opacity;background-size:contain;background-repeat:no-repeat;background-position:center}
+.tuile .pa b{display:block;width:100%;height:100%;background:inherit}
+
+/* monte : de bas en haut, en se balançant */
+@keyframes monte{0%{transform:translate(0,0) rotate(-12deg);opacity:0}8%{opacity:1}30%{transform:translate(var(--dx),-38cqh) rotate(10deg)}60%{transform:translate(calc(var(--dx)*-1),-78cqh) rotate(-10deg)}92%{opacity:1}100%{transform:translate(0,-128cqh) rotate(8deg);opacity:0}}
+/* tombe : de haut en bas, en tournant */
+@keyframes tombe{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:1}35%{transform:translate(var(--dx),45cqh) rotate(var(--r1))}70%{transform:translate(calc(var(--dx)*-1),88cqh) rotate(var(--r2))}94%{opacity:1}100%{transform:translate(0,130cqh) rotate(var(--r3));opacity:0}}
+/* vent : en biais, du haut gauche vers le bas droit */
+@keyframes vent{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:1}50%{transform:translate(55cqw,45cqh) rotate(200deg)}94%{opacity:1}100%{transform:translate(120cqw,95cqh) rotate(400deg);opacity:0}}
+/* vole : papillon qui traverse en ondulant */
+@keyframes vole{0%{transform:translate(0,0) rotate(8deg)}25%{transform:translate(35cqw,-14cqh) rotate(-6deg)}50%{transform:translate(70cqw,4cqh) rotate(10deg)}75%{transform:translate(100cqw,-12cqh) rotate(-4deg)}100%{transform:translate(140cqw,0) rotate(8deg)}}
+@keyframes ailes{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.25)}}
+/* méduse : monte par à-coups en pulsant */
+@keyframes meduse{0%{transform:translate(0,0)}100%{transform:translate(var(--dx),-140cqh)}}
+@keyframes pulse{0%,100%{transform:scale(1,1)}40%{transform:scale(1.18,.8)}70%{transform:scale(.92,1.1)}}
+/* boule disco : se balance et tourne ses reflets */
+@keyframes balance{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+@keyframes spot{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}80%{opacity:.9}100%{transform:translate(var(--dx),40cqh);opacity:0}}
+
+.apercu{position:fixed;inset:0;z-index:9;display:none}
+.apercu.ouvert{display:block}
+.apercu .tuile{position:absolute;inset:0;aspect-ratio:auto;border-radius:0;box-shadow:none}
+.apercu .site{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 32px));
+  background:rgba(255,255,255,.88);border-radius:22px;padding:26px 22px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+.apercu .site b{display:block;font-size:26px;letter-spacing:-.01em}
+.apercu .site p{margin:6px 0 16px;color:var(--doux)}
+.apercu .site a{display:inline-block;background:#1E1C1B;color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-weight:600}
+.apercu .nom{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.apercu .nom span{background:rgba(255,255,255,.9);padding:7px 12px;border-radius:999px;font-weight:600;font-size:14px}
+.apercu .nom button{all:unset;cursor:pointer;background:#fff;width:40px;height:40px;border-radius:50%;text-align:center;line-height:40px;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.apercu .fleches{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:14px}
+.apercu .fleches button{all:unset;cursor:pointer;background:#fff;padding:10px 18px;border-radius:999px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+@media (prefers-reduced-motion:reduce){.tuile *{animation:none!important}}
+.tuile .img{background-size:cover}
+.seul header,.seul main{display:none}.seul .apercu .nom,.seul .apercu .fleches,.seul .apercu .site{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>Fonds qui bougent · série 3</h1>
+  <p>Inspirés de tes images : téléphones à clapet, dés en verre, miroirs cœur et gloss. Touche un fond pour le voir en grand.</p>
+</header>
+<main><div class="grille" id="g"></div></main>
+
+
+<div class="apercu" id="apercu" role="dialog" aria-modal="true" aria-label="Aperçu du fond">
+  <div id="ap-tuile"></div>
+  <div class="site"><b>Les Ongles de Léa</b><p>Prothésiste ongulaire · Lyon 6e</p><a href="#" onclick="return false">Réserver</a></div>
+  <div class="nom"><span id="ap-nom"></span><button id="ap-x" aria-label="Fermer">×</button></div>
+  <div class="fleches"><button id="ap-prec">← Avant</button><button id="ap-suiv">Après →</button></div>
+</div>
+
+<script>
+var IMG="../loginail-site/fonds-img/";
+function svg(s,vb){return "url(\"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+(vb||"0 0 40 40")+'">'+s+'</svg>')+"\")"}
+var defs=function(id,a){return '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1">'+a.map(function(c,i){return '<stop offset="'+(i/(a.length-1))+'" stop-color="'+c+'"/>'}).join("")+'</linearGradient></defs>'};
+var D={
+ coeur:function(c){return svg(defs("g",c)+'<path d="M20 36C7 26 1 20 1 12A9.5 9.5 0 0 1 20 8A9.5 9.5 0 0 1 39 12C39 20 33 26 20 36Z" fill="url(#g)" fill-opacity=".9" stroke="rgba(255,255,255,.7)" stroke-width="1"/><path d="M7 11Q8 6 13 5.5" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".95"/><ellipse cx="27" cy="25" rx="3" ry="1.6" fill="#fff" opacity=".5" transform="rotate(-35 27 25)"/>')},
+ etoile:function(c){return svg(defs("g",c)+'<path d="M20 2L25 14L38 15L28 24L31 37L20 30L9 37L12 24L2 15L15 14Z" fill="url(#g)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><path d="M14 16L18 15" stroke="#fff" stroke-width="2" stroke-linecap="round"/>')},
+ levres:svg('<path d="M2 20C7 10 15 9 20 13C25 9 33 10 38 20C31 31 9 31 2 20Z" fill="#D21F3C"/><path d="M3 20C12 22 28 22 37 20C30 24 10 24 3 20Z" fill="#8E1426"/><path d="M11 14Q15 12.5 18 14.5" stroke="#FF8A9A" stroke-width="1.6" fill="none" stroke-linecap="round"/>',"0 0 40 34"),
+ petale:svg('<path d="M20 2C30 9 33 22 20 38C7 22 10 9 20 2Z" fill="#F9C9D6"/><path d="M20 2C26 8 27 16 20 24" fill="#FDE3EA"/><path d="M17 3L20 7L23 3" fill="#F7B3C6"/>'),
+ note:function(c){return svg('<path d="M13 31A5 4 0 1 1 13 30.9V7L33 3V27A5 4 0 1 1 33 26.9V11L17 14V31Z" fill="'+c+'"/>')},
+ diamant:svg('<path d="M8 4H32L39 14L20 37L1 14Z" fill="#D9B8FF"/><path d="M1 14H39L20 37Z" fill="#B48CF0"/><path d="M8 4L14 14L20 4L26 14L32 4" fill="#EEDDFF"/><path d="M14 14L20 37L26 14Z" fill="#C9A4FA"/><path d="M10 7L12 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>'),
+ fraise:svg('<path d="M20 9C31 9 36 15 33 24C30 32 24 38 20 38C16 38 10 32 7 24C4 15 9 9 20 9Z" fill="#E8344A"/><g fill="#FFE08A"><circle cx="14" cy="17" r="1"/><circle cx="22" cy="16" r="1"/><circle cx="28" cy="19" r="1"/><circle cx="17" cy="24" r="1"/><circle cx="25" cy="26" r="1"/><circle cx="20" cy="32" r="1"/><circle cx="12" cy="24" r="1"/></g><path d="M20 10L12 5L17 9L13 2L20 8L27 2L23 9L28 5Z" fill="#4E9A3C"/><path d="M11 15Q12 12 15 12" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7" stroke-linecap="round"/>'),
+ cerise:svg('<path d="M14 26Q16 12 26 4M28 27Q27 14 26 4" stroke="#5A7A2E" stroke-width="1.6" fill="none"/><path d="M26 4Q33 3 35 9Q30 9 26 4Z" fill="#6FA03C"/><circle cx="13" cy="30" r="8" fill="#D3203A"/><circle cx="29" cy="30" r="7.5" fill="#C01A33"/><circle cx="10" cy="27" r="2" fill="#fff" opacity=".8"/><circle cx="26.5" cy="27" r="1.8" fill="#fff" opacity=".8"/>'),
+ noeud:svg('<path d="M20 15C13 3 2 4 3 12C4 20 13 18 20 16ZM20 15C27 3 38 4 37 12C36 20 27 18 20 16Z" fill="#E8899E"/><path d="M19 17L11 36L15 33L18 38L20 18M21 17L29 36L25 33L22 38L20 18" fill="#D9667F"/><circle cx="20" cy="15.5" r="3.4" fill="#C9506B"/><path d="M8 9Q10 7 13 8" stroke="#fff" stroke-width="1.4" fill="none" opacity=".7" stroke-linecap="round"/>'),
+ meduse:svg('<defs><radialGradient id="m" cx=".5" cy=".35" r=".6"><stop offset="0" stop-color="#F3E6FF"/><stop offset=".6" stop-color="#B98CFF" stop-opacity=".85"/><stop offset="1" stop-color="#7A4FE0" stop-opacity=".4"/></radialGradient></defs><path d="M4 22C4 8 36 8 36 22C30 25 10 25 4 22Z" fill="url(#m)"/><g stroke="#D8BFFF" stroke-width="1.3" fill="none" opacity=".85" stroke-linecap="round"><path d="M9 23Q6 32 10 40Q13 48 9 56"/><path d="M15 24Q18 34 14 44Q12 52 15 58"/><path d="M20 24Q22 36 19 48"/><path d="M25 24Q22 34 26 44Q28 52 25 58"/><path d="M31 23Q34 32 30 40Q27 48 31 56"/></g><ellipse cx="14" cy="14" rx="4" ry="2" fill="#fff" opacity=".6"/>',"0 0 40 60"),
+ papillon:function(c1,c2){return svg('<g stroke="#5B4636" stroke-width=".8"><path d="M20 18C14 4 3 2 2 9C1 15 10 18 20 19Z" fill="'+c1+'"/><path d="M20 18C26 4 37 2 38 9C39 15 30 18 20 19Z" fill="'+c1+'"/><path d="M20 19C12 21 6 28 10 31C14 33 18 26 20 20Z" fill="'+c2+'"/><path d="M20 19C28 21 34 28 30 31C26 33 22 26 20 20Z" fill="'+c2+'"/></g><path d="M20 12V28" stroke="#3A2C22" stroke-width="1.6" stroke-linecap="round"/><path d="M20 12Q17 7 15 6M20 12Q23 7 25 6" stroke="#3A2C22" stroke-width=".8" fill="none"/>',"0 0 40 34")},
+ disco:svg('<defs><radialGradient id="d" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#E7C3D6"/><stop offset="1" stop-color="#8A3E66"/></radialGradient><clipPath id="c"><circle cx="20" cy="22" r="15"/></clipPath></defs><path d="M20 0V7" stroke="#C99AB3" stroke-width="1"/><circle cx="20" cy="22" r="15" fill="url(#d)"/><g clip-path="url(#c)" stroke="rgba(110,40,80,.35)" stroke-width=".7"><path d="M5 12H35M5 17H35M5 22H35M5 27H35M5 32H35"/><path d="M10 7V37M15 7V37M20 7V37M25 7V37M30 7V37"/></g><rect x="12" y="13" width="4" height="4" fill="#fff"/><rect x="17" y="18" width="3" height="3" fill="#fff" opacity=".7"/>',"0 0 40 40"),
+ eclat:function(c){return "url(\"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 0Q11 9 20 10Q11 11 10 20Q9 11 0 10Q9 9 10 0Z" fill="'+c+'"/></svg>')+"\")"}
+};
+function hasard(g){return function(){g=(g*9301+49297)%233280;return g/233280}}
+/* o : n, image (texte ou fonction), taille [min,max], ratio, geste, duree [min,max], depart ("bas","haut","gauche"), style, interieur */
+var GRAND=1; /* en grand : plus d'objets et un peu plus gros, pour garder la même densité */
+function objets(t,o){var r=hasard(o.graine||7),n=Math.round((COULEUR?o.n*1.8:o.n)*GRAND);for(var i=0;i<n;i++){var e=document.createElement("i");e.className="pa";var s=(o.taille[0]+r()*(o.taille[1]-o.taille[0]))*(GRAND>1?1.35:1);
+  var pos=o.depart=="haut"?"top:-"+(s*(o.ratio||1)+4)+"px;left:"+(r()*100-6)+"%;":o.depart=="gauche"?"left:-"+(s+10)+"px;top:"+(r()*80)+"%;":o.depart=="vent"?"left:"+(r()*110-60)+"%;top:-"+(s+10)+"px;":"top:100%;left:"+(r()*100-6)+"%;";
+  var img=typeof o.image=="function"?o.image(r):o.image,d=o.duree[0]+r()*(o.duree[1]-o.duree[0]);
+  e.style.cssText="width:"+s.toFixed(0)+"px;height:"+(s*(o.ratio||1)).toFixed(0)+"px;"+pos+"background-image:"+img+";"+
+   "animation:"+o.geste+" "+d.toFixed(1)+"s "+(o.courbe||"linear")+" -"+(r()*d).toFixed(1)+"s infinite;"+
+   "--dx:"+((r()-.5)*44).toFixed(0)+"px;--r1:"+(r()>.5?"":"-")+"120deg;--r2:"+(r()>.5?"":"-")+"240deg;--r3:"+(r()>.5?"":"-")+"360deg;"+(o.style||"");
+  if(o.interieur){var b=document.createElement("b");b.style.cssText=o.interieur;e.style.backgroundImage="none";b.style.backgroundImage=img;b.style.backgroundSize="contain";b.style.backgroundRepeat="no-repeat";e.appendChild(b)}
+  t.appendChild(e)}}
+
+
+/* série 3 (20/11) : inspirée des images de Marie */
+D.tel=svg('<g><rect x="5" y="31" width="28" height="31" rx="7" fill="#FF4FA3"/><rect x="8" y="34" width="22" height="25" rx="5" fill="#FFC6E2"/><circle cx="19" cy="39.5" r="3.6" fill="#D2B6F7" stroke="#B48CF0" stroke-width=".8"/><circle cx="19" cy="39.5" r="1.4" fill="#EBDDFE"/><g fill="#B98CF0"><ellipse cx="12" cy="47" rx="2.6" ry="1.5"/><ellipse cx="19" cy="47" rx="2.6" ry="1.5"/><ellipse cx="26" cy="47" rx="2.6" ry="1.5"/><ellipse cx="12" cy="51.5" rx="2.6" ry="1.5"/><ellipse cx="19" cy="51.5" rx="2.6" ry="1.5"/><ellipse cx="26" cy="51.5" rx="2.6" ry="1.5"/><ellipse cx="12" cy="56" rx="2.6" ry="1.5"/><ellipse cx="19" cy="56" rx="2.6" ry="1.5"/><ellipse cx="26" cy="56" rx="2.6" ry="1.5"/></g><rect x="7" y="28" width="24" height="5.5" rx="2.7" fill="#E8358F"/><rect x="5" y="2" width="28" height="28" rx="7" fill="#FF4FA3"/><rect x="8" y="5" width="22" height="22" rx="5" fill="#FFC6E2"/><rect x="11" y="10" width="16" height="12" rx="2" fill="#CDBCF5" stroke="#9C86D8" stroke-width=".8"/><path d="M16.5 14.2h1.2v-1h1.3v1h1v-1h1.3v1h1.2v2h-1.2v1.2h-1.2v1.2h-2.4v-1.2h-1.2v-1.2h-1.2z" fill="#8A6FD1"/><g fill="#E8358F"><circle cx="17" cy="7.4" r=".6"/><circle cx="19" cy="7.4" r=".6"/><circle cx="21" cy="7.4" r=".6"/></g><path d="M8 7Q9 4 12 3.6" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".9"/><path d="M33 34q4 3 3 9" stroke="#FF7CBF" stroke-width="1" fill="none"/><circle cx="35.6" cy="40" r="1.3" fill="#E0C8FF"/><circle cx="36" cy="43.2" r="1.3" fill="#FFB3D9"/><path d="M36 45.2l1 2.2 2.3.2-1.8 1.5.6 2.3-2.1-1.3-2 1.3.6-2.3-1.8-1.5 2.3-.2z" fill="#F7A6D2" stroke="#fff" stroke-width=".5"/></g>',"0 0 42 64");
+D.de=function(c){return svg('<path d="M20 3L36 11L20 19L4 11Z" fill="'+c[0]+'" fill-opacity=".92"/><path d="M4 11L20 19V37L4 29Z" fill="'+c[1]+'" fill-opacity=".92"/><path d="M20 19L36 11V29L20 37Z" fill="'+c[2]+'" fill-opacity=".92"/><g fill="#FFF4EE"><ellipse cx="20" cy="11" rx="2.3" ry="1.3"/><ellipse cx="8.5" cy="17" rx="1.6" ry="2"/><ellipse cx="12" cy="24" rx="1.6" ry="2"/><ellipse cx="15.5" cy="31" rx="1.6" ry="2"/><ellipse cx="25" cy="20" rx="1.6" ry="2"/><ellipse cx="31" cy="27" rx="1.6" ry="2"/><ellipse cx="28" cy="23.5" rx="1.6" ry="2"/></g><path d="M7 11.5L19 5.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".8"/><path d="M34.5 13V26" stroke="#BFE3FF" stroke-width="1" stroke-linecap="round" opacity=".8"/>')};
+D.miroir=svg('<path d="M20 37C7 27 2 21 2 13A9 9 0 0 1 20 9A9 9 0 0 1 38 13C38 21 33 27 20 37Z" fill="#F6B8D2" stroke="#D9D9E3" stroke-width="3.2"/><path d="M20 37C7 27 2 21 2 13A9 9 0 0 1 20 9A9 9 0 0 1 38 13C38 21 33 27 20 37Z" fill="none" stroke="#8C8C9C" stroke-width=".7"/><path d="M8 13Q10 8 15 8" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/><path d="M27 20l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="#fff"/>');
+D.gloss=svg('<g transform="rotate(-25 20 22)"><rect x="14" y="13" width="12" height="27" rx="3" fill="#E31C70" fill-opacity=".88" stroke="#F7A1C4" stroke-width=".8"/><rect x="15" y="2" width="10" height="11" rx="2.5" fill="#B8105A"/><rect x="14" y="11.5" width="12" height="2.5" fill="#D9D9E3"/><path d="M17 16V36" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".55"/><g fill="#FFD2E6"><circle cx="21" cy="20" r=".7"/><circle cx="23" cy="26" r=".7"/><circle cx="20" cy="31" r=".7"/><circle cx="22.5" cy="35" r=".6"/></g></g>');
+var ARC='<defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB3E0"/><stop offset=".3" stop-color="#C9B8FF"/><stop offset=".45" stop-color="#FFFFFF"/><stop offset=".6" stop-color="#B3E8FF"/><stop offset=".78" stop-color="#FFF0A8"/><stop offset="1" stop-color="#F7A8D8"/></linearGradient></defs><circle cx="20" cy="20" r="17" fill="url(#h)" opacity=".85"/><path d="M20 20L8 5A17 17 0 0 1 14 3.6Z" fill="#fff" opacity=".55"/><path d="M20 20L32 35A17 17 0 0 1 26 36.4Z" fill="#fff" opacity=".45"/>';
+D.cd=svg('<circle cx="20" cy="20" r="17" fill="#EDE2FF"/>'+ARC+'<circle cx="20" cy="20" r="17" fill="none" stroke="#C9B6F0" stroke-width="1"/><circle cx="20" cy="20" r="5" fill="#E2D4FA" stroke="#B9A2EC" stroke-width=".8"/><circle cx="20" cy="20" r="2" fill="#FDE0EE"/><path d="M9 12Q12 7 17 6" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".9"/>');
+D.baladeur=svg('<ellipse cx="20" cy="21" rx="18" ry="16" fill="#FF5FAE" fill-opacity=".9" stroke="#FFB3D9" stroke-width="1.2"/><g transform="translate(9.5 8) scale(.6)"><circle cx="17.5" cy="17.5" r="17" fill="#EDE2FF"/><g transform="translate(-2.5 -2.5)">'+ARC+'</g><circle cx="17.5" cy="17.5" r="5" fill="#E2D4FA" stroke="#B9A2EC"/><circle cx="17.5" cy="17.5" r="2" fill="#FF8CC6"/></g><g fill="#DCC6FB" stroke="#B48CF0" stroke-width=".5"><ellipse cx="14" cy="33" rx="2.6" ry="1.5"/><ellipse cx="20" cy="33.6" rx="3" ry="1.7"/><ellipse cx="26" cy="33" rx="2.6" ry="1.5"/></g><path d="M5 15Q8 7 15 5" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".85"/><path d="M37 24q2 3 1 6" stroke="#E8358F" stroke-width=".8" fill="none"/><circle cx="36.6" cy="32" r="1.8" fill="#E8203F"/><circle cx="39" cy="31.4" r="1.7" fill="#D0142F"/>',"0 0 42 40");
+D.casque=svg('<path d="M8 25Q7 5 20 5Q33 5 32 25" stroke="#A77EEA" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M9 23Q9 8 20 7" stroke="#fff" stroke-width="1" fill="none" opacity=".7"/><ellipse cx="8" cy="28" rx="5.5" ry="7.5" fill="#9466E0"/><ellipse cx="32" cy="28" rx="5.5" ry="7.5" fill="#9466E0"/><ellipse cx="9" cy="28" rx="3.6" ry="5.6" fill="#D9C2FA"/><ellipse cx="31" cy="28" rx="3.6" ry="5.6" fill="#D9C2FA"/><path d="M9 25l.8 2.2 2.2.8-2.2.8L9 31l-.8-2.2-2.2-.8 2.2-.8z" fill="#fff"/>');
+var DAMIER="repeating-conic-gradient(#5E1236 0 25%,#F7B7CF 0 50%) 0 0/34px 34px";
+var DES=[["#FFC2D4","#FF6F96","#FF8DAA"],["#FFD3E0","#FF8AA8","#E9F5A6"],["#FFE0EA","#F9A0BC","#FFB8CC"]];
+var TOUS=[
+ {n:"Téléphones à clapet · rose",d:"plein de petits tél qui tombent",fond:"linear-gradient(170deg,#FDE0EE,#F9C4DE)",fx:function(t){
+   objets(t,{n:22,graine:31,image:D.tel,taille:[10,22],ratio:1.52,geste:"tombe",duree:[7,12],depart:"haut",style:"--r1:30deg;--r2:-25deg;--r3:20deg;filter:drop-shadow(0 2px 2px rgba(200,40,120,.25))"})}},
+ {n:"Téléphones à clapet · damier",d:"les mêmes, sur damier bordeaux",fond:DAMIER,fx:function(t){
+   objets(t,{n:22,graine:33,image:D.tel,taille:[10,22],ratio:1.52,geste:"tombe",duree:[7,12],depart:"haut",style:"--r1:30deg;--r2:-25deg;--r3:20deg;filter:drop-shadow(0 2px 3px rgba(40,0,20,.45))"})}},
+ {n:"Dés en verre",d:"ils tombent en roulant",fond:"linear-gradient(170deg,#FCE3EC,#F8CCDB)",fx:function(t){
+   objets(t,{n:13,graine:35,image:function(r){return D.de(DES[Math.floor(r()*3)])},taille:[16,32],geste:"tombe",duree:[6,10],depart:"haut",style:"filter:drop-shadow(0 6px 5px rgba(170,90,200,.3))"})}},
+ {n:"Miroirs cœur et gloss",d:"sur damier, comme ton image",fond:DAMIER,fx:function(t){
+   objets(t,{n:14,graine:37,image:function(r){return r()>.5?D.miroir:D.gloss},taille:[18,34],geste:"tombe",duree:[7,11],depart:"haut",style:"--r1:40deg;--r2:-30deg;--r3:25deg;filter:drop-shadow(0 3px 4px rgba(40,0,20,.4))"})}},
+ {n:"Trousse de fille",d:"tél, dés, miroirs et gloss mélangés",fond:"linear-gradient(170deg,#EBDDFB,#D7C2F4)",fx:function(t){
+   objets(t,{n:18,graine:39,image:function(r){var k=r();return k<.4?D.tel:k<.6?D.de(DES[0]):k<.8?D.miroir:D.gloss},taille:[14,28],ratio:1.15,geste:"tombe",duree:[7,11],depart:"haut",style:"--r1:30deg;--r2:-25deg;--r3:20deg;filter:drop-shadow(0 3px 3px rgba(110,60,170,.3))"})}},
+ {n:"Baladeurs CD",d:"baladeurs, casques et CD holo",nouveau:1,fond:"linear-gradient(170deg,#FDE0EE,#F7C2DC)",fx:function(t){
+   objets(t,{n:18,graine:43,image:function(r){var k=r();return k<.5?D.baladeur:k<.75?D.casque:D.cd},taille:[13,26],geste:"tombe",duree:[7,12],depart:"haut",style:"--r1:30deg;--r2:-25deg;--r3:20deg;filter:drop-shadow(0 2px 3px rgba(200,40,140,.3))"})}}
+];
+[0,2,4].forEach(function(i){TOUS[i].garde=1});
+var COULEUR=false;
+function fabrique(f){var t=document.createElement("div");t.className="tuile";var im=document.createElement("div");im.className="img";im.style.background=f.fond;t.appendChild(im);f.fx(t);return t}
+function grille(el,liste){liste.forEach(function(f,i){var b=document.createElement("button");b.className="carte";b.appendChild(fabrique(f));
+  b.insertAdjacentHTML("beforeend","<span>"+f.n+(f.garde?'<em class="gard">gardé</em>':f.nouveau?'<em class="gard" style="background:#E8358F">nouveau</em>':"")+"</span><small>"+f.d+"</small>");b.onclick=function(){ouvre(i)};el.appendChild(b)})}
+grille(document.getElementById("g"),TOUS);
+setTimeout(function(){var m=location.search.match(/f=(\d)/);if(m)ouvre(+m[1]-1)},0);
+
+var ap=document.getElementById("apercu"),cur=0;
+function ouvre(i){cur=(i+TOUS.length)%TOUS.length;var z=document.getElementById("ap-tuile");z.innerHTML="";GRAND=Math.min(3,Math.max(1,Math.sqrt(innerWidth*innerHeight/(150*195))/1.1));z.appendChild(fabrique(TOUS[cur]));GRAND=1;
+  document.getElementById("ap-nom").textContent=(cur+1)+" / "+TOUS.length+" · "+TOUS[cur].n;document.title=TOUS[cur].n;ap.classList.add("ouvert")}
+document.getElementById("ap-x").onclick=function(){ap.classList.remove("ouvert");document.getElementById("ap-tuile").innerHTML=""};
+document.getElementById("ap-prec").onclick=function(){ouvre(cur-1)};document.getElementById("ap-suiv").onclick=function(){ouvre(cur+1)};
+addEventListener("keydown",function(e){if(!ap.classList.contains("ouvert"))return;if(e.key=="Escape")document.getElementById("ap-x").click();if(e.key=="ArrowRight")ouvre(cur+1);if(e.key=="ArrowLeft")ouvre(cur-1)});
+
+if(/seul/.test(location.search))document.body.classList.add('seul');
+</script>
+</body>
+</html>

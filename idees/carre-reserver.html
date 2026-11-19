@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le carré « Réserver »</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Dancing+Script:wght@700&family=Space+Mono:wght@400;700&family=Jost:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F7F3EF;color:#1E1C1B;font:15px/1.45 Jost,-apple-system,"Segoe UI",sans-serif}
+header,main{max-width:1240px;margin:auto;padding:24px 16px 4px}
+h1{font-size:24px;margin:0 0 6px}header p{margin:0;color:#6E6762}
+main{padding-bottom:60px}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
+.choix{all:unset;cursor:pointer;display:flex;flex-direction:column}
+.choix:focus-visible .scene{outline:3px solid #C2506E;outline-offset:3px}
+.choix span{font-weight:600;margin-top:8px}.choix small{color:#6E6762;font-size:13px}
+.choix .ref{display:inline-block;background:#1E1C1B;color:#fff;font-size:11px;padding:1px 8px;border-radius:999px;margin-left:5px;vertical-align:2px}
+
+/* le décor : un bout de site avec son fond */
+.scene{position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background-size:cover;background-position:center;container-type:size;
+  box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 22px rgba(0,0,0,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(min(100cqw,520px)/100*4)}
+.photo{--u:calc(min(100cqw,520px)/100);width:calc(var(--u)*84);aspect-ratio:4/3.4;max-height:44cqh;border-radius:calc(var(--u)*5);background-size:cover;background-position:center;
+  box-shadow:0 0 0 calc(var(--u)*1.2) #fff,0 calc(var(--u)*2) calc(var(--u)*6) rgba(0,0,0,.2);flex:none}
+.c{--u:calc(min(100cqw,520px)/100);--a:#C2506E;--t:#1E1C1B;width:calc(var(--u)*84);text-align:center;color:var(--t);position:relative}
+.metier{font:600 calc(var(--u)*2.7)/1.2 Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.nom{font:calc(var(--u)*10)/1.15 "Abril Fatface",serif;margin:calc(var(--u)*1.6) 0;white-space:nowrap}
+.etoiles{font-size:calc(var(--u)*3);opacity:.8}
+.btn{display:inline-block;margin-top:calc(var(--u)*4);background:var(--a);color:#fff;font:600 calc(var(--u)*3.3)/1 Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  padding:calc(var(--u)*3.4) calc(var(--u)*6);border-radius:999px;box-shadow:0 calc(var(--u)*1) calc(var(--u)*3) rgba(0,0,0,.18)}
+.dispo{display:block;font-size:calc(var(--u)*2.6);margin-top:calc(var(--u)*2);opacity:.8}
+
+/* 0 · aujourd'hui */
+.v0{background:rgba(250,225,235,.92);border-radius:calc(var(--u)*5);padding:calc(var(--u)*7) calc(var(--u)*5)}
+
+/* 1 · flacon de vernis : bouchon noir, étiquette */
+.v1{width:calc(var(--u)*72);padding-top:calc(var(--u)*17)}
+.v1::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:calc(var(--u)*22);height:calc(var(--u)*19);
+  background:linear-gradient(90deg,#1E1C1B,#4A4542 30%,#1E1C1B 60%);border-radius:calc(var(--u)*3) calc(var(--u)*3) calc(var(--u)*1) calc(var(--u)*1)}
+.v1 .corps{background:linear-gradient(115deg,rgba(255,255,255,.55),rgba(255,255,255,0) 35%),var(--verre,#E9A6C4);border-radius:calc(var(--u)*13);
+  padding:calc(var(--u)*7) calc(var(--u)*5) calc(var(--u)*8);box-shadow:inset 0 0 0 calc(var(--u)*.8) rgba(255,255,255,.6),0 calc(var(--u)*3) calc(var(--u)*8) rgba(0,0,0,.18)}
+.v1 .etiq{background:#FFFBF5;border-radius:calc(var(--u)*3);padding:calc(var(--u)*4) calc(var(--u)*3)}
+.v1 .nom{font-size:calc(var(--u)*8.4)}
+
+/* 2 · ticket */
+.v2{background:#FFFDF8;padding:calc(var(--u)*7) calc(var(--u)*6);font-family:"Space Mono",monospace;
+  -webkit-mask:radial-gradient(circle calc(var(--u)*2.2) at 50% 0,#0000 98%,#000) 0 0/calc(var(--u)*7) 51% repeat-x,radial-gradient(circle calc(var(--u)*2.2) at 50% 100%,#0000 98%,#000) 0 100%/calc(var(--u)*7) 51% repeat-x;
+          mask:radial-gradient(circle calc(var(--u)*2.2) at 50% 0,#0000 98%,#000) 0 0/calc(var(--u)*7) 51% repeat-x,radial-gradient(circle calc(var(--u)*2.2) at 50% 100%,#0000 98%,#000) 0 100%/calc(var(--u)*7) 51% repeat-x;
+  filter:drop-shadow(0 calc(var(--u)*2) calc(var(--u)*3) rgba(0,0,0,.2))}
+.v2 .metier{font-family:"Space Mono",monospace;letter-spacing:.05em}
+.v2 .sep{border-top:calc(var(--u)*.6) dashed rgba(30,28,27,.35);margin:calc(var(--u)*4) 0}
+.v2 .ligne{display:flex;justify-content:space-between;font-size:calc(var(--u)*3)}
+.v2 .btn{border-radius:calc(var(--u)*1.5);font-family:"Space Mono",monospace;font-weight:700}
+
+/* 3 · bulles de message (comme un SMS) */
+.v3{text-align:left;display:flex;flex-direction:column;gap:calc(var(--u)*2.4)}
+.v3 .bulle{position:relative;background:#fff;border-radius:calc(var(--u)*6);padding:calc(var(--u)*4) calc(var(--u)*5);max-width:86%;
+  box-shadow:0 calc(var(--u)*1.5) calc(var(--u)*4) rgba(0,0,0,.15)}
+.v3 .bulle.g{border-bottom-left-radius:calc(var(--u)*1.5)}
+.v3 .bulle .nom{margin:calc(var(--u)*.6) 0;font-size:calc(var(--u)*9)}
+.v3 .bulle.d{align-self:flex-end;background:var(--a);color:#fff;border-bottom-right-radius:calc(var(--u)*1.5);font:600 calc(var(--u)*3.6)/1.3 Jost,sans-serif}
+.v3 .heure{font-size:calc(var(--u)*2.4);opacity:.75;text-align:center;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.v3 .btn{margin-top:0;align-self:flex-end;background:#fff;color:var(--a);border:calc(var(--u)*.8) solid var(--a)}
+
+/* 4 · sticker penché */
+.v4{background:var(--fondc,#FFE8F1);border:calc(var(--u)*2.2) solid #fff;border-radius:calc(var(--u)*6);padding:calc(var(--u)*6) calc(var(--u)*5);
+  transform:rotate(-4deg);box-shadow:0 calc(var(--u)*2) calc(var(--u)*4) rgba(0,0,0,.22)}
+.v4 .nom{font-family:"Dancing Script",cursive;font-size:calc(var(--u)*12.5)}
+.v4 .btn{transform:rotate(5deg);border:calc(var(--u)*1.2) solid #fff}
+
+/* 5 · arche */
+.v5{background:#FFF8F2;border-radius:calc(var(--u)*42) calc(var(--u)*42) calc(var(--u)*4) calc(var(--u)*4);width:calc(var(--u)*70);
+  padding:calc(var(--u)*16) calc(var(--u)*5) calc(var(--u)*7);box-shadow:inset 0 0 0 calc(var(--u)*1.4) var(--a),inset 0 0 0 calc(var(--u)*2.8) #FFF8F2,inset 0 0 0 calc(var(--u)*3.3) var(--a),0 calc(var(--u)*3) calc(var(--u)*8) rgba(0,0,0,.18)}
+.v5 .btn{border-radius:calc(var(--u)*2)}
+
+/* 6 · sans carré : le nom directement sur le fond */
+.v6{padding:calc(var(--u)*4)}
+.v6 .pastille{display:inline-block;background:#fff;color:var(--t);border-radius:999px;padding:calc(var(--u)*1.6) calc(var(--u)*4)}
+.v6 .nom{color:var(--a);font-size:calc(var(--u)*13);-webkit-text-stroke:calc(var(--u)*3) #fff;paint-order:stroke fill;
+  filter:drop-shadow(0 calc(var(--u)*1) calc(var(--u)*2) rgba(0,0,0,.25))}
+.v6 .etoiles{display:inline-block;background:#fff;border-radius:999px;padding:calc(var(--u)*1) calc(var(--u)*3);opacity:1}
+.v6 .btn{font-size:calc(var(--u)*4);padding:calc(var(--u)*4.2) calc(var(--u)*8);box-shadow:0 0 0 calc(var(--u)*1.4) #fff,0 calc(var(--u)*2) calc(var(--u)*6) rgba(0,0,0,.3)}
+.v6 .dispo{display:inline-block;background:#fff;border-radius:999px;padding:calc(var(--u)*1) calc(var(--u)*3);margin-top:calc(var(--u)*3);opacity:1}
+
+/* grand aperçu : téléphone ou ordinateur */
+.ap{position:fixed;inset:0;z-index:9;background:#2B2622;display:none;align-items:center;justify-content:center;padding:70px 16px 84px}
+.ap.ouvert{display:flex}
+.ap .scene{border-radius:24px;height:100%;aspect-ratio:9/19.5;max-width:100%}
+.ap.ordi .scene{aspect-ratio:16/10;height:auto;width:min(100%,calc((100vh - 160px)*1.6));border-radius:12px}
+.ap.ordi .scene{flex-direction:row;gap:5cqw}
+.ap.ordi .photo{width:38cqw;max-height:none;aspect-ratio:4/4.4;max-width:none}
+.ap.ordi .c{--u:calc(min(100cqh,620px)/100)}
+.barre{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.barre span{color:#fff;font-weight:600}
+.barre .r{color:#1E1C1B}.r{all:unset;cursor:pointer;background:#fff;color:#1E1C1B;border-radius:999px;font-weight:600;padding:9px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.r[aria-pressed=true]{background:#C2506E;color:#fff}
+.bas{position:absolute;left:0;right:0;bottom:20px;display:flex;justify-content:center;gap:12px}
+@media (prefers-reduced-motion:no-preference){.ap .c{animation:arrive .35s cubic-bezier(.2,.8,.2,1)}}
+@keyframes arrive{from{opacity:0;transform:translateY(12px) scale(.97)}}
+@media (prefers-reduced-motion:no-preference){.ap .v4{animation:arrive4 .35s cubic-bezier(.2,.8,.2,1)}}
+@keyframes arrive4{from{opacity:0;transform:translateY(12px) rotate(-4deg)}to{transform:rotate(-4deg)}}
+.seul header,.seul main,.seul .barre,.seul .bas,.seul .bas-ap{display:none}.seul .ap{padding:0;background:transparent}.seul #az{height:100%}.seul .ap .scene{border-radius:0;height:100%;width:100%;aspect-ratio:auto;box-shadow:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>Le carré « Réserver » : 5 nouveaux habits</h1>
+  <p>Comme sur un vrai site : ta photo en haut (l'en-tête), le carré juste dessous, le fond autour. Touche-en un pour le voir en grand, sur téléphone ou sur ordinateur.</p>
+</header>
+<main><div class="grille" id="g"></div></main>
+
+<div class="ap" id="ap" role="dialog" aria-modal="true" aria-label="Aperçu en grand">
+  <div class="barre"><span id="an"></span><span style="display:flex;gap:8px"><button class="r" id="bt" aria-pressed="true">Téléphone</button><button class="r" id="bo" aria-pressed="false">Ordinateur</button><button class="r" id="bx" aria-label="Fermer">×</button></span></div>
+  <div id="az" style="height:100%;display:flex;align-items:center;justify-content:center;width:100%"></div>
+  <div class="bas"><button class="r" id="bp">← Avant</button><button class="r" id="bs">Après →</button></div>
+</div>
+
+<script>
+var F="nouveaux-fonds-1911/";
+var T=[
+ {n:"Aujourd'hui",d:"la carte de tous les sites",v:0,f:"telephones-holo-lilas",a:"#9C6FD6",ref:1,ph:"celeste"},
+ {n:"Flacon de vernis",d:"bouchon noir, étiquette : on reconnaît l'onglerie",v:1,f:"teckels-pied-de-poule",a:"#8E1F3C",verre:"#E7A3B0",ph:"cerise"},
+ {n:"Ticket",d:"un ticket de rendez-vous, bords découpés",v:2,f:"citrons-coquillages",a:"#E0784F",ph:"douceur"},
+ {n:"Sticker penché",d:"comme un autocollant collé de travers",v:4,f:"lunettes-papillons-orange",a:"#E8357A",fondc:"#FFE6EF",ph:"bling"},
+ {n:"Arche",d:"une vitrine de salon, double filet",v:5,f:"faons-champignons",a:"#9A6234",ph:"boheme"},
+ {n:"Sans carré",d:"le nom posé directement sur le fond",v:6,f:"patins-glace",a:"#4E7FB8",ph:"cristal"}
+];
+function carte(t){
+  var m='<div class="metier">Prothésiste ongulaire · Marseille</div>',nm='<div class="nom">Nails by Drimf</div>',et='<div class="etoiles">★★★★★ 5,0 · 3 avis</div>',
+      bt='<span class="btn">Réserver un créneau</span><span class="dispo">Prochain créneau : demain · 9h</span>',st='--a:'+t.a+';'+(t.verre?'--verre:'+t.verre+';':'')+(t.fondc?'--fondc:'+t.fondc+';':'');
+  if(t.v==1)return '<div class="c v1" style="'+st+'"><div class="corps"><div class="etiq">'+m+nm+et+'</div>'+bt+'</div></div>';
+  if(t.v==2)return '<div class="c v2" style="'+st+'">'+m+nm+'<div class="sep"></div><div class="ligne"><span>Prochain créneau</span><b>demain 9h</b></div><div class="ligne"><span>Avis</span><b>★ 5,0 (3)</b></div><div class="sep"></div><span class="btn">Réserver un créneau</span></div>';
+  if(t.v==3)return '<div class="c v3" style="'+st+'"><div class="heure">Aujourd\'hui · 18:42</div><div class="bulle g">'+m+nm+'<div class="etoiles">★★★★★ 5,0 · 3 avis</div></div><div class="bulle d">Coucou ! Tu as une place demain ? 💅</div><div class="bulle g" style="font-size:calc(var(--u)*3.4)">Oui, demain à 9h 🤍</div><span class="btn">Réserver un créneau</span></div>';
+  if(t.v==6)return '<div class="c v6" style="'+st+'"><div class="metier pastille">Prothésiste ongulaire · Marseille</div>'+nm+'<div class="etoiles">★★★★★ 5,0 · 3 avis</div><br>'+bt+'</div>';
+  return '<div class="c v'+t.v+'" style="'+st+'">'+m+nm+et+bt+'</div>';
+}
+function scene(t){return '<div class="scene" style="background-image:url('+F+t.f+'.webp)"><div class="photo" style="background-image:url(../loginail-site/univers-photos/'+t.ph+'/1.webp)"></div>'+carte(t)+'</div>'}
+/* le nom tient TOUJOURS sur une ligne (D36) : on réduit la taille si besoin */
+function ajuste(){document.querySelectorAll('.nom').forEach(function(n){n.style.fontSize='';var b=n.parentNode.clientWidth||n.clientWidth,f=parseFloat(getComputedStyle(n).fontSize),k=0;while(n.scrollWidth>n.clientWidth+1&&k++<40){f*=.95;n.style.fontSize=f+'px'}})}
+addEventListener('resize',ajuste);
+var g=document.getElementById("g"),ap=document.getElementById("ap"),cur=0,ordi=false;
+T.forEach(function(t,i){var b=document.createElement("button");b.className="choix";
+  b.innerHTML=scene(t)+'<span>'+t.n+(t.ref?'<em class="ref">aujourd\'hui</em>':'')+'</span><small>'+t.d+'</small>';b.onclick=function(){ouvre(i)};g.appendChild(b)});
+document.fonts.ready.then(ajuste);
+function ouvre(i){cur=(i+T.length)%T.length;var t=T[cur];document.getElementById("az").innerHTML=scene(t);
+  document.getElementById("an").textContent=t.n;document.title=t.n;ap.classList.toggle("ordi",ordi);ap.classList.add("ouvert");ajuste()}
+document.getElementById("bt").onclick=function(){ordi=false;this.setAttribute("aria-pressed","true");document.getElementById("bo").setAttribute("aria-pressed","false");ouvre(cur)};
+document.getElementById("bo").onclick=function(){ordi=true;this.setAttribute("aria-pressed","true");document.getElementById("bt").setAttribute("aria-pressed","false");ouvre(cur)};
+document.getElementById("bx").onclick=function(){ap.classList.remove("ouvert");document.title="Le carré « Réserver »"};
+document.getElementById("bp").onclick=function(){ouvre(cur-1)};document.getElementById("bs").onclick=function(){ouvre(cur+1)};
+addEventListener("keydown",function(e){if(!ap.classList.contains("ouvert"))return;if(e.key=="Escape")document.getElementById("bx").click();if(e.key=="ArrowRight")ouvre(cur+1);if(e.key=="ArrowLeft")ouvre(cur-1)});
+var m=location.search.match(/v=(\d)/);if(m)ouvre(+m[1]);if(/ordi/.test(location.search))document.getElementById("bo").click();
+
+if(/seul/.test(location.search))document.body.classList.add('seul');
+</script>
+</body>
+</html>

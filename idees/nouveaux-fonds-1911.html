@@ -1,0 +1,33 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>25 nouveaux fonds</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#F7F3EF;color:#1E1C1B;font:15px/1.45 -apple-system,"Segoe UI",Roboto,sans-serif}
+header,main{max-width:1240px;margin:auto;padding:24px 16px 4px}h1{font-size:24px;margin:0 0 6px}header p{margin:0;color:#6E6762}
+main{padding-bottom:60px}.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.carte{all:unset;cursor:pointer;display:flex;flex-direction:column}
+.tuile{position:relative;aspect-ratio:9/16;border-radius:14px;background-size:cover;background-position:center;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.06)}
+.mini{position:absolute;left:10%;right:10%;top:40%;background:rgba(255,255,255,.9);border-radius:10px;padding:8px 6px;text-align:center;font-size:11px;font-weight:700}
+.mini i{display:block;margin:5px auto 0;width:56%;height:12px;border-radius:9px;background:#1E1C1B}
+.carte span{font-size:13px;font-weight:600;margin-top:6px}.carte small{font-size:12px;color:#6E6762}
+.carte:focus-visible .tuile{outline:3px solid #C2506E;outline-offset:2px}
+.ap{position:fixed;inset:0;z-index:9;display:none;background-size:cover;background-position:center}.ap.ouvert{display:block}
+.site{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 32px));background:rgba(255,255,255,.88);border-radius:22px;padding:26px 22px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+.site b{display:block;font-size:26px}.site p{margin:6px 0 16px;color:#6E6762}.site a{display:inline-block;background:#1E1C1B;color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-weight:600}
+.nom{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.nom span{background:rgba(255,255,255,.92);padding:7px 12px;border-radius:999px;font-weight:600;font-size:14px}
+button.r{all:unset;cursor:pointer;background:#fff;border-radius:999px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.nom button{width:40px;height:40px;text-align:center;line-height:40px;font-size:20px}
+.fl{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:14px}.fl button{padding:10px 18px}
+</style></head><body>
+<header><h1>25 nouveaux fonds</h1><p>Tes images, au format des fonds Loginail. Touche un fond pour le voir derrière un site.</p></header>
+<main><div class="grille" id="g"></div></main>
+<div class="ap" id="ap" role="dialog" aria-modal="true" aria-label="Aperçu du fond"><div class="site"><b>Les Ongles de Léa</b><p>Prothésiste ongulaire · Lyon 6e</p><a href="#" onclick="return false">Réserver</a></div>
+<div class="nom"><span id="an"></span><button class="r" id="ax" aria-label="Fermer">×</button></div><div class="fl"><button class="r" id="av">← Avant</button><button class="r" id="as">Après →</button></div></div>
+<script>
+var L=[["telephones-holo-lilas", "Téléphones holo lilas"], ["fraisier-noeuds-rouges", "Fraisier et nœuds rouges"], ["teckels-pied-de-poule", "Teckels et pied-de-poule"], ["faons-champignons", "Faons et champignons"], ["musique-holo-lilas", "Musique holo lilas"], ["jean-strass", "Jean et strass"], ["eclairs-flammes-bleus", "Éclairs et flammes bleus"], ["casino-rouge", "Casino rouge"], ["lunettes-papillons-orange", "Lunettes et papillons orange"], ["patins-glace", "Patins sur la glace"], ["hippocampes-coquillages", "Hippocampes et coquillages"], ["citrons-coquillages", "Citrons et coquillages"], ["martini-olives", "Martini et olives"], ["baddie-fuchsia", "Baddie fuchsia"], ["medaillons-velours", "Médaillons sur velours"], ["nuit-etoilee-satin", "Nuit étoilée satin"], ["bubble-tea-matcha", "Bubble tea matcha"], ["croix-epingles", "Croix et épingles"], ["roller-disco-caramel", "Roller disco caramel"], ["leopard-ecaille", "Léopard et écaille"], ["baladeur-cd-rose", "Baladeur CD rose"], ["telephone-coquillage-vert", "Téléphone coquillage vert"], ["charms-damier-rose", "Charms sur damier rose"], ["talons-bisous-zebre", "Talons et bisous zèbre"], ["bonbons-rayures-lilas", "Bonbons rayures lilas"]];
+var g=document.getElementById("g"),ap=document.getElementById("ap"),cur=0;
+L.forEach(function(f,i){var b=document.createElement("button");b.className="carte";b.innerHTML='<div class="tuile" style="background-image:url(nouveaux-fonds-1911/'+f[0]+'.webp)"><div class="mini">Les Ongles de Léa<i></i></div></div><span>'+f[1]+'</span><small>'+(i<20?"nouveau":"envoyé avant")+'</small>';b.onclick=function(){ouvre(i)};g.appendChild(b)});
+function ouvre(i){cur=(i+L.length)%L.length;ap.style.backgroundImage="url(nouveaux-fonds-1911/"+L[cur][0]+".webp)";document.getElementById("an").textContent=(cur+1)+" / "+L.length+" · "+L[cur][1];document.title=L[cur][1];ap.classList.add("ouvert")}
+document.getElementById("ax").onclick=function(){ap.classList.remove("ouvert");document.title="25 nouveaux fonds"};
+document.getElementById("av").onclick=function(){ouvre(cur-1)};document.getElementById("as").onclick=function(){ouvre(cur+1)};
+addEventListener("keydown",function(e){if(!ap.classList.contains("ouvert"))return;if(e.key=="Escape")document.getElementById("ax").click();if(e.key=="ArrowRight")ouvre(cur+1);if(e.key=="ArrowLeft")ouvre(cur-1)});
+</script></body></html>
