@@ -2443,6 +2443,7 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) section.appli{padding-bottom:84px!important}
   html body:not(#_) section.styles{padding-top:46px!important;padding-bottom:12px!important}
   html body:not(#_) section.styles .rangee{margin-top:54px!important}
+  html body:not(#_) section.styles .note-ia{display:none!important}
   html body:not(#_) section.marie{padding-top:34px!important}
   html body:not(#_) .marie-tel h2{font-size:min(6.3vw,25px)!important;line-height:1.28}
 }
@@ -2492,6 +2493,12 @@ document.addEventListener("DOMContentLoaded",function(){
   .pied-bocaux{display:flex;flex-direction:column;align-items:center;margin:0 auto 14px;width:100%;max-width:640px}
   .pied-bocaux canvas{display:block}
   .pied-bocaux .pb-aide{margin-top:8px;font-size:12.5px;color:#7a6f69;text-align:center}
+  /* 20/11 (Marie, 3e passage) : « Combien ça coûte » — à droite la carte 49,99 € puis « Tout est inclus. », même largeur */
+  html body:not(#_) .v3prix .vu > .k2c{display:none}
+  .col-prix{display:flex;flex-direction:column;gap:26px;min-width:0}
+  html body:not(#_) .k2c.k2c-ordi{display:block;margin:0;max-width:none;width:100%;padding:30px 30px 28px;border-radius:30px;box-shadow:0 40px 70px -40px rgba(120,40,70,.45)}
+  html body:not(#_) .k2c.k2c-ordi ul{gap:16px 14px}
+  html body:not(#_) .k2c.k2c-ordi li{font-size:14.5px}
   /* 20/11 (Marie, 2e passage) */
   html body:not(#_) .np .np-nav .np-bar{height:58px}
   html body:not(#_) .np .np-hero{margin-top:-58px}
@@ -2507,7 +2514,7 @@ document.addEventListener("DOMContentLoaded",function(){
   .fil-fin::before,.fil-fin::after{content:"";flex:1;height:4px;background:radial-gradient(circle,rgba(224,98,140,.55) 1.4px,transparent 2px) 0 0/12px 4px repeat-x}
   html body:not(#_) section.styles{padding-bottom:70px}
 }
-@media (max-width:760px){.fil-fin{display:none}}
+@media (max-width:760px){.fil-fin,.k2c.k2c-ordi{display:none!important}}
 @media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
 </style>
 </head><body>
@@ -2713,12 +2720,15 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="k2c"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
       <div class="fin-go"><a href="loginail-creer/index.html">Créer mon site gratuitement →</a><small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small></div>
     </div>
+    <div class="col-prix"><!-- 20/11 (Marie) : ordinateur — 49,99 € en haut, « Tout est inclus. » dessous, même largeur -->
     <div class="v3carte vu">
       <div class="p">49,99 € <small>/ mois</small></div>
       <div class="of">1er mois offert</div>
       <!-- 20/11 (Marie) : la liste ✓ est retirée (doublon avec « Tout est inclus. » juste à côté) -->
       <a class="cta" href="loginail-creer/index.html">Créer mon site gratuitement →</a>
       <small class="n">Sans engagement · 0 % de commission · tu arrêtes en 1 clic</small>
+    </div>
+    <div class="k2c k2c-ordi vu"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
     </div>
   </div>
 </section>
@@ -4054,13 +4064,13 @@ const V=1;let raf=0,vu=true;
     if(!libre(x,y,r))continue;if(B.some(b=>Math.hypot(b.x-x,b.y-y)<(b.r+r)*.95))continue;
     B.push({x,y,r,vx:0,vy:0,a:Math.random()*6.28,va:0,im:imgs[NOMS[B.length%NOMS.length]]})}
   // ---- le mouvement (le même que la 1re version : rien ne sort jamais)
-  let gx=0,gy=.3,secousse=0;
+  let gx=0,gy=SOURIS?0:.3,secousse=0;const FREIN=SOURIS?.86:.985; // ordinateur : pas de gravité, ça s'arrête vite, ça ne roule pas (Marie 20/11)
   function pas(){
     for(const b of B){b.vx+=gx;b.vy+=gy;if(secousse>0){b.vx+=(Math.random()-.5)*secousse;b.vy+=(Math.random()-.5)*secousse-secousse*.25}
-      b.vx*=.985;b.vy*=.985;
+      b.vx*=FREIN;b.vy*=FREIN;
       const nx=b.x+b.vx;if(libre(nx,b.y,b.r))b.x=nx;else{b.vx*=-.35;b.va+=b.vy*.02}
       const ny=b.y+b.vy;if(libre(b.x,ny,b.r))b.y=ny;else{b.vy*=-.35;b.vx*=.9;b.va=b.vx/b.r}
-      b.a+=b.va;b.va*=.96}
+      if(SOURIS)b.va=0;b.a+=b.va;b.va*=.96}
     for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const p=B[i],q=B[j],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||1,mn=(p.r+q.r)*.92;
       if(d<mn){const k=(mn-d)/d/2,ux=dx*k,uy=dy*k;if(libre(p.x-ux,p.y-uy,p.r)){p.x-=ux;p.y-=uy}if(libre(q.x+ux,q.y+uy,q.r)){q.x+=ux;q.y+=uy}
         const rv=(q.vx-p.vx)*dx/d+(q.vy-p.vy)*dy/d;if(rv<0){const im=-rv*.5;p.vx-=im*dx/d;p.vy-=im*dy/d;q.vx+=im*dx/d;q.vy+=im*dy/d}}}
@@ -4081,7 +4091,7 @@ const V=1;let raf=0,vu=true;
   // toucher : seuls les charms autour du doigt bougent (ils s'écartent et sautent), le reste ne bouge pas ; glisser le doigt les remue au passage
   const pousse=(e,fort)=>{const R=cv.getBoundingClientRect(),x=e.clientX-R.left,y=e.clientY-R.top,RAY=FS*.55;
     for(const b of B){const dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d>RAY)continue;const k=(1-d/RAY)*fort,u=d||1;
-      b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-k*5;b.va+=(Math.random()-.5)*k*.4}};
+      b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-(SOURIS?0:k*5);b.va+=(Math.random()-.5)*k*.4}};
   let appui=false;
   cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6);if(!capteurs&&!SOURIS)demande()});
   cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35);else if(e.pointerType==='mouse')pousse(e,.5)}); // ordinateur : la souris qui passe remue les charms
