@@ -29,7 +29,7 @@
   <div class="nom" id="nom"></div>
   <div class="k">Pensé par une prothésiste, pour les prothésistes</div>
   <canvas id="c" aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas>
-  <div class="aide" id="aide">Touche les bocaux, puis <b>secoue ton téléphone</b> ✦</div>
+  <div class="aide" id="aide">Touche un bocal, puis <b>secoue ton téléphone</b> ✦</div>
   <button class="bt" id="bt" type="button">Activer le secouage</button>
 <script>
 (async function(){
@@ -113,7 +113,14 @@
   async function demande(){try{if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
       const r=await DeviceMotionEvent.requestPermission();if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission)await DeviceOrientationEvent.requestPermission().catch(()=>{});
       if(r==='granted'){ecoute();bt.classList.remove('on')}else aide.innerHTML='Touche les bocaux pour les secouer ✦'}else ecoute()}catch(e){aide.innerHTML='Touche les bocaux pour les secouer ✦'}}
-  cv.addEventListener('pointerdown',()=>{secousse=7;if(!capteurs)demande()});bt.addEventListener('click',demande);
+  // toucher : seuls les charms autour du doigt bougent (ils s'écartent et sautent), le reste ne bouge pas ; glisser le doigt les remue au passage
+  const pousse=(e,fort)=>{const R=cv.getBoundingClientRect(),x=e.clientX-R.left,y=e.clientY-R.top,RAY=FS*.55;
+    for(const b of B){const dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d>RAY)continue;const k=(1-d/RAY)*fort,u=d||1;
+      b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-k*5;b.va+=(Math.random()-.5)*k*.4}};
+  let appui=false;
+  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6);if(!capteurs)demande()});
+  cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35)});
+  addEventListener('pointerup',()=>{appui=false});addEventListener('pointercancel',()=>{appui=false});bt.addEventListener('click',demande);
   if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'&&/iPhone|iPad|iPod/.test(navigator.userAgent))bt.classList.add('on');
   window._bocal={B,libre,dedans,secoue:v=>{secousse=v},FS};
   pas();
