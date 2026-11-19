@@ -2121,6 +2121,87 @@ document.addEventListener("DOMContentLoaded",function(){
   }).catch(function(){});
 });
 </script>
+<style id="tel-retouches-1911">
+/* 19/11 au soir (Marie) : TÉLÉPHONE seulement (≤ 760 px) — l'ordinateur ne change pas.
+   1) « Rappel SMS · tout seul » : une vraie bulle de message, centrée SOUS les téléphones (ne touche plus rien)
+   2) « Pendant que tu dors / La veille / Une annulation / Ton site » : les cartes se bloquent et s'empilent en défilant
+   3) Classe ou baddie : la rangée de téléphones bouge un peu de droite à gauche → on comprend qu'on peut glisser
+   4) « Je suis prothésiste, comme toi. » : joli sur 2 lignes */
+@media (max-width:760px){
+  /* la bulle « Rappel SMS » arrive SUR l'écran de l'appli, comme une vraie notification (Marie 19/11 : seule dessous, ce n'était pas joli) */
+  html body:not(#_) .cq .cq-sms{left:auto;right:2px;bottom:2px;translate:none;width:200px;max-width:200px;font-size:11.5px;line-height:1.35;
+     background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;padding:9px 12px;rotate:5deg;
+     box-shadow:0 16px 30px -12px rgba(60,30,40,.35)}
+  html body:not(#_) .cq .cq-sms .de{color:#B03562}
+  html body:not(#_) .appli .bento .case:not(.grande){position:sticky;top:calc(84px + var(--pile,0) * 9px);align-self:start;
+     box-shadow:0 -8px 24px -16px rgba(60,30,40,.35),0 10px 30px -18px rgba(60,30,40,.25)}
+  html body:not(#_) .appli .bento .case:not(.grande):nth-child(2){--pile:0}
+  html body:not(#_) .appli .bento .case:not(.grande):nth-child(3){--pile:1}
+  html body:not(#_) .appli .bento .case:not(.grande):nth-child(4){--pile:2}
+  html body:not(#_) .appli .bento .case:not(.grande):nth-child(5){--pile:3}
+  html body:not(#_) .appli .bento::after{content:"";display:block;height:80px} /* la pile reste bloquée juste un instant, puis « Classe ou baddie » arrive vite (Marie 19/11) */
+  html body:not(#_) section.appli{padding-bottom:30px}
+  /* effet S1 « notifications d'iPhone » (Marie 19/11) : la carte du dessous rétrécit et s'assombrit quand la suivante arrive dessus */
+  html body:not(#_) .appli .bento .case:not(.grande){top:calc(84px + var(--pile,0) * 9px);transform-origin:50% 0;
+     transform:scale(calc(1 - var(--p,0) * .07));filter:brightness(calc(1 - var(--p,0) * .1));will-change:transform}
+  .rangee.coucou > *{animation:rangeeCoucou 4.2s cubic-bezier(.45,0,.2,1) infinite}
+  html body:not(#_) .marie blockquote{font-size:min(8.2vw,32px)!important;line-height:1.18}
+  html body:not(#_) .marie blockquote .l{display:block;white-space:nowrap}
+}
+@keyframes rangeeCoucou{0%,55%,100%{translate:0 0}20%,35%{translate:-46px 0}}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){.rangee.coucou > *{animation:none}}
+</style>
+<style id="appli-tel-p2">
+/* 19/11 au soir (Marie, version P2 « les écrans qui glissent ») : TÉLÉPHONE seulement — « L'appli qui gère tout » :
+   la grande case rose est remplacée par 3 vrais écrans de l'appli qui glissent au doigt (Accueil, Agenda, Fiche cliente).
+   L'écran d'à côté dépasse bien + la rangée fait un petit mouvement tant qu'on n'y a pas touché. Ordinateur inchangé.
+   Maquette : idees/telephone.html?v=P2&go=appli (idees/appli-tel.js) */
+.ape{display:none}
+@media (max-width:760px){
+  html body:not(#_) .appli .case.grande{display:none}
+  html body:not(#_) .appli .tete{display:none} /* une seule phrase sur téléphone (Marie 19/11) */
+  .ape{display:block;padding:26px 0 30px;text-align:center;min-width:0;width:100%}
+  .ape .q{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6b625c;font-weight:500}
+  .ape .t{display:block;font-family:'Abril Fatface',serif;font-weight:400;font-size:min(8vw,31px);line-height:1.15;margin:0;color:#1E1C1B}
+  .ape .t .l{display:block;white-space:nowrap}
+  .ape .t em{font-style:normal;color:#B03562}
+  .ape p.s{font-size:15px;color:#5F5751;line-height:1.5;margin:0 auto;max-width:300px}
+  .ape .rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:24px calc(50% - 100px) 8px;margin:0 -18px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .ape .rail::-webkit-scrollbar{display:none}
+  .ape .ecran{flex:none;width:200px;margin:0;scroll-snap-align:center;transition:scale .35s ease,opacity .35s ease;scale:.92;opacity:.72}
+  .ape .ecran.ici{scale:1;opacity:1}
+  .ape .cadre{border-radius:34px;background:#111;padding:7px;box-shadow:0 30px 60px -22px rgba(60,30,40,.4),0 6px 18px rgba(0,0,0,.08);position:relative}
+  .ape .cadre img{display:block;width:100%;border-radius:28px;aspect-ratio:600/1298;object-fit:cover;object-position:top}
+  .ape .cadre::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:28%;height:13px;border-radius:9px;background:#111;z-index:2}
+  .ape figcaption{margin-top:14px;font-size:14px;font-weight:500;color:#1E1C1B}
+  .ape figcaption small{display:block;font-weight:400;font-size:12.5px;color:#6b625c;margin-top:2px}
+  .ape .points{display:flex;justify-content:center;gap:7px;margin-top:14px}
+  .ape .points span{width:7px;height:7px;border-radius:50%;background:#E8D9D4;transition:background .3s,width .3s}
+  .ape .points span.ici{background:#B03562;width:20px;border-radius:4px}
+  .ape.coucou .rail{animation:apeCoucou 4.2s cubic-bezier(.45,0,.2,1) infinite}
+}
+@keyframes apeCoucou{0%,55%,100%{translate:0 0}20%,35%{translate:-46px 0}}
+@media (prefers-reduced-motion:reduce){.ape.coucou .rail{animation:none}}
+</style>
+<style id="tel-retouches-1911c">
+/* 19/11 tard (Marie) : TÉLÉPHONE seulement.
+   a) un passage flou et rosé entre la carte « Créer mon site » et « L'appli qui gère tout, dans ta poche » : la partie appli change d'ambiance
+   b) les charms du pied de page flottent un peu plus, et quand on les touche ils sautent en tournant avec des petites étoiles */
+@media (max-width:760px){
+  html body:not(#_) section.appli{position:relative;isolation:isolate;overflow-x:clip;overflow-y:visible;background:linear-gradient(180deg,#FBF1F4 0,#FBEFF3 140px,#FBF3F5 70%,rgba(251,243,245,0) 100%)} /* commence à la couleur du bas de « c'est quoi » : pas de ligne */
+  html body:not(#_) section.appli::before{content:"";position:absolute;z-index:-1;left:-15%;right:-15%;top:0;height:360px;pointer-events:none;
+     background:radial-gradient(42% 45% at 20% 58%,rgba(236,150,182,.85),transparent 72%),radial-gradient(40% 42% at 80% 52%,rgba(205,150,228,.65),transparent 72%),radial-gradient(32% 36% at 52% 74%,rgba(255,200,170,.75),transparent 72%),linear-gradient(180deg,#FBF1F4 0,#FBEFF3 100%);
+     filter:blur(22px)}
+  .pied-ch img{cursor:pointer;-webkit-tap-highlight-color:transparent}
+  html body:not(#_) .pied-ch img{animation-name:piedFlotteTel}
+  .pied-ch img.saute{animation:piedSaute .7s cubic-bezier(.2,.9,.3,1.3)!important}
+  .pied-etoile{position:fixed;z-index:80;pointer-events:none;color:#E0628C;font-size:13px;line-height:1;animation:piedEtoile .8s ease-out forwards}
+}
+@keyframes piedFlotteTel{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-9px) rotate(6deg)}}
+@keyframes piedSaute{0%{transform:translateY(0) scale(1) rotate(0)}35%{transform:translateY(-26px) scale(1.35) rotate(200deg)}70%{transform:translateY(-6px) scale(.95) rotate(350deg)}100%{transform:translateY(0) scale(1) rotate(360deg)}}
+@keyframes piedEtoile{0%{opacity:1;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){.pied-ch img.saute,.pied-etoile{animation:none!important}.pied-etoile{display:none}}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2239,6 +2320,15 @@ document.addEventListener("DOMContentLoaded",function(){
 <section class="appli">
   <div class="wrap">
     <div class="tete vu"><div class="k">Et derrière</div><h2 class="serif titre" style="margin-top:12px">L’appli qui gère <em>tout.</em></h2></div>
+    <div class="ape" id="ape" aria-label="L’appli en 3 écrans">
+      <h2 class="t"><span class="l">L’appli qui gère tout,</span> <span class="l"><em>dans ta poche.</em></span></h2>
+      <div class="rail">
+        <figure class="ecran ici"><div class="cadre"><img src="loginail-site/apercus-univers/app-accueil-1911.webp" alt="L’accueil de l’appli Loginail" decoding="async"></div><figcaption>Ton accueil<small>ta prochaine cliente en grand</small></figcaption></figure>
+        <figure class="ecran"><div class="cadre"><img src="loginail-site/apercus-univers/app-agenda-1911.webp" alt="L’agenda de l’appli Loginail" decoding="async"></div><figcaption>Ton agenda<small>les réservations arrivent toutes seules</small></figcaption></figure>
+        <figure class="ecran"><div class="cadre"><img src="loginail-site/apercus-univers/app-fiche-1911.webp" alt="La fiche d’une cliente dans l’appli" decoding="async"></div><figcaption>Tes clientes<small>visites, fidélité, historique</small></figcaption></figure>
+      </div>
+      <div class="points" aria-hidden="true"><span class="ici"></span><span></span><span></span></div>
+    </div>
     <div class="bento">
       <div class="case grande vu"><div><div class="q">Ta journée</div><b>Ton agenda, d’un coup d’œil.</b><p>Elle réserve sur ton site, le rendez-vous arrive ici tout seul.</p></div><div class="tel"><img src="loginail-site/apercus-univers/app-accueil-1911.webp" alt="L’accueil de l’appli Loginail"></div></div>
       <div class="case vu"><div class="q">Pendant que tu dors</div><b>Elles réservent la nuit.</b><div class="notif"><span class="ic"></span><div><strong>Nouvelle réservation</strong><small>Léa · pose gel · samedi 10 h</small></div></div></div>
@@ -2266,7 +2356,7 @@ document.addEventListener("DOMContentLoaded",function(){
   <div class="wrap">
     <div class="vu">
       <div class="k">Qui est derrière</div>
-      <blockquote>« Je suis prothésiste, <em>comme toi.</em> »</blockquote>
+      <blockquote><span class="l">« Je suis prothésiste,</span> <span class="l"><em>comme toi.</em> »</span></blockquote>
       <div class="texte-long">
       <p>Je passe mes journées à poser des ongles. Et comme toi, je sais ce que c’est de répondre aux messages entre deux clientes pour caler un rendez-vous.</p>
       <p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, et <b>sans payer une commission</b> sur chaque cliente. Il n’existait pas. Alors je l’ai créé.</p>
@@ -3456,6 +3546,51 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
   const choisit=()=>mq.matches?monte():demonte();
   if(document.readyState==='loading')addEventListener('DOMContentLoaded',choisit);else choisit();
   (mq.addEventListener?mq.addEventListener('change',choisit):mq.addListener(choisit));
+})();
+</script>
+<script id="tel-retouches-1911-js">/* 19/11 (Marie) : téléphone seulement — la rangée « Classe ou baddie » fait coucou (bouge un peu)
+   tant qu'on ne l'a pas touchée ; dès qu'elle la touche ou la fait glisser, ça s'arrête. */
+(function(){
+  const r=document.getElementById('rangee');if(!r||!('IntersectionObserver' in window))return;
+  const tel=matchMedia('(max-width:760px)');let fini=false;
+  const stop=()=>{fini=true;r.classList.remove('coucou')};
+  ['pointerdown','touchstart','wheel'].forEach(t=>r.addEventListener(t,stop,{passive:true,once:true}));
+  new IntersectionObserver(es=>es.forEach(e=>{r.classList.toggle('coucou',!fini&&tel.matches&&e.isIntersecting)}),{threshold:.5}).observe(r);
+})();
+</script>
+<script id="appli-tel-p2-js">/* 19/11 (Marie, P2) : les écrans de l'appli — l'écran du milieu en avant, les petits points suivent,
+   la rangée fait coucou tant qu'on ne l'a pas touchée (téléphone seulement, le bloc est caché sur ordinateur) */
+(function(){
+  const el=document.getElementById('ape');if(!el)return;const rail=el.querySelector('.rail'),ecr=[...rail.children],pts=[...el.querySelectorAll('.points span')];
+  const maj=()=>{const c=rail.scrollLeft+rail.clientWidth/2;let best=0,dmin=1e9;
+    ecr.forEach((e,i)=>{const d=Math.abs(e.offsetLeft+e.offsetWidth/2-c);if(d<dmin){dmin=d;best=i}});
+    ecr.forEach((e,i)=>e.classList.toggle('ici',i===best));pts.forEach((p,i)=>p.classList.toggle('ici',i===best))};
+  rail.addEventListener('scroll',maj,{passive:true});
+  let fini=false;const stop=()=>{fini=true;el.classList.remove('coucou')};
+  ['pointerdown','touchstart','wheel'].forEach(t=>rail.addEventListener(t,stop,{passive:true,once:true}));
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>el.classList.toggle('coucou',!fini&&e.isIntersecting)),{threshold:.5}).observe(el);
+})();
+</script>
+<script id="cartes-iphone-js">/* 19/11 (Marie, effet S1) : téléphone seulement — calcule combien la carte suivante recouvre chaque carte (--p de 0 à 1) */
+(function(){
+  const mq=matchMedia('(max-width:760px)');const cs=[...document.querySelectorAll('.appli .bento .case:not(.grande)')];if(cs.length<2)return;
+  let att=false;const maj=()=>{att=false;if(!mq.matches){cs.forEach(c=>c.style.removeProperty('--p'));return}
+    cs.forEach((c,i)=>{const n=cs[i+1];if(!n){c.style.setProperty('--p',0);return}const a=c.getBoundingClientRect(),b=n.getBoundingClientRect();
+      c.style.setProperty('--p',Math.max(0,Math.min(1,1-(b.top-a.top)/Math.max(1,a.height))).toFixed(3))})};
+  const demande=()=>{if(!att){att=true;requestAnimationFrame(maj)}};
+  addEventListener('scroll',demande,{passive:true});addEventListener('resize',demande);maj();
+})();
+</script>
+<script id="pied-charms-js">/* 19/11 (Marie) : téléphone — toucher un charm du pied de page = il saute en tournant + petites étoiles */
+(function(){
+  const mq=matchMedia('(max-width:760px)'),calme=matchMedia('(prefers-reduced-motion:reduce)');
+  document.querySelectorAll('.pied-ch img').forEach(im=>im.addEventListener('pointerdown',()=>{
+    if(!mq.matches)return;im.classList.remove('saute');void im.offsetWidth;im.classList.add('saute');
+    setTimeout(()=>im.classList.remove('saute'),720);if(calme.matches)return;
+    const r=im.getBoundingClientRect();for(let k=0;k<5;k++){const e=document.createElement('span');e.className='pied-etoile';e.textContent='✦';
+      const a=Math.PI*(1.1+.8*k/4),d=34+Math.random()*16;e.style.left=(r.left+r.width/2-6)+'px';e.style.top=(r.top+r.height/2-6)+'px';
+      e.style.setProperty('--dx',Math.cos(a)*d+'px');e.style.setProperty('--dy',Math.sin(a)*d+'px');document.body.appendChild(e);setTimeout(()=>e.remove(),850)}
+  }));
 })();
 </script>
 </body></html>
