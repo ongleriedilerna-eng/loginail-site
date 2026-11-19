@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>100 écritures, planche 4 · très différentes</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+:root{--rose:#B03562;--noir:#1E1C1B;--creme:#FBF6F3;--gris:#8a817c;--vert:#2f7d55}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--noir);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(251,246,243,.95);backdrop-filter:blur(8px);border-bottom:1px solid #eadfd9;padding:14px 16px}
+.haut{max-width:1360px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+h1{font-size:20px;margin:0}
+.compte{display:flex;gap:8px;font-size:14px}
+.compte span{padding:6px 12px;border-radius:99px;background:#fff;border:1px solid #eadfd9}
+.compte .g{color:var(--vert);font-weight:700}.compte .p{color:var(--rose);font-weight:700}
+.nom{flex:1;min-width:220px;display:flex;gap:8px;align-items:center;font-size:14px}
+.nom input{flex:1;font:inherit;font-size:16px;padding:9px 12px;border:1px solid #d9ccc5;border-radius:12px;background:#fff}
+.filtres{max-width:1360px;margin:10px auto 0;display:flex;gap:6px;flex-wrap:wrap}
+.filtres button{font:inherit;font-size:13px;padding:6px 12px;border-radius:99px;border:1px solid #d9ccc5;background:#fff;cursor:pointer;transition:transform .12s}
+.filtres button:active{transform:scale(.96)}
+.filtres button.on{background:var(--noir);color:#fff;border-color:var(--noir)}
+main{max-width:1360px;margin:0 auto;padding:18px 16px 80px}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--gris);margin:28px 0 12px}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.carte{background:#fff;border-radius:18px;border:2px solid transparent;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;overflow:hidden;transition:border-color .15s,opacity .15s,transform .15s}
+.carte.garde{border-color:var(--vert)}
+.carte.pas{opacity:.45}
+.apercu{min-height:150px;display:flex;align-items:center;justify-content:center;padding:18px 14px;text-align:center;font-size:42px;line-height:1.1;word-break:break-word;color:var(--noir)}
+.apercu small{display:block;font-size:.42em;margin-top:6px;color:var(--rose)}
+.info{padding:0 16px 10px;font-size:13px;color:var(--gris);display:flex;justify-content:space-between;gap:8px}
+.info b{color:var(--noir);font-size:14px}
+.boutons{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #f0e7e2}
+.boutons button{font:inherit;font-size:15px;font-weight:600;padding:14px 8px;border:0;background:#fff;cursor:pointer;transition:background .12s,color .12s,transform .1s}
+.boutons button:active{transform:scale(.97)}
+.boutons .non{color:var(--rose);border-right:1px solid #f0e7e2}
+.boutons .oui{color:var(--vert)}
+.carte.pas .non{background:var(--rose);color:#fff}
+.carte.garde .oui{background:var(--vert);color:#fff}
+@media (max-width:600px){.apercu{font-size:36px;min-height:130px}h1{font-size:18px}.grille{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="haut">
+    <h1>✦ 100 nouvelles écritures · planche 4 · très différentes</h1>
+    <div class="compte"><span class="g">✓ <i id="nG">0</i> gardées</span><span class="p">✕ <i id="nP">0</i> pas gardées</span><span><i id="nR">0</i> à trier</span></div>
+    <label class="nom">Votre texte : <input id="texte" value="Ongles de Léa" maxlength="40"></label>
+  </div>
+  <div class="filtres" id="filtres"></div>
+</header>
+<main id="main"></main>
+<script>
+/* [nom Google, surnom, famille, axe à charger] */
+const F = [
+ ["En volume, à rayures et en pochoir",[
+  ["Bungee Outline","Contour néon",""],["Londrina Outline","Fil de fer",""],["Tilt Prism","Prisme",""],["Big Shoulders Inline Display","Double trait","wght@900"],
+  ["Montserrat Subrayada","Soulignée","wght@700"],["Geostar Fill","Étoile géométrique",""],["Geostar","Géométrie",""],["Monofett","Code-barre",""],
+  ["Saira Stencil One","Pochoir net",""],["Sirin Stencil","Pochoir fin",""],["Kumar One","Kumar",""],["Megrim","Migraine",""],
+  ["Unlock","Cadenas",""],["Ruslan Display","Russe",""],["Stalinist One","Soviétique",""],["Tilt Neon","Néon doux",""]]],
+ ["Abîmées, brûlées et mystérieuses",[
+  ["Rubik Microbe","Microbes",""],["Rubik Burned","Brûlée",""],["Rubik Distressed","Usée",""],["Rubik Broken Fax","Fax cassé",""],
+  ["Rubik Maps","Carte au trésor",""],["Rubik Glitch Pop","Bug",""],["Rubik Doodle Triangles","Triangles",""],["Rubik Lines","Lignes",""],
+  ["Rubik Pixels","Mosaïque",""],["Nosifer","Vampire",""],["Chokokutai","Sculptée",""],["Lakki Reddy","Bizarre",""]]],
+ ["Bonbons et bulles bizarres",[
+  ["Emilys Candy","Bonbon d'Emily",""],["Matemasie","Guimauve",""],["Sour Gummy","Bonbon acidulé","wght@800"],["Gorditas","Gordita","wght@700"],
+  ["Cherry Swash","Cerise","wght@700"],["Cherry Cream Soda","Soda cerise",""],["Crafty Girls","Bricolage",""],["Risque","Risqué",""],
+  ["Seymour One","Seymour",""],["Englebert","Englebert",""],["Atma","Atma","wght@700"],["Underdog","Underdog",""],
+  ["Lemonada","Limonade","wght@700"],["Baumans","Baumans",""]]],
+ ["Cursives inattendues",[
+  ["Neonderthaw","Néon attaché",""],["Sarina","Sarina",""],["Grechen Fuemen","Grechen",""],["Ruge Boogie","Boogie",""],
+  ["Smooch","Bisou",""],["Grey Qo","Grey",""],["Splash","Éclaboussure",""],["Gwendolyn","Gwendolyn","wght@700"],
+  ["Puppies Play","Chiots",""],["Comforter Brush","Pinceau doux",""],["Kolker Brush","Kolker",""],["Fuggles","Fuggles",""],
+  ["Praise","Louange",""],["Sassy Frass","Insolente",""],["Mrs Sheppards","Madame Sheppard",""],["Ruthie","Ruthie",""],
+  ["Island Moments","Île",""],["My Soul","Mon âme",""]]],
+ ["Venues du Japon et d'ailleurs",[
+  ["Reggae One","Reggae",""],["RocknRoll One","Rock'n'roll",""],["Stick","Baguettes",""],["DotGothic16","Écran",""],
+  ["Yusei Magic","Feutre magique",""],["Kaisei Decol","Déco","wght@700"],["Dela Gothic One","Dela",""],["Yuji Boku","Pinceau d'encre",""],
+  ["Kiwi Maru","Kiwi","wght@500"],["Akaya Kanadaka","Akaya",""],["Akaya Telivigala","Télivigala",""],["Bahianita","Bahianita",""],
+  ["Kings","Rois",""],["Sail","Voile",""],["Rubik Mono One","Capitales",""],["Unkempt","Ébouriffée","wght@700"]]],
+ ["Saloon, foire et voyage",[
+  ["Diplomata SC","Ambassade",""],["Stint Ultra Condensed","Très serrée",""],["Hanalei","Hanalei",""],["Flamenco","Flamenco",""],
+  ["Miniver","Miniver",""],["Galada","Galada",""],["Mogra","Mogra",""],["Chonburi","Chonburi",""],
+  ["Mouse Memoirs","Souris",""],["Port Lligat Slab","Port",""],["Original Surfer","Surfeur",""],["Kranky","Grognon",""]]],
+ ["Toutes neuves (2024-2025)",[
+  ["Doto","Points","wght@900"],["Agu Display","Agu",""],["Sankofa Display","Sankofa",""],["Jaro","Jaro",""],
+  ["Playpen Sans","Parc à bébé","wght@800"],["Story Script","Conte",""],["Winky Rough","Clin d'œil",""],["Momo Signature","Momo",""],
+  ["Bitcount Prop Single","Compteur",""],["Funnel Display","Entonnoir","wght@800"],["Micro 5 Charted","Grille",""],["Jersey 15","Jersey",""]]]
+];
+/* chargement des écritures (par paquets de 12) */
+const tout = F.flatMap(([, l]) => l);
+for (let i = 0; i < tout.length; i += 12) {
+  const q = tout.slice(i, i + 12).map(([g, , a]) => "family=" + g.replace(/ /g, "+") + (a ? ":" + a : "")).join("&");
+  const l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = "https://fonts.googleapis.com/css2?" + q + "&display=swap"; document.head.appendChild(l);
+}
+let choix = {}; try { choix = JSON.parse(localStorage.getItem("tri-ecritures-2011-d") || "{}"); } catch (e) {}
+const garder = () => { try { localStorage.setItem("tri-ecritures-2011-d", JSON.stringify(choix)); } catch (e) {} };
+const main = document.getElementById("main"), inp = document.getElementById("texte");
+let filtre = "tout";
+function compte() {
+  const v = Object.values(choix);
+  nG.textContent = v.filter(x => x === "garde").length;
+  nP.textContent = v.filter(x => x === "pas").length;
+  nR.textContent = tout.length - v.length;
+}
+function dessine() {
+  main.innerHTML = "";
+  for (const [titre, liste] of F) {
+    const l = liste.filter(([g]) => filtre === "tout" || (filtre === "reste" ? !choix[g] : choix[g] === filtre));
+    if (!l.length) continue;
+    const h = document.createElement("h2"); h.textContent = titre + " · " + liste.length; main.appendChild(h);
+    const gr = document.createElement("div"); gr.className = "grille"; main.appendChild(gr);
+    for (const [g, s] of l) {
+      const c = document.createElement("div"); c.className = "carte " + (choix[g] || ""); c.dataset.g = g;
+      c.innerHTML = `<div class="apercu" style="font-family:'${g}'"><div><span class="t"></span><small>Prendre rendez-vous</small></div></div>
+        <div class="info"><b>${s}</b><span>${g}</span></div>
+        <div class="boutons"><button class="non">✕ Je garde pas</button><button class="oui">✓ Je garde</button></div>`;
+      c.querySelector(".t").textContent = inp.value || "Ongles de Léa";
+      c.querySelector(".non").onclick = () => vote(c, g, "pas");
+      c.querySelector(".oui").onclick = () => vote(c, g, "garde");
+      gr.appendChild(c);
+    }
+  }
+  if (!main.children.length) main.innerHTML = "<p style='text-align:center;color:#8a817c;margin-top:60px'>Rien ici pour l'instant.</p>";
+  compte();
+}
+function vote(c, g, v) {
+  choix[g] = choix[g] === v ? undefined : v; if (!choix[g]) delete choix[g];
+  c.className = "carte " + (choix[g] || ""); garder(); compte();
+}
+inp.oninput = () => document.querySelectorAll(".apercu .t").forEach(t => t.textContent = inp.value || "Ongles de Léa");
+const fl = document.getElementById("filtres");
+[["tout","Tout voir"],["reste","À trier"],["garde","Gardées"],["pas","Pas gardées"]].forEach(([k, t]) => {
+  const b = document.createElement("button"); b.textContent = t; if (k === filtre) b.className = "on";
+  b.onclick = () => { filtre = k; fl.querySelectorAll("button").forEach(x => x.className = ""); b.className = "on"; dessine(); scrollTo(0, 0); };
+  fl.appendChild(b);
+});
+window.resultat = () => ({ garde: Object.keys(choix).filter(k => choix[k] === "garde"), pas: Object.keys(choix).filter(k => choix[k] === "pas") });
+dessine();
+</script>
+</body>
+</html>
