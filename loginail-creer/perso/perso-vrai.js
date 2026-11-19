@@ -53,7 +53,7 @@
     const k = b.clientWidth / (L[0].w || b.clientWidth || 390);
     L.forEach((c, i) => { const eto = c.n === "__etoile", s = c.s * k, el = P.D.createElement(eto ? "div" : "img");
       el.className = "lgn-sticker" + (eto ? " lgn-etoile" : ""); el.dataset.n = c.n;
-      if (eto) { el.dataset.g = "r" + i; el.innerHTML = `<i style="animation-delay:${(-(i * .37) % 1.6).toFixed(2)}s">✦</i>`; } else { el.src = "../loginail-site/charms/" + String(c.n).replace(/[^a-z0-9-]/gi, "") + ".png"; el.draggable = false; }
+      if (eto) { el.dataset.g = "r" + i; el.innerHTML = `<i style="animation-delay:${(-(i * .37) % 1.6).toFixed(2)}s">✦</i>`; } else { el.src = "../loginail-site/charms/" + String(c.n).replace(/[^a-z0-9-]/gi, "") + ".webp"; el.draggable = false; }
       el._s = s; el._r = c.r || 0; el._f = c.f === -1 ? -1 : 1;
       el.style.cssText = `position:absolute;z-index:9000;left:${c.x / 100 * b.clientWidth - s / 2}px;top:${c.y * k - s / 2}px;width:${s}px;height:${s}px;rotate:${el._r}deg;${el._f === -1 ? "scale:-1 1;" : ""}touch-action:none;cursor:grab;user-select:none;${eto ? "" : "filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));"}`;
       b.appendChild(el); }); }

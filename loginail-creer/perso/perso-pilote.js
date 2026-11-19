@@ -315,7 +315,7 @@
   P.charmsTous = () => Object.keys(P.W.CH_IMG || {});
   P.familles = () => (window.CH_FAMS || []).filter(f => !f[1].startsWith("*")).map(f => f[0]);
   P.charmsDe = fam => fam === "Populaires" ? POP : P.charmsTous().filter(n => (window.CH_CAT || {})[n] === fam);
-  P.imgCharm = n => `../loginail-site/charms/${n}.png`;
+  P.imgCharm = n => `../loginail-site/charms/${n}.webp`;   /* 20/11 : WebP sans perte (pixels identiques) */
   P.MAX = 21;   /* 17/11 (Marie) : 21 charms maximum, comme l'ancienne page */
   P.poses = () => [...P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)")].map(x => x.dataset.n);
   const boite = () => P.D.querySelector(".defile") || P.D.scrollingElement;
@@ -323,7 +323,7 @@
   P.charm = n => { const D = P.D, box = boite();
     const deja = D.querySelector(`.lgn-sticker[data-n="${n}"]`); if (deja) { if (choisi === deja) choisit(null); deja.remove(); signale("charms"); return false; }
     if (P.poses().length >= P.MAX) return false;
-    const im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".png"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
+    const im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".webp"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
     const i = P.poses().length, places = [[.08, .16], [.7, .12], [.74, .44], [.06, .5], [.4, .06], [.78, .7], [.1, .74], [.5, .52]], pl = places[i % places.length];
     im._s = 74; im._r = Math.round(Math.random() * 30 - 15);
     im.style.cssText = `position:absolute;z-index:9000;left:${box.clientWidth * pl[0]}px;top:${box.scrollTop + box.clientHeight * pl[1]}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:pzArrive .5s cubic-bezier(.3,1.5,.5,1) both`;
