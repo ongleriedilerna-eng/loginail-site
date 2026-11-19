@@ -2341,6 +2341,38 @@ document.addEventListener("DOMContentLoaded",function(){
   .marie-tel .marie-ig svg{width:20px;height:20px}
 }
 </style>
+<style id="pied-chute">
+/* 19/11 nuit (Marie) : TÉLÉPHONE seulement — quand elle arrive tout en bas, les 5 charms du pied tombent du ciel l'un après l'autre,
+   rebondissent, roulent un peu et se posent juste au-dessus de « Loginail · pensé par une prothésiste, pour les prothésistes ».
+   Deux d'entre eux ont une autre taille. Ensuite ils flottent comme avant et sautent toujours quand on les touche. Ordinateur inchangé. */
+@media (max-width:760px){
+  html body:not(#_) .pied-ch img:nth-child(2){width:54px}
+  html body:not(#_) .pied-ch img:nth-child(4){width:32px}
+  html body:not(#_) .pied-ch{align-items:flex-end}
+  .pied-ch.attend img{opacity:0}
+  .pied-ch.chute img{animation:piedChute 1.5s cubic-bezier(.35,0,.25,1) both!important;animation-delay:var(--d,0s)!important}
+}
+@keyframes piedChute{
+  0%{opacity:0;transform:translate(var(--x0,0px),-480px) rotate(-220deg)}
+  8%{opacity:1}
+  50%{transform:translate(var(--x1,0px),0) rotate(var(--r1,-40deg))}
+  60%{transform:translate(calc(var(--x1,0px) * .75),-16px) rotate(calc(var(--r1,-40deg) * .7))}
+  70%{transform:translate(calc(var(--x1,0px) * .5),0) rotate(calc(var(--r1,-40deg) * .45))}
+  78%{transform:translate(calc(var(--x1,0px) * .3),-5px) rotate(calc(var(--r1,-40deg) * .25))}
+  86%{transform:translate(calc(var(--x1,0px) * .12),0) rotate(calc(var(--r1,-40deg) * .1))}
+  100%{opacity:1;transform:translate(0,0) rotate(0)}
+}
+@media (prefers-reduced-motion:reduce){.pied-ch.attend img{opacity:1}.pied-ch.chute img{animation:none!important}}
+</style>
+<style id="pied-physique">
+/* 19/11 nuit (Marie) : TÉLÉPHONE seulement — après leur chute, les 5 charms du pied restent « vivants » : ils roulent tout seuls de temps en
+   temps, on peut les prendre au doigt, les lancer, ils retombent, rebondissent et roulent sur la ligne « Loginail · pensé par… ». Ordinateur inchangé. */
+@media (max-width:760px){
+  .pied-ch.physique{position:relative;height:60px;display:block}
+  .pied-ch.physique img{position:absolute;left:0;top:0;animation:none!important;transition:none;touch-action:none;cursor:grab;user-select:none;-webkit-user-drag:none;will-change:transform}
+  .pied-ch.physique img.tenu{cursor:grabbing;filter:drop-shadow(0 14px 14px rgba(80,30,45,.28))}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -3766,6 +3798,60 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
     if(pile.length>6){const v=pile.pop();setTimeout(()=>v.remove(),600)}};
   let parti=false;const go=()=>{if(parti)return;parti=true;for(let k=0;k<4;k++)setTimeout(ajoute,k*350);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),1800)};
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:.3}).observe(z);else go();
+})();
+</script>
+<script id="pied-chute-js">/* 19/11 (Marie) : téléphone — les charms du pied tombent du ciel, roulent et se posent quand on arrive en bas */
+(function(){
+  const row=document.querySelector('.pied-ch');if(!row||!matchMedia('(max-width:760px)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches||!('IntersectionObserver' in window))return;
+  const ims=[...row.querySelectorAll('img')];
+  // départ un peu de côté, atterrissage décalé puis il roule jusqu'à sa place (la rotation suit la distance roulée)
+  const P=[[-60,-34],[40,28],[-20,-22],[70,36],[-45,-30]];
+  ims.forEach((im,i)=>{const [x0,x1]=P[i%P.length],w=im.getBoundingClientRect().width||44;
+    im.style.setProperty('--x0',x0+'px');im.style.setProperty('--x1',x1+'px');im.style.setProperty('--r1',(x1/(Math.PI*w)*360).toFixed(0)+'deg');im.style.setProperty('--d',(i*.22)+'s')});
+  row.classList.add('attend');let fait=false;
+  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!fait){fait=true;row.classList.remove('attend');row.classList.add('chute');
+    setTimeout(()=>row.classList.remove('chute'),1500+ims.length*220+200)}}),{threshold:.6}).observe(row);
+})();
+</script>
+<script id="pied-physique-js">/* 19/11 (Marie) : téléphone — les charms du pied : gravité, rebonds, roulement, on les prend et on les lance */
+(function(){
+  const row=document.querySelector('.pied-ch');if(!row||!matchMedia('(max-width:760px)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const ims=[...row.querySelectorAll('img')];let B=[],actif=false,vu=false,raf=0,dernier=0;
+  function demarre(){ // on part de là où la chute les a posés
+    if(actif)return;actif=true;const R=row.getBoundingClientRect();
+    B=ims.map(im=>{const r=im.getBoundingClientRect();return{el:im,w:r.width,h:r.height,x:r.left-R.left,y:r.top-R.top,vx:0,vy:0,a:0,va:0,tenu:false}});
+    row.classList.add('physique');const H=row.clientHeight;B.forEach(b=>{b.y=H-b.h;place(b)});boucle();
+    ims.forEach((im,i)=>branche(im,B[i]));
+    setInterval(()=>{if(!vu||document.hidden)return;const b=B[Math.floor(Math.random()*B.length)];if(b.tenu)return; // un petit coup de vie de temps en temps
+      b.vx+=(Math.random()<.5?-1:1)*(1.5+Math.random()*2);b.vy-=2+Math.random()*3;reveille()},2600);
+  }
+  const place=b=>{b.el.style.transform=`translate(${b.x.toFixed(1)}px,${b.y.toFixed(1)}px) rotate(${b.a.toFixed(1)}deg)`};
+  function reveille(){if(!raf){dernier=performance.now();raf=requestAnimationFrame(boucle)}}
+  function boucle(t){raf=0;const W=row.clientWidth,H=row.clientHeight,TOP=-320;let bouge=false;
+    for(const b of B){if(b.tenu){bouge=true;continue}
+      b.vy+=.55;b.vx*=.995;b.x+=b.vx;b.y+=b.vy;
+      if(b.y>H-b.h){b.y=H-b.h;if(Math.abs(b.vy)>1.2)b.vy*=-.42;else b.vy=0;b.vx*=.94;b.va=b.vx/(b.w/2)*57.3}  // au sol : il roule
+      else b.va*=.99;
+      if(b.y<TOP){b.y=TOP;b.vy=Math.abs(b.vy)*.4}
+      if(b.x<0){b.x=0;b.vx=Math.abs(b.vx)*.6}if(b.x>W-b.w){b.x=W-b.w;b.vx=-Math.abs(b.vx)*.6}
+      b.a+=b.va;if(Math.abs(b.vx)>.05||Math.abs(b.vy)>.05||b.y<H-b.h-.5)bouge=true}
+    for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const p=B[i],q=B[j];if(p.tenu&&q.tenu)continue; // ils se cognent
+      const dx=(q.x+q.w/2)-(p.x+p.w/2),dy=(q.y+q.h/2)-(p.y+p.h/2),d=Math.hypot(dx,dy)||1,m=(p.w+q.w)/2*.82;
+      if(d<m){const k=(m-d)/d/2,ux=dx*k,uy=dy*k;if(!p.tenu){p.x-=ux;p.y-=uy}if(!q.tenu){q.x+=ux;q.y+=uy}
+        const rv=(q.vx-p.vx)*dx/d+(q.vy-p.vy)*dy/d;if(rv<0){const im=-rv*.7;if(!p.tenu){p.vx-=im*dx/d;p.vy-=im*dy/d}if(!q.tenu){q.vx+=im*dx/d;q.vy+=im*dy/d}}bouge=true}}
+    B.forEach(place);if(bouge&&vu)raf=requestAnimationFrame(boucle)}
+  function branche(im,b){let px=0,py=0,lx=0,ly=0,lt=0,dep=0;
+    im.addEventListener('pointerdown',e=>{e.preventDefault();im.setPointerCapture(e.pointerId);b.tenu=true;im.classList.add('tenu');dep=0;
+      const R=row.getBoundingClientRect();px=e.clientX-R.left-b.x;py=e.clientY-R.top-b.y;lx=e.clientX;ly=e.clientY;lt=performance.now();b.vx=b.vy=0;reveille()});
+    im.addEventListener('pointermove',e=>{if(!b.tenu)return;const R=row.getBoundingClientRect(),now=performance.now(),dt=Math.max(8,now-lt);
+      b.vx=(e.clientX-lx)/dt*16;b.vy=(e.clientY-ly)/dt*16;dep+=Math.abs(e.clientX-lx)+Math.abs(e.clientY-ly);lx=e.clientX;ly=e.clientY;lt=now;
+      b.x=e.clientX-R.left-px;b.y=e.clientY-R.top-py;b.a+=b.vx*1.5;place(b)});
+    const lache=()=>{if(!b.tenu)return;b.tenu=false;im.classList.remove('tenu');
+      if(dep<6){b.vy=-9;b.vx=(Math.random()-.5)*4;b.va=(Math.random()<.5?-1:1)*12} // simple toucher : il saute
+      const sp=Math.hypot(b.vx,b.vy);if(sp>28){b.vx*=28/sp;b.vy*=28/sp}reveille()};
+    im.addEventListener('pointerup',lache);im.addEventListener('pointercancel',lache)}
+  // ils deviennent « vivants » juste après la chute ; la boucle tourne seulement quand le bas de la page est visible
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{vu=e.isIntersecting;if(vu){if(!actif)setTimeout(demarre,1500+ims.length*220+300);else reveille()}}),{threshold:.2}).observe(row);
 })();
 </script>
 </body></html>
