@@ -2573,9 +2573,10 @@ document.addEventListener("DOMContentLoaded",function(){
 @media (max-width:760px){.fil-fin,.k2c.k2c-ordi{display:none!important}}
 @media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
 /* 20/11 (Marie, ordinateur) : carré 49,99 qui flotte tout doucement ; charms en plus ; téléphones de l'appli plus grands ; « Le premier mois » aligné en haut avec le carré */
-.ch-ordi,.pb-ch{display:none}
+.ch-ordi,.pb-ch,.rentab{display:none}
 @media (max-width:760px){html body:not(#_) .v3 .ch.ch-ordi,html body:not(#_) .pb-ch{display:none!important}}
 @media (min-width:761px){
+  html body:not(#_) .rentab{display:flex}
   @keyframes carteFlotte{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -10px;rotate:.6deg}}
   html body:not(#_) #cest-quoi .cq-res{animation:carteFlotte 7s ease-in-out infinite}
   html body:not(#_) section.appli#v3-appli{position:relative}
@@ -2583,15 +2584,17 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .v3 .marie .b-ch{animation:fl 6s ease-in-out infinite}
   .pied-bocaux{position:relative}
   html body:not(#_) .pb-ch{display:block;position:absolute;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
-  html body:not(#_) #v3-appli .wrap{max-width:1360px}
-  html body:not(#_) .ape{grid-template-columns:330px 1fr}
-  html body:not(#_) .ape .rail{height:740px}
-  html body:not(#_) .ape .ecran{max-width:215px}
-  html body:not(#_) .ape .rail:hover .ecran{max-width:185px}
-  html body:not(#_) .ape .rail .ecran:hover{max-width:320px}
-  html body:not(#_) .ape figcaption{font-size:16px}
-  html body:not(#_) .ape figcaption small{font-size:13.5px}
   html body:not(#_) .v3 .v3prix .wrap{align-items:start}
+  /* 20/11 (Marie) : « Je suis prothésiste, comme toi. » sur une seule ligne */
+  html body:not(#_) .v3 .marie blockquote{white-space:nowrap;font-size:clamp(38px,4.1vw,58px)!important;max-width:none}
+  html body:not(#_) .v3 .marie blockquote .l{display:inline}
+  html body:not(#_) .v3 .marie .vu,html body:not(#_) .v3 .marie .wrap{max-width:1180px}
+  /* 20/11 (Marie) : sous « Le premier mois, c'est cadeau » ça faisait vide → le calcul « 1 cliente » */
+  .rentab{display:flex;align-items:center;gap:22px;margin-top:38px;max-width:520px;background:#fff;border-radius:26px;padding:24px 28px;position:relative;box-shadow:0 30px 60px -34px rgba(120,40,70,.45)}
+  .rentab .rb-gros{font-family:'Abril Fatface',serif;font-size:64px;line-height:1;color:#B03562;flex:none}
+  .rentab b{display:block;font-family:'Abril Fatface',serif;font-weight:400;font-size:23px;line-height:1.15;color:#1E1C1B;margin-bottom:6px}
+  .rentab p{margin:0;font-size:15px;line-height:1.5;color:#5b524d}
+  .rentab img{position:absolute;width:54px;left:-18px;top:-24px;rotate:-12deg;filter:drop-shadow(0 8px 10px rgba(80,30,45,.22));animation:fl 6s ease-in-out infinite}
 }
 @media (prefers-reduced-motion:reduce){html body:not(#_) #cest-quoi .cq-res,html body:not(#_) .pb-ch{animation:none}}
 </style>
@@ -2847,6 +2850,7 @@ document.addEventListener("DOMContentLoaded",function(){
         <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si tu restes.</span></li>
         <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
       </ul>
+      <div class="rentab"><img src="loginail-site/charms-mini/cerisedisco.webp" alt=""><div class="rb-gros">1</div><div><b>cliente de plus par mois,<br>et c’est remboursé.</b><p>49,99 €, c’est moins qu’une pose. Une nouvelle cliente, ou un seul lapin évité grâce aux rappels SMS, et Loginail s’est payé tout seul.</p></div></div>
       <div class="k2c"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
       <div class="cq cq-bis cq-fin" aria-label="Le prix"><div class="cq-res">
         <div class="cq-logo">Logi<span>nail</span></div>
