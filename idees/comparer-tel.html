@@ -31,20 +31,15 @@ const PAGES={
  html body:not(#_) #bulles .b[style*="top: 78px"]{top:84px!important;opacity:.82!important}
  html body:not(#_) #bulles .b[style*="top: 148px"]{top:160px!important;opacity:.6!important}
 }`]]},
- roue:{t:'Les téléphones du haut',s:'Sous « Créer mon site gratuitement ». À gauche aujourd’hui, puis 3 versions plus douces.',cible:'#wheel',fixe:300,
-  v:[['Aujourd’hui','cadre noir épais, encoche','',1],
-     ['1 · Doux','fin cadre blanc, ombre rose',`
+ roue:{t:'Les téléphones du haut',s:'Sous « Créer mon site gratuitement ». À gauche la version Doux, à droite la même en un peu plus marquée, pour qu’on voie tout de suite que c’est un téléphone.',cible:'#wheel',fixe:300,
+  v:[['1 · Doux','fin cadre blanc, ombre rose, petite pilule blanche',`
 html body:not(#_) .np .np-card{background:#fff!important;padding:4px!important;border-radius:30px!important;box-shadow:0 22px 40px -22px rgba(176,53,98,.45),0 0 0 1px rgba(30,28,27,.06)!important}
 html body:not(#_) .np .np-card .np-sc{border-radius:26px!important}
-html body:not(#_) .np .np-card .np-nt{display:none!important}`],
-     ['2 · Nacre','cadre rose nacré, petite pilule',`
-html body:not(#_) .np .np-card{background:linear-gradient(140deg,#FFF6F9,#F3C9D8 45%,#FFFFFF 60%,#EBC2D2)!important;padding:5px!important;border-radius:32px!important;box-shadow:0 24px 44px -24px rgba(176,53,98,.55)!important}
-html body:not(#_) .np .np-card .np-sc{border-radius:27px!important}
-html body:not(#_) .np .np-card .np-nt{top:12px!important;width:34px!important;height:10px!important;border-radius:99px!important;background:rgba(30,28,27,.75)!important}`],
-     ['3 · Sans cadre','juste l’écran, coins ronds',`
-html body:not(#_) .np .np-card{background:none!important;padding:0!important;border-radius:24px!important;box-shadow:0 20px 36px -20px rgba(80,30,50,.5)!important}
-html body:not(#_) .np .np-card .np-sc{border-radius:24px!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
-html body:not(#_) .np .np-card .np-nt{display:none!important}`]]}};
+html body:not(#_) .np .np-card .np-nt{display:block!important;top:11px!important;width:34px!important;height:10px!important;border-radius:99px!important;background:rgba(255,255,255,.92)!important;box-shadow:0 1px 3px rgba(30,28,27,.25)!important;z-index:2}`],
+     ['1+ · Doux renforcé','un tout petit peu moins marqué qu’avant',`
+html body:not(#_) .np .np-card{background:#fff!important;padding:5px!important;border-radius:30px!important;box-shadow:0 24px 42px -21px rgba(176,53,98,.5),0 3px 8px -4px rgba(60,30,40,.14),0 0 0 1px rgba(30,28,27,.07)!important}
+html body:not(#_) .np .np-card .np-sc{border-radius:25px!important}
+html body:not(#_) .np .np-card .np-nt{display:block!important;top:12px!important;width:34px!important;height:10px!important;border-radius:99px!important;background:rgba(255,255,255,.92)!important;box-shadow:0 1px 3px rgba(30,28,27,.25)!important;z-index:2}`]]}};
 const C=PAGES[P];document.getElementById('t').textContent=C.t;document.getElementById('s').textContent=C.s;document.title=C.t;
 const g=document.getElementById('g');
 C.v.forEach(([nom,sous,css,auj])=>{const col=document.createElement('div');col.className='col'+(auj?' auj':'');
