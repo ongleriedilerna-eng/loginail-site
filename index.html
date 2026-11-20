@@ -2654,7 +2654,8 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .cq.cq-fin .cq-prix small{font-size:15px}
   html body:not(#_) .cq.cq-fin .cq-offert{margin:10px 0 12px;padding:7px 16px;font-size:15px}
   html body:not(#_) .cq.cq-fin .cq-zero{font-size:14.5px;margin-top:8px}
-  html body:not(#_) .bzt{height:390px;padding-bottom:40px;margin-bottom:-40px}
+  /* 21/11 (Marie, idees/comparer-tel.html?p=bulles) : 3 bulles au lieu de 5, plus d'air → zone 100 px moins haute */
+  html body:not(#_) .bzt{height:290px;padding-bottom:40px;margin-bottom:-40px}
   /* 20/11 nuit (Marie) : « 49,99 € » bien au milieu, comme les 3 lignes dessous (« / mois » posé à côté, sans pousser le prix) */
   html body:not(#_) .cq.cq-fin .cq-prix{position:relative;display:table;margin-left:auto!important;margin-right:auto!important}
   html body:not(#_) .cq.cq-fin .cq-prix small{position:absolute;left:100%;bottom:.55em;margin-left:6px;white-space:nowrap;line-height:1}
@@ -4158,7 +4159,7 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
   const pile=[];let n=0;const H=70;/* 20/11 : bulles un peu plus grandes sur téléphone → un peu plus d'écart */
   const ajoute=()=>{const it=L[n++%L.length],e=document.createElement('div');e.className='b';e.setAttribute('aria-hidden','true');
     e.innerHTML='<i>'+it[0]+'</i><div><b>'+it[1]+'</b><small>'+it[2]+'</small></div>';e.style.top='-40px';e.style.opacity='0';e.style.scale='.92';z.appendChild(e);pile.unshift(e);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*(innerWidth>760?68:H))+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{if(innerWidth<=760){/* 21/11 (Marie) : téléphone — 3 bulles seulement, plus espacées */x.style.top=(8+i*76)+'px';x.style.opacity=i>2?'0':['1','.82','.6'][i];x.style.scale=i>2?'.94':String(1-i*.025);return}x.style.top=(8+i*68)+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
     if(pile.length>6){const v=pile.pop();setTimeout(()=>v.remove(),600)}};
   let parti=false;const tel=innerWidth<=760;/* 20/11 (Marie) : téléphone — les bulles arrivent plus vite (ordinateur inchangé) */
   const go=()=>{if(parti)return;parti=true;
