@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fonds qui bougent · série 8</title>
+<style>
+:root{--encre:#1E1C1B;--doux:#6E6762;--fond:#F7F3EF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font:15px/1.45 -apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:28px 16px 6px;max-width:1240px;margin:auto}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--doux)}
+main{padding:16px 16px 60px;max-width:1240px;margin:auto}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.carte{all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-start}
+.carte span{display:block;font-size:13px;font-weight:600;margin-top:6px}
+.carte small{display:block;font-size:12px;color:var(--doux)}
+.carte:focus-visible .tuile{outline:3px solid #C2506E;outline-offset:2px}
+.carte .gard{display:inline-block;background:#1E1C1B;color:#fff;font-size:11px;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:1px}
+
+.tuile{position:relative;overflow:hidden;aspect-ratio:170/220;border-radius:14px;container-type:size;
+  box-shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.06)}
+.tuile .img{position:absolute;inset:0;background-size:cover;background-position:center}
+.tuile .pa{position:absolute;display:block;pointer-events:none;will-change:transform,opacity;background-size:contain;background-repeat:no-repeat;background-position:center}
+.tuile .pa b{display:block;width:100%;height:100%;background:inherit}
+
+/* monte : de bas en haut, en se balançant */
+@keyframes monte{0%{transform:translate(0,0) rotate(-12deg);opacity:0}8%{opacity:1}30%{transform:translate(var(--dx),-38cqh) rotate(10deg)}60%{transform:translate(calc(var(--dx)*-1),-78cqh) rotate(-10deg)}92%{opacity:1}100%{transform:translate(0,-128cqh) rotate(8deg);opacity:0}}
+/* tombe : de haut en bas, en tournant */
+@keyframes tombe{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:1}35%{transform:translate(var(--dx),45cqh) rotate(var(--r1))}70%{transform:translate(calc(var(--dx)*-1),88cqh) rotate(var(--r2))}94%{opacity:1}100%{transform:translate(0,130cqh) rotate(var(--r3));opacity:0}}
+/* vent : en biais, du haut gauche vers le bas droit */
+@keyframes vent{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:1}50%{transform:translate(55cqw,45cqh) rotate(200deg)}94%{opacity:1}100%{transform:translate(120cqw,95cqh) rotate(400deg);opacity:0}}
+/* vole : papillon qui traverse en ondulant */
+@keyframes vole{0%{transform:translate(0,0) rotate(8deg)}25%{transform:translate(35cqw,-14cqh) rotate(-6deg)}50%{transform:translate(70cqw,4cqh) rotate(10deg)}75%{transform:translate(100cqw,-12cqh) rotate(-4deg)}100%{transform:translate(140cqw,0) rotate(8deg)}}
+@keyframes ailes{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.25)}}
+/* méduse : monte par à-coups en pulsant */
+@keyframes meduse{0%{transform:translate(0,0)}100%{transform:translate(var(--dx),-140cqh)}}
+@keyframes pulse{0%,100%{transform:scale(1,1)}40%{transform:scale(1.18,.8)}70%{transform:scale(.92,1.1)}}
+/* boule disco : se balance et tourne ses reflets */
+@keyframes balance{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+@keyframes spot{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}80%{opacity:.9}100%{transform:translate(var(--dx),40cqh);opacity:0}}
+
+.apercu{position:fixed;inset:0;z-index:9;display:none}
+.apercu.ouvert{display:block}
+.apercu .tuile{position:absolute;inset:0;aspect-ratio:auto;border-radius:0;box-shadow:none}
+.apercu .site{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 32px));
+  background:rgba(255,255,255,.88);border-radius:22px;padding:26px 22px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+.apercu .site b{display:block;font-size:26px;letter-spacing:-.01em}
+.apercu .site p{margin:6px 0 16px;color:var(--doux)}
+.apercu .site a{display:inline-block;background:#1E1C1B;color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-weight:600}
+.apercu .nom{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.apercu .nom span{background:rgba(255,255,255,.9);padding:7px 12px;border-radius:999px;font-weight:600;font-size:14px}
+.apercu .nom button{all:unset;cursor:pointer;background:#fff;width:40px;height:40px;border-radius:50%;text-align:center;line-height:40px;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.apercu .fleches{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:14px}
+.apercu .fleches button{all:unset;cursor:pointer;background:#fff;padding:10px 18px;border-radius:999px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+@media (prefers-reduced-motion:reduce){.tuile *{animation:none!important}}
+.tuile .img{background-size:cover}
+@keyframes defile{to{background-position:16cqw 0}}
+@keyframes flotte{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-9px) rotate(6deg)}}
+@keyframes glisse{0%{transform:translate(0,0) rotate(-8deg);opacity:0}8%{opacity:1}50%{transform:translate(22cqw,-62cqh) rotate(8deg)}92%{opacity:1}100%{transform:translate(45cqw,-128cqh) rotate(-8deg);opacity:0}}
+@keyframes pop{0%{transform:scale(0) rotate(-25deg);opacity:0}12%{transform:scale(1.2) rotate(6deg);opacity:1}20%{transform:scale(1) rotate(0)}75%{transform:scale(1);opacity:1}88%,100%{transform:scale(0);opacity:0}}
+@keyframes sonne{0%,55%,100%{transform:rotate(0)}58%{transform:rotate(-14deg)}61%{transform:rotate(14deg)}64%{transform:rotate(-14deg)}67%{transform:rotate(14deg)}70%{transform:rotate(-10deg)}73%{transform:rotate(10deg)}76%{transform:rotate(0)}}
+@media (prefers-reduced-motion:reduce){.tuile .pa{animation:none!important;transform:none!important;opacity:1!important}}
+@keyframes coule{0%{transform:scaleY(0);opacity:1}55%{transform:scaleY(1)}85%{transform:scaleY(1.06);opacity:1}100%{transform:scaleY(1.06);opacity:0}}
+@keyframes sautille{0%,100%{transform:translateY(0) scale(1,1)}12%{transform:translateY(0) scale(1.12,.88)}38%{transform:translateY(-16px) scale(.94,1.06) rotate(-6deg)}62%{transform:translateY(0) scale(1.1,.9)}74%{transform:translateY(0) scale(1)}}
+@keyframes change{0%,100%{filter:hue-rotate(0deg) drop-shadow(0 2px 2px rgba(150,60,90,.25));transform:rotate(-8deg)}33%{filter:hue-rotate(15deg) drop-shadow(0 2px 2px rgba(150,60,90,.25))}50%{transform:rotate(8deg)}66%{filter:hue-rotate(-55deg) drop-shadow(0 2px 2px rgba(150,60,90,.25))}}
+@keyframes roule{0%{transform:translateX(0) rotate(0);opacity:0}6%{opacity:1}94%{opacity:1}100%{transform:translateX(calc(100cqw + 60px)) rotate(720deg);opacity:0}}
+
+/* série 8 : nouveaux gestes */
+@keyframes bat{0%,42%,100%{transform:scale(1)}10%{transform:scale(1.28)}20%{transform:scale(.96)}30%{transform:scale(1.18)}}
+@keyframes eclate{0%{transform:translateY(0) scale(.15);opacity:0}12%{opacity:1}70%{transform:translateY(-22px) scale(1);opacity:1}76%{transform:translateY(-24px) scale(1.12);opacity:1}80%{transform:translateY(-24px) scale(1.45);opacity:0}100%{transform:translateY(-24px) scale(1.45);opacity:0}}
+@keyframes neon{0%,18%,24%,58%,63%,100%{opacity:1}19%,23%,60%{opacity:.18}21%{opacity:.85}61%{opacity:.4}}
+@keyframes ailes2{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.2)}}
+@keyframes papillonne{0%,100%{transform:translate(0,0) rotate(-8deg)}25%{transform:translate(10px,-8px) rotate(6deg)}50%{transform:translate(2px,-14px) rotate(-4deg)}75%{transform:translate(-8px,-6px) rotate(8deg)}}
+@keyframes pose{0%{transform:translateY(-70cqh) rotate(calc(var(--r1) / 4)) scale(1.15);opacity:0}6%{opacity:1}24%{transform:translateY(0) rotate(calc(var(--r2) / 30)) scale(1)}27%{transform:translateY(-3px) rotate(calc(var(--r2) / 30)) scale(1.02)}30%,86%{transform:translateY(0) rotate(calc(var(--r2) / 30)) scale(1);opacity:1}100%{transform:translateY(0) rotate(calc(var(--r2) / 30)) scale(1);opacity:0}}
+@keyframes tampon{0%{transform:rotate(calc(var(--r1) / 6)) scale(1.7);opacity:0}5%{transform:rotate(calc(var(--r1) / 6)) scale(.9);opacity:1}9%{transform:rotate(calc(var(--r1) / 6)) scale(1)}82%{opacity:1}100%{transform:rotate(calc(var(--r1) / 6)) scale(1);opacity:0}}
+@keyframes ballon{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-14px) rotate(5deg)}}
+@keyframes pendule{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+@keyframes eclot{0%{transform:scale(0) rotate(-120deg);opacity:0}6%{opacity:1}20%{transform:scale(1.08) rotate(8deg)}26%,88%{transform:scale(1) rotate(0)}97%,100%{transform:scale(0) rotate(40deg);opacity:0}}
+.seul header,.seul main{display:none}.seul .apercu .nom,.seul .apercu .fleches,.seul .apercu .site{display:none}
+@keyframes retourne{0%,38%,62%,100%{transform:scaleX(1)}50%{transform:scaleX(.06)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Fonds qui bougent · série 8</h1>
+  <p>40 fonds qui bougent. Dis-moi les NUMÉROS que tu gardes. Touche un fond pour le voir en grand.</p>
+</header>
+<main><div class="grille" id="g"></div></main>
+
+
+<div class="apercu" id="apercu" role="dialog" aria-modal="true" aria-label="Aperçu du fond">
+  <div id="ap-tuile"></div>
+  <div class="site"><b>Les Ongles de Léa</b><p>Prothésiste ongulaire · Lyon 6e</p><a href="#" onclick="return false">Réserver</a></div>
+  <div class="nom"><span id="ap-nom"></span><button id="ap-x" aria-label="Fermer">×</button></div>
+  <div class="fleches"><button id="ap-prec">← Avant</button><button id="ap-suiv">Après →</button></div>
+</div>
+
+<script>
+var IMG="../loginail-site/fonds-img/";
+function svg(s,vb){return "url(\"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+(vb||"0 0 40 40")+'">'+s+'</svg>')+"\")"}
+var defs=function(id,a){return '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1">'+a.map(function(c,i){return '<stop offset="'+(i/(a.length-1))+'" stop-color="'+c+'"/>'}).join("")+'</linearGradient></defs>'};
+var D={
+ coeur:function(c){return svg(defs("g",c)+'<path d="M20 36C7 26 1 20 1 12A9.5 9.5 0 0 1 20 8A9.5 9.5 0 0 1 39 12C39 20 33 26 20 36Z" fill="url(#g)" fill-opacity=".9" stroke="rgba(255,255,255,.7)" stroke-width="1"/><path d="M7 11Q8 6 13 5.5" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".95"/><ellipse cx="27" cy="25" rx="3" ry="1.6" fill="#fff" opacity=".5" transform="rotate(-35 27 25)"/>')},
+ etoile:function(c){return svg(defs("g",c)+'<path d="M20 2L25 14L38 15L28 24L31 37L20 30L9 37L12 24L2 15L15 14Z" fill="url(#g)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><path d="M14 16L18 15" stroke="#fff" stroke-width="2" stroke-linecap="round"/>')},
+ levres:svg('<path d="M2 20C7 10 15 9 20 13C25 9 33 10 38 20C31 31 9 31 2 20Z" fill="#D21F3C"/><path d="M3 20C12 22 28 22 37 20C30 24 10 24 3 20Z" fill="#8E1426"/><path d="M11 14Q15 12.5 18 14.5" stroke="#FF8A9A" stroke-width="1.6" fill="none" stroke-linecap="round"/>',"0 0 40 34"),
+ petale:svg('<path d="M20 2C30 9 33 22 20 38C7 22 10 9 20 2Z" fill="#F9C9D6"/><path d="M20 2C26 8 27 16 20 24" fill="#FDE3EA"/><path d="M17 3L20 7L23 3" fill="#F7B3C6"/>'),
+ note:function(c){return svg('<path d="M13 31A5 4 0 1 1 13 30.9V7L33 3V27A5 4 0 1 1 33 26.9V11L17 14V31Z" fill="'+c+'"/>')},
+ diamant:svg('<path d="M8 4H32L39 14L20 37L1 14Z" fill="#D9B8FF"/><path d="M1 14H39L20 37Z" fill="#B48CF0"/><path d="M8 4L14 14L20 4L26 14L32 4" fill="#EEDDFF"/><path d="M14 14L20 37L26 14Z" fill="#C9A4FA"/><path d="M10 7L12 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>'),
+ fraise:svg('<path d="M20 9C31 9 36 15 33 24C30 32 24 38 20 38C16 38 10 32 7 24C4 15 9 9 20 9Z" fill="#E8344A"/><g fill="#FFE08A"><circle cx="14" cy="17" r="1"/><circle cx="22" cy="16" r="1"/><circle cx="28" cy="19" r="1"/><circle cx="17" cy="24" r="1"/><circle cx="25" cy="26" r="1"/><circle cx="20" cy="32" r="1"/><circle cx="12" cy="24" r="1"/></g><path d="M20 10L12 5L17 9L13 2L20 8L27 2L23 9L28 5Z" fill="#4E9A3C"/><path d="M11 15Q12 12 15 12" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7" stroke-linecap="round"/>'),
+ cerise:svg('<path d="M14 26Q16 12 26 4M28 27Q27 14 26 4" stroke="#5A7A2E" stroke-width="1.6" fill="none"/><path d="M26 4Q33 3 35 9Q30 9 26 4Z" fill="#6FA03C"/><circle cx="13" cy="30" r="8" fill="#D3203A"/><circle cx="29" cy="30" r="7.5" fill="#C01A33"/><circle cx="10" cy="27" r="2" fill="#fff" opacity=".8"/><circle cx="26.5" cy="27" r="1.8" fill="#fff" opacity=".8"/>'),
+ noeud:svg('<path d="M20 15C13 3 2 4 3 12C4 20 13 18 20 16ZM20 15C27 3 38 4 37 12C36 20 27 18 20 16Z" fill="#E8899E"/><path d="M19 17L11 36L15 33L18 38L20 18M21 17L29 36L25 33L22 38L20 18" fill="#D9667F"/><circle cx="20" cy="15.5" r="3.4" fill="#C9506B"/><path d="M8 9Q10 7 13 8" stroke="#fff" stroke-width="1.4" fill="none" opacity=".7" stroke-linecap="round"/>'),
+ meduse:svg('<defs><radialGradient id="m" cx=".5" cy=".35" r=".6"><stop offset="0" stop-color="#F3E6FF"/><stop offset=".6" stop-color="#B98CFF" stop-opacity=".85"/><stop offset="1" stop-color="#7A4FE0" stop-opacity=".4"/></radialGradient></defs><path d="M4 22C4 8 36 8 36 22C30 25 10 25 4 22Z" fill="url(#m)"/><g stroke="#D8BFFF" stroke-width="1.3" fill="none" opacity=".85" stroke-linecap="round"><path d="M9 23Q6 32 10 40Q13 48 9 56"/><path d="M15 24Q18 34 14 44Q12 52 15 58"/><path d="M20 24Q22 36 19 48"/><path d="M25 24Q22 34 26 44Q28 52 25 58"/><path d="M31 23Q34 32 30 40Q27 48 31 56"/></g><ellipse cx="14" cy="14" rx="4" ry="2" fill="#fff" opacity=".6"/>',"0 0 40 60"),
+ papillon:function(c1,c2){return svg('<g stroke="#5B4636" stroke-width=".8"><path d="M20 18C14 4 3 2 2 9C1 15 10 18 20 19Z" fill="'+c1+'"/><path d="M20 18C26 4 37 2 38 9C39 15 30 18 20 19Z" fill="'+c1+'"/><path d="M20 19C12 21 6 28 10 31C14 33 18 26 20 20Z" fill="'+c2+'"/><path d="M20 19C28 21 34 28 30 31C26 33 22 26 20 20Z" fill="'+c2+'"/></g><path d="M20 12V28" stroke="#3A2C22" stroke-width="1.6" stroke-linecap="round"/><path d="M20 12Q17 7 15 6M20 12Q23 7 25 6" stroke="#3A2C22" stroke-width=".8" fill="none"/>',"0 0 40 34")},
+ disco:svg('<defs><radialGradient id="d" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#E7C3D6"/><stop offset="1" stop-color="#8A3E66"/></radialGradient><clipPath id="c"><circle cx="20" cy="22" r="15"/></clipPath></defs><path d="M20 0V7" stroke="#C99AB3" stroke-width="1"/><circle cx="20" cy="22" r="15" fill="url(#d)"/><g clip-path="url(#c)" stroke="rgba(110,40,80,.35)" stroke-width=".7"><path d="M5 12H35M5 17H35M5 22H35M5 27H35M5 32H35"/><path d="M10 7V37M15 7V37M20 7V37M25 7V37M30 7V37"/></g><rect x="12" y="13" width="4" height="4" fill="#fff"/><rect x="17" y="18" width="3" height="3" fill="#fff" opacity=".7"/>',"0 0 40 40"),
+ eclat:function(c){return "url(\"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 0Q11 9 20 10Q11 11 10 20Q9 11 0 10Q9 9 10 0Z" fill="'+c+'"/></svg>')+"\")"}
+};
+function hasard(g){return function(){g=(g*9301+49297)%233280;return g/233280}}
+/* o : n, image (texte ou fonction), taille [min,max], ratio, geste, duree [min,max], depart ("bas","haut","gauche"), style, interieur */
+var GRAND=1; /* en grand : plus d'objets et un peu plus gros, pour garder la même densité */
+function objets(t,o){var r=hasard(o.graine||7),n=Math.round((COULEUR?o.n*1.8:o.n)*GRAND);for(var i=0;i<n;i++){var e=document.createElement("i");e.className="pa";var s=(o.taille[0]+r()*(o.taille[1]-o.taille[0]))*(GRAND>1?1.35:1);
+  var pos=o.depart=="haut"?"top:-"+(s*(o.ratio||1)+4)+"px;left:"+(r()*100-6)+"%;":o.depart=="gauche"?"left:-"+(s+10)+"px;top:"+(r()*80)+"%;":o.depart=="toit"?"top:0;left:"+(r()*100-4).toFixed(1)+"%;":o.depart=="place"?"top:"+(r()*94-4).toFixed(1)+"%;left:"+(r()*100-6).toFixed(1)+"%;":o.depart=="vent"?"left:"+(r()*110-60)+"%;top:-"+(s+10)+"px;":"top:100%;left:"+(r()*100-6)+"%;";
+  var img=typeof o.image=="function"?o.image(r):o.image,d=o.duree[0]+r()*(o.duree[1]-o.duree[0]);
+  e.style.cssText="width:"+s.toFixed(0)+"px;height:"+(s*(o.ratio||1)).toFixed(0)+"px;"+pos+"background-image:"+img+";"+
+   "animation:"+o.geste+" "+d.toFixed(1)+"s "+(o.courbe||"linear")+" -"+(r()*d).toFixed(1)+"s infinite;"+
+   "--dx:"+((r()-.5)*44).toFixed(0)+"px;--r1:"+(r()>.5?"":"-")+"120deg;--r2:"+(r()>.5?"":"-")+"240deg;--r3:"+(r()>.5?"":"-")+"360deg;"+(o.style||"");
+  if(o.interieur){var b=document.createElement("b");b.style.cssText=o.interieur;e.style.backgroundImage="none";b.style.backgroundImage=img;b.style.backgroundSize="contain";b.style.backgroundRepeat="no-repeat";e.appendChild(b)}
+  t.appendChild(e)}}
+
+
+/* série 3 (20/11) : inspirée des images de Marie */
+D.tel=svg('<g><rect x="5" y="31" width="28" height="31" rx="7" fill="#FF4FA3"/><rect x="8" y="34" width="22" height="25" rx="5" fill="#FFC6E2"/><circle cx="19" cy="39.5" r="3.6" fill="#D2B6F7" stroke="#B48CF0" stroke-width=".8"/><circle cx="19" cy="39.5" r="1.4" fill="#EBDDFE"/><g fill="#B98CF0"><ellipse cx="12" cy="47" rx="2.6" ry="1.5"/><ellipse cx="19" cy="47" rx="2.6" ry="1.5"/><ellipse cx="26" cy="47" rx="2.6" ry="1.5"/><ellipse cx="12" cy="51.5" rx="2.6" ry="1.5"/><ellipse cx="19" cy="51.5" rx="2.6" ry="1.5"/><ellipse cx="26" cy="51.5" rx="2.6" ry="1.5"/><ellipse cx="12" cy="56" rx="2.6" ry="1.5"/><ellipse cx="19" cy="56" rx="2.6" ry="1.5"/><ellipse cx="26" cy="56" rx="2.6" ry="1.5"/></g><rect x="7" y="28" width="24" height="5.5" rx="2.7" fill="#E8358F"/><rect x="5" y="2" width="28" height="28" rx="7" fill="#FF4FA3"/><rect x="8" y="5" width="22" height="22" rx="5" fill="#FFC6E2"/><rect x="11" y="10" width="16" height="12" rx="2" fill="#CDBCF5" stroke="#9C86D8" stroke-width=".8"/><path d="M16.5 14.2h1.2v-1h1.3v1h1v-1h1.3v1h1.2v2h-1.2v1.2h-1.2v1.2h-2.4v-1.2h-1.2v-1.2h-1.2z" fill="#8A6FD1"/><g fill="#E8358F"><circle cx="17" cy="7.4" r=".6"/><circle cx="19" cy="7.4" r=".6"/><circle cx="21" cy="7.4" r=".6"/></g><path d="M8 7Q9 4 12 3.6" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".9"/><path d="M33 34q4 3 3 9" stroke="#FF7CBF" stroke-width="1" fill="none"/><circle cx="35.6" cy="40" r="1.3" fill="#E0C8FF"/><circle cx="36" cy="43.2" r="1.3" fill="#FFB3D9"/><path d="M36 45.2l1 2.2 2.3.2-1.8 1.5.6 2.3-2.1-1.3-2 1.3.6-2.3-1.8-1.5 2.3-.2z" fill="#F7A6D2" stroke="#fff" stroke-width=".5"/></g>',"0 0 42 64");
+D.de=function(c){return svg('<path d="M20 3L36 11L20 19L4 11Z" fill="'+c[0]+'" fill-opacity=".92"/><path d="M4 11L20 19V37L4 29Z" fill="'+c[1]+'" fill-opacity=".92"/><path d="M20 19L36 11V29L20 37Z" fill="'+c[2]+'" fill-opacity=".92"/><g fill="#FFF4EE"><ellipse cx="20" cy="11" rx="2.3" ry="1.3"/><ellipse cx="8.5" cy="17" rx="1.6" ry="2"/><ellipse cx="12" cy="24" rx="1.6" ry="2"/><ellipse cx="15.5" cy="31" rx="1.6" ry="2"/><ellipse cx="25" cy="20" rx="1.6" ry="2"/><ellipse cx="31" cy="27" rx="1.6" ry="2"/><ellipse cx="28" cy="23.5" rx="1.6" ry="2"/></g><path d="M7 11.5L19 5.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".8"/><path d="M34.5 13V26" stroke="#BFE3FF" stroke-width="1" stroke-linecap="round" opacity=".8"/>')};
+D.miroir=svg('<path d="M20 37C7 27 2 21 2 13A9 9 0 0 1 20 9A9 9 0 0 1 38 13C38 21 33 27 20 37Z" fill="#F6B8D2" stroke="#D9D9E3" stroke-width="3.2"/><path d="M20 37C7 27 2 21 2 13A9 9 0 0 1 20 9A9 9 0 0 1 38 13C38 21 33 27 20 37Z" fill="none" stroke="#8C8C9C" stroke-width=".7"/><path d="M8 13Q10 8 15 8" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/><path d="M27 20l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="#fff"/>');
+D.gloss=svg('<g transform="rotate(-25 20 22)"><rect x="14" y="13" width="12" height="27" rx="3" fill="#E31C70" fill-opacity=".88" stroke="#F7A1C4" stroke-width=".8"/><rect x="15" y="2" width="10" height="11" rx="2.5" fill="#B8105A"/><rect x="14" y="11.5" width="12" height="2.5" fill="#D9D9E3"/><path d="M17 16V36" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".55"/><g fill="#FFD2E6"><circle cx="21" cy="20" r=".7"/><circle cx="23" cy="26" r=".7"/><circle cx="20" cy="31" r=".7"/><circle cx="22.5" cy="35" r=".6"/></g></g>');
+var ARC='<defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB3E0"/><stop offset=".3" stop-color="#C9B8FF"/><stop offset=".45" stop-color="#FFFFFF"/><stop offset=".6" stop-color="#B3E8FF"/><stop offset=".78" stop-color="#FFF0A8"/><stop offset="1" stop-color="#F7A8D8"/></linearGradient></defs><circle cx="20" cy="20" r="17" fill="url(#h)" opacity=".85"/><path d="M20 20L8 5A17 17 0 0 1 14 3.6Z" fill="#fff" opacity=".55"/><path d="M20 20L32 35A17 17 0 0 1 26 36.4Z" fill="#fff" opacity=".45"/>';
+D.cd=svg('<circle cx="20" cy="20" r="17" fill="#EDE2FF"/>'+ARC+'<circle cx="20" cy="20" r="17" fill="none" stroke="#C9B6F0" stroke-width="1"/><circle cx="20" cy="20" r="5" fill="#E2D4FA" stroke="#B9A2EC" stroke-width=".8"/><circle cx="20" cy="20" r="2" fill="#FDE0EE"/><path d="M9 12Q12 7 17 6" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".9"/>');
+D.baladeur=svg('<ellipse cx="20" cy="21" rx="18" ry="16" fill="#FF5FAE" fill-opacity=".9" stroke="#FFB3D9" stroke-width="1.2"/><g transform="translate(9.5 8) scale(.6)"><circle cx="17.5" cy="17.5" r="17" fill="#EDE2FF"/><g transform="translate(-2.5 -2.5)">'+ARC+'</g><circle cx="17.5" cy="17.5" r="5" fill="#E2D4FA" stroke="#B9A2EC"/><circle cx="17.5" cy="17.5" r="2" fill="#FF8CC6"/></g><g fill="#DCC6FB" stroke="#B48CF0" stroke-width=".5"><ellipse cx="14" cy="33" rx="2.6" ry="1.5"/><ellipse cx="20" cy="33.6" rx="3" ry="1.7"/><ellipse cx="26" cy="33" rx="2.6" ry="1.5"/></g><path d="M5 15Q8 7 15 5" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".85"/><path d="M37 24q2 3 1 6" stroke="#E8358F" stroke-width=".8" fill="none"/><circle cx="36.6" cy="32" r="1.8" fill="#E8203F"/><circle cx="39" cy="31.4" r="1.7" fill="#D0142F"/>',"0 0 42 40");
+D.casque=svg('<path d="M8 25Q7 5 20 5Q33 5 32 25" stroke="#A77EEA" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M9 23Q9 8 20 7" stroke="#fff" stroke-width="1" fill="none" opacity=".7"/><ellipse cx="8" cy="28" rx="5.5" ry="7.5" fill="#9466E0"/><ellipse cx="32" cy="28" rx="5.5" ry="7.5" fill="#9466E0"/><ellipse cx="9" cy="28" rx="3.6" ry="5.6" fill="#D9C2FA"/><ellipse cx="31" cy="28" rx="3.6" ry="5.6" fill="#D9C2FA"/><path d="M9 25l.8 2.2 2.2.8-2.2.8L9 31l-.8-2.2-2.2-.8 2.2-.8z" fill="#fff"/>');
+var DAMIER="repeating-conic-gradient(#5E1236 0 25%,#F7B7CF 0 50%) 0 0/34px 34px";
+var DES=[["#FFC2D4","#FF6F96","#FF8DAA"],["#FFD3E0","#FF8AA8","#E9F5A6"],["#FFE0EA","#F9A0BC","#FFB8CC"]];
+/* série 4 (19/11) : d'après les images de Marie ; chaque fond a SON geste et SON fond */
+D.noeudC=function(a,b,c){return svg('<path d="M20 15C13 3 2 4 3 12C4 20 13 18 20 16ZM20 15C27 3 38 4 37 12C36 20 27 18 20 16Z" fill="'+a+'"/><path d="M19 17L11 36L15 33L18 38L20 18M21 17L29 36L25 33L22 38L20 18" fill="'+b+'"/><circle cx="20" cy="15.5" r="3.4" fill="'+c+'"/><path d="M8 9Q10 7 13 8" stroke="#fff" stroke-width="1.6" fill="none" opacity=".9" stroke-linecap="round"/>')};
+D.perles=svg('<defs><radialGradient id="p" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#F6E8EC"/><stop offset="1" stop-color="#C9AEB8"/></radialGradient></defs><circle cx="13" cy="15" r="8" fill="url(#p)"/><circle cx="27" cy="15" r="8" fill="url(#p)"/><circle cx="20" cy="27" r="8" fill="url(#p)"/>');
+D.etoileA=svg(defs("s",["#FFFFFF","#B9B9C6","#E9E9F0"])+'<path d="M20 3L25 14L37 15L28 23L31 36L20 29L9 36L12 23L3 15L15 14Z" fill="url(#s)" stroke="#8D8D9C" stroke-width=".8" stroke-linejoin="round"/><path d="M14 16L18 15" stroke="#fff" stroke-width="2" stroke-linecap="round"/>');
+D.fer=svg('<path d="M10 6V20A10 10 0 0 0 30 20V6" stroke="#B9B9C6" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M10 6V20A10 10 0 0 0 30 20V6" stroke="#fff" stroke-width="2.6" fill="none" stroke-dasharray=".1 4.6" stroke-linecap="round"/>');
+D.talon=svg('<path d="M3 26Q3 21 9 20L22 22Q30 11 35 6L37.5 7.5Q36 15 34 21L33.5 32H31.2L31 24Q27 27.5 20 28.5L7 29.5Q3 29.5 3 26Z" fill="#D0142F"/><path d="M8 22.5L21 24" stroke="#fff" stroke-width="1.4" opacity=".6" stroke-linecap="round"/><path d="M33 9Q31 14 27 19" stroke="#FF8A9A" stroke-width="1.2" fill="none" opacity=".8" stroke-linecap="round"/>',"0 0 40 34");
+D.ourson=function(c){return svg('<g fill="'+c+'" fill-opacity=".9"><circle cx="13" cy="7" r="4"/><circle cx="27" cy="7" r="4"/><circle cx="20" cy="13" r="9"/><ellipse cx="20" cy="30" rx="10" ry="11"/><ellipse cx="10" cy="25" rx="3.5" ry="5" transform="rotate(25 10 25)"/><ellipse cx="30" cy="25" rx="3.5" ry="5" transform="rotate(-25 30 25)"/><circle cx="12.5" cy="39" r="4.5"/><circle cx="27.5" cy="39" r="4.5"/></g><ellipse cx="16" cy="9" rx="3" ry="1.6" fill="#fff" opacity=".75" transform="rotate(-30 16 9)"/><ellipse cx="15" cy="28" rx="2.5" ry="5.5" fill="#fff" opacity=".4"/><circle cx="17" cy="13" r="1" fill="#000" opacity=".2"/><circle cx="23" cy="13" r="1" fill="#000" opacity=".2"/>',"0 0 40 44")};
+D.lune=svg(defs("l",["#FFFFFF","#B8B8C6","#EDEDF3"])+'<path d="M26 4A16 16 0 1 0 36 30A13 13 0 1 1 26 4Z" fill="url(#l)" stroke="#9A9AAA" stroke-width=".8"/><path d="M13 11Q10 16 11 22" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>');
+D.telvert=svg('<path d="M8 33L12 17Q22 13 32 17L36 33Z" fill="#9BD12E"/><path d="M8 33H36" stroke="#6E9C12" stroke-width="2"/><circle cx="22" cy="25" r="6.5" fill="#E9C46A" stroke="#B88A2C"/><circle cx="22" cy="25" r="2.5" fill="#F7E3A6"/><g fill="#B88A2C"><circle cx="22" cy="20" r=".9"/><circle cx="26.5" cy="22.5" r=".9"/><circle cx="26.5" cy="27.5" r=".9"/><circle cx="22" cy="30" r=".9"/><circle cx="17.5" cy="27.5" r=".9"/><circle cx="17.5" cy="22.5" r=".9"/></g><path d="M15 15V11M29 15V11" stroke="#D9B04A" stroke-width="1.6"/><path d="M4 9Q4 4 10 4H34Q40 4 40 9Q40 12 36 12Q34 12 33 10H11Q10 12 8 12Q4 12 4 9Z" fill="#A8DC3A"/><path d="M9 6H34" stroke="#fff" stroke-width="1.2" opacity=".6" stroke-linecap="round"/>',"0 0 44 36");
+var ZEBRE="url(\"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 600" preserveAspectRatio="xMidYMid slice"><defs><pattern id="z" width="300" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect width="300" height="34" fill="#F7A0B6"/><rect y="8" width="300" height="13" fill="#D81E46"/></pattern><filter id="t" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency=".012 .035" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="34"/></filter></defs><rect x="-60" y="-60" width="420" height="720" fill="url(#z)" filter="url(#t)"/></svg>')+"\") center/cover";
+var DAMIER2="url(\"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 600" preserveAspectRatio="xMidYMid slice"><defs><pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="#F27BB5"/><rect width="30" height="30" fill="#8C1F63"/><rect x="30" y="30" width="30" height="30" fill="#8C1F63"/></pattern><filter id="w" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency=".005" numOctaves="1" seed="4"/><feDisplacementMap in="SourceGraphic" scale="70"/></filter></defs><rect x="-60" y="-60" width="420" height="720" fill="url(#p)" filter="url(#w)"/></svg>')+"\") center/cover";
+var RAYURES="repeating-linear-gradient(90deg,#D8C6F4 0 8cqw,#FBF2D0 8cqw 16cqw)";
+/* série 5 (19/11) : l'onglerie qui bouge — un geste différent par fond */
+D.goutte=svg('<path d="M3 0H17V100C17 112 14 118 10 118C6 118 3 112 3 100Z" fill="#C8102E"/><path d="M6.5 2V98" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".45"/><ellipse cx="8" cy="108" rx="1.6" ry="3" fill="#fff" opacity=".5"/>',"0 0 20 120");
+D.flacon=function(c){return svg('<rect x="10" y="0" width="10" height="15" rx="2" fill="#1E1C1B"/><path d="M12 2V13" stroke="#fff" stroke-width="1" opacity=".35"/><rect x="9" y="13" width="12" height="4" rx="1" fill="#D9D9E3"/><rect x="3" y="16" width="24" height="27" rx="7" fill="'+c+'"/><path d="M7 21V36" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".6"/><ellipse cx="20" cy="22" rx="3" ry="1.5" fill="#fff" opacity=".35"/>',"0 0 30 44")};
+D.ongle=svg('<path d="M12 1C18 1 22 8 22 17V31Q22 39 12 39Q2 39 2 31V17C2 8 6 1 12 1Z" fill="#E8357A"/><path d="M5 33Q12 27 19 33Q19 37 12 37Q5 37 5 33Z" fill="#fff" opacity=".35"/><path d="M7 9Q9 5 12 4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".85"/><path d="M6.5 14V26" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".35"/>',"0 0 24 40");
+D.strass=function(c){return svg('<defs><radialGradient id="s" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="'+c+'"/><stop offset="1" stop-color="#3A2440"/></radialGradient></defs><circle cx="20" cy="20" r="18" fill="#C9C9D4"/><path d="M20 4L31 9L36 20L31 31L20 36L9 31L4 20L9 9Z" fill="url(#s)"/><path d="M20 4L20 13M36 20L27 20M20 36L20 27M4 20L13 20M9 9L14 14M31 9L26 14M31 31L26 26M9 31L14 26" stroke="#fff" stroke-width=".8" opacity=".6"/><path d="M14 13H26L27 27H13Z" fill="#fff" opacity=".3"/>')};
+D.lettre=svg('<rect x="1" y="1" width="38" height="26" rx="3" fill="#FFF5F8" stroke="#F2A7C3" stroke-width="1.2"/><path d="M2 3L20 16L38 3" stroke="#F2A7C3" stroke-width="1.2" fill="#FDE3EC"/><path d="M20 20C16 17 14 15.5 14 13.6A2.8 2.8 0 0 1 20 12.4A2.8 2.8 0 0 1 26 13.6C26 15.5 24 17 20 20Z" fill="#E0204F"/>',"0 0 40 28");
+/* série 8 (20/11) : des gestes jamais vus sur Loginail */
+var F="../loginail-site/fonds-img/";
+function im(n){return "url("+F+n+".webp) center/cover"}
+D.bulle=function(c){return svg('<defs><radialGradient id="b" cx=".5" cy=".5" r=".5"><stop offset=".62" stop-color="#fff" stop-opacity=".06"/><stop offset=".8" stop-color="'+c[0]+'" stop-opacity=".55"/><stop offset=".92" stop-color="'+c[1]+'" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".95"/></radialGradient></defs><circle cx="20" cy="20" r="18" fill="url(#b)"/><ellipse cx="13" cy="12" rx="4.5" ry="2.6" fill="#fff" opacity=".9" transform="rotate(-35 13 12)"/><circle cx="27" cy="28" r="1.6" fill="#fff" opacity=".7"/>')};
+var NEONS={coeur:'<path d="M20 33C9 25 5 20 5 14A7 7 0 0 1 20 11A7 7 0 0 1 35 14C35 20 31 25 20 33Z"/>',etoile:'<path d="M20 5L24 15L35 16L27 23L29.5 34L20 28L10.5 34L13 23L5 16L16 15Z"/>',eclair:'<path d="M23 4L11 22H19L16 36L29 17H21Z"/>',lune:'<path d="M25 6A14 14 0 1 0 33 30A11 11 0 1 1 25 6Z"/>',ongle:'<path d="M20 5C25 5 28 10 28 17V28Q28 35 20 35Q12 35 12 28V17C12 10 15 5 20 5Z"/><path d="M15 29Q20 25 25 29"/>',levres:'<path d="M5 21C9 14 15 13 20 16C25 13 31 14 35 21C29 29 11 29 5 21Z"/><path d="M6 21C14 23 26 23 34 21"/>'};
+D.neon=function(f,c){var p=NEONS[f];return svg('<defs><filter id="h" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter></defs><g fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="'+c+'" stroke-width="5" filter="url(#h)" opacity=".95">'+p+'</g><g stroke="'+c+'" stroke-width="2.6">'+p+'</g><g stroke="#fff" stroke-width="1" opacity=".9">'+p+'</g></g>')};
+D.polaroid=function(c1,c2,deco){return svg('<rect x="2" y="2" width="36" height="42" rx="1.5" fill="#FFFDFB"/><rect x="5" y="5" width="30" height="29" fill="url(#p)"/><defs><linearGradient id="p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c1+'"/><stop offset="1" stop-color="'+c2+'"/></linearGradient></defs>'+deco+'<path d="M7 7L14 7" stroke="#fff" stroke-width="1.4" opacity=".6" stroke-linecap="round"/>',"0 0 40 46")};
+var DECO=['<path d="M20 28C14 24 11 21 11 17.5A4 4 0 0 1 20 16A4 4 0 0 1 29 17.5C29 21 26 24 20 28Z" fill="#fff" opacity=".9"/>','<circle cx="27" cy="13" r="4" fill="#FFF3B0"/><path d="M5 34L14 22L20 28L26 20L35 34Z" fill="#fff" opacity=".55"/>','<path d="M16 26Q17 17 24 12M24 27Q24 18 24 12" stroke="#5A7A2E" stroke-width="1.1" fill="none"/><circle cx="15" cy="28" r="4" fill="#D3203A"/><circle cx="25" cy="28" r="3.8" fill="#C01A33"/>','<path d="M20 12L22 18L28 19L23.5 23L25 29L20 26L15 29L16.5 23L12 19L18 18Z" fill="#fff" opacity=".9"/>'];
+D.bisou=function(c){return svg('<g fill="'+c+'"><path d="M3 19C6 12 13 10 19.5 14C20 12.5 21 12.5 21.5 14C28 10 34 12 37 19C33 20 26 20.5 20 19C14 20.5 7 20 3 19Z" opacity=".92"/><path d="M4 21C9 22 15 22.5 20 22C25 22.5 31 22 36 21C32 28 25 31 20 31C15 31 8 28 4 21Z" opacity=".9"/></g><g stroke="#fff" stroke-width=".6" opacity=".4" fill="none"><path d="M9 17L10 19M13 15L14 18.5M17 14.5L17.5 18M24 14.5L23.5 18M28 15L27 18.5M32 17L31 19"/><path d="M9 24L10 26.5M13 24.5L13.5 28M17 25L17.3 29M23 25L22.7 29M27 24.5L26.5 28M31 24L30 26.5"/></g>',"0 0 40 34")};
+D.ballon=function(c){return svg(defs("g",c)+'<path d="M20 44C9 36 3 29 3 20A9.5 9.5 0 0 1 20 13A9.5 9.5 0 0 1 37 20C37 29 31 36 20 44Z" fill="url(#g)"/><path d="M9 18Q10 12 16 11" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/><path d="M18 44L22 44L21 47L19 47Z" fill="'+c[1]+'"/><path d="M20 47Q16 55 21 62Q26 70 19 78Q15 84 20 90" stroke="#fff" stroke-width=".9" fill="none" opacity=".9"/>',"0 0 40 90")};
+D.pendentif=function(charm){var p="";for(var y=4;y<64;y+=6)p+='<circle cx="10" cy="'+y+'" r="2.6" fill="url(#q)"/>';return svg('<defs><radialGradient id="q" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#F6E8EC"/><stop offset="1" stop-color="#BFA6AE"/></radialGradient>'+(charm=="or"?'<linearGradient id="o" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4C2"/><stop offset=".5" stop-color="#E2B54E"/><stop offset="1" stop-color="#9C6B1E"/></linearGradient>':'<linearGradient id="o" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#C9C9D6"/><stop offset="1" stop-color="#6F6F80"/></linearGradient>')+'</defs><path d="M10 0V66" stroke="#E9DCC9" stroke-width=".6"/>'+p+'<circle cx="10" cy="67" r="1.8" fill="none" stroke="url(#o)" stroke-width="1.2"/><path d="M10 92C2 86 0 82 0 77.5A5 5 0 0 1 10 75A5 5 0 0 1 20 77.5C20 82 18 86 10 92Z" fill="url(#o)"/><path d="M3.5 77Q4.5 74 7.5 74" stroke="#fff" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".9"/>',"0 0 20 94")};
+D.fleur=function(c){var p="";for(var i=0;i<6;i++)p+='<ellipse cx="20" cy="9.5" rx="5.6" ry="9" fill="'+c+'" transform="rotate('+(i*60)+' 20 20)"/>';return svg(p+'<g opacity=".45" fill="#fff">'+'<ellipse cx="18.5" cy="8" rx="1.6" ry="4" transform="rotate(-8 18.5 8)"/></g><circle cx="20" cy="20" r="5.6" fill="#FFD25A"/><circle cx="18.3" cy="18.3" r="1.6" fill="#FFF3C0"/>')};
+var VICHY="linear-gradient(90deg,rgba(150,190,140,.22) 50%,transparent 50%) 0 0/22px 22px,linear-gradient(rgba(150,190,140,.22) 50%,transparent 50%) 0 0/22px 22px,#FBFAF2";
+/* série 8 (20/11) : les 6 images de Marie (n200 à n205), avec des objets tirés de chaque image */
+D.ver=function(c){return svg(defs("g",c)+'<path d="M4 16C10 4 16 4 22 14S34 24 40 12S52 4 56 14" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round"/><path d="M6 13C11 6 15 6 20 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>',"0 0 60 28")};
+D.coquille=function(c){return svg(defs("g",c)+'<path d="M20 4C32 4 38 14 36 24C34 33 26 38 18 36C9 34 4 26 6 17C8 9 13 4 20 4Z" fill="url(#g)" stroke="rgba(255,255,255,.6)" stroke-width="1"/><path d="M20 14C26 14 28 20 25 25C22 29 15 28 14 22C13 18 16 15 20 16" fill="none" stroke="#fff" stroke-width="1.3" opacity=".65"/><path d="M10 12Q12 8 17 7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".9"/>')};
+var GALET={tri:'M20 5Q24 5 27 11L35 29Q37 35 31 35H9Q3 35 5 29L13 11Q16 5 20 5Z',lune:'M2 10C6 30 34 30 38 10C28 21 12 21 2 10Z',demi:'M18 4C8 4 4 12 4 20S8 36 18 36ZM22 4C32 4 36 12 36 20S32 36 22 36Z'};
+D.galet=function(k,c){return svg(defs("g",c)+'<path d="'+GALET[k]+'" fill="url(#g)" stroke="rgba(0,0,0,.18)" stroke-width=".8"/><path d="M11 15Q14 10 19 9" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".45"/>')};
+D.fleurN=function(c){var p="";for(var i=0;i<4;i++)p+='<path d="M20 20C13 12 15 3 20 1C25 3 27 12 20 20Z" fill="url(#g)" stroke="#CDBB8A" stroke-width=".6" transform="rotate('+(i*90)+' 20 20)"/>';return svg(defs("g",c)+p+'<path d="M20 15L24 20L20 25L16 20Z" fill="#F5E9C8" stroke="#C9B47A" stroke-width=".6"/>')};
+D.losange=function(c){return svg(defs("g",c)+'<path d="M20 2L30 20L20 38L10 20Z" fill="url(#g)" stroke="#CDBB8A" stroke-width=".8"/>')};
+D.opale=svg(defs("g",["#FFFFFF","#FFD6E8","#C6EFFF","#FFF1B8"])+'<path d="M15 2C21 12 28 22 28 30A13 13 0 0 1 2 30C2 22 9 12 15 2Z" fill="url(#g)" stroke="rgba(255,255,255,.85)" stroke-width="1"/><path d="M8 30Q8 21 13 14" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/><circle cx="19" cy="31" r="3" fill="#BDEBFF" opacity=".55"/>',"0 0 30 44");
+D.pierre=svg(defs("g",["#5C7CFF","#1A24C8","#0A0F6B"])+'<path d="M6 8C12 0 30 2 38 8C44 14 42 24 34 27C24 31 10 29 5 22C1 17 2 12 6 8Z" fill="url(#g)" stroke="#7FA8FF" stroke-width="1"/><path d="M10 9Q18 4 28 7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/><path d="M14 20Q22 24 32 19" stroke="#7FA8FF" stroke-width="1.2" fill="none" opacity=".6"/>',"0 0 44 30");
+D.ecaille=svg(defs("g",["#FFE1A0","#E89A3C","#B5561A"])+'<path d="M2 2H42C42 16 33 24 22 24C11 24 2 16 2 2Z" fill="url(#g)" stroke="#8A3A10" stroke-width=".7"/><path d="M10 7L16 13L22 6L29 14L35 7" stroke="#fff" stroke-width="1.1" opacity=".55" fill="none" stroke-linejoin="round"/>',"0 0 44 26");
+D.anneau=svg(defs("g",["#EFE0FF","#B58BEA"])+'<circle cx="20" cy="20" r="14" fill="none" stroke="url(#g)" stroke-width="5.5"/><circle cx="20" cy="20" r="14" fill="none" stroke="#8D62CC" stroke-width=".7" opacity=".6"/><path d="M9 14Q12 8 19 7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".85"/>');
+D.perleL=svg('<defs><radialGradient id="q" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#E4D3FA"/><stop offset="1" stop-color="#A988DE"/></radialGradient></defs><circle cx="20" cy="20" r="17" fill="url(#q)"/><path d="M11 14Q13 9 18 8" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>');
+D.sardine=svg('<path d="M4 14C12 4 30 4 42 12L54 4V24L42 16C30 24 12 24 4 14Z" fill="#F3E3C4" stroke="#C9B58A" stroke-width=".8"/><path d="M10 11C20 6 32 7 40 12C30 11 18 11 10 11Z" fill="#2B3FA6"/><circle cx="12" cy="13" r="1.6" fill="#2B3FA6"/><path d="M26 8L30 4L33 9" fill="#E24B2B"/>',"0 0 56 28");
+var TOUS=[
+{n:"Éclats holo qui scintillent",d:"des éclats irisés apparaissent et disparaissent",fond:im("n178"),fx:function(t){
+  objets(t,{n:12,graine:201,image:function(r){return D.eclat(["#FFFFFF","#E9DDFF","#FFD9F2"][Math.floor(r()*3)])},taille:[14,26],geste:"pop",duree:[2.2,4],courbe:"ease-out",depart:"place",style:""})}},
+{n:"Cerises qui rebondissent",d:"des cerises sautillent sur ta vague gloss",fond:im("n179"),fx:function(t){
+  objets(t,{n:7,graine:202,image:D.cerise,taille:[24,34],geste:"sautille",duree:[2.4,3.6],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Notes de musique qui montent",d:"des notes montent sur ton salon rétro",fond:im("n180"),fx:function(t){
+  objets(t,{n:9,graine:203,image:function(r){return D.note(["#A3182A","#E0205F","#7A1230"][Math.floor(r()*3)])},taille:[18,28],geste:"monte",duree:[6,10],courbe:"ease-in-out",depart:"bas",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Diamants qui apparaissent",d:"des diamants scintillent sur ta mosaïque nacrée",fond:im("n181"),fx:function(t){
+  objets(t,{n:9,graine:204,image:D.diamant,taille:[20,32],geste:"pop",duree:[2.6,4.6],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Fraises qui tombent",d:"des fraises tombent sur ton vichy rouge",fond:im("n182"),fx:function(t){
+  objets(t,{n:9,graine:205,image:D.fraise,taille:[22,34],geste:"tombe",duree:[7,11],courbe:"ease-in",depart:"haut",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Cœurs qui glissent",d:"des cœurs montent doucement derrière ta pin-up",fond:im("n183"),fx:function(t){
+  objets(t,{n:10,graine:206,image:function(r){return D.coeur(r()>.5?["#FFD1DC","#E0204F"]:["#FFFFFF","#FF7A9C"])},taille:[18,30],geste:"glisse",duree:[6,10],courbe:"ease-in-out",depart:"bas",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Nœuds qui tombent",d:"des nœuds tombent sur ton vichy prune",fond:im("n184"),fx:function(t){
+  objets(t,{n:8,graine:207,image:D.noeud,taille:[24,34],geste:"tombe",duree:[7,11],courbe:"ease-in",depart:"haut",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Perles qui flottent",d:"des perles flottent sur tes vagues chocolat",fond:im("n185"),fx:function(t){
+  objets(t,{n:10,graine:208,image:D.perles,taille:[18,28],geste:"flotte",duree:[3.5,5.5],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Étoiles argentées qui scintillent",d:"des étoiles chromées apparaissent sur ta nacre bleue",fond:im("n186"),fx:function(t){
+  objets(t,{n:11,graine:209,image:D.etoileA,taille:[16,28],geste:"pop",duree:[2.4,4.4],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Nœuds qui sautillent",d:"des nœuds roses sautillent sur tes nœuds violets",fond:im("n187"),fx:function(t){
+  objets(t,{n:8,graine:210,image:D.noeudC("#FF8FB8","#E04D86","#B8326A"),taille:[24,34],geste:"sautille",duree:[2.6,4],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Marguerites qui se balancent",d:"des marguerites flottent autour de ta lampe à lave",fond:im("n188"),fx:function(t){
+  objets(t,{n:9,graine:211,image:function(r){return D.fleur(r()>.5?"#FFFFFF":"#FFE3C2")},taille:[24,36],geste:"flotte",duree:[3.5,5.5],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Ongles qui se posent",d:"des ongles se posent de travers puis s'effacent",fond:im("n189"),fx:function(t){
+  objets(t,{n:9,graine:212,image:D.ongle,taille:[20,30],ratio:1.67,geste:"pose",duree:[6,9],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Colliers argentés qui se balancent",d:"des colliers de perles chromées pendent du haut",fond:im("n190"),fx:function(t){
+  objets(t,{n:6,graine:213,image:D.pendentif("chrome"),taille:[18,24],ratio:4.7,geste:"pendule",duree:[3,4.6],courbe:"ease-in-out",depart:"toit",style:"transform-origin:50% 0;filter:drop-shadow(0 4px 4px rgba(0,20,0,.4))"})}},
+{n:"Cerises qui tombent",d:"des cerises tombent sur tes rayures",fond:im("n191"),fx:function(t){
+  objets(t,{n:8,graine:214,image:D.cerise,taille:[24,34],geste:"tombe",duree:[7,11],courbe:"ease-in",depart:"haut",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Pétales qui tombent",d:"des pétales tombent sur tes orchidées",fond:im("n192"),fx:function(t){
+  objets(t,{n:11,graine:215,image:D.petale,taille:[16,28],geste:"tombe",duree:[8,12],courbe:"ease-in",depart:"haut",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Fleurs portées par le vent",d:"des fleurs jaunes et roses s'envolent en tournant",fond:im("n193"),fx:function(t){
+  objets(t,{n:8,graine:216,image:function(r){return D.fleur(r()>.5?"#FFD25A":"#FFB3C8")},taille:[18,28],geste:"vent",duree:[9,14],courbe:"linear",depart:"vent",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Petits cœurs qui montent",d:"des petits cœurs roses montent sur ton damier",fond:im("n195"),fx:function(t){
+  objets(t,{n:10,graine:217,image:D.coeur(["#FFE1EA","#FF9DB8"]),taille:[14,22],geste:"monte",duree:[7,11],courbe:"ease-in-out",depart:"bas",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Sardines qui nagent",d:"des sardines traversent, des bulles montent",fond:im("n196"),fx:function(t){
+  objets(t,{n:5,graine:218,image:D.sardine,taille:[40,60],ratio:0.5,geste:"vole",duree:[10,16],courbe:"ease-in-out",depart:"gauche",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"});
+  objets(t,{n:7,graine:219,image:D.bulle(["#9AD8FF","#FFFFFF"]),taille:[12,24],geste:"monte",duree:[5,9],courbe:"ease-in-out",depart:"bas",style:""})}},
+{n:"Ballons qui s'envolent",d:"des ballons colorés montent sur tes cercles",fond:im("n197"),fx:function(t){
+  objets(t,{n:8,graine:220,image:function(r){var k=r();return k<.3?D.ballon(["#FFC2DC","#F0609E"]):k<.6?D.ballon(["#FFF0B3","#F5B800"]):k<.8?D.ballon(["#B6F0F0","#12A3A3"]):D.ballon(["#E9DDFF","#A983F0"])},taille:[18,28],ratio:2.25,geste:"monte",duree:[8,13],courbe:"ease-in-out",depart:"bas",style:"transform-origin:50% 100%;filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Boules disco qui se balancent",d:"des boules disco pendent et scintillent",fond:im("n198"),fx:function(t){
+  objets(t,{n:5,graine:221,image:D.disco,taille:[26,36],geste:"pendule",duree:[3,4.6],courbe:"ease-in-out",depart:"toit",style:"transform-origin:50% 0;filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"});
+  objets(t,{n:10,graine:222,image:D.eclat("#FFFFFF"),taille:[12,22],geste:"pop",duree:[2.2,4],courbe:"ease-out",depart:"place",style:""})}},
+{n:"Éclats d'or qui apparaissent",d:"des éclats dorés scintillent sur ton cuir",fond:im("n199"),fx:function(t){
+  objets(t,{n:12,graine:223,image:D.eclat(["#FFD27A","#FFF0C2"][0]),taille:[14,24],geste:"pop",duree:[2.2,4],courbe:"ease-out",depart:"place",style:""})}},
+{n:"Vers de verre qui nagent",d:"des vers de verre rouge ondulent sur ton damier bleu",fond:im("n200"),fx:function(t){
+  objets(t,{n:5,graine:91,image:function(r){return D.ver(r()>.5?["#FF4B3E","#C4161C"]:["#FF7A6B","#D4202A"])},taille:[34,52],ratio:0.47,geste:"vole",duree:[9,15],courbe:"ease-in-out",depart:"gauche",style:"filter:drop-shadow(0 4px 3px rgba(20,40,120,.3))"});
+  objets(t,{n:4,graine:92,image:D.coquille(["#FF5A4F","#C4161C"]),taille:[22,32],geste:"sautille",duree:[3,5],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 4px 3px rgba(20,40,120,.3))"})}},
+{n:"Galets qui tombent",d:"des galets de terre cuite et de lapis tombent en tournant",fond:im("n201"),fx:function(t){
+  objets(t,{n:7,graine:93,image:function(r){var k=["tri","lune","demi"][Math.floor(r()*3)],c=[["#E07A45","#B84A1C"],["#4A5CD8","#1B2A9E"],["#F0D2A6","#D3A877"]][Math.floor(r()*3)];return D.galet(k,c)},taille:[22,36],geste:"tombe",duree:[7,11],courbe:"ease-in",depart:"haut",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Fleurs de nacre qui éclosent",d:"des fleurs de nacre s'ouvrent sur ton vert émeraude",fond:im("n202"),fx:function(t){
+  objets(t,{n:11,graine:94,image:function(r){return D.fleurN(r()>.5?["#FFFFFF","#F4E3EC","#BFE9D2"]:["#F4FFF8","#D5F2E2","#A8E0C4"])},taille:[20,34],geste:"eclot",duree:[6,9],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"});
+  objets(t,{n:9,graine:95,image:D.losange(["#FFFFFF","#F6DDE8","#CDEBDD"]),taille:[8,13],ratio:1.6,geste:"pop",duree:[2.4,4.4],courbe:"ease-out",depart:"place",style:""})}},
+{n:"Gouttes d'opale qui montent",d:"des opales et des pierres bleues montent comme des bulles",fond:im("n203"),fx:function(t){
+  objets(t,{n:6,graine:96,image:D.opale,taille:[18,28],ratio:1.45,geste:"monte",duree:[8,13],courbe:"ease-in-out",depart:"bas",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"});
+  objets(t,{n:5,graine:97,image:D.pierre,taille:[24,38],ratio:0.68,geste:"monte",duree:[9,15],courbe:"ease-in-out",depart:"bas",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Étoiles de cuivre",d:"des étoiles dorées apparaissent sur tes écailles",fond:im("n204"),fx:function(t){
+  objets(t,{n:11,graine:224,image:D.etoile(["#FFE1A0","#E8903C"]),taille:[16,28],geste:"pop",duree:[2.4,4.4],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Anneaux lilas qui battent",d:"des anneaux de cordon lilas battent sur ton moiré",fond:im("n205"),fx:function(t){
+  objets(t,{n:8,graine:99,image:D.anneau,taille:[18,30],geste:"bat",duree:[1.3,2],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"});
+  objets(t,{n:7,graine:100,image:D.perleL,taille:[10,16],geste:"flotte",duree:[3,5],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Nuit d'étoiles",d:"des étoiles s'allument, la lune se balance",fond:"radial-gradient(circle at 50% 30%,#2A2150,#120D2B 70%)",fx:function(t){
+  objets(t,{n:14,graine:231,image:D.etoile(["#FFF0B8","#F2B84B"]),taille:[10,20],geste:"pop",duree:[2,4],courbe:"ease-out",depart:"place",style:""});
+  objets(t,{n:2,graine:232,image:D.lune,taille:[26,34],geste:"ballon",duree:[4,6],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Damier et cerises",d:"des cerises sautillent sur ton damier noir et blanc",fond:"repeating-conic-gradient(#fff 0 25%,#1E1C1B 0 50%) 0 0/36px 36px",fx:function(t){
+  objets(t,{n:6,graine:233,image:D.cerise,taille:[26,36],geste:"sautille",duree:[2.4,3.6],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Oursons gourmands",d:"des oursons bonbons tombent sur tes rayures",fond:"repeating-linear-gradient(90deg,#FFD3E2 0 9cqw,#FFFFFF 9cqw 18cqw)",fx:function(t){
+  objets(t,{n:8,graine:234,image:function(r){return D.ourson(["#FF6F9C","#FFB347","#8BE0A4","#B79BFF"][Math.floor(r()*4)])},taille:[22,32],ratio:1.1,geste:"tombe",duree:[7,11],courbe:"ease-in",depart:"haut",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Méduses lilas",d:"des méduses montent doucement",fond:"linear-gradient(180deg,#E8DBFF,#B9A3F0 60%,#8E73D9)",fx:function(t){
+  objets(t,{n:7,graine:235,image:D.meduse,taille:[24,38],ratio:1.2,geste:"monte",duree:[9,14],courbe:"ease-in-out",depart:"bas",style:""})}},
+{n:"Vichy bleu et fleurs",d:"des fleurs s'ouvrent sur ton vichy bleu",fond:"linear-gradient(90deg,rgba(120,160,230,.28) 50%,transparent 50%) 0 0/22px 22px,linear-gradient(rgba(120,160,230,.28) 50%,transparent 50%) 0 0/22px 22px,#F6F9FF",fx:function(t){
+  objets(t,{n:14,graine:236,image:function(r){return D.fleur(["#FFD25A","#FF8FB8","#B98CF0"][Math.floor(r()*3)])},taille:[18,30],geste:"eclot",duree:[6,9],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Satin noir et diamants",d:"des diamants apparaissent sur ton satin noir",fond:"linear-gradient(160deg,#2A2A2E,#0E0E10 60%,#26262B)",fx:function(t){
+  objets(t,{n:10,graine:237,image:D.diamant,taille:[20,30],geste:"pop",duree:[2.6,4.6],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Pois rouges et nœuds",d:"des nœuds sautillent sur tes pois",fond:"radial-gradient(circle,#fff 28%,transparent 30%) 0 0/28px 28px,#D3203A",fx:function(t){
+  objets(t,{n:7,graine:238,image:D.noeudC("#FFFFFF","#F3C6D0","#E8899E"),taille:[24,34],geste:"sautille",duree:[2.6,4],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"CD qui roulent",d:"des CD irisés traversent ton fond pêche",fond:"linear-gradient(180deg,#FFE5D6,#FFC9B5)",fx:function(t){
+  objets(t,{n:5,graine:239,image:D.cd,taille:[24,36],geste:"roule",duree:[9,13],courbe:"linear",depart:"gauche",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Cœurs-miroirs",d:"des cœurs-miroirs flottent sur ton rose",fond:"linear-gradient(170deg,#FFD9E6,#F7A8C4)",fx:function(t){
+  objets(t,{n:7,graine:240,image:D.miroir,taille:[22,30],geste:"ballon",duree:[3.5,5.5],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Bulles de menthe",d:"des bulles montent sur ton dégradé menthe",fond:"linear-gradient(180deg,#E4F7EC,#BFE9D2)",fx:function(t){
+  objets(t,{n:10,graine:241,image:D.bulle(["#9AD8FF","#C9A6FF"]),taille:[16,34],geste:"monte",duree:[7,11],courbe:"ease-in-out",depart:"bas",style:""})}},
+{n:"Bordeaux et étoiles d'argent",d:"des étoiles chromées scintillent sur ton bordeaux",fond:"linear-gradient(160deg,#5E1236,#2E0818)",fx:function(t){
+  objets(t,{n:10,graine:242,image:D.etoileA,taille:[14,24],geste:"pop",duree:[2.4,4.4],courbe:"ease-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"});
+  objets(t,{n:2,graine:243,image:D.lune,taille:[24,32],geste:"ballon",duree:[4,6],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Zèbre rose et cœurs",d:"des cœurs sautillent sur ton zèbre rose",fond:ZEBRE,fx:function(t){
+  objets(t,{n:7,graine:244,image:D.coeur(["#FFFFFF","#FF8FB8"]),taille:[20,30],geste:"sautille",duree:[2.4,3.6],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}},
+{n:"Pêche et gloss",d:"des gloss sautillent sur ton dégradé pêche",fond:"linear-gradient(180deg,#FFD9C4,#FFB5A0)",fx:function(t){
+  objets(t,{n:6,graine:245,image:D.gloss,taille:[22,32],geste:"sautille",duree:[2.6,4],courbe:"ease-in-out",depart:"place",style:"filter:drop-shadow(0 3px 4px rgba(40,10,30,.28))"})}}
+];
+var COULEUR=false;
+function fabrique(f){var t=document.createElement("div");t.className="tuile";var im=document.createElement("div");im.className="img";im.style.background=f.fond;if(f.anim)im.style.animation=f.anim;t.appendChild(im);f.fx(t);return t}
+function grille(el,liste){liste.forEach(function(f,i){var b=document.createElement("button");b.className="carte";b.appendChild(fabrique(f));
+  b.insertAdjacentHTML("beforeend","<span>"+(i+1)+". "+f.n+(f.garde?'<em class="gard">gardé</em>':f.nouveau?'<em class="gard" style="background:#E8358F">nouveau</em>':"")+"</span><small>"+f.d+"</small>");b.onclick=function(){ouvre(i)};el.appendChild(b)})}
+grille(document.getElementById("g"),TOUS);
+setTimeout(function(){var m=location.search.match(/f=(\d)/);if(m)ouvre(+m[1]-1)},0);
+
+var ap=document.getElementById("apercu"),cur=0;
+function ouvre(i){cur=(i+TOUS.length)%TOUS.length;var z=document.getElementById("ap-tuile");z.innerHTML="";GRAND=Math.min(3,Math.max(1,Math.sqrt(innerWidth*innerHeight/(150*195))/1.1));z.appendChild(fabrique(TOUS[cur]));GRAND=1;
+  document.getElementById("ap-nom").textContent=(cur+1)+" / "+TOUS.length+" · "+TOUS[cur].n;document.title=TOUS[cur].n;ap.classList.add("ouvert")}
+document.getElementById("ap-x").onclick=function(){ap.classList.remove("ouvert");document.getElementById("ap-tuile").innerHTML=""};
+document.getElementById("ap-prec").onclick=function(){ouvre(cur-1)};document.getElementById("ap-suiv").onclick=function(){ouvre(cur+1)};
+addEventListener("keydown",function(e){if(!ap.classList.contains("ouvert"))return;if(e.key=="Escape")document.getElementById("ap-x").click();if(e.key=="ArrowRight")ouvre(cur+1);if(e.key=="ArrowLeft")ouvre(cur-1)});
+
+if(/seul/.test(location.search))document.body.classList.add('seul');
+</script>
+</body>
+</html>
