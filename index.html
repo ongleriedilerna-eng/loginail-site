@@ -2297,6 +2297,22 @@ document.addEventListener("DOMContentLoaded",function(){
    L'ombre est plus courte (elle s'efface 40 px avant le bord) et la section garde un peu plus de place dessous. */
 @media (max-width:760px){html body:not(#_) .cq.cq-bis{padding-bottom:28px}
   html body:not(#_) .cq.cq-bis .cq-res{box-shadow:0 3px 6px rgba(60,30,40,.08),0 20px 36px -12px rgba(120,40,70,.40),0 38px 60px -26px rgba(120,40,70,.45)}}
+/* 20/11 (Marie) : ORDINATEUR seulement — le carré 49,99 € prend l'ombre B « autocollant rose » (ombre nette framboise décalée + fin contour noir) */
+@media (min-width:761px){html body:not(#_) .v3 .v3carte{box-shadow:10px 12px 0 #E0628C;border:2px solid #1E1C1B}}
+/* 20/11 (Marie, 4e passage) : TÉLÉPHONE seulement —
+   1) « L'appli qui gère tout, dans ta poche » : d'abord les 4 téléphones, ensuite les bulles (notifications)
+   2) « Classe ou baddie ? » : un charm en plus à droite (ça faisait vide)
+   3) le carré 49,99 € descend tout à la fin, juste avant « Créer mon site gratuitement » (sans son propre bouton, pour ne pas avoir 2 boutons noirs collés) */
+.cq-fin,html body:not(#_) .ch-tel{display:none}
+@media (max-width:760px){
+  html body:not(#_) .ape{display:flex;flex-direction:column}
+  html body:not(#_) .ape .bzt{order:9;margin-top:22px}
+  html body:not(#_) .appli .cq-bis{display:none}
+  html body:not(#_) .cq.cq-bis.cq-fin{display:block;padding:34px 0 28px}
+  html body:not(#_) .cq-fin+.fin-go{margin-top:6px}
+  html body:not(#_) .styles .ch-tel{display:block}
+  html body:not(#_) #v3-styles .ch.ch-tel{left:auto!important;right:2.5%!important;top:142px!important;width:50px!important;rotate:14deg}
+}
 </style>
 <style id="fin-tel-f2">
 /* 19/11 nuit (Marie, version F2) : TÉLÉPHONE seulement — la fin de l'accueil en rose poudré avec le bord festonné (comme l'ordinateur),
@@ -2684,6 +2700,7 @@ document.addEventListener("DOMContentLoaded",function(){
 <!-- 4 · CLASSE OU BADDIE -->
 <section class="styles" id="v3-styles">
   <img class="ch" src="loginail-site/charms-mini/papilloncyber.webp" style="width:70px;left:8%;top:10px;rotate:-10deg" alt="">
+  <img class="ch ch-tel" src="loginail-site/charms-mini/cerisedisco.webp" style="width:60px;right:7%;top:205px;rotate:14deg" alt="">
   <div class="wrap vu">
     <div class="k">Plus de 30 univers</div>
     <h2 class="serif titre" style="margin-top:12px">Classe <em>ou</em> baddie ?</h2>
@@ -2733,6 +2750,13 @@ document.addEventListener("DOMContentLoaded",function(){
         <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
       </ul>
       <div class="k2c"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
+      <div class="cq cq-bis cq-fin" aria-label="Le prix"><div class="cq-res">
+        <div class="cq-logo">Logi<span>nail</span></div>
+        <div class="cq-prix">49,99 € <small>/ mois</small></div>
+        <div class="cq-offert">1er mois offert</div>
+        <div class="cq-pt">Sans engagement</div>
+        <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
+      </div></div>
       <div class="fin-go"><a href="loginail-creer/index.html">Créer mon site gratuitement →</a><small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small></div>
     </div>
     <div class="col-prix"><!-- 20/11 (Marie) : ordinateur — 49,99 € en haut, « Tout est inclus. » dessous, même largeur -->
