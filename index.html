@@ -2311,7 +2311,17 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .cq.cq-bis.cq-fin{display:block;padding:34px 0 28px}
   html body:not(#_) .cq-fin+.fin-go{margin-top:6px}
   html body:not(#_) .styles .ch-tel{display:block}
-  html body:not(#_) #v3-styles .ch.ch-tel{left:auto!important;right:2.5%!important;top:142px!important;width:50px!important;rotate:14deg}
+  /* 20/11 (Marie, 5e passage) : moins de vide — « dans ta poche » remonte sous « Rappel SMS · tout seul »,
+     « Classe ou baddie » remonte sous les bulles ; les bulles sont un peu plus grandes */
+  html body:not(#_) section.appli#v3-appli{padding-top:10px!important;padding-bottom:14px!important}
+  html body:not(#_) .ape{padding-top:6px;padding-bottom:0}
+  html body:not(#_) section.styles#v3-styles{padding-top:16px!important}
+  html body:not(#_) .bzt{height:350px;max-width:400px}
+  html body:not(#_) .bzt .b{width:334px;gap:11px;padding:11px 15px 11px 11px;border-radius:18px}
+  html body:not(#_) .bzt .b i{width:38px;height:38px;font-size:17px;border-radius:11px}
+  html body:not(#_) .bzt .b b{font-size:15px}
+  html body:not(#_) .bzt .b small{font-size:12.5px}
+  html body:not(#_) #v3-styles .ch.ch-tel{left:auto!important;right:2.5%!important;top:112px!important;width:50px!important;rotate:14deg}
 }
 </style>
 <style id="fin-tel-f2">
@@ -2796,7 +2806,7 @@ document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.clas
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 })()</script>
-<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div><div class="pied-bocaux" id="piedBocaux"><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide">Touche un bocal, puis secoue ou tourne ton téléphone ✦</div></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
+<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div><div class="pied-bocaux" id="piedBocaux"><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide">Touche un bocal, puis tourne ton téléphone ✦</div></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
 <div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
 
 <script>
@@ -3981,7 +3991,7 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
   const L=[['☾','Nouvelle réservation · 2 h','elle réserve pendant que tu dors'],['✉','Rappel SMS envoyé','inclus, sans limite'],['◉','128 vues cette semaine','tu sais combien l’ont vu'],
     ['◷','Une place se libère','la liste d’attente est prévenue'],['♡','Anniversaire d’Inès','un petit mot, en un clic'],['★','Fidélité · 6 sur 10','sa carte se remplit toute seule'],
     ['€','55 € encaissés','ta caisse du jour'],['↗','Instagram · 58 %','tu sais d’où elles viennent'],['✕','Annulation','la place se remet en ligne'],['%','0 % de commission','tout est pour toi']];
-  const pile=[];let n=0;const H=62;
+  const pile=[];let n=0;const H=70;/* 20/11 : bulles un peu plus grandes sur téléphone → un peu plus d'écart */
   const ajoute=()=>{const it=L[n++%L.length],e=document.createElement('div');e.className='b';e.setAttribute('aria-hidden','true');
     e.innerHTML='<i>'+it[0]+'</i><div><b>'+it[1]+'</b><small>'+it[2]+'</small></div>';e.style.top='-40px';e.style.opacity='0';e.style.scale='.92';z.appendChild(e);pile.unshift(e);
     requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*(innerWidth>760?68:H))+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
@@ -4116,7 +4126,8 @@ const V=1;let raf=0,vu=true;
       b.vx*=FREIN;b.vy*=FREIN;
       const nx=b.x+b.vx;if(libre(nx,b.y,b.r))b.x=nx;else{b.vx*=-.35;b.va+=b.vy*.02}
       const ny=b.y+b.vy;if(libre(b.x,ny,b.r))b.y=ny;else{b.vy*=-.35;b.vx*=.9;b.va=b.vx/b.r}
-      if(SOURIS)b.va=0;b.a+=b.va;b.va*=.96}
+      if(SOURIS)b.va=0;else b.va=b.va*.9+(b.vx/b.r)*.1; // 20/11 (Marie) : téléphone — quand il glisse, il tourne sur lui-même
+      b.a+=b.va;b.va*=.96}
     for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const p=B[i],q=B[j],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||1,mn=(p.r+q.r)*.92;
       if(d<mn){const k=(mn-d)/d/2,ux=dx*k,uy=dy*k;if(libre(p.x-ux,p.y-uy,p.r)){p.x-=ux;p.y-=uy}if(libre(q.x+ux,q.y+uy,q.r)){q.x+=ux;q.y+=uy}
         const rv=(q.vx-p.vx)*dx/d+(q.vy-p.vy)*dy/d;if(rv<0){const im=-rv*.5;p.vx-=im*dx/d;p.vy-=im*dy/d;q.vx+=im*dx/d;q.vy+=im*dy/d}}}
@@ -4130,7 +4141,7 @@ const V=1;let raf=0,vu=true;
     addEventListener('devicemotion',e=>{const a=e.acceleration||{};const fo=Math.hypot(a.x||0,a.y||0,a.z||0);if(fo>9)secousse=Math.min(9,fo*.45)});
     const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),sg=ios?1:-1;
     addEventListener('devicemotion',e=>{const g=e.accelerationIncludingGravity;if(!g||g.x==null)return; // gravité réelle, dans le repère de l'écran
-      const ax=sg*g.x/9.81,ay=sg*g.y/9.81;gx=gx*.8+(ax*.5)*.2;gy=gy*.8+(-ay*.5)*.2});aide.innerHTML='Secoue ou tourne ton téléphone ✦'}
+      const ax=sg*g.x/9.81,ay=sg*g.y/9.81;gx=gx*.8+(ax*.95)*.2;gy=gy*.8+(-ay*.95)*.2});aide.innerHTML='Tourne ou secoue ton téléphone ✦'} /* 20/11 (Marie) : plus de réaction quand on penche */
   async function demande(){try{if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
       const r=await DeviceMotionEvent.requestPermission();if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission)await DeviceOrientationEvent.requestPermission().catch(()=>{});
       if(r==='granted'){ecoute()}else aide.innerHTML='Touche les bocaux pour les secouer ✦'}else ecoute()}catch(e){aide.innerHTML='Touche les bocaux pour les secouer ✦'}}
@@ -4139,7 +4150,11 @@ const V=1;let raf=0,vu=true;
     for(const b of B){const dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d>RAY)continue;const k=(1-d/RAY)*fort,u=d||1;
       b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-(SOURIS?0:k*5);b.va+=(Math.random()-.5)*k*.4}};
   let appui=false;
-  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6);if(!capteurs&&!SOURIS)demande()});
+  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6)});
+  /* 20/11 (Marie) : sur iPhone, l'autorisation « mouvement » n'est acceptée qu'au moment où le doigt se lève (pas quand il se pose) :
+     on la demande là, sur les bocaux OU sur la petite phrase dessous */
+  const autorise=()=>{if(!capteurs&&!SOURIS)demande()};
+  cv.addEventListener('touchend',autorise);cv.addEventListener('click',autorise);aide.addEventListener('click',autorise);aide.style.cursor='pointer';
   cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35);else if(e.pointerType==='mouse')pousse(e,.5)}); // ordinateur : la souris qui passe remue les charms
   if(SOURIS){aide.innerHTML='Passe ta souris sur les bocaux ✦';cv.style.cursor='pointer'}
   addEventListener('pointerup',()=>{appui=false});addEventListener('pointercancel',()=>{appui=false});
