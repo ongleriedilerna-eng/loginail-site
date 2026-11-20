@@ -196,7 +196,9 @@
       if (!c) { ["color", "background", "-webkit-background-clip", "background-clip", "-webkit-text-fill-color"].forEach(k => el.style.removeProperty(k)); return; }
       if (deg) { el.style.setProperty("background", c, "important"); el.style.setProperty("-webkit-background-clip", "text", "important"); el.style.setProperty("background-clip", "text", "important"); el.style.setProperty("-webkit-text-fill-color", "transparent", "important");
         el.querySelectorAll("*:not(i)").forEach(x => x.style.setProperty("-webkit-text-fill-color", "transparent", "important")); }
-      else { el.style.setProperty("color", c, "important"); el.style.setProperty("-webkit-text-fill-color", c, "important"); el.querySelectorAll("*:not(i)").forEach(x => { x.style.setProperty("color", c, "important"); x.style.setProperty("-webkit-text-fill-color", c, "important"); }); } }); };
+      else { el.style.setProperty("color", c, "important"); el.style.setProperty("-webkit-text-fill-color", c, "important"); el.querySelectorAll("*:not(i)").forEach(x => { x.style.setProperty("color", c, "important"); x.style.setProperty("-webkit-text-fill-color", c, "important"); }); } });
+    /* 20/11 (Marie : « quand je change de charme, le prénom clignote ») : sa couleur choisie au doigt (couleur-libre.js) se remettait 40 ms plus tard → on la remet tout de suite */
+    if (window.__peintLibre) window.__peintLibre(); };
   new MutationObserver(() => { clearTimeout(peintNom.t); peintNom.t = setTimeout(peintNom, 120); }).observe(document.body, { childList: true, subtree: true });
   setTimeout(peintNom, 700); setTimeout(peintNom, 1500);
   /* 09/11 (Marie) : le nom ne doit jamais être coupé (« Priscil… » avec une écriture très large) : s'il dépasse, il rapetisse juste assez */
