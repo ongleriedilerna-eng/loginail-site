@@ -22,8 +22,15 @@
     ecran.classList.add("ecrin");
     const fr = !ecran._lang || ecran._lang === "fr";
     const btn = ecran.querySelector(".hent [data-res],.hent .he-btn") || ecran.querySelector("[data-res]"), h1 = ecran.querySelector(".hent h1,h1");
-    const acc = btn ? getComputedStyle(btn).backgroundColor : "";
-    ecran.style.setProperty("--e-acc", acc && !/rgba\(0, 0, 0, 0\)|transparent/.test(acc) ? acc : "#2A1B1E");
+    /* la couleur d'accent : celle du bouton Réserver si elle est bien pleine (certains boutons sont « en verre », presque transparents),
+       sinon la couleur des boutons du site (--btn), sinon la couleur du nom, sinon un brun foncé */
+    const plein = c => { const m = String(c || "").match(/rgba?\(([^)]+)\)/); if (!m) return false; const v = m[1].split(/[ ,\/]+/).filter(Boolean).map(Number); const a = v.length > 3 ? v[3] : 1;
+      const lum = (v[0] * .299 + v[1] * .587 + v[2] * .114) / 255; return a > .6 && lum < .8; };
+    const autres = [...ecran.querySelectorAll(".btns .plein,.onglets button.on,.hp .plein,.bouton,.pc-cat .on,.seg .on")].map(e => getComputedStyle(e).backgroundColor);
+    const cands = [btn && getComputedStyle(btn).backgroundColor, ...autres, getComputedStyle(ecran).getPropertyValue("--btn").trim(), h1 && getComputedStyle(h1).color];
+    const probe = document.createElement("i"); probe.style.cssText = "position:absolute;visibility:hidden"; ecran.appendChild(probe);
+    const acc = cands.map(c => { if (!c) return ""; probe.style.color = ""; probe.style.color = c; return getComputedStyle(probe).color; }).find(plein); probe.remove();
+    ecran.style.setProperty("--e-acc", acc || "#2A1B1E");
     if (h1) ecran.style.setProperty("--e-titre", getComputedStyle(h1).fontFamily);
     const secs = [...DF.querySelectorAll(":scope>.sec")];
     secs.forEach(s => { s.classList.remove(...[...s.classList].filter(c => c.startsWith("e-")));

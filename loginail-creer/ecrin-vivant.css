@@ -164,3 +164,12 @@
 .ecran.ecrin .e-avis .un-carte small{color:rgba(255,255,255,.6)!important}
 .ecran.ecrin .e-avis .un-carte .barre{background:rgba(255,255,255,.18)!important}
 .ecran.ecrin .e-avis .un-carte .barre i{background:var(--e-dore)!important}
+/* textes des avis toujours clairs sur le bloc foncé (certains réglages « blocs » du site forcent un texte foncé) */
+.ecran.ecrin:not(#a):not(#b) .e-avis p,.ecran.ecrin:not(#a):not(#b) .e-avis .un-carte p,.ecran.ecrin:not(#a):not(#b) .e-avis .al-i p{color:#f7eee9!important;opacity:1!important}
+.ecran.ecrin:not(#a):not(#b) .e-avis small,.ecran.ecrin:not(#a):not(#b) .e-avis .al-nb{color:rgba(255,255,255,.62)!important}
+.ecran.ecrin:not(#a):not(#b) .e-avis .gros b,.ecran.ecrin:not(#a):not(#b) .e-avis .al-tete b{font:400 72px/1 var(--e-titre,serif)!important;background:linear-gradient(180deg,#fff7e6,var(--e-dore));-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.ecran.ecrin:not(#a):not(#b) .e-avis .gros,.ecran.ecrin:not(#a):not(#b) .e-avis .gros div{color:rgba(255,255,255,.75)!important}
+.ecran.ecrin:not(#a):not(#b) .e-avis .et{color:var(--e-dore)!important}
+/* Instagram : textes clairs sur le bloc foncé, dans les 3 styles */
+.ecran.ecrin:not(#a):not(#b) .e-insta b,.ecran.ecrin:not(#a):not(#b) .e-insta .igprof span,.ecran.ecrin:not(#a):not(#b) .e-insta .igprof div,.ecran.ecrin:not(#a):not(#b) .e-insta .ig-top span,.ecran.ecrin:not(#a):not(#b) .e-insta .insta span{color:#fff!important}
+.ecran.ecrin:not(#a):not(#b) .e-insta small,.ecran.ecrin:not(#a):not(#b) .e-insta .exemple{color:rgba(255,255,255,.62)!important}
