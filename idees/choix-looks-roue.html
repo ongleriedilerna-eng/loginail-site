@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choix des Looks · roue de l'accueil</title>
+<style>html,body{margin:0;height:100%;background:#F6EFEA}iframe{border:0;width:100%;height:100%;display:block}</style>
+</head><body>
+<!-- Planche du 20/11 : les sites des téléphones de l'accueil (roue) remplacés par les Looks de Marie.
+     On charge la vraie page Personnaliser (pour avoir les vrais styles des sites), puis on pose la planche par-dessus. -->
+<iframe id="f" src="../loginail-creer/personnaliser.html"></iframe>
+<script>
+const ROUE = [["THE SLIDE SALON","ex-theslidesalon"],["nails by sab","ex-nailsbysab"],["IZI NAILS","ex-izinails"],["Sy’lver Salon","chrome"],["YOUR FAV NAIL TECH","ex-yourfavnailtech"],["Nails by Drimf","ex-nailsbydrimf"],["Les ongles de Lilow","ex-lesonglesdelilow"],["NAILVIZION","ex-nailvizion"],["Nails by Drimf (2)","ex-nailsbydrimf2"]];
+/* 20/11 : un nom de salon inventé + une ville par Look (sinon la roue montre 9 fois « Nails by Drimf · Marseille ») */
+const NOMS = [["Cyber Nails","Lyon"],["Nuage Nails","Nantes"],["L’Atelier Argent","Bordeaux"],["Jelly Nails","Lille"],["Studio Nacre","Paris"],["Rio Nails","Montpellier"],["Cherry Disco","Toulouse"],["Pink Léo","Nice"],["Holo Bar","Rennes"],["les Ongles de Cerise","Strasbourg"],["La Sirène Noire","Brest"]];
+/* pour l'image de l'accueil seulement : la grande spirale du look 3 cachait le nom du salon → posée plus haut, sur la photo */
+const AJUSTE = { 3: { piercingspirale: [58, 44, 170, -10, 1] } };
+const f = document.getElementById("f");
+f.addEventListener("load", () => { const W = f.contentWindow, D = f.contentDocument; let n = 0;
+  const go = () => { const P = W.Pilote; if (!P || !P.pret || !W.LOOKS_MARIE) { if (n++ < 200) return setTimeout(go, 150); return; }
+    const st = D.createElement("style"); st.textContent = `
+      #planche{position:fixed;inset:0;z-index:999999;overflow:auto;background:#F6EFEA;font-family:Jost,system-ui,sans-serif;color:#1E1C1B;padding:28px 16px 60px;box-sizing:border-box}
+      #planche h1{font:400 clamp(30px,4vw,44px)/1.1 "Cormorant Garamond",Georgia,serif;margin:0 auto 6px;max-width:1300px}
+      #planche h1 i{color:#B03562}
+      #planche p.s{margin:0 auto 26px;max-width:1300px;color:#6b625c;font-size:16px}
+      #planche h2{max-width:1300px;margin:30px auto 14px;font:600 13px/1 Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#B03562}
+      #planche .g{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:26px 18px}
+      #planche .g.l{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+      #planche .t{text-align:center}
+      #planche .tel{position:relative;margin:0 auto;border-radius:30px;background:#0b0b0c;padding:7px;box-shadow:0 18px 40px rgba(60,30,40,.18)}
+      #planche .ec{position:relative;overflow:hidden;border-radius:23px;aspect-ratio:390/844;background:#fff center top/cover}
+      #planche .miniS{position:absolute;inset:0;display:block}
+      #planche .num{position:absolute;left:-8px;top:-10px;z-index:5;width:40px;height:40px;border-radius:50%;background:#B03562;color:#fff;font:600 19px/40px Jost,sans-serif;box-shadow:0 4px 12px rgba(176,53,98,.35)}
+      #planche b{display:block;margin-top:11px;font-size:16px}
+      #planche small{display:block;color:#6b625c;font-size:13px}
+      #planche .roue .tel{opacity:.9}`;
+    D.head.appendChild(st);
+    const box = D.createElement("div"); box.id = "planche";
+    const LM = W.LOOKS_MARIE, MES = (() => { try { return JSON.parse(W.localStorage.getItem("lgnMesLooks") || "[]"); } catch (e) { return []; } })().filter(L => L.ph);
+    const tous = [...LM.map(L => [L, ""]), ...MES.map(L => [L, "pas encore rangé"])];
+    box.innerHTML = `<h1>Les téléphones de l’accueil, <i>avec tes Looks</i></h1>
+      <p class="s">Dis-moi les numéros des Looks que tu veux voir tourner sur l’accueil de loginail.fr (à la place des sites d’aujourd’hui).</p>
+      <h2>Tes Looks (${tous.length})</h2>
+      <div class="g l">${tous.map(([L, m], i) => `<div class="t"><div class="tel" style="width:min(100%,230px)"><span class="num">${i + 1}</span><div class="ec"><span class="miniS" data-i="${i}"></span></div></div><b>${NOMS[i] ? NOMS[i][0] : L.n}</b><small>${NOMS[i] ? NOMS[i][1] + " · look « " + L.n + " »" : m}</small></div>`).join("")}</div>
+      <h2>Aujourd’hui sur l’accueil (la roue)</h2>
+      <div class="g roue">${ROUE.map(([nm, im]) => `<div class="t"><div class="tel" style="width:min(100%,160px)"><div class="ec" style="background-image:url(../loginail-site/apercus-univers/${im}.webp)"></div></div><b>${nm}</b></div>`).join("")}</div>`;
+    /* ?seul=N : le look N tout seul, en vrai format téléphone 390 × 844 (pour fabriquer l'image de la roue de l'accueil) */
+    const seul = +new URLSearchParams(location.search).get("seul");
+    if (seul) box.innerHTML = `<span class="miniS" data-i="${seul - 1}" style="position:fixed;left:0;top:0;width:390px;height:844px;overflow:hidden"></span>`, box.style.padding = "0";
+    D.body.appendChild(box);
+    if (seul) setTimeout(() => { const m = box.querySelector(".miniS"); try { m.shadowRoot.firstElementChild.getAnimations({ subtree: true }).forEach(a => { const t = a.effect.getComputedTiming();
+      if (t.iterations !== Infinity && isFinite(t.endTime)) a.finish(); }); } catch (e) {} document.title = "PRET"; }, 2500);
+    requestAnimationFrame(() => box.querySelectorAll(".miniS").forEach(m => { const L0 = tous[+m.dataset.i][0], aj = AJUSTE[+m.dataset.i + 1], L = aj ? { ...L0, pos: { ...L0.pos, ...aj } } : L0;
+      P.montreSite(m, L.ph, m.offsetWidth || 216); try { W.charmsMini(m, L); } catch (e) {}
+      const nv = NOMS[+m.dataset.i]; if (nv && m.shadowRoot) { const w = D.createTreeWalker(m.shadowRoot, 4); let t;
+        while ((t = w.nextNode())) t.nodeValue = t.nodeValue.replace(/nails by drimf|les ongles de cerise/gi, x => x === x.toUpperCase() ? nv[0].toUpperCase() : nv[0]).replace(/marseille/gi, x => x === x.toUpperCase() ? nv[1].toUpperCase() : nv[1]); } }));
+  }; go(); });
+</script>
+</body></html>
