@@ -16,7 +16,7 @@ const DEF=["coeurchrome","etoilechrome","coeurcristal","coeurgeleerose","collier
 const ses=()=>{let l=[];try{l=(window.__pzEtat?window.__pzEtat().charms:(typeof BR!=="undefined"&&BR&&BR.charms))||[]}catch(e){}
   if(!l.length)try{l=(new URLSearchParams(location.search).get("charm")||"").split(",").filter(Boolean)}catch(e){}
   if(!l.length)l=DEF;return l};
-const src=k=>{try{if(typeof CHI!=="undefined"&&CHI[k])return CHI[k]}catch(e){}return CHB+k+".png"};
+const src=k=>{try{if(typeof CHI!=="undefined"&&CHI[k])return CHI[k]}catch(e){}return CHB+k+".webp"};   /* 20/11 : .webp (les .png ne sont pas en ligne) */
 const ch=i=>{const l=ses();return src(l[i%l.length])};
 
 const css=`

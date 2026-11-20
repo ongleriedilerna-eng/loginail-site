@@ -75,6 +75,11 @@ button:focus-visible{outline:2px solid var(--noir);outline-offset:2px}
 .ent.on{color:var(--noir);font-weight:500}
 .ent.on .mi{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
 .ent:active .mi{transform:scale(.96)}
+/* 20/11 (D62) : les habits du carré « Réserver » en tête de l'onglet En-tête */
+.entGrp{flex:0 0 100%;grid-column:1/-1;font:600 11px Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 2px 0}
+.entGrp b{color:#B5475E;font-weight:600}
+.ent.hab{position:relative}
+.ent .neuf{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:#B5475E;color:#fff;font:600 8.5px Jost,sans-serif;letter-spacing:.06em;padding:1px 6px;border-radius:999px;z-index:2;pointer-events:none;white-space:nowrap}
 /* fonds */
 .vg{width:64px;height:64px;border-radius:14px;overflow:hidden;position:relative;background:#EEE9E3;box-shadow:inset 0 0 0 1px var(--ligne);transition:transform .15s}
 .vg .f100,.vg .tuile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border-radius:0!important}
@@ -1056,7 +1061,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=2011flu2"></script>
+<script src="perso/perso-pilote.js?v=2011hab"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1101,7 +1106,14 @@ $("revenir").onclick = () => { $("app").classList.remove("agrandi"); setTimeout(
 function rendAutres(o) {}
 function rend(o) {
   if (!P.pret) return;
-  if (o === "entete") { const l = $("lEnt"); if (!l.children.length) l.innerHTML = P.ENT.map(([k, n]) => `<button class="ent" data-k="${k}"><span class="mi"></span>${n}</button>`).join("");
+  if (o === "entete") { const l = $("lEnt"); if (!l.children.length) { /* 20/11 (Marie, D62) : les 4 habits du carré « Réserver » en premier, sous « Nouveau · votre carré change d'habit », puis toutes les en-têtes */
+      const HAB = ["hticket", "hflacon", "harche", "hsans"], grp = t => `<div class="entGrp">${t}</div>`; let deja = false;
+      l.innerHTML = P.ENT.map(([k, n], i) => { const h = HAB.includes(k); let av = "";
+        if (h && i === 0) av = grp("<b>Nouveau</b> · votre carré change d’habit"); else if (!h && !deja && P.ENT.some(x => HAB.includes(x[0]))) { av = grp("Toutes les en-têtes"); }
+        if (!h) deja = true;
+        return av + `<button class="ent${h ? " hab" : ""}" data-k="${k}"><span class="mi"></span>${h ? '<span class="neuf">NOUVEAU</span>' : ""}${n}</button>`; }).join("");
+      const titres = () => { const nw = getComputedStyle(l).display === "flex" && getComputedStyle(l).flexWrap === "nowrap"; l.querySelectorAll(".entGrp").forEach(g => g.hidden = nw); };
+      titres(); addEventListener("resize", titres); }
     l.querySelectorAll(".ent").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.entete));
     /* 20/11 (Marie : « encore plus fluide ») : 81 petits téléphones dessinés d'un coup = 12 images/s (10 = 144). On ne dessine QUE ceux qu'on voit
        (+ une marge), les autres sont vidés ; ceux qu'on voit bougent, les autres sont en pause. */
