@@ -2636,8 +2636,8 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .m5 .marie-ig{background:none!important;box-shadow:none!important;height:auto!important;padding:0 0 3px!important;border-radius:0!important;border-bottom:1.5px solid #C2456F;gap:7px}
   html body:not(#_) .m5 .marie-ig svg{width:18px;height:18px}
   html body:not(#_) .m5 .m5-c{position:absolute;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(120,40,70,.2));animation:m5flotte 5s ease-in-out infinite}
-  html body:not(#_) .m5 .m5-c1{width:58px;left:0;bottom:-96px;rotate:-12deg}
-  html body:not(#_) .m5 .m5-c2{width:34px;left:20%;bottom:-150px;animation-delay:-2s}
+  html body:not(#_) .m5 .m5-c1{width:54px;left:2%;bottom:-62px;rotate:-12deg}
+  html body:not(#_) .m5 .m5-c2{width:32px;left:19%;bottom:-36px;animation-delay:-2s;z-index:1}
 }
 @media (prefers-reduced-motion:reduce){.m5 .m5-ch,.m5 .m5-c{animation:none!important}}
 </style>
@@ -2655,6 +2655,16 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .cq.cq-fin .cq-offert{margin:10px 0 12px;padding:7px 16px;font-size:15px}
   html body:not(#_) .cq.cq-fin .cq-zero{font-size:14.5px;margin-top:8px}
   html body:not(#_) .bzt{height:390px;padding-bottom:40px;margin-bottom:-40px}
+  /* 20/11 nuit (Marie) : « 49,99 € » bien au milieu, comme les 3 lignes dessous (« / mois » posé à côté, sans pousser le prix) */
+  html body:not(#_) .cq.cq-fin .cq-prix{position:relative;display:table;margin-left:auto!important;margin-right:auto!important}
+  html body:not(#_) .cq.cq-fin .cq-prix small{position:absolute;left:100%;bottom:.55em;margin-left:6px;white-space:nowrap;line-height:1}
+  /* « Qui a créé Loginail » : plus de boule disco, la partie remonte (elle n'occupe plus tout l'écran) */
+  html body:not(#_) section.marie{min-height:0!important;padding-top:34px!important;padding-bottom:86px!important}
+  /* « Bon à savoir » collé à « 1er mois offert · sans engagement » */
+  html body:not(#_) section.v3prix{padding-bottom:0!important}
+  html body:not(#_) .v3prix .fin-go{margin-bottom:0!important}
+  html body:not(#_) section.v3faq{padding-top:4px!important}
+  html body:not(#_) .marie-tel.m5{padding-top:0!important}
 }
 </style>
 </head><body>
@@ -2837,7 +2847,6 @@ document.addEventListener("DOMContentLoaded",function(){
       </div>
       <div class="signature">Marie</div>
       <div class="marie-tel m5"><!-- 20/11 nuit (Marie) : proposition 5 « très épurée » (idees/qui-a-cree-5.html) -->
-        <img class="m5-ch" src="loginail-site/charms-mini/bouledisco.webp" alt="">
         <div class="k">Qui a créé Loginail</div>
         <h2>Une prothésiste,<br><em>comme toi.</em></h2>
         <div class="m5-trait"></div>
@@ -2908,7 +2917,16 @@ document.addEventListener("DOMContentLoaded",function(){
 /* 20/11 (Marie) : côté Baddie = 7 de ses looks, en images qui bougent (outils/capture-looks-roue-anim.py) */
 const S3={baddie:[3,11,5,7,4,1,10].map(i=>'../apercus-univers/look-roue-anim-hd-'+i),/* 20/11 nuit : ordre de Marie (L'Atelier Argent, La Sirène Noire, Studio Nacre…) + grande qualité */classe:['tpl-maisonmoka','tpl-maisonnoire','tpl-atelierronce','tpl-studiopoudre','tpl-maisonlin','tpl-cristal','clean']};
 const r=document.getElementById('rangee');
-const montre=k=>{r.innerHTML=S3[k].map(n=>`<div class="tel"><img src="${M}${n}.webp" alt="" loading="lazy"></div>`).join('')};montre('baddie');
+/* 20/11 nuit (Marie) : TÉLÉPHONE — la rangée tourne en boucle (la liste 3 fois) et démarre sur le 1er site AU MILIEU,
+   avec déjà un téléphone qui dépasse à gauche et à droite ; quand on arrive au bout d'une copie, on revient sans que ça se voie */
+const telM=matchMedia('(max-width:760px)');
+const centre=j=>{const t=r.children[j];if(!t)return;const tb=t.getBoundingClientRect(),rb=r.getBoundingClientRect();r.style.scrollSnapType='none';r.scrollLeft+=(tb.left+tb.width/2)-(rb.left+rb.width/2);requestAnimationFrame(()=>r.style.scrollSnapType='')};
+const montre=k=>{const L=S3[k],n=L.length,boucle=telM.matches,T=boucle?[...L,...L,...L]:L;
+  r.dataset.n=boucle?n:0;r.innerHTML=T.map((x,j)=>`<div class="tel" data-i="${j%n}"><img src="${M}${x}.webp" alt="" loading="${boucle&&j>=n-1&&j<=n+1?'eager':'lazy'}"></div>`).join('');
+  if(boucle)requestAnimationFrame(()=>centre(n))};montre('baddie');
+let finT=0;r.addEventListener('scroll',()=>{const n=+r.dataset.n;if(!n)return;clearTimeout(finT);finT=setTimeout(()=>{
+  const t=[...r.children],rb=r.getBoundingClientRect(),c=rb.left+rb.width/2;let j=0,d=1e9;t.forEach((e,i)=>{const b=e.getBoundingClientRect(),x=Math.abs(b.left+b.width/2-c);if(x<d){d=x;j=i}});
+  if(j<n||j>=2*n)centre(n+(j%n))},160)},{passive:true});
 document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.classList.contains('on'))return;document.querySelectorAll('.bascule button').forEach(x=>x.classList.toggle('on',x===b));r.classList.add('change');setTimeout(()=>{montre(b.dataset.s);requestAnimationFrame(()=>r.classList.remove('change'))},260)});
 /* apparition au défilement */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
@@ -4320,10 +4338,10 @@ const V=1;let raf=0,vu=true;
 (function(){
   const r=document.getElementById('rangee');if(!r)return;
   const pts=document.createElement('div');pts.className='pts-styles';pts.setAttribute('aria-hidden','true');r.after(pts);
-  const maj=()=>{const t=[...r.children];if(pts.children.length!==t.length)pts.innerHTML=t.map(()=>'<span></span>').join('');
+  const maj=()=>{const t=[...r.children],nb=+r.dataset.n||t.length;if(pts.children.length!==nb)pts.innerHTML=Array.from({length:nb},()=>'<span></span>').join('');
     const R=r.getBoundingClientRect(),c=R.left+R.width/2;let best=0,dmin=1e9;
     t.forEach((e,i)=>{const b=e.getBoundingClientRect(),d=Math.abs(b.left+b.width/2-c);if(d<dmin){dmin=d;best=i}});
-    [...pts.children].forEach((p,i)=>p.classList.toggle('ici',i===best))};
+    const ici=t[best]&&t[best].dataset.i!=null?+t[best].dataset.i:best;[...pts.children].forEach((p,i)=>p.classList.toggle('ici',i===ici))};
   r.addEventListener('scroll',maj,{passive:true});new MutationObserver(()=>requestAnimationFrame(maj)).observe(r,{childList:true});
   addEventListener('resize',maj);maj();
 })();

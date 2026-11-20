@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparer · téléphone</title>
+<style>
+@font-face{font-family:'Abril Fatface';src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format('woff2')}
+@font-face{font-family:Jost;src:url(../loginail-site/polices/Jost-400-latin.woff2) format('woff2')}
+@font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format('woff2')}
+body{margin:0;background:#EDE5E0;font-family:Jost,sans-serif;color:#1E1C1B;padding:22px 16px 40px}
+h1{font-family:'Abril Fatface',serif;font-weight:400;font-size:30px;margin:0 0 4px;text-align:center}
+p.s{margin:0 0 22px;text-align:center;color:#6b625c;font-size:16px}
+.g{display:flex;flex-wrap:wrap;gap:26px;justify-content:center}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.col h2{margin:0;font-size:22px;font-family:'Abril Fatface',serif;font-weight:400}
+.col h2 small{display:block;font-family:Jost,sans-serif;font-size:14px;color:#6b625c;text-align:center;margin-top:2px}
+.col.auj h2{color:#6b625c}
+.cadre{width:390px;height:780px;border-radius:44px;overflow:hidden;border:10px solid #1E1C1B;box-shadow:0 30px 60px -30px rgba(60,30,40,.5);background:#fff}
+iframe{width:390px;height:780px;border:0;display:block}
+</style></head><body>
+<h1 id="t"></h1><p class="s" id="s"></p>
+<div class="g" id="g"></div>
+<script>
+const P=new URLSearchParams(location.search).get('p')||'bulles';
+const PAGES={
+ bulles:{t:'Les bulles de l’appli',s:'« Fidélité », « 55 € encaissés »… À gauche aujourd’hui (5 bulles), à droite la proposition : 3 bulles seulement, plus d’air.',cible:'#bulles',bloc:'center',
+  v:[['Aujourd’hui','5 bulles','',1],
+     ['Proposition','3 bulles, plus grandes et plus espacées',`
+@media (max-width:760px){
+ html body:not(#_) .bzt{height:290px!important;margin-bottom:-40px}
+ html body:not(#_) #bulles .b{transition:top .55s cubic-bezier(.2,.8,.2,1),opacity .45s ease,scale .45s ease!important}
+ html body:not(#_) #bulles .b[style*="top: 218px"],html body:not(#_) #bulles .b[style*="top: 288px"],html body:not(#_) #bulles .b[style*="top: 358px"]{opacity:0!important;scale:.94!important}
+ html body:not(#_) #bulles .b[style*="top: 78px"]{top:84px!important;opacity:.82!important}
+ html body:not(#_) #bulles .b[style*="top: 148px"]{top:160px!important;opacity:.6!important}
+}`]]},
+ roue:{t:'Les téléphones du haut',s:'Sous « Créer mon site gratuitement ». À gauche aujourd’hui, puis 3 versions plus douces.',cible:'#wheel',fixe:300,
+  v:[['Aujourd’hui','cadre noir épais, encoche','',1],
+     ['1 · Doux','fin cadre blanc, ombre rose',`
+html body:not(#_) .np .np-card{background:#fff!important;padding:4px!important;border-radius:30px!important;box-shadow:0 22px 40px -22px rgba(176,53,98,.45),0 0 0 1px rgba(30,28,27,.06)!important}
+html body:not(#_) .np .np-card .np-sc{border-radius:26px!important}
+html body:not(#_) .np .np-card .np-nt{display:none!important}`],
+     ['2 · Nacre','cadre rose nacré, petite pilule',`
+html body:not(#_) .np .np-card{background:linear-gradient(140deg,#FFF6F9,#F3C9D8 45%,#FFFFFF 60%,#EBC2D2)!important;padding:5px!important;border-radius:32px!important;box-shadow:0 24px 44px -24px rgba(176,53,98,.55)!important}
+html body:not(#_) .np .np-card .np-sc{border-radius:27px!important}
+html body:not(#_) .np .np-card .np-nt{top:12px!important;width:34px!important;height:10px!important;border-radius:99px!important;background:rgba(30,28,27,.75)!important}`],
+     ['3 · Sans cadre','juste l’écran, coins ronds',`
+html body:not(#_) .np .np-card{background:none!important;padding:0!important;border-radius:24px!important;box-shadow:0 20px 36px -20px rgba(80,30,50,.5)!important}
+html body:not(#_) .np .np-card .np-sc{border-radius:24px!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
+html body:not(#_) .np .np-card .np-nt{display:none!important}`]]}};
+const C=PAGES[P];document.getElementById('t').textContent=C.t;document.getElementById('s').textContent=C.s;document.title=C.t;
+const g=document.getElementById('g');
+C.v.forEach(([nom,sous,css,auj])=>{const col=document.createElement('div');col.className='col'+(auj?' auj':'');
+  col.innerHTML=`<h2>${nom}<small>${sous}</small></h2><div class="cadre"><iframe src="../index.html?essai=${encodeURIComponent(nom)}" loading="eager"></iframe></div>`;g.append(col);
+  const f=col.querySelector('iframe');f.onload=()=>{const d=f.contentDocument;if(css){const st=d.createElement('style');st.textContent=css;d.head.appendChild(st)}
+    const w=f.contentWindow;if(C.fixe){setTimeout(()=>w.scrollTo(0,C.fixe),700);return}let k=0;const va=()=>{const e=d.querySelector(C.cible);if(e){w.scrollBy(0,240);k++;const r=e.getBoundingClientRect();
+      if(k<40&&(C.bloc==='center'?r.top+r.height/2>w.innerHeight/2+40:r.bottom>w.innerHeight-10))setTimeout(va,60)}};setTimeout(va,600)}});
+</script>
+</body></html>
