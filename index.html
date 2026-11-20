@@ -2298,7 +2298,20 @@ document.addEventListener("DOMContentLoaded",function(){
 @media (max-width:760px){html body:not(#_) .cq.cq-bis{padding-bottom:28px}
   html body:not(#_) .cq.cq-bis .cq-res{box-shadow:0 3px 6px rgba(60,30,40,.08),0 20px 36px -12px rgba(120,40,70,.40),0 38px 60px -26px rgba(120,40,70,.45)}}
 /* 20/11 (Marie) : ORDINATEUR seulement — le carré 49,99 € prend l'ombre B « autocollant rose » (ombre nette framboise décalée + fin contour noir) */
-@media (min-width:761px){html body:not(#_) .v3 .v3carte{box-shadow:10px 12px 0 #E0628C;border:2px solid #1E1C1B}}
+@media (min-width:761px){html body:not(#_) .v3 .v3carte{box-shadow:10px 12px 0 #E0628C;border:2px solid #1E1C1B}
+  /* 20/11 (Marie) : le carré ordinateur reprend le contenu et les tailles du carré téléphone */
+  html body:not(#_) .v3 .v3carte{padding:34px 28px 32px}
+  .v3carte .cq-logo{font-family:'Abril Fatface',serif;font-size:40px;line-height:1.1}
+  .v3carte .cq-logo span{color:#B03562}
+  .v3carte .cq-prix{font-family:'Abril Fatface',serif;font-size:56px;line-height:1.1;margin:14px 0 2px}
+  .v3carte .cq-prix small{font-family:Jost,sans-serif;font-size:17px;color:var(--gris)}
+  .v3carte .cq-offert{display:inline-block;margin:14px 0 18px;background:#FBEFF3;color:#B03562;border-radius:99px;padding:9px 20px;font-weight:500;font-size:16px}
+  .v3carte .cq-pt{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gris);line-height:2}
+  .v3carte .cq-zero{margin-top:12px;font-size:16px}
+  .v3carte .cq-zero b{color:#B03562}
+  .v3carte .cq-go{display:inline-flex;align-items:center;gap:8px;margin-top:22px;height:52px;padding:0 26px;border-radius:99px;background:#1E1C1B;color:#fff;text-decoration:none;font-weight:500;font-size:15px;transition:transform .2s ease}
+  .v3carte .cq-go:hover{transform:translateY(-2px)}
+}
 /* 20/11 (Marie, 4e passage) : TÉLÉPHONE seulement —
    1) « L'appli qui gère tout, dans ta poche » : d'abord les 4 téléphones, ensuite les bulles (notifications)
    2) « Classe ou baddie ? » : un charm en plus à droite (ça faisait vide)
@@ -2770,12 +2783,13 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="fin-go"><a href="loginail-creer/index.html">Créer mon site gratuitement →</a><small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small></div>
     </div>
     <div class="col-prix"><!-- 20/11 (Marie) : ordinateur — 49,99 € en haut, « Tout est inclus. » dessous, même largeur -->
-    <div class="v3carte vu">
-      <div class="p">49,99 € <small>/ mois</small></div>
-      <div class="of">1er mois offert</div>
-      <!-- 20/11 (Marie) : la liste ✓ est retirée (doublon avec « Tout est inclus. » juste à côté) -->
-      <a class="cta" href="loginail-creer/index.html">Créer mon site gratuitement →</a>
-      <small class="n">Sans engagement · 0 % de commission · tu arrêtes en 1 clic</small>
+    <div class="v3carte vu"><!-- 20/11 (Marie) : ordinateur — même contenu que le carré du téléphone -->
+      <div class="cq-logo">Logi<span>nail</span></div>
+      <div class="cq-prix">49,99 € <small>/ mois</small></div>
+      <div class="cq-offert">1er mois offert</div>
+      <div class="cq-pt">Sans engagement</div>
+      <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
+      <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
     </div>
     <div class="k2c k2c-ordi vu"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
     </div>
