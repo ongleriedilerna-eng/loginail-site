@@ -4010,6 +4010,7 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
   }));
 })();
 </script>
+<style>#bulles.bz-net .b{transition:none!important}</style>
 <script id="bulles-tel-js">/* 19/11 (Marie, B1 « la pile ») : téléphone — la nouvelle bulle arrive en haut et pousse les autres vers le bas */
 (function(){
   const z=document.getElementById('bulles');if(!z)return;
@@ -4026,7 +4027,9 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
     /* téléphone : un seul rythme régulier dès le début (plus de rafale puis d'attente) */
     /* 20/11 (Marie, 3e passage) : 3 bulles d'un coup puis une longue attente, ça faisait « bug » →
        un seul rythme régulier : la 1re bulle dès qu'on arrive, puis une nouvelle toutes les 2,2 s */
-    ajoute();setInterval(()=>{if(!document.hidden)ajoute()},2200)};
+    if(tel)ajoute();setInterval(()=>{if(!document.hidden)ajoute()},2200)};
+  /* 20/11 (Marie) : ordinateur — les bulles sont DÉJÀ affichées en arrivant (avant, la zone partait vide) ; même rythme ensuite */
+  if(!tel){z.classList.add('bz-net');for(let k=0;k<5;k++)ajoute();setTimeout(()=>z.classList.remove('bz-net'),120)}
   /* 20/11 (Marie) : les bulles démarrent AVANT d'arriver à l'écran (300 px plus tôt) → elles sont déjà là quand on voit les téléphones */
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:0,rootMargin:'0px 0px '+(tel?-120:300)+'px 0px'}/* téléphone : on démarre quand la zone est vraiment à l'écran, pour voir la 1re bulle arriver */).observe(z);else go();
 })();
