@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ombre du prix · téléphone</title>
+<style>
+:root{--rose:#B03562;--encre:#1E1C1B}
+body{margin:0;background:#EFE7E2;font-family:Jost,system-ui,sans-serif;color:var(--encre)}
+h1{font:400 30px 'Abril Fatface',Georgia,serif;text-align:center;margin:26px 16px 4px}
+.sous{text-align:center;color:#6b625c;margin:0 16px 24px}
+.grille{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;padding:0 16px 40px}
+.col{width:320px;text-align:center}
+.col h2{margin:0 0 2px;font:500 19px Jost,sans-serif}.col h2 b{color:var(--rose);font-size:22px}
+.col p{margin:0 0 12px;color:#6b625c;font-size:14px;min-height:40px}
+.col.avant h2 b{color:#6b625c}
+.tel{width:312px;height:620px;overflow:hidden;border-radius:40px;border:9px solid #1E1C1B;margin:0 auto;background:#fff;box-shadow:0 20px 40px -20px rgba(0,0,0,.45)}
+.tel iframe{width:390px;height:775px;border:0;transform:scale(.8);transform-origin:0 0;pointer-events:none}
+</style></head><body>
+<h1>Le carré 49,99 € sur téléphone</h1>
+<p class="sous">À gauche, ce qu’il y a aujourd’hui. Ensuite, 3 ombres possibles. C’est le vrai site : seule l’ombre change.</p>
+<div class="grille" id="g"></div>
+<script>
+const V={
+ avant:{t:"Aujourd’hui",d:"L’ombre actuelle : on la voit à peine."},
+ A:{t:"Ombre douce",d:"Une grande ombre floue rosée : la carte flotte au-dessus de la page.",
+    css:"0 3px 6px rgba(60,30,40,.08),0 28px 46px -16px rgba(120,40,70,.42),0 70px 110px -36px rgba(120,40,70,.55)"},
+ B:{t:"Autocollant rose",d:"Une ombre nette rose framboise, décalée, avec un fin contour noir.",
+    css:"10px 12px 0 #E0628C",bord:"2px solid #1E1C1B"},
+ C:{t:"Halo rose qui respire",d:"Une lueur rose autour de la carte, qui grandit et diminue doucement.",
+    css:"0 0 0 1px rgba(224,98,140,.18),0 24px 70px -18px rgba(224,98,140,.65)",respire:true}
+};
+const q=new URLSearchParams(location.search).get('v');const liste=q&&V[q]?[q]:Object.keys(V);
+if(q&&V[q])document.title=(q==='avant'?'Aujourd’hui':'Ombre '+q)+' · prix';
+const g=document.getElementById('g');
+liste.forEach(k=>{const v=V[k];const d=document.createElement('div');d.className='col'+(k==='avant'?' avant':'');
+ d.innerHTML='<h2><b>'+(k==='avant'?'':k+' · ')+'</b>'+v.t+'</h2><p>'+v.d+'</p><div class="tel"><iframe data-k="'+k+'" src="../index.html"></iframe></div>';g.appendChild(d)});
+function cssPour(v){
+ if(!v.css)return "";
+ const ani=v.respire?"@keyframes respire{0%,100%{box-shadow:"+v.css+"}50%{box-shadow:0 0 0 1px rgba(224,98,140,.28),0 30px 90px -14px rgba(224,98,140,.85)}}":"";
+ return ani+"html body:not(#_) .cq.cq-bis .cq-res{box-shadow:"+v.css+"!important;"+(v.bord?"border:"+v.bord+"!important;":"")+(v.respire?"animation:respire 4s ease-in-out infinite!important;":"")+"}";
+}
+function regle(f){
+ try{const w=f.contentWindow,doc=f.contentDocument;
+  const st=doc.createElement('style');st.textContent=cssPour(V[f.dataset.k]);doc.head.appendChild(st);
+  doc.documentElement.style.scrollBehavior='auto';
+  const cible=doc.querySelector('.cq-bis .cq-res');
+  const place=()=>{const b=cible.getBoundingClientRect();w.scrollTo(0,b.top+w.scrollY-220);};
+  [0,700,1800,3000,4500].forEach(t=>setTimeout(place,t));
+ }catch(e){}
+}
+document.querySelectorAll('iframe').forEach(f=>f.addEventListener('load',()=>regle(f)));
+</script>
+</body></html>

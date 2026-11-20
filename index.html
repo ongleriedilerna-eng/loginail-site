@@ -2292,6 +2292,8 @@ document.addEventListener("DOMContentLoaded",function(){
 }
 @media (max-width:760px) and (prefers-reduced-motion:reduce){.bzt .b{transition:none}}
 @media (max-width:760px) and (prefers-reduced-motion:no-preference){html body:not(#_) .bzt .b{transition:top .4s cubic-bezier(.2,.8,.2,1),opacity .3s ease,scale .3s ease}}
+/* 20/11 (Marie, choix A « ombre douce », idees/prix-ombre.html) : téléphone — le carré 49,99 € flotte au-dessus de la page */
+@media (max-width:760px){html body:not(#_) .cq.cq-bis .cq-res{box-shadow:0 3px 6px rgba(60,30,40,.08),0 28px 46px -16px rgba(120,40,70,.42),0 70px 110px -36px rgba(120,40,70,.55)}}
 </style>
 <style id="fin-tel-f2">
 /* 19/11 nuit (Marie, version F2) : TÉLÉPHONE seulement — la fin de l'accueil en rose poudré avec le bord festonné (comme l'ordinateur),
@@ -3959,8 +3961,8 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
   let parti=false;const tel=innerWidth<=760;/* 20/11 (Marie) : téléphone — les bulles arrivent plus vite (ordinateur inchangé) */
   const go=()=>{if(parti)return;parti=true;
     /* téléphone : un seul rythme régulier dès le début (plus de rafale puis d'attente) */
-    if(tel){ajoute();setInterval(()=>{if(!document.hidden)ajoute()},750);return}
-    for(let k=0;k<4;k++)setTimeout(ajoute,k*160);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),900)};
+    /* 20/11 (Marie, 2e passage) : ça allait trop vite, on n'avait pas le temps de lire → 3 bulles posées au départ, puis une nouvelle toutes les 2,6 s */
+    for(let k=0;k<3;k++)setTimeout(ajoute,k*220);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},2600),900)};
   /* 20/11 (Marie) : les bulles démarrent AVANT d'arriver à l'écran (300 px plus tôt) → elles sont déjà là quand on voit les téléphones */
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:0,rootMargin:'0px 0px '+(tel?900:300)+'px 0px'}).observe(z);else go();
 })();
