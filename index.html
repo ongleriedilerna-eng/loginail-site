@@ -2823,7 +2823,8 @@ document.addEventListener("DOMContentLoaded",function(){
 </section>
 </div>
 <script>(()=>{const M='loginail-site/apercus-mini/';/* classe ou baddie */
-const S3={baddie:['baddie','y2k','pop','chrome','bling','emo','cerise'],classe:['tpl-maisonmoka','tpl-maisonnoire','tpl-atelierronce','tpl-studiopoudre','tpl-maisonlin','tpl-cristal','clean']};
+/* 20/11 (Marie) : côté Baddie = 7 de ses looks, en images qui bougent (outils/capture-looks-roue-anim.py) */
+const S3={baddie:[3,7,11,4,1,5,10].map(i=>'../apercus-univers/look-roue-anim-'+i),classe:['tpl-maisonmoka','tpl-maisonnoire','tpl-atelierronce','tpl-studiopoudre','tpl-maisonlin','tpl-cristal','clean']};
 const r=document.getElementById('rangee');
 const montre=k=>{r.innerHTML=S3[k].map(n=>`<div class="tel"><img src="${M}${n}.webp" alt="" loading="lazy"></div>`).join('')};montre('baddie');
 document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.classList.contains('on'))return;document.querySelectorAll('.bascule button').forEach(x=>x.classList.toggle('on',x===b));r.classList.add('change');setTimeout(()=>{montre(b.dataset.s);requestAnimationFrame(()=>r.classList.remove('change'))},260)});
@@ -3848,7 +3849,10 @@ function buildWheel(){
   wh.innerHTML=Array.from({length:n},(_,i)=>{const [nm,f]=SITES[i%SITES.length];
     return `<div class="np-slot" style="transform:rotate(${i*real}deg)"><div class="np-card"><div class="np-nt"></div><div class="np-sc" role="img" aria-label="Site ${nm}" style="background-image:url(${f.includes('/')?f:U+f+'.webp'})"></div></div></div>`}).join('');
 }
-buildWheel();let lw=innerWidth;addEventListener('resize',()=>{if((innerWidth<760)!==(lw<760))buildWheel();lw=innerWidth});
+/* 20/11 (Marie) : la roue bouge aussi — une fois la page chargée, chaque look passe en image animée */
+let anim=false;const passeAnim=()=>{anim=true;document.querySelectorAll('#wheel .np-sc').forEach(e=>{const m=e.style.backgroundImage.match(/look-roue-(\d+)\.webp/);if(m){const im=new Image();im.onload=()=>{e.style.backgroundImage='url(loginail-site/apercus-univers/look-roue-anim-'+m[1]+'.webp)'};im.src='loginail-site/apercus-univers/look-roue-anim-'+m[1]+'.webp'}})};
+if(document.readyState==='complete')setTimeout(passeAnim,300);else addEventListener('load',()=>setTimeout(passeAnim,300));
+buildWheel();let lw=innerWidth;addEventListener('resize',()=>{if((innerWidth<760)!==(lw<760)){buildWheel();if(anim)passeAnim()}lw=innerWidth});
 
 /* ---- Charms « baddie » : sur les bords, ils s'écartent quand la souris approche ---- */
 const C='https://loginail.fr/loginail-site/charms-mini/';
