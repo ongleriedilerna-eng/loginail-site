@@ -490,6 +490,12 @@ body.cat2 .catMenu.ouvert i{rotate:180deg}
 #lEnt .ent:hover .mi{box-shadow:0 0 0 3px #1E1C1B,0 0 0 5px #fff,0 0 0 6.5px rgba(181,71,94,.45),0 14px 24px -14px rgba(0,0,0,.55)!important}
 #lEnt .ent.on .mi{box-shadow:0 0 0 3px #1E1C1B,0 0 0 6px #fff,0 0 0 8px var(--rose),0 14px 24px -14px rgba(0,0,0,.55)!important}
 #lEnt .ent{padding-top:4px}
+/* 20/11 (Marie : « les en-têtes plus grandes, finalement ») : 5 par ligne sur ordinateur, 4 sur téléphone, noms entiers (sur 2 lignes si besoin) */
+@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:16px 14px!important}}
+@media (max-width:899px){body.grandC #lEnt .ent,#lEnt .ent{width:calc((100vw - 80px)/4)!important}}
+/* 20/11 (« ça saccade ») : chaque vignette = sa propre couche, le défilement ne la redessine plus */
+#lEnt .ent .mi{contain:layout paint style;transform:translateZ(0);backface-visibility:hidden}
+#lEnt .ent{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.2;text-align:center;font-size:12.5px}
 /* 17/11 (Marie) : l'intérieur des petits téléphones ne défile pas : la molette / le doigt fait défiler la liste */
 .ent .mi{pointer-events:none;overscroll-behavior:none}
 #lEnt .ent.on{color:var(--rose)}
@@ -1061,7 +1067,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=2011hab"></script>
+<script src="perso/perso-pilote.js?v=2111traits"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1117,12 +1123,20 @@ function rend(o) {
     l.querySelectorAll(".ent").forEach(b => b.classList.toggle("on", b.dataset.k === P.etat.entete));
     /* 20/11 (Marie : « encore plus fluide ») : 81 petits téléphones dessinés d'un coup = 12 images/s (10 = 144). On ne dessine QUE ceux qu'on voit
        (+ une marge), les autres sont vidés ; ceux qu'on voit bougent, les autres sont en pause. */
-    const larg = l.querySelector(".mi").clientWidth || 76, e = P.etat, cle = [e.fond, e.police, e.couleur, e.vif, e.nomc, e.blocs, P.photoUne(), larg].join("|");
+    const larg = ([...l.querySelectorAll(".mi")].map(m => m.clientWidth).find(w => w > 0)) || l._larg || 76, e = P.etat, cle = [e.fond, e.police, e.couleur, e.vif, e.nomc, e.blocs, P.photoUne(), larg].join("|");
     try { if (!window._visE) window._visE = new Set(); if (!window._ioEnt) window._ioEnt = new IntersectionObserver(es => es.forEach(x => { const m = x.target, lst = $("lEnt");
-        if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { try { P.miniEntete(m, m.parentElement.dataset.k, lst._larg || 76); } catch (er) {} m.dataset.ok = lst.dataset.cle; } window._visE.add(m); }
+        if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { m.dataset.ok = lst.dataset.cle; fileEnt(m); } window._visE.add(m); }
         else { window._visE.delete(m); m.classList.add("off"); if (m.shadowRoot && m.dataset.ok) { m.shadowRoot.innerHTML = ""; m.dataset.ok = ""; } }
         /* au plus 6 vignettes bougent en même temps (les premières visibles) : les autres restent sur une image */
         [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "160px" });
+      /* 20/11 (Marie : « ça saccade ») : (1) les vignettes se dessinent UNE par image (plus toutes d'un coup = plus de blocage) ;
+         (2) pendant qu'on fait défiler, tout est mis en pause (reprend 0,2 s après) */
+      if (!window.fileEnt) { window._qE = []; let on = 0; const go = () => { const t0 = performance.now(); while (window._qE.length && performance.now() - t0 < 6) { const m = window._qE.shift(); if (!window._visE.has(m)) { m.dataset.ok = ""; continue; }
+            try { const w = m.clientWidth || $("lEnt")._larg || 76; m.dataset.w = w; P.miniEntete(m, m.parentElement.dataset.k, w); } catch (er) {} break; }
+          if (window._qE.length) requestAnimationFrame(go); else on = 0; };
+        window.fileEnt = m => { window._qE.push(m); if (!on) { on = 1; requestAnimationFrame(go); } }; }
+      { const pan = l.closest(".panneau"); if (pan && !pan._sp) { pan._sp = 1; let tp; pan.addEventListener("scroll", () => { window._visE.forEach(v => v.classList.add("pause")); clearTimeout(tp); tp = setTimeout(() => window._visE.forEach(v => v.classList.remove("pause")), 200); }, { passive: true }); } }
+      if (!l._ro) { l._ro = 1; let tr; try { new ResizeObserver(() => { clearTimeout(tr); tr = setTimeout(() => { l.querySelectorAll(".mi").forEach(m => { if (m.dataset.ok && m.clientWidth && Math.abs(m.clientWidth - (+m.dataset.w || 0)) > 2) { m.dataset.ok = l.dataset.cle; fileEnt(m); } }); }, 120); }).observe(l); } catch (er) {} }   /* 20/11 (Marie : « ça fait ça ») : une vignette dessinée trop petite se redessine à sa vraie taille */
       const nouveau = l.dataset.cle !== cle; if (nouveau) { l.dataset.cle = cle; l._larg = larg; P.nouvelleFeuille(); }
       l.querySelectorAll(".mi").forEach(m => { if (!m._io) { m._io = 1; m.classList.add("off"); window._ioEnt.observe(m); } else if (nouveau) { m.dataset.ok = ""; window._ioEnt.unobserve(m); window._ioEnt.observe(m); } }); } catch (er) { console.warn(er); } }
   if (o === "fond" && $("lFond").dataset.cat === catFond && $("lFond").children.length) { $("lFond").querySelectorAll(".vg").forEach(b => b.classList.toggle("on", b.dataset.f === P.etat.fond)); $("catF").querySelectorAll(".puce").forEach(b => b.classList.toggle("on", b.dataset.c === catFond)); return rendAutres(o); }
@@ -1332,6 +1346,8 @@ if (MODE_VED) { const lf = $("lFond"), bd = document.createElement("div"); bd.cl
   bd.querySelector("#vedRaz").onclick = () => { VED_CHOIX = []; sauve(); bulle("On recommence"); }; setInterval(badges, 500); }
 /* charms en 2 colonnes (comme les fonds) + les étoiles déplacées à côté de « C'est parfait » */
 (() => { const box = $("catBox"), lc = $("lCh"), d = document.createElement("div"); d.className = "chDeux"; box.before(d); d.append(box, lc); lc.classList.remove("ligne");
+  /* 20/11 (Marie) : les thèmes en barre HORIZONTALE, au-dessus de « Chercher un charm » (plus de barre verticale) */
+  { const ou = document.querySelector('.panneau[data-p=charms] .outilsC'); if (ou) { ou.before(box); box.classList.add("catH"); } }
   const t = document.createElement("div"); t.className = "fdTitre"; t.textContent = "Thèmes"; box.prepend(t);
   const cc = $("catC"), fl = document.createElement("button"); fl.className = "fdFleche"; fl.type = "button"; fl.setAttribute("aria-label", "Voir d'autres thèmes");
   fl.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>`; box.append(fl);
@@ -1921,8 +1937,28 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
   .fenLooks .looks{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))!important;padding:2px 18px 8px!important}
 }
 #assortirF{display:none!important}
-/* en-têtes un peu plus petites (ordinateur) : on voit tout de suite qu'il y en a d'autres en dessous */
-@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(auto-fill,minmax(114px,1fr))!important;gap:12px 12px!important}}
+/* 20/11 (Marie : « les en-têtes plus grandes, finalement ») : 4 par ligne sur ordinateur (avant : 7 toutes petites) */
+@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:16px 14px!important}}
+/* 20/11 (Marie) : thèmes de charms en barre horizontale, compteur « 0 / 21 charms » plus grand au-dessus de « Trier par », charms un tout petit peu plus petits */
+.panneau[data-p=charms] #catBox.catH{display:block!important;width:auto;flex:none;margin:0 18px 10px;background:none;box-shadow:none;border-radius:0;overflow:visible;position:relative}
+.panneau[data-p=charms] #catBox.catH .fdTitre,.panneau[data-p=charms] #catBox.catH .fdFleche,.panneau[data-p=charms] #catBox.catH .catF{display:none!important}
+.panneau[data-p=charms] #catBox.catH #catC{display:flex!important;flex-direction:row;flex-wrap:nowrap!important;gap:4px;overflow-x:auto!important;overflow-y:hidden!important;padding:2px 2px 6px!important;scrollbar-width:none;-webkit-mask:none!important;mask:none!important}
+.panneau[data-p=charms] #catBox.catH #catC::-webkit-scrollbar{display:none}
+.panneau[data-p=charms] #catBox.catH #catC .catI{flex:none;flex-direction:column;align-items:center;justify-content:flex-start;width:66px;height:auto!important;padding:3px 2px 4px;gap:3px;border-radius:14px;background:transparent!important;color:var(--muted)!important;font-size:10.5px;line-height:1.15;text-align:center}
+.panneau[data-p=charms] #catBox.catH #catC .catI img,.panneau[data-p=charms] #catBox.catH #catC .catI .cfav{width:40px!important;height:40px!important;border-radius:50%;background:var(--fond);padding:6px;box-sizing:border-box;object-fit:contain;box-shadow:0 0 0 1px rgba(0,0,0,.06);display:grid;place-items:center}
+.panneau[data-p=charms] #catBox.catH #catC .catI.on{color:var(--noir)!important;font-weight:500}
+.panneau[data-p=charms] #catBox.catH #catC .catI.on img,.panneau[data-p=charms] #catBox.catH #catC .catI.on .cfav{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--noir)}
+.panneau[data-p=charms] #catBox.catH #catC .catI span{max-width:64px}
+.compteL{flex-direction:column;align-items:flex-end;gap:6px}
+.compteC,.compteC.plein{font-size:22px;font-weight:400;letter-spacing:-.01em}   /* 20/11 (Marie) : grand mais PAS en gras */
+.chDeux #lCh{grid-template-columns:repeat(auto-fill,minmax(54px,1fr))}
+/* 20/11 (Marie) : en-têtes beaucoup plus petites (on n'en voyait que 4) ; écritures : 4 par ligne sur ordinateur */
+@media (min-width:900px){
+  body.ecr2 .grille2{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+  body.ecr2 .ecr-c{height:92px!important;padding:8px 6px 6px!important}
+  body.ecr2 .ecr-c>span:not(.fd){font-size:24px!important}
+  body.ecr2 .ecr-c small{font-size:8.5px!important;padding:1px 6px!important}
+}
 /* 18/11 soir (Marie) : photos beaucoup plus petites (ordinateur et téléphone) */
 @media (min-width:900px){.grandP .ph{width:104px!important;height:138px!important}}
 /* 18/11 (Marie) : pas encore de photo : une grande case « Ajoutez vos photos » */
@@ -2112,6 +2148,44 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
     document.addEventListener("pointerdown", e => { if (!fin.contains(e.target)) stop(); }, true);
     addEventListener("keydown", e => { if (e.key === "Escape") stop(); });
   }
+})();
+</script>
+<style>
+/* 21/11 (Marie) : familles d'en-têtes en « traits » (noms en italique soulignés de rose), « Toutes » en premier ; en-têtes plus petites sur ordinateur */
+#lEnt .ent.hors,#lEnt .entGrp{display:none!important}
+.famSlogan{flex:none;font:italic 400 13.5px Georgia,serif;color:var(--muted);padding:0 18px 8px}
+@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))!important;gap:14px 10px!important}#lEnt .ent{font-size:11.5px}}
+@media (max-width:899px){#lEnt .ent{font-size:11px}}
+.famTraits{flex:none;min-height:max-content;display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;padding:2px 0 0;border-bottom:1px solid var(--ligne);margin:0 18px 10px}
+.famTraits::-webkit-scrollbar{display:none}
+.famTraits .tr{flex:none;position:relative;background:none;border:0;padding:6px 0 9px;font:italic 500 19px/1 "Cormorant Garamond",serif;color:var(--muted);white-space:nowrap;cursor:pointer;transition:color .2s}
+.famTraits .tr sup{font:400 10px Jost,sans-serif;font-style:normal;margin-left:3px;color:#b9aeb0;vertical-align:super}
+.famTraits .tr::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--rose);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.famTraits .tr.on{color:var(--noir)}.famTraits .tr.on::after{transform:scaleX(1)}
+.famTraits .tr:hover:not(.on){color:var(--noir)}
+</style>
+<script>
+(function(){
+const FE=[["Toutes","Toutes vos en-têtes, d’un coup d’œil",null],
+ ["Brillantes","Ça scintille, ça brille",["zdisco","wenseigne","zetoiles","wfil","wetor","wetoile","zfeu","xguirlande","xlustre","xscint","xbokeh","xstrass","bijou","diamant","disco","etoile","rayons","trace","lueurs","coeurparticules","foil","pendentif"]],
+ ["Charms en mouvement","Vos charms qui volent, tombent et tournent",["zbulles","wtele","zpluie","wronde","whuit","wtourb","ztombe","xperlecoeur","xguirch","xsusp","xbracelet","xbulch","xchrome","xgeant","xcollier","xperles","xgum","xbonbons","bulles","papillons","levitation","ballons","confettis"]],
+ ["Photo","Votre photo, mise en scène",["cadre","medaillon","bandeau","magazine","couv","story","feed","chromecadre","xloge","viseur","carrousel","feuilleter","swipe","vinyle","coulure"]],
+ ["Mon téléphone","Comme sur l’écran de votre téléphone",["wcachet","wcachet2","wnotif","wfeuille","wverrou","xtap","xreac","xmusique","xlecteur","tele","enveloppe","live"]],
+ ["Douces et colorées","Des couleurs qui flottent",["zvagues","zpoints","brume","aquarelle","arcenciel","ondes","xsavon","xnuancier","popart","wcachet"]],
+ ["Carré","Le bouton « Réserver » change d’habit",["hticket","hflacon","harche","hsans"]]];
+let famEnt=0;
+const fE=k=>{for(let i=1;i<FE.length;i++)if(FE[i][2].includes(k))return i;return FE.length-2};
+const nbE=i=>{const l=document.getElementById("lEnt");return l?[...l.querySelectorAll(".ent")].filter(x=>i===0||fE(x.dataset.k)===i).length:0};
+function dessineFE(){const l=document.getElementById("lEnt");if(!l||!l.children.length)return;
+ let b=document.getElementById("famEnt");
+ if(!b){b=document.createElement("div");b.id="famEnt";b.className="famTraits";b.innerHTML=FE.map((f,i)=>`<button class="tr" type="button" data-i="${i}" title="${f[1]}">${f[0]}<sup>${nbE(i)}</sup></button>`).join("");
+  const s=document.createElement("div");s.id="famSl";s.className="famSlogan";l.parentNode.insertBefore(b,l);l.parentNode.insertBefore(s,l);
+  b.onclick=e=>{const x=e.target.closest("[data-i]");if(!x)return;famEnt=+x.dataset.i;dessineFE();l.scrollLeft=0;const pa=l.closest(".panneau");if(pa)pa.scrollTop=0;x.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"})}}
+ b.querySelectorAll("[data-i]").forEach(x=>x.classList.toggle("on",+x.dataset.i===famEnt));
+ document.getElementById("famSl").textContent=FE[famEnt][1];
+ l.querySelectorAll(".ent").forEach(x=>x.classList.toggle("hors",famEnt!==0&&fE(x.dataset.k)!==famEnt));}
+const R0=rend;rend=function(o){const r=R0.apply(this,arguments);if(o==="entete")try{dessineFE()}catch(e){}return r};
+try{dessineFE()}catch(e){}
 })();
 </script>
 </body>

@@ -15,7 +15,7 @@
     ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"],
     ["balcon", "Balcon"], ["devanture", "Devanture"], ["classique", "Classique"], ["couverture", "Couverture"], ["grandtitre", "Grand titre"]];
   /* D22 · les 39 en-têtes gardées par Marie, dans l'ordre (les anciennes d'abord, puis les nouvelles) */
-  const GARDEES = [/* 20/11 (Marie, D51 + D62) : les 4 habits du carré « Réserver », en premier */ "hticket", "hflacon", "harche", "hsans", "cadre", /* 19/11 (Marie, D54) : ses 8 en-têtes qui bougent */ "zpoints", "zpluie", "zbulles", "zdisco", "zetoiles", "zvagues", "zfeu", "ztombe", /* 20/11 (Marie, D55 à D58) : 10 en-têtes de plus */ "wenseigne", "wtele", "wfil", "wronde", "whuit", "wtourb", "wetor", "wetoile", "wcachet", "wnotif", "wfeuille", "wverrou", "wcachet2", /* 19/11 (Marie, D36) : ses 23 nouvelles en-têtes */ "xperlecoeur", "xguirch", "xsusp", "xbracelet", "xgum", "xbulch", "xchrome", "xgeant", "xcollier", "xlustre", "xperles", "xloge", "xstrass", "xguirlande", "xbokeh", "xscint", "xsavon", "xmusique", "xlecteur", "xbonbons", "xtap", "xreac", "xnuancier", "medaillon", "bandeau",   /* 18/11 (Marie) : « Photo encadrée » en premier = l'en-tête de départ */ "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
+  const GARDEES = [/* 20/11 (Marie, D51 + D62) : les 4 habits du carré « Réserver », en premier */ "hticket", "hflacon", "harche", "hsans", "cadre", /* 20/11 (Marie) : les plus jolies d'abord — Disco, Bulles de charms… */ "zdisco", "zbulles", "wenseigne", "wtele", "zpluie", "zetoiles", "wfil", "wronde", "whuit", "wtourb", "wetor", "wetoile", "zfeu", "zvagues", "ztombe", "zpoints", "wcachet", "wnotif", "wfeuille", "wverrou", "wcachet2", /* 19/11 (Marie, D36) : ses 23 nouvelles en-têtes */ "xperlecoeur", "xguirch", "xsusp", "xbracelet", "xgum", "xbulch", "xchrome", "xgeant", "xcollier", "xlustre", "xperles", "xloge", "xstrass", "xguirlande", "xbokeh", "xscint", "xsavon", "xmusique", "xlecteur", "xbonbons", "xtap", "xreac", "xnuancier", "medaillon", "bandeau",   /* 18/11 (Marie) : « Photo encadrée » en premier = l'en-tête de départ */ "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
     "tele", "carrousel", "viseur", "feuilleter", "swipe", "ondes", "confettis", "arcenciel", "ballons", "chromecadre", "enveloppe",   /* 18/11 soir : « Machine à écrire » retirée (Marie) */
     "aquarelle", "rayons", "popart", "etoile", "brume", "lueurs", "trace", "coeurparticules", "levitation", "live", "pendentif", "foil"];
   /* 17/11 soir : « Pour vous » = les 42 charms choisis par Marie (page idees/choix-pour-vous.html) */
@@ -260,7 +260,7 @@
         if (r.type === 4) { let ok = false; try { ok = (W || window).matchMedia(r.conditionText || r.media.mediaText).matches; } catch (e) {} if (ok) ajoute(r.cssRules); continue; }
         regles.push(unites(abs(r.cssText)).replace(/:root/g, ":host")); } };
       ajoute(rs); }
-    P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n:host *{overflow:hidden!important;scroll-behavior:auto!important}\n.ile{display:none!important}\n:host(.off) *,:host(.off) *::after{animation-play-state:paused!important}"); return feuille; }
+    P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n:host *{overflow:hidden!important;scroll-behavior:auto!important}\n.ile{display:none!important}\n:host(.off) *,:host(.off) *::after,:host(.pause) *,:host(.pause) *::after{animation-play-state:paused!important}"); return feuille; }
   /* 17/11 (Marie : « ça met grave du temps ») : la mise en forme du site est recopiée UNE fois par tournée, plus 37 fois */
   P.nouvelleFeuille = () => { feuille = null; };
   /* changer de fond / d'écriture / de couleur ne rejoue plus l'animation d'arrivée du site : on la termine tout de suite
@@ -302,6 +302,11 @@
     if (SALON.vrai) { const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT); let t; while ((t = w.nextNode())) t.nodeValue = t.nodeValue.replace(SALON.vrai, SALON.nom).replace(SALON.vrai.toUpperCase(), SALON.nom.toUpperCase()); }
     Object.assign(c.style, { position: "absolute", left: "0", top: "0", width: "390px", height: "844px", borderRadius: "0", transform: `scale(${sc})`, transformOrigin: "0 0" });
     const sr = hote.shadowRoot || hote.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ""; hote.setAttribute("style", root); sr.appendChild(c);
+    /* 20/11 (Marie : « il y a des bugs partout, la tache d'aquarelle… ») : les vignettes en pause restaient figées sur la TOUTE 1re image de l'animation,
+       qui est vide pour les en-têtes dont la photo apparaît (aquarelle, bijou, diamant, étoile…). On avance chaque animation à un moment où tout est visible. */
+    const fige = () => { try { c.getAnimations({ subtree: true }).forEach(a => { const t = a.effect.getComputedTiming(), d = +t.delay || 0, dur = +t.duration || 0;
+      a.currentTime = t.iterations === Infinity || !isFinite(t.endTime) ? d + dur * .45 : Math.max(0, t.endTime - 1); }); } catch (e) {} };
+    requestAnimationFrame(() => { fige(); setTimeout(fige, 120); });
   } catch (e) { console.warn("mini en-tête", e); } };
 
   /* 17/11 (Marie : « mon look 1, c'est pas joli : il faut que le carré soit SON look ») : une copie figée du haut de son site
@@ -454,8 +459,9 @@
     const remet = () => { try { const box = boite(), k0 = new Set(pris.map(cleCh)); pris.forEach(x => { if (!x.isConnected) box.appendChild(x); });
       P.D.querySelectorAll(".lgn-sticker").forEach(x => { if (!pris.includes(x) && k0.has(cleCh(x))) x.remove(); }); } catch (e) {} };
     try { return fn(); } finally { if (pris.length) { remet(); [0, 60, 200, 500, 900].forEach(t => setTimeout(remet, t)); } } };
-  P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false;
-    const go = () => { if (fait) return; fait = true; gardeCharms(() => P._choisitPhoto(u)); };
+  P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false; P._phVoulue = u;
+    /* 20/11 (Marie : « des fois il y a une autre photo qui se met ») : seule la DERNIÈRE photo touchée est posée (une photo plus lente à charger n'écrase plus la suivante) */
+    const go = () => { if (fait) return; fait = true; if (P._phVoulue !== u) return; gardeCharms(() => P._choisitPhoto(u)); };
     if (im.complete) go(); else { im.onload = im.onerror = go; setTimeout(go, 1200); } };
   P._choisitPhoto = u => { P.rideau(600, 900); try {   /* le site remet ses couleurs ~0,5 s après une nouvelle photo : la copie reste jusque-là ; 18/11 : sa 1re photo remplace « Votre photo apparaîtra ici » partout */ P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0;if(BR.photos.length===1)PH.vide=u}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
