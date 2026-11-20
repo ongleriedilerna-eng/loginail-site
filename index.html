@@ -2582,6 +2582,39 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .pts-styles span.ici{background:#B03562;width:20px;border-radius:4px}
 }
 </style>
+<style id="marie-tel-p5">
+/* 20/11 nuit (Marie) : TÉLÉPHONE — « Qui a créé Loginail » version très épurée (proposition 5) : beaucoup d'air, un seul charm, signature écrite à la main */
+@font-face{font-family:Allura;src:url(loginail-site/polices/Allura-400-latin.woff2) format("woff2");font-display:swap}
+@keyframes m5flotte{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@media (max-width:760px){
+  html body:not(#_) section.marie::before{display:none}
+  html body:not(#_) .marie-tel.m5{position:relative;padding:58px 14px 10px}
+  html body:not(#_) .m5 .m5-ch{position:absolute;width:46px;left:50%;margin-left:-23px;top:0;filter:drop-shadow(0 6px 10px rgba(120,40,70,.18));animation:m5flotte 4.2s ease-in-out infinite}
+  html body:not(#_) .m5 .k{color:#9a8f8a;letter-spacing:.24em}
+  html body:not(#_) .m5 h2{font-size:40px!important;line-height:1.08!important;margin:22px 0 0!important;letter-spacing:-.01em}
+  html body:not(#_) .m5 .m5-trait{width:44px;height:2px;background:#C2456F;margin:28px auto;border-radius:2px}
+  html body:not(#_) .m5 p{font-size:17px!important;line-height:1.7!important;color:#4a4440;margin:0 auto 10px!important;max-width:300px!important}
+  html body:not(#_) .m5 .sign{font-family:Allura,cursive!important;font-size:64px!important;line-height:1;margin:26px 0 8px!important}
+  html body:not(#_) .m5 .marie-ig{background:none!important;box-shadow:none!important;height:auto!important;padding:0 0 3px!important;border-radius:0!important;border-bottom:1.5px solid #C2456F;gap:7px}
+  html body:not(#_) .m5 .marie-ig svg{width:18px;height:18px}
+}
+@media (prefers-reduced-motion:reduce){.m5 .m5-ch{animation:none!important}}
+</style>
+<style id="tel-retouches-2011c">
+/* 20/11 nuit (Marie) : TÉLÉPHONE seulement
+   1) le carré 49,99 € du bas un peu moins gros
+   2) le trait sous les bulles (« 55 € encaissés »…) : sur iPhone l'ombre de la dernière bulle était coupée net au bord de la zone des bulles
+      → la zone des bulles est 40 px plus haute (dessous), sans changer la place de « Classe ou baddie » */
+@media (max-width:760px){
+  html body:not(#_) .cq.cq-bis.cq-fin .cq-res{max-width:318px;padding:24px 18px 22px;border-radius:24px}
+  html body:not(#_) .cq.cq-fin .cq-logo{font-size:31px}
+  html body:not(#_) .cq.cq-fin .cq-prix{font-size:40px;margin:8px 0 2px}
+  html body:not(#_) .cq.cq-fin .cq-prix small{font-size:15px}
+  html body:not(#_) .cq.cq-fin .cq-offert{margin:10px 0 12px;padding:7px 16px;font-size:15px}
+  html body:not(#_) .cq.cq-fin .cq-zero{font-size:14.5px;margin-top:8px}
+  html body:not(#_) .bzt{height:390px;padding-bottom:40px;margin-bottom:-40px}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2758,12 +2791,14 @@ document.addEventListener("DOMContentLoaded",function(){
       <p>Loginail, c’est l’outil que j’aurais aimé avoir : tu colles ton lien, ton site est prêt, et l’appli s’occupe du reste. Toi, tu t’occupes des ongles.</p>
       </div>
       <div class="signature">Marie</div>
-      <div class="marie-tel">
-        <div class="k">Qui a créé Loginail ?</div>
-        <h2><span class="l">Une prothésiste ongulaire,</span> <span class="l"><em>pour les prothésistes ongulaires.</em></span></h2>
-        <p>Je passe mes journées à poser des ongles.</p>
-        <p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, <b>sans commission</b>. Il n’existait pas. Alors je l’ai créé.</p>
-        <div class="sign">Marie.</div>
+      <div class="marie-tel m5"><!-- 20/11 nuit (Marie) : proposition 5 « très épurée » (idees/qui-a-cree-5.html) -->
+        <img class="m5-ch" src="loginail-site/charms-mini/bouledisco.webp" alt="">
+        <div class="k">Qui a créé Loginail</div>
+        <h2>Une prothésiste,<br><em>comme toi.</em></h2>
+        <div class="m5-trait"></div>
+        <p>Je voulais un site <b>aussi beau que nos ongles</b>, qui se fasse tout seul, sans commission.</p>
+        <p>Il n’existait pas. Alors je l’ai créé.</p>
+        <div class="sign">Marie</div>
         <a class="marie-ig" href="https://www.instagram.com/ongleriedilerna/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#B03562" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#B03562" stroke="none"/></svg>@ongleriedilerna</a>
       </div>
     </div>
@@ -2779,7 +2814,7 @@ document.addEventListener("DOMContentLoaded",function(){
       <h2 class="serif titre" style="margin-top:12px">Le premier mois,<br><em>c’est cadeau.</em></h2>
       <ul class="v3frise">
         <li><b>Aujourd’hui</b><span>Tu crées ton site et ton appli. 0 €.</span></li>
-        <li><b>Pendant 30 jours</b><span>Tout est à toi : réservations, SMS, agenda. Toujours 0 €.</span></li>
+        <li><b>Pendant 30 jours</b><span>Tout est à toi : résas, SMS, agenda. 0 €.</span></li>
         <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si tu restes.</span></li>
         <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
       </ul>
