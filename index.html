@@ -2572,6 +2572,28 @@ document.addEventListener("DOMContentLoaded",function(){
 }
 @media (max-width:760px){.fil-fin,.k2c.k2c-ordi{display:none!important}}
 @media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
+/* 20/11 (Marie, ordinateur) : carré 49,99 qui flotte tout doucement ; charms en plus ; téléphones de l'appli plus grands ; « Le premier mois » aligné en haut avec le carré */
+.ch-ordi,.pb-ch{display:none}
+@media (max-width:760px){html body:not(#_) .v3 .ch.ch-ordi,html body:not(#_) .pb-ch{display:none!important}}
+@media (min-width:761px){
+  @keyframes carteFlotte{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -10px;rotate:.6deg}}
+  html body:not(#_) #cest-quoi .cq-res{animation:carteFlotte 7s ease-in-out infinite}
+  html body:not(#_) section.appli#v3-appli{position:relative}
+  html body:not(#_) .v3 .ch.ch-ordi{display:block}
+  html body:not(#_) .v3 .marie .b-ch{animation:fl 6s ease-in-out infinite}
+  .pied-bocaux{position:relative}
+  html body:not(#_) .pb-ch{display:block;position:absolute;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
+  html body:not(#_) #v3-appli .wrap{max-width:1360px}
+  html body:not(#_) .ape{grid-template-columns:330px 1fr}
+  html body:not(#_) .ape .rail{height:740px}
+  html body:not(#_) .ape .ecran{max-width:215px}
+  html body:not(#_) .ape .rail:hover .ecran{max-width:185px}
+  html body:not(#_) .ape .rail .ecran:hover{max-width:320px}
+  html body:not(#_) .ape figcaption{font-size:16px}
+  html body:not(#_) .ape figcaption small{font-size:13.5px}
+  html body:not(#_) .v3 .v3prix .wrap{align-items:start}
+}
+@media (prefers-reduced-motion:reduce){html body:not(#_) #cest-quoi .cq-res,html body:not(#_) .pb-ch{animation:none}}
 </style>
 <style id="points-styles-tel">/* 20/11 (Marie) : téléphone seulement — petits points sous « Classe ou baddie », comme sous les écrans de l'appli,
    pour montrer qu'on peut glisser à gauche et à droite ; le point du site regardé devient un trait rose. Ordinateur : caché. */
@@ -2731,6 +2753,7 @@ document.addEventListener("DOMContentLoaded",function(){
 <div class="v3">
 <!-- 5 · L'APPLI -->
 <section class="appli" id="v3-appli">
+  <img class="ch ch-ordi" src="loginail-site/charms-mini/saturne.webp" style="width:74px;left:6%;top:70px;rotate:-12deg" alt=""><img class="ch ch-ordi" src="loginail-site/charms-mini/coeurepinesmetal.webp" style="width:66px;right:7%;top:40px;rotate:10deg;animation-delay:-2.5s" alt=""><!-- 20/11 (Marie) : ordinateur — moins vide -->
   <div class="wrap">
     <div class="tete vu"><div class="k">Et derrière</div><h2 class="serif titre" style="margin-top:12px">L’appli qui gère <em>tout.</em></h2></div>
     <div class="ape" id="ape" aria-label="L’appli en 3 écrans">
@@ -2768,6 +2791,7 @@ document.addEventListener("DOMContentLoaded",function(){
 <section class="styles" id="v3-styles">
   <img class="ch" src="loginail-site/charms-mini/papilloncyber.webp" style="width:70px;left:8%;top:10px;rotate:-10deg" alt="">
   <img class="ch ch-tel" src="loginail-site/charms-mini/cerisedisco.webp" style="width:60px;right:7%;top:205px;rotate:14deg" alt="">
+  <img class="ch ch-ordi" src="loginail-site/charms-mini/cerisecoeur.webp" style="width:70px;right:9%;top:40px;rotate:12deg;animation-delay:-3s" alt=""><!-- 20/11 (Marie) : ordinateur — un charm à droite -->
   <div class="wrap vu">
     <div class="k">Plus de 30 univers</div>
     <h2 class="serif titre" style="margin-top:12px">Classe <em>ou</em> baddie ?</h2>
@@ -2867,7 +2891,7 @@ document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.clas
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 })()</script>
-<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div><div class="pied-bocaux" id="piedBocaux"><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide">Touche un bocal, puis tourne ton téléphone ✦</div></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
+<footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div><div class="pied-bocaux" id="piedBocaux"><img class="pb-ch" src="loginail-site/charms-mini/cerisedisco.webp" style="width:70px;left:-150px;top:10px;rotate:-14deg" alt=""><img class="pb-ch" src="loginail-site/charms-mini/etoile4.webp" style="width:36px;left:-60px;top:120px;rotate:8deg;animation-delay:-2s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/collierperles.webp" style="width:58px;left:-200px;top:120px;rotate:6deg;animation-delay:-4s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/ceriseruban.webp" style="width:66px;right:-150px;top:0;rotate:12deg;animation-delay:-1s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/papilloncyber.webp" style="width:56px;right:-60px;top:110px;rotate:-10deg;animation-delay:-3s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/bouledisco.webp" style="width:50px;right:-210px;top:115px;animation-delay:-5s" alt=""><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide">Touche un bocal, puis tourne ton téléphone ✦</div></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
 <div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
 
 <script>
@@ -4050,6 +4074,29 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
 })();
 </script>
 <style>#bulles.bz-net .b{transition:none!important}</style>
+<script id="charms-souris-js">/* 20/11 (Marie) : ordinateur — les charms de la page (appli, Classe ou baddie, « comme toi », prix, pied) s'écartent quand la souris passe dessus, puis reviennent */
+(function(){
+  if(!matchMedia('(min-width:761px) and (hover:hover)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const els=[...document.querySelectorAll('.v3 section>img.ch,.v3 .marie .b-ch,.pb-ch')];if(!els.length)return;
+  const it=els.map(e=>({e,dx:0,dy:0,vx:0,vy:0,r:0,vr:0,cool:0}));
+  let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3;
+  addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){mx=e.clientX;my=e.clientY}});
+  document.addEventListener('pointerleave',()=>{mx=my=-9e3});
+  function tick(){
+    const mvx=(mx>-9e3&&pmx>-9e3)?mx-pmx:0,mvy=(my>-9e3&&pmy>-9e3)?my-pmy:0;pmx=mx;pmy=my;
+    for(const c of it){
+      const b=c.e.getBoundingClientRect();if(b.bottom<-200||b.top>innerHeight+200)continue;
+      const s=b.width,cx=b.left+s/2,cy=b.top+b.height/2,ux=cx-mx,uy=cy-my,d=Math.hypot(ux,uy)||1,hit=s/2+26;
+      if(d<hit&&c.cool<=0){const k=1-d/hit;c.vx+=ux/d*(8+k*10)+mvx*.7;c.vy+=uy/d*(8+k*10)+mvy*.7;c.vr+=(ux>0?1:-1)*(8+Math.min(14,Math.abs(mvx)*.3));c.cool=8}
+      c.cool--;c.vx+=-c.dx*.012;c.vy+=-c.dy*.012;c.vx*=.93;c.vy*=.93;c.vr+=-c.r*.01;c.vr*=.92;
+      c.dx+=c.vx;c.dy+=c.vy;c.r+=c.vr;
+      if(Math.abs(c.dx)+Math.abs(c.dy)+Math.abs(c.r)>.05)c.e.style.transform='translate('+c.dx.toFixed(1)+'px,'+c.dy.toFixed(1)+'px) rotate('+c.r.toFixed(1)+'deg)';
+      else if(c.e.style.transform){c.e.style.transform='';c.dx=c.dy=c.r=0}
+    }
+    requestAnimationFrame(tick)}
+  requestAnimationFrame(tick);
+})();
+</script>
 <script id="bulles-tel-js">/* 19/11 (Marie, B1 « la pile ») : téléphone — la nouvelle bulle arrive en haut et pousse les autres vers le bas */
 (function(){
   const z=document.getElementById('bulles');if(!z)return;
