@@ -3957,9 +3957,12 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
     requestAnimationFrame(()=>requestAnimationFrame(()=>pile.forEach((x,i)=>{x.style.top=(8+i*(innerWidth>760?68:H))+'px';x.style.opacity=i>4?'0':String(1-i*.12);x.style.scale=String(1-i*.025)})));
     if(pile.length>6){const v=pile.pop();setTimeout(()=>v.remove(),600)}};
   let parti=false;const tel=innerWidth<=760;/* 20/11 (Marie) : téléphone — les bulles arrivent plus vite (ordinateur inchangé) */
-  const go=()=>{if(parti)return;parti=true;for(let k=0;k<4;k++)setTimeout(ajoute,k*(tel?100:160));setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},tel?1000:1500),tel?500:900)};
+  const go=()=>{if(parti)return;parti=true;
+    /* téléphone : un seul rythme régulier dès le début (plus de rafale puis d'attente) */
+    if(tel){ajoute();setInterval(()=>{if(!document.hidden)ajoute()},750);return}
+    for(let k=0;k<4;k++)setTimeout(ajoute,k*160);setTimeout(()=>setInterval(()=>{if(!document.hidden)ajoute()},1500),900)};
   /* 20/11 (Marie) : les bulles démarrent AVANT d'arriver à l'écran (300 px plus tôt) → elles sont déjà là quand on voit les téléphones */
-  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:0,rootMargin:'0px 0px '+(tel?600:300)+'px 0px'}).observe(z);else go();
+  if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go()}),{threshold:0,rootMargin:'0px 0px '+(tel?900:300)+'px 0px'}).observe(z);else go();
 })();
 </script>
 <script id="pied-chute-js">/* 19/11 (Marie) : téléphone — les charms du pied tombent du ciel, roulent et se posent quand on arrive en bas */
