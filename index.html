@@ -2619,8 +2619,11 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .m5 .sign{font-family:Allura,cursive!important;font-size:64px!important;line-height:1;margin:26px 0 8px!important}
   html body:not(#_) .m5 .marie-ig{background:none!important;box-shadow:none!important;height:auto!important;padding:0 0 3px!important;border-radius:0!important;border-bottom:1.5px solid #C2456F;gap:7px}
   html body:not(#_) .m5 .marie-ig svg{width:18px;height:18px}
+  html body:not(#_) .m5 .m5-c{position:absolute;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(120,40,70,.2));animation:m5flotte 5s ease-in-out infinite}
+  html body:not(#_) .m5 .m5-c1{width:58px;left:0;bottom:-96px;rotate:-12deg}
+  html body:not(#_) .m5 .m5-c2{width:34px;left:20%;bottom:-150px;animation-delay:-2s}
 }
-@media (prefers-reduced-motion:reduce){.m5 .m5-ch{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.m5 .m5-ch,.m5 .m5-c{animation:none!important}}
 </style>
 <style id="tel-retouches-2011c">
 /* 20/11 nuit (Marie) : TÉLÉPHONE seulement
@@ -2628,7 +2631,8 @@ document.addEventListener("DOMContentLoaded",function(){
    2) le trait sous les bulles (« 55 € encaissés »…) : sur iPhone l'ombre de la dernière bulle était coupée net au bord de la zone des bulles
       → la zone des bulles est 40 px plus haute (dessous), sans changer la place de « Classe ou baddie » */
 @media (max-width:760px){
-  html body:not(#_) .cq.cq-bis.cq-fin .cq-res{max-width:318px;padding:24px 18px 22px;border-radius:24px}
+  /* 20/11 nuit (Marie) : le carré 49,99 € a la même forme et la même largeur que « Tout est inclus. » juste au-dessus */
+  html body:not(#_) .cq.cq-bis.cq-fin .cq-res{max-width:none;width:100%;padding:24px 20px 22px;border-radius:26px;box-shadow:0 30px 60px -34px rgba(120,40,70,.45)}
   html body:not(#_) .cq.cq-fin .cq-logo{font-size:31px}
   html body:not(#_) .cq.cq-fin .cq-prix{font-size:40px;margin:8px 0 2px}
   html body:not(#_) .cq.cq-fin .cq-prix small{font-size:15px}
@@ -2824,6 +2828,7 @@ document.addEventListener("DOMContentLoaded",function(){
         <p>Il n’existait pas. Alors je l’ai créé.</p>
         <div class="sign">Marie</div>
         <a class="marie-ig" href="https://www.instagram.com/ongleriedilerna/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#B03562" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#B03562" stroke="none"/></svg>@ongleriedilerna</a>
+        <img class="m5-c m5-c1" src="loginail-site/charms-mini/noeudcerise.webp" alt=""><img class="m5-c m5-c2" src="loginail-site/charms-mini/perle.webp" alt=""><!-- 20/11 nuit : 2 charms à gauche, pour habiller le vide avant « Combien ça coûte » -->
       </div>
     </div>
   </div>
@@ -2883,7 +2888,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </div>
 <script>(()=>{const M='loginail-site/apercus-mini/';/* classe ou baddie */
 /* 20/11 (Marie) : côté Baddie = 7 de ses looks, en images qui bougent (outils/capture-looks-roue-anim.py) */
-const S3={baddie:[3,7,11,4,1,5,10].map(i=>'../apercus-univers/look-roue-anim-'+i),classe:['tpl-maisonmoka','tpl-maisonnoire','tpl-atelierronce','tpl-studiopoudre','tpl-maisonlin','tpl-cristal','clean']};
+const S3={baddie:[3,11,5,7,4,1,10].map(i=>'../apercus-univers/look-roue-anim-hd-'+i),/* 20/11 nuit : ordre de Marie (L'Atelier Argent, La Sirène Noire, Studio Nacre…) + grande qualité */classe:['tpl-maisonmoka','tpl-maisonnoire','tpl-atelierronce','tpl-studiopoudre','tpl-maisonlin','tpl-cristal','clean']};
 const r=document.getElementById('rangee');
 const montre=k=>{r.innerHTML=S3[k].map(n=>`<div class="tel"><img src="${M}${n}.webp" alt="" loading="lazy"></div>`).join('')};montre('baddie');
 document.querySelectorAll('.bascule button').forEach(b=>b.onclick=()=>{if(b.classList.contains('on'))return;document.querySelectorAll('.bascule button').forEach(x=>x.classList.toggle('on',x===b));r.classList.add('change');setTimeout(()=>{montre(b.dataset.s);requestAnimationFrame(()=>r.classList.remove('change'))},260)});
@@ -4113,7 +4118,11 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
     /* téléphone : un seul rythme régulier dès le début (plus de rafale puis d'attente) */
     /* 20/11 (Marie, 3e passage) : 3 bulles d'un coup puis une longue attente, ça faisait « bug » →
        un seul rythme régulier : la 1re bulle dès qu'on arrive, puis une nouvelle toutes les 2,2 s */
-    if(tel)ajoute();setInterval(()=>{if(!document.hidden)ajoute()},2200)};
+    /* 20/11 nuit (Marie) : téléphone — « une seule, puis plusieurs d'un coup » → la pile est déjà remplie (3 bulles) avant d'arriver,
+       puis une nouvelle bulle toutes les 2,2 s, jamais deux trop près (sur iPhone les minuteries se rattrapent après un défilement) */
+    let der=0;const tour=()=>{const t=performance.now();if(!document.hidden&&t-der>1900){der=t;ajoute()}setTimeout(tour,2200)};
+    setTimeout(tour,tel?900:2200)};
+  if(tel){z.classList.add('bz-net');for(let k=0;k<3;k++)ajoute();setTimeout(()=>z.classList.remove('bz-net'),120)}
   /* 20/11 (Marie) : ordinateur — les bulles sont DÉJÀ affichées en arrivant (avant, la zone partait vide) ; même rythme ensuite */
   if(!tel){z.classList.add('bz-net');for(let k=0;k<5;k++)ajoute();setTimeout(()=>z.classList.remove('bz-net'),120)}
   /* 20/11 (Marie) : les bulles démarrent AVANT d'arriver à l'écran (300 px plus tôt) → elles sont déjà là quand on voit les téléphones */
