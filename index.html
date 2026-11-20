@@ -2573,6 +2573,18 @@ document.addEventListener("DOMContentLoaded",function(){
 @media (max-width:760px){.fil-fin,.k2c.k2c-ordi{display:none!important}}
 @media (min-width:761px) and (prefers-reduced-motion:reduce){.bzt .b,.ape .ecran{transition:none}}
 /* 20/11 (Marie, ordinateur) : carré 49,99 qui flotte tout doucement ; charms en plus ; téléphones de l'appli plus grands ; « Le premier mois » aligné en haut avec le carré */
+/* 20/11 (Marie) : ORDINATEUR — la souris sur un téléphone de la roue : la roue s'arrête, le téléphone grandit un peu, le fond du haut prend les couleurs de ce site */
+.np-fondsite{display:none}
+@media (min-width:761px) and (hover:hover){
+  .np .np-fondsite{display:block;position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .6s ease}
+  .np .np-fondsite i{position:absolute;inset:-90px;background:center/cover no-repeat;filter:blur(60px) saturate(1.25);opacity:.45}
+  .np .np-hero.np-fond-on .np-fondsite{opacity:1}
+  .np .np-arc.np-survol .np-wheel{animation-play-state:paused}
+  html body:not(#_) .np .np-card{transform-origin:50% 0;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease}
+  html body:not(#_) .np .np-card:hover{transform:scale(1.28);box-shadow:0 40px 70px -28px rgba(80,30,50,.7)}
+  .np .np-slot:has(.np-card:hover){z-index:5}
+}
+@media (min-width:761px) and (prefers-reduced-motion:reduce){html body:not(#_) .np .np-card{transition:none}}
 .ch-ordi,.pb-ch,.rentab{display:none}
 @media (max-width:760px){html body:not(#_) .v3 .ch.ch-ordi,html body:not(#_) .pb-ch{display:none!important}}
 @media (min-width:761px){
@@ -2658,6 +2670,7 @@ document.addEventListener("DOMContentLoaded",function(){
   </div>
 </header></div>
 <div class="np" style="display:contents"><section class="np-hero" id="hero">
+  <div class="np-fondsite" aria-hidden="true"><i></i></div><!-- 20/11 (Marie) : ordinateur — au survol d'un téléphone de la roue, le fond prend les couleurs de ce site -->
   <div class="np-charms" id="charms" aria-hidden="true"></div>
 
   <div class="np-top">
@@ -4083,6 +4096,17 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
 })();
 </script>
 <style>#bulles.bz-net .b{transition:none!important}</style>
+<script id="roue-survol-js">/* 20/11 (Marie) : ORDINATEUR seulement — survol d'un téléphone de la roue */
+(function(){
+  if(!matchMedia('(min-width:761px) and (hover:hover)').matches)return;
+  const arc=document.getElementById('arc'),hero=document.getElementById('hero'),f=hero&&hero.querySelector('.np-fondsite i');if(!arc||!f)return;
+  let t=0;
+  arc.addEventListener('pointerover',e=>{const c=e.target.closest('.np-card');if(!c)return;clearTimeout(t);
+    arc.classList.add('np-survol');const sc=c.querySelector('.np-sc');if(sc)f.style.backgroundImage=sc.style.backgroundImage;hero.classList.add('np-fond-on')});
+  arc.addEventListener('pointerout',e=>{const c=e.target.closest('.np-card');if(!c||c.contains(e.relatedTarget))return;
+    t=setTimeout(()=>{arc.classList.remove('np-survol');hero.classList.remove('np-fond-on')},120)});
+})();
+</script>
 <script id="charms-souris-js">/* 20/11 (Marie) : ordinateur — les charms de la page (appli, Classe ou baddie, « comme toi », prix, pied) s'écartent quand la souris passe dessus, puis reviennent */
 (function(){
   if(!matchMedia('(min-width:761px) and (hover:hover)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
