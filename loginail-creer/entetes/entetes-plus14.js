@@ -105,7 +105,7 @@ window.entete=function(k,t,lang){
     return `<div class="${c}" data-s="accueil"><div class="wx-cad">${ph(D.hero)}</div><div class="hb-tk"><div class="he-txt">${kick}${h1(300,40)}${lignes?`<div class="hb-sep"></div>${lignes}`:""}<div class="hb-sep"></div>${btn}</div></div></div>`;
   }
   if(k==="hflacon")return `<div class="${c} hb-k" data-s="accueil"><div class="hb-z"><div class="hb-bouchon"></div><div class="hb-bague"></div><div class="hb-verre"></div>${ph(D.hero)}<div class="hb-reflet"></div><div class="he-txt">${kick}${h1(230,30)}${note}</div><div class="hb-act">${btn}</div></div></div>`;
-  if(k==="harche")return `<div class="${c} hb-k" data-s="accueil"><div class="hb-z">${ph(D.hero2||D.hero)}<div class="he-txt">${kick}${h1(250,34)}${note}${btn}</div></div></div>`;
+  if(k==="harche")return `<div class="${c} hb-k" data-s="accueil"><div class="hb-z">${ph(D.hero)}<div class="he-txt">${kick}${h1(250,34)}${note}${btn}</div></div></div>`;
   if(k==="hsans")return `<div class="${c} hb-k" data-s="accueil"><div class="hb-z">${ph(D.hero)}<div class="hb-ombre"></div><div class="he-txt">${kick}${h1(340,56)}${note}</div><div class="hb-bas">${btn.replace(/<small>.*<\/small>/,"")}${cr?`<div class="hb-dispo">${t.dispo} : ${cr}</div>`:""}</div></div></div>`;
   return "";
 };

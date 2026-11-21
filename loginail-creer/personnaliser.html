@@ -2666,14 +2666,19 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 #publier.finiH{text-transform:none;letter-spacing:.01em;font-size:13.5px;white-space:nowrap;padding:0 18px}
 /* En-tête : les vignettes remontent (moins de vide sous « Toutes / Brillantes ») */
 @media (max-width:899px){#famEnt{margin-bottom:2px!important}#lEnt{padding-top:0!important;row-gap:6px!important}#lEnt .ent{padding-top:0!important}#lEnt .ent .mi{margin-top:3px!important}}
-/* Écriture : comme les en-têtes */
-#famE{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap!important;padding:2px 0 0!important;margin:0 18px 10px!important;border-bottom:1px solid var(--ligne);min-height:max-content;position:sticky;top:0;z-index:4;background:var(--fondReg,#fff)}
+/* En-tête : chaque vignette est un bouton, qui centrait son contenu → un nom sur 2 lignes faisait REMONTER la vignette (Bulles, Guirlande) : tout calé en haut */
+#lEnt{align-items:start!important}
+#lEnt .ent{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important}
+/* Écriture (Marie, 21/11 soir) : les familles en RONDS comme les charms et les fonds — « Abc » écrit dans une écriture de la famille, le nom dessous */
+#famE{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap!important;padding:4px 14px 6px!important;margin:0 0 8px!important;min-height:max-content;position:sticky;top:0;z-index:4;background:var(--fondReg,#fff)}
 #famE::-webkit-scrollbar{display:none}
-#famE .puce{flex:none;position:relative;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;height:auto!important;min-height:0!important;padding:6px 0 9px!important;font:italic 500 19px/1 "Cormorant Garamond",serif!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important;white-space:nowrap;cursor:pointer;transition:color .2s}
-#famE .puce sup{font:400 10px Jost,sans-serif;font-style:normal;margin-left:3px;color:#b9aeb0;vertical-align:super}
-#famE .puce::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--rose);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-#famE .puce.on{color:var(--noir)!important}
-#famE .puce.on::after{transform:scaleX(1)}
+#famE .puce{flex:none;width:62px;display:flex;flex-direction:column;align-items:center;gap:5px;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;height:auto!important;min-height:0!important;padding:3px 1px 4px!important;font:400 11px/1.15 Jost,sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important;white-space:nowrap;cursor:pointer}
+#famE .puce .rE{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:radial-gradient(circle at 32% 28%,#fff,#f4e6e9);box-shadow:0 0 0 1px rgba(181,71,94,.14),0 4px 10px -6px rgba(181,71,94,.5);transition:box-shadow .2s,transform .2s}
+#famE .puce .rE b{font-weight:400;font-size:17px;line-height:1;color:var(--noir);white-space:nowrap}
+#famE .puce.on{color:var(--noir)!important;font-weight:500!important}
+#famE .puce.on .rE{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
+#famE .puce:active .rE{transform:scale(.94)}
+@media (min-width:900px){#famE{background:transparent!important;position:static!important;padding-left:0!important}}
 /* Fond : ronds comme les charms */
 .fondDeux .fdTitre{display:none!important}
 .fondDeux #catF .catFond{width:60px!important;padding:3px 1px 4px!important;gap:5px!important;background:none!important;border-radius:0!important;font:400 11px/1.15 Jost,sans-serif!important;color:var(--muted)!important}
@@ -2692,10 +2697,18 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const pub = $("publier"); if (pub) { pub.textContent = "J’ai fini mon site ✦"; pub.classList.add("finiH"); pub.setAttribute("aria-label", "J’ai fini mon site"); }
   if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function (o) { const r = o0.apply(this, arguments); B.classList.toggle("ongLook", o === "look"); return r; }; }
   /* 3. Écriture : le nombre d'écritures par famille, et la famille choisie toujours visible */
-  function comptes() { const b = $("famE"), F = window.FAMILLES_ECRITURES || []; if (!b || !b.children.length || b.dataset.nb || typeof Pilote === "undefined" || !Pilote.polices) return;
-    const n = F.map(() => 0); try { Pilote.polices().forEach(([k]) => { const i = familleEcr(k); n[i < 0 ? F.length - 1 : i]++; }); } catch (e) { return; }
-    b.dataset.nb = 1; b.querySelectorAll(".puce").forEach(x => { const s = document.createElement("sup"); s.textContent = n[+x.dataset.i] || ""; x.appendChild(s); }); }
+  /* chaque famille : un rond avec « Abc » dans une de ses écritures */
+  const MODELE = { "Élégantes": "magazine", "Attachées": "parisienne", "Gourmandes": "bonbon", "Vintage": "saloon", "Folles": "y2k", "À la main": "feutre" };
+  function comptes() { const b = $("famE"), F = window.FAMILLES_ECRITURES || []; if (!b || !b.children.length || b.dataset.rond || typeof Pilote === "undefined" || !Pilote.polices || !Pilote.famille) return;
+    let dispo; try { dispo = new Set(Pilote.polices().map(x => x[0])); Pilote.policesCss && Pilote.policesCss(); } catch (e) { return; }
+    b.dataset.rond = 1; b.querySelectorAll(".puce").forEach(x => { const f = F[+x.dataset.i]; if (!f) return; const nom = f[0];
+      const k = dispo.has(MODELE[nom]) ? MODELE[nom] : (f[2].find(c => dispo.has(c)) || "");
+      let ff = ""; try { ff = k ? Pilote.famille(k).replace(/"/g, "'") : ""; } catch (e) {}
+      x.innerHTML = `<i class="rE"><b style="font-family:${ff}">Abc</b></i><span>${nom}</span>`; }); }
   function centre() { const b = $("famE"), x = b && b.querySelector(".puce.on"); if (x && b.clientWidth) b.scrollLeft = x.offsetLeft - b.clientWidth / 2 + x.offsetWidth / 2; }
+  /* 4. Fond : noms courts, sur une seule ligne (« Tous les fonds » → « Tous », « Qui bougent » → « Animés ») */
+  const COURT = { "Tous les fonds": "Tous", "Qui bougent": "Animés" };
+  const cf = $("catF"); if (cf) { const court = () => cf.querySelectorAll(".catFond>span").forEach(x => { const t = COURT[x.textContent.trim()]; if (t) x.textContent = t; }); court(); new MutationObserver(court).observe(cf, { childList: true }); }
   const fe = $("famE"); if (fe) new MutationObserver(() => { comptes(); clearTimeout(centre.t); centre.t = setTimeout(centre, 30); }).observe(fe, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
 })();
 </script>

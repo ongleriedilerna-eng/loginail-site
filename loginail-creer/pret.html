@@ -2596,19 +2596,19 @@ function entete(k,t,lang){
   const c=`hent he-${k}`;
   if(k==="bandeau")return `<div class="${c}" data-s="accueil">${ph(D.hero)}<div class="he-carte">${txt()}</div></div>`;
   if(k==="diagonale")return `<div class="${c}" data-s="accueil">${ph(D.hero)}${txt()}</div>`;
-  if(k==="vague")return `<div class="${c}" data-s="accueil">${ph(D.hero2||D.hero)}${txt()}</div>`;
+  if(k==="vague")return `<div class="${c}" data-s="accueil">${ph(D.hero)}${txt()}</div>`;
   if(k==="ticket")return `<div class="${c}" data-s="accueil"><div class="he-sur">${TX[0]}</div><div class="tk">${ph(N[0])}<div class="d"><small>${TX[1]} ✦</small>${nom}<small>${D.ville}</small></div></div>${txt(false)}</div>`;
   if(k==="vitrine")return `<div class="${c}" data-s="accueil"><div class="auvent"></div><div class="vit">${ph(D.hero)}${nom}</div>${txt(false)}</div>`;
-  if(k==="rideau")return `<div class="${c}" data-s="accueil"><div class="scene">${ph(D.hero2||D.hero)}<div class="rd g"></div><div class="rd d"></div><div class="tr"></div></div>${txt()}</div>`;
+  if(k==="rideau")return `<div class="${c}" data-s="accueil"><div class="scene">${ph(D.hero)}<div class="rd g"></div><div class="rd d"></div><div class="tr"></div></div>${txt()}</div>`;
   if(k==="loge")return `<div class="${c}" data-s="accueil"><div class="lo">${ph(D.hero3||D.hero)}${am.map(s=>`<span class="am" style="${s}"></span>`).join("")}</div>${txt()}</div>`;
   if(k==="balcon")return `<div class="${c}" data-s="accueil"><div class="fen">${ph(D.hero)}</div><div class="balc"><span class="pot g"></span><span class="pot d"></span></div>${txt()}</div>`;
   if(k==="devanture")return `<div class="${c}" data-s="accueil"><div class="fac">${nom}</div><div class="store"></div><div class="vit">${ph(D.hero)}</div>${txt(false)}</div>`;
   /* 15/11 (Marie) : les 4 anciennes refaites en vraies en-têtes (avant, c'étaient des modèles de site entier, d'où les bugs) */
   if(k==="classique")return `<div class="${c}" data-s="accueil"><div class="he-pil">${D.nom}</div><div class="cad">${ph(D.hero)}</div>${txt()}</div>`;
-  if(k==="medaillon")return `<div class="${c}" data-s="accueil"><div class="med">${ph(D.hero2||D.hero)}</div>${txt()}</div>`;
+  if(k==="medaillon")return `<div class="${c}" data-s="accueil"><div class="med">${ph(D.hero)}</div>${txt()}</div>`;
   if(k==="magazine")return `<div class="${c}" data-s="accueil"><div class="mag">${ph(D.hero)}<div class="mag-h"><span>${D.ville}</span><span>N° 1</span></div></div>${txt()}</div>`;
   if(k==="couverture")return `<div class="${c}" data-s="accueil"><div class="cou">${ph(D.hero)}<div class="cou-n">${kick}${nom}</div></div><div class="he-txt">${note}${btn}</div></div>`;
-  if(k==="fleurs")return `<div class="${c}" data-s="accueil"><div class="pol">${ph(D.hero2||D.hero)}<span>Bienvenue</span></div>${txt()}</div>`;
+  if(k==="fleurs")return `<div class="${c}" data-s="accueil"><div class="pol">${ph(D.hero)}<span>Bienvenue</span></div>${txt()}</div>`;
   return "";
 }
 </script>
