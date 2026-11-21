@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Personnalisez votre site · Loginail</title>
 <link href="../polices.css" rel="stylesheet">
+<!-- 21/11 (Marie : « ça met énormément de temps à charger ») : le gros fichier des fonds (2,7 Mo) part DÈS l'arrivée, en même temps que son site, au lieu d'attendre la fin -->
+<link rel="preload" href="../loginail-site/fonds-100.js?v=1511" as="script">
 <script src="../charms-cat.js?v=11191412"></script>
 <script src="perso/charms-noms.js?v=11191412"></script>
 <script src="perso/charms-couleurs.js?v=1911a"></script>
@@ -1067,7 +1069,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=2111traits"></script>
+<script src="perso/perso-pilote.js?v=2111tel"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1126,7 +1128,7 @@ function rend(o) {
     const larg = ([...l.querySelectorAll(".mi")].map(m => m.clientWidth).find(w => w > 0)) || l._larg || 76, e = P.etat, cle = [e.fond, e.police, e.couleur, e.vif, e.nomc, e.blocs, P.photoUne(), larg].join("|");
     try { if (!window._visE) window._visE = new Set(); if (!window._ioEnt) window._ioEnt = new IntersectionObserver(es => es.forEach(x => { const m = x.target, lst = $("lEnt");
         if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { m.dataset.ok = lst.dataset.cle; fileEnt(m); } window._visE.add(m); }
-        else { window._visE.delete(m); m.classList.add("off"); if (m.shadowRoot && m.dataset.ok) { m.shadowRoot.innerHTML = ""; m.dataset.ok = ""; } }
+        else { window._visE.delete(m); m.classList.add("off"); /* 21/11 (Marie : « ça met énormément de temps ») : on GARDE la vignette déjà dessinée (en pause) au lieu de l'effacer : plus rien à redessiner quand on revient */ }
         /* au plus 6 vignettes bougent en même temps (les premières visibles) : les autres restent sur une image */
         [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "160px" });
       /* 20/11 (Marie : « ça saccade ») : (1) les vignettes se dessinent UNE par image (plus toutes d'un coup = plus de blocage) ;
@@ -1262,13 +1264,13 @@ const ouvre0 = ouvre;
 /* 17/11 soir (Marie) : la photo a SON onglet, plus mélangée aux en-têtes (?photo=entete = ancienne façon, ?photo=ensemble pour la garder) */
 const MODE = ({ entete: "onglet", ensemble: "entete" })[new URLSearchParams(location.search).get("photo")] || "onglet";
 if (MODE) document.body.classList.add("m-" + MODE);
-const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : `<label class="ph ajout" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP">+<small>Ajouter<br>des photos</small></label>` + P.photos().map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
+const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : (P.photos().length >= 6 ? `<input type="file" accept="image/*" multiple hidden class="fichierP">` : `<label class="ph ajout" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP">+<small>Ajouter<br>des photos</small></label>`) + P.photos().slice(0, 6).map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
 /* 17/11 (Marie) : une croix pour retirer une photo, et « Annuler » pendant 5 s */
 let retiree = null;
 function annule(r) { retiree = r; const a = $("annuleP"); a.classList.add("on"); clearTimeout(annule.t); annule.t = setTimeout(() => { a.classList.remove("on"); retiree = null; }, 5000); }
 function brancheP(l) { l.onclick = e => { const x = e.target.closest("button.sup"); if (x) { const r = P.retirePhoto(x.dataset.u); if (r) { const w = x.closest(".phw"); w.classList.add("part"); setTimeout(rendPhotos, 260); annule(r); } return; }
     const b = e.target.closest("button.ph"); if (!b) return; P.choisitPhoto(b.dataset.u); l.querySelectorAll("button.ph").forEach(y => y.classList.toggle("on", y === b)); };
-  l.querySelector(".fichierP").onchange = async e => { const fs = e.target.files; if (!fs || !fs.length) return; const n = await P.litPhotos(fs); setTimeout(() => rendPhotos(), 600); if (n > 1) bulle(n + " photos ajoutées ✓"); };
+  l.querySelector(".fichierP").onchange = async e => { const fs = e.target.files; if (!fs || !fs.length) return; /* 21/11 (Marie) : 6 photos maximum */ const place = 6 - P.photos().length; if (place <= 0) return bulle("6 photos maximum : enlevez-en une d’abord"); if (fs.length > place) bulle("6 photos maximum : " + place + (place > 1 ? " photos gardées" : " photo gardée")); const n = await P.litPhotos([...fs].slice(0, place)); setTimeout(() => rendPhotos(), 600); if (n > 1) bulle(n + " photos ajoutées ✓"); };
   l.onscroll = majFleche; setTimeout(majFleche, 50); }
 function majFleche() { const l = $("lPh"), f = $("flecheP"); if (!l || !f) return; const reste = l.scrollWidth - l.clientWidth - l.scrollLeft; f.hidden = reste < 8; l.parentElement.classList.toggle("deborde", reste >= 8); }
 function rendPhotos() { if (MODE === "entete") { const l = $("lPh"); l.innerHTML = phHtml(); brancheP(l); } if (MODE === "onglet") { const l = $("lPhG"); l.innerHTML = phHtml(true); brancheP(l); } }
@@ -1855,7 +1857,7 @@ setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(plac
 })();
 
 taille();
-P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.search).get("fond"); if (f0) { P.fond(f0); setTimeout(() => P.assortir(), 250); } } setTimeout(() => { $("attente").classList.add("part"); rendPhotos(); ouvre(ORDRE.includes(new URLSearchParams(location.search).get("onglet")) ? new URLSearchParams(location.search).get("onglet") : ORDRE[0]); setTimeout(() => { if (onglet === "entete") rend("entete"); }, 1400); }, 700); });
+P.branche($("site")).then(() => { { const f0 = new URLSearchParams(location.search).get("fond"); if (f0) { P.fond(f0); setTimeout(() => P.assortir(), 250); } } setTimeout(() => { $("attente").classList.add("part"); rendPhotos(); ouvre(ORDRE.includes(new URLSearchParams(location.search).get("onglet")) ? new URLSearchParams(location.search).get("onglet") : ORDRE[0]); setTimeout(() => { if (onglet === "entete") rend("entete"); }, 1400); }, 450); });
 </script>
 <script>
 /* 17/11 (Marie : « Oui, remplace ») : les fonds en 2 colonnes : on range les catégories et les fonds côte à côte */
@@ -2181,12 +2183,181 @@ function dessineFE(){const l=document.getElementById("lEnt");if(!l||!l.children.
  let b=document.getElementById("famEnt");
  if(!b){b=document.createElement("div");b.id="famEnt";b.className="famTraits";b.innerHTML=FE.map((f,i)=>`<button class="tr" type="button" data-i="${i}" title="${f[1]}">${f[0]}<sup>${nbE(i)}</sup></button>`).join("");
   const s=document.createElement("div");s.id="famSl";s.className="famSlogan";l.parentNode.insertBefore(b,l);l.parentNode.insertBefore(s,l);
-  b.onclick=e=>{const x=e.target.closest("[data-i]");if(!x)return;famEnt=+x.dataset.i;dessineFE();l.scrollLeft=0;const pa=l.closest(".panneau");if(pa)pa.scrollTop=0;x.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"})}}
+  b.onclick=e=>{const x=e.target.closest("[data-i]");if(!x)return;famEnt=+x.dataset.i;dessineFE();l.scrollLeft=0;const pa=l.closest(".panneau");if(pa)pa.scrollTop=0;b.scrollTo({left:x.offsetLeft-b.clientWidth/2+x.offsetWidth/2,behavior:"smooth"})/* 21/11 (Marie : « ça va en haut et en bas ») : scrollIntoView faisait aussi bouger la page de haut en bas */}}
  b.querySelectorAll("[data-i]").forEach(x=>x.classList.toggle("on",+x.dataset.i===famEnt));
  document.getElementById("famSl").textContent=FE[famEnt][1];
  l.querySelectorAll(".ent").forEach(x=>x.classList.toggle("hors",famEnt!==0&&fE(x.dataset.k)!==famEnt));}
 const R0=rend;rend=function(o){const r=R0.apply(this,arguments);if(o==="entete")try{dessineFE()}catch(e){}return r};
 try{dessineFE()}catch(e){}
+})();
+</script>
+<!-- 21/11 (Marie, version TÉLÉPHONE de Personnaliser) :
+     1. on tire la feuille des réglages vers le haut / le bas (poignée + barre des onglets) : le téléphone grandit ou rétrécit, en suivant le doigt ;
+        la taille choisie reste la même d'un onglet à l'autre ;
+     2. Photo : 5 photos par ligne, la feuille s'arrête juste sous les photos (plus de grand vide) ;
+     3. Fond : plus de rond noir autour du thème choisi (fin trait rose) ; « Sans fond » n'est plus un carré : un petit lien en bas, à côté de « Tout recommencer à zéro » ;
+     4. Écriture : Élégantes / Attachées / Gourmandes… restent en haut quand on descend ; on glisse le pouce à gauche / à droite pour changer de famille ;
+     5. Couleurs : plus de flèches ‹ › sur les ambiances (elles coupaient « Mes couleurs ») ; les bulles dorées / argent… passent sous le nuancier (« Sauvegarder » reste visible) ;
+     6. Charms : version téléphone (aide cachée, étoiles + « Placer en grand » sur une ligne, recherche + tri sur une ligne). -->
+<style>
+@media (max-width:899px){
+  .tireT{flex:none;height:22px;margin:-6px 0 -4px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none}
+  .tireT b{width:42px;height:5px;border-radius:9px;background:#D9D2CC;transition:background .2s,width .2s}
+  body.tireOn .tireT b{background:#B5475E;width:52px}
+  body.tireOn #site,body.tireOn .tel{transition:none!important;pointer-events:none}
+  body.tireOn{user-select:none;-webkit-user-select:none}
+  #onglets{touch-action:pan-x}
+  body.grandC.feuille21 .choix,body.grandC.feuille21.surCouleurs .choix,body.grandC.feuille21.surCharms .choix,body.grandC.feuille21.m-entete .choix{height:var(--hC)!important}
+  /* 2. photos : 5 par ligne */
+  /* 6 photos maximum (Marie, 21/11) : 3 par ligne, 2 lignes, jamais une toute seule en bas */
+  #lPhG{display:grid!important;grid-template-columns:repeat(3,1fr);padding-left:18px!important;padding-right:18px!important;flex-wrap:initial!important}
+  body.grandC #lPhG .ph,#lPhG .ph{width:100%!important;height:auto!important;aspect-ratio:5/4;border-radius:14px}
+  #lPhG .phw{display:block;width:100%}
+  #lPhG{gap:8px!important;row-gap:8px!important}
+  body.grandC .panneau[data-p=photo]{padding-bottom:6px!important}
+  body.grandC .panneau[data-p=charms]{padding-bottom:6px!important}
+  .tireT,.tireT *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+  #lPhG .ph.ajout small{font-size:11px!important}
+  #lPhG .sup{width:20px;height:20px;top:-5px;right:-5px}
+  /* 3. fonds : « Sans fond » en lien, plus en carré */
+  #lFond .vg.sans{display:none!important}
+  .sansF{display:none;border:0;background:none;padding:8px 2px;font:400 12.5px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(0,0,0,.2);white-space:nowrap;cursor:pointer}
+  body.surFond .sansF{display:inline-block}
+  .sansF.on{color:#B5475E;text-decoration-color:#B5475E}
+  body.surFond .zeroTel{margin-right:0}
+  body.surFond .sansF{margin-right:auto;margin-left:14px}
+  /* 4. écriture : familles toujours visibles */
+  .panneau[data-p=ecriture] .famE{position:sticky;top:0;z-index:4;background:#fff;padding-top:4px;padding-bottom:8px;margin-bottom:0;touch-action:pan-x}
+  #lPol{touch-action:pan-y;transition:transform .22s cubic-bezier(.2,.8,.2,1),opacity .22s}
+  #lPol.glisse{transition:none}
+  /* 5. couleurs */
+  #ambG,#ambD{display:none!important}
+  .ambsG{-webkit-mask-image:none!important;mask-image:none!important;padding:2px 18px 2px 18px!important;scroll-padding-left:18px}
+  .hautG{padding-left:0!important;padding-right:0!important}
+  #spectre .extraC{margin:10px 0 0;width:100%}
+  #spectre .brillV{display:flex!important;justify-content:space-between;gap:6px}
+  #spectre .brillV button{width:30px!important;height:30px!important;flex:none}
+  /* 6. charms */
+  body.surCharms #aide,body.surCouleurs #aide{display:none}
+  .famSlogan{display:none!important}
+  /* couleurs : colonne de gauche resserrée, « Sauvegarder mes couleurs » toujours visible */
+  .panneau[data-p=couleurs] .gaucheC{gap:6px!important}
+  .panneau[data-p=couleurs] .assortV,.panneau[data-p=couleurs] .partsV button{height:36px!important;min-height:0!important;font-size:12px!important;line-height:1.05!important}
+  .panneau[data-p=couleurs] .partsV{gap:6px!important}
+  .panneau[data-p=couleurs] .partsV button i,.panneau[data-p=couleurs] .assortV b{width:20px!important;height:20px!important}
+  .panneau[data-p=couleurs] .gaucheC .exP button{height:30px!important;font-size:11.5px!important}
+  .panneau[data-p=couleurs] .sauveC{min-height:36px!important;padding:4px 8px!important;font-size:11.5px!important;line-height:1.1}
+  .panneau[data-p=couleurs] .hautG{margin-bottom:6px!important}
+  #spectre{display:flex!important;flex-direction:column;min-height:0}
+  #spectre .rectS{flex:1 1 auto;min-height:70px!important;height:auto!important}
+  .rangAmb{display:flex;align-items:center;gap:0;padding-left:14px;margin-bottom:8px}
+  .rangAmb .sauveC{flex:none;width:auto!important;min-height:40px!important;margin:0!important;padding:0 12px!important;font-size:12px!important;white-space:nowrap}
+  .rangAmb .hautG{flex:1;min-width:0;margin:0!important}
+  .rangAmb .ambsG{padding-left:8px!important}
+  #spectre .brillV button{width:26px!important;height:26px!important}
+  #spectre .rectS{min-height:60px!important}
+  .panneau[data-p=couleurs] .atelierC{align-items:stretch!important}
+  body.surCharms .etoBox{align-items:center;gap:8px;padding:0 14px 0 18px!important;justify-content:space-between!important}
+  body.surCharms .etoBox .grandCh{height:30px;font-size:12px;padding:0 11px;margin-left:auto;white-space:nowrap}
+  .panneau[data-p=charms] .basC:empty{display:none}
+  .panneau[data-p=charms] .outilsC{display:flex!important;align-items:center;gap:8px;padding:0 14px 4px 18px!important;margin:0!important}
+  .panneau[data-p=charms] .outilsC .cherche{flex:1;min-width:0;height:36px!important;margin:0!important}
+  .panneau[data-p=charms] .outilsC .cherche input{font-size:16px}
+  .panneau[data-p=charms] .outilsC .catMenu{display:none!important}
+  .panneau[data-p=charms] .outilsC .compteL{margin:0!important;display:flex!important;flex-direction:column;align-items:flex-end;gap:0;white-space:nowrap;justify-self:auto!important}
+  .panneau[data-p=charms] .outilsC .compteC{font:500 12px Jost,sans-serif!important;color:var(--noir)}
+  .panneau[data-p=charms] .outilsC .triC{font-size:10.5px!important}
+  .panneau[data-p=charms] .outilsC .triC .triB{font-size:11px!important;padding:2px 6px!important;height:auto!important}
+  body.surCharms .etoBox .etoN{display:flex;align-items:center;gap:6px;margin:0!important}
+  body.surCharms .etoBox .etoT{display:inline!important;font-size:12px;white-space:nowrap}
+  body.surCharms .etoBox .pill button{height:28px;padding:0 11px;font-size:12px}
+  #catBox{height:auto}
+  .panneau[data-p=charms] #catC .catI{font-size:9.5px!important;gap:2px!important}
+  .panneau[data-p=charms] #catC .catI img,.panneau[data-p=charms] #catC .catI .cfav,.panneau[data-p=charms] #catC .catI>i{width:40px!important;height:40px!important}
+}
+/* 3. le thème choisi (fonds ET charms) : fin trait rose au lieu du gros rond noir */
+.fondDeux .catFond.on .vgI,#catC .catI.on img,#catC .catI.on .cfav,#catC .catI.on>i{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--rose,#B5475E)!important}
+.fdFleche{background:#fff!important;color:var(--noir)!important;box-shadow:0 4px 12px -6px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.06)!important}
+</style>
+<script>
+(function () {
+  if (innerWidth >= 900) return;
+  const $ = id => document.getElementById(id), R = $("reglages"), B = document.body;
+  if (!R) return;
+  /* 1. la poignée */
+  const t = document.createElement("div"); t.className = "tireT"; t.setAttribute("role", "slider"); t.setAttribute("aria-label", "Agrandir ou réduire mon site"); t.innerHTML = "<b></b>";
+  R.insertBefore(t, $("onglets"));
+  let hScene = null; try { hScene = +sessionStorage.getItem("lgnScene21") || null; } catch (e) {}
+  const hautH = () => (document.querySelector(".haut") || {}).offsetHeight || 52;
+  const MIN_SCENE = 230, MIN_CHOIX = 96;
+  const defaut = () => Math.round(innerHeight * .42);
+  const choix = () => document.querySelector(".choix");
+  const naturel = () => { const p = document.querySelector(".panneau.on"); if (!p) return 9999;
+    if (p.dataset.p === "photo") { const l = $("lPhG"); return l && l.scrollHeight ? l.scrollHeight + 10 : 9999; } return 9999; };
+  let raf = 0;
+  function applique(h) { const c = choix(); if (!c) return;
+    const autre = R.offsetHeight - c.offsetHeight, maxC = innerHeight - hautH() - MIN_SCENE - autre;
+    const nat = naturel(); let hc = innerHeight - hautH() - h - autre; if (nat < 9999 && !B.classList.contains("tireOn")) hc = nat; /* Photo : la feuille s'arrête juste sous les photos */ hc = Math.max(MIN_CHOIX, Math.min(hc, maxC, nat));
+    B.style.setProperty("--hC", Math.round(hc) + "px"); B.classList.add("feuille21");
+    if (!raf) raf = requestAnimationFrame(() => { raf = 0; try { taille(); } catch (e) {} }); }
+  const remet = () => applique(hScene || defaut());
+  /* à chaque onglet, la même taille de téléphone */
+  if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function () { const r = o0.apply(this, arguments); remet(); setTimeout(remet, 60); return r; }; }
+  addEventListener("resize", () => setTimeout(remet, 30));
+  /* on tire : poignée + barre des onglets (si le doigt va plutôt vers le haut ou le bas) */
+  function branche(el, toujours) { let y0, x0, h0, actif = false, pid = null, hist = [];
+    el.addEventListener("pointerdown", e => { if (e.button > 0) return; y0 = e.clientY; x0 = e.clientX; h0 = document.querySelector(".scene").offsetHeight; actif = !!toujours; pid = e.pointerId; hist = [[e.timeStamp, e.clientY]];
+      if (actif) { e.preventDefault(); B.classList.add("tireOn"); try { el.setPointerCapture(pid); } catch (x) {} } });
+    el.addEventListener("pointermove", e => { if (pid !== e.pointerId || y0 == null) return; const dy = e.clientY - y0, dx = e.clientX - x0;
+      if (!actif) { if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx) * 1.3) { actif = true; B.classList.add("tireOn"); try { el.setPointerCapture(pid); } catch (x) {} } else return; }
+      e.preventDefault(); hist.push([e.timeStamp, e.clientY]); if (hist.length > 6) hist.shift();
+      hScene = h0 + dy; applique(hScene); });
+    const fin = e => { if (pid !== e.pointerId) return; try { getSelection().removeAllRanges(); } catch (x) {} const etait = actif; actif = false; y0 = null; pid = null; B.classList.remove("tireOn");
+      if (!etait) { if (toujours) { /* un simple toucher sur la poignée : grand ↔ petit */
+          const sc = document.querySelector(".scene").offsetHeight; hScene = sc < innerHeight * .55 ? innerHeight - hautH() - 150 : Math.round(innerHeight * .36); anime(sc, hScene); } return; }
+      /* lancé rapide : on va jusqu'au bout */
+      const a = hist[0], z = hist[hist.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]);
+      const sc = document.querySelector(".scene").offsetHeight;
+      if (Math.abs(v) > .6) { hScene = v > 0 ? innerHeight - hautH() - 150 : MIN_SCENE; anime(sc, hScene); } else { hScene = sc; }
+      try { sessionStorage.setItem("lgnScene21", Math.round(hScene)); } catch (x) {} };
+    el.addEventListener("pointerup", fin); el.addEventListener("pointercancel", fin); }
+  function anime(de, a) { const t0 = performance.now(), D = 260; B.classList.add("tireOn");
+    const pas = n => { const k = Math.min(1, (n - t0) / D), e = 1 - Math.pow(1 - k, 3); applique(de + (a - de) * e); if (k < 1) requestAnimationFrame(pas); else { B.classList.remove("tireOn"); hScene = document.querySelector(".scene").offsetHeight; try { sessionStorage.setItem("lgnScene21", Math.round(hScene)); } catch (x) {} } };
+    requestAnimationFrame(pas); }
+  branche(t, true); branche($("onglets"), false);
+  remet(); setTimeout(remet, 400); setTimeout(remet, 1500);
+  try { const ro = new ResizeObserver(() => { if (!B.classList.contains("tireOn")) remet(); }); const lp = () => { const l = $("lPhG"); if (l && !l._ro21) { l._ro21 = 1; ro.observe(l); } }; lp(); setTimeout(lp, 800); setTimeout(lp, 3000); } catch (e) {}
+
+  /* 3. « Sans fond » : un lien en bas */
+  const pied = document.querySelector(".pied"), zero = pied && pied.querySelector(".zeroTel");
+  if (zero) { const sf = document.createElement("button"); sf.type = "button"; sf.className = "sansF"; sf.textContent = "Sans fond"; zero.after(sf);
+    sf.onclick = () => { const v = document.querySelector("#lFond .vg.sans"); if (v) v.click(); setTimeout(majSans, 50); };
+    const majSans = () => sf.classList.toggle("on", !!(window.Pilote && !Pilote.etat.fond)); setInterval(() => { if (B.classList.contains("surFond")) majSans(); }, 700); }
+
+  /* 4. écriture : on glisse à gauche / à droite pour changer de famille */
+  const L = $("lPol"), F = $("famE");
+  if (L && F) { let x0 = null, y0, pid, mode = 0;
+    L.addEventListener("pointerdown", e => { if (e.pointerType === "mouse") return; x0 = e.clientX; y0 = e.clientY; pid = e.pointerId; mode = 0; });
+    L.addEventListener("pointermove", e => { if (x0 == null || e.pointerId !== pid) return; const dx = e.clientX - x0, dy = e.clientY - y0;
+      if (!mode) { if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.4) { mode = 1; L.classList.add("glisse"); } else if (Math.abs(dy) > 10) { mode = 2; } }
+      if (mode === 1) L.style.transform = `translateX(${dx * .6}px)`; });
+    const fin = e => { if (x0 == null || e.pointerId !== pid) return; const dx = e.clientX - x0; x0 = null; L.classList.remove("glisse");
+      if (mode === 1 && Math.abs(dx) > 50) { const bs = [...F.querySelectorAll(".puce")], i = bs.findIndex(b => b.classList.contains("on")), j = i + (dx < 0 ? 1 : -1);
+        if (bs[j]) { L.style.transform = `translateX(${dx < 0 ? -40 : 40}px)`; L.style.opacity = "0"; setTimeout(() => { bs[j].click(); L.style.transition = "none"; L.style.transform = `translateX(${dx < 0 ? 40 : -40}px)`; void L.offsetWidth; L.style.transition = ""; L.style.transform = ""; L.style.opacity = ""; }, 160); return; } }
+      L.style.transform = ""; };
+    L.addEventListener("pointerup", fin); L.addEventListener("pointercancel", fin);
+    /* on empêche le clic sur une écriture quand on a glissé */
+    L.addEventListener("click", e => { if (mode === 1) { e.stopPropagation(); e.preventDefault(); mode = 0; } }, true); }
+
+  /* 5. couleurs : les bulles dorées / argent sous le nuancier */
+  const ex = $("extraC"), sp = $("spectre"); if (ex && sp) sp.appendChild(ex);
+  /* « Sauvegarder mes couleurs » : au début de la ligne des ambiances (ses couleurs sauvegardées apparaissent juste à côté) */
+  const sv = $("sauveC"), hg = $("hautG"); if (sv && hg) { const r = document.createElement("div"); r.className = "rangAmb"; hg.before(r); r.appendChild(sv); r.appendChild(hg); sv.querySelector("span").textContent = "Sauvegarder"; }
+
+  /* 6. charms : « Placer mes charms en grand » sur la ligne des étoiles */
+  const gc = $("grandCh"), eto = document.querySelector(".etoBox"); if (gc && eto) { eto.appendChild(gc); gc.textContent = "⤢ Placer en grand"; }
+  const ci = $("chercheC"); if (ci) ci.placeholder = "Chercher : cœur, cerise…";
+  const et = document.querySelector(".etoBox .etoT"); if (et) et.innerHTML = "<b>✦</b> Étoiles";
 })();
 </script>
 </body>
