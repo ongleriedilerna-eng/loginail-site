@@ -2669,8 +2669,21 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 /* En-tête : chaque vignette est un bouton, qui centrait son contenu → un nom sur 2 lignes faisait REMONTER la vignette (Bulles, Guirlande) : tout calé en haut */
 #lEnt{align-items:start!important}
 #lEnt .ent{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important}
+/* 21/11 soir (Marie : « le noir quand je clique, ça fait pas beau, pour tous ») : ce qui est choisi = un trait FIN rose, partout */
+.hautG .ambG.on{background:#fff!important;box-shadow:0 0 0 1.5px var(--rose,#B5475E)!important}
+#famCh .rayonC.on i,.rayonC.on i{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--rose,#B5475E)!important}
+.hautG{padding-top:4px!important;padding-bottom:4px!important}
+/* En-tête (Marie : « plus de téléphone, un carré arrondi comme les fonds, de la taille de 4 fonds ») : grands carrés, 2 par ligne (téléphone), 3 (ordinateur) */
+.panneau>#lEnt{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 10px!important;padding:2px 18px 14px!important}
+@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:2px 4px 14px!important}}
+#famSl{display:none!important}
+body.grandC #lEnt .ent,#lEnt .ent{width:auto!important;margin:0!important}
+#lEnt .ent .mi{width:100%!important;margin:0 0 6px!important;aspect-ratio:1/1!important;height:auto!important;border-radius:14px!important;background:#F6F3EF;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)!important}
+#lEnt .ent:hover .mi{box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),0 6px 14px -8px rgba(0,0,0,.35)!important}
+#lEnt .ent.on .mi{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--rose,#B5475E)!important}
+#lEnt .ent{font-size:12.5px!important}
 /* Écriture ET En-tête (Marie, 21/11 soir) : les familles en PILULES comme les ambiances de Couleurs — un rond (« A » dans une écriture de la famille, ou un petit dessin) et le nom à côté */
-#famE,#famEnt{display:flex!important;gap:8px!important;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap!important;padding:2px 18px 8px!important;margin:0 0 6px!important;border:0!important;min-height:max-content;position:sticky;top:0;z-index:4;background:var(--fondReg,#fff)}
+#famE,#famEnt{display:flex!important;gap:8px!important;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap!important;padding:5px 18px 8px!important;margin:0 0 6px!important;border:0!important;min-height:max-content;position:sticky;top:0;z-index:4;background:var(--fondReg,#fff)}
 #famE::-webkit-scrollbar,#famEnt::-webkit-scrollbar{display:none}
 #famE .puce,#famEnt .tr{flex:none;display:flex!important;align-items:center;gap:8px;height:44px!important;min-height:0!important;padding:0 14px 0 6px!important;border:0!important;border-radius:999px!important;background:var(--fond,#F6F3EF)!important;box-shadow:none!important;font:400 12.5px Jost,sans-serif!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important;white-space:nowrap;cursor:pointer;transition:box-shadow .2s,background .2s}
 #famEnt .tr::after,#famE .puce::after{display:none!important}
@@ -2678,10 +2691,10 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 #famE .puce .rE,#famEnt .tr .rE{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:radial-gradient(circle at 32% 28%,#fff,#f4e6e9);box-shadow:inset 0 0 0 1px rgba(181,71,94,.16)}
 #famE .puce .rE b{font-weight:400;font-size:21px;line-height:1;color:var(--noir)}
 #famEnt .tr .rE svg{width:18px;height:18px;color:var(--rose,#B5475E)}
-#famE .puce.on,#famEnt .tr.on{background:#fff!important;color:var(--noir)!important;font-weight:500!important;box-shadow:0 0 0 2px var(--noir)!important}
+#famE .puce.on,#famEnt .tr.on{background:#fff!important;color:var(--noir)!important;font-weight:500!important;box-shadow:0 0 0 1.5px var(--rose,#B5475E)!important}
 #famE .puce:active,#famEnt .tr:active{transform:scale(.96)}
 @media (max-width:899px){#famE .puce,#famEnt .tr{height:40px!important}#famE .puce .rE,#famEnt .tr .rE{width:28px;height:28px}}
-@media (min-width:900px){#famE,#famEnt{background:transparent!important;position:static!important;padding-left:0!important}}
+@media (min-width:900px){#famE,#famEnt{background:transparent!important;position:static!important;padding:5px 4px 10px!important}}
 /* Fond : ronds comme les charms */
 .fondDeux .fdTitre{display:none!important}
 .fondDeux #catF .catFond{width:60px!important;padding:3px 1px 4px!important;gap:5px!important;background:none!important;border-radius:0!important;font:400 11px/1.15 Jost,sans-serif!important;color:var(--muted)!important}
@@ -2689,7 +2702,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 .fondDeux #catF .catFond .vgI>.f100{inset:5px!important;width:auto!important;height:auto!important;border-radius:50%!important;overflow:hidden!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
 .fondDeux #catF .catFond .vgI>.f100>.tuile{inset:0!important}
 .fondDeux #catF .catFond.on{color:var(--noir)!important;font-weight:500}
-.fondDeux #catF .catFond.on .vgI{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)!important}
+.fondDeux #catF .catFond.on .vgI{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--rose,#B5475E)!important}
 .fondDeux #catF .catFond:active .vgI{transform:scale(.94)}
 @media (max-width:899px){#catFG,#catFD{display:none!important}.fondDeux #catF{padding-left:14px!important;padding-right:14px!important;gap:2px!important}}
 </style>
