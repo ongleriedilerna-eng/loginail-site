@@ -2335,8 +2335,9 @@ try{dessineFE()}catch(e){}
   const MIN_SCENE = 230, MIN_CHOIX = 12;
   const defaut = () => Math.round(innerHeight * .44);   /* 2.4 : au milieu, 2 rangées et demie de choix (comme Snapchat) */   /* 2.2 : au repos, le téléphone est grand */
   const choix = () => document.querySelector(".choix");
-  const naturel = () => { const p = document.querySelector(".panneau.on"); if (!p) return 9999;
-    if (p.dataset.p === "photo") { const l = $("lPhG"); return l && l.scrollHeight ? l.scrollHeight + 10 : 9999; } return 9999; };
+  /* 21/11 (Marie) : la feuille garde PARTOUT la taille qu'elle a dans Photo (même téléphone dans tous les onglets) */
+  let natPhoto = 0;
+  const naturel = () => { const l = $("lPhG"); if (l && l.offsetParent && l.scrollHeight) natPhoto = l.scrollHeight + 10; return natPhoto || 9999; };
   let raf = 0;
   function applique(h) { const c = choix(); if (!c) return;
     const autre = R.offsetHeight - c.offsetHeight, maxC = innerHeight - hautH() - MIN_SCENE - autre;
@@ -2375,7 +2376,7 @@ try{dessineFE()}catch(e){}
   function pose(e) { const sc = SC(); etatF = e; B.classList.toggle("feuilleHaut", e === "haut"); B.classList.toggle("feuilleBas", e === "bas");
     sc.style.flex = ""; sc.style.height = ""; R.style.marginTop = "";
     if (e === "bas") { const c = choix(), autre = R.offsetHeight - c.offsetHeight; applique(innerHeight - hautH() - autre - MIN_CHOIX); }
-    else { applique(defaut()); peek(); }
+    else applique(defaut());
     hcRepos = parseFloat(B.style.getPropertyValue("--hC")) || 0;
     try { taille(); } catch (x) {}
     if (e === "haut") { const hS = sc.offsetHeight, X = Math.max(0, hautH() + hS - enHaut()); sc.style.flex = "none"; sc.style.height = hS + "px"; R.style.marginTop = -X + "px"; B.style.setProperty("--hC", Math.round(hcRepos + X) + "px"); }
@@ -3207,7 +3208,10 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   /* couleurs : la place se remplit en douceur */
   body.v2 .panneau[data-p=couleurs] .atelierC{transition:height .38s cubic-bezier(.2,.9,.25,1);overflow:hidden}
   body.v2 .panneau[data-p=couleurs] #spectre{display:flex!important;flex-direction:column!important;height:100%!important}
-  body.v2 .panneau[data-p=couleurs] #spectre .rectS{flex:1 1 auto!important;height:auto!important;min-height:80px!important}
+  body.v2 .panneau[data-p=couleurs] #spectre .rectS{flex:1 1 auto!important;height:auto!important;min-height:34px!important}
+  body.v2 .panneau[data-p=couleurs] .assortV,body.v2 .panneau[data-p=couleurs] .partsV button{min-height:30px!important}
+  body.v2 .panneau[data-p=couleurs] #spectre{padding:6px!important;gap:4px!important}
+  body.v2 .panneau[data-p=couleurs] #spectre .exP button,body.v2 .panneau[data-p=couleurs] #spectre .extraC button{height:28px!important}
 }
 </style>
 <script>
@@ -3215,7 +3219,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const B = document.body, p = document.querySelector('.panneau[data-p="couleurs"]'), at = p && p.querySelector(".atelierC"); if (!at) return;
   const ajuste = () => { if (!p.classList.contains("on")) return; const pr = p.getBoundingClientRect(), ar = at.getBoundingClientRect();
     const dispo = Math.floor(pr.bottom - ar.top - 10), nat = at.dataset.nat ? +at.dataset.nat : (at.dataset.nat = at.scrollHeight);
-    at.style.height = Math.max(+at.dataset.nat || 0, dispo) + "px"; };
+    at.style.height = Math.max(150, dispo) + "px"; };   /* 21/11 : toujours la place qu'il y a (même feuille partout) */
   /* la hauteur « normale » (feuille au milieu) est mesurée une fois ; ensuite on suit la place qu'il y a */
   const mesureNat = () => { at.style.height = ""; at.dataset.nat = ""; requestAnimationFrame(() => { at.dataset.nat = at.offsetHeight; ajuste(); }); };
   new MutationObserver(() => setTimeout(ajuste, 30)).observe(B, { attributes: true, attributeFilter: ["class", "style"] });
