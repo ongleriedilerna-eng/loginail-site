@@ -2360,5 +2360,283 @@ try{dessineFE()}catch(e){}
   const et = document.querySelector(".etoBox .etoT"); if (et) et.innerHTML = "<b>✦</b> Étoiles";
 })();
 </script>
+<!-- 21/11 (Marie, validé) : Charms en 10 catégories + Fonds (moins de thèmes, « Je ne veux pas de fond ») — venu de idee-perso-familles.html (Marie) : En-tête rangée en FAMILLES comme Écriture · Charms et Fonds : thèmes en pastilles en haut, tout visible -->
+<style>
+/* 20/11 : en-têtes plus petites (Marie : « c'est trop grand ») */
+.famRonds{padding-bottom:6px}
+.famRonds .rayonC{width:66px}
+.famRonds .rayonC i img.phR{width:100%!important;height:100%!important;object-fit:cover;border-radius:50%}
+.famTraits{flex:none;min-height:max-content;display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;padding:2px 18px 0;border-bottom:1px solid var(--ligne);margin:0 18px 10px;padding-left:0;padding-right:0}
+.famTraits::-webkit-scrollbar{display:none}
+.famTraits .tr{flex:none;position:relative;background:none;border:0;padding:6px 0 9px;font:italic 500 19px/1 "Cormorant Garamond",serif;color:var(--muted);white-space:nowrap;cursor:pointer;transition:color .2s}
+.famTraits .tr sup{font:400 10px Jost,sans-serif;font-style:normal;margin-left:3px;color:#b9aeb0;vertical-align:super}
+.famTraits .tr::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--rose);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.famTraits .tr.on{color:var(--noir)}.famTraits .tr.on::after{transform:scaleX(1)}
+.famTraits .tr:hover:not(.on){color:var(--noir)}
+html[data-fam=traits] .famSlogan{font-size:13.5px}
+/* Charms + Fonds : UNE SEULE LIGNE, petites vignettes rondes, flèche › pour comprendre qu'on peut aller à droite */
+#catG,#catD,#catFG,#catFD{display:none!important}
+.rayonsC{display:flex;flex-wrap:nowrap;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 14px 4px;scroll-behavior:smooth}
+.rayonsC::-webkit-scrollbar,.fondDeux #catF::-webkit-scrollbar,body #catC::-webkit-scrollbar{display:none}
+.rayonC{flex:none;width:60px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 1px 4px;font:400 11px/1.12 Jost,sans-serif;color:var(--muted);text-align:center}
+.rayonC i{width:38px;height:38px;border-radius:50%;background:var(--fond);box-shadow:0 0 0 1px rgba(0,0,0,.07);display:grid;place-items:center;font-style:normal;font-size:17px;color:var(--rose);transition:box-shadow .2s,transform .2s}
+.rayonC i img{width:28px;height:28px;object-fit:contain}
+.rayonC:hover:not(.on) i{transform:scale(1.06)}
+.rayonC.on{color:var(--noir);font-weight:500}
+.rayonC.on i{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
+body #catC{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-mask:none!important;mask:none!important;gap:6px!important;padding:2px 14px 8px!important;flex-direction:row!important;max-height:none!important;scrollbar-width:none;scroll-behavior:smooth}
+body #catC .catI{flex:none!important;flex-direction:row!important;width:auto!important;height:28px!important;padding:0 11px!important;border-radius:999px!important;border:1px solid var(--ligne)!important;background:#fff!important;color:var(--muted)!important;font:400 12px Jost,sans-serif!important;white-space:nowrap!important;min-width:max-content!important;margin:0!important}
+body #catC .catI span{max-width:none!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;display:inline!important}
+body #catC .catI img,body #catC .catI .cfav{display:none!important}
+body #catC .catI.on{background:var(--noir)!important;border-color:var(--noir)!important;color:#fff!important;font-weight:400!important}
+body #catC .catI.hors{display:none!important}
+.fondDeux{flex-direction:column!important;gap:4px!important}
+.fondDeux .catBoxF{width:auto!important;background:none!important;box-shadow:none!important;border-radius:0!important;flex:none!important;display:block!important}
+.fondDeux #catF{flex-direction:row!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-mask:none!important;mask:none!important;padding:0 2px 4px!important;gap:0!important;scrollbar-width:none;scroll-behavior:smooth}
+.fondDeux .catFond{flex:none!important;width:66px!important;padding:3px 1px 4px!important;font-size:11px!important;line-height:1.12!important}
+.fondDeux .catFond .vgI{width:38px!important;height:38px!important}
+.fondDeux .catFond.on:after{display:none!important}
+.fondDeux #lFond{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))!important}
+/* la flèche › : UNE seule, à côté de la ligne (jamais par-dessus les vignettes) */
+.panneau[data-p=fond] .fdFleche{display:none!important}
+.rg,.fondDeux .catBoxF.rg{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:flex-start;gap:0;flex:none;min-width:0;position:relative}
+.rg>.rayonsC,.rg>#catC,.rg>#catF{flex:1 1 0!important;min-width:0!important}
+.rgFl{position:static!important;flex:none;width:28px;height:28px;margin:8px 6px 0 2px;border-radius:50%;background:#fff;box-shadow:0 2px 8px -3px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.05);display:none;place-items:center;font:300 19px/1 Jost,sans-serif;color:var(--noir);padding:0 0 2px 1px;cursor:pointer}
+.rg.cont .rgFl{display:grid}
+.rg.cont>.rayonsC,.rg.cont>#catC,.rg.cont>#catF{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent)!important;mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent)!important}
+/* Fond : toute la page défile (les thèmes partent quand on descend) */
+.fondDeux{overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:none}
+.fondDeux::-webkit-scrollbar{display:none}
+.fondDeux #lFond{overflow:visible!important;flex:none!important;height:auto!important;min-height:0!important}
+.fondDeux>*{flex-shrink:0!important}
+.fondDeux .catBoxF.rg{min-height:78px!important;align-items:stretch!important;overflow:visible!important}
+.fondDeux #catF{min-height:76px!important}
+.fondDeux .catFond{min-height:74px!important;flex-shrink:0!important}
+.fondDeux .catFond .vgI{flex:none!important}
+.rg .rgFl{align-self:flex-start}
+/* Charms : mêmes vignettes que les fonds (plus grandes, collées, pleines) */
+.rayonC{width:58px}
+.rayonC i{width:46px;height:46px;background:radial-gradient(circle at 32% 28%,#fff,#f4e6e9);box-shadow:0 0 0 1px rgba(181,71,94,.14),0 4px 10px -6px rgba(181,71,94,.5)}
+.rayonC i img{width:38px;height:38px}
+.rayonC.on i{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--noir)}
+.fondDeux .catFond{width:58px!important}
+.fondDeux .catFond .vgI{width:46px!important;height:46px!important}
+@media (max-width:899px){.rayonC{width:58px}}
+/* 20/11 soir (Marie : « la version ordinateur ne va pas du tout ») : rayons alignés sous le titre, plus grands, sans vide ; plus de place pour les charms */
+@media (min-width:900px){
+ .panneau[data-p=charms] #catBox.catH{margin:0 0 2px -7px!important}
+ .panneau[data-p=charms] #catBox.catH .rg{align-items:flex-start!important}
+ #famCh.rayonsC{padding:5px 0 4px!important;gap:0;margin-left:calc((42px - clamp(56px,calc(100% / 13),80px))/2 + 9px)}
+ #famCh .rayonC{width:clamp(56px,calc(100% / 13),80px);padding:0 2px 2px;gap:5px;font-size:11px;line-height:1.15}
+ #famCh .rayonC i{width:42px;height:42px}
+ #famCh .rayonC i img{width:33px;height:33px}
+ .pied #compteC{display:none;margin-right:auto;padding-left:2px}body.surCharms .pied #compteC{display:block}
+ .panneau[data-p=charms] .outilsC{margin-top:0!important}.panneau[data-p=charms] .compteL{flex-direction:row!important}
+ body #catC{padding:4px 0 8px!important}
+}
+@media (min-width:900px){
+ .outilsC.haut{display:none!important}
+ body.surCharms .outilsC.haut{display:flex!important;align-items:center;gap:14px;width:min(450px,calc(100% - 240px));margin:-43px 0 7px auto!important;padding:0!important;position:relative;z-index:3}
+ .outilsC.haut .cherche{flex:1 1 auto;min-width:0;max-width:none}
+ .panneau[data-p=charms] #catBox.catH{max-height:120px;overflow:hidden;transition:max-height .28s cubic-bezier(.2,.8,.2,1),opacity .2s,margin .28s}
+ .panneau[data-p=charms].descendu #catBox.catH{max-height:0!important;opacity:0;margin-bottom:0!important}
+ #lCh .titreTh{margin:10px 0 0!important;font:500 13px Jost,sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:var(--noir)!important}
+ #lCh .titreTh:first-child{margin-top:0!important}
+}
+.rg.rgCache{display:none!important}
+/* 21/11 (Marie : « un effet flouté, pour pas que ça fasse barre ») : les charms s'effacent en douceur sous la recherche */
+/* fondu en haut dès que la liste a défilé (même quand les ronds sont là), et fondu en bas tant qu'il reste des charms dessous */
+.chDeux #lCh{--fH:0px;--fB:0px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 var(--fH),#000 calc(100% - var(--fB)),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 var(--fH),#000 calc(100% - var(--fB)),transparent 100%)}
+.chDeux #lCh.fHaut{--fH:34px}.chDeux #lCh.fBas{--fB:30px}
+/* 21/11 fluidité : le navigateur ne recalcule que les charms visibles */
+#lCh .ch{content-visibility:auto;contain-intrinsic-size:auto 60px}
+/* 21/11 (Marie) : en haut « Vos charms » + la phrase d'aide à droite ; dessous la recherche ; en descendant, seule la recherche reste ; étoiles en bas à côté de « J'ai fini » */
+@media (min-width:900px){
+ body.surCharms #aide{margin:-46px 0 0 auto!important;width:min(330px,calc(100% - 270px));text-wrap:balance;hyphens:none;text-align:right;font-size:13.5px!important;line-height:1.4;min-height:0}
+ body.surCharms .outilsC.haut{margin:16px 0 10px!important;width:100%!important;justify-content:space-between}
+ body.surCharms .outilsC.haut .cherche{flex:0 1 460px}
+ body.surCharms #titreP,body.surCharms #aide,body.surCharms .outilsC.haut,.panneau[data-p=charms] #catBox.catH,body.surCharms .choix,body.surCharms .panneau[data-p=charms]{transition:none!important}
+ .fantome{position:fixed;inset:0;pointer-events:none;z-index:5}
+ body.surCharms.chDesc #titreP,body.surCharms.chDesc #aide{max-height:0!important;opacity:0;margin-top:0!important;margin-bottom:0!important;padding:0!important}
+ body.surCharms.chDesc .outilsC.haut{margin:6px 0 0!important}
+ body.surCharms.chDesc .choix{margin-top:4px!important}body.surCharms.chDesc .panneau[data-p=charms]{padding-top:0!important}
+ .pied .etoBox{display:none!important}
+ body.surCharms .pied .etoBox{display:flex!important;margin:0 auto 0 48px!important;padding:0!important}
+ body.surCharms .pied #compteC{margin-right:0!important}
+ body.surCharms .pied .etoN.sousAide{margin:0!important}
+ body.surCharms .pied .finiP{margin-left:0!important}
+ /* la flèche : un petit rond blanc, posé en bas de la liste, au milieu */
+ /* 21/11 (Marie) : la flèche dans le bas de page, entre « Avec / Sans » et « J'ai fini mon site » (plus par-dessus les charms) */
+ body.surCharms .pied .flecheBas{position:static!important;translate:none!important;order:1;flex:0 0 38px;margin:0 auto;width:38px!important;height:38px!important;min-width:38px;border-radius:50%;background:#fff;box-shadow:0 6px 16px -8px rgba(181,71,94,.55),0 0 0 1px rgba(181,71,94,.12);color:var(--rose);padding:0}
+ body.surCharms .pied .finiP{order:2}
+ body.surCharms .pied .etoBox{margin-right:0!important}
+ body.surCharms .flecheBas svg{width:18px;height:18px;stroke-width:1.8!important}
+}
+[data-avant] #lCh .ch.avant,body.modeAvant #lCh .ch.avant{box-shadow:0 0 0 3px var(--rose)!important}
+#lCh .rienC{grid-column:1/-1!important;max-width:none!important;width:auto!important;line-height:1.5;margin:6px 0}
+@media (min-width:900px){.pied #compteC,.pied #compteC.plein{font:300 21px/1 Jost,sans-serif!important;letter-spacing:.02em;color:var(--noir)}
+.pied #compteC em{font:italic 500 25px/1 "Cormorant Garamond",serif;letter-spacing:0;margin-left:2px}}
+#famCh .rayonC i.duo{position:relative}
+#famCh .rayonC i.duo img{position:absolute;width:62%!important;height:62%!important;object-fit:contain}
+#famCh .rayonC i.duo .d1{left:6%;top:10%;z-index:1}
+#famCh .rayonC i.duo .d2{right:6%;bottom:8%;z-index:2}
+#bandeauB{position:fixed;left:50%;top:6px;transform:translateX(-50%);z-index:9999;background:#1E1C1B;color:#fff;font:400 13px Jost,sans-serif;padding:8px 16px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px -10px rgba(0,0,0,.6)}
+#bandeauB span{color:#FFD9EA;margin-left:6px}
+#lCh .ch.choisiB{box-shadow:0 0 0 2.5px var(--rose)!important}
+#lFond .vg.sans,.catFond[data-c="Animaux"],.catFond[data-c="Couleur simple"],.catFond[data-c="Dark"],.catFond[data-c="Nouveaux"]{display:none!important}
+#pasFond{margin-right:auto;padding:6px 2px;font:400 12.5px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px;background:none;border:0;cursor:pointer;white-space:nowrap}
+#pasFond:hover,#pasFond.on{color:var(--noir)}#pasFond.on{font-weight:500}#pasFond[hidden]{display:none}
+@media (max-width:899px){#pasFond{display:none!important}}   /* téléphone : le lien « Sans fond » existe déjà */
+@media (min-width:1500px) and (max-height:820px){body.surCharms .etoBox{justify-content:flex-end!important;margin-top:-34px!important;position:relative;z-index:2}body.surCharms .etoN.sousAide{margin:0!important}}
+</style>
+<script>
+(function(){
+const R0=rend;rend=function(o){const r=R0.apply(this,arguments);if(o==="charms"){try{groupeC()}catch(e){}}return r};
+/* ---------- CHARMS : 10 rayons au plus (à toi de choisir lesquels) ---------- */
+const FC=[
+ ["Vos charms",null],["Tous les charms",null],
+ ["Cœurs et nœuds",["Cœurs","Nœuds"]],
+ ["Fleurs et bohème",["Fleurs et nature","Jardin","Bohème"]],
+ ["Gourmand et maison",["Gourmand","Fruits et légumes","Glaces","Cuisine","Diner américain","Maison et objets","Papeterie et couture"]],
+ ["Animaux",["Animaux","Animaux marins"]],
+ ["Vacances",["Mer et plage","Tropical","Voyage","Hiver","Corse","Paris","Régions de France"]],
+ ["Beauté et onglerie",["Onglerie","Beauté","Salle de bain","Coiffure"]],
+ ["Mode et bijoux",["Bijoux","Piercings","Pierres et cristaux","Mode et accessoires","Sacs","Chaussures","Lunettes","Vêtements","Jean","Léopard et zèbre","Faon","Écaille","Serpent"]],
+ ["Y2K",["Y2K et tech","Téléphones et bipeurs","Jeux vidéo","Musique rétro","Pixel","Cyber chrome","Cyber rose","Néon","Jouets rétro"]],
+ ["Nuit et magie",["Ciel et étoiles","Espace","Magie et astro","Gothique","Rock","Symboles"]],
+ ["Fête et lettres",["Fête et musique","Cinéma et tapis rouge","Fête foraine","Jeux et sport","Fiertés","Drapeaux","Lettres","Chiffres"]]];
+function rangee(row,hote){if(!row||row.dataset.rg)return;row.dataset.rg=1;let w=hote;if(w)w.classList.add("rg");else{w=document.createElement("div");w.className="rg";row.parentNode.insertBefore(w,row);w.appendChild(row)}
+ const b=document.createElement("button");b.className="rgFl";b.type="button";b.setAttribute("aria-label","Voir la suite");b.textContent="›";w.appendChild(b);
+ const maj=()=>w.classList.toggle("cont",row.scrollWidth-row.clientWidth-row.scrollLeft>6);
+ b.onclick=()=>row.scrollBy({left:Math.max(160,row.clientWidth*.7),behavior:"smooth"});
+ row.addEventListener("scroll",maj,{passive:true});addEventListener("resize",maj);try{new ResizeObserver(maj).observe(row);new MutationObserver(maj).observe(row,{childList:true,subtree:true})}catch(e){}setTimeout(maj,60);}
+let famC=null;
+const nomC=b=>b.textContent.replace("✦","").trim();
+function dessineFC(){const c=document.getElementById("catC");if(!c||c.children.length<10)return;
+ let b=document.getElementById("famCh");
+ if(!b){b=document.createElement("div");b.id="famCh";b.className="rayonsC";
+  const ico=f=>{const cible=f[1]?f[1][0]:f[0];const t=[...c.querySelectorAll(".catI")].find(t=>nomC(t)===cible);if(!t)return"◐";const im=t.querySelector("img");return im?`<img src="${im.src}" alt="">`:(t.querySelector(".cfav")&&t.querySelector(".cfav").textContent||"◐")};
+  b.innerHTML=FC.map((f,i)=>`<button class="rayonC" data-i="${i}"><i>${ico(f)}</i><span>${f[0]}</span></button>`).join("");c.parentNode.insertBefore(b,c);rangee(b);rangee(c);
+  b.onclick=e=>{const x=e.target.closest(".rayonC");if(!x)return;famC=+x.dataset.i;const f=FC[famC];
+   const bts=[...c.querySelectorAll(".catI")];const cible=f[1]?bts.find(t=>nomC(t)===f[1][0]):bts.find(t=>nomC(t)===f[0]);if(cible)cible.click();dessineFC();const lc=document.getElementById("lCh");lc.scrollTop=0}}
+ if(famC===null){famC=1;const t0=[...c.querySelectorAll(".catI")].find(t=>t.dataset.c==="Tous");if(t0)t0.click()}
+ const f=FC[famC];b.querySelectorAll(".rayonC").forEach((x,i)=>x.classList.toggle("on",i===famC));
+ c.querySelectorAll(".catI").forEach(t=>{const n=f[1]?f[1].indexOf(nomC(t)):-1;t.classList.toggle("hors",n<0);t.style.order=n<0?"":n});
+ c.parentNode.classList.add("rgCache");
+ /* catégorie double (« Cœurs et nœuds ») : DEUX charms dans le rond, un de chaque */
+ const imT=th=>{const t=[...c.querySelectorAll(".catI")].find(t=>nomC(t)===th),im=t&&t.querySelector("img");return im?im.src:""};
+ b.querySelectorAll(".rayonC").forEach((t,i)=>{const nm=FC[i][0],d=DUO[nm],x=CHX[nm];let k,h;
+  if(d){const a=Array.isArray(x)?x:[];const s1=a[0]?P.imgCharm(a[0]):imT(d[0]),s2=a[1]?P.imgCharm(a[1]):imT(d[1]);k=s1+"|"+s2;h=`<img class="d1" src="${s1}" alt=""><img class="d2" src="${s2}" alt="">`}
+  else if(typeof x==="string"){k=x;h=`<img src="${P.imgCharm(x)}" alt="">`}
+  if(k&&t.dataset.b!==k){t.dataset.b=k;t.querySelector("i").innerHTML=h;t.querySelector("i").classList.toggle("duo",!!d)}});}
+/* ---------- Mode « je choisis mes bulles » (?bulles=1) : un clic sur un charm = l'image du rond ouvert ---------- */
+let AVANT=(()=>{try{return JSON.parse(localStorage.getItem("lgnAvant")||"[]")}catch(e){return[]}})();
+/* Mode « je choisis les charms mis en avant » (?avant=1) : dans « Tous les charms », un clic = mis en avant (ou retiré) */
+if(/[?&]avant=1/.test(location.search)){
+ const bd=document.createElement("div");bd.id="bandeauB";document.body.appendChild(bd);document.body.classList.add("modeAvant");
+ const cpt=()=>{bd.innerHTML="<b>Mis en avant</b> · dans « Tous les charms », cliquez les charms à montrer en premier (re-cliquez pour retirer). <span>"+AVANT.length+" choisi(s)</span>"};cpt();
+ document.addEventListener("click",e=>{const ch=e.target.closest&&e.target.closest("#lCh .ch");if(!ch||famC!==1)return;e.stopImmediatePropagation();e.preventDefault();
+  const n=ch.dataset.n,i=AVANT.indexOf(n);if(i<0)AVANT.push(n);else AVANT.splice(i,1);try{localStorage.setItem("lgnAvant",JSON.stringify(AVANT))}catch(er){}
+  ch.classList.toggle("avant",i<0);cpt()},true);}   /* on ne déplace rien pendant le choix (sinon tout se décale sous la souris) */
+const DUO={"Cœurs et nœuds":["Cœurs","Nœuds"],"Fleurs et bohème":["Fleurs et nature","Bohème"],"Gourmand et maison":["Gourmand","Maison et objets"],"Beauté et onglerie":["Beauté","Onglerie"],"Mode et bijoux":["Mode et accessoires","Bijoux"],"Nuit et magie":["Ciel et étoiles","Magie et astro"],"Fête et lettres":["Fête et musique","Lettres"]};
+const CHX=Object.assign({"Tous les charms":"escargotpixel","Pour vous":"libellule","Beauté et onglerie":["nuanciercapsules","serum"],"Mode et bijoux":["cacheoreilles","sacstrassfuchsia"],"Y2K":"minidisc","Fête et lettres":["boule8","lettreyargent"],"Gourmand et maison":["cafetierevache","macaronfraise"],"Animaux":"teckelcreme","Vacances":"boueeflamant","Nuit et magie":["planeteetincelles","bouledecristal"]},(()=>{try{return JSON.parse(localStorage.getItem("lgnBulles")||"{}")}catch(e){return{}}})());   /* 20/11 : les bulles choisies par Marie */
+if(/[?&]bulles=1/.test(location.search)){
+ const bd=document.createElement("div");bd.id="bandeauB";bd.innerHTML="<b>Choix des bulles</b> · ouvrez un rond, puis cliquez le charm à mettre dedans. <span id='bandeauN'></span>";document.body.appendChild(bd);
+ const cpt=()=>{document.getElementById("bandeauN").textContent=Object.keys(CHX).filter(k=>k[0]!=="_").length+" rond(s) choisis sur "+(FC.length-1)+" · rond double : 1er clic = gauche, 2e clic = droite"};cpt();
+ document.addEventListener("click",e=>{const ch=e.target.closest&&e.target.closest("#lCh .ch");if(!ch||famC===null||famC===0)return;e.stopImmediatePropagation();e.preventDefault();
+  {const nm=FC[famC][0];if(DUO[nm]){const a=Array.isArray(CHX[nm])?CHX[nm]:[null,null],k=CHX["_"+nm]||0;a[k]=ch.dataset.n;CHX[nm]=a;CHX["_"+nm]=1-k}else CHX[nm]=ch.dataset.n}try{localStorage.setItem("lgnBulles",JSON.stringify(CHX))}catch(er){}dessineFC();cpt();
+  document.querySelectorAll("#lCh .ch.choisiB").forEach(x=>x.classList.remove("choisiB"));ch.classList.add("choisiB")},true);}
+/* un rayon = TOUS ses charms d'un coup, rangés par petit titre (plus de 2e ligne de thèmes à comprendre) */
+/* charms mal rangés à l'origine (Marie, 20/11) : charm → [catégorie, groupe] */
+const OV={antilleshibiscus:["Fleurs et bohème","Fleurs et nature"],masquetissu:["Beauté et onglerie","Beauté"],masquelapin:["Beauté et onglerie","Beauté"],masquenuitzebre:["Beauté et onglerie","Beauté"],servietteplagehibiscus:["Vacances","Mer et plage"],bohosacosier:["Vacances","Mer et plage"],bohopanier:["Vacances","Mer et plage"],bohochapeau:["Vacances","Mer et plage"],chapeaupaillenoeud:["Vacances","Mer et plage"]};
+const SOUS={
+ "Gourmand":[["Boissons",/soda|caf[ée]|th[ée]|th[ée] |latte|cocktail|martini|lait|bubble|citronnade|expresso|matcha|chocolat chaud|verre|gobelet|canette|capsule|carafe|olive|thermos|tasse|th[ée]i[èe]re|granit/i],
+  ["Bonbons et chocolat",/bonbon|sucette|guimauve|ourson|sucre d|chocolat en|tablette|truffe|gel[ée]e|pomme d.amour/i],
+  ["Pâtisseries et viennoiseries",/croissant|macaron|g[âa]teau|cupcake|tarte|[ée]clair|gaufre|madeleine|brioche|roul[ée]|biscuit|meringue|pancake|muffin|cookie|palmier|flan|clafoutis|chou|tiramisu|cannolo|bretzel|mochi|pain au|baguette|fraisier|p[âa]tisserie|fraise au|fraises cara/i],
+  ["Petit-déjeuner",/œuf|oeuf|confiture|miel|c[ée]r[ée]ales|yaourt|tartine|cannelle/i],
+  ["Plats du monde",/pizza|burger|sushi|maki|ramen|onigiri|dim sum|bao|taiyaki|spaghetti|burrata|focaccia|pok[ée]|sandwich|tartine|[œo]euf|c[ée]r[ée]ales|yaourt|affogato|past[èe]que|fruits rouges|myrtilles|citron/i]],
+ "Fleurs et nature":[["Champignons",/champignon|amanite/i],
+  ["Plantes et cactus",/cactus|monstera|bonsa|plante|terrarium|succulente|foug|pothos|aloe|ficus|lierre|arbre|fraisier|pot de/i],
+  ["Fleurs",/fleur|hibiscus|lotus|lys|orchid|tulipe|rose|marguerite|pivoine|coquelicot|tournesol|muguet|lavande|passiflore|frangipanier|bouquet|couronne|cerisier|n[ée]nuphar/i],
+  ["Forêt et saisons",/feuille|gland|pomme de pin|sapin|olivier|[ée]rable/i]],
+ "Beauté":[["Lèvres",/l[èe]vres|rouge [àa] l[èe]vres|gloss/i],
+  ["Maquillage",/poudrier|mascara|eye-liner|fard|palette|pinceau|houppette|[ée]ponge|recourbe|faux cils|kabuki/i],
+  ["Parfums",/parfum|roll-on|diffuseur/i],
+  ["Miroirs et trousses",/miroir|trousse/i],
+  ["Soins et spa",/cr[èe]me|s[ée]rum|ampoule|huile|gua sha|jade|masque|concombre|pierres|spa|brumisateur|tube|brosse|bougie|serviette|solaire|soin|goutte|flacon/i]]};
+const NOMG={"Fleurs et nature":"Fleurs","Léopard et zèbre":"Léopard et zèbre","Mode et accessoires":"Accessoires","Cinéma et tapis rouge":"Cinéma","Y2K et tech":"Tech"};
+function groupeC(){if(famC===null)return;const f=FC[famC],l=document.getElementById("lCh"),q=document.getElementById("chercheC").value.trim();if(q||!l)return;
+ const CC=window.CH_COUL||{},co=n=>n in CC?CC[n]:99999,po=P.poses(),fav=(typeof FAV!=="undefined"?FAV:[]).filter(n=>P.charmsTous().includes(n)),bt=n=>`<button class="ch${po.includes(n)?" on":""}${fav.includes(n)?" fav":""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy" decoding="async"></button>`;
+ if(famC===0){const r=l.querySelector(".rienC");if(r){r.innerHTML="Touchez un charm pour le poser :<br>il apparaîtra ici.";if(fav.length)r.remove()}
+  if(fav.length)l.insertAdjacentHTML("beforeend",`<p class="titreTh">Vos favoris ♥</p>`+fav.map(bt).join(""));return}
+ if(famC===1){ /* « Tous les charms » : ceux que Marie met en avant d'abord, puis tous les autres par couleur */
+  const av=[...new Set(["cerisespixel",...AVANT,...P.charmsDe("Populaires"),"cacheoreilles","raierose","masquetissu","coquillagerose","peche"])].filter(n=>P.charmsTous().includes(n))   /* 20/11 : les choix de Marie + les 42 anciens « Pour vous » */,rest=P.charmsTous().filter(n=>!av.includes(n)).sort((a,b)=>co(a)-co(b));
+  l.innerHTML=`<p class="titreTh">Nouveautés</p>`+av.map(n=>bt(n).replace('class="ch','class="ch avant')).join("")+`<p class="titreTh">Tous les charms</p>`+rest.map(bt).join("");return}
+ if(!f[1])return;
+ /* une catégorie = des petits groupes (Drapeaux, Lettres…), CHACUN rangé par couleur */
+ const vu=new Set(),G=f[1].map(th=>[th,[]]);
+ Object.keys(OV).forEach(n=>{if(OV[n][0]===f[0]){const g=G.find(x=>x[0]===OV[n][1]);if(g&&!vu.has(n)){vu.add(n);g[1].push(n)}}});
+ G.forEach(g=>P.charmsDe(g[0]).forEach(n=>{if(!vu.has(n)&&!(OV[n]&&OV[n][0]!==f[0])){vu.add(n);g[1].push(n)}}));
+ const TIT=!/[?&]titres=0/.test(location.search);   /* 21/11 : Marie choisit la version B */   /* version B : un petit titre par groupe */
+ /* 21/11 (Marie : « ça fait pâté ») : les gros groupes sont redécoupés d'après le nom du charm */
+ const G2=[];G.forEach(g=>{const R=SOUS[g[0]];if(!R){G2.push([NOMG[g[0]]||g[0],g[1],g[0]]);return}
+  const B=R.map(r=>[r[0],[]]),reste=[];g[1].forEach(n=>{const nm=P.nomCharm(n),k=R.findIndex(r=>r[1].test(nm));(k<0?reste:B[k][1]).push(n)});
+  B.forEach(b=>G2.push([b[0],b[1],g[0]]));if(reste.length)G2.push(["Et aussi",reste,g[0]])});
+ /* lettres et chiffres : par série (or rose, doré, argent, pastel, puis les autres), puis dans l'ordre A→Z / 0→9 */
+ const SER=["or rose","dor","argent","pastel","chrome","nacr","gothique"],ser=n=>{const m=P.nomCharm(n).toLowerCase(),i=SER.findIndex(x=>m.includes(x));return i<0?SER.length:i},
+  car=n=>(P.nomCharm(n).match(/^(?:Lettre|Chiffre) (\S)/)||[,"~"])[1];
+ const tri=g=>/^(Lettres|Chiffres)$/.test(g[2])?(a,b)=>ser(a)-ser(b)||car(a).localeCompare(car(b),"fr"):(a,b)=>co(a)-co(b);
+ l.innerHTML=G2.filter(g=>g[1].length).map(g=>(TIT?`<p class="titreTh">${g[0]}</p>`:"")+g[1].sort(tri(g)).map(bt).join("")).join("");}
+document.addEventListener("click",e=>{if(e.target.closest(".catFond")){const f=document.querySelector(".fondDeux");if(f)f.scrollTop=0}});
+if(matchMedia("(min-width:900px)").matches){const cc=document.getElementById("compteC"),pd=document.querySelector(".pied");if(cc&&pd){pd.prepend(cc);const hab=()=>{const m=cc.textContent.match(/^(.*?)\s*charms$/);if(m&&!cc.querySelector("em"))cc.innerHTML=m[1]+" <em>charms</em>"};hab();new MutationObserver(hab).observe(cc,{childList:true,characterData:true,subtree:true})}
+ const ou=document.querySelector(".outilsC"),ti=document.getElementById("titreP");if(ou&&ti){(document.getElementById("aide")||ti).after(ou);ou.classList.add("haut")}
+ /* 21/11 (Marie) : « Étoiles qui brillent » en bas, juste à côté de « J'ai fini mon site » */
+ /* 21/11 (Marie) : « Étoiles qui brillent » en bas, juste après « 0 / 21 charms » */
+ setTimeout(()=>{const eb=document.querySelector(".etoBox"),cc=document.getElementById("compteC");if(eb&&cc)cc.after(eb)},0);
+ /* repli TRÈS fluide : on change la page d'un coup, puis on fait seulement glisser et fondre (rien n'est recalculé pendant l'animation) */
+ const lc=document.getElementById("lCh"),pa=lc.closest(".panneau"),EZ="cubic-bezier(.22,1,.36,1)";let av=0,gel=0;
+ const haut=()=>[document.getElementById("titreP"),document.getElementById("aide"),document.getElementById("catBox")];
+ /* 21/11 v2 : plus de copie par-dessus. Descendre = le haut s'efface sur place, PUIS les charms montent.
+    Remonter = les charms descendent (sans vide en bas), PUIS le haut réapparaît. Rien ne se chevauche. */
+ /* 21/11 v3 (Marie : « quand on remonte, on ne voit plus que 3-4 lignes ») : 3 états.
+    0 = tout en haut : titre + phrase + ronds ; 1 = on remonte au milieu : seulement les ronds ; 2 = on descend : rien.
+    On efface sur place PUIS on glisse ; ou on glisse PUIS on fait réapparaître. Rien ne se chevauche. */
+ let enCours=null,etat=0;
+ const cachesDe=n=>{const h=haut();return [n>=1?h[0]:null,n>=1?h[1]:null,n===2?h[2]:null].filter(Boolean)};
+ const applique=n=>{document.body.classList.toggle("chDesc",n>=1);pa.classList.toggle("descendu",n===2);etat=n};
+ function va(n){if(n===etat)return;gel=performance.now()+560;
+  const avant=cachesDe(etat),apres=cachesDe(n),part=apres.filter(e=>!avant.includes(e)),revient=avant.filter(e=>!apres.includes(e));
+  const bouge=()=>[document.querySelector(".outilsC.haut"),pa.querySelector(".chDeux")].filter(Boolean);
+  const glisse=(r0,etire)=>{bouge().forEach((e,k)=>{const d=r0[k]-e.getBoundingClientRect().top;if(Math.abs(d)<1)return;
+    e.animate([{transform:`translateY(${d}px)`},{transform:"none"}],{duration:360,easing:EZ});
+    if(e.classList.contains("chDeux")){if(d>0)e.animate([{clipPath:`inset(0 0 ${d}px 0)`},{clipPath:"inset(0 0 0px 0)"}],{duration:360,easing:EZ});
+     else if(etire){e.style.flex="none";e.style.height=etire+"px";e.animate([{clipPath:"inset(0 0 0px 0)"},{clipPath:`inset(0 0 ${-d}px 0)`}],{duration:360,easing:EZ}).onfinish=()=>{e.style.height="";e.style.flex=""}}}})};
+  if(enCours){enCours.forEach(a=>a.cancel());enCours=null}
+  if(part.length){enCours=part.map(e=>e.animate([{opacity:1,transform:"none"},{opacity:0,transform:"translateY(-8px)"}],{duration:110,easing:"ease-in",fill:"forwards"}));
+   etat=n;enCours[0].onfinish=()=>{const r0=bouge().map(e=>e.getBoundingClientRect().top);applique(n);enCours&&enCours.forEach(a=>a.cancel());enCours=null;glisse(r0)}}
+  else{const r0=bouge().map(e=>e.getBoundingClientRect().top),hL=(pa.querySelector(".chDeux")||{}).offsetHeight;
+   const cadres=[pa,pa.closest(".choix"),pa.querySelector(".chDeux")].filter(Boolean);cadres.forEach(c=>c.style.overflow="visible");setTimeout(()=>cadres.forEach(c=>c.style.overflow=""),380);
+   applique(n);glisse(r0,hL);
+   revient.forEach((e,k)=>e.animate([{opacity:0,transform:"translateY(-8px)"},{opacity:1,transform:"none"}],{duration:240,delay:250+k*25,easing:EZ,fill:"backwards"}))}}
+ const bascule=desc=>va(desc?2:0);
+ const fondus=()=>{lc.classList.toggle("fHaut",lc.scrollTop>2);lc.classList.toggle("fBas",lc.scrollTop+lc.clientHeight<lc.scrollHeight-2)};fondus();setInterval(fondus,700);
+ lc.addEventListener("scroll",()=>{fondus();const t=lc.scrollTop,d=t-av;av=t;if(t<=0){if(etat!==0&&performance.now()>=gel)va(0);return}if(performance.now()<gel)return;
+  if(d>1&&t>6)va(2);else if(d<-2&&etat===2)va(1)},{passive:true});
+ lc.addEventListener("wheel",e=>{if(e.deltaY<0&&performance.now()>=gel){if(lc.scrollTop<=0)va(0);else if(etat===2)va(1)}},{passive:true});
+ /* en arrivant tout en haut pendant une animation : on vérifie juste après */
+ setInterval(()=>{if(lc.scrollTop<=0&&etat!==0&&performance.now()>=gel&&onglet==="charms")va(0)},300);}
+try{TXT.charms=["Vos <em>charms</em>","Touchez un charm pour le poser. Ensuite, déplacez-le, agrandissez-le ou tournez-le."];if(onglet==="charms")document.getElementById("aide").textContent=TXT.charms[1]}catch(e){}
+/* ---------- FONDS (Marie, 20/11 soir) : moins de thèmes, pas de carré « Sans fond » ---------- */
+const FUS={"Animaux":"Y2K","Couleur simple":"Élégants","Dark":"Rock","Nouveaux":null};
+function fusionFonds(){if(!P.pret)return;const F=P.fonds();let ch=false;window.FONDS_ENLEVES=window.FONDS_ENLEVES||[];
+ F.forEach((x,i)=>{if(/Teckel|Cheval /.test(x[0])&&!window.FONDS_ENLEVES.includes(i)){window.FONDS_ENLEVES.push(i);ch=true}
+  if(!x[3]||!x[3].some(t=>t in FUS))return;const n=[];x[3].forEach(t=>{const v=t in FUS?FUS[t]:t;if(v&&!n.includes(v))n.push(v)});x[3]=n;ch=true});
+ if(ch){const l=document.getElementById("lFond");l.dataset.cat="";if(typeof catFond!=="undefined"&&catFond in FUS)catFond="Tous";if(onglet==="fond")rend("fond")}
+ let b=document.getElementById("pasFond");if(!b){b=document.createElement("button");b.id="pasFond";b.type="button";b.textContent="Je ne veux pas de fond";document.querySelector(".pied").prepend(b);
+  b.onclick=()=>{const s=document.querySelector("#lFond .vg.sans");if(s)s.click()}}
+ b.hidden=onglet!=="fond";b.classList.toggle("on",!P.etat.fond);}
+const obs=()=>{try{fusionFonds()}catch(e){}try{dessineFC();const cf=document.getElementById("catF");if(cf&&cf.children.length>3)rangee(cf,cf.parentElement)}catch(e){}};setInterval(obs,400);
+})();
+</script>
 </body>
 </html>

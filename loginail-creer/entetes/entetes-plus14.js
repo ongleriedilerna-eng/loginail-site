@@ -71,7 +71,7 @@ const css=`
           mask:radial-gradient(circle calc(var(--u)*5.2) at 50% 100%,transparent 98%,#000) 0 0/calc(var(--u)*10.4) 100% repeat-x}
 .ecran .hent.hb.he-w-hsans .hb-z .he-txt{left:4%;right:4%;top:44%;width:auto!important;background:none!important;padding:0!important;border-radius:0}
 .hent.hb.he-w-hsans .kick{display:inline-block;background:#fff;color:#1E1C1B;border-radius:999px;padding:calc(var(--u)*1.5) calc(var(--u)*4);opacity:1}
-.ecran .defile .hent.hb.he-w-hsans h1{color:#fff;margin:calc(var(--u)*1.2) 0;text-shadow:0 calc(var(--u)*.8) calc(var(--u)*3) rgba(0,0,0,.4)}
+.ecran .defile .hent.hb.he-w-hsans h1,.ecran .hent.hb.he-w-hsans .he-txt h1{color:#fff!important;margin:calc(var(--u)*1.2) 0;text-shadow:0 calc(var(--u)*.8) calc(var(--u)*3) rgba(0,0,0,.4)}
 .hent.hb.he-w-hsans .note{color:#fff;opacity:1;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .he-w-hsans .hb-bas{left:0;right:0;top:79%;display:flex;flex-direction:column;align-items:center}
 .hent.hb.he-w-hsans .he-btn{font-size:calc(var(--u)*3.6);padding:calc(var(--u)*4.2) calc(var(--u)*8);box-shadow:0 0 0 calc(var(--u)*1.4) #fff,0 calc(var(--u)*2) calc(var(--u)*6) rgba(0,0,0,.3)}
