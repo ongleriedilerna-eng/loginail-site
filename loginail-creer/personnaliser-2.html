@@ -1128,7 +1128,7 @@ function rend(o) {
     const larg = ([...l.querySelectorAll(".mi")].map(m => m.clientWidth).find(w => w > 0)) || l._larg || 76, e = P.etat, cle = [e.fond, e.police, e.couleur, e.vif, e.nomc, e.blocs, P.photoUne(), larg].join("|");
     try { if (!window._visE) window._visE = new Set(); if (!window._ioEnt) window._ioEnt = new IntersectionObserver(es => es.forEach(x => { const m = x.target, lst = $("lEnt");
         if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { m.dataset.ok = lst.dataset.cle; fileEnt(m); } window._visE.add(m); }
-        else { window._visE.delete(m); m.classList.add("off"); /* 21/11 (Marie : « ça met énormément de temps ») : on GARDE la vignette déjà dessinée (en pause) au lieu de l'effacer : plus rien à redessiner quand on revient */ }
+        else { window._visE.delete(m); m.classList.add("off"); /* on garde les vignettes déjà dessinées (en pause), mais au plus 24 : au-delà, les plus anciennes hors écran sont effacées (mémoire du téléphone) */ const g = window._gardeE || (window._gardeE = []); const i = g.indexOf(m); if (i >= 0) g.splice(i, 1); g.push(m); while (g.length > 24) { const v = g.shift(); if (!window._visE.has(v) && v.shadowRoot) { v.shadowRoot.innerHTML = ""; v.dataset.ok = ""; } } }
         /* au plus 6 vignettes bougent en même temps (les premières visibles) : les autres restent sur une image */
         [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "160px" });
       /* 20/11 (Marie : « ça saccade ») : (1) les vignettes se dessinent UNE par image (plus toutes d'un coup = plus de blocage) ;
@@ -1159,7 +1159,7 @@ function rend(o) {
     $("lNom").innerHTML = Object.entries(P.NOMC).map(([k, bg]) => `<button class="dot${k === P.etat.nomc ? " on" : ""}" data-nc="${k}" style="background:${bg}" aria-label="${k}" title="${k}"></button>`).join("");
     $("blocsC").querySelectorAll("[data-bl]").forEach(b => b.classList.toggle("on", b.dataset.bl === P.etat.blocs));
     $("assortir").hidden = !P.etat.fond; rendCouleursG(); }
-  if (o === "charms") { const fams = ["Poses", ...(FAV.length ? ["Favoris"] : []), "Tous", "Populaires", "Couleurs", ...P.familles().filter(f => f !== "Populaires" && f !== "Tous")];   /* 19/11 (Marie) : « Par couleur » juste sous « Pour vous » */   /* 18/11 (Marie : « il n'y a pas voir tous les charms, comme pour les fonds ») */
+  if (o === "charms") { const fams = [...(P.poses().length || catCharm === "Poses" ? ["Poses"] : []), ...(FAV.length ? ["Favoris"] : []), "Tous", "Populaires", "Couleurs", ...P.familles().filter(f => f !== "Populaires" && f !== "Tous")];   /* 19/11 (Marie) : « Par couleur » juste sous « Pour vous » */   /* 18/11 (Marie : « il n'y a pas voir tous les charms, comme pour les fonds ») */
     if (catCharm === "Favoris" && !FAV.length) catCharm = "Populaires";
     /* 17/11 (Marie) : la barre des catégories, chacune avec son petit charm (comme l'ancienne page) */
     $("catC").innerHTML = fams.map(f => { const ic = f === "Poses" ? (P.poses().length ? `<img src="${P.imgCharm(P.poses()[P.poses().length - 1])}" alt="" loading="lazy">` : `<i class="cfav">✦</i>`) : f === "Favoris" ? `<i class="cfav">♥</i>` : f === "Couleurs" ? `<i class="cfav ccoul"></i>` : `<img src="${P.imgCharm(f === "Tous" ? "etoileopale" : (((window.CH_FAMS || []).find(x => x[0] === f) || [])[1] || "").replace(/^\*.*/, "") || P.charmsDe(f)[0] || "cerisedisco")}" alt="" loading="lazy">`;   /* 18/11 : l'image choisie pour chaque thème (CH_FAMS), pas le 1er charm de la liste */
@@ -2523,7 +2523,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   body.v2 #lEnt .ent.on{box-shadow:0 0 0 2.5px #1E1C1B;color:#1E1C1B}
   body.v2 #lEnt .ent.on .mi,body.v2 #lEnt .ent:hover .mi{box-shadow:none!important}
   body.v2 #lEnt .ent:active{transform:scale(.96)}
-  body.v2 #lEnt .ent .neuf{top:6px;left:6px}
+  body.v2 #lEnt .ent .neuf{top:6px;left:50%!important;transform:translateX(-50%)!important}
   body.v2 #lCh .ch{background:#F5F3F6!important;border-radius:14px}
   body.v2 .famTraits{margin:0 14px 10px!important}
 }
@@ -2747,10 +2747,10 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     box-shadow:0 0 0 1.2px #8C8884,0 0 0 2.4px #2B2927,0 34px 40px -26px rgba(0,0,0,.42)}
   body.v2 .coucheT{background:linear-gradient(90deg,#2E2C2A,#6F6B67 18%,#45423F 50%,#6F6B67 82%,#2E2C2A)}
   body.v2 .trT{position:absolute;pointer-events:none;background:linear-gradient(90deg,#34322F,#7A7672 45%,#3B3936)}
-  body.v2 .trT.g{left:0;top:40px;bottom:40px;width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
-  body.v2 .trT.d{right:0;top:40px;bottom:40px;width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
-  body.v2 .trT.h{top:0;left:40px;right:40px;height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
-  body.v2 .trT.b{bottom:0;left:40px;right:40px;height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.g{left:0;top:26px;bottom:26px;width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
+  body.v2 .trT.d{right:0;top:26px;bottom:26px;width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
+  body.v2 .trT.h{top:0;left:26px;right:26px;height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.b{bottom:0;left:26px;right:26px;height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
   /* les boutons sur les tranches */
   body.v2 .trT i{position:absolute;left:18%;right:18%;border-radius:3px;background:linear-gradient(90deg,#55524E,#9B9792,#55524E);box-shadow:0 0 0 .5px rgba(0,0,0,.4)}
   body.v2 .dosT{transform:translateZ(calc(var(--ep) * -1)) rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
@@ -2796,7 +2796,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   /* 1. le téléphone en 3D : cadre, tranches (couches + plans), dos avec le bloc photo */
   if (T && !T.querySelector(".faceT")) {
     const f = document.createElement("i"); f.className = "faceT"; T.prepend(f);
-    const N = 9; for (let k = 1; k <= N; k++) { const c = document.createElement("i"); c.className = "coucheT"; c.style.transform = `translateZ(calc(var(--ep) * ${-(k / (N + 1)).toFixed(3)}))`; T.prepend(c); }
+    /* 21/11 : plus de couches empilées (9 copies pleine taille = trop de mémoire, Safari fermait la page) : 4 tranches fines suffisent */
     [["g", '<i style="top:14%;height:7%"></i><i style="top:25%;height:12%"></i><i style="top:40%;height:12%"></i>'], ["d", '<i style="top:22%;height:16%"></i><i style="top:66%;height:10%"></i>'], ["h", ""], ["b", ""]]
       .forEach(([k, h]) => { const e = document.createElement("i"); e.className = "trT " + k; e.innerHTML = h; T.prepend(e); });
     const d = document.createElement("i"); d.className = "dosT"; d.innerHTML = '<span class="camT"><b></b><b></b><b></b><i></i></span><span class="marqueT">loginail</span>'; T.prepend(d); }
@@ -2840,7 +2840,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 (function () { if (innerWidth >= 900) return;
   const v = (new URLSearchParams(location.search).get("ent") || "A").toUpperCase(); document.body.classList.add("ent" + v);
   /* on zoome sur l'en-tête (la photo et son effet) pour qu'il remplisse le carré */
-  const ZOOM = ".defile>*:not(.hent){opacity:0!important}.defile>.hent{transform:translateY(-34px) scale(1.16);transform-origin:50% 0}";
+  const ZOOM = ".defile>*:not(.hent){opacity:0!important}.defile>.hent{transform:translateY(-70px) scale(1.18);transform-origin:50% 0}";
   window.ENT_VIGNETTE = (c) => {
     c.querySelectorAll(".f100,.fond-site,.ile,.barre-nav,.fab,.resbar,.dock,.burger,.hpill,.idx,.lgt").forEach(x => x.remove());
     c.style.background = v === "B" ? "#EEECEF" : "#fff";
@@ -2849,6 +2849,26 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
       ? ZOOM + ".ecran,.defile,.hent,.hent::before,.hent::after{background:#EEECEF!important;background-image:none!important}.hent img,.he-ph,.he-ph img,[class*='photo'] img{filter:grayscale(1) brightness(1.35) contrast(.55)!important}"
       : ZOOM + ".ecran,.defile,.hent,.hent::before,.hent::after{background:#fff!important;background-image:none!important}";
     c.prepend(st); };
+})();
+</script>
+<!-- 2.7 (21/11 soir, Marie) : la loupe défile AVEC les étiquettes des charms (elle ne les coupe plus) ; texte « Touchez un charm… » centré. -->
+<style>
+@media (max-width:899px){
+  body.v2 .panneau[data-p=charms] #catBox.catH>.loupeChip{display:none!important}
+  body.v2 #catC .loupeChip{display:grid!important;flex:none;margin:0!important;width:34px;height:34px}
+  body.v2 #lCh .rienC{grid-column:1/-1;text-align:center!important;margin:18px auto!important;max-width:260px;justify-self:center}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const cc = document.getElementById("catC"), lo = document.querySelector("#catBox .loupeChip"); if (!cc || !lo) return;
+  const met = () => { if (lo.parentNode !== cc) cc.prepend(lo); }; met(); new MutationObserver(met).observe(cc, { childList: true });
+  /* quand la feuille recouvre le téléphone, son site se met en pause (moins de travail, moins de mémoire) */
+  new MutationObserver(() => { try { const D = window.Pilote && Pilote.D; if (!D) return; if (!D.getElementById("pzGel21")) { const st = D.createElement("style"); st.id = "pzGel21"; st.textContent = "html.gel21 *,html.gel21 *::before,html.gel21 *::after{animation-play-state:paused!important}"; D.head.appendChild(st); }
+    D.documentElement.classList.toggle("gel21", document.body.classList.contains("feuilleHaut")); } catch (e) {} }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  /* « Vos charms » apparaît dès le 1er charm posé (et part quand il n'y en a plus) */
+  setInterval(() => { try { if (onglet !== "charms" || !window.Pilote || !Pilote.pret) return; const a = !!cc.querySelector('[data-c="Poses"]'), b = Pilote.poses().length > 0;
+    if (a !== b && catCharm !== "Poses") rend("charms"); } catch (e) {} }, 600);
 })();
 </script>
 </body>
