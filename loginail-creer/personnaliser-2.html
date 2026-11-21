@@ -3189,5 +3189,35 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const l = document.getElementById("lCh"); if (l) new MutationObserver(() => document.body.classList.toggle("triStyle", typeof triCh !== "undefined" && triCh === "style")).observe(l, { childList: true });
 })();
 </script>
+<!-- 2.13 (21/11 soir, Marie) : ambiances = des ronds sans noms (on en voit beaucoup plus) ; quand la feuille est en haut, les couleurs s'agrandissent en douceur pour remplir la place. -->
+<style>
+@media (max-width:899px){
+  body.v2 .ambsG{gap:10px!important;padding:4px 14px!important;align-items:center}
+  body.v2 .ambG{width:40px!important;height:40px!important;padding:0!important;border-radius:50%!important;background:transparent!important;font-size:0!important;color:transparent!important;gap:0!important;justify-content:center;box-shadow:none!important}
+  body.v2 .ambG .tri{width:40px!important;height:40px!important;box-shadow:0 0 0 1.5px #fff,0 3px 10px -5px rgba(0,0,0,.35)!important;transition:transform .2s cubic-bezier(.2,1.5,.4,1)}
+  body.v2 .ambG:active .tri{transform:scale(.9)}
+  body.v2 .ambG.on .tri{box-shadow:0 0 0 3px #fff,0 6px 16px -6px rgba(181,71,94,.65)!important;transform:scale(1.06)}
+  body.v2 .ambG.mienC{padding:0!important}
+  body.v2 .rangAmb{margin-bottom:0!important}body.v2 .rangAmb .hautG{min-height:0!important;padding:0!important;margin:0!important}body.v2 .panneau[data-p=couleurs] .atelierC{margin-top:4px!important}
+  body.v2 .ambG.mienC .supC{font-size:9px!important;color:#1E1C1B!important}
+  /* couleurs : la place se remplit en douceur */
+  body.v2 .panneau[data-p=couleurs] .atelierC{transition:height .38s cubic-bezier(.2,.9,.25,1);overflow:hidden}
+  body.v2 .panneau[data-p=couleurs] #spectre{display:flex!important;flex-direction:column!important;height:100%!important}
+  body.v2 .panneau[data-p=couleurs] #spectre .rectS{flex:1 1 auto!important;height:auto!important;min-height:80px!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const B = document.body, p = document.querySelector('.panneau[data-p="couleurs"]'), at = p && p.querySelector(".atelierC"); if (!at) return;
+  const ajuste = () => { if (!p.classList.contains("on")) return; const pr = p.getBoundingClientRect(), ar = at.getBoundingClientRect();
+    const dispo = Math.floor(pr.bottom - ar.top - 10), nat = at.dataset.nat ? +at.dataset.nat : (at.dataset.nat = at.scrollHeight);
+    at.style.height = Math.max(+at.dataset.nat || 0, dispo) + "px"; };
+  /* la hauteur « normale » (feuille au milieu) est mesurée une fois ; ensuite on suit la place qu'il y a */
+  const mesureNat = () => { at.style.height = ""; at.dataset.nat = ""; requestAnimationFrame(() => { at.dataset.nat = at.offsetHeight; ajuste(); }); };
+  new MutationObserver(() => setTimeout(ajuste, 30)).observe(B, { attributes: true, attributeFilter: ["class", "style"] });
+  if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function (o) { const r = o0.apply(this, arguments); if (o === "couleurs") setTimeout(mesureNat, 80); return r; }; }
+  addEventListener("resize", () => setTimeout(mesureNat, 100));
+})();
+</script>
 </body>
 </html>
