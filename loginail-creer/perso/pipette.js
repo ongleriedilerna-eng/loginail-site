@@ -110,8 +110,9 @@ body.pipOn .pipBandeau{opacity:1;translate:-50% 0}
   const bloque = e => { e.preventDefault(); e.stopPropagation(); };
   const sort = () => loupe.classList.remove("on");
   const touche = e => { if (e.key === "Escape") arrete(); };
-  function demarre() {
-    const D = Pilote.D; if (!D || !ORDI()) return; if (on) return arrete();
+  let force = false;   /* 21/11 : sur téléphone (2.0), la pipette est lancée par son bouton à côté du téléphone */
+  function demarre(f) { if (f === true) force = true;
+    const D = Pilote.D; if (!D || (!ORDI() && !force)) return; if (on) return arrete();
     on = true; dernier = null; document.body.classList.add("pipOn");
     band.innerHTML = `${ICO}<span>Cliquez sur une couleur de votre site<small>pour ${NOMP[partC]} · Échap pour annuler</small></span>`;
     branche = D; D.addEventListener("mousemove", suit, true); D.addEventListener("click", prend, true); D.addEventListener("mousedown", bloque, true);
@@ -128,7 +129,8 @@ body.pipOn .pipBandeau{opacity:1;translate:-50% 0}
   $("partsG").addEventListener("click", e => { if (e.target.closest(".pipI")) demarre(); else arrete(); });
   /* on quitte « Couleurs » ou la fenêtre devient petite : la pipette se range */
   const ouvreAv = ouvre; ouvre = o => { arrete(); return ouvreAv(o); };
-  addEventListener("resize", () => { if (!ORDI()) arrete(); });
+  addEventListener("resize", () => { if (!ORDI() && !force) arrete(); });
+  window.lgnPipette = () => demarre(true); window.lgnPipetteStop = () => arrete();
   /* l'astuce, sur ordinateur */
   if (ORDI() && ASTUCES.couleurs) ASTUCES.couleurs.splice(1, 0, ["⌖", "<b>La pipette</b> : touchez le petit rond à droite de « Bouton Réserver » (ou Nom, Encadrés), puis cliquez sur une photo : sa couleur exacte est posée."]);
 })();

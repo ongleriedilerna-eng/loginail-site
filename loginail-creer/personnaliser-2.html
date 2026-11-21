@@ -1540,10 +1540,14 @@ function ajusteNoms(l) { l.querySelectorAll(".ecr-c span").forEach(s => { let f 
    Au départ : la famille de l'écriture déjà choisie. Mode ?ordre=1 : toutes les écritures, comme avant. */
 var famEcr = null;
 function familleEcr(k) { const F = window.FAMILLES_ECRITURES || []; for (let i = 0; i < F.length; i++) if (F[i][2].includes(k)) return i; return -1; }
-function dansFamE(k) { const F = window.FAMILLES_ECRITURES; if (MODE_ORDRE || !F || !F.length) return true; const i = familleEcr(k); return (i < 0 ? F.length - 1 : i) === famEcr; }
+function dansFamE(k) { const F = window.FAMILLES_ECRITURES; if (famEcr === -1) { try { return FAVS.ecriture.includes(k); } catch (e) { return true; } } if (MODE_ORDRE || !F || !F.length) return true; const i = familleEcr(k); return (i < 0 ? F.length - 1 : i) === famEcr; }
 function dessineFamE() { const F = window.FAMILLES_ECRITURES || [], b = $("famE"); if (!b) return; b.hidden = MODE_ORDRE || !F.length;
   if (famEcr === null) { const i = familleEcr(P.etat.police); famEcr = i < 0 ? 0 : i; }
   if (!b.children.length) b.innerHTML = F.map((f, i) => `<button class="puce" data-i="${i}" title="${f[1]}">${f[0]}</button>`).join("");
+  /* 21/11 (Marie) : « Favoris » en premier dès qu'une écriture est en favori */
+  let nf = 0; try { nf = FAVS.ecriture.length; } catch (e) {} let fv = b.querySelector('[data-i="-1"]');
+  if (nf && !fv) b.insertAdjacentHTML("afterbegin", '<button class="puce favE" data-i="-1" title="Vos écritures favorites">♥ Favoris</button>');
+  if (!nf && fv) { fv.remove(); if (famEcr === -1) famEcr = 0; }
   b.querySelectorAll(".puce").forEach(x => x.classList.toggle("on", +x.dataset.i === famEcr)); }
 $("famE").onclick = e => { const x = e.target.closest(".puce"); if (!x || +x.dataset.i === famEcr) return; famEcr = +x.dataset.i; const l = $("lPol");
   rend("ecriture"); l.scrollLeft = 0; const pan = l.closest(".panneau"); if (pan && pan.scrollTop > $("famE").offsetTop) pan.scrollTop = $("famE").offsetTop;
@@ -2064,7 +2068,7 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 })();
 </script>
 <script src="perso/perso-vrai.js?v=11191412"></script>
-<script src="perso/pipette.js?v=2111a"></script>
+<script src="perso/pipette.js?v=2111tel"></script>
 <!-- 19/11 (D49, Marie + Lilyan) « Coup de baguette » : à la 1re ouverture de la création, une ligne qui brille transforme SON site en
      Néon acidulé, puis Pixel girl, puis Baddie léopard (le fond derrière la page change en même temps) ; la ligne remonte, son site revient,
      et une étiquette arrive : « Voilà ce qu'on peut faire. Maintenant, à toi de jouer ✦ ». Une seule fois (mémoire : lgnBaguetteVue).
@@ -2388,7 +2392,10 @@ try{dessineFE()}catch(e){}
       const a = this.hist[0], z = this.hist[this.hist.length - 1], v = a && z ? (z[1] - a[1]) / Math.max(1, z[0] - a[0]) : 0, bouge = Math.abs(this.cible - G.top0);
       const proche = ORD.reduce((m, x) => Math.abs(G.tops[x] - this.cible) < Math.abs(G.tops[m] - this.cible) ? x : m, "milieu"); let e = proche;
       if (tapPoignee && bouge < 6) e = etatF === "milieu" ? "haut" : "milieu";   /* simple toucher sur la poignée */
-      else if (Math.abs(v) > .4 && proche === etatF) e = ORD[Math.max(0, Math.min(2, ORD.indexOf(etatF) + (v > 0 ? 1 : -1)))];   /* lancé : la position suivante */
+      else { const i0 = ORD.indexOf(etatF), d = this.cible - G.top0, sens = d > 0 ? 1 : -1, i1 = Math.max(0, Math.min(2, i0 + sens));
+        /* 21/11 (Marie : « quand je la baisse, ça va directement en grand ») : un geste = UN cran ; deux crans seulement si on a vraiment tiré très loin */
+        if (Math.abs(d) > 30 || Math.abs(v) > .4) { e = ORD[i1]; const i2 = Math.max(0, Math.min(2, i1 + sens)); if (i2 !== i1 && sens * (this.cible - G.tops[ORD[i1]]) > Math.abs(G.tops[ORD[i2]] - G.tops[ORD[i1]]) * .55) e = ORD[i2]; }
+        else e = etatF; }
       const topFin = G.tops[e]; vers(topFin, e, Math.abs(topFin - this.cible) < 4 ? 1 : 300); } };
   function branche(el, toujours) { let x0 = 0, pid = null;
     el.addEventListener("pointerdown", e => { if (e.button > 0) return; geste.y0 = e.clientY; x0 = e.clientX; pid = e.pointerId; geste.hist = [[e.timeStamp, e.clientY]];
@@ -2736,21 +2743,21 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 @media (max-width:899px){
   body.v2 .scene{perspective:1000px;perspective-origin:50% 45%}
   body.v2 .haut{touch-action:pan-y}
-  body.v2 .tel{background:transparent!important;box-shadow:none!important;transform-style:preserve-3d;--ep:calc(var(--tw,200px)*.085);
+  body.v2 .tel{background:transparent!important;box-shadow:none!important;transform-style:preserve-3d;--ep:calc(var(--tw,200px)*.085);--rT:calc(var(--tw,200px)*.135);border-radius:var(--rT)!important;
     animation:telArrive3 1.05s cubic-bezier(.2,.85,.25,1) backwards!important;transition:rotate .9s cubic-bezier(.16,1.25,.3,1)!important}
   body.v2 .tel.tourne,body.v2 .tel.sansTr{transition:none!important}
   body.v2 .tel::before,body.v2 .tel::after{display:none!important}
   @keyframes telArrive3{0%{opacity:0;translate:0 60px;rotate:y -38deg}60%{opacity:1;translate:0 -4px;rotate:y 6deg}100%{opacity:1;translate:0 0;rotate:y 0deg}}
-  body.v2 .tel>.ecr{transform:translateZ(1px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
-  body.v2 .faceT,body.v2 .dosT,body.v2 .coucheT{position:absolute;inset:0;border-radius:40px;pointer-events:none}
+  body.v2 .tel>.ecr{transform:translateZ(1px);backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:calc(var(--rT) - 4px)!important}
+  body.v2 .faceT,body.v2 .dosT,body.v2 .coucheT{position:absolute;inset:0;border-radius:var(--rT);pointer-events:none}
   body.v2 .faceT{background:#0C0B0B;transform:translateZ(.5px);backface-visibility:hidden;-webkit-backface-visibility:hidden;
     box-shadow:0 0 0 1.2px #8C8884,0 0 0 2.4px #2B2927,0 34px 40px -26px rgba(0,0,0,.42)}
   body.v2 .coucheT{background:linear-gradient(90deg,#2E2C2A,#6F6B67 18%,#45423F 50%,#6F6B67 82%,#2E2C2A)}
   body.v2 .trT{position:absolute;pointer-events:none;background:linear-gradient(90deg,#34322F,#7A7672 45%,#3B3936)}
-  body.v2 .trT.g{left:0;top:26px;bottom:26px;width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
-  body.v2 .trT.d{right:0;top:26px;bottom:26px;width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
-  body.v2 .trT.h{top:0;left:26px;right:26px;height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
-  body.v2 .trT.b{bottom:0;left:26px;right:26px;height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.g{left:0;top:calc(var(--rT)*.7);bottom:calc(var(--rT)*.7);width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
+  body.v2 .trT.d{right:0;top:calc(var(--rT)*.7);bottom:calc(var(--rT)*.7);width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
+  body.v2 .trT.h{top:0;left:calc(var(--rT)*.7);right:calc(var(--rT)*.7);height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.b{bottom:0;left:calc(var(--rT)*.7);right:calc(var(--rT)*.7);height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
   /* les boutons sur les tranches */
   body.v2 .trT i{position:absolute;left:18%;right:18%;border-radius:3px;background:linear-gradient(90deg,#55524E,#9B9792,#55524E);box-shadow:0 0 0 .5px rgba(0,0,0,.4)}
   body.v2 .dosT{transform:translateZ(calc(var(--ep) * -1)) rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
@@ -2840,7 +2847,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 (function () { if (innerWidth >= 900) return;
   const v = (new URLSearchParams(location.search).get("ent") || "A").toUpperCase(); document.body.classList.add("ent" + v);
   /* on zoome sur l'en-tête (la photo et son effet) pour qu'il remplisse le carré */
-  const ZOOM = ".defile>*:not(.hent){opacity:0!important}.defile>.hent{transform:translateY(-70px) scale(1.18);transform-origin:50% 0}";
+  const ZOOM = ".defile>*:not(.hent){opacity:0!important}.defile>.hent{transform:translateY(-104px) scale(1.22);transform-origin:50% 0}";
   window.ENT_VIGNETTE = (c) => {
     c.querySelectorAll(".f100,.fond-site,.ile,.barre-nav,.fab,.resbar,.dock,.burger,.hpill,.idx,.lgt").forEach(x => x.remove());
     c.style.background = v === "B" ? "#EEECEF" : "#fff";
@@ -2869,6 +2876,54 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   /* « Vos charms » apparaît dès le 1er charm posé (et part quand il n'y en a plus) */
   setInterval(() => { try { if (onglet !== "charms" || !window.Pilote || !Pilote.pret) return; const a = !!cc.querySelector('[data-c="Poses"]'), b = Pilote.poses().length > 0;
     if (a !== b && catCharm !== "Poses") rend("charms"); } catch (e) {} }, 600);
+})();
+</script>
+<!-- 2.8 (21/11 soir, Marie) : contour BLANC sur ce qui est choisi (plus doux que le noir) ; en-têtes en carrés arrondis remplis (plus de trait blanc), nom dessous ;
+     pipette en bas à droite du téléphone (onglet Couleurs) ; bouton « ✦ Étoiles » avec interrupteur (on comprenait pas le rond à étoile) ; écritures : changement plus doux. -->
+<style>
+@media (max-width:899px){
+  /* contour blanc + petite ombre rose */
+  body.v2 #lEnt .ent.on,body.v2 #lEnt .ent.on .mi{box-shadow:none!important}
+  body.v2 #lEnt .ent.on .mi,body.v2 .vg.on,body.v2 #lPhG .ph.on,body.v2 #lPol .ecr-c.on,body.v2 #lCh .ch.on{box-shadow:0 0 0 3px #fff,0 6px 16px -6px rgba(181,71,94,.65)!important}
+  body.v2 .partsV button.on{box-shadow:0 0 0 2.5px #fff,0 6px 16px -6px rgba(181,71,94,.6)!important}
+  body.v2 #lPol .ecr-c.on .ok{background:#B5475E!important}
+  /* en-têtes : carré arrondi rempli par l'image, nom dessous, sans carte blanche */
+  body.v2 #lEnt .ent,body.v2.entB #lEnt .ent{background:transparent!important;padding:0!important;overflow:visible!important;color:#7d7177!important;font-size:10.5px!important}
+  body.v2 #lEnt .ent .mi{border-radius:16px!important;overflow:hidden!important;margin:0 0 5px!important;background:#EDE9EC!important}
+  body.v2 #lEnt .ent.on{color:#1E1C1B!important;font-weight:500}
+  /* pipette */
+  body.v2 .pipT{position:absolute;right:16px;bottom:14px;z-index:6;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.94);color:#1E1C1B;display:none;place-items:center;cursor:pointer;
+    box-shadow:0 6px 14px -8px rgba(0,0,0,.4),inset 0 0 0 1px rgba(0,0,0,.05);transition:transform .2s cubic-bezier(.2,1.5,.4,1),background .2s,color .2s}
+  body.v2.catStyle .pipT{display:grid}
+  body.v2.feuilleHaut .pipT{opacity:0;pointer-events:none}
+  body.v2.pipOn .pipT{background:#B5475E;color:#fff;animation:pipPouls 1.1s ease-in-out infinite}
+  body.v2 .pipT:active{transform:scale(.9)}
+  /* bouton Étoiles : une étiquette claire avec interrupteur */
+  body.v2 .etoileH{width:auto!important;height:34px!important;border-radius:999px!important;padding:0 6px 0 11px!important;gap:7px;display:flex!important;align-items:center;color:#1E1C1B!important;font:500 12px Jost,sans-serif}
+  body.v2 .etoileH svg{width:15px!important;height:15px!important;color:#C9BFC4;transition:color .2s}
+  body.v2 .etoileH.on svg{color:#E8B44C}
+  body.v2 .etoileH .intT{position:relative;width:30px;height:18px;border-radius:9px;background:#E4DEE1;transition:background .2s}
+  body.v2 .etoileH .intT::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:translate .25s cubic-bezier(.2,1.4,.4,1)}
+  body.v2 .etoileH.on .intT{background:#B5475E}
+  body.v2 .etoileH.on .intT::after{translate:12px 0}
+  /* écritures : changement de famille tout doux */
+  body.v2 #lPol.famAnim{animation:ecrDoux .32s cubic-bezier(.2,.8,.2,1)!important}
+  @keyframes ecrDoux{from{opacity:0;transform:translateY(6px)}}
+  body.v2 .famE .favE{color:#B5475E}
+  body.v2 .haut .etoileH{position:static!important;margin-left:10px;margin-right:auto;box-shadow:0 6px 16px -10px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.06)!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const sc = document.querySelector(".scene");
+  /* pipette en bas à droite du téléphone */
+  if (sc && !sc.querySelector(".pipT")) { const b = document.createElement("button"); b.type = "button"; b.className = "pipT"; b.setAttribute("aria-label", "Pipette : prendre une couleur sur mon site");
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M14.5 4.8l1.9-1.9a2.3 2.3 0 013.3 3.3l-1.9 1.9.9.9-1.5 1.5-4.4-4.4 1.5-1.5.2.2z" fill="currentColor"/><path d="M12.4 7.8l4.4 4.4-7.6 7.6c-.4.4-1 .7-1.6.7H6.3l-2 1.6-.9-.9 1.6-2v-1.3c0-.6.3-1.2.7-1.6l6.7-6.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+    b.onclick = e => { e.stopPropagation(); if (document.body.classList.contains("pipOn")) { window.lgnPipetteStop && lgnPipetteStop(); return; }
+      if (window.lgnPipette) { lgnPipette(); if (typeof bulle === "function") bulle("Touche une photo de ton site : sa couleur est posée ✦", 3000); } };
+    sc.appendChild(b); }
+  /* bouton Étoiles : étiquette + interrupteur */
+  const et = document.querySelector(".etoileH"), zh = document.querySelector(".haut .zeroH"); if (et && zh) zh.after(et); if (et) { const svg = et.querySelector("svg"); et.innerHTML = ""; if (svg) et.appendChild(svg); et.insertAdjacentHTML("beforeend", '<span>Étoiles</span><i class="intT"></i>'); et.setAttribute("aria-label", "Étoiles qui brillent : oui ou non"); }
 })();
 </script>
 </body>
