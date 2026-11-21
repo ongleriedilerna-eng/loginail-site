@@ -3366,10 +3366,22 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
      fonds affichés par paquets de 48 (plus fluide). -->
 <style>
 @media (max-width:899px){
-  body.v2 .fondDeux .catBoxF,body.v2 .panneau[data-p=charms] #catBox.catH{transition:max-height .28s cubic-bezier(.2,.9,.25,1),opacity .22s,padding .28s,margin .28s;max-height:80px;overflow:hidden}
-  body.v2 .fondDeux .catBoxF.cacheP,body.v2 .panneau[data-p=charms] #catBox.catH.cacheP{max-height:0!important;opacity:0;padding-top:0!important;padding-bottom:0!important;margin:0!important}
-  body.v2 .famTraits,body.v2 .panneau[data-p=ecriture] .famE{position:sticky!important;top:6px!important;z-index:5;transition:transform .3s cubic-bezier(.2,.9,.25,1),opacity .22s}
-  body.v2 .famTraits.cacheP,body.v2 .panneau[data-p=ecriture] .famE.cacheP{transform:translateY(-130%);opacity:0;pointer-events:none}
+  /* 2.19 : fonds et charms — la pilule est posée PAR-DESSUS le haut de la liste (la liste ne change plus de hauteur : plus de saut) */
+  body.v2 .fondDeux,body.v2 .panneau[data-p=charms]{position:relative!important}
+  body.v2 .fondDeux .catBoxF,body.v2 .panneau[data-p=charms] #catBox.catH{position:absolute!important;left:0;right:0;top:0;z-index:6;background:#FBE3EC!important;
+    transition:transform .32s cubic-bezier(.2,.9,.25,1),opacity .24s;will-change:transform}
+  body.v2 .fondDeux .catBoxF::after,body.v2 .panneau[data-p=charms] #catBox.catH::after{content:"";position:absolute;left:0;right:0;top:100%;height:16px;pointer-events:none;
+    background:linear-gradient(#FBE3EC,rgba(251,227,236,0));-webkit-backdrop-filter:blur(1.5px);backdrop-filter:blur(1.5px);-webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000,transparent)}
+  body.v2 .fondDeux .catBoxF.cacheP,body.v2 .panneau[data-p=charms] #catBox.catH.cacheP{transform:translateY(-105%);opacity:0;pointer-events:none}
+  body.v2 .fondDeux #lFond{padding-top:66px!important;scroll-padding-top:66px}
+  body.v2 .panneau[data-p=charms] .chDeux{padding-top:0!important}
+  body.v2 #lCh{padding-top:66px!important}
+  body.v2.chercheOn #lCh{padding-top:8px!important}
+  body.v2.chercheOn .panneau[data-p=charms] #catBox.catH{position:relative!important}
+  /* en-têtes et écritures : la pilule a un bandeau rose derrière elle (plus rien ne dépasse autour) + un léger fondu dessous */
+  body.v2 .famTraits,body.v2 .panneau[data-p=ecriture] .famE{position:sticky!important;top:8px!important;z-index:5;transition:transform .3s cubic-bezier(.2,.9,.25,1),opacity .22s;
+    box-shadow:0 0 0 12px #FBE3EC,0 22px 12px -4px rgba(251,227,236,.95)!important}
+  body.v2 .famTraits.cacheP,body.v2 .panneau[data-p=ecriture] .famE.cacheP{transform:translateY(-160%);opacity:0;pointer-events:none}
   body.v2 #lFond .vg.plusTard{display:none!important}
 }
 </style>
@@ -3391,6 +3403,16 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     const coupe = () => { const vs = [...lf.querySelectorAll(".vg:not(.sans)")]; vs.forEach((v, i) => v.classList.toggle("plusTard", i >= n)); };
     new MutationObserver(m => { if (m.some(x => x.type === "childList" && x.addedNodes.length > 5)) { n = PAQ; coupe(); } }).observe(lf, { childList: true });
     lf.addEventListener("scroll", () => { if (lf.scrollTop + lf.clientHeight > lf.scrollHeight - 300 && lf.querySelector(".vg.plusTard")) { n += PAQ; coupe(); } }, { passive: true }); coupe(); }
+})();
+</script>
+<!-- 2.19 (21/11 soir) : bug des looks — après un look, le site restait descendu (« Mes prestations ») : il remonte en haut. -->
+<style>@media (max-width:899px){ body.v2 .looksT:focus{outline:none} }</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const l = document.getElementById("lLook"); if (!l) return;
+  l.addEventListener("click", e => { const b = e.target.closest(".look"); if (!b || b.classList.contains("ajout")) return;
+    const haut = () => { try { const D = Pilote.D, d = D.querySelector(".defile") || D.scrollingElement; if (d) d.scrollTop = 0; Pilote.enHaut && Pilote.enHaut(); } catch (x) {} };
+    [80, 500, 1200, 2200].forEach(t => setTimeout(haut, t)); });
 })();
 </script>
 </body>
