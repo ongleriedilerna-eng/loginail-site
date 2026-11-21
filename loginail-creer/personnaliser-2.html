@@ -1245,7 +1245,7 @@ $("revenir").addEventListener("click", () => { if (cliente) { cliente = false; P
 $("lCh").addEventListener("click", e => { const c = e.target.closest(".cc"); if (!c) return; e.stopImmediatePropagation(); coulOn = +c.dataset.g; rend("charms"); $("lCh").scrollTop = 0; }, true);
 $("lCh").onclick = e => { const b = e.target.closest(".ch"); if (!b) return; const r = P.charm(b.dataset.n); b.classList.toggle("on", r === true);
   /* 19/11 (Marie : « une partie où il y a tous ceux qu'on a choisis ») : « Vos charms » se remet à jour (son petit rond = le dernier posé) */
-  setTimeout(() => { const top = $("lCh").scrollTop, ct = $("catC").scrollTop; if (catCharm === "Poses") { rend("charms"); $("lCh").scrollTop = top; } else { const v = $("catC").querySelector('.catI[data-c="Poses"]'); if (v) { const l = P.poses(); v.querySelector("img,i").outerHTML = l.length ? `<img src="${P.imgCharm(l[l.length - 1])}" alt="">` : `<i class="cfav">✦</i>`; } } $("catC").scrollTop = ct; }, 60);
+  setTimeout(() => { const top = $("lCh").scrollTop, ct = $("catC").scrollTop; if (catCharm === "Poses") { rend("charms"); $("lCh").scrollTop = top; } else { const v = $("catC").querySelector('.catI[data-c="Poses"]'); if (v && v.querySelector("img,i")) { const l = P.poses(); v.querySelector("img,i").outerHTML = l.length ? `<img src="${P.imgCharm(l[l.length - 1])}" alt="">` : `<i class="cfav">✦</i>`; } } $("catC").scrollTop = ct; }, 60);
   if (r === true && P.poses().length === 1) bulle(matchMedia("(hover:hover)").matches ? "Cliquez dessus : tirez ⤡ pour l’agrandir et le pencher" : "Deux doigts pour l’agrandir et le pencher ✦");
   if (r === false && !b.classList.contains("on") && P.poses().length >= P.MAX) bulle(P.MAX + " charms maximum : enlevez-en un d’abord"); majCompte(); };
 
@@ -3379,9 +3379,8 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   body.v2.chercheOn #lCh{padding-top:8px!important}
   body.v2.chercheOn .panneau[data-p=charms] #catBox.catH{position:relative!important}
   /* en-têtes et écritures : la pilule a un bandeau rose derrière elle (plus rien ne dépasse autour) + un léger fondu dessous */
-  body.v2 .famTraits,body.v2 .panneau[data-p=ecriture] .famE{position:sticky!important;top:8px!important;z-index:5;transition:transform .3s cubic-bezier(.2,.9,.25,1),opacity .22s;
-    box-shadow:0 0 0 12px #FBE3EC,0 22px 12px -4px rgba(251,227,236,.95)!important}
-  body.v2 .famTraits.cacheP,body.v2 .panneau[data-p=ecriture] .famE.cacheP{transform:translateY(-160%);opacity:0;pointer-events:none}
+  body.v2 .famTraits,body.v2 .panneau[data-p=ecriture] .famE{position:relative!important;top:auto!important}
+
   body.v2 #lFond .vg.plusTard{display:none!important}
 }
 </style>
@@ -3389,7 +3388,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 (function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
   const $ = id => document.getElementById(id);
   /* qui se cache, quand on fait défiler quoi */
-  const PAIRES = [["#lFond", ".fondDeux .catBoxF"], ["#lCh", "#catBox"], ['.panneau[data-p="entete"]', ".famTraits"], ['.panneau[data-p="ecriture"]', ".panneau[data-p=ecriture] .famE"]];
+  const PAIRES = [["#lFond", ".fondDeux .catBoxF"], ["#lCh", "#catBox"], ['.panneau[data-p="entete"]', ".bandeP.bE"], ['.panneau[data-p="ecriture"]', ".bandeP.bC"]];
   const suit = (selS, selP) => { const sc = document.querySelector(selS); if (!sc) return; let y0 = sc.scrollTop, acc = 0;
     sc.addEventListener("scroll", () => { const p = document.querySelector(selP); if (!p) return; const y = sc.scrollTop, d = y - y0; y0 = y;
       if (y < 30) { p.classList.remove("cacheP"); acc = 0; return; }
@@ -3413,6 +3412,30 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   l.addEventListener("click", e => { const b = e.target.closest(".look"); if (!b || b.classList.contains("ajout")) return;
     const haut = () => { try { const D = Pilote.D, d = D.querySelector(".defile") || D.scrollingElement; if (d) d.scrollTop = 0; Pilote.enHaut && Pilote.enHaut(); } catch (x) {} };
     [80, 500, 1200, 2200].forEach(t => setTimeout(haut, t)); });
+})();
+</script>
+<!-- 2.20 (21/11 soir, Marie) : bandeau rose RECTANGLE (droit en haut, arrondi en bas) derrière les pilules des en-têtes et des écritures ; plus de trait sous les dessins ;
+     en quittant l'onglet En-tête, ses vignettes sont effacées de la mémoire (le téléphone ne sature plus en allant aux charms). -->
+<style>
+@media (max-width:899px){
+  body.v2 #onglets{border-bottom:0!important}
+  body.v2 .bandeP{position:sticky;top:0;z-index:6;background:#FBE3EC;border-radius:0 0 20px 20px;padding:6px 0 8px;margin:0 0 4px;transition:transform .3s cubic-bezier(.2,.9,.25,1),opacity .22s}
+  body.v2 .bandeP>.famTraits,body.v2 .bandeP>.famE{margin:0 12px!important}
+  body.v2 .panneau[data-p=entete],body.v2 .panneau[data-p=ecriture]{padding-top:0!important}
+  body.v2 .bandeP{top:-1px;box-shadow:0 -8px 0 #FBE3EC}
+  body.v2 .bandeP.cacheP{transform:translateY(-110%);opacity:0;pointer-events:none}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const enrobe = (el, k) => { if (!el || (el.parentNode && el.parentNode.classList.contains("bandeP"))) return; const w = document.createElement("div"); w.className = "bandeP " + k; el.before(w); w.appendChild(el); };
+  const go = () => { enrobe(document.getElementById("famEnt"), "bE"); enrobe(document.getElementById("famE"), "bC"); };
+  go(); new MutationObserver(go).observe(document.querySelector(".choix"), { childList: true, subtree: true });
+  /* mémoire : en quittant En-tête, on efface ses vignettes (elles se redessinent au retour) */
+  if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function (o) { const avant = typeof onglet !== "undefined" ? onglet : null; const r = o0.apply(this, arguments);
+    if (avant === "entete" && o !== "entete") setTimeout(() => { document.querySelectorAll("#lEnt .mi").forEach(m => { if (m.shadowRoot) m.shadowRoot.innerHTML = ""; m.dataset.ok = ""; }); window._gardeE = []; if (window._visE) window._visE.clear(); if (window._qE) window._qE.length = 0; }, 350);
+    if (o === "entete" && avant !== "entete") setTimeout(() => { try { const l = document.getElementById("lEnt"); l.dataset.cle = ""; rend("entete"); } catch (e) {} }, 60);
+    return r; }; }
 })();
 </script>
 </body>
