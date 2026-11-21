@@ -186,7 +186,7 @@ const DEMO = /[?&]demo/.test(location.search);   /* ?demo : la page avec le site
 if (!FINI.aDuSite && !DEMO) location.replace("index.html");
 $("logo").innerHTML = LOGO;
 $("slug").textContent = FINI.slug;
-$("kick").textContent = `✦ C'EST FAIT, ${FINI.prenom.toUpperCase()}`;
+$("kick").textContent = "✦ C'EST FAIT !";   /* 21/11 (Marie) : juste « C'est fait ! », sans prénom (jamais « Léa ») */
 /* le téléphone prend la hauteur qui reste (rien ne défile) */
 const tb = $("telB"), sc = $("scene");
 /* 2 téléphones : son site devant, son appli derrière à droite (Marie : « qu'elles voient qu'il y a aussi l'appli pour tout gérer ») */
