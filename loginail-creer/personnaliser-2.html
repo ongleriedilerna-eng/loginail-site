@@ -2048,7 +2048,7 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
   const fais = (cls) => { const b = document.createElement("button"); b.type = "button"; b.className = "zeroB " + cls; b.innerHTML = `<span aria-hidden="true">↺</span> Tout recommencer à zéro`; b.onclick = demande; return b; };
   function demande() { prend(); if (!depart) return bulle("Votre site arrive… un instant");
     const d = document.createElement("div"); d.className = "supFond";
-    d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Tout recommencer ?</h4><p>Votre site redevient comme au début :<br>fond, en-tête, écriture, couleurs et charms.<br>Vos looks et vos favoris sont gardés.</p><div><button class="non">Non</button><button class="oui">Oui, à zéro</button></div></div>`;
+    d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Tu veux vraiment tout recommencer à zéro ?</h4><p>Ton site redevient comme au début :<br>fond, en-tête, écriture, couleurs et charms.<br>Tes looks et tes favoris sont gardés.</p><div><button class="non">Non</button><button class="oui">Oui</button></div></div>`;
     const ferme = () => d.remove();
     d.onclick = async ev => { if (ev.target === d || ev.target.closest(".non")) return ferme();
       if (!ev.target.closest(".oui")) return; ferme();
@@ -2583,5 +2583,69 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   body.v2 .tel .pilT{top:1.9%!important;width:28%!important;height:3.4%!important;margin-left:-14%!important}
 }
 </style>
+<!-- 2.3 (21/11 soir, Marie) : ↺ en haut à gauche à la place du logo (avec « Oui / Non ») ; plus rien en bas (ni « Tout recommencer », ni ⌄, ni flèche) ;
+     annuler / refaire dans une forme à nous (pas celle de Snapchat) ; thèmes des fonds et des charms en petites étiquettes pour mieux voir les carrés. -->
+<style>
+@media (max-width:899px){
+  body.v2 .haut .logo,body.v2 #retour{display:none!important}
+  body.v2 .zeroH{width:42px;height:42px;border-radius:50%;border:0;background:#fff;color:#1E1C1B;display:grid;place-items:center;cursor:pointer;
+    box-shadow:0 6px 16px -10px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.06);transition:transform .2s cubic-bezier(.2,1.5,.4,1)}
+  body.v2 .zeroH svg{width:21px;height:21px;transition:transform .45s cubic-bezier(.3,1.3,.4,1)}
+  body.v2 .zeroH:active{transform:scale(.9)}body.v2 .zeroH:active svg{transform:rotate(-180deg)}
+  /* plus rien en bas */
+  body.v2 .pied{display:none!important}
+  body.v2 #reglages{padding-bottom:calc(var(--sab,0px) + 4px)!important}
+  /* annuler / refaire : deux petits ronds blancs séparés, flèches en arc */
+  body.v2 .undoT{gap:10px!important;left:16px!important;bottom:14px!important}
+  body.v2 .undoT .rond,body.v2 .undoT .rond+.rond{width:38px!important;height:38px!important;border-radius:50%!important;background:rgba(255,255,255,.92)!important;color:#1E1C1B!important;
+    box-shadow:0 6px 14px -8px rgba(0,0,0,.4),inset 0 0 0 1px rgba(0,0,0,.05)!important;backdrop-filter:none!important}
+  body.v2 .undoT .rond:disabled{opacity:.45}
+  body.v2 .undoT .rond svg{width:19px!important;height:19px!important}
+  /* étiquettes fines (fonds + charms) */
+  body.v2 .fondDeux .catBoxF{display:flex!important;flex-direction:row!important;align-items:center;gap:0}
+  body.v2 .fondDeux #catF,body.v2 .panneau[data-p=charms] #catBox.catH #catC{gap:6px!important;padding:2px 14px 8px!important}
+  body.v2 .fondDeux #catF{padding-left:6px!important}
+  body.v2 .fondDeux .catFond,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI{flex:none!important;flex-direction:row!important;align-items:center!important;width:auto!important;height:34px!important;
+    padding:0 12px 0 4px!important;gap:6px!important;border-radius:999px!important;background:#fff!important;color:#5f545a!important;font:500 12px Jost,sans-serif!important;white-space:nowrap;
+    box-shadow:0 2px 8px -5px rgba(0,0,0,.3)!important}
+  body.v2 .fondDeux .catFond span,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI span{max-width:none!important}
+  body.v2 .fondDeux .catFond .vgI,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI img,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI .cfav{width:26px!important;height:26px!important;border-radius:50%!important;padding:0!important;flex:none;box-shadow:none!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI img{padding:2px!important;background:#F5F3F6!important}
+  body.v2 .fondDeux .catFond.on,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI.on{background:#1E1C1B!important;color:#fff!important}
+  body.v2 .fondDeux .catFond.on .vgI,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI.on img,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI.on .cfav{box-shadow:0 0 0 1.5px #fff!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH{margin:0 0 4px!important}
+  body.v2 .sansChip{flex:none;margin:0 0 8px 14px;height:34px;padding:0 12px;border-radius:999px;border:1.5px dashed rgba(0,0,0,.22);background:transparent;color:#5f545a;font:500 12px Jost,sans-serif;white-space:nowrap;cursor:pointer}
+  body.v2 .sansChip.on{background:#1E1C1B;border-color:#1E1C1B;color:#fff}
+  body.v2 .panneau[data-p=charms] .outilsC .cherche{height:34px!important}
+  body.v2:not(.chercheOn) .panneau[data-p=charms] .outilsC{display:none!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH{display:flex!important;flex-direction:row!important;align-items:center!important;width:auto!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC{flex:1;min-width:0;padding-left:6px!important}
+  body.v2 .loupeChip{flex:none;width:34px;height:34px;margin:0 0 8px 14px;border-radius:50%;border:0;background:#fff;color:#1E1C1B;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px -5px rgba(0,0,0,.3)}
+  body.v2.chercheOn .loupeChip{background:#1E1C1B;color:#fff}
+}
+</style>
+<script>
+(function () {
+  if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const $ = id => document.getElementById(id);
+  /* ↺ en haut à gauche : ouvre « Tu veux vraiment tout recommencer à zéro ? » (même fenêtre qu'avant) */
+  const h = document.querySelector(".haut"); if (h && !h.querySelector(".zeroH")) { const b = document.createElement("button"); b.type = "button"; b.className = "zeroH"; b.setAttribute("aria-label", "Tout recommencer à zéro"); b.title = "Tout recommencer à zéro";
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4 3.8v4.2h4.2"/></svg>';
+    b.onclick = () => { const z = document.querySelector(".zeroTel") || document.querySelector(".zeroOrdi"); if (z) z.click(); }; h.prepend(b); }
+  /* annuler / refaire : flèches en arc (forme à nous) */
+  const an = $("annul"), rf = $("refaire");
+  if (an) an.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>';
+  if (rf) rf.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg>';
+  /* charms : la recherche se cache derrière une loupe, au début des thèmes */
+  const cb = $("catBox"); if (cb && !cb.querySelector(".loupeChip")) { const l = document.createElement("button"); l.type = "button"; l.className = "loupeChip"; l.setAttribute("aria-label", "Chercher un charm");
+    l.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>';
+    l.onclick = () => { const on = document.body.classList.toggle("chercheOn"); const i = $("chercheC"); if (on && i) setTimeout(() => i.focus(), 50); }; cb.prepend(l); }
+  /* « Sans fond » : une petite étiquette au début des thèmes de fonds */
+  const bx = document.querySelector(".fondDeux .catBoxF");
+  if (bx && !bx.querySelector(".sansChip")) { const s = document.createElement("button"); s.type = "button"; s.className = "sansChip"; s.textContent = "Sans fond";
+    s.onclick = () => { const v = document.querySelector("#lFond .vg.sans"); if (v) v.click(); setTimeout(maj, 80); }; bx.prepend(s);
+    const maj = () => s.classList.toggle("on", !!(window.Pilote && !Pilote.etat.fond)); if (window.Pilote && Pilote.change) Pilote.change(maj); setTimeout(maj, 3000); }
+})();
+</script>
 </body>
 </html>
