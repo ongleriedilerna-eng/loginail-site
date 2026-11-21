@@ -2210,6 +2210,9 @@ const BR=(()=>{try{
     {const q=new URLSearchParams(location.search);if(q.has("essai")){if(q.get("style"))b.style=+q.get("style");if(q.get("couleur"))b.couleur=q.get("couleur");if(q.get("mode"))b.mode=q.get("mode");
       b.epure=q.get("epure")==="1";b.coffin=q.get("coffin")==="1";b.arrondi=q.get("arrondi")==="1";b.fond=q.get("fond")||"";b.police=q.get("police")||"";b.paillettes=q.get("paillettes")||"non";b.charms=(q.get("charm")||"").split(",").filter(Boolean)}}}
     return b}}catch(e){return null}})();
+/* 21/11 : un vrai site (?s=…) n'a pas de photos Google (adresses temporaires, pas gardées à l'inscription) : sans ça la page restait vide */
+if(BR&&!Array.isArray(BR.photos))BR.photos=[];
+if(BR&&!Array.isArray(BR.avis))BR.avis=[];
 if(!BR)location.replace("index.html"+location.search);
 else{
   const ordre=BR.photos.map((_,i)=>i);if(BR.principale>0){ordre.splice(BR.principale,1);ordre.unshift(BR.principale)}
