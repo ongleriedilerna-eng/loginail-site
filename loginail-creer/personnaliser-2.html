@@ -1167,14 +1167,14 @@ function rend(o) {
     const poses = P.poses(), q = sansAcc($("chercheC").value);
     /* 19/11 (Marie : « trier par couleur ») : « Par couleur » = une rangée de pastilles, puis tous les charms de cette couleur ;
        et dans chaque thème, les charms sont rangés par couleur (rose, rouge, orange… argent, multicolore) */
-    const CC = window.CH_COUL || {}, coulDe = n => (n in CC ? CC[n] : 99999), parCoul = l => l.slice().sort((a, b) => coulDe(a) - coulDe(b));
+    const CC = window.CH_COUL || {}, ROUE = [9, 2, 3, 5, 6, 7, 8, 10, 4, 1, 0, 11] /* rang de chaque groupe : 21/11 (Marie) argent, noir, puis le cercle chromatique */, coulDe = n => (n in CC ? ROUE[Math.floor(CC[n] / 1000)] * 1000 + CC[n] % 1000 : 99999), parCoul = l => l.slice().sort((a, b) => coulDe(a) - coulDe(b));
     /* 19/11 (Marie) : « Trier par » couleur ou thème (le choix est gardé) ; par thème = les charms d'une même famille ensemble, avec son petit titre */
     const CAT = window.CH_CAT || {}, FA = P.familles(), famDe = n => { const i = FA.indexOf(CAT[n]); return i < 0 ? 999 : i; };
     /* 19/11 (Marie : « version bébé, version pixel… ») : par style = mignon, pixel, néon, chrome… (étiquetés image par image, perso/charms-styles.js) */
     const ST = window.CH_STYLE || {}, SO = Object.keys(window.STYLES_CH || {}), styDe = n => { const i = SO.indexOf(ST[n]); return i < 0 ? 999 : i; };
     const trie = l => triCh === "theme" ? l.slice().sort((a, b) => famDe(a) - famDe(b) || coulDe(a) - coulDe(b)) : triCh === "style" ? l.slice().sort((a, b) => styDe(a) - styDe(b) || coulDe(a) - coulDe(b)) : parCoul(l);
     const liste = q ? trie(P.charmsTous().filter(n => n.includes(q.replace(/[^a-z0-9]/g, "")) || sansAcc(P.nomCharm(n)).includes(q))) : catCharm === "Poses" ? P.poses().slice().reverse() : catCharm === "Favoris" ? FAV.filter(n => P.charmsTous().includes(n))
-      : catCharm === "Couleurs" ? trie(P.charmsTous().filter(n => Math.floor(coulDe(n) / 1000) === coulOn)) : catCharm === "Tous" ? trie(P.charmsTous()) : trie(P.charmsDe(catCharm));
+      : catCharm === "Couleurs" ? trie(P.charmsTous().filter(n => Math.floor((n in CC ? CC[n] : 99999) / 1000) === coulOn)) : catCharm === "Tous" ? trie(P.charmsTous()) : trie(P.charmsDe(catCharm));
     const avecTitres = triCh !== "coul" && catCharm !== "Poses" && catCharm !== "Favoris" && (q || triCh === "style" ||catCharm === "Tous" || catCharm === "Couleurs" || catCharm === "Populaires");
     let famAv = null; const titre = n => { if (!avecTitres) return ""; const f = triCh === "style" ? ((window.STYLES_CH || {})[ST[n]] || "Autres") : (CAT[n] || "Autres"); if (f === famAv) return ""; famAv = f; return `<p class="titreTh">${f}</p>`; };
     $("catBox").style.display = q ? "none" : "";
@@ -3112,6 +3112,43 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     /* les favoris des charms : le même cœur noir (sans mot) */
     const coeurs = () => { cc.querySelectorAll('.catI[data-c="Favoris"] .cfav').forEach(x => { if (!x.querySelector("svg")) x.innerHTML = COEUR; }); majPil(); };
     new MutationObserver(coeurs).observe(cc, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] }); coeurs(); }
+})();
+</script>
+<!-- 2.11 (21/11 soir, Marie) : charms — UNE seule ligne, comme la barre d'Apple mais en haut : rond loupe · longue pilule de dessins · rond filtre (3 traits).
+     Filtre = Tous les charms (par thème) · Par couleur (argent, noir, puis le cercle chromatique ; sans rangée de pastilles) · Par style. Plus de « Pour vous ». -->
+<style>
+@media (max-width:899px){
+  body.v2 .outilsT{display:none!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH{display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;padding:6px 12px 8px!important;margin:0!important}
+  body.v2 .rondCh{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#1E1C1B;display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 12px -6px rgba(0,0,0,.3);transition:transform .2s cubic-bezier(.2,1.5,.4,1),background .2s,color .2s}
+  body.v2 .rondCh:active{transform:scale(.9)}
+  body.v2.chercheOn .rondCh.loupeR,body.v2 .rondCh.filR.actif{background:#1E1C1B;color:#fff}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC{flex:1!important;min-width:0;height:44px;border-radius:999px!important;background:#fff!important;box-shadow:0 3px 12px -6px rgba(0,0,0,.3);padding:0 4px!important;align-items:center;gap:0!important;overflow-x:auto!important;scrollbar-width:none}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI{width:44px!important;height:36px!important;border-radius:999px!important;flex:none!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI::after{display:none!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI.on{background:#F7D3E3!important}
+  body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI img,body.v2 .panneau[data-p=charms] #catBox.catH #catC .catI .cfav{width:28px!important;height:28px!important}
+  body.v2 #lCh .coulC{display:none!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const $ = id => document.getElementById(id), B = document.body, box = $("catBox"), cc = $("catC"); if (!box || !cc) return;
+  const lo = document.createElement("button"); lo.type = "button"; lo.className = "rondCh loupeR"; lo.setAttribute("aria-label", "Chercher un charm");
+  lo.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>';
+  const fi = document.createElement("button"); fi.type = "button"; fi.className = "rondCh filR"; fi.setAttribute("aria-label", "Filtrer les charms");
+  fi.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></svg>';
+  box.prepend(lo); box.append(fi);
+  lo.onclick = () => { const on = B.classList.toggle("chercheOn"); const i = $("chercheC"); if (on && i) setTimeout(() => i.focus(), 50); };
+  let choixF = null;
+  const feuille = (opts, choisi) => { const f = document.createElement("div"); f.className = "feuilleCh";
+    f.innerHTML = `<div class="liste" role="listbox" aria-label="Filtrer">${opts.map(([v, n]) => `<button type="button" data-v="${v}" class="${v === choisi ? "on" : ""}">${n}<i></i></button>`).join("")}</div><button type="button" class="annuleF">Annuler</button>`;
+    document.body.appendChild(f); return new Promise(ok => { f.onclick = e => { const b = e.target.closest("[data-v]"); f.remove(); ok(b ? b.dataset.v : null); }; }); };
+  fi.onclick = async () => { const v = await feuille([["theme", "Tous les charms"], ["coul", "Par couleur"], ["style", "Par style"]], choixF); if (!v) return;
+    choixF = v; catCharm = "Tous"; triCh = v; try { localStorage.setItem("lgnTriCharms", v); } catch (x) {} try { majTri(); } catch (x) {}
+    fi.classList.add("actif"); rend("charms"); const l = $("lCh"); if (l) l.scrollTop = 0; const p = l && l.closest(".panneau"); if (p) p.scrollTop = 0; };
+  /* un dessin touché = on quitte le filtre « Tous » */
+  cc.addEventListener("click", () => { setTimeout(() => { if (catCharm !== "Tous") { choixF = null; fi.classList.remove("actif"); } }, 30); });
 })();
 </script>
 </body>
