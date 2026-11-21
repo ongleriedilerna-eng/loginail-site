@@ -103,6 +103,9 @@ const coffre = supabase.createClient("https://scfhaombuptmrlkdhcsl.supabase.co",
 /* 06/11 : on arrive dans la vraie appli (app.loginail.fr) */
 $("ouvrir").href = (location.hostname === "app.loginail.fr" ? "../" : "../appli.html") + IPHONE;
 $("recommencer").href = "index.html" + IPHONE;
+/* 21/11 : le bouton du mail mène ici (loginail) avec ?token_hash=…&type=…&r=<adresse de retour avec ?b=…>, plus vers supabase.co (= spams) */
+const P = new URLSearchParams(location.search);
+const BID = P.get("b") || (() => { try { return new URL(P.get("r")).searchParams.get("b"); } catch (e) { return null; } })();
 const montre = (...ids) => ["range", "pret", "perdu", "ouvrir", "recommencer"].forEach(i => $(i).hidden = !ids.includes(i));
 
 /* range le brouillon dans le coffre (une seule fois : ensuite on l'efface) */
@@ -111,7 +114,7 @@ async function range(user) {
   let b = null;
   try { const local = JSON.parse(localStorage.getItem("loginail-brouillon")); if (local) b = local; } catch (e) {}
   if (user.user_metadata?.brouillon) b = { ...(b || {}), ...user.user_metadata.brouillon };
-  const bid = new URLSearchParams(location.search).get("b");
+  const bid = BID;
   if (bid) { const { data } = await coffre.rpc("prendre_brouillon", { bid }); if (data) b = { ...(b || {}), ...data }; }
   if (!b) return null;
   const { error: e1 } = await coffre.from("profils").update({
@@ -187,6 +190,13 @@ async function depart() {
 /* le lien de l'e-mail arrive avec la connexion dans l'adresse : on laisse la bibliothèque la lire, puis on range */
 let fait = false;
 if (SIMU) { fait = true; depart(); }
+else if (P.get("token_hash")) {
+  /* on valide le jeton ici ; s'il a déjà servi (2e clic), depart() retrouve la connexion déjà ouverte */
+  fait = true;
+  coffre.auth.verifyOtp({ token_hash: P.get("token_hash"), type: P.get("type") || "email" })
+    .catch(() => {})
+    .then(() => { history.replaceState(null, "", location.pathname + (BID ? "?b=" + encodeURIComponent(BID) : "") + (IPHONE ? (BID ? "&" : "?") + "iphone" : "")); depart(); });
+}
 coffre.auth.onAuthStateChange((ev, s) => { if (s && !fait) { fait = true; setTimeout(depart, 0); } });
 setTimeout(() => { if (!fait) { fait = true; depart(); } }, 2500);
 </script>

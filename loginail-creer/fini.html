@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Votre site est prêt · Loginail</title>
+<title>Ton site est prêt · Loginail</title>
 <meta name="theme-color" content="#F6F3EF">
 <link href="../polices.css" rel="stylesheet">
 <style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
@@ -60,7 +60,7 @@ h1 em{font-style:italic}
 body.envoye .fin{display:block}body.envoye .avant{display:none}
 .env{width:50px;height:38px;color:var(--roseF)}
 .fin h2{margin:4px 0 0;font:400 30px/1 "Cormorant Garamond",serif}.fin h2 em{font-style:italic}
-.fin p{margin:8px auto 0;max-width:32ch;font:300 13.5px/1.45 Jost,sans-serif;color:var(--muted)}.fin p b{color:var(--noir);font-weight:500;word-break:break-all}
+.fin p{margin:8px auto 0;max-width:32ch;font:300 13.5px/1.45 Jost,sans-serif;color:var(--muted)}.fin p b{color:var(--noir);font-weight:500;word-break:break-all}.fin p.spams{margin-top:6px;max-width:none;font-size:12.5px}.fin p.spams b{word-break:normal}
 .etapes{margin-top:12px;display:grid;gap:7px;text-align:left}
 .etapes div{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:14px;background:var(--fond);font:300 13px/1.3 Jost,sans-serif}
 .etapes i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--noir);color:#fff;font:500 11px Jost,sans-serif;font-style:normal}
@@ -142,20 +142,20 @@ body.envoye .fin{display:block}body.envoye .avant{display:none}
 <div class="page">
   <div class="haut"><button class="retouche" type="button" onclick="history.length > 1 ? history.back() : location.href = 'personnaliser.html'">← Retoucher</button><div class="logo" id="logo"></div></div>
   <div class="scene" id="scene"><div class="duo" id="telB"><div class="halo"></div>
-    <div class="unS"><div id="tel"></div><span class="etq">Votre site</span></div>
-    <div class="unA"><div class="cadreA"><div class="ecranA" id="ecranA" aria-hidden="true"></div><div class="fT-encoche"></div></div><span class="etq">Votre appli</span></div>
+    <div class="unS"><div id="tel"></div><span class="etq">Ton site</span></div>
+    <div class="unA"><div class="cadreA"><div class="ecranA" id="ecranA" aria-hidden="true"></div><div class="fT-encoche"></div></div><span class="etq">Ton appli</span></div>
   </div></div>
   <div class="droite">
     <div class="titres" id="titres">
       <div class="kick" id="kick">✦ C'EST FAIT</div>
-      <h1>Votre site est <em>prêt</em>.</h1>
+      <h1>Ton site est <em>prêt</em>.</h1>
       <div class="adr"><i>✦</i> loginail.fr/<b id="slug"></b></div>
     </div>
     <div class="carte" id="carte">
       <div class="avant">
         <div class="offre"><div><b>1 mois <em>offert</em></b><span>puis 49,99 € par mois</span></div><small>SANS<br>ENGAGEMENT</small></div>
-        <div class="plus4"><div><i>✦</i><span><b>Votre site</b>à votre nom</span></div><div><i>✦</i><span><b>Réservation en ligne</b>+ SMS de rappel</span></div><div><i>✦</i><span><b>Votre appli</b>agenda, clientes, caisse</span></div><div><i>✦</i><span><b>0 % de commission</b>sur vos rendez-vous</span></div></div>
-        <input class="champ" id="mail" type="email" inputmode="email" autocomplete="email" placeholder="Votre adresse e-mail">
+        <div class="plus4"><div><i>✦</i><span><b>Ton site</b>à ton nom</span></div><div><i>✦</i><span><b>Réservation en ligne</b>+ SMS de rappel</span></div><div><i>✦</i><span><b>Ton appli</b>agenda, clientes, caisse</span></div><div><i>✦</i><span><b>0 % de commission</b>sur tes rendez-vous</span></div></div>
+        <input class="champ" id="mail" type="email" inputmode="email" autocomplete="email" placeholder="Ton adresse e-mail">
         <div class="mdp"><input class="champ" id="mdp" type="password" autocomplete="new-password" placeholder="Mot de passe (8 caractères min.)"><button class="oeil" type="button" id="oeil">Voir</button></div>
         <label class="cgv"><input type="checkbox" id="cgv"><span>J'accepte les <a href="../conditions-abonnement.html" target="_blank" rel="noopener">conditions</a> et la <a href="../confidentialite.html" target="_blank" rel="noopener">confidentialité</a>.</span></label>
         <button class="go" id="go" disabled>Activer mon site ✦</button>
@@ -164,12 +164,13 @@ body.envoye .fin{display:block}body.envoye .avant{display:none}
       </div>
       <div class="fin">
         <svg class="env" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="1.5" y="1.5" width="61" height="45" rx="9"/><path d="M4 6l28 21L60 6"/></svg>
-        <h2>Regardez vos <em>e-mails</em></h2>
-        <p>Un lien vous attend à <b id="adrMail"></b>. Touchez-le : votre site s'active.</p>
+        <h2>Regarde tes <em>e-mails</em></h2>
+        <p>Un lien t'attend à <b id="adrMail"></b>. Touche-le : ton site s'active.</p>
+        <p class="spams">Rien reçu ? Regarde dans tes <b>Spams</b>&nbsp;ou&nbsp;<b>Promotions</b>.</p>
         <div class="etapes">
-          <div><i>1</i><span>Touchez <b>« Activer mon site »</b> dans l'e-mail.</span></div>
-          <div><i>2</i><span>Téléchargez <b>l'appli Loginail</b>.</span></div>
-          <div><i>3</i><span>Partagez votre lien sur Instagram.</span></div>
+          <div><i>1</i><span>Touche <b>« Activer mon site »</b> dans l'e-mail.</span></div>
+          <div><i>2</i><span>Télécharge <b>l'appli Loginail</b>.</span></div>
+          <div><i>3</i><span>Partage ton lien sur Instagram.</span></div>
         </div>
         <button class="renv" id="renv" type="button">Je n'ai rien reçu : renvoyer</button>
       </div>
@@ -264,7 +265,7 @@ async function envoie() {
   const adr = $("mail").value.trim(), BR = FINI.br; $("go").disabled = true; $("msgA").textContent = "";
   if (DEMO && !FINI.aDuSite) { montreMails(adr); return; }
   if (SIMU) { BR.email = adr; try { localStorage.setItem("loginail-brouillon", JSON.stringify(BR)); } catch (e) {} montreMails(adr); return; }
-  if (!coffre) { $("msgA").textContent = "Pas de connexion. Vérifiez votre internet et réessayez."; verif(); return; }
+  if (!coffre) { $("msgA").textContent = "Pas de connexion. Vérifie ton internet et réessaie."; verif(); return; }
   $("go").textContent = "Un instant…";
   try {
     const { photos, avis, ...garde } = BR || {};   /* les photos et avis Google ne se gardent pas : on les relira sur Google */
@@ -272,10 +273,10 @@ async function envoie() {
     const q = new URLSearchParams(); if (bid) q.set("b", bid);
     const { data: inscr, error } = await coffre.auth.signUp({ email: adr, password: $("mdp").value, options: { emailRedirectTo: retourMail("fin.html?" + q.toString()), data: { brouillon: garde, ...infosMail() } } });
     $("go").textContent = "Activer mon site ✦";
-    if (!error && inscr?.user && !inscr.user.identities?.length) { $("msgA").textContent = "Vous avez déjà un compte avec cette adresse : connectez-vous dans l'appli Loginail."; verif(); return; }
-    if (error) { $("msgA").textContent = /rate|limit|seconds/i.test(error.message) ? "Trop d'essais d'un coup. Réessayez dans une minute." : /password/i.test(error.message) ? "Choisissez un mot de passe plus long (8 caractères ou plus)." : "Le compte n'a pas pu être créé. Vérifiez l'adresse et réessayez."; verif(); return; }
+    if (!error && inscr?.user && !inscr.user.identities?.length) { $("msgA").textContent = "Tu as déjà un compte avec cette adresse : connecte-toi dans l'appli Loginail."; verif(); return; }
+    if (error) { $("msgA").textContent = /rate|limit|seconds/i.test(error.message) ? "Trop d'essais d'un coup. Réessaie dans une minute." : /password/i.test(error.message) ? "Choisis un mot de passe plus long (8 caractères ou plus)." : "Le compte n'a pas pu être créé. Vérifie l'adresse et réessaie."; verif(); return; }
     montreMails(adr);
-  } catch (e) { $("go").textContent = "Activer mon site ✦"; $("msgA").textContent = "Pas de connexion. Vérifiez votre internet et réessayez."; verif(); }
+  } catch (e) { $("go").textContent = "Activer mon site ✦"; $("msgA").textContent = "Pas de connexion. Vérifie ton internet et réessaie."; verif(); }
 }
 $("go").onclick = envoie;
 $("mail").addEventListener("keydown", e => { if (e.key === "Enter" && !$("go").disabled) envoie(); });
