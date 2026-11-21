@@ -1264,7 +1264,7 @@ const ouvre0 = ouvre;
 /* 17/11 soir (Marie) : la photo a SON onglet, plus mélangée aux en-têtes (?photo=entete = ancienne façon, ?photo=ensemble pour la garder) */
 const MODE = ({ entete: "onglet", ensemble: "entete" })[new URLSearchParams(location.search).get("photo")] || "onglet";
 if (MODE) document.body.classList.add("m-" + MODE);
-const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : (P.photos().length >= 6 ? `<input type="file" accept="image/*" multiple hidden class="fichierP">` : `<label class="ph ajout" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP">+<small>Ajouter<br>des photos</small></label>`) + P.photos().slice(0, 6).map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
+const phHtml = (grand) => !P.photos().length ? `<label class="ph ajout videP" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP"><span class="pl">+</span><span><b>Ajoutez vos photos</b><small>Depuis votre téléphone : elles apparaissent tout de suite sur votre site.</small></span></label>` : `<label class="ph ajout${P.photos().length >= 6 ? " pleinP" : ""}" title="Ajouter mes photos"><input type="file" accept="image/*" multiple hidden class="fichierP">+<small>Ajouter<br>des photos</small></label>` + P.photos().slice(0, 6).map(u => `<span class="phw"><button class="ph${u === P.photoUne() ? " on" : ""}" data-u="${u}" style="background-image:url('${u}')" aria-label="Choisir cette photo"></button>${P.photos().length > 1 ? `<button class="sup" data-u="${u}" aria-label="Retirer cette photo" title="Retirer cette photo">✕</button>` : ""}</span>`).join("");
 /* 17/11 (Marie) : une croix pour retirer une photo, et « Annuler » pendant 5 s */
 let retiree = null;
 function annule(r) { retiree = r; const a = $("annuleP"); a.classList.add("on"); clearTimeout(annule.t); annule.t = setTimeout(() => { a.classList.remove("on"); retiree = null; }, 5000); }
@@ -2328,7 +2328,7 @@ try{dessineFE()}catch(e){}
   let hScene = null, ouvert = false, hcRepos = 0;
   const hautH = () => (document.querySelector(".haut") || {}).offsetHeight || 52;
   const MIN_SCENE = 230, MIN_CHOIX = 12;
-  const defaut = () => Math.round(innerHeight * .53);   /* 2.2 : au repos, le téléphone est grand */
+  const defaut = () => Math.round(innerHeight * .44);   /* 2.4 : au milieu, 2 rangées et demie de choix (comme Snapchat) */   /* 2.2 : au repos, le téléphone est grand */
   const choix = () => document.querySelector(".choix");
   const naturel = () => { const p = document.querySelector(".panneau.on"); if (!p) return 9999;
     if (p.dataset.p === "photo") { const l = $("lPhG"); return l && l.scrollHeight ? l.scrollHeight + 10 : 9999; } return 9999; };
@@ -2338,9 +2338,7 @@ try{dessineFE()}catch(e){}
     const nat = naturel(); let hc = innerHeight - hautH() - h - autre; hc = Math.max(MIN_CHOIX, Math.min(hc, maxC, nat));
     B.style.setProperty("--hC", Math.round(hc) + "px"); B.classList.add("feuille21");
     if (!raf) raf = requestAnimationFrame(() => { raf = 0; try { taille(); } catch (e) {} }); }
-  const remet = () => { if (B.classList.contains("glisseT")) return; const sc = document.querySelector(".scene"), etait = typeof ouvert !== "undefined" && ouvert;
-    if (etait) { sc.style.flex = ""; sc.style.height = ""; R.style.marginTop = ""; }
-    applique(defaut()); hcRepos = parseFloat(B.style.getPropertyValue("--hC")) || 0; if (etait) requestAnimationFrame(() => pose(true)); };
+  const remet = () => { if (B.classList.contains("glisseT")) return; try { pose(etatF); } catch (e) { applique(defaut()); } };
   /* à chaque onglet, la même taille de téléphone */
   if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function () { const r = o0.apply(this, arguments); remet(); setTimeout(remet, 60); return r; }; }
   addEventListener("resize", () => setTimeout(remet, 30));
@@ -2350,39 +2348,67 @@ try{dessineFE()}catch(e){}
   /* 2.2 (Marie : « comme Snapchat : tu tires en haut, ça te tire tous les trucs ; tu tires en bas, ça revient ») :
      2 positions seulement. Au repos, le téléphone est GRAND. Tirée vers le haut, la feuille glisse PAR-DESSUS le téléphone (qui ne bouge pas) ;
      pendant le geste on ne déplace qu'une image (transform), la vraie mise en page est faite une seule fois, quand on lâche. */
-  const SC = () => document.querySelector(".scene");
-  const maxX = () => Math.max(0, SC().offsetHeight - 6);
-  function pose(o) { const sc = SC(); ouvert = o; B.classList.toggle("feuilleHaut", o);
-    if (o) { const hS = sc.offsetHeight, X = Math.max(0, hS - 6); sc.style.flex = "none"; sc.style.height = hS + "px"; R.style.marginTop = -X + "px"; B.style.setProperty("--hC", Math.round(hcRepos + X) + "px"); }
-    else { sc.style.flex = ""; sc.style.height = ""; R.style.marginTop = ""; B.style.setProperty("--hC", Math.round(hcRepos) + "px"); }
-    R.style.transform = ""; B.classList.remove("glisseT"); }
-  let S0 = 0, cible = 0;
-  function montre(dy) { R.style.transform = `translate3d(0,${dy}px,0)`; }
-  function vers(dyFin, o, duree) { const m = (R.style.transform.match(/,(-?[\d.]+)px/) || [0, 0])[1], de = parseFloat(m) || 0, t0 = performance.now();
-    const pas = n => { const q = Math.min(1, (n - t0) / duree), e = 1 - Math.pow(1 - q, 4); montre(de + (dyFin - de) * e); if (q < 1) requestAnimationFrame(pas); else pose(o); };
+  /* 2.4 (Marie : « pour refermer c'est trop haut », « elle doit pouvoir la mettre tout en bas pour voir le téléphone en grand ») :
+     3 positions — HAUT (la feuille couvre le téléphone, mais s'arrête au 1er quart de l'écran : facile à reprendre au pouce),
+     MILIEU (2 rangées et demie de choix, comme Snapchat), BAS (seuls les dessins restent : téléphone en très grand).
+     Pendant le geste, on ne bouge que des images (transform) ; la vraie mise en page est faite une seule fois, quand on lâche.
+     On peut aussi refermer en glissant vers le bas directement sur les choix, quand la liste est tout en haut. */
+  const SC = () => document.querySelector(".scene"), TEL = () => $("tel");
+  let etatF = "milieu";
+  const enHaut = () => Math.round(innerHeight * .24);
+  function pose(e) { const sc = SC(); etatF = e; B.classList.toggle("feuilleHaut", e === "haut"); B.classList.toggle("feuilleBas", e === "bas");
+    sc.style.flex = ""; sc.style.height = ""; R.style.marginTop = "";
+    if (e === "bas") { const c = choix(), autre = R.offsetHeight - c.offsetHeight; applique(innerHeight - hautH() - autre - MIN_CHOIX); }
+    else applique(defaut());
+    hcRepos = parseFloat(B.style.getPropertyValue("--hC")) || 0;
+    try { taille(); } catch (x) {}
+    if (e === "haut") { const hS = sc.offsetHeight, X = Math.max(0, hautH() + hS - enHaut()); sc.style.flex = "none"; sc.style.height = hS + "px"; R.style.marginTop = -X + "px"; B.style.setProperty("--hC", Math.round(hcRepos + X) + "px"); }
+    R.style.transform = ""; TEL().style.transform = ""; B.classList.remove("glisseT"); }
+  /* le haut de la feuille, dans chaque position (en px depuis le haut de l'écran), calculé au début du geste */
+  let G = null;
+  function mesure() { const sc = SC(), c = choix(), autre = R.offsetHeight - c.offsetHeight, top0 = Math.round(R.getBoundingClientRect().top);
+    const sL = sc.offsetHeight;   /* hauteur de la scène telle qu'elle est posée maintenant */
+    const sMil = Math.min(innerHeight - hautH() - autre - MIN_CHOIX, Math.max(MIN_SCENE, defaut())), sBas = innerHeight - hautH() - autre - MIN_CHOIX;
+    return { top0, sL, tops: { haut: enHaut(), milieu: hautH() + sMil, bas: hautH() + sBas } }; }
+  function montre(top) { const dy = top - G.top0; R.style.transform = `translate3d(0,${dy}px,0)`;
+    /* le téléphone suit seulement quand la feuille descend sous le milieu (au-dessus, la feuille passe PAR-DESSUS) */
+    const sV = Math.max(G.tops.milieu, top) - hautH(), k = Math.max(.3, (sV - 14) / Math.max(1, G.sL - 14));
+    TEL().style.transform = Math.abs(k - 1) < .002 ? "" : `translate3d(0,${(sV - G.sL) / 2}px,0) scale(${k})`; }
+  function vers(topFin, e, duree) { const de = G.top0 + (parseFloat((R.style.transform.match(/,(-?[\d.]+)px/) || [0, 0])[1]) || 0), t0 = performance.now();
+    const pas = n => { const q = Math.min(1, (n - t0) / duree), f = 1 - Math.pow(1 - q, 4); montre(de + (topFin - de) * f); if (q < 1) requestAnimationFrame(pas); else pose(e); };
     requestAnimationFrame(pas); }
-  function branche(el, toujours) { let y0, x0, actif = false, pid = null, hist = [], X = 0;
-    const part = e => { actif = true; B.classList.add("glisseT"); X = maxX() || 300; cible = 0; try { el.setPointerCapture(pid); } catch (x) {} };
-    el.addEventListener("pointerdown", e => { if (e.button > 0) return; y0 = e.clientY; x0 = e.clientX; actif = false; pid = e.pointerId; hist = [[e.timeStamp, e.clientY]];
-      if (toujours) { e.preventDefault(); part(e); } });
-    el.addEventListener("pointermove", e => { if (pid !== e.pointerId || y0 == null) return; const dy = e.clientY - y0, dx = e.clientX - x0;
-      if (!actif) { if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx) * 1.3) part(e); else return; }
-      e.preventDefault(); hist.push([e.timeStamp, e.clientY]); if (hist.length > 5) hist.shift();
-      /* fermée : on peut monter jusqu'en haut ; ouverte : on peut redescendre jusqu'au repos ; au-delà, élastique */
-      const lo = ouvert ? 0 : -X, hi = ouvert ? X : 0; let d = dy;
-      if (d < lo) d = lo - Math.pow(lo - d, .65); if (d > hi) d = hi + Math.pow(d - hi, .65);
-      cible = d; montre(d); });
-    const fin = e => { if (pid !== e.pointerId) return; try { getSelection().removeAllRanges(); } catch (x) {} const etait = actif; actif = false; y0 = null; pid = null;
-      if (!etait) return;
-      const a = hist[0], z = hist[hist.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]), bouge = Math.abs(cible);
-      let o;
-      if (toujours && bouge < 6) o = !ouvert;                         /* un simple toucher sur la poignée : ouvre ↔ ferme */
-      else if (Math.abs(v) > .4) o = v < 0;                           /* lancé vers le haut = ouvre, vers le bas = ferme */
-      else o = ouvert ? cible < X * .35 : cible < -X * .35;           /* sinon : on regarde où elle a été lâchée */
-      const dyFin = o === ouvert ? 0 : (o ? -X : X);
-      vers(dyFin, o, Math.abs(dyFin - cible) < 4 ? 1 : 300); };
+  const ORD = ["haut", "milieu", "bas"];
+  /* le moteur du geste, partagé par la poignée, la barre des dessins et la liste des choix */
+  const geste = { actif: false, y0: 0, hist: [], cible: 0,
+    part() { this.actif = true; B.classList.add("glisseT"); G = mesure(); this.cible = G.top0; },
+    bouge(y, t) { const top = G.top0 + (y - this.y0), lo = G.tops.haut, hi = G.tops.bas; let v = top;
+      if (v < lo) v = lo - Math.pow(lo - v, .65); if (v > hi) v = hi + Math.pow(v - hi, .65);
+      this.hist.push([t, y]); if (this.hist.length > 5) this.hist.shift(); this.cible = v; montre(v); },
+    fin(tapPoignee) { if (!this.actif) return; this.actif = false; try { getSelection().removeAllRanges(); } catch (x) {}
+      const a = this.hist[0], z = this.hist[this.hist.length - 1], v = a && z ? (z[1] - a[1]) / Math.max(1, z[0] - a[0]) : 0, bouge = Math.abs(this.cible - G.top0);
+      const proche = ORD.reduce((m, x) => Math.abs(G.tops[x] - this.cible) < Math.abs(G.tops[m] - this.cible) ? x : m, "milieu"); let e = proche;
+      if (tapPoignee && bouge < 6) e = etatF === "milieu" ? "haut" : "milieu";   /* simple toucher sur la poignée */
+      else if (Math.abs(v) > .4 && proche === etatF) e = ORD[Math.max(0, Math.min(2, ORD.indexOf(etatF) + (v > 0 ? 1 : -1)))];   /* lancé : la position suivante */
+      const topFin = G.tops[e]; vers(topFin, e, Math.abs(topFin - this.cible) < 4 ? 1 : 300); } };
+  function branche(el, toujours) { let x0 = 0, pid = null;
+    el.addEventListener("pointerdown", e => { if (e.button > 0) return; geste.y0 = e.clientY; x0 = e.clientX; pid = e.pointerId; geste.hist = [[e.timeStamp, e.clientY]];
+      if (toujours) { e.preventDefault(); geste.part(); try { el.setPointerCapture(pid); } catch (x) {} } });
+    el.addEventListener("pointermove", e => { if (pid !== e.pointerId) return; const dy = e.clientY - geste.y0, dx = e.clientX - x0;
+      if (!geste.actif) { if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx) * 1.3) { geste.part(); try { el.setPointerCapture(pid); } catch (x) {} } else return; }
+      e.preventDefault(); geste.bouge(e.clientY, e.timeStamp); });
+    const fin = e => { if (pid !== e.pointerId) return; pid = null; geste.fin(toujours); };
     el.addEventListener("pointerup", fin); el.addEventListener("pointercancel", fin); }
   branche(t, true); branche($("onglets"), false);
+  /* glisser vers le bas SUR les choix (liste tout en haut) = refermer la feuille, comme sur Snapchat */
+  { const ch = choix(); let y0 = 0, x0 = 0, suivi = false, pret = false;
+    const panTop = () => { const p = document.querySelector(".panneau.on"); if (!p) return true; const sc = [p, ...p.querySelectorAll("#lFond,#lCh,#lEnt,#lPol,.chDeux")].filter(x => x.scrollHeight > x.clientHeight + 2);
+      return sc.every(x => x.scrollTop <= 0); };
+    ch.addEventListener("touchstart", e => { if (e.touches.length !== 1) return; y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; suivi = false; pret = etatF !== "bas" && panTop(); geste.y0 = y0; geste.hist = [[e.timeStamp, y0]]; }, { passive: true });
+    ch.addEventListener("touchmove", e => { if (!pret) return; const y = e.touches[0].clientY, dy = y - y0, dx = e.touches[0].clientX - x0;
+      if (!suivi) { if (dy > 10 && dy > Math.abs(dx) * 1.3) { suivi = true; geste.y0 = y; geste.part(); } else { if (Math.abs(dy) > 10 || Math.abs(dx) > 10) pret = false; return; } }
+      e.preventDefault(); geste.bouge(y, e.timeStamp); }, { passive: false });
+    const f = () => { if (suivi) { suivi = false; geste.fin(false); } pret = false; };
+    ch.addEventListener("touchend", f); ch.addEventListener("touchcancel", f); }
   /* 2.0 : les onglets deviennent une rangée d'ICÔNES (comme les catégories du dressing Snapchat) */
   const IC = { photo: '<rect x="3.5" y="6.5" width="17" height="13" rx="3.5"/><path d="M8.5 6.5l1.4-2.2h4.2l1.4 2.2"/><circle cx="12" cy="13" r="3.6"/>',
     entete: '<rect x="6" y="2.8" width="12" height="18.4" rx="3"/><rect x="8.4" y="5.6" width="7.2" height="6" rx="1.2"/><path d="M9 14.6h6M10 17h4"/>',
@@ -2645,6 +2671,69 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   if (bx && !bx.querySelector(".sansChip")) { const s = document.createElement("button"); s.type = "button"; s.className = "sansChip"; s.textContent = "Sans fond";
     s.onclick = () => { const v = document.querySelector("#lFond .vg.sans"); if (v) v.click(); setTimeout(maj, 80); }; bx.prepend(s);
     const maj = () => s.classList.toggle("on", !!(window.Pilote && !Pilote.etat.fond)); if (window.Pilote && Pilote.change) Pilote.change(maj); setTimeout(maj, 3000); }
+})();
+</script>
+<!-- 2.4 (21/11 soir, Marie) : couleurs (barre des ambiances + « Sauvegarder mes couleurs » en bas, comme avant) ; petite étoile sous ↺ (étoiles avec/sans) ;
+     plus de carré à gauche de « Publier » ni de « Placer en grand » ; téléphone qu'on fait TOURNER en glissant le doigt à côté (comme le Bitmoji), qui ne flotte plus ;
+     écritures 3 par ligne ; photos 4 par ligne avec « Ajouter des photos » toujours là (au maximum : message). -->
+<style>
+@media (max-width:899px){
+  body.v2 #oeilH,body.v2 #grandCh,body.v2 .etoBox,body.v2 .dotsT{display:none!important}
+  body.v2.catStyle .rangAmb .hautG{display:flex!important}
+  body.v2 .rangAmb{padding:0!important;margin-bottom:6px!important}
+  body.v2 .gaucheC .sauveC{margin-top:6px!important}
+  /* étoile sous ↺ */
+  body.v2 .etoileH{position:absolute;left:16px;top:4px;z-index:6;width:42px;height:42px;border-radius:50%;border:0;background:#fff;color:#C9BFC4;display:grid;place-items:center;cursor:pointer;
+    box-shadow:0 6px 16px -10px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.06);transition:color .2s,transform .25s cubic-bezier(.2,1.5,.4,1)}
+  body.v2 .etoileH svg{width:21px;height:21px}
+  body.v2 .etoileH.on{color:#E8B44C}
+  body.v2 .etoileH:active{transform:scale(.88) rotate(-20deg)}
+  body.v2 .etoileH.pop{animation:etoPop .5s cubic-bezier(.2,1.5,.4,1)}
+  @keyframes etoPop{40%{transform:scale(1.25) rotate(18deg)}}
+  /* téléphone : arrive penché, ne flotte plus, tourne au doigt */
+  body.v2 .tel{animation:telArrive 1s cubic-bezier(.2,.85,.25,1) both!important;transition:rotate .55s cubic-bezier(.2,1.4,.35,1)!important}
+  body.v2 .tel.tourne{transition:none!important}
+  body.v2 .scene{touch-action:pan-y}
+  /* écritures : 3 par ligne, plus petites */
+  body.v2 #lPol{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;padding:2px 14px 20px!important}
+  body.v2 #lPol .ecr-c{height:auto!important;min-height:0!important;aspect-ratio:1/.78;padding:6px 6px!important;align-items:center!important;justify-content:center!important;text-align:center;border-radius:14px!important;background:#fff!important}
+  body.v2 #lPol .ecr-c span{font-size:15px!important;line-height:1.1!important;white-space:normal!important;overflow:hidden;max-width:100%}
+  body.v2 #lPol .ecr-c small{font-size:8.5px!important;margin-top:4px;background:none!important;padding:0!important}
+  body.v2 #lPol .ecr-c::before,body.v2 #lPol .ecr-c::after{display:none!important}
+  /* photos : 4 par ligne */
+  body.v2 #lPhG{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+  body.v2 #lPhG .ph.ajout small{font-size:9.5px!important}
+  body.v2 #lPhG .ph.pleinP{opacity:.55}
+  body.v2 #bulle{white-space:normal!important;max-width:calc(100vw - 40px)!important;width:max-content;text-align:center;line-height:1.35!important;padding:10px 16px!important;border-radius:16px!important}
+}
+</style>
+<script>
+(function () {
+  if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const $ = id => document.getElementById(id), B = document.body;
+  /* couleurs : « Sauvegarder mes couleurs » revient en bas de la colonne de gauche */
+  const sv = $("sauveC"), gc = document.querySelector(".gaucheC"); if (sv && gc) { gc.appendChild(sv); const sp = sv.querySelector("span"); if (sp) sp.textContent = "Sauvegarder mes couleurs"; }
+  /* étoile sous ↺ : étoiles qui brillent avec / sans */
+  const sc = document.querySelector(".scene"), eto = $("etoN");
+  if (sc && eto && !document.querySelector(".etoileH")) { const b = document.createElement("button"); b.type = "button"; b.className = "etoileH"; b.setAttribute("aria-label", "Étoiles qui brillent");
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.7 6 6.5.6-4.9 4.3 1.5 6.4L12 16.5l-5.8 3.3 1.5-6.4L2.8 9.1l6.5-.6z"/></svg>';
+    const avec = () => { const x = eto.querySelector('[data-n]:not([data-n="0"]).on'); return !!x; };
+    const maj = () => { b.classList.toggle("on", avec()); b.title = avec() ? "Étoiles : avec (toucher pour enlever)" : "Étoiles : sans (toucher pour en mettre)"; };
+    b.onclick = () => { const cible = eto.querySelector(avec() ? '[data-n="0"]' : '[data-n]:not([data-n="0"])'); if (cible) cible.click(); setTimeout(maj, 60); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
+      if (typeof bulle === "function") bulle(avec() ? "Étoiles qui brillent ✦" : "Sans étoiles"); };
+    sc.appendChild(b); maj(); new MutationObserver(maj).observe(eto, { subtree: true, attributes: true, attributeFilter: ["class"] }); }
+  /* le téléphone tourne quand on glisse le doigt à côté de lui (gauche / droite), puis revient tout seul */
+  const T = $("tel");
+  if (sc && T) { let x0 = null, y0 = 0, pid = null, on = false;
+    sc.addEventListener("pointerdown", e => { if (e.target.closest("#tel,button")) return; x0 = e.clientX; y0 = e.clientY; pid = e.pointerId; on = false; });
+    sc.addEventListener("pointermove", e => { if (x0 == null || e.pointerId !== pid) return; const dx = e.clientX - x0, dy = e.clientY - y0;
+      if (!on) { if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { on = true; T.classList.add("tourne"); try { sc.setPointerCapture(pid); } catch (x) {} } else return; }
+      const a = Math.max(-55, Math.min(55, dx * .45)); T.style.rotate = `y ${a}deg`; });
+    const fin = e => { if (e.pointerId !== pid) return; x0 = null; pid = null; if (!on) return; on = false; T.classList.remove("tourne"); T.style.rotate = ""; };
+    sc.addEventListener("pointerup", fin); sc.addEventListener("pointercancel", fin); }
+  /* photos : au maximum, le carré « Ajouter » explique au lieu d'ouvrir les photos */
+  document.addEventListener("click", e => { const a = e.target.closest("#lPhG .ph.ajout"); if (!a) return;
+    if (window.Pilote && Pilote.photos().length >= 6) { e.preventDefault(); e.stopPropagation(); if (typeof bulle === "function") bulle("Tu as atteint le maximum de photos. Tu pourras les modifier ou en ajouter dans ton application.", 4200); } }, true);
 })();
 </script>
 </body>
