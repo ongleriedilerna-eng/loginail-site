@@ -2065,6 +2065,8 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 </script>
 <script src="perso/perso-vrai.js?v=11191412"></script>
 <script src="perso/pipette.js?v=2111a"></script>
+<!-- 21/11 (Marie) : nouvelle ouverture (look Sirène + « Créer le mien » → classique), remplace le coup de baguette -->
+<script src="perso/ouverture.js?v=2111b"></script>
 <!-- 19/11 (D49, Marie + Lilyan) « Coup de baguette » : à la 1re ouverture de la création, une ligne qui brille transforme SON site en
      Néon acidulé, puis Pixel girl, puis Baddie léopard (le fond derrière la page change en même temps) ; la ligne remonte, son site revient,
      et une étiquette arrive : « Voilà ce qu'on peut faire. Maintenant, à toi de jouer ✦ ». Une seule fois (mémoire : lgnBaguetteVue).
@@ -2100,7 +2102,7 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 </style>
 <script>
 (() => { const CLE = "lgnBaguetteVue";
-  try { if (localStorage.getItem(CLE) || /[?&]baguette=0/.test(location.search)) return; } catch (e) { return; }
+  try { if (window.OUVERTURE_ON || localStorage.getItem(CLE) || /[?&]baguette=0/.test(location.search)) return; } catch (e) { return; }
   const ecr = document.querySelector("#tel>.ecr"), att = document.getElementById("attente"); if (!ecr || !att) return;
   const LOOKS = [["Néon acidulé", "../loginail-site/intro/look-1.webp"], ["Pixel girl", "../loginail-site/intro/look-2.webp"], ["Baddie léopard", "../loginail-site/intro/look-3.webp"]];
   const vu = () => { try { localStorage.setItem(CLE, "1"); } catch (e) {} };
