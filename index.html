@@ -2322,7 +2322,22 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) #cest-quoi .cq-zero b{color:#B03562}
   html body:not(#_) #cest-quoi .cq-go{margin-top:22px;height:52px;padding:0 26px;transition:transform .2s ease}
   html body:not(#_) #cest-quoi .cq-go:hover{transform:translateY(-2px)}
+  /* 21/11 (Marie) : « ça fait gros » → carte plus petite, et une ligne de confiance dessous */
+  html body:not(#_) #cest-quoi .cq-col{display:flex;flex-direction:column;align-items:center;justify-self:center;width:100%;max-width:320px}
+  html body:not(#_) #cest-quoi .cq-res{max-width:320px;padding:24px 22px 24px;border-radius:26px;box-shadow:8px 9px 0 #E0628C}
+  html body:not(#_) #cest-quoi .cq-logo{font-size:32px}
+  html body:not(#_) #cest-quoi .cq-prix{font-size:44px;margin:8px 0 0}
+  html body:not(#_) #cest-quoi .cq-prix small{font-size:15px}
+  html body:not(#_) #cest-quoi .cq-offert{margin:10px 0 12px;padding:7px 16px;font-size:15px}
+  html body:not(#_) #cest-quoi .cq-pt{font-size:11.5px;line-height:1.8}
+  html body:not(#_) #cest-quoi .cq-zero{margin-top:8px;font-size:15px}
+  html body:not(#_) #cest-quoi .cq-go{margin-top:16px;height:46px;padding:0 22px}
+  html body:not(#_) #cest-quoi .cq-dessous{display:flex;flex-direction:column;gap:7px;margin-top:26px;font-size:14px;color:#5b524d;text-align:left}
+  html body:not(#_) #cest-quoi .cq-dessous span{display:flex;align-items:center;gap:9px}
+  html body:not(#_) #cest-quoi .cq-dessous i{width:20px;height:20px;border-radius:50%;background:#FBEFF3;color:#B03562;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;flex:none}
 }
+.cq-dessous{display:none}
+@media (max-width:760px){html body:not(#_) #cest-quoi .cq-col{display:none}}
 /* 20/11 (Marie, 4e passage) : TÉLÉPHONE seulement —
    1) « L'appli qui gère tout, dans ta poche » : d'abord les 4 téléphones, ensuite les bulles (notifications)
    2) « Classe ou baddie ? » : un charm en plus à droite (ça faisait vide)
@@ -2590,7 +2605,7 @@ document.addEventListener("DOMContentLoaded",function(){
 @media (min-width:761px){
   html body:not(#_) .rentab{display:flex}
   @keyframes carteFlotte{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -10px;rotate:.6deg}}
-  html body:not(#_) #cest-quoi .cq-res{animation:carteFlotte 7s ease-in-out infinite}
+  /* 21/11 (Marie) : la carte du prix ne flotte plus (« qu'il arrête de bouger ») */
   html body:not(#_) section.appli#v3-appli{position:relative}
   html body:not(#_) .v3 .ch.ch-ordi{display:block}
   html body:not(#_) .v3 .marie .b-ch{animation:fl 6s ease-in-out infinite}
@@ -2778,6 +2793,7 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="cq-carte c-attente" style="left:0;top:74%;--r:-2deg;animation-delay:-3.3s"><div class="cq-ic">◷</div><div><b>Liste d’attente</b><small>une place se libère, elle est prévenue</small></div></div>
       <div class="cq-sms"><div class="de">Rappel SMS · tout seul</div>Bonjour Inès ! RDV demain 09h00, 12 rue Paradis 13006 Marseille.</div>
     </div>
+    <div class="cq-col">
     <div class="cq-res">
       <div class="cq-logo">Logi<span>nail</span></div>
       <div class="cq-prix">49,99 € <small>/ mois</small></div>
@@ -2785,6 +2801,8 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="cq-pt">Sans engagement<br>Rien à installer</div>
       <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
       <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="cq-dessous"><span><i>✓</i>Rappels SMS inclus, sans limite</span><span><i>✓</i>Tu arrêtes en 1 clic, sans frais</span><span><i>✓</i>Fait par une prothésiste</span></div>
     </div>
   </div>
 </div></section>
