@@ -2327,7 +2327,7 @@ try{dessineFE()}catch(e){}
   R.insertBefore(t, $("onglets"));
   let hScene = null; try { hScene = +sessionStorage.getItem("lgnScene21") || null; } catch (e) {}
   const hautH = () => (document.querySelector(".haut") || {}).offsetHeight || 52;
-  const MIN_SCENE = 230, MIN_CHOIX = 96;
+  const MIN_SCENE = 230, MIN_CHOIX = 12;
   const defaut = () => Math.round(innerHeight * .42);
   const choix = () => document.querySelector(".choix");
   const naturel = () => { const p = document.querySelector(".panneau.on"); if (!p) return 9999;
@@ -2356,7 +2356,7 @@ try{dessineFE()}catch(e){}
     hScene = S; B.classList.remove("glisseT"); applique(S); try { taille(); } catch (e) {} R.style.transform = ""; TEL().style.transform = "";
     try { sessionStorage.setItem("lgnScene21", Math.round(S)); } catch (x) {} }
   function vers(S, duree) { const de = S0 + (parseFloat((R.style.transform.match(/,(-?[\d.]+)px/) || [0, 0])[1]) || 0), t0 = performance.now();
-    const pas = n => { const q = Math.min(1, (n - t0) / duree), e = 1 - Math.pow(1 - q, 3); montre(de + (S - de) * e); if (q < 1) requestAnimationFrame(pas); else pose(S); };
+    const pas = n => { const q = Math.min(1, (n - t0) / duree), e = 1 - Math.pow(1 - q, 4); montre(de + (S - de) * e); if (q < 1) requestAnimationFrame(pas); else pose(S); };
     requestAnimationFrame(pas); }
   function debut() { S0 = SC().offsetHeight; B.classList.add("glisseT"); }
   function branche(el, toujours) { let y0, x0, actif = false, pid = null, hist = [], lim = [0, 0];
@@ -2371,10 +2371,14 @@ try{dessineFE()}catch(e){}
     const fin = e => { if (pid !== e.pointerId) return; try { getSelection().removeAllRanges(); } catch (x) {} const etait = actif; actif = false; y0 = null; pid = null;
       if (!etait) return;
       const a = hist[0], z = hist[hist.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]), moved = Math.abs(cible - S0);
-      let S = Math.max(lim[0], Math.min(lim[1], cible));
-      if (Math.abs(v) > .5) S = v > 0 ? lim[1] : lim[0];   /* lancé rapide : jusqu'au bout */
-      else if (toujours && moved < 6) S = S0 < (lim[0] + lim[1]) / 2 ? lim[1] : lim[0];   /* simple toucher sur la poignée : grand ↔ petit */
-      vers(S, Math.abs(S - cible) < 4 ? 1 : 220); };
+      /* 2.1 (vidéos Snapchat de Marie) : la feuille se range toute seule sur 3 CRANS — haut (beaucoup de choix), milieu, bas (téléphone en grand) */
+      const mil = Math.max(lim[0], Math.min(lim[1], defaut())), crans = [...new Set([lim[0], mil, lim[1]])].sort((x, y) => x - y);
+      const proche = x => crans.reduce((m, c) => Math.abs(c - x) < Math.abs(m - x) ? c : m, crans[0]);
+      let S;
+      if (toujours && moved < 6) S = Math.abs(S0 - lim[1]) < 8 ? mil : lim[1];   /* simple toucher sur la poignée : téléphone en grand ↔ milieu */
+      else if (Math.abs(v) > .45) S = v > 0 ? (crans.find(c => c > S0 + 4) || lim[1]) : ([...crans].reverse().find(c => c < S0 - 4) || lim[0]);   /* lancé : le cran suivant */
+      else S = proche(cible);
+      vers(S, Math.abs(S - cible) < 4 ? 1 : 260); };
     el.addEventListener("pointerup", fin); el.addEventListener("pointercancel", fin); }
   branche(t, true); branche($("onglets"), false);
   /* 2.0 : les onglets deviennent une rangée d'ICÔNES (comme les catégories du dressing Snapchat) */
@@ -2427,6 +2431,128 @@ try{dessineFE()}catch(e){}
   const gc = $("grandCh"), eto = document.querySelector(".etoBox"); if (gc && eto) { eto.appendChild(gc); gc.textContent = "⤢ Placer en grand"; }
   const ci = $("chercheC"); if (ci) ci.placeholder = "Chercher : cœur, cerise…";
   const et = document.querySelector(".etoBox .etoT"); if (et) et.innerHTML = "<b>✦</b> Étoiles";
+})();
+</script>
+<!-- 21/11 (Marie : « pas assez fluide ») : les vignettes de fonds « qui bougent » tournaient TOUTES en permanence (plus de 1 000 animations, même cachées,
+     même dans les autres onglets : téléphone occupé à 99 %). Maintenant : seules les vignettes qu'on VOIT bougent ; rien ne bouge dans un onglet fermé, ni pendant qu'on tire la feuille. -->
+<style>
+#app#app#app .panneau:not(.on) *,#app#app#app .panneau:not(.on) *::before,#app#app#app .panneau:not(.on) *::after{animation-play-state:paused!important}
+#app#app#app #lFond .vg:not(.vu),#app#app#app #lFond .vg:not(.vu) *,#app#app#app #lFond .vg:not(.vu) *::before,#app#app#app #lFond .vg:not(.vu) *::after{animation-play-state:paused!important}
+body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-play-state:paused!important}
+</style>
+<script>
+(function () { const l = document.getElementById("lFond"); if (!l || !window.IntersectionObserver) { if (l) l.classList.add("toutVu"); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("vu", e.isIntersecting)), { rootMargin: "40px" });
+  const suis = () => l.querySelectorAll(".vg").forEach(v => { if (!v._io21) { v._io21 = 1; io.observe(v); } });
+  new MutationObserver(suis).observe(l, { childList: true }); suis(); })();
+</script>
+<!-- 2.1 (21/11, vidéos Snapchat de Marie) : 3 catégories en haut (Mon site / Style / Charms), rangée de dessins PLEINS sans mots,
+     téléphone avec sa pilule qui arrive penché, flotte doucement et réagit à chaque choix, cartes façon Snapchat, pastilles de couleurs à droite. -->
+<style>
+@media (max-width:899px){
+  body.v2 #aide{display:none!important}
+  /* le bouton « œil » (caché derrière le téléphone) attrapait le doigt à la place de la poignée : il n'apparaît que dans la vue en grand */
+  body.v2 .app:not(.agrandi) .vueCliente{display:none!important}
+  body.v2 .tireT{height:26px;position:relative;z-index:7}
+  /* catégories */
+  body.v2 .catsT{display:flex;justify-content:space-around;padding:0 20px 4px;border-bottom:1px solid rgba(0,0,0,.06);touch-action:pan-x}
+  body.v2 .catsT button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;border:0;background:none;padding:2px 0 4px;font:500 11.5px/1.2 Jost,sans-serif;color:#A8959F;cursor:pointer;transition:color .2s}
+  body.v2 .catsT svg{width:25px;height:25px;transition:transform .25s cubic-bezier(.2,1.5,.4,1)}
+  body.v2 .catsT button[aria-selected=true]{color:#1E1C1B}
+  body.v2 .catsT button[aria-selected=true] svg{transform:scale(1.1)}
+  body.v2 .catsT button:active svg{transform:scale(.9)}
+  /* rangée de dessins, sans mots, alignés à gauche */
+  body.v2 #onglets{justify-content:flex-start!important;padding:4px 12px 0!important;gap:2px!important}
+  body.v2 #onglets button{flex:0 0 58px!important;padding:4px 0 11px!important}
+  body.v2 #onglets .noT{display:none!important}
+  body.v2 #onglets .icT{width:44px!important;height:36px!important;color:#A8959F}
+  body.v2 #onglets .icT svg{width:31px;height:31px}
+  body.v2 #onglets .horsCat{display:none!important}
+  body.v2 #onglets button::before{left:18%;right:18%}
+  body.v2 #onglets .btnLooks .icT{color:#A8959F}
+  /* téléphone : pilule, arrivée penchée, flotte, réagit */
+  body.v2 .scene{perspective:1100px}
+  body.v2 .tel{border-radius:36px;box-shadow:0 0 0 1px #3B3938 inset,0 34px 44px -28px rgba(0,0,0,.5),0 4px 10px -4px rgba(0,0,0,.25)!important;will-change:translate;animation:telArrive 1s cubic-bezier(.2,.85,.25,1) both,telFlotte 5.5s ease-in-out 1s infinite}
+  body.v2 .tel .pilT{position:absolute;left:50%;top:2.1%;width:27%;height:3.3%;margin-left:-13.5%;border-radius:99px;background:#0B0A0A;z-index:6;pointer-events:none}
+  body.v2 .tel.telReagit{animation:telReagit .75s cubic-bezier(.3,.7,.3,1),telFlotte 5.5s ease-in-out .75s infinite}
+  body.v2.glisseT .tel,body.v2 .app.agrandi .tel{animation:none}
+  @keyframes telArrive{0%{opacity:0;translate:0 70px;rotate:-13deg;scale:.82}55%{opacity:1;translate:0 -6px;rotate:3deg;scale:1.02}100%{opacity:1;translate:0 0;rotate:0deg;scale:1}}
+  @keyframes telFlotte{0%,100%{translate:0 0}50%{translate:0 -6px}}
+  @keyframes telReagit{0%{rotate:y 0deg;scale:1}28%{rotate:y -18deg;scale:1.04}62%{rotate:y 10deg;scale:1.01}100%{rotate:y 0deg;scale:1}}
+  /* pastilles de couleurs, à droite de la scène */
+  body.v2 .dotsT{position:absolute;right:8px;top:6px;bottom:10px;width:38px;z-index:6;display:none;flex-direction:column;align-items:center;gap:9px;overflow-y:auto;scrollbar-width:none;padding:6px 0 30px;-webkit-mask:linear-gradient(#000 calc(100% - 34px),transparent);mask:linear-gradient(#000 calc(100% - 34px),transparent)}
+  body.v2 .dotsT::-webkit-scrollbar{display:none}
+  body.v2.catStyle .dotsT{display:flex}
+  body.v2 .dotsT button{flex:none;width:26px;height:26px;border-radius:50%;border:0;padding:0;box-shadow:0 0 0 1.5px rgba(255,255,255,.9),0 2px 6px -2px rgba(0,0,0,.35);cursor:pointer;transition:transform .2s cubic-bezier(.2,1.5,.4,1),box-shadow .2s}
+  body.v2 .dotsT button.on{transform:scale(1.12);box-shadow:0 0 0 2.5px #fff,0 0 0 4.5px #1E1C1B}
+  body.v2 .dotsT button:active{transform:scale(.88)}
+  body.v2.catStyle .rangAmb .hautG{display:none!important}
+  body.v2.catStyle .rangAmb{padding:0 18px;margin-bottom:8px}
+  /* cartes façon Snapchat : gris très clair, arrondies, 3 par ligne ; la carte choisie est entourée de noir */
+  body.v2 #lEnt{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px!important;padding:2px 14px 10px!important}
+  body.v2.grandC #lEnt .ent,body.v2 #lEnt .ent{width:auto!important;margin:0!important;padding:0 0 6px!important;background:#F5F3F6;border-radius:14px;overflow:hidden;font-size:10px!important;color:#93868E;gap:0!important;transition:box-shadow .18s,transform .18s}
+  body.v2 #lEnt .ent .mi{width:100%!important;margin:0 0 5px!important;aspect-ratio:390/540!important;height:auto!important;border-radius:0!important;box-shadow:none!important}
+  body.v2 #lEnt .ent.on{box-shadow:0 0 0 2.5px #1E1C1B;color:#1E1C1B}
+  body.v2 #lEnt .ent.on .mi,body.v2 #lEnt .ent:hover .mi{box-shadow:none!important}
+  body.v2 #lEnt .ent:active{transform:scale(.96)}
+  body.v2 #lEnt .ent .neuf{top:6px;left:6px}
+  body.v2 #lCh .ch{background:#F5F3F6!important;border-radius:14px}
+  body.v2 .famTraits{margin:0 14px 10px!important}
+}
+</style>
+<script>
+(function () {
+  if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const $ = id => document.getElementById(id), B = document.body, O = $("onglets"), R = $("reglages"), P = window.Pilote, T = $("tel");
+  /* 1. dessins pleins (comme le cintre, le t-shirt… de Snapchat), sans mots */
+  const c = (x, y, r) => `M${x - r} ${y}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0z`;
+  const PLEIN = {
+    photo: `<path d="M9.2 4h5.6l1.3 2H19a2.6 2.6 0 0 1 2.6 2.6v8.8A2.6 2.6 0 0 1 19 20H5a2.6 2.6 0 0 1-2.6-2.6V8.600A2.600 2.600 0 0 1 5 6h2.900z${c(12, 12.8, 4.1)}${c(12, 12.8, 2.1)}"/>`,
+    entete: `<path d="M6.500 2.500h11A2.500 2.500 0 0 1 20 5v14a2.500 2.500 0 0 1-2.500 2.500h-11A2.500 2.500 0 0 1 4 19V5a2.500 2.500 0 0 1 2.500-2.500zM7 5.500h10v7H7zM8 15h8v1.700H8zM9.500 18.200h5v1.500h-5z"/>`,
+    fond: `<path d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z${c(8.4, 8.4, 1.6)}${c(15.6, 8.4, 1.6)}${c(12, 12, 1.6)}${c(8.4, 15.6, 1.6)}${c(15.6, 15.6, 1.6)}"/>`,
+    ecriture: `<text x="12" y="18.300" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="16.500">Aa</text>`,
+    couleurs: `<path d="M12 3.500c-4.700 0-8.500 3.600-8.500 8.100 0 4.300 3.500 7.900 8 7.900 1.300 0 1.800-.8 1.800-1.600 0-1.200-1-1.600-1-2.600 0-.9.700-1.500 1.700-1.500h2.300c2.400 0 4.200-1.700 4.200-4C20.500 6.400 16.700 3.500 12 3.500z${c(7.9, 11.3, 1.4)}${c(10.5, 7.7, 1.4)}${c(14.8, 7.700, 1.400)}"/>`,
+    charms: `<path d="M12 21s-8-4.900-8-10.600C4 7.500 6.100 5.500 8.700 5.500c1.400 0 2.600.6 3.300 1.700.700-1.100 1.900-1.700 3.300-1.700 2.600 0 4.700 2 4.700 4.900C20 16.100 12 21 12 21z"/><circle cx="12" cy="3.300" r="1.500" fill="none" stroke="currentColor" stroke-width="1.500"/>`,
+    look: `<path d="M12 2.500l2.700 6 6.500.6-4.900 4.300 1.500 6.400L12 16.500l-5.800 3.300 1.500-6.400L2.800 9.100l6.500-.6z"/>` };
+  const NOM = { photo: "Photo", entete: "En-tête", fond: "Fond", ecriture: "Écriture", couleurs: "Couleurs", charms: "Charms", look: "Looks tout prêts" };
+  const ic = o => `<span class="icT"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" stroke="none">${PLEIN[o]}</svg></span>`;
+  O.querySelectorAll("button[data-o]").forEach(bt => { const o = bt.dataset.o; if (!PLEIN[o]) return; bt.innerHTML = ic(o); bt.setAttribute("aria-label", NOM[o]); bt.title = NOM[o]; });
+  const lk = () => { const x = O.querySelector(".btnLooks"); if (x && !x.dataset.plein) { x.dataset.plein = 1; x.innerHTML = ic("look"); x.setAttribute("aria-label", NOM.look); x.title = NOM.look; majCat(); } };
+  /* 2. les 3 catégories */
+  const TR = 'fill="none" stroke="currentColor" stroke-width="1.700" stroke-linecap="round" stroke-linejoin="round"';
+  const CATS = [["Mon site", ["photo", "entete", "fond"], `<rect x="6.500" y="2.500" width="11" height="19" rx="2.800"/><path d="M10.500 5.300h3"/><path d="M9.500 13l1.800 1.800 3.400-3.800"/>`],
+    ["Style", ["ecriture", "couleurs"], `<path d="M20 3.500c-3.800 1.400-8 5.500-9.700 8.700l2.500 2.500c3.200-1.700 7.300-5.900 8.700-9.700z"/><path d="M9.200 13.400c-2.100.1-3.500 1.500-3.600 3.500-.1 1.300-.8 2.100-2.100 2.600 1 .8 2.300 1.200 3.700 1.200 2.500 0 4.300-1.700 4.400-4"/>`],
+    ["Charms", ["charms", "look"], `<path d="M12 20.500s-7.500-4.600-7.500-10C4.500 7.700 6.500 5.800 9 5.800c1.300 0 2.400.600 3 1.600.600-1 1.700-1.600 3-1.600 2.500 0 4.500 1.900 4.500 4.700 0 5.400-7.500 10-7.500 10z"/><path d="M19 2v3M17.500 3.500h3"/>`]];
+  const bar = document.createElement("div"); bar.className = "catsT"; bar.setAttribute("role", "tablist");
+  bar.innerHTML = CATS.map((k, i) => `<button type="button" role="tab" data-c="${i}"><svg viewBox="0 0 24 24" ${TR}>${k[2]}</svg>${k[0]}</button>`).join("");
+  R.insertBefore(bar, O);
+  const catDe = o => Math.max(0, CATS.findIndex(k => k[1].includes(o)));
+  let cat = 0; const dern = {};
+  function majCat() { bar.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-selected", i === cat));
+    O.querySelectorAll("button[data-o]").forEach(b => b.classList.toggle("horsCat", !CATS[cat][1].includes(b.dataset.o)));
+    const x = O.querySelector(".btnLooks"); if (x) x.classList.toggle("horsCat", cat !== 2);
+    B.classList.toggle("catStyle", cat === 1); O.scrollLeft = 0; }
+  bar.onclick = e => { const b = e.target.closest("button"); if (!b) return; const i = +b.dataset.c; if (i === cat) return; cat = i; majCat(); ouvre(dern[i] || CATS[i][1][0]); };
+  { const o0 = ouvre; ouvre = function (o) { const r = o0.apply(this, arguments); const i = catDe(o); dern[i] = o; if (i !== cat) { cat = i; } majCat(); return r; }; }
+  majCat(); lk(); setTimeout(lk, 700); setTimeout(lk, 2700);
+  { const ti = document.querySelector(".tireT"); if (ti) ti.addEventListener("click", () => {}); }
+  /* 3. le téléphone : sa pilule, et il réagit (il tourne un peu) à chaque choix */
+  const ecr = T.querySelector(".ecr"); if (ecr && !ecr.querySelector(".pilT")) { const pi = document.createElement("i"); pi.className = "pilT"; ecr.appendChild(pi); }
+  let touche = false, tR = 0; R.addEventListener("pointerdown", () => { touche = true; }, true);
+  T.addEventListener("animationend", e => { if (e.animationName === "telReagit") T.classList.remove("telReagit"); });
+  const reagit = () => { if (!touche || B.classList.contains("glisseT")) return; clearTimeout(tR); tR = setTimeout(() => { T.classList.remove("telReagit"); void T.offsetWidth; T.classList.add("telReagit"); }, 60); };
+  if (P && P.change) P.change(reagit);
+  /* 4. les pastilles de couleurs à droite (catégorie Style) : chaque pastille = une ambiance complète (3 couleurs assorties) */
+  const sc = document.querySelector(".scene"), dots = document.createElement("div"); dots.className = "dotsT"; dots.setAttribute("aria-label", "Couleurs assorties"); sc.appendChild(dots);
+  function majDots() { const hg = $("hautG"); if (!hg) return; const as = [...hg.querySelectorAll(".ambG")]; if (!as.length) return;
+    dots.innerHTML = as.map((a, i) => { const cs = [...a.querySelectorAll(".tri i")].map(x => x.style.background || x.style.backgroundColor || "#ccc");
+      const g = cs.length >= 3 ? `linear-gradient(135deg,${cs[0]} 0 34%,${cs[1]} 34% 67%,${cs[2]} 67%)` : cs[0];
+      return `<button type="button" data-k="${i}" class="${a.classList.contains("on") ? "on" : ""}" style="background:${g}" title="${(a.textContent || a.title || "Couleurs").trim()}" aria-label="${(a.textContent || a.title || "Couleurs").trim()}"></button>`; }).join(""); }
+  dots.onclick = e => { const b = e.target.closest("button"); if (!b) return; const a = [...$("hautG").querySelectorAll(".ambG")][+b.dataset.k]; if (!a) return; touche = true; a.click();
+    setTimeout(() => { majDots(); const n = dots.querySelector(`[data-k="${b.dataset.k}"]`); dots.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === n)); }, 80); };
+  const hg = $("hautG"); if (hg) new MutationObserver(() => { clearTimeout(majDots.t); majDots.t = setTimeout(majDots, 60); }).observe(hg, { childList: true, subtree: true });
+  const att = $("attente"), iv = setInterval(() => { if (!att || !att.classList.contains("part")) return; clearInterval(iv);
+    setTimeout(() => { try { if (hg && !hg.children.length && typeof rendCouleursG === "function") rendCouleursG(); } catch (e) {} majDots(); }, 900); }, 150);
 })();
 </script>
 </body>

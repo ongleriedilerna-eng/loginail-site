@@ -2642,5 +2642,18 @@ function fusionFonds(){if(!P.pret)return;const F=P.fonds();let ch=false;window.F
 const obs=()=>{try{fusionFonds()}catch(e){}try{dessineFC();const cf=document.getElementById("catF");if(cf&&cf.children.length>3)rangee(cf,cf.parentElement)}catch(e){}};setInterval(obs,400);
 })();
 </script>
+<!-- 21/11 (Marie : « pas assez fluide ») : les vignettes de fonds « qui bougent » tournaient TOUTES en permanence (plus de 1 000 animations, même cachées,
+     même dans les autres onglets : téléphone occupé à 99 %). Maintenant : seules les vignettes qu'on VOIT bougent ; rien ne bouge dans un onglet fermé, ni pendant qu'on tire la feuille. -->
+<style>
+#app#app#app .panneau:not(.on) *,#app#app#app .panneau:not(.on) *::before,#app#app#app .panneau:not(.on) *::after{animation-play-state:paused!important}
+#app#app#app #lFond .vg:not(.vu),#app#app#app #lFond .vg:not(.vu) *,#app#app#app #lFond .vg:not(.vu) *::before,#app#app#app #lFond .vg:not(.vu) *::after{animation-play-state:paused!important}
+body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-play-state:paused!important}
+</style>
+<script>
+(function () { const l = document.getElementById("lFond"); if (!l || !window.IntersectionObserver) { if (l) l.classList.add("toutVu"); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("vu", e.isIntersecting)), { rootMargin: "40px" });
+  const suis = () => l.querySelectorAll(".vg").forEach(v => { if (!v._io21) { v._io21 = 1; io.observe(v); } });
+  new MutationObserver(suis).observe(l, { childList: true }); suis(); })();
+</script>
 </body>
 </html>
