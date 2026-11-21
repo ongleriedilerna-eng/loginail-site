@@ -7,11 +7,15 @@
       fond Quadrillage crème, en-tête Bandeau, écriture Meuh, couleur Vanille, bouton Chocolat, nom Chocolat, encadrés en verre, aucun charm.
    Tant qu'elle n'a pas touché « Créer le mien » : rien n'est enregistré dans son brouillon (pas de photo de la fille dans SON site),
    et si elle touche un réglage, on passe d'abord au classique puis son choix s'applique.
-   Une seule fois (mémoire : lgnOuvertureVue). ?ouverture=1 : la revoir ; ?ouverture=0 : jamais. */
+   21/11 (Marie : « montre-le à chaque fois ») : à CHAQUE arrivée (avant : une seule fois). ?ouverture=0 : jamais.
+   Si elle REVIENT (elle a déjà touché « Créer le mien » et son brouillon a ses réglages) : « Créer le mien » lui rend SON site
+   (rien n'a été enregistré pendant la Sirène : on recharge la page sans l'ouverture, son brouillon est intact) au lieu du classique. */
 (() => {
   const CLE = "lgnOuvertureVue", Q = new URLSearchParams(location.search);
   if (Q.get("ouverture") === "0") return;
-  try { if (localStorage.getItem(CLE) && Q.get("ouverture") !== "1") return; } catch (e) { return; }
+  let revient = false;
+  try { const br = JSON.parse(localStorage.getItem("loginail-brouillon") || "null");
+    revient = !!(localStorage.getItem(CLE) && Q.has("vrai") && br && br.entete); } catch (e) { return; }
   window.OUVERTURE_ON = true;   /* le coup de baguette ne se lance pas */
 
   const LOOK_DEPART = "Sirène gothique";
@@ -107,6 +111,7 @@
     if (bouton) { bouton.classList.add("part"); setTimeout(() => bouton && bouton.remove(), 300); }
     const voile = document.createElement("div"); voile.className = "ouvVoile"; voile.innerHTML = "<i>✦</i>"; ecr.appendChild(voile);
     requestAnimationFrame(() => voile.classList.add("on")); await pause(240);
+    if (revient) { const u = new URL(location.href); u.searchParams.set("ouverture", "0"); location.replace(u.href); return new Promise(() => {}); }   /* SON site revient, tel qu'elle l'a laissé */
     if (saPhoto) P.choisitPhoto(saPhoto);
     await pause(60); P.retirePhoto(photoFille);
     await pause(1000);   /* le pilote remet les charms jusqu'à 0,9 s après un changement de photo : on attend avant de les enlever */
