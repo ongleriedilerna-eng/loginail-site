@@ -2674,14 +2674,16 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 #famCh .rayonC.on i,.rayonC.on i{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--rose,#B5475E)!important}
 .hautG{padding-top:4px!important;padding-bottom:4px!important}
 /* En-tête (Marie : « plus de téléphone, un carré arrondi comme les fonds, de la taille de 4 fonds ») : grands carrés, 2 par ligne (téléphone), 3 (ordinateur) */
-.panneau>#lEnt{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 10px!important;padding:2px 18px 14px!important}
-@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:2px 4px 14px!important}}
+/* 21/11 soir (Marie : « beaucoup trop grands ») : la taille d'UN fond — 3 par ligne (téléphone), 7 (ordinateur) */
+.panneau>#lEnt{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px 8px!important;padding:2px 18px 14px!important}
+@media (min-width:900px){.panneau>#lEnt{grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:12px 9px!important;padding:2px 4px 14px!important}}
 #famSl{display:none!important}
 body.grandC #lEnt .ent,#lEnt .ent{width:auto!important;margin:0!important}
 #lEnt .ent .mi{width:100%!important;margin:0 0 6px!important;aspect-ratio:1/1!important;height:auto!important;border-radius:14px!important;background:#F6F3EF;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)!important}
 #lEnt .ent:hover .mi{box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),0 6px 14px -8px rgba(0,0,0,.35)!important}
 #lEnt .ent.on .mi{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--rose,#B5475E)!important}
-#lEnt .ent{font-size:12.5px!important}
+#lEnt .ent{font-size:11px!important;line-height:1.2!important}
+#lEnt .ent .mi{margin-bottom:4px!important}
 /* Écriture ET En-tête (Marie, 21/11 soir) : les familles en PILULES comme les ambiances de Couleurs — un rond (« A » dans une écriture de la famille, ou un petit dessin) et le nom à côté */
 #famE,#famEnt{display:flex!important;gap:8px!important;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap!important;padding:5px 18px 8px!important;margin:0 0 6px!important;border:0!important;min-height:max-content;position:sticky;top:0;z-index:4;background:var(--fondReg,#fff)}
 #famE::-webkit-scrollbar,#famEnt::-webkit-scrollbar{display:none}
