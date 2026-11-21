@@ -2722,18 +2722,133 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     b.onclick = () => { const cible = eto.querySelector(avec() ? '[data-n="0"]' : '[data-n]:not([data-n="0"])'); if (cible) cible.click(); setTimeout(maj, 60); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
       if (typeof bulle === "function") bulle(avec() ? "Étoiles qui brillent ✦" : "Sans étoiles"); };
     sc.appendChild(b); maj(); new MutationObserver(maj).observe(eto, { subtree: true, attributes: true, attributeFilter: ["class"] }); }
-  /* le téléphone tourne quand on glisse le doigt à côté de lui (gauche / droite), puis revient tout seul */
-  const T = $("tel");
-  if (sc && T) { let x0 = null, y0 = 0, pid = null, on = false;
-    sc.addEventListener("pointerdown", e => { if (e.target.closest("#tel,button")) return; x0 = e.clientX; y0 = e.clientY; pid = e.pointerId; on = false; });
-    sc.addEventListener("pointermove", e => { if (x0 == null || e.pointerId !== pid) return; const dx = e.clientX - x0, dy = e.clientY - y0;
-      if (!on) { if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { on = true; T.classList.add("tourne"); try { sc.setPointerCapture(pid); } catch (x) {} } else return; }
-      const a = Math.max(-55, Math.min(55, dx * .45)); T.style.rotate = `y ${a}deg`; });
-    const fin = e => { if (e.pointerId !== pid) return; x0 = null; pid = null; if (!on) return; on = false; T.classList.remove("tourne"); T.style.rotate = ""; };
-    sc.addEventListener("pointerup", fin); sc.addEventListener("pointercancel", fin); }
+  /* (la rotation du téléphone est dans le bloc 2.5) */
   /* photos : au maximum, le carré « Ajouter » explique au lieu d'ouvrir les photos */
   document.addEventListener("click", e => { const a = e.target.closest("#lPhG .ph.ajout"); if (!a) return;
     if (window.Pilote && Pilote.photos().length >= 6) { e.preventDefault(); e.stopPropagation(); if (typeof bulle === "function") bulle("Tu as atteint le maximum de photos. Tu pourras les modifier ou en ajouter dans ton application.", 4200); } }, true);
+})();
+</script>
+<!-- 2.5 (21/11 soir, Marie : « un téléphone stylé, comme sur la page iPhone 18 Pro, d'un seul bloc ; qu'elle puisse le tourner ») :
+     un VRAI téléphone en 3D (cadre, tranches en métal, dos avec le bloc photo) ; on le fait tourner au doigt sur lui, à côté de lui et sur la barre du haut ;
+     il revient tout seul de face. + fonds 4 par ligne et fluides ; écritures : étiquettes qui partent quand on descend ; couleurs sans rien de coupé ;
+     charms 6 par ligne ; looks plus petits. -->
+<style>
+@media (max-width:899px){
+  body.v2 .scene{perspective:1000px;perspective-origin:50% 45%}
+  body.v2 .haut{touch-action:pan-y}
+  body.v2 .tel{background:transparent!important;box-shadow:none!important;transform-style:preserve-3d;--ep:calc(var(--tw,200px)*.085);
+    animation:telArrive3 1.05s cubic-bezier(.2,.85,.25,1) backwards!important;transition:rotate .9s cubic-bezier(.16,1.25,.3,1)!important}
+  body.v2 .tel.tourne,body.v2 .tel.sansTr{transition:none!important}
+  body.v2 .tel::before,body.v2 .tel::after{display:none!important}
+  @keyframes telArrive3{0%{opacity:0;translate:0 60px;rotate:y -38deg}60%{opacity:1;translate:0 -4px;rotate:y 6deg}100%{opacity:1;translate:0 0;rotate:y 0deg}}
+  body.v2 .tel>.ecr{transform:translateZ(1px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  body.v2 .faceT,body.v2 .dosT,body.v2 .coucheT{position:absolute;inset:0;border-radius:40px;pointer-events:none}
+  body.v2 .faceT{background:#0C0B0B;transform:translateZ(.5px);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    box-shadow:0 0 0 1.2px #8C8884,0 0 0 2.4px #2B2927,0 34px 40px -26px rgba(0,0,0,.42)}
+  body.v2 .coucheT{background:linear-gradient(90deg,#2E2C2A,#6F6B67 18%,#45423F 50%,#6F6B67 82%,#2E2C2A)}
+  body.v2 .trT{position:absolute;pointer-events:none;background:linear-gradient(90deg,#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.g{left:0;top:40px;bottom:40px;width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
+  body.v2 .trT.d{right:0;top:40px;bottom:40px;width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
+  body.v2 .trT.h{top:0;left:40px;right:40px;height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.b{bottom:0;left:40px;right:40px;height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  /* les boutons sur les tranches */
+  body.v2 .trT i{position:absolute;left:18%;right:18%;border-radius:3px;background:linear-gradient(90deg,#55524E,#9B9792,#55524E);box-shadow:0 0 0 .5px rgba(0,0,0,.4)}
+  body.v2 .dosT{transform:translateZ(calc(var(--ep) * -1)) rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    background:radial-gradient(120% 80% at 30% 20%,#5A5754,#3A3836 55%,#2C2A28);box-shadow:0 0 0 1.2px #8C8884,0 0 0 2.4px #2B2927,inset 0 0 0 4px rgba(255,255,255,.05)}
+  body.v2 .camT{position:absolute;left:8%;top:4.5%;width:42%;aspect-ratio:1/1.02;border-radius:26%;background:linear-gradient(145deg,#4a4745,#2c2a28);
+    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.12),0 4px 10px -4px rgba(0,0,0,.6)}
+  body.v2 .camT b{position:absolute;width:42%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 38%,#3d4a6a 0 12%,#0b0c12 30%,#14151a 62%,#585450 64%,#232120 74%);box-shadow:0 0 0 2px #1b1a19,0 2px 5px rgba(0,0,0,.6)}
+  body.v2 .camT b:nth-child(1){left:6%;top:6%}body.v2 .camT b:nth-child(2){left:6%;bottom:6%}body.v2 .camT b:nth-child(3){right:6%;top:29%}
+  body.v2 .camT i{position:absolute;right:12%;top:8%;width:15%;aspect-ratio:1;border-radius:50%;background:radial-gradient(#fff8e6,#d9c9a2 60%,#8a7f68)}
+  body.v2 .marqueT{position:absolute;left:50%;top:52%;translate:-50% -50%;font:500 calc(var(--tw,200px)*.075)/1 Jost,sans-serif;letter-spacing:.28em;color:rgba(255,255,255,.22);text-transform:lowercase}
+  /* fonds : 4 par ligne ; pendant qu'on descend, les vignettes s'arrêtent (plus fluide) */
+  body.v2 .fondDeux #lFond{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important}
+  body.v2 .fondDeux #lFond .vg{border-radius:12px}
+  body.v2 #app#app#app #lFond.defileF .vg *{animation-play-state:paused!important}
+  body.v2 #lFond .vg{content-visibility:auto;contain-intrinsic-size:80px 80px}
+  /* écritures : les étiquettes partent quand on descend (plus de bug) */
+  body.v2 .panneau[data-p=ecriture] .famE{position:static!important;top:auto!important}
+  /* couleurs : tout tient (rien de coupé) */
+  body.v2 .panneau[data-p=couleurs]{display:flex!important;flex-direction:column!important;overflow-y:auto!important}
+  body.v2 .panneau[data-p=couleurs] .atelierC{align-items:start!important;gap:10px!important;padding:0 14px 8px!important;flex:none!important}
+  body.v2 .panneau[data-p=couleurs] .gaucheC{gap:5px!important;width:122px!important}
+  body.v2 .panneau[data-p=couleurs] .assortV,body.v2 .panneau[data-p=couleurs] .partsV button{height:34px!important;font-size:11.5px!important}
+  body.v2 .panneau[data-p=couleurs] .gaucheC .sauveC{min-height:34px!important;font-size:11px!important;padding:2px 8px!important}
+  body.v2 #spectre{padding:8px!important;gap:6px!important;height:auto!important}
+  body.v2 #spectre .rectS{height:92px!important;min-height:0!important;flex:none!important}
+  body.v2 #spectre .reglS{margin:0!important}
+  body.v2 #spectre .extraC{margin:0!important}
+  /* charms : 6 par ligne, toute la largeur */
+  body.v2 #lCh{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:6px!important;padding:2px 12px 20px!important}
+  body.v2 #lCh .ch{width:auto!important;height:auto!important;aspect-ratio:1/1;margin:0!important}
+  body.v2 .panneau[data-p=charms] .chDeux{display:block!important;padding:0!important;width:100%!important}
+  body.v2 #lCh{width:100%!important;box-sizing:border-box}
+  body.v2 #lCh .ch img{width:80%!important;height:80%!important}
+  /* looks : plus petits */
+  body.v2 .looks{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+  body.v2 .look{font-size:10.5px!important}
+}
+</style>
+<script>
+(function () {
+  if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const $ = id => document.getElementById(id), B = document.body, T = $("tel"), sc = document.querySelector(".scene");
+  /* 1. le téléphone en 3D : cadre, tranches (couches + plans), dos avec le bloc photo */
+  if (T && !T.querySelector(".faceT")) {
+    const f = document.createElement("i"); f.className = "faceT"; T.prepend(f);
+    const N = 9; for (let k = 1; k <= N; k++) { const c = document.createElement("i"); c.className = "coucheT"; c.style.transform = `translateZ(calc(var(--ep) * ${-(k / (N + 1)).toFixed(3)}))`; T.prepend(c); }
+    [["g", '<i style="top:14%;height:7%"></i><i style="top:25%;height:12%"></i><i style="top:40%;height:12%"></i>'], ["d", '<i style="top:22%;height:16%"></i><i style="top:66%;height:10%"></i>'], ["h", ""], ["b", ""]]
+      .forEach(([k, h]) => { const e = document.createElement("i"); e.className = "trT " + k; e.innerHTML = h; T.prepend(e); });
+    const d = document.createElement("i"); d.className = "dosT"; d.innerHTML = '<span class="camT"><b></b><b></b><b></b><i></i></span><span class="marqueT">loginail</span>'; T.prepend(d); }
+  /* 2. on le fait tourner : sur lui (dans son site), à côté de lui, sur la barre du haut */
+  let a = 0, a0 = 0, x0 = null, y0 = 0, on = false, vx = 0, lx = 0, lt = 0;
+  const pose = v => { T.style.rotate = `y ${v}deg`; };
+  const debut = (x, y) => { x0 = x; y0 = y; on = false; a0 = a; lx = x; lt = performance.now(); vx = 0; };
+  const suit = (x, y) => { if (x0 == null) return false; const dx = x - x0, dy = y - y0;
+    if (!on) { if (Math.abs(dx) > 9 && Math.abs(dx) > Math.abs(dy) * 1.2) { on = true; T.classList.add("tourne"); } else { if (Math.abs(dy) > 12) x0 = null; return false; } }
+    const n = performance.now(); vx = (x - lx) / Math.max(1, n - lt); lx = x; lt = n; a = a0 + dx * .75; pose(a); return true; };
+  const lache = () => { if (x0 == null) return; x0 = null; if (!on) return; on = false; T.classList.remove("tourne");
+    /* un lancé fait un tour complet ; sinon il revient de face */
+    let cible = Math.round(a / 360) * 360; if (Math.abs(vx) > .9) cible = (vx > 0 ? Math.ceil(a / 360 + .02) : Math.floor(a / 360 - .02)) * 360;
+    a = cible; pose(a);
+    const fini = () => { T.removeEventListener("transitionend", fini); T.classList.add("sansTr"); a = 0; pose(0); void T.offsetWidth; T.classList.remove("sansTr"); };
+    T.addEventListener("transitionend", fini); };
+  const zone = (el, exclu) => { if (!el) return;
+    el.addEventListener("pointerdown", e => { if (e.target.closest(exclu)) return; debut(e.clientX, e.clientY); try { el.setPointerCapture(e.pointerId); } catch (x) {} });
+    el.addEventListener("pointermove", e => { suit(e.clientX, e.clientY); });
+    el.addEventListener("pointerup", lache); el.addEventListener("pointercancel", lache); };
+  zone(sc, "button,#tel"); zone(document.querySelector(".haut"), "button");
+  /* dans son site (même adresse) : un glissé de côté fait tourner, sauf sur une ligne qui défile de côté ou sur un charm */
+  const dansSite = () => { const D = window.Pilote && Pilote.D; if (!D || D._tourne3d) return; D._tourne3d = 1;
+    const deCote = t => { for (let e = t; e && e !== D.body; e = e.parentElement) { if (e.classList && (e.classList.contains("lgn-sticker") || e.classList.contains("pzPoign"))) return true;
+      const cs = D.defaultView.getComputedStyle(e); if (e.scrollWidth > e.clientWidth + 4 && /auto|scroll/.test(cs.overflowX) && !/auto|scroll/.test(cs.overflowY)) return true; } return false; };
+    let pris = false;
+    const Wn = D.defaultView; Wn.addEventListener("touchstart", e => { pris = false; if (e.touches.length !== 1 || deCote(e.target)) { x0 = null; return; } debut(e.touches[0].screenX, e.touches[0].screenY); }, { passive: true, capture: true });   /* screenX : la position sur l'ÉCRAN (le site tourne avec le téléphone, ses propres positions aussi) */
+    Wn.addEventListener("touchmove", e => { if (x0 == null && !pris) return; if (suit(e.touches[0].screenX, e.touches[0].screenY)) { pris = true; e.preventDefault(); } }, { passive: false, capture: true });
+    Wn.addEventListener("touchend", () => { lache(); pris = false; }, true); Wn.addEventListener("touchcancel", () => { lache(); pris = false; }, true); };
+  const att = $("attente"), iv = setInterval(() => { if (att && att.classList.contains("part")) { clearInterval(iv); dansSite(); } }, 200);
+  /* 3. fonds : pendant qu'on fait défiler, les vignettes qui bougent se mettent en pause */
+  const lf = $("lFond"); if (lf) { let t = 0; lf.addEventListener("scroll", () => { lf.classList.add("defileF"); clearTimeout(t); t = setTimeout(() => lf.classList.remove("defileF"), 160); }, { passive: true }); }
+})();
+</script>
+<!-- 2.6 (21/11 soir, Marie : « dans le carré on voit le fond, ça sert à rien, il faut voir que l'en-tête ») : 2 idées à comparer (adresse ?ent=A ou ?ent=B)
+     A = sa photo + l'effet, sans le fond du site ; B = l'effet seul, sur une silhouette grise (comme les habits de Snapchat sur le mannequin gris). -->
+<style>
+@media (max-width:899px){ body.v2 #lEnt .ent{background:#fff!important} body.v2.entB #lEnt .ent{background:#EEECEF!important} }
+</style>
+<script>
+(function () { if (innerWidth >= 900) return;
+  const v = (new URLSearchParams(location.search).get("ent") || "A").toUpperCase(); document.body.classList.add("ent" + v);
+  /* on zoome sur l'en-tête (la photo et son effet) pour qu'il remplisse le carré */
+  const ZOOM = ".defile>*:not(.hent){opacity:0!important}.defile>.hent{transform:translateY(-34px) scale(1.16);transform-origin:50% 0}";
+  window.ENT_VIGNETTE = (c) => {
+    c.querySelectorAll(".f100,.fond-site,.ile,.barre-nav,.fab,.resbar,.dock,.burger,.hpill,.idx,.lgt").forEach(x => x.remove());
+    c.style.background = v === "B" ? "#EEECEF" : "#fff";
+    const st = document.createElement("style");
+    st.textContent = v === "B"
+      ? ZOOM + ".ecran,.defile,.hent,.hent::before,.hent::after{background:#EEECEF!important;background-image:none!important}.hent img,.he-ph,.he-ph img,[class*='photo'] img{filter:grayscale(1) brightness(1.35) contrast(.55)!important}"
+      : ZOOM + ".ecran,.defile,.hent,.hent::before,.hent::after{background:#fff!important;background-image:none!important}";
+    c.prepend(st); };
 })();
 </script>
 </body>

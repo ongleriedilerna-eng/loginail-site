@@ -305,6 +305,7 @@
     /* 21/11 (Marie : « ça met énormément de temps à charger ») : la vignette ne montre que le 1er écran → on ne garde que le haut du site (avant : le site entier, 740 éléments et 34 photos, recopié 85 fois) */
     { const df = c.querySelector(".defile"); if (df) { const i = [...df.children].indexOf(n); [...df.children].slice(Math.max(i, 0) + 2).forEach(x => x.remove()); } c.querySelectorAll(":scope>.fab-menu,:scope>.dk-panel,:scope>.menu,:scope>.lm-pan,:scope>.feuille,:scope>.idx,:scope>.dispo2.off").forEach(x => x.remove()); }
     if (SALON.vrai) { const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT); let t; while ((t = w.nextNode())) t.nodeValue = t.nodeValue.replace(SALON.vrai, SALON.nom).replace(SALON.vrai.toUpperCase(), SALON.nom.toUpperCase()); }
+    try { if (window.ENT_VIGNETTE) window.ENT_VIGNETTE(c, k); } catch (e) {}   /* 21/11 (2.0) : façon de montrer la vignette (idées A / B) */
     Object.assign(c.style, { position: "absolute", left: "0", top: "0", width: "390px", height: "844px", borderRadius: "0", transform: `scale(${sc})`, transformOrigin: "0 0" });
     const sr = hote.shadowRoot || hote.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ""; hote.setAttribute("style", root); sr.appendChild(c);
     /* 20/11 (Marie : « il y a des bugs partout, la tache d'aquarelle… ») : les vignettes en pause restaient figées sur la TOUTE 1re image de l'animation,
