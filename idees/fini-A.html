@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Loginail · Votre site est prêt (A)</title>
+<meta name="theme-color" content="#F6F3EF">
+<link href="../polices.css" rel="stylesheet">
+<style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
+<style>
+/* Version A · « Le grand moment » : une seule page — son site en grand dans le téléphone, « Votre site est prêt », son adresse,
+   puis tout de suite l'offre et le compte (e-mail, mot de passe) sur la même page. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#6B625C;--rose:#D97A9C;--roseF:#B03562;--ligne:rgba(30,28,27,.12);--sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+.page{max-width:480px;margin:0 auto;padding:calc(var(--sat) + 16px) 20px calc(var(--sab) + 28px);display:flex;flex-direction:column;align-items:center}
+.logo{width:104px;color:var(--noir)}
+.scene{position:relative;width:62%;max-width:250px;margin-top:22px}
+.fT-cadre{position:relative;width:100%;border-radius:34px;overflow:hidden;background:#fff;box-shadow:0 0 0 7px #1b1b1d,0 0 0 8px #3a3a3c,0 34px 60px -28px rgba(80,30,50,.55);animation:monte .9s cubic-bezier(.2,.8,.3,1) both}
+.fT-cadre iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none}
+.fT-encoche{position:absolute;left:50%;top:7px;width:28%;height:4.2%;max-height:22px;border-radius:99px;background:#1b1b1d;transform:translateX(-50%)}
+@keyframes monte{from{opacity:0;transform:translateY(26px) scale(.94)}}
+.halo{position:absolute;inset:-18% -30%;z-index:-1;background:radial-gradient(closest-side,rgba(233,169,191,.55),rgba(233,169,191,0));filter:blur(6px);animation:respire 4s ease-in-out infinite}
+@keyframes respire{50%{transform:scale(1.06);opacity:.8}}
+.kick{margin-top:26px;font:500 11.5px Jost,sans-serif;letter-spacing:.22em;color:var(--roseF)}
+h1{margin:8px 0 0;font:400 44px/1 "Cormorant Garamond",serif;letter-spacing:-.01em;text-align:center}
+h1 em{font-style:italic}
+.adr{display:flex;align-items:center;gap:8px;margin-top:14px;padding:9px 16px 9px 10px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font:400 14px Jost,sans-serif}
+.adr i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);color:var(--roseF);font-style:normal;font-size:12px}
+.adr b{font-weight:500}
+.sous{margin:12px 0 0;max-width:32ch;text-align:center;font:300 15px/1.45 Jost,sans-serif;color:var(--muted)}
+.carte{width:100%;margin-top:24px;padding:22px 20px 20px;border-radius:28px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 24px 40px -30px rgba(80,30,50,.4)}
+.offre{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--ligne)}
+.offre b{display:block;font:400 30px/1 "Cormorant Garamond",serif}
+.offre b em{font-style:italic}
+.offre span{display:block;margin-top:4px;font:300 13.5px Jost,sans-serif;color:var(--muted)}
+.offre small{flex:none;padding:7px 11px;border-radius:999px;background:#FBF1F4;color:var(--roseF);font:500 10.5px Jost,sans-serif;letter-spacing:.12em;text-align:center;line-height:1.35}
+ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px}
+li{display:flex;gap:10px;align-items:flex-start;font:300 14.5px/1.35 Jost,sans-serif}
+li::before{content:"✦";flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#E9A9BF,#D97A9C);color:#fff;font-size:9px;margin-top:1px}
+li b{font-weight:500}
+.champ{width:100%;height:56px;margin-top:12px;border:1px solid rgba(30,28,27,.22);border-radius:999px;padding:0 22px;background:#fff;font:400 16px Jost,sans-serif;outline:none}
+.champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.06)}
+.form{margin-top:18px}
+.form .t{margin:0 0 2px;font:500 14px Jost,sans-serif}
+.mdp{position:relative}.mdp .champ{padding-right:74px}
+.oeil{position:absolute;right:8px;top:20px;height:40px;padding:0 14px;border:0;border-radius:999px;background:none;font:400 13px Jost,sans-serif;color:var(--muted)}
+.cgv{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font:300 13px/1.4 Jost,sans-serif;color:var(--muted);cursor:pointer}
+.cgv input{width:20px;height:20px;margin:0;accent-color:var(--noir);flex:none}
+.cgv a{color:var(--noir)}
+.go{width:100%;height:58px;margin-top:16px;border:0;border-radius:999px;background:var(--noir);color:var(--fond);font:500 13px Jost,sans-serif;letter-spacing:.16em;box-shadow:0 14px 26px -14px rgba(0,0,0,.6);transition:transform .15s,opacity .3s;cursor:pointer}
+.go:disabled{opacity:.35;cursor:default}.go:not(:disabled):active{transform:scale(.97)}
+.petit{margin:12px 0 0;text-align:center;font:300 12.5px/1.45 Jost,sans-serif;color:var(--muted)}
+.petit b{font-weight:500;color:var(--noir)}
+.retouche{margin-top:18px;background:none;border:0;font:300 14px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* après : regardez vos e-mails */
+.fin{display:none;flex-direction:column;align-items:center;text-align:center;margin-top:26px}
+body.envoye .fin{display:flex}body.envoye .avant{display:none}
+.env{width:78px;height:60px;color:var(--roseF);animation:monte .7s cubic-bezier(.2,.8,.3,1) both}
+.fin h2{margin:12px 0 0;font:400 40px/1 "Cormorant Garamond",serif}.fin h2 em{font-style:italic}
+.fin p{margin:12px 0 0;max-width:32ch;font:300 15px/1.5 Jost,sans-serif;color:var(--muted)}.fin p b{color:var(--noir);font-weight:500}
+.etapes{margin-top:22px;display:grid;gap:10px;width:100%;text-align:left}
+.etapes div{display:flex;gap:12px;align-items:center;padding:13px 16px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font:300 14px/1.35 Jost,sans-serif}
+.etapes i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--noir);color:#fff;font:500 12px Jost,sans-serif;font-style:normal}
+.etoileV{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+/* ordinateur : son site à gauche, en grand ; tout le reste à droite */
+@media (min-width:900px){
+  .page{max-width:1080px;display:grid;grid-template-columns:minmax(0,380px) minmax(0,520px);justify-content:center;column-gap:80px;align-items:start;padding-top:28px}
+  .logo{grid-column:1/-1;justify-self:center}
+  .scene{grid-column:1;grid-row:2/span 8;width:100%;max-width:330px;justify-self:center;margin-top:46px;position:sticky;top:40px}
+  .droite{grid-column:2;display:flex;flex-direction:column;align-items:flex-start}
+  .droite .kick{margin-top:40px}h1{font-size:62px;text-align:left}.sous{text-align:left}
+  .fin{align-items:flex-start;text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="logo" id="logo"></div>
+  <div class="scene"><div class="halo"></div><div id="tel"></div></div>
+  <div class="droite">
+    <div class="avant">
+      <div class="kick" id="kick">✦ C'EST FAIT</div>
+      <h1>Votre site<br>est <em>prêt</em>.</h1>
+      <div class="adr"><i>✦</i><span>loginail.fr/<b id="slug"></b></span></div>
+      <p class="sous">Activez-le : vos clientes pourront réserver dès ce soir, jour et nuit.</p>
+      <div class="carte">
+        <div class="offre"><div><b>1 mois <em>offert</em></b><span>puis 49,99 € par mois</span></div><small>SANS<br>ENGAGEMENT</small></div>
+        <ul>
+          <li><span><b>Votre site</b>, à votre nom, comme vous l'avez choisi</span></li>
+          <li><span>La <b>réservation en ligne</b> et les <b>SMS de rappel</b></span></li>
+          <li><span><b>Votre appli</b> : agenda, clientes, caisse</span></li>
+          <li><span><b>0 % de commission</b> sur vos rendez-vous</span></li>
+        </ul>
+        <div class="form">
+          <p class="t">Votre compte</p>
+          <input class="champ" id="mail" type="email" inputmode="email" autocomplete="email" placeholder="Votre adresse e-mail">
+          <div class="mdp"><input class="champ" id="mdp" type="password" autocomplete="new-password" placeholder="Mot de passe (8 caractères ou plus)"><button class="oeil" type="button" id="oeil">Voir</button></div>
+          <label class="cgv"><input type="checkbox" id="cgv"><span>J'accepte les <a href="../mentions-legales.html" target="_blank" rel="noopener">conditions</a> et la <a href="../confidentialite.html" target="_blank" rel="noopener">politique de confidentialité</a>.</span></label>
+          <button class="go" id="go" disabled>ACTIVER MON SITE ✦</button>
+          <p class="petit"><b>Sans carte bancaire.</b> Rien n'est prélevé pendant votre mois offert.</p>
+        </div>
+      </div>
+      <button class="retouche" type="button" onclick="history.back()">Retoucher mon site</button>
+    </div>
+    <div class="fin">
+      <svg class="env" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="1.5" y="1.5" width="61" height="45" rx="9"/><path d="M4 6l28 21L60 6"/></svg>
+      <h2>Regardez vos <em>e-mails</em></h2>
+      <p>On vous a envoyé un lien à <b id="adrMail"></b>. Touchez-le : votre site s'active.</p>
+      <div class="etapes">
+        <div><i>1</i><span>Ouvrez l'e-mail de Loginail et touchez <b>« Activer mon site »</b>.</span></div>
+        <div><i>2</i><span>Téléchargez <b>l'appli Loginail</b> et connectez-vous avec votre e-mail.</span></div>
+        <div><i>3</i><span>Partagez votre lien sur Instagram : vos clientes réservent.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="manque-commun.js"></script>
+<script src="fini-commun.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+$("logo").innerHTML = LOGO;
+$("slug").textContent = FINI.slug;
+$("kick").textContent = `✦ C'EST FAIT, ${FINI.prenom.toUpperCase()}`;
+const f = FINI.telephone($("tel")); FINI.defile(f);
+setTimeout(() => eclat($("tel"), 24), 700);
+const verif = () => { $("go").disabled = !(FINI.mailOk($("mail").value) && $("mdp").value.length >= 8 && $("cgv").checked); };
+["mail", "mdp"].forEach(k => $(k).oninput = verif); $("cgv").onchange = verif;
+$("oeil").onclick = e => { const v = $("mdp").type === "password"; $("mdp").type = v ? "text" : "password"; e.target.textContent = v ? "Cacher" : "Voir"; };
+$("go").onclick = () => { $("adrMail").textContent = $("mail").value.trim(); document.body.classList.add("envoye"); scrollTo({ top: 0, behavior: "smooth" }); setTimeout(() => eclat(document.querySelector(".env"), 16), 300); };
+</script>
+</body>
+</html>

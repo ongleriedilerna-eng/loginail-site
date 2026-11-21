@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fiche cliente · Oui / Non et pictos</title>
+<style>
+body{margin:0;background:#E9E3DC;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;color:#1E1C1B;padding:24px 16px}
+h1{font-size:20px;font-weight:500;margin:0 0 4px}.chapo{font-size:13.5px;color:#6B625C;margin:0 0 22px}
+.grille{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.col{width:340px}.col h2{font-size:15px;font-weight:600;margin:0 0 3px}.col p{font-size:12.5px;color:#6B625C;margin:0 0 10px;min-height:34px}
+.tel{background:#F6F2EE;border-radius:34px;border:8px solid #1E1C1B;padding:22px 16px 26px;box-shadow:0 18px 40px rgba(30,28,27,.18)}
+.nom{font-size:24px;margin:0}.sw{display:flex;background:#fff;border-radius:999px;padding:4px;margin:14px 0 6px}.sw b{flex:1;text-align:center;border-radius:999px;padding:10px 0;font-size:13.5px;font-weight:500;color:#8A847E}.sw b.on{background:#1E1C1B;color:#fff}
+.k{margin:16px 0 8px;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#8A847E}
+.carte{background:#fff;border-radius:20px;padding:2px 14px}
+.lg{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(30,28,27,.08);font-size:14px}.lg:last-child{border-bottom:0}.lg>.q{flex:1;min-width:0}
+.ic{flex:none;width:32px;height:32px;border-radius:10px;background:#EDE7E0;display:grid;place-items:center;font-size:15px;transition:background .2s}
+.ic svg{width:18px;height:18px;fill:none;stroke:#1E1C1B;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.on2{display:flex;gap:4px;background:#F3EEE9;border-radius:999px;padding:3px}
+.on2 button{border:0;background:none;border-radius:999px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:500;color:#6B625C;cursor:pointer;transition:background .18s,color .18s,transform .12s}
+.on2 button:active{transform:scale(.93)}.on2 button.oui{background:#1E1C1B;color:#fff}.on2 button.non{background:#fff;color:#1E1C1B;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.jsais{border:0;background:none;font:inherit;font-size:12.5px;font-weight:500;padding:6px 0 6px 8px;color:#1E1C1B;text-decoration:underline;text-underline-offset:3px}
+.rep{font-size:12px;color:#8A847E;display:block;margin-top:2px}
+.vieux .qq{flex:none;width:24px;height:24px;border-radius:50%;border:1px dashed rgba(30,28,27,.3);display:grid;place-items:center;font-size:11px;color:#8A847E}
+.conseil{margin-top:12px;border-radius:16px;background:#1E1C1B;color:#fff;padding:12px 14px;font-size:13px;line-height:1.4}.conseil small{display:block;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:3px}
+.planche{margin-top:30px;background:#fff;border-radius:22px;padding:18px;max-width:1100px}
+.planche table{border-collapse:collapse;width:100%}.planche td,.planche th{padding:10px 8px;text-align:center;font-size:12.5px;border-bottom:1px solid #EFE9E3}.planche th{font-weight:600;font-size:12px;color:#6B625C}.planche td:first-child{text-align:left;font-weight:500}
+</style></head><body>
+<h1>Fiche cliente → onglet Notes</h1>
+<p class="chapo">Les questions à réponse simple se règlent d’un doigt : <b>Oui</b> ou <b>Non</b>, rien à écrire. Clique pour essayer. Seul « Son métier ? » garde un petit champ (on ne peut pas deviner le métier).</p>
+<div class="grille" id="g"></div>
+<div class="planche"><b style="font-size:14px">Toutes les séries côte à côte</b><table id="t"></table></div>
+<script>
+const SVG={
+couple:'<path d="M12 20s-7-4.3-7-9.5A3.8 3.8 0 0 1 12 8a3.8 3.8 0 0 1 7 2.5C19 15.7 12 20 12 20z"/>',
+enfants:'<circle cx="12" cy="7.5" r="3"/><path d="M6.5 20c0-3.6 2.5-6.5 5.5-6.5s5.5 2.9 5.5 6.5"/><path d="M10.6 6.2c.7-.9 2.1-.9 2.8 0"/>',
+animal:'<path d="M8 17.5c0-2.6 1.8-4.8 4-4.8s4 2.2 4 4.8c0 1.5-1.2 2.3-2.4 2-1-.3-2.2-.3-3.2 0-1.2.3-2.4-.5-2.4-2z"/><ellipse cx="5.6" cy="11.2" rx="1.7" ry="2.1"/><ellipse cx="9.4" cy="6.9" rx="1.8" ry="2.3"/><ellipse cx="14.6" cy="6.9" rx="1.8" ry="2.3"/><ellipse cx="18.4" cy="11.2" rx="1.7" ry="2.1"/>',
+travail:'<rect x="4" y="8" width="16" height="11" rx="2.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8M4 13h16"/>',
+vacances:'<circle cx="12" cy="12" r="3.6"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M6 18l1.4-1.4M16.6 7.4 18 6"/>',
+papote:'<path d="M4.5 6.5h10a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-3.5 3v-3h-1a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2z"/><path d="M16.5 10h2a2 2 0 0 1 2 2v4.5a2 2 0 0 1-2 2h-.5v2.5l-3-2.5h-3"/>'};
+const Q=[["couple","En couple&nbsp;?","oui"],["enfants","Des enfants&nbsp;?","oui"],["animal","Un animal&nbsp;?","oui"],["vacances","Vacances bientôt&nbsp;?","oui"],["papote","Aime papoter&nbsp;?","oui"],["travail","Son métier&nbsp;?","txt"]];
+const AVANT={couple:"♡",enfants:"☺",animal:"❀",travail:"✎",vacances:"✈",papote:"☕"};
+const EMO={couple:"💞",enfants:"🧸",animal:"🐾",travail:"💼",vacances:"🌴",papote:"💬"};
+const PASTEL={couple:"#F6DCE2",enfants:"#FBE6D2",animal:"#E3EDDC",travail:"#E4E1F3",vacances:"#FFF0C9",papote:"#DDEBF2"};
+const V=[
+ {id:"A",t:"A · Traits fins (ma reco)",p:"Même trait que les boutons Appeler / Message de la fiche. Sobre, premium, ça ne vieillit pas.",ic:k=>`<span class="ic">${'<svg viewBox="0 0 24 24">'+SVG[k]+'</svg>'}</span>`},
+ {id:"B",t:"B · Traits fins sur couleurs douces",p:"Pareil, mais chaque question a sa petite couleur pastel : plus girly, on repère vite.",ic:k=>`<span class="ic" style="background:${PASTEL[k]}">${'<svg viewBox="0 0 24 24">'+SVG[k]+'</svg>'}</span>`},
+ {id:"C",t:"C · Vrais emojis couleur",p:"Les emojis du téléphone. Joyeux, mais ils changent d’un téléphone à l’autre (iPhone / Android).",ic:k=>`<span class="ic" style="background:#F6F2EE;font-size:17px">${EMO[k]}</span>`}];
+const etat={};
+function tel(v){
+ let h=`<div class="tel"><h3 class="nom">Léa Martin</h3><div class="sw"><b>Fiche</b><b class="on">Notes</b></div><div class="k">Ce que je sais</div><div class="carte">`;
+ for(const [k,t,ty] of Q){const s=etat[v.id+k];
+  h+=`<div class="lg">${v.ic(k)}<div class="q">${t}${ty==="txt"&&s?`<span class="rep">${s}</span>`:""}</div>`+
+  (ty==="oui"?`<span class="on2"><button data-v="${v.id}" data-k="${k}" data-r="oui" class="${s==="oui"?"oui":""}">Oui</button><button data-v="${v.id}" data-k="${k}" data-r="non" class="${s==="non"?"non":""}">Non</button></span>`
+   :`<button class="jsais" data-v="${v.id}" data-k="${k}" data-r="txt">${s?"Changer":"Écrire"}</button>`)+`</div>`;}
+ const conseil=etat[v.id+"vacances"]==="oui"?"Parle-lui de ses vacances.":etat[v.id+"enfants"]==="oui"?"Demande-lui des nouvelles de ses enfants.":etat[v.id+"animal"]==="oui"?"Demande-lui des nouvelles de son animal.":etat[v.id+"papote"]==="non"?"Elle préfère le calme : laisse-la se détendre.":"Demande-lui ce qu’elle a fait de beau ces derniers temps.";
+ return h+`</div><div class="conseil"><small>Pour lancer la conversation</small>${conseil}</div></div>`;}
+function avant(){let h=`<div class="tel vieux"><h3 class="nom">Léa Martin</h3><div class="sw"><b>Fiche</b><b class="on">Notes</b></div><div class="k">Pas encore</div><div class="carte">`;
+ for(const [k,t] of Q)h+=`<div class="lg"><span class="qq">?</span><div class="q">${t}</div><button class="jsais" style="text-decoration:none">Je sais</button></div>`;
+ return h+`</div><div class="k">Ce que je sais</div><div class="carte"><div class="lg"><span class="ic">♡</span><div class="q">En couple</div></div><div class="lg"><span class="ic">☺</span><div class="q">Deux enfants</div></div></div></div>`;}
+function dessine(){document.getElementById("g").innerHTML=`<div class="col"><h2>Aujourd’hui</h2><p>Il faut appuyer sur « Je sais » puis écrire, même pour un simple oui.</p>${avant()}</div>`+V.map(v=>`<div class="col"><h2>${v.t}</h2><p>${v.p}</p>${tel(v)}</div>`).join("");
+ document.getElementById("t").innerHTML=`<tr><th></th><th>Aujourd’hui</th>${V.map(v=>`<th>${v.id}</th>`).join("")}</tr>`+Q.map(([k,t])=>`<tr><td>${t}</td><td><span class="ic" style="margin:auto">${AVANT[k]}</span></td>${V.map(v=>`<td><div style="display:flex;justify-content:center">${v.ic(k)}</div></td>`).join("")}</tr>`).join("");}
+document.addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(!b)return;const key=b.dataset.v+b.dataset.k;
+ if(b.dataset.r==="txt"){const r=prompt("Son métier ?",etat[key]||"Infirmière");if(r!==null)etat[key]=r.trim();}
+ else etat[key]=etat[key]===b.dataset.r?undefined:b.dataset.r;dessine();});
+dessine();
+</script></body></html>

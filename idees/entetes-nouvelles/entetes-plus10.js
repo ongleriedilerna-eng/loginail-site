@@ -1,7 +1,7 @@
 /* 16/11 (Marie) : série 10 — 10 en-têtes qui bougent EN PERMANENCE (pas seulement à l'ouverture), UNE seule photo. Maquette. */
 (function(){
 /* 16/11 : seules les en-têtes choisies par Marie restent proposées */
-const NOUV=[["levitation", "Lévitation"], ["live", "En direct"], ["pendentif", "Pendentif"], ["foil", "Reflet holographique"]];
+const NOUV=[["levitation", "Lévitation"], ["live", "En direct"], ["pendentif", "Pendentif"], ["foil", "Reflet holographique"], ["cadre", "Photo encadrée"]];   /* 18/11 (Marie) : « cadre » = le Reflet holographique SANS reflet (en-tête de départ) */
 try{NOUV.forEach(e=>{if(!ENTETES.some(x=>x[0]===e[0]))ENTETES.push(e)})}catch(e){}
 const capt=/[?&]capt/.test(location.search);
 const OR="linear-gradient(135deg,#6f4a12 0%,#f8e7a6 18%,#b8862b 34%,#fff4c4 50%,#a8761f 66%,#f3d98a 82%,#6f4a12 100%)";
@@ -86,6 +86,8 @@ let css=`
 @keyframes wAng{to{--angw:360deg}}
 .he-w-foil .wx-wrap{position:relative;width:calc(100% - 40px);max-width:520px;flex:none;margin-bottom:18px}
 .he-w-foil .wx-wrap .wx-cad{width:100%;margin:0}
+/* 11 Photo encadrée (18/11) : la même carte que le Reflet holographique, sans reflet ni contour irisé */
+.he-w-cadre .wx-cad{box-shadow:0 0 0 5px rgba(255,255,255,.95),0 26px 46px -22px rgba(0,0,0,.45)}
 `;
 if(capt)css+=`.hent[class*="he-w-"] *{animation-delay:-1.3s!important;animation-play-state:paused!important}`;
 const st=document.createElement("style");st.id="entetes-plus10";st.textContent=css;document.head.appendChild(st);
@@ -116,6 +118,7 @@ window.entete=function(k,t,lang){
     return H(`<div class="wx-sc"><div>${ph}</div>${pos.map(([x,y],i)=>`<span class="wx-st" style="left:${x}%;top:${y}%;animation-delay:${-((i*.37)%1.8)}s">✦</span>`).join("")}</div>${txt()}`);}
   if(k==="mosaique"){const rg=(top,b)=>`<div class="wx-rg${b?" b":""}" style="top:${top}px">${R(12,i=>`<div style="filter:${["none","sepia(.4)","grayscale(.6)","saturate(1.4)"][i%4]}">${ph}</div>`)}</div>`;
     return H(`<div class="wx-mo">${rg(10)}${rg(170,1)}${rg(330)}${rg(490,1)}</div>${cad()}${txt()}`);}
+  if(k==="cadre")return H(cad()+txt());
   if(k==="foil")return H(`<div class="wx-wrap"><span class="wx-bd"></span>${cad('<span class="wx-fo"></span>')}</div>${txt()}`);
   return "";
 };

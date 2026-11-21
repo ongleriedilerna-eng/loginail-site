@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A · Nacre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--fond:#F3EEE8;--carte:#FFFDFB;--txt:#231A1C;--doux:#7d6f6a;--acc:#2A1B1E;--or:#C9A15A;
+--ombre:0 1px 1px rgba(60,35,30,.04),0 4px 10px rgba(60,35,30,.06),0 18px 40px -12px rgba(60,35,30,.18);
+--ombre-haute:0 2px 3px rgba(60,35,30,.06),0 10px 24px rgba(60,35,30,.10),0 34px 60px -18px rgba(60,35,30,.28);
+--reflet:inset 0 1px 0 rgba(255,255,255,.9)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--fond);color:var(--txt);font:400 15px/1.55 Jost,sans-serif;-webkit-font-smoothing:antialiased}
+.page{max-width:1120px;margin:0 auto;padding:28px 16px 60px}
+/* titres : plus de « — TITRE », un vrai titre avec une étoile */
+.ti{display:flex;align-items:center;gap:10px;margin:0 4px 18px}
+.ti h2{font:italic 400 30px/1.1 "Bodoni Moda",serif;letter-spacing:-.01em}
+.ti i{font-style:normal;color:var(--or);font-size:14px;transform:translateY(-6px)}
+.ti small{margin-left:auto;font-size:12px;color:var(--doux)}
+.sec{margin:0 0 44px}
+.carte{background:var(--carte);border-radius:24px;box-shadow:var(--ombre),var(--reflet)}
+/* PRESTATIONS : cartes qui flottent, photo ronde, on appuie dessus */
+.pr{display:grid;gap:12px}
+.p{display:flex;align-items:center;gap:14px;padding:12px 14px 12px 12px;border-radius:20px;background:var(--carte);box-shadow:var(--ombre),var(--reflet);cursor:pointer;transition:transform .18s cubic-bezier(.3,.7,.4,1),box-shadow .18s}
+.p:hover{transform:translateY(-3px);box-shadow:var(--ombre-haute),var(--reflet)}
+.p:active{transform:translateY(1px) scale(.985);box-shadow:0 1px 2px rgba(60,35,30,.12),var(--reflet)}
+.p img{width:58px;height:58px;border-radius:16px;object-fit:cover;box-shadow:0 6px 14px -4px rgba(60,35,30,.35)}
+.p b{display:block;font:500 15px/1.2 Jost;letter-spacing:.02em}
+.p span{font-size:12.5px;color:var(--doux)}
+.p .px{margin-left:auto;text-align:right;white-space:nowrap}
+.p .px em{display:block;font:italic 500 19px "Bodoni Moda",serif;color:var(--txt)}
+.p .fl{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:#fff;font-size:16px;flex:none;box-shadow:0 6px 12px -4px rgba(42,27,30,.6),inset 0 1px 0 rgba(255,255,255,.18)}
+/* AVIS : la note en médaille, les avis en paquet de cartes */
+.av{display:grid;gap:22px}
+.note{display:flex;align-items:center;gap:18px;padding:22px}
+.med{width:86px;height:86px;border-radius:50%;flex:none;display:grid;place-items:center;font:500 30px "Bodoni Moda",serif;color:#fff;
+background:radial-gradient(circle at 32% 28%,#4a3438,#2A1B1E 70%);box-shadow:0 14px 28px -10px rgba(42,27,30,.7),inset 0 2px 0 rgba(255,255,255,.15),inset 0 -6px 12px rgba(0,0,0,.35)}
+.et{color:var(--or);letter-spacing:2px;font-size:15px;display:inline-block}
+.et.brille{font-size:20px;text-shadow:0 0 12px rgba(201,161,90,.55)}
+.note p{font-size:13px;color:var(--doux)}
+.paquet{position:relative;height:290px}
+.av-c{position:absolute;inset:0 6px auto;padding:24px 22px 20px;border-radius:24px;background:var(--carte);box-shadow:var(--ombre),var(--reflet);transition:transform .5s cubic-bezier(.3,.7,.3,1),opacity .5s}
+.av-c q{display:block;font:italic 400 17px/1.5 "Bodoni Moda",serif;quotes:none;margin:10px 0 14px}
+.av-c q:before{content:"“";display:block;font-size:54px;line-height:.5;color:var(--or);margin:10px 0 4px}
+.qui{display:flex;align-items:center;gap:10px;font-size:13px}
+.qui span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#efe6dc;font-weight:600;box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+.av-c[data-r="1"]{transform:translateY(12px) scale(.95) rotate(-2deg);z-index:2}
+.av-c[data-r="2"]{transform:translateY(24px) scale(.9) rotate(2deg);z-index:1}
+.av-c[data-r="0"]{z-index:3}
+.av-c[data-r="sort"]{transform:translateX(-120%) rotate(-10deg);opacity:0;z-index:4}
+.bt{display:flex;justify-content:center;align-items:center;gap:8px;height:52px;border-radius:99px;font:500 13px Jost;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--txt);background:var(--carte);box-shadow:var(--ombre),var(--reflet)}
+.bt.noir{background:linear-gradient(#3a2a2d,#2A1B1E);color:#fff;box-shadow:0 12px 24px -10px rgba(42,27,30,.8),inset 0 1px 0 rgba(255,255,255,.15)}
+/* À PROPOS : photo qui dépasse de la carte */
+.ap{display:grid;gap:0}
+.ap img{width:72%;aspect-ratio:4/5;object-fit:cover;border-radius:22px;box-shadow:var(--ombre-haute);position:relative;z-index:2;margin-left:4px}
+.ap .carte{margin:-70px 0 0 18%;padding:88px 22px 22px;font:400 16px/1.6 Jost}
+.sig{display:block;margin-top:12px;font:italic 400 26px "Bodoni Moda",serif}
+/* HORAIRES : la ligne d'aujourd'hui sort de la carte */
+.ho{padding:10px}
+.j{display:flex;justify-content:space-between;padding:11px 14px;font-size:14px;border-radius:14px}
+.j+.j{border-top:1px solid #f1ebe5}
+.j.auj{background:var(--acc);color:#fff;transform:scale(1.04);box-shadow:0 12px 22px -10px rgba(42,27,30,.7);border:0;font-weight:500}
+.j.auj+.j{border-top:0}
+.j .f{color:var(--doux)}
+.ouv{display:inline-flex;align-items:center;gap:8px;margin:0 4px 14px;padding:7px 14px;border-radius:99px;background:var(--carte);box-shadow:var(--ombre);font-size:13px}
+.ouv i{width:8px;height:8px;border-radius:50%;background:#3fae6a;box-shadow:0 0 0 4px rgba(63,174,106,.18)}
+/* apparition au défilement */
+.r{}
+.r.vu{opacity:1;animation:monte .55s cubic-bezier(.3,.7,.3,1) backwards}
+@keyframes monte{from{opacity:0;transform:translateY(20px)}}
+@media(min-width:900px){
+ .page{padding:60px 40px}
+ .deux{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+ .pr{grid-template-columns:1fr}
+ .ti h2{font-size:38px}
+}
+@media(prefers-reduced-motion:reduce){.r{opacity:1;transform:none}.av-c,.p{transition:none}}
+</style></head><body>
+<div class="page">
+ <div class="deux">
+  <section class="sec">
+   <div class="ti"><h2>Prestations</h2><i>✦</i><small>Touchez pour réserver</small></div>
+   <div class="pr">
+    <div class="p r"><img src="../exemple-dilerna/r1.jpg" alt=""><div><b>Pose américaine</b><span>2 choix · 1 h 30</span></div><div class="px"><span>dès</span><em>20 €</em></div><div class="fl">›</div></div>
+    <div class="p r"><img src="../exemple-dilerna/r3.jpg" alt=""><div><b>Gainage</b><span>3 choix · 1 h</span></div><div class="px"><span>dès</span><em>20 €</em></div><div class="fl">›</div></div>
+    <div class="p r"><img src="../exemple-dilerna/r4.jpg" alt=""><div><b>Semi renforcé</b><span>2 choix · 45 min</span></div><div class="px"><span>dès</span><em>15 €</em></div><div class="fl">›</div></div>
+    <div class="p r"><img src="../exemple-dilerna/r6.jpg" alt=""><div><b>Et aussi</b><span>1 choix</span></div><div class="px"><span>dès</span><em>120 €</em></div><div class="fl">›</div></div>
+   </div>
+  </section>
+  <section class="sec">
+   <div class="ti"><h2>Avis Google</h2><i>✦</i></div>
+   <div class="av">
+    <div class="carte note r"><div class="med">5,0</div><div><span class="et brille">★★★★★</span><p>67 avis vérifiés sur Google</p></div></div>
+    <div class="paquet" id="paquet">
+     <div class="av-c" data-r="0"><span class="et">★★★★★</span><q>Marie est géniale ! De son accueil à sa prestation tout est parfait. Le lieu est propre et il y a toujours une petite attention.</q><div class="qui"><span>P</span>Paola G. · Google</div></div>
+     <div class="av-c" data-r="1"><span class="et">★★★★★</span><q>Marie fait un travail soigné, elle est aux petits soins. Première fois chez elle et ce ne sera pas la dernière.</q><div class="qui"><span>C</span>Catherine L. · Google</div></div>
+     <div class="av-c" data-r="2"><span class="et">★★★★★</span><q>Très bon moment passé en compagnie de Marie, dans son petit cocon où l'on se sent tout de suite à l'aise.</q><div class="qui"><span>M</span>Mélinda N. · Google</div></div>
+    </div>
+    <a class="bt r" href="#">★ Laisser mon avis</a>
+   </div>
+  </section>
+ </div>
+ <div class="deux">
+  <section class="sec">
+   <div class="ti"><h2>À propos</h2><i>✦</i></div>
+   <div class="ap r"><img src="../exemple-dilerna/photo2.jpg" alt=""><div class="carte">Moi, c'est Marie ! J'ai 28 ans, je suis nail artist indépendante à Porto-Vecchio, et un peu baddie sur les bords. Chez moi, on prend le temps.<span class="sig">Marie</span></div></div>
+  </section>
+  <section class="sec">
+   <div class="ti"><h2>Horaires</h2><i>✦</i></div>
+   <div class="ouv r"><i></i>Ouvert jusqu'à 19 h</div>
+   <div class="carte ho r">
+    <div class="j"><span>Lundi</span><span>9 h – 19 h</span></div>
+    <div class="j"><span>Mardi</span><span>9 h – 19 h</span></div>
+    <div class="j auj"><span>Aujourd'hui · jeudi</span><span>9 h – 19 h</span></div>
+    <div class="j"><span>Vendredi</span><span>9 h – 19 h</span></div>
+    <div class="j"><span>Samedi</span><span>9 h – 13 h</span></div>
+    <div class="j"><span>Dimanche</span><span class="f">Fermé</span></div>
+   </div>
+   <div style="height:16px"></div>
+   <a class="bt noir r" href="#">Réserver un créneau</a>
+  </section>
+ </div>
+</div>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vu');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.r').forEach((el,i)=>{el.style.animationDelay=(i%4)*60+'ms';io.observe(el)});
+/* paquet d'avis : la carte du dessus part, celle d'en dessous monte */
+const cs=[...document.querySelectorAll('.av-c')];let o=[0,1,2];
+function tourne(){const h=cs[o[0]];h.dataset.r='sort';setTimeout(()=>{o.push(o.shift());o.forEach((n,i)=>cs[n].dataset.r=i)},450)}
+document.getElementById('paquet').onclick=tourne;
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(tourne,4200);
+/* reflet qui passe sur les étoiles */
+document.querySelector('.brille').animate([{opacity:1},{opacity:.55},{opacity:1}],{duration:2400,iterations:Infinity});
+</script>
+</body></html>

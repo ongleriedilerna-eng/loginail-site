@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Loginail · Votre site est prêt (B)</title>
+<meta name="theme-color" content="#F6F3EF">
+<link href="../polices.css" rel="stylesheet">
+<style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
+<style>
+/* Version B · « Une chose à la fois » (comme la page « Il manque… », D33) : 1. bravo + son site ; 2. son e-mail ; 3. son mot de passe ; 4. regardez vos e-mails.
+   Le téléphone avec son site reste là tout du long (en haut sur téléphone, à gauche sur ordinateur). */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#6B625C;--roseF:#B03562;--ligne:rgba(30,28,27,.12);--sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+.page{max-width:480px;min-height:100dvh;margin:0 auto;padding:calc(var(--sat) + 16px) 20px 0;display:flex;flex-direction:column;align-items:center}
+.logo{width:104px}
+.scene{position:relative;width:30%;max-width:140px;margin-top:18px;transition:width .5s cubic-bezier(.2,.8,.3,1)}
+body.e0 .scene{width:50%;max-width:215px}
+.fT-cadre{position:relative;width:100%;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 0 0 6px #1b1b1d,0 0 0 7px #3a3a3c,0 30px 54px -26px rgba(80,30,50,.55);animation:monte .9s cubic-bezier(.2,.8,.3,1) both}
+.fT-cadre iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none}
+.fT-encoche{position:absolute;left:50%;top:6px;width:28%;height:4%;max-height:20px;border-radius:99px;background:#1b1b1d;transform:translateX(-50%)}
+.halo{position:absolute;inset:-18% -30%;z-index:-1;background:radial-gradient(closest-side,rgba(233,169,191,.55),rgba(233,169,191,0));filter:blur(6px);animation:respire 4s ease-in-out infinite}
+@keyframes monte{from{opacity:0;transform:translateY(26px) scale(.94)}}
+@keyframes respire{50%{transform:scale(1.06);opacity:.8}}
+.etape{display:none;width:100%;flex-direction:column;align-items:center;text-align:center;animation:entre .45s cubic-bezier(.2,.8,.3,1) both}
+.etape.on{display:flex}
+@keyframes entre{from{opacity:0;transform:translateX(26px)}}
+.compte{margin-top:20px;font:400 12px Jost,sans-serif;letter-spacing:.14em;color:var(--muted)}
+.compte i{display:inline-block;width:22px;height:4px;margin:0 2px;border-radius:9px;background:rgba(30,28,27,.14);vertical-align:2px}.compte i.on{background:linear-gradient(90deg,#E9A9BF,#D97A9C)}
+.ic{width:46px;height:46px;margin-top:14px;border-radius:14px;display:grid;place-items:center;color:var(--roseF);background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 6px 14px -6px rgba(176,53,98,.4)}
+.ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.kick{margin-top:22px;font:500 11.5px Jost,sans-serif;letter-spacing:.22em;color:var(--roseF)}
+h1,h2{margin:8px 0 0;font:400 44px/1 "Cormorant Garamond",serif;letter-spacing:-.01em}h2{font-size:36px;margin-top:12px}
+h1 em,h2 em{font-style:italic}
+.q{margin:10px 0 0;max-width:32ch;font:300 15px/1.45 Jost,sans-serif;color:var(--muted)}
+.adr{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:9px 16px 9px 10px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font:400 14px Jost,sans-serif}
+.adr i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);color:var(--roseF);font-style:normal;font-size:12px}.adr b{font-weight:500}
+.offre{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:16px}
+.offre span{padding:7px 12px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font:400 12.5px Jost,sans-serif}
+.offre span b{font-weight:500;color:var(--roseF)}
+.champ{width:100%;height:58px;margin-top:18px;border:1px solid rgba(30,28,27,.22);border-radius:999px;padding:0 22px;background:#fff;font:400 17px Jost,sans-serif;text-align:center;outline:none}
+.champ:focus{border-color:var(--noir);box-shadow:0 0 0 4px rgba(30,28,27,.06)}
+.mdp{position:relative;width:100%}.mdp .champ{padding:0 74px}
+.oeil{position:absolute;right:8px;top:27px;height:40px;padding:0 14px;border:0;border-radius:999px;background:none;font:400 13px Jost,sans-serif;color:var(--muted);cursor:pointer}
+.cgv{display:flex;gap:10px;align-items:flex-start;margin-top:16px;text-align:left;font:300 13px/1.4 Jost,sans-serif;color:var(--muted);cursor:pointer}
+.cgv input{width:20px;height:20px;margin:0;accent-color:var(--noir);flex:none}.cgv a{color:var(--noir)}
+.bas{position:sticky;bottom:0;width:100%;margin-top:auto;padding:22px 0 calc(var(--sab) + 12px);display:flex;flex-direction:column;align-items:center;gap:10px;background:linear-gradient(to bottom,rgba(246,243,239,0),var(--fond) 20px)}
+.go{width:100%;height:58px;border:0;border-radius:999px;background:var(--noir);color:var(--fond);font:500 13px Jost,sans-serif;letter-spacing:.16em;box-shadow:0 14px 26px -14px rgba(0,0,0,.6);transition:transform .15s,opacity .3s;cursor:pointer}
+.go:disabled{opacity:.35;cursor:default}.go:not(:disabled):active{transform:scale(.97)}
+.lien{background:none;border:0;font:300 14px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.petit{margin:0;text-align:center;font:300 12.5px/1.4 Jost,sans-serif;color:var(--muted)}.petit b{font-weight:500;color:var(--noir)}
+.secoue{animation:secoue .4s}@keyframes secoue{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.etapes{margin-top:20px;display:grid;gap:10px;width:100%;text-align:left}
+.etapes div{display:flex;gap:12px;align-items:center;padding:13px 16px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px var(--ligne);font:300 14px/1.35 Jost,sans-serif}
+.etapes i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--noir);color:#fff;font:500 12px Jost,sans-serif;font-style:normal}
+.etoileV{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+@media (max-height:740px){body:not(.e0) .scene{width:24%}body.e0 .scene{width:42%}h2{font-size:31px}}
+/* ordinateur : son site à gauche, en grand, tout du long ; la question à droite */
+@media (min-width:900px){
+  .page{max-width:1080px;display:grid;grid-template-columns:minmax(0,360px) minmax(0,520px);grid-template-rows:auto 1fr auto;justify-content:center;column-gap:90px;padding-top:28px}
+  .logo{grid-column:1/-1;justify-self:center}
+  .scene,body.e0 .scene{grid-column:1;grid-row:2/span 2;width:100%;max-width:320px;justify-self:center;align-self:center}
+  .etape{grid-column:2;grid-row:2;align-self:center;align-items:flex-start;text-align:left}
+  .bas{grid-column:2;grid-row:3;align-items:flex-start;max-width:520px}
+  h1{font-size:62px}h2{font-size:50px}.petit{text-align:left}.offre{justify-content:flex-start}.champ{text-align:left}.mdp .champ{padding:0 74px 0 22px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body class="e0">
+<div class="page">
+  <div class="logo" id="logo"></div>
+  <div class="scene"><div class="halo"></div><div id="tel"></div></div>
+
+  <section class="etape on" data-e="0">
+    <div class="kick" id="kick">✦ C'EST FAIT</div>
+    <h1>Votre site<br>est <em>prêt</em>.</h1>
+    <div class="adr"><i>✦</i><span>loginail.fr/<b id="slug"></b></span></div>
+    <div class="offre"><span><b>1 mois offert</b></span><span>sans carte bancaire</span><span>sans engagement</span></div>
+  </section>
+
+  <section class="etape" data-e="1">
+    <div class="compte"><i class="on"></i><i></i></div>
+    <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></div>
+    <h2>Votre <em>e-mail</em></h2>
+    <p class="q">Pour vous connecter à votre appli et recevoir vos réservations.</p>
+    <input class="champ" id="mail" type="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr" enterkeyhint="next">
+  </section>
+
+  <section class="etape" data-e="2">
+    <div class="compte"><i class="on"></i><i class="on"></i></div>
+    <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg></div>
+    <h2>Votre <em>mot de passe</em></h2>
+    <p class="q">8 caractères ou plus. Le même pour votre appli.</p>
+    <div class="mdp"><input class="champ" id="mdp" type="password" autocomplete="new-password" placeholder="Mot de passe" enterkeyhint="done"><button class="oeil" type="button" id="oeil">Voir</button></div>
+    <label class="cgv"><input type="checkbox" id="cgv"><span>J'accepte les <a href="../mentions-legales.html" target="_blank" rel="noopener">conditions</a> et la <a href="../confidentialite.html" target="_blank" rel="noopener">politique de confidentialité</a>.</span></label>
+  </section>
+
+  <section class="etape" data-e="3">
+    <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></div>
+    <h2>Regardez vos <em>e-mails</em></h2>
+    <p class="q">On vous a envoyé un lien à <b id="adrMail" style="color:var(--noir);font-weight:500"></b>.</p>
+    <div class="etapes">
+      <div><i>1</i><span>Ouvrez l'e-mail de Loginail et touchez <b>« Activer mon site »</b>.</span></div>
+      <div><i>2</i><span>Téléchargez <b>l'appli Loginail</b> et connectez-vous.</span></div>
+      <div><i>3</i><span>Partagez votre lien sur Instagram : vos clientes réservent.</span></div>
+    </div>
+  </section>
+
+  <div class="bas">
+    <button class="go" id="go">ACTIVER MON SITE ✦</button>
+    <p class="petit" id="petit">Puis 49,99 € par mois. <b>Rien n'est prélevé</b> pendant votre mois offert.</p>
+    <button class="lien" type="button" id="retour">Retoucher mon site</button>
+  </div>
+</div>
+<script src="manque-commun.js"></script>
+<script src="fini-commun.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+$("logo").innerHTML = LOGO; $("slug").textContent = FINI.slug; $("kick").textContent = `✦ C'EST FAIT, ${FINI.prenom.toUpperCase()}`;
+const f = FINI.telephone($("tel")); FINI.defile(f); setTimeout(() => eclat($("tel"), 24), 700);
+let e = 0;
+const TXT = [["ACTIVER MON SITE ✦", "Retoucher mon site"], ["SUIVANT", "Revenir"], ["ACTIVER MON SITE ✦", "Revenir"], ["", ""]];
+function va(n) { e = n; document.body.className = "e" + n;
+  document.querySelectorAll(".etape").forEach(s => s.classList.toggle("on", +s.dataset.e === n));
+  $("go").textContent = TXT[n][0]; $("go").hidden = n === 3; $("retour").textContent = TXT[n][1]; $("retour").hidden = n === 3; $("petit").hidden = n === 3;
+  verif(); const c = document.querySelector(`.etape[data-e="${n}"] input.champ`); if (c && matchMedia("(min-width:900px)").matches) setTimeout(() => c.focus({ preventScroll: true }), 200);
+  if (n === 3) setTimeout(() => eclat(document.querySelector('.etape[data-e="3"] .ic'), 16), 250); }
+function verif() { $("go").disabled = e === 2 && !($("mdp").value.length >= 8 && $("cgv").checked); }
+function secoue(el) { el.classList.remove("secoue"); void el.offsetWidth; el.classList.add("secoue"); }
+$("go").onclick = () => {
+  if (e === 0) return va(1);
+  if (e === 1) { if (!FINI.mailOk($("mail").value)) { secoue($("mail")); $("mail").focus(); return; } return va(2); }
+  if (e === 2) { $("adrMail").textContent = $("mail").value.trim(); return va(3); } };
+$("retour").onclick = () => { if (e === 0) history.back(); else va(e - 1); };
+$("mdp").oninput = verif; $("cgv").onchange = verif;
+$("mail").onkeydown = ev => { if (ev.key === "Enter") { ev.preventDefault(); $("go").click(); } };
+$("mdp").onkeydown = ev => { if (ev.key === "Enter" && !$("go").disabled) { ev.preventDefault(); $("go").click(); } };
+$("oeil").onclick = ev => { const v = $("mdp").type === "password"; $("mdp").type = v ? "text" : "password"; ev.target.textContent = v ? "Cacher" : "Voir"; };
+</script>
+</body>
+</html>

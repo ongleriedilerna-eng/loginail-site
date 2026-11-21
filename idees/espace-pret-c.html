@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Idée C · Votre espace est prêt</title>
+<link href="../loginail-creer/polices.css" rel="stylesheet">
+<style>
+/* Idée C « La fête » : le haut de son site en grand, une pluie de charms qui tombe une fois, son prénom en très grand. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#6B625C}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--fond);font-family:Jost,sans-serif;color:var(--noir);-webkit-font-smoothing:antialiased;overflow:hidden}
+#tel{max-width:480px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.haut{flex:none;height:46%;position:relative;border-radius:0 0 40px 40px;overflow:hidden;
+  background:radial-gradient(90% 70% at 15% 10%,#F2CFC8 0%,transparent 60%),radial-gradient(90% 70% at 95% 90%,#E4D0EE 0%,transparent 60%),#FAEFEA;
+  animation:ouvre .7s cubic-bezier(.2,.8,.2,1) both}
+.haut .marque{position:absolute;top:calc(env(safe-area-inset-top) + 22px);left:0;right:0;text-align:center;font:300 10px Jost;letter-spacing:.5em;color:var(--muted)}
+.haut .nom{position:absolute;left:0;right:0;top:44%;text-align:center;font:400 54px/1 Italiana,serif;letter-spacing:.04em}
+.haut .sous{position:absolute;left:0;right:0;top:calc(44% + 64px);text-align:center;font:300 10px Jost;letter-spacing:.4em;color:var(--muted)}
+.pluie span{position:absolute;top:-40px;font-size:24px;animation:tombe 1.8s cubic-bezier(.3,.6,.4,1) both}
+@keyframes tombe{to{transform:translateY(var(--y)) rotate(var(--r));opacity:var(--o)}}
+.bas{flex:1;display:flex;flex-direction:column;padding:0 24px calc(env(safe-area-inset-bottom) + 22px)}
+.centre{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.petit{font:400 11px Jost;letter-spacing:.3em;color:var(--muted);animation:monte .5s .5s both}
+h1{margin:6px 0 0;font:400 62px/1 Italiana,serif;animation:monte .5s .6s both}
+.ligne{margin-top:14px;font:300 14px Jost;color:var(--muted);animation:monte .5s .7s both}
+.ligne b{font-weight:400;color:var(--noir)}
+.go{display:block;width:100%;border-radius:999px;padding:18px;background:var(--noir);color:var(--fond);font:500 13px Jost;letter-spacing:.2em;text-align:center;text-decoration:none;animation:monte .5s .85s both}
+@keyframes ouvre{from{height:100%;border-radius:0}}
+@keyframes monte{from{opacity:0;transform:translateY(12px)}}
+</style>
+</head>
+<body>
+<div id="tel">
+  <div class="haut">
+    <div class="marque">LOGINAIL</div>
+    <div class="nom" id="nom">Dilerna</div>
+    <div class="sous">ONGLERIE</div>
+    <div class="pluie" id="pluie"></div>
+  </div>
+  <div class="bas">
+    <div class="centre">
+      <div class="petit">VOTRE ESPACE EST PRÊT</div>
+      <h1 id="prenom">Marie</h1>
+      <div class="ligne" id="ligne"><b>3</b> prestations · <b>5</b> jours d’ouverture · votre site</div>
+    </div>
+    <a class="go">OUVRIR MON ESPACE</a>
+  </div>
+</div>
+<script>
+let b = null; try { b = JSON.parse(localStorage.getItem("loginail-brouillon")); } catch (e) {}
+const $ = id => document.getElementById(id);
+if (b?.prenom) $("prenom").textContent = b.prenom;
+if (b?.nom) $("nom").textContent = b.nom;
+const n = b?.prestations?.length || 3, j = (b?.horaires || []).filter(Boolean).length || 5;
+$("ligne").innerHTML = `<b>${n}</b> prestation${n > 1 ? "s" : ""} · <b>${j}</b> jour${j > 1 ? "s" : ""} d’ouverture · votre site`;
+/* la pluie de charms : une seule fois, ils restent posés dans le haut */
+const charms = ["🎀", "✨", "💅", "🌸", "💖", "🫧", "⭐", "🎀", "✨", "🌸", "💖", "💅"];
+charms.forEach((c, i) => {
+  const s = document.createElement("span"); s.textContent = c;
+  s.style.left = (4 + i * 8 + Math.random() * 4) + "%";
+  s.style.setProperty("--y", (i % 2 ? 50 + Math.random() * 70 : 240 + Math.random() * 90) + "px"   /* jamais sur le nom du salon */);
+  s.style.setProperty("--r", (Math.random() * 60 - 30) + "deg");
+  s.style.setProperty("--o", (.55 + Math.random() * .45).toFixed(2));
+  s.style.animationDelay = (.3 + i * .06) + "s";
+  $("pluie").append(s);
+});
+</script>
+</body>
+</html>

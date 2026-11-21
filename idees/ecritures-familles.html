@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Écritures par familles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+:root{--fond:#f7f0ea;--carte:#f6dfe3;--carte2:#fbeef0;--encre:#3a1f2b;--rose:#9b3157;--doux:#8a6f78;--trait:#ead7da}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--fond);color:var(--encre);font-family:-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* ---------- Page de comparaison (2 téléphones) ---------- */
+.compare{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+.compare h1{font-family:Georgia,serif;font-weight:400;font-size:30px;text-align:center}
+.compare h1 em{color:var(--rose)}
+.compare>p{text-align:center;color:var(--doux);margin:8px 0 26px;font-size:15px}
+.duo{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+.tel{text-align:center}
+.tel b{display:block;font-size:17px;margin-bottom:4px}
+.tel span{display:block;color:var(--doux);font-size:13px;margin-bottom:12px}
+.tel iframe{width:390px;height:780px;border:10px solid #241820;border-radius:44px;background:var(--fond);max-width:calc(100vw - 32px)}
+.tel a{display:inline-block;margin-top:10px;color:var(--rose);font-size:14px}
+
+/* ---------- Onglet Écriture (les 2 versions) ---------- */
+.pan{max-width:1200px;margin:0 auto;padding:22px 16px 40px}
+.pan h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:30px;letter-spacing:-.3px}
+.pan h2 em{color:var(--rose)}
+.pan .sous{color:var(--doux);font-size:14px;margin:4px 0 16px}
+.carte{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  height:96px;border-radius:18px;background:linear-gradient(135deg,var(--carte),var(--carte2));
+  --t:25px;border:2px solid transparent;transition:transform .15s ease,border-color .15s ease;padding:6px 8px;overflow:hidden}
+.carte:active{transform:scale(.97)}
+.carte .nom{display:block;width:max-content;line-height:1.15;color:var(--rose);white-space:nowrap;transform-origin:center}
+.carte .eti{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--doux)}
+.carte.on{border-color:var(--rose)}
+.carte.on::after{content:"✓";position:absolute;top:7px;right:9px;width:20px;height:20px;border-radius:50%;background:var(--rose);color:#fff;font-size:12px;line-height:20px;text-align:center}
+.carte.neuve .eti::before{content:"• ";color:var(--rose)}
+
+/* Version A : rayons (pastilles) */
+.pastilles{position:sticky;top:0;z-index:2;background:var(--fond);display:flex;gap:8px;overflow-x:auto;padding:8px 0 12px;scrollbar-width:none;margin:0 -16px;padding-left:16px;padding-right:16px}
+.pastilles::-webkit-scrollbar{display:none}
+.pastille{flex:none;padding:9px 15px;border-radius:99px;border:1.5px solid var(--trait);background:#fff;font-size:14px;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.pastille.on{background:var(--encre);color:#fff;border-color:var(--encre)}
+.slogan{font-family:Georgia,serif;font-style:italic;color:var(--doux);font-size:15px;margin:2px 0 12px}
+.grille{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.grille.anim{animation:monte .22s ease}
+@keyframes monte{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Version B : vitrine (étagères) */
+.etagere{margin:6px 0 22px}
+.etagere .tete{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.etagere h3{font-family:Georgia,serif;font-weight:400;font-size:22px}
+.etagere .tout{color:var(--rose);font-size:14px;white-space:nowrap}
+.etagere .slogan{margin:2px 0 10px;font-size:14px}
+.rang{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+.rang::-webkit-scrollbar{display:none}
+.rang .carte{flex:none;width:44%;scroll-snap-align:start}
+.etagere.ouverte .rang{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible;margin:0;padding:0}
+.etagere.ouverte .rang .carte{width:auto}
+
+@media (min-width:900px){
+  .pan{padding:36px 40px 60px}
+  .pan h2{font-size:40px}
+  .grille,.etagere.ouverte .rang{grid-template-columns:repeat(4,1fr);gap:14px}
+  .carte{height:120px}
+  .carte{--t:32px}
+  .rang .carte{width:23%}
+  .pastilles{margin:0;padding-left:0;padding-right:0}
+  .rang{margin:0;padding:0 0 6px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* [écriture Google, surnom, famille, réglage, taille, nouvelle ?]
+   familles : E Élégantes · A Attachées · G Gourmandes · V Vintage · F Folles · M À la main
+   Les 57 déjà en ligne gardent leur surnom ; les 64 gardées par Marie (planches 1 à 5) ont le point rose.
+   « Vieux film » (Black And White Picture) n'est PAS dedans : pas d'accents. */
+const L = [
+ // ---- Élégantes
+ ["Italiana","Élégante","E","",1],["Playfair Display","Chic","E","wght@500",.88],["Cinzel","Luxe","E","wght@500",.78],
+ ["Bodoni Moda","Mode","E","",.9],["DM Serif Display","Magazine","E","",.9],["Cormorant Garamond","Mystique","E","",1.05],
+ ["Cinzel Decorative","Astres","E","",.8],["Yeseva One","Féminine","E","",.86],["Gloock","Couture","E","",.88],
+ ["Gravitas One","Haute couture","E","",.78],["Jost","Moderne","E","",.9],
+ ["Libre Caslon Display","Caslon","E","",.95,1],["Della Respira","Respira","E","",.95,1],["Bellefair","Belle affaire","E","",.95,1],
+ ["Literata","Littéraire","E","ital,wght@1,800",.85,1],["Elsie Swash Caps","Elsie","E","wght@900",.85,1],["Vidaloka","Vidaloka","E","",.9,1],
+ ["Sorts Mill Goudy","Goudy","E","",.95,1],["Castoro Titling","Castor","E","",.78,1],["Srisakdi","Palais","E","wght@700",.85,1],
+ // ---- Attachées
+ ["Great Vibes","Manuscrite","A","",1.15],["Pinyon Script","Calligraphie","A","",1.05],["Parisienne","Parisienne","A","",1.05],
+ ["Allura","Romantique","A","",1.2],["Tangerine","Plume","A","",1.35],["Corinthia","Dentelle","A","",1.3],
+ ["Playball","Gala","A","",1.05],["Satisfy","Satin","A","",1.1],["Dancing Script","Danse","A","",1.1],
+ ["Luxurious Script","Luxueuse","A","",1.15,1],["Princess Sofia","Princesse","A","",.95,1],["Imperial Script","Impériale","A","",1.15,1],
+ ["MonteCarlo","Monte-Carlo","A","",1.1,1],["Fleur De Leah","Fleur","A","",1.15,1],["Ballet","Ballet","A","",.9,1],
+ ["Herr Von Muellerhoff","Lettre d'amour","A","",1.3,1],["Passions Conflict","Passion folle","A","",1.4,1],["WindSong","Chant du vent","A","",.85,1],
+ ["Festive","Festive","A","",1.15,1],["Rochester","Rochester","A","",1.05,1],["Quintessential","Quintessence","A","",1,1],
+ ["Meddon","Plume ancienne","A","",.8,1],["Mr Bedfort","Bedford","A","",1.3,1],["Meie Script","Meie","A","",1.05,1],
+ ["Praise","Louange","A","",1.1,1],["Ruthie","Ruthie","A","",1.3,1],["Momo Signature","Momo","A","",.9,1],
+ // ---- Gourmandes
+ ["Bagel Fat One","Ronde","G","",.8],["Cherry Bomb One","Bonbon","G","",.85],["Rubik Bubbles","Bulle","G","",.85],
+ ["Agbalumo","Sucrée","G","",.95],["Oleo Script","Dolce","G","",1],["Fraunces","Gourmande","G","ital,wght@1,700",.9],
+ ["Fredoka","Doudou","G","wght@600",.9],["Sniglet","Guimauve","G","",.9],["Righteous","Arrondie","G","",.86],
+ ["Corben","Douce","G","",.82],["Tilt Warp","Gonflée","G","",.9],["Titan One","Cartoon","G","",.88],
+ ["Chango","Bombée","G","",.72],["Spicy Rice","Piment","G","",.88],
+ ["Luckiest Guy","BD","G","",.88,1],["Sonsie One","Swing","G","",.78,1],["Vibur","Vibur","G","",1,1],
+ ["Molle","Molle","G","ital@1",.95,1],["Trade Winds","Tropical","G","",.85,1],
+ // ---- Vintage
+ ["Lobster","Vintage","V","",.9],["Lily Script One","Pin-up","V","",.92],["Pacifico","Années 60","V","",.85],
+ ["Shrikhand","Seventies","V","",.82],["Abril Fatface","Rétro","V","",.82],["Limelight","Cinéma","V","",.82],
+ ["Fascinate","Art déco","V","",.82],["Grandiflora One","Art nouveau","V","",.92],["UnifrakturMaguntia","Gothique","V","",.95],
+ ["Bebas Neue","Affiche","V","",1],
+ ["Sancreek","Saloon","V","",.9,1],["Ewert","Wanted","V","",.8,1],["Pirata One","Pirate","V","",1,1],
+ ["Bigelow Rules","Fête foraine","V","",1.05,1],["Atomic Age","Années 50","V","",.8,1],["Peralta","Tonneau","V","",.85,1],
+ ["UnifrakturCook","Gothique noir","V","wght@700",.95,1],["Jacquard 24","Broderie","V","",.85,1],["Jacquard 12","Point de croix","V","",.85,1],
+ ["Old Standard TT","Journal 1900","V","wght@700",.88,1],["Sevillana","Séville","V","",.95,1],["Flamenco","Flamenco","V","",.95,1],
+ ["Romanesco","Romanesco","V","",1.3,1],["Arbutus","Arbouse","V","",.72,1],["Medula One","Médula","V","",1.1,1],
+ ["Tourney","Tournoi","V","wght@800",.85,1],["Big Shoulders Inline Display","Double trait","V","wght@900",1,1],
+ // ---- Folles
+ ["Rubik Gemstones","Bijou","F","",.88],["Henny Penny","Conte de fées","F","",.88],["Rubik Beastly","Monstre mignon","F","",.88],
+ ["Rubik Spray Paint","Bombe de peinture","F","",.88],["Monoton","Y2K","F","",.72],["Bungee Shade","Relief","F","",.7],
+ ["Rampart One","Contour 3D","F","",.86],["Climate Crisis","Fondue","F","",.68],["Unbounded","Futur","F","",.68],
+ ["Silkscreen","Pixel","F","",.72],
+ ["Mountains of Christmas","Noël","F","wght@700",.95,1],["Caesar Dressing","César","F","",.9,1],["Griffy","Griffe","F","",.95,1],
+ ["Akronim","Akronim","F","",.9,1],["Rubik Microbe","Microbes","F","",.85,1],["Akaya Kanadaka","Akaya","F","",.9,1],
+ ["Saira Stencil One","Pochoir net","F","",.85,1],
+ // ---- À la main
+ ["Permanent Marker","Feutre","M","",.85],["Kaushan Script","Pinceau","M","",1],["Sedgwick Ave Display","Graffiti","M","",1],
+ ["Comforter Brush","Pinceau doux","M","",1.15,1],["Gloria Hallelujah","Alléluia","M","",.85,1],["Reenie Beanie","Gribouille","M","",1.15,1],
+ ["Zeyada","Zeyada","M","",1.15,1],["Crafty Girls","Bricolage","M","",.85,1],["Kalam","Kalam","M","wght@700",.95,1],
+ ["Covered By Your Grace","Grâce","M","",1.05,1],["Swanky and Moo Moo","Meuh","M","",.95,1]
+];
+const FAM = [
+ ["E","Élégantes","Chic comme une couverture de magazine"],
+ ["A","Attachées","Les belles lettres qui se tiennent la main"],
+ ["G","Gourmandes","Rondes, sucrées, à croquer"],
+ ["V","Vintage","Saloon, pin-up, pirate, gothique, fête foraine"],
+ ["F","Folles","Pour celles qui osent tout"],
+ ["M","À la main","Comme un petit mot écrit au feutre"]
+];
+const TEXTE = "Ongles de Léa";
+
+/* chargement des écritures, seulement les lettres du texte (rapide) */
+for (let i = 0; i < L.length; i += 15) {
+  const q = L.slice(i, i + 15).map(([g,,,a]) => "family=" + g.replace(/ /g,"+") + (a ? ":" + a : "")).join("&");
+  const l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = "https://fonts.googleapis.com/css2?" + q + "&text=" + encodeURIComponent(TEXTE) + "&display=swap";
+  document.head.appendChild(l);
+}
+const style = ([g,,,a]) => {
+  let s = "font-family:'" + g + "'";
+  if (/ital/.test(a)) s += ";font-style:italic";
+  const w = (a.match(/wght@(?:1,)?(\d+)/) || [])[1]; if (w) s += ";font-weight:" + w;
+  return s;
+};
+let choisie = "Great Vibes";
+const carte = f => `<button class="carte${f[5] ? " neuve" : ""}${f[0] === choisie ? " on" : ""}" data-g="${f[0]}">
+  <span class="nom" style="${style(f)};font-size:calc(var(--t,25px) * ${f[4]})">${TEXTE}</span><span class="eti">${f[1]}</span></button>`;
+const de = k => L.filter(f => f[2] === k);
+const app = document.getElementById("app");
+const v = new URLSearchParams(location.search).get("v");
+const entete = `<h2>Votre <em>écriture</em></h2><p class="sous">Votre nom, dans le style qui vous ressemble.</p>`;
+
+function versionA() {
+  let fam = "E";
+  const dessine = anim => {
+    const F = FAM.find(x => x[0] === fam);
+    app.innerHTML = `<div class="pan">${entete}
+      <div class="pastilles">${FAM.map(([k,n]) => `<button class="pastille${k===fam?" on":""}" data-k="${k}">${n}</button>`).join("")}</div>
+      <p class="slogan">${F[2]}</p><div class="grille${anim?" anim":""}">${de(fam).map(carte).join("")}</div></div>`;
+  };
+  dessine(false);
+  app.addEventListener("click", e => {
+    const p = e.target.closest(".pastille"); if (p) { fam = p.dataset.k; dessine(true); return; }
+    const c = e.target.closest(".carte"); if (c) { choisie = c.dataset.g; app.querySelectorAll(".carte").forEach(x => x.classList.toggle("on", x === c)); }
+  });
+}
+function versionB() {
+  app.innerHTML = `<div class="pan">${entete}${FAM.map(([k,n,s]) => `<section class="etagere" data-k="${k}">
+    <div class="tete"><h3>${n}</h3><button class="tout">Tout voir →</button></div><p class="slogan">${s}</p>
+    <div class="rang">${de(k).map(carte).join("")}</div></section>`).join("")}</div>`;
+  app.addEventListener("click", e => {
+    const t = e.target.closest(".tout");
+    if (t) { const s = t.closest(".etagere"); const o = s.classList.toggle("ouverte"); t.textContent = o ? "Replier ↑" : "Tout voir →"; return; }
+    const c = e.target.closest(".carte"); if (c) { choisie = c.dataset.g; app.querySelectorAll(".carte").forEach(x => x.classList.toggle("on", x === c)); }
+  });
+}
+/* un nom trop long rapetisse pour tenir dans sa carte (jamais coupé) */
+function ajuste() {
+  app.querySelectorAll(".nom").forEach(n => {
+    const dispo = n.parentElement.clientWidth - 18, r = dispo / n.offsetWidth;
+    n.style.transform = r < 1 ? "scale(" + r + ")" : "";
+  });
+}
+new MutationObserver(() => requestAnimationFrame(ajuste)).observe(app, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+document.fonts.addEventListener("loadingdone", ajuste); addEventListener("resize", ajuste);
+if (v === "a") { document.title = "Version A · Rayons"; versionA(); }
+else if (v === "b") { document.title = "Version B · Vitrine"; versionB(); }
+else {
+  document.title = "Écritures : 2 versions";
+  app.innerHTML = `<div class="compare"><h1>Les écritures <em>par familles</em></h1>
+   <p>Les 121 écritures (57 en ligne + 64 que tu as gardées, point rose) rangées en 6 familles. Touche pour essayer.</p>
+   <div class="duo">
+    <div class="tel"><b>Version A · Rayons</b><span>une famille à la fois, on passe de l'une à l'autre en haut</span>
+      <iframe src="?v=a" title="Version A"></iframe><br><a href="?v=a" target="_blank">Ouvrir en grand</a></div>
+    <div class="tel"><b>Version B · Vitrine</b><span>toutes les familles d'un coup, on glisse chaque rangée</span>
+      <iframe src="?v=b" title="Version B"></iframe><br><a href="?v=b" target="_blank">Ouvrir en grand</a></div>
+   </div></div>`;
+}
+</script>
+</body>
+</html>

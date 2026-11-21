@@ -8,7 +8,7 @@
 <script src="../charms-cat.js?v=1"></script>
 <script src="charms-noms.js?v=1711"></script>
 <script src="charms-couleurs.js?v=1911"></script>
-<script src="looks-marie.js?v=1911a"></script>
+<script src="looks-marie.js?v=1911b"></script>
 <style>
 /* 16/11 · Pôle Design · Personnaliser, version A « L'atelier ».
    Les 5 choses à régler sont TOUJOURS visibles (En-tête · Fond · Écriture · Couleurs · Charms) : on va où on veut,
@@ -772,6 +772,13 @@ body.ep1 .choix:after{display:none!important}
 .supBoite p{margin:0 0 18px;font:400 14px Jost,sans-serif;color:var(--muted)}
 .supBoite div{display:flex;gap:10px}.supBoite button{flex:1;height:44px;border-radius:999px;border:0;font:500 14px Jost,sans-serif;cursor:pointer}
 .supBoite .non{background:var(--fond);color:var(--noir)}.supBoite .oui{background:#B5475E;color:#fff}
+.zeroB{display:inline-flex;align-items:center;gap:7px;border:0;background:none;cursor:pointer;font:400 13px Jost,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(0,0,0,.2);padding:8px 2px;transition:color .15s,transform .15s}
+.zeroB span{text-decoration:none;font-size:15px;transition:transform .35s var(--ressort,ease)}
+.zeroB:hover{color:#B5475E}.zeroB:hover span{transform:rotate(-200deg)}.zeroB:active{transform:scale(.96)}
+.zeroOrdi{position:absolute;left:4px;top:var(--zeroY,100%)}
+.zeroTel{margin-right:auto;margin-left:40px;font-size:12.5px;white-space:nowrap}   /* 40 px : la petite flèche « voir la suite » est à gauche */
+@media (min-width:900px){.zeroTel{display:none}}
+@media (max-width:899px){body.surCharms .zeroTel{display:none}}
 @keyframes supF{from{opacity:0}}@keyframes supB{from{opacity:0;transform:scale(.92) translateY(8px)}}
 
 /* 17/11 v2 (Marie : « on ne voit pas qu'on peut descendre » + « ça se fond avec les fonds ») :
@@ -1235,7 +1242,11 @@ const MES = (() => { try { return JSON.parse(localStorage.getItem("lgnMesLooks")
    un ancien en-tête (photo en plein écran) qui n'existe plus, et l'en-tête de la pro ne changeait pas → retirés.
    On ne garde que les looks dont l'en-tête existe encore (ou qui n'en imposent pas). */
 const enteteExiste = L => !L.e || P.ENT.some(x => x[0] === L.e);
-const tousLooks = () => [...MES, ...(window.LOOKS_MARIE || [])].filter(enteteExiste);
+/* 19/11 (Marie : « supprimer Pixel girl, Baddie léopard… comme je veux, une croix comme les autres ») : dans SA maquette, les looks
+   tout prêts ont aussi la croix ; ils sont mis de côté dans ce navigateur (lgnLooksRetires) et retirés du fichier quand elle dit « j'ai fini ». */
+const RETIRES = (() => { try { return JSON.parse(localStorage.getItem("lgnLooksRetires") || "[]"); } catch (e) { return []; } })();
+const ORDRE_LOOKS = (() => { try { return JSON.parse(localStorage.getItem("lgnOrdreLooks") || "[]"); } catch (e) { return []; } })();   /* l'ordre choisi en glissant */
+const tousLooks = () => [...MES, ...(window.LOOKS_MARIE || []).filter(L => !RETIRES.includes(L.n))].filter(enteteExiste);
 let lookOn = -1;
 ORDRE.unshift("look"); document.body.classList.add("looks6");
 TXT.look = ["Votre <em>look</em>", "Un toucher : tout votre site change. Vous affinerez ensuite si vous voulez."];
@@ -1282,10 +1293,44 @@ const idxFond = nom => P.fonds().findIndex(x => x[0] === nom);
 function rendLooks() { const l = $("lLook");
   l.innerHTML = `<button class="look surp" data-i="s"><span class="vis"><b><i>✦</i>Surprends-moi</b></span>Au hasard</button><button class="look ajout" data-i="plus"><span class="vis"><b><i>+</i>Enregistrer ce look</b></span>Mon site tel qu’il est</button>` + tousLooks().map((L, i) => { const k = idxFond(L.f);
     const vis = L.img ? `<img class="cap" src="../loginail-site/apercus-univers/${L.img}.webp" alt="" loading="lazy">` : L.ph ? `<span class="miniS"></span>` : (k >= 0 ? P.vignetteFond(k) : "") + `<b style="font-family:${P.famille(L.p).replace(/"/g, "'")}">${L.n}</b>`;
-    return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span>${i < MES.length ? `<span class="supL" role="button" aria-label="Supprimer ce look">✕</span>` : ""}${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join("");
+    return `<button class="look${L.img ? " univ" : " mien"}${i === lookOn ? " on" : ""}" data-i="${i}"><span class="vis">${vis}</span><span class="supL" role="button" aria-label="Supprimer ce look">✕</span>${L.n}${L.d ? `<small>${L.d}</small>` : ""}</button>`; }).join("");
   /* 17/11 (Marie) : les looks enregistrés montrent une vraie copie de SON site ; les favoris passent en premier (comme les en-têtes) */
-  requestAnimationFrame(() => l.querySelectorAll(".look.mien").forEach(b => { const L = tousLooks()[+b.dataset.i], m = b.querySelector(".miniS"); if (L && L.ph && m) P.montreSite(m, L.ph, m.offsetWidth || 140); }));
+  requestAnimationFrame(() => l.querySelectorAll(".look.mien").forEach(b => { const L = tousLooks()[+b.dataset.i], m = b.querySelector(".miniS"); if (L && L.ph && m) { P.montreSite(m, L.ph, m.offsetWidth || 140); charmsMini(m, L); } }));
+  { const aj = l.querySelector(".look.ajout"), tl = tousLooks(), bs = [...l.querySelectorAll(".look.mien,.look.univ")];   /* l'ordre choisi par Marie (glisser-déposer) ; les nouveaux en premier */
+    bs.map((b, k) => [b, ORDRE_LOOKS.indexOf((tl[+b.dataset.i] || {}).n), k]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).reverse().forEach(([b]) => aj && aj.after(b)); }
   const ajout = l.querySelector(".look.ajout"); let fv = []; try { fv = FAVS.look; } catch (e) {} fv.slice().reverse().forEach(n => { const i = tousLooks().findIndex(L => L.n === n), b = i >= 0 && l.querySelector(`.look[data-i="${i}"]`); if (b && ajout) ajout.after(b); }); }
+/* 19/11 (Marie : « dans les looks, il n'y a pas les charms ni les étoiles qui bougent ») : la photo du carré ne gardait que le haut
+   du site et jetait les charms au passage. Les charms et les étoiles sont bien enregistrés dans le look (c, pos, et) :
+   on les redessine dans le carré, à leur place, à leur taille, et ils bougent comme sur le vrai site. Vaut pour les anciens looks aussi. */
+const CSS_MINI = `@keyframes lgnFlotte{0%,100%{translate:0 0}50%{translate:0 -7px}}@keyframes lgnSc{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+  .miniCh{position:absolute;z-index:9000;pointer-events:none;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:lgnFlotte 3.2s ease-in-out infinite}
+  .miniEt{position:absolute;z-index:9001;pointer-events:none;container-type:size;display:grid;place-items:center}
+  .miniEt i{font-style:normal;font-size:100cqmin;line-height:1;color:#fff;text-shadow:0 0 6px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 92%,transparent),0 0 14px color-mix(in srgb,var(--lgn-halo,#ffa0c8) 70%,transparent),0 0 1.5px color-mix(in srgb,var(--lgn-halo,#c0508c) 75%,#000 10%);animation:lgnSc 1.6s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){.miniCh,.miniEt i{animation:none}}`;
+function charmsMini(hote, L) { try { const sr = hote.shadowRoot; if (!sr || !L) return; const c = sr.firstElementChild; if (!c) return;
+  c.querySelectorAll(".lgn-sticker").forEach(x => x.remove());   /* une photo récente peut déjà en avoir : on repart des données */
+  const box = c.querySelector(".defile") || c, W = L.ph.w || 390, H = L.ph.ht || 844, ok = P.charmsTous();
+  const st = document.createElement("style"); st.textContent = CSS_MINI; sr.appendChild(st);
+  const places = [[8, 16], [70, 12], [74, 44], [6, 50], [40, 6], [78, 70], [10, 74], [50, 52]];
+  (L.c || []).filter(n => !ok.length || ok.includes(n)).slice(0, P.MAX).forEach((n, i) => { const xy = (L.pos || {})[n] || [...places[i % places.length], 74, 0, 1];
+    const im = document.createElement("img"); im.className = "miniCh"; im.alt = ""; im.src = new URL(P.imgCharm(n), P.D.baseURI).href; const s = xy[2] || 74;
+    Object.assign(im.style, { left: W * xy[0] / 100 + "px", top: H * xy[1] / 100 + "px", width: s + "px", height: s + "px", rotate: (xy[3] || 0) + "deg", scale: xy[4] === -1 ? "-1 1" : "", animationDelay: (-(i * .7) % 3.2).toFixed(2) + "s" });
+    box.appendChild(im); });
+  const et = L.et || []; et.forEach(s => { const e = document.createElement("div"); e.className = "miniEt"; e.innerHTML = `<i style="animation-delay:${(-Math.random() * 1.6).toFixed(2)}s">✦</i>`;
+    Object.assign(e.style, { left: W * s[0] / 100 + "px", top: H * s[1] / 100 + "px", width: (s[2] || 20) + "px", height: (s[2] || 20) + "px" }); box.appendChild(e); });
+  if (getComputedStyle(box).position === "static") box.style.position = "relative"; } catch (e) { console.warn("charms du carré", e); } }
+/* 19/11 (Marie : « mes photos dans l'image des looks, pas la photo de la cliente ») : le carré d'un look garde la photo qui était
+   sur le site AU MOMENT où le look a été enregistré (celle de Marie pour les looks tout prêts). Cliquer le look ne touche jamais
+   la photo de la pro. Ces photos étaient gardées en très grand (≈ 500 Ko par look : la mémoire du navigateur était pleine vers 7 looks) :
+   on les réduit à la taille du carré (≈ 30 Ko). Vaut aussi pour les looks déjà enregistrés. */
+const reduitImage = (src, maxi = 560) => new Promise(ok => { const im = new Image(); im.onload = () => { try { const k = Math.min(1, maxi / Math.max(im.naturalWidth, im.naturalHeight));
+    const c = document.createElement("canvas"); c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k); c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+    const r = c.toDataURL("image/jpeg", .82); ok(r.length < src.length ? r : src); } catch (e) { ok(src); } }; im.onerror = () => ok(src); im.src = src; });
+async function allegePhotos(ph) { if (!ph || !ph.h) return ph;
+  const gros = [...new Set(ph.h.match(/data:image\/[a-z+]+;base64,[A-Za-z0-9+/=]{60000,}/g) || [])]; if (!gros.length) return ph;
+  let h = ph.h; for (const s of gros) { const r = await reduitImage(s); if (r !== s) h = h.split(s).join(r); } return { ...ph, h }; }
+(async () => { let change = false; for (const L of MES) if (L.ph && L.ph.h && L.ph.h.length > 150000) { const p = await allegePhotos(L.ph); if (p.h.length < L.ph.h.length) { L.ph = p; change = true; } }
+  if (change) { try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (e) {} } })();
 const pause = ms => new Promise(r => setTimeout(r, ms));
 async function appliqueLook(L) {
   P.poses().forEach(n => P.charm(n)); while (P.nbEtoiles()) P.enleveEtoiles();
@@ -1332,21 +1377,49 @@ async function auHasard() { const pick = a => a[Math.floor(Math.random() * a.len
     pos[n] = [p[0] + Math.random() * 4 - 2, p[1] + Math.random() * 4 - 2, Math.round(mini + Math.random() * (maxi - mini)), Math.round(Math.random() * 56 - 28), Math.random() < .25 ? -1 : 1]; });
   const et = []; if (Math.random() < .8) { const nbB = 1 + Math.floor(Math.random() * 3); for (let k = 0; k < nbB; k++) { const p = places[(choisis.length + k) % places.length]; [[0, 0, 34], [9, -5, 20], [-7, 6, 15]].forEach(([dx, dy, sz]) => et.push([p[0] + dx, p[1] + dy, sz])); } }
   return { e: pick(P.ENT)[0], f: f[0], p: pick(pol)[0], c: choisis, pos, et }; }
-function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (MES.length + 1)); if (!nom) return;
+async function enregistre() { const nom = prompt("Nom de ce look :", "Mon look " + (MES.length + 1)); if (!nom) return;
+  const ph = await allegePhotos(P.photoSite());
   const box = P.D.querySelector(".defile") || P.D.scrollingElement, W = box.clientWidth, H = box.clientHeight, r1 = v => Math.round(v * 10) / 10, pos = {}, et = [];
   P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)").forEach(im => pos[im.dataset.n] = [r1(parseFloat(im.style.left) / W * 100), r1(parseFloat(im.style.top) / H * 100), Math.round(im._s || 74), Math.round(im._r || 0), im._f === -1 ? -1 : 1]);
   P.D.querySelectorAll(".lgn-etoile").forEach(x => et.push([r1(parseFloat(x.style.left) / W * 100), r1(parseFloat(x.style.top) / H * 100), Math.round(x._s || 20)]));
-  MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, lb: { ...P.libre }, c: P.poses(), pos, et, ph: P.photoSite(), quand: new Date().toISOString() });
+  MES.unshift({ n: nom, e: P.etat.entete, f: P.etat.fond, p: P.etat.police, co: P.etat.couleur, v: P.etat.vif, nc: P.etat.nomc, bl: P.etat.blocs, lb: { ...P.libre }, c: P.poses(), pos, et, ph, quand: new Date().toISOString() });
   try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (e) { MES.slice(3).forEach(L => delete L.ph); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (x) {} }
   lookOn = 0; rendLooks(); bulle("Look « " + nom + " » enregistré ✦"); }
+/* 19/11 (Marie : « je peux classer, trier ») : on attrape un look et on le glisse à sa place (souris ou doigt).
+   Un simple toucher applique toujours le look ; rester appuyée sans bouger = favori, comme avant. L'ordre est gardé dans ce navigateur. */
+(() => { const l = $("lLook"); let g = null, vientDeGlisser = 0;
+  const st = document.createElement("style"); st.textContent = `.look.tire{opacity:.35}.lookFantome{position:fixed;z-index:99999;pointer-events:none;transform:rotate(-3deg) scale(1.06);transition:none;filter:drop-shadow(0 14px 20px rgba(0,0,0,.28))}
+    .look.cible .vis{box-shadow:-4px 0 0 0 var(--noir,#222)!important}.look.cibleApres .vis{box-shadow:4px 0 0 0 var(--noir,#222)!important}`; document.head.appendChild(st);
+  const fin = () => { if (!g) return; if (g.f) g.f.remove(); g.b.classList.remove("tire"); l.querySelectorAll(".cible,.cibleApres").forEach(x => x.classList.remove("cible", "cibleApres")); };
+  l.addEventListener("pointerdown", e => { const b = e.target.closest(".look.mien,.look.univ"); if (!b || e.target.closest(".supL") || e.button > 0) return; g = { b, x: e.clientX, y: e.clientY, id: e.pointerId, on: false }; });
+  addEventListener("pointermove", e => { if (!g || e.pointerId !== g.id) return;
+    if (!g.on) { if (Math.hypot(e.clientX - g.x, e.clientY - g.y) < 10) return; g.on = true; clearTimeout(g.b._tf);   /* on bouge : ce n'est pas un appui long (favori) */
+      const r = g.b.getBoundingClientRect(); g.dx = g.x - r.left; g.dy = g.y - r.top; g.f = g.b.cloneNode(true); g.f.classList.add("lookFantome"); g.f.style.width = r.width + "px";
+      document.body.appendChild(g.f); g.b.classList.add("tire");
+      g.f.querySelectorAll(".miniS").forEach((m, k) => { const o = g.b.querySelectorAll(".miniS")[k]; if (o && o.shadowRoot) { const s =m.attachShadow({ mode: "open" }); s.adoptedStyleSheets = o.shadowRoot.adoptedStyleSheets; s.append(...[...o.shadowRoot.childNodes].map(n => n.cloneNode(true))); m.setAttribute("style", o.getAttribute("style") || ""); } }); }
+    e.preventDefault(); g.f.style.left = e.clientX - g.dx + "px"; g.f.style.top = e.clientY - g.dy + "px";
+    l.querySelectorAll(".cible,.cibleApres").forEach(x => x.classList.remove("cible", "cibleApres"));
+    const sous = document.elementFromPoint(e.clientX, e.clientY), c = sous && sous.closest("#lLook .look.mien,#lLook .look.univ"); g.c = null;
+    if (c && c !== g.b) { const r = c.getBoundingClientRect(), apres = e.clientX > r.left + r.width / 2; c.classList.add(apres ? "cibleApres" : "cible"); g.c = c; g.apres = apres; }
+    const p = l.closest(".panneau,.lookFen,[class*='fen']") || l.parentElement, rp = p.getBoundingClientRect();   /* près du bord : la liste défile */
+    if (e.clientY > rp.bottom - 50) p.scrollBy(0, 12); else if (e.clientY < rp.top + 50) p.scrollBy(0, -12); }, { passive: false });
+  const lache = e => { if (!g || e.pointerId !== g.id) return; const d = g; fin(); g = null; if (!d.on) return; vientDeGlisser = Date.now();
+    if (d.c) { if (d.apres) d.c.after(d.b); else d.c.before(d.b);
+      const tl = tousLooks(), noms = [...l.querySelectorAll(".look.mien,.look.univ")].map(b => (tl[+b.dataset.i] || {}).n).filter(Boolean);
+      ORDRE_LOOKS.length = 0; ORDRE_LOOKS.push(...noms); try { localStorage.setItem("lgnOrdreLooks", JSON.stringify(ORDRE_LOOKS)); } catch (er) {} bulle("Rangé ✦"); } };
+  addEventListener("pointerup", lache); addEventListener("pointercancel", lache);
+  l.addEventListener("click", e => { if (Date.now() - vientDeGlisser < 400) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  l.addEventListener("dragstart", e => e.preventDefault()); })();
 /* la croix d'un look enregistré : on demande avant de supprimer */
 $("lLook").addEventListener("click", e => { const x = e.target.closest(".supL"); if (!x) return; e.preventDefault(); e.stopImmediatePropagation();
-  const i = +x.closest(".look").dataset.i, L = MES[i]; if (!L) return;
+  const i = +x.closest(".look").dataset.i, L = tousLooks()[i]; if (!L) return;
   const d = document.createElement("div"); d.className = "supFond";
   d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Supprimer ce look ?</h4><p>« ${L.n.replace(/</g, "&lt;")} » sera effacé.<br>Votre site ne change pas.</p><div><button class="non">Non</button><button class="oui">Oui, supprimer</button></div></div>`;
   const ferme = () => d.remove();
   d.onclick = ev => { if (ev.target === d || ev.target.closest(".non")) return ferme();
-    if (ev.target.closest(".oui")) { MES.splice(i, 1); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (er) {}
+    if (ev.target.closest(".oui")) { const k = MES.indexOf(L);
+      if (k >= 0) { MES.splice(k, 1); try { localStorage.setItem("lgnMesLooks", JSON.stringify(MES)); } catch (er) {} }
+      else { RETIRES.push(L.n); try { localStorage.setItem("lgnLooksRetires", JSON.stringify(RETIRES)); } catch (er) {} }
       if (lookOn === i) lookOn = -1; else if (lookOn > i) lookOn--; ferme(); rendLooks(); rend("look"); bulle("Look supprimé"); } };
   document.body.appendChild(d); d.querySelector(".non").focus(); }, true);
 $("lLook").onclick = async e => { const b = e.target.closest(".look"); if (!b) return;
@@ -1683,7 +1756,7 @@ function rendAstuces(o) { const a = $("astuces"); if (!a) return; const L = (AST
 function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || innerWidth < 900) return; const libre = Math.round(T.getBoundingClientRect().left - a.parentElement.getBoundingClientRect().left - 48 - 28); a.style.setProperty("--astW", Math.max(0, Math.min(260, libre)) + "px");   /* mesuré à l'écran : jamais sur le téléphone */ a.classList.toggle("cache", libre < 170 || $("app").classList.contains("agrandi"));
   /* on n'affiche que les astuces qui tiennent dans la hauteur du téléphone */
   const bas = T.offsetTop + T.offsetHeight; /* 17/11 (Marie : « plus smooth quand ça se ferme ») : une astuce qui ne tient plus s'efface en douceur au lieu de disparaître d'un coup */
-  [...a.querySelectorAll(".astuce")].forEach(x => x.classList.toggle("loin", a.offsetTop + x.offsetTop + x.offsetHeight > bas)); }
+  [...a.querySelectorAll(".astuce")].forEach(x => x.classList.toggle("loin", a.offsetTop + x.offsetTop + x.offsetHeight > bas - 46)); a.style.setProperty("--zeroY", Math.round(bas - a.offsetTop - 38) + "px"); }   /* 19/11 : « Tout recommencer à zéro » tout en bas, à la hauteur du bas du téléphone */
 { const ouvreAvantAst = ouvre; ouvre = o => { ouvreAvantAst(o); rendAstuces(o); }; }
 /* la flèche de l'onglet En-tête : descend d'un écran ; en bas elle se retourne et remonte ; cachée sur les autres onglets */
 (() => { const ch = document.querySelector(".choix"); if (!ch) return; const fl = document.createElement("button"); fl.type = "button"; fl.className = "flecheEnt cache"; fl.setAttribute("aria-label", "Voir d'autres en-têtes");
@@ -1878,6 +1951,31 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
     const w = btn.offsetWidth || 90, x = T.offsetLeft - w - 12;
     btn.style.setProperty("--lkX", (x >= 8 ? x : T.offsetLeft + 12) + "px"); btn.style.setProperty("--lkY", (T.offsetTop + (x >= 8 ? 6 : 12)) + "px"); };
   addEventListener("resize", () => setTimeout(placeB, 60)); setInterval(placeB, 700); setTimeout(placeB, 100);
+})();
+/* 19/11 (Marie : « un bouton tout en bas, sous les astuces, pour qu'elle puisse tout supprimer si elle veut revenir à 0 »)
+   « Tout recommencer à zéro » : on remet le site comme Loginail l'a créé à son arrivée (fond, en-tête, écriture, couleurs, charms, photo).
+   Ordinateur : sous les astuces · téléphone : en bas à gauche des réglages. On demande toujours avant ; et la flèche « Annuler » peut tout remettre. */
+(() => {
+  let depart = null;
+  const prend = () => { if (!depart && P.pret) depart = etatMaintenant(); };
+  P.branche && setTimeout(function attend() { if (P.pret && $("attente").classList.contains("part")) setTimeout(prend, 900); else setTimeout(attend, 300); }, 300);
+  $("reglages").addEventListener("pointerdown", prend, true);   /* au cas où : avant son tout 1er choix */
+  const fais = (cls) => { const b = document.createElement("button"); b.type = "button"; b.className = "zeroB " + cls; b.innerHTML = `<span aria-hidden="true">↺</span> Tout recommencer à zéro`; b.onclick = demande; return b; };
+  function demande() { prend(); if (!depart) return bulle("Votre site arrive… un instant");
+    const d = document.createElement("div"); d.className = "supFond";
+    d.innerHTML = `<div class="supBoite" role="dialog" aria-modal="true"><h4>Tout recommencer ?</h4><p>Votre site redevient comme au début :<br>fond, en-tête, écriture, couleurs et charms.<br>Vos looks et vos favoris sont gardés.</p><div><button class="non">Non</button><button class="oui">Oui, à zéro</button></div></div>`;
+    const ferme = () => d.remove();
+    d.onclick = async ev => { if (ev.target === d || ev.target.closest(".non")) return ferme();
+      if (!ev.target.closest(".oui")) return; ferme();
+      dernier = 0; memo();   /* la flèche « Annuler » pourra tout remettre */
+      P.effaceLibre(); lookOn = -1; await remetEtat(depart);
+      setTimeout(() => { try { rendLooks(); } catch (e) {} rend(onglet); }, 400);
+      bulle("Votre site est revenu au début ↺"); };
+    document.body.appendChild(d); d.querySelector(".non").focus(); }
+  const surAst = fais("zeroOrdi"), surPied = fais("zeroTel");
+  const pose = () => { const a = $("astuces"); if (a && !a.contains(surAst)) a.appendChild(surAst); };   /* les astuces sont redessinées à chaque onglet */
+  new MutationObserver(pose).observe($("astuces"), { childList: true }); pose();
+  document.querySelector(".pied").prepend(surPied);
 })();
 </script>
 </body>

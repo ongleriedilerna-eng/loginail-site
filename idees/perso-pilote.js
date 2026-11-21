@@ -14,9 +14,8 @@
     ["diagonale", "Diagonale"], ["vague", "Vague"], ["ticket", "Ticket"], ["vitrine", "Vitrine"], ["rideau", "Rideau"], ["loge", "Loge de star"],
     ["balcon", "Balcon"], ["devanture", "Devanture"], ["classique", "Classique"], ["couverture", "Couverture"], ["grandtitre", "Grand titre"]];
   /* D22 · les 39 en-têtes gardées par Marie, dans l'ordre (les anciennes d'abord, puis les nouvelles) */
-  const GARDEES = ["medaillon", "bandeau", "magazine", "pleinecran", "couv", "story", "feed", "bijou", "vinyle", "coulure", "diamant", "disco", "papillons", "bulles",
-    "tele", "carrousel", "viseur", "feuilleter", "swipe", "ondes", "confettis", "arcenciel", "ballons", "chromecadre", "enveloppe", "machine",
-    "aquarelle", "rayons", "popart", "etoile", "brume", "lueurs", "trace", "coeurparticules", "levitation", "live", "pendentif", "foil"];
+  const GARDEES = [/* 21/11 (Marie) : SES 16 en-têtes, dans CET ordre (planche idees/ordre-entetes-2111.html) */ "xperles", "xbracelet", "xbulch", "disco", "feed", "hticket", "xguirch", "xgum", "xloge", "xlecteur", "live", "diamant", "papillons", "viseur", "tele", "vinyle",
+    /* puis les autres */ "cadre", "xperlecoeur", "xsusp", "xchrome", "xgeant", "xcollier", "xlustre", "xstrass", "xguirlande", "xbokeh", "xscint", "xsavon", "xmusique", "xbonbons", "xtap", "xreac", "xnuancier", "medaillon", "bandeau", "magazine", "pleinecran", "couv", "story", "bijou", "coulure", "bulles", "carrousel", "feuilleter", "swipe", "ondes", "confettis", "arcenciel", "ballons", "chromecadre", "enveloppe", "aquarelle", "rayons", "popart", "etoile", "brume", "lueurs", "trace", "coeurparticules", "levitation", "pendentif", "foil"];
   /* 17/11 soir : « Pour vous » = les 42 charms choisis par Marie (page idees/choix-pour-vous.html) */
   const POP = ["cerisedisco", "libellule", "croissant", "cocktail", "ramenoeuf", "casquette", "flamme", "clapet", "bouledisco", "boule8", "cabriolet", "cadeau", "baladeur", "lampeuv", "serum", "pinceacheveux", "cremeconcombre", "bottedisco", "canard", "ourson", "papillonroseverre", "papilloncyber", "bougielotus", "levresgrillz", "planeteetincelles", "coeurpixel", "fleursixties", "tulipe", "cerisesor", "baguettetradition", "onigiri", "painchocolat", "potionviolette", "boueeflamant", "hautsirene", "etoiledemerrose", "hippocampe", "basketargent", "chapeaupaille", "cible", "cassette", "manetteblanche"];
   /* les couleurs du site, rangées par teinte, 16 seulement d'abord (les 51 restent derrière « Plus de couleurs ») */
@@ -63,15 +62,18 @@
       if (!W.F100) { const s = D.createElement("script"); s.src = "../loginail-site/fonds-100.js?v=1511"; D.head.appendChild(s); await new Promise(r => { W.addEventListener("f100", r, { once: true }); setTimeout(r, 4000); }); }
       /* 17/11 soir (Marie : « on doit mettre toutes les en-têtes ») : les 23 nouvelles en-têtes gardées (D21, D22),
          code de maquette idees/entetes-nouvelles/, injectées dans son site comme dans la maquette des en-têtes */
-      for (const n of ["", "2", "3", "4", "5", "6", "7", "8", "9", "10"]) await new Promise(r => { const s = D.createElement("script"); s.src = `../idees/entetes-nouvelles/entetes-plus${n}.js?v=1711`; s.onload = s.onerror = r; D.body.appendChild(s); });
+      for (const n of ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]) await new Promise(r => { const s = D.createElement("script"); s.src = `../idees/entetes-nouvelles/entetes-plus${n}.js?v=1711`; s.onload = s.onerror = r; D.body.appendChild(s); });
       try { const tous = W.eval("ENTETES"); const nom = k => (tous.find(x => x[0] === k) || [k, k])[1];
         P.ENT = GARDEES.filter(k => tous.some(x => x[0] === k)).map(k => [k, nom(k)]); } catch (e) { console.warn(e); }
       await attends(250); copieStyles();
       /* départ sobre (comme la page actuelle) : Fleurs, Affiche, noir, blocs « verre » */
-      P.entete("medaillon", true);   /* 17/11 (Marie) : au départ, une en-tête où l'on voit bien le fond */ await attends(200);
+      P.entete("cadre", true);   /* 18/11 (Marie) : au départ, le Reflet holographique SANS reflet (« la cliente se projette ») */ await attends(200);
       clique('#pzPol [data-p="affiche"]'); clique('.pf-dots [data-co="noir"]'); clique('.pf-vifs [data-vif="noirb"]');
       try { W.eval('if(typeof BR!=="undefined"&&BR){BR.nomc="noir";BR.blocs="verre"}window.__lgnChoix=Object.assign(window.__lgnChoix||{},{nomc:"noir",blocs:"verre"})'); } catch (e) {}
       [900, 2200].forEach(t => setTimeout(() => { if (P.etat.police === "affiche") clique('#pzPol [data-p="affiche"]'); }, t));
+      /* 18/11 (Marie : « un fond de base, pour l'effet waouh ») : le fond Agrumes dès l'arrivée, couleurs assorties */
+      if (P.fonds().some(x => x[0] === P.FOND_DEPART)) { P.fond(P.FOND_DEPART); P.change(function q1(q) { if (q === "fond" && P.etat.fond === P.FOND_DEPART && !P._departFait) { P._departFait = true; if (P.autoAssort !== false) { P.assortir(); P.DEPART_COUL && P.DEPART_COUL(); } } }); }
+      setTimeout(() => P.prechargePhotos(), 1500);
       brancheGestes();   /* 17/11 (Marie) : on ne touche plus le site pour choisir la partie à colorer (inutile) */
       P.pret = true; ok(P); signale("pret");
     }, { once: true });
@@ -82,20 +84,38 @@
      Elle ne voit plus jamais les étapes intermédiaires. */
   let rideau = null, tRideau = 0;
   const animsFinies = () => { try { return !P.D.getAnimations().some(a => a.playState === "running" && a.effect && a.effect.getTiming().iterations !== Infinity); } catch (e) { return true; } };
-  P.rideau = (duree = 420) => { const D = P.D; if (!D) return; clearTimeout(tRideau);
+  P.rideau = (duree = 420, maxi = 1800) => { const D = P.D; if (!D) return; clearTimeout(tRideau); P._verrou = false;
     if (!rideau || !rideau.isConnected) { const e = D.querySelector(".ecran"); if (!e || !e.parentElement) return;
       const c = e.cloneNode(true); c.removeAttribute("id"); c.dataset.rideau = 1; c.querySelectorAll("[id]").forEach(x => x.removeAttribute("id"));
       Object.assign(c.style, { position: "absolute", left: e.offsetLeft + "px", top: e.offsetTop + "px", width: e.offsetWidth + "px", height: e.offsetHeight + "px", zIndex: 99999, pointerEvents: "none", transition: "opacity .14s ease", margin: 0 });
       c.querySelectorAll(".pzPoign").forEach(x => x.remove());
+      /* 18/11 soir (Marie : « le carré s'affiche ou pas », « le nom fait un bond ») : la copie est VRAIMENT figée —
+         ses couleurs sont recopiées telles quelles (sinon elles changent avec le site) et ses animations d'entrée ne rejouent pas */
+      try { const cs = P.W.getComputedStyle(e); for (let i = 0; i < cs.length; i++) { const k = cs[i]; if (k.startsWith("--")) c.style.setProperty(k, cs.getPropertyValue(k)); } } catch (x) {}
+      try { const sel = ".he-btn,.he-txt,.hent h1,.hf-nom,.fiche,.note,.kick,button"; const o = [...e.querySelectorAll(sel)], k = [...c.querySelectorAll(sel)];
+        o.forEach((x, i) => { const y = k[i]; if (!y) return; const z = P.W.getComputedStyle(x); ["background-color", "background-image", "color", "border-color", "box-shadow"].forEach(p => y.style.setProperty(p, z.getPropertyValue(p), "important")); }); } catch (x) {}
+      if (!D.getElementById("pzFige")) { const st = D.createElement("style"); st.id = "pzFige"; st.textContent = "[data-rideau],[data-rideau] *{animation:none!important;transition:none!important}"; D.head.appendChild(st); }
       e.after(c); const d0 = e.querySelector(".defile"), d1 = c.querySelector(".defile"); if (d0 && d1) d1.scrollTop = d0.scrollTop; rideau = c; }
-    garde(); const t0 = Date.now(); const leve = () => { if (Date.now() - t0 < 1800 && (!animsFinies() || P._attente > 0 || !ecritureOk())) { tRideau = setTimeout(leve, 60); return; }
-      try { P.ajusteBouton(99); } catch (e) {} const c = rideau; rideau = null; if (!c) return; P.leves.forEach(f => { try { f(); } catch (e) {} }); c.remove(); };   /* d'un coup : le téléphone et la page changent au même instant */
+    garde(); const t0 = Date.now(); let sig0 = null;
+    /* 18/11 soir (Marie : « le nom fait un bond ») : sous la copie, on règle la taille du nom comme elle sera à l'écran (copie masquée le temps de mesurer,
+       dans la même image : rien ne se voit), et on ne dévoile qu'une fois la taille STABLE deux fois de suite (images chargées, mise en page finie) */
+    const mesure = () => { const c = rideau, par = c && c.parentNode, suiv = c && c.nextSibling; try { if (c) c.remove(); P.ajusteBouton(999); const n = P.D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"), b = n && (n.closest(".he-txt") || n.parentElement);
+        return n ? n.style.fontSize + "|" + Math.round(n.getBoundingClientRect().height) + "|" + (b ? b.style.translate : "") : ""; } catch (e) { return ""; } finally { if (c && par) par.insertBefore(c, suiv); } };
+    const leve = () => { const sig = mesure(), stable = sig === sig0; sig0 = sig;
+      if (Date.now() - t0 < maxi && (!animsFinies() || P._attente > 0 || !ecritureOk() || !stable)) { tRideau = setTimeout(leve, 60); return; }
+      const c = rideau; rideau = null; if (!c) return; c.remove(); P._verrou = true; P.leves.forEach(f => { try { f(); } catch (e) {} }); };   /* la taille du nom est calculée APRÈS avoir enlevé la copie, dans la même image : plus de bond */   /* d'un coup : le téléphone et la page changent au même instant */
     tRideau = setTimeout(leve, duree); };
   P._attente = 0; P.leves = []; P.auLever = f => P.leves.push(f);
   /* le GARDIEN de l'écriture : le site remet parfois l'écriture de départ ~0,5 s après un changement ; on la remet aussitôt */
   const premiere = s => String(s || "").split(",")[0].replace(/["']/g, "").trim().toLowerCase();
   const ecritureOk = () => { try { const k = P.etat.police; if (!k) return true; const n = P.D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"); if (!n) return true;
     const b = P.D.querySelector(`#pzPol [data-p="${k}"]`); if (!b) return true; return premiere(P.W.getComputedStyle(n).fontFamily) === premiere(b.style.fontFamily || P.W.getComputedStyle(b).fontFamily); } catch (e) { return true; } };
+  /* 18/11 soir (Marie : « quand je change de photo, ça change la couleur du bouton ») : le site se reconstruit d'abord avec son bouton doré par défaut ;
+     le rideau reste posé tant que le bouton n'a pas retrouvé SA couleur */
+  const boutonOk = () => { try { const b = P.D.querySelector(".ecran .he-btn"); if (!b) return true; let att = P.libre && P.libre.bt;
+      if (!att) { const v = P.D.querySelector(`.pf-vifs [data-vif="${P.etat.vif}"]`); if (!v) return true; const cv = P.W.getComputedStyle(v); if (cv.backgroundImage !== "none") return true; att = cv.backgroundColor; }
+      const t = P.D.createElement("i"); t.style.color = att; P.D.body.appendChild(t); const want = P.W.getComputedStyle(t).color; t.remove();
+      return P.W.getComputedStyle(b).backgroundColor === want; } catch (e) { return true; } };
   let gardeJusqua = 0, tGarde = 0;
   const garde = () => { gardeJusqua = Date.now() + 1600; if (tGarde) return;
     const tour = () => { if (!ecritureOk()) { clique(`#pzPol [data-p="${P.etat.police}"]`); P.calme(); P.ajusteBouton(99); }
@@ -123,16 +143,51 @@
   P.vignetteFond = i => { const W = P.W; if (!W.F100) return ""; const t = document.createElement("div"); t.innerHTML = W.F100.rond(i); const c = t.querySelector(".f100"); if (!c) return "";
     c.removeAttribute("style"); const tu = c.querySelector(".tuile"); if (tu) ["width", "height", "border-radius"].forEach(k => tu.style.removeProperty(k));
     return c.outerHTML.replace(/fonds-img\//g, "fonds-mini/"); };
-  P.fond = n => { const Pz = P.D.getElementById("pzFonds"); if (!Pz) return; P.etat.fond = n; P.rideau(90); P._attente++;
+  /* 18/11 soir (Marie : « le carré bug quand je change de fond ») : avec assort=true, les couleurs assorties sont posées DANS LE MÊME INSTANT que le fond,
+     derrière le rideau (avant : 80 ms après, on voyait le carré changer de couleur) */
+  P.fond = (n, assort) => { const Pz = P.D.getElementById("pzFonds"); if (!Pz) return; P.etat.fond = n; P.rideau(90); P._attente++;
     precharge(n).then(() => { P._attente--; if (P.etat.fond !== n) return; const b = P.D.createElement("button"); b.dataset.f = n; b.style.display = "none"; Pz.appendChild(b); b.click(); b.remove();
+      if (assort) try { P.assortir(); } catch (e) {}
       P.calme(); haloEtoiles(); signale("fond"); }); };
   /* « Assortir à mon fond » : chaque fond connaît sa couleur d'encre ; on prend le bouton le plus proche */
   const rgb = s => { const h = (String(s).match(/#([0-9a-f]{6})/i) || [])[1]; if (h) return [0, 2, 4].map(k => parseInt(h.substr(k, 2), 16)); const m = String(s).match(/\d+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0]; };
   const dist = (a, b) => { const x = rgb(a), y = rgb(b); return (x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2 + (x[2] - y[2]) ** 2; };
-  P.assortir = () => { const f = P.fonds().find(x => x[0] === P.etat.fond); if (!f || !f[4]) return false;
+  P.FOND_DEPART = "Ruban framboise sur crème";
+  /* son trait framboise n'est pas dans la couleur moyenne : on pose nous-mêmes encadrés poudre + bouton framboise */
+  P.DEPART_COUL = () => { if (P.D.querySelector('.pf-dots [data-co="poudre"]')) P.couleur("poudre", true); if (P.D.querySelector('.pf-vifs [data-vif="framboiseb"]')) P.vif("framboiseb"); P.nomc("bordeaux"); };   /* 18/11 soir (Marie) : le beige avec le trait rose */
+  /* 18/11 (Marie : « sur un fond rose, il me met du jaune ») : avant, on suivait UNE couleur de détail du fond (f[4]), parfois jaune sur un fond rose.
+     Maintenant : la couleur DOMINANTE du fond (mesurée, teintes-fonds.js) décide ; le détail n'est gardé que s'il est de la même famille. */
+  const tsl = c => { const [r, g, b] = rgb(c).map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    const s = d ? d / (1 - Math.abs(2 * l - 1)) : 0; let h = 0; if (d) h = mx === r ? 60 * (((g - b) / d) % 6) : mx === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4); return [(h + 360) % 360, s, l]; };
+  const ecH = (a, b) => Math.min(Math.abs(a - b), 360 - Math.abs(a - b));
+  const proche = (cible, liste) => { const C = tsl(cible); return liste.reduce((m, b) => { const note = x => { const X = tsl(x.style.background);
+      if (C[1] < .15) return dist(x.style.background, cible) / 65025;                     /* fond neutre (blanc, beige, noir) : la plus proche, tout simplement */
+      return ecH(X[0], C[0]) / 60 + Math.abs(X[2] - C[2]) * 1.2 + (X[1] < .15 ? 1.5 : 0); };   /* sinon : même famille de couleur d'abord */
+    return note(b) < note(m) ? b : m; }); };
+  P.assortir = () => { const f = P.fonds().find(x => x[0] === P.etat.fond); if (!f) return false;
+    const dom = (window.TEINTES_FONDS || {})[f[0]] || f[4], acc = f[4] || dom; if (!dom) return false;
+    const D = tsl(dom), A = tsl(acc);
+    /* 18/11 soir : beaucoup de fonds ont reçu la même couleur de détail « moutarde » par défaut (#B?8?2?) : on l'ignore.
+       Un fond crème, beige, gris, noir ou blanc compte comme « sans couleur ». */
+    const dore = A[0] >= 28 && A[0] <= 62 && A[1] > .3 && !/dor|or|gold|mimosa|soleil|citron|jaune|miel|tournesol|banane/i.test(f[0]);   /* du doré seulement si le fond EST doré ou jaune */
+    const moutarde = dore || (A[0] >= 34 && A[0] <= 50 && A[1] > .5 && A[2] > .28 && A[2] < .5), accVrai = !moutarde && A[1] >= .35 && A[2] > .15 && A[2] < .8;
+    if (D[1] < .15 || (D[2] > .65 && D[1] < .45) || D[2] < .2) D[1] = 0;
+    const ref = accVrai ? acc : dom;
     const vifs = [...P.D.querySelectorAll(".pf-vifs [data-vif]")].filter(b => b.dataset.vif !== "blancb"); if (!vifs.length) return false;
-    const v = vifs.reduce((m, b) => dist(b.style.background, f[4]) < dist(m.style.background, f[4]) ? b : m); P.vif(v.dataset.vif);
-    const dots = [...P.D.querySelectorAll(".pf-dots [data-co]")]; const d = dots.reduce((m, b) => dist(b.style.background, f[4]) < dist(m.style.background, f[4]) ? b : m); P.couleur(d.dataset.co, true); return true; };
+    const R = tsl(ref); if (R[2] > .6 && (R[0] >= 315 || R[0] <= 15)) R[0] = 338;   /* un rose pâle → un bouton framboise, pas rouge */
+    const cibleV = R[1] < .15 ? ref : `hsl(${R[0]},${Math.max(45, R[1] * 100)}%,${Math.min(48, R[2] * 100)}%)`;   /* le bouton : la même famille, assez soutenue pour se lire */
+    /* 18/11 soir (Marie : « fond noir et bouton jaune ??? ») : fond sans couleur (noir, gris, blanc, beige) → bouton noir, sobre */
+    const vifChoisi = (D[1] < .15 && !accVrai) ? (vifs.find(b => b.dataset.vif === "noirb") || proche(dom, vifs)) : proche(hexDe(cibleV), vifs);
+    P.vif(vifChoisi.dataset.vif);
+    const dots = [...P.D.querySelectorAll(".pf-dots [data-co]")]; const dot = proche(dom, dots); P.couleur(dot.dataset.co, true);
+    /* 18/11 soir (Marie : « le nom n'a pas bougé ») : le nom suit aussi — même famille que le bouton, assez foncé pour se lire ; sur encadrés foncés, en blanc */
+    try { const clair = tsl(dot.style.background)[2] > .45;
+      let nc = "noir"; if (!clair) nc = "blanc";
+      else if (D[1] >= .15 || accVrai) { const V = tsl(vifChoisi.style.background); const cand = Object.entries(P.NOMC).filter(([k, v]) => !/gradient/.test(v) && v.startsWith("#")).map(([k, v]) => [k, tsl(v)]).filter(([, x]) => x[2] < .5 && x[1] > .2);
+        const best = cand.reduce((m, x) => { const n = ecH(x[1][0], V[0]) / 60 + Math.abs(x[1][2] - Math.min(V[2], .4)); return !m || n < m[0] ? [n, x[0]] : m; }, null); if (best && best[0] < .6) nc = best[1]; }
+      P.nomc(nc); } catch (e) {}
+    return true; };
+  const hexDe = c => { if (/^#/.test(c)) return c; const d = document.createElement("i"); d.style.color = c; document.body.appendChild(d); const m = getComputedStyle(d).color.match(/\d+/g).slice(0, 3); d.remove(); return "#" + m.map(x => (+x).toString(16).padStart(2, "0")).join(""); };
 
   /* 17/11 soir (Marie) : remettre « Votre site » — la couleur du NOM a sa propre palette (comme l'ancienne page, hero-format.js),
      .pf-dots = la couleur du SITE, et les blocs « Sur blanc / Sur couleur » */
@@ -189,7 +244,15 @@
   function feuilleSite() { if (feuille) return feuille; const regles = [];
     for (const sh of P.D.styleSheets) { let rs; try { rs = sh.cssRules; } catch (e) { continue; } const base = sh.href || P.D.baseURI;
       const abs = t => t.replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (m, q, u) => `url("${new URL(u, base).href}")`);
-      for (const r of rs) { if (r.type === 3 || r.type === 5) continue; regles.push(abs(r.cssText).replace(/:root/g, ":host")); } }
+      /* 19/11 (Marie : « les looks ne sont pas en format téléphone, ça dénature mes créations ») : les petits téléphones (looks,
+         en-têtes) prenaient les tailles de l'ÉCRAN de l'ordinateur (règles « téléphone » sautées, hauteurs en vh de l'ordinateur).
+         On les calcule comme dans le vrai téléphone du milieu (390 × 844) : même rendu sur ordinateur et sur téléphone. */
+      const W = P.W, vw = (W && W.innerWidth) || 390, vh = (W && W.innerHeight) || 844;
+      const unites = t => t.replace(/(^|[^\w.-])(\d*\.?\d+)[dsl]?v(h|w|min|max)\b/g, (m, a, n, u) => a + (+n * (u === "h" ? vh : u === "w" ? vw : u === "min" ? Math.min(vw, vh) : Math.max(vw, vh)) / 100).toFixed(2) + "px");
+      const ajoute = liste => { for (const r of liste) { if (r.type === 3 || r.type === 5) continue;
+        if (r.type === 4) { let ok = false; try { ok = (W || window).matchMedia(r.conditionText || r.media.mediaText).matches; } catch (e) {} if (ok) ajoute(r.cssRules); continue; }
+        regles.push(unites(abs(r.cssText)).replace(/:root/g, ":host")); } };
+      ajoute(rs); }
     P.policesCss(); feuille = new CSSStyleSheet(); feuille.replaceSync(regles.join("\n") + "\n:host{display:block;position:relative;overflow:hidden}\n:host>.ecran::before{display:none!important}\n:host *{overflow:hidden!important;scroll-behavior:auto!important}\n.ile{display:none!important}"); return feuille; }
   /* 17/11 (Marie : « ça met grave du temps ») : la mise en forme du site est recopiée UNE fois par tournée, plus 37 fois */
   P.nouvelleFeuille = () => { feuille = null; };
@@ -200,7 +263,8 @@
   /* 17/11 (Marie : « le bouton Réserver un créneau ne doit jamais dépasser ») : si le bouton du haut du site touche le bas
      du 1er écran, le nom rapetisse doucement jusqu'à ce que le bouton soit entier (règle pour TOUTES les en-têtes et écritures) */
   const enMouvement = () => { try { return P.D.getAnimations().some(a => a.playState === "running" && a.effect && a.effect.getTiming().iterations !== Infinity); } catch (e) { return false; } };
-  P.ajusteBouton = (essai = 0) => { if (enMouvement() && essai < 25) return setTimeout(() => P.ajusteBouton(essai + 1), 120);   /* 17/11 : on mesure quand plus rien ne bouge (sinon le nom rapetissait à chaque clic) */
+  P.ajusteBouton = (essai = 0) => { if (P._verrou && essai !== 999) return;   /* 18/11 soir : une fois le site dévoilé, la taille du nom ne bouge plus jusqu'au prochain changement */
+    if (enMouvement() && essai < 25) return setTimeout(() => P.ajusteBouton(essai + 1), 120);   /* 17/11 : on mesure quand plus rien ne bouge (sinon le nom rapetissait à chaque clic) */
     try { const D = P.D, W = P.W, H = W.innerHeight, marge = 30;
     const b = [...D.querySelectorAll(".ecran button")].find(x => /r[ée]server un cr[ée]neau/i.test(x.textContent)); if (!b) return;
     const nom = D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"); if (!nom) return;
@@ -209,11 +273,14 @@
     /* 17/11 (Marie) : le nom tient TOUJOURS sur une seule ligne : on rapetisse juste ce qu'il faut */
     nom.style.setProperty("white-space", "nowrap", "important");
     const cadre = nom.parentElement, cs = W.getComputedStyle(cadre), dispo = cadre.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
-    const large = () => Math.max(nom.scrollWidth, nom.getBoundingClientRect().width) > dispo;
-    let m = 0; while (large() && m++ < 30) { f *= .95; nom.style.setProperty("font-size", f + "px", "important"); }
+    /* 18/11 soir (Marie : « le nom fait un bond ») : EXACTEMENT le même calcul que le site (hero-format.js, ajusteNom) — avant, les deux ne tombaient
+       pas d'accord (44 px ici, 42 px là-bas) et le nom sautait de l'un à l'autre */
+    const large = () => nom.scrollWidth > nom.clientWidth + 1 || Math.max(nom.scrollWidth, nom.getBoundingClientRect().width) > dispo + 40;
+    let m = 0; while (large() && f > 18 && m++ < 40) { f *= .95; nom.style.setProperty("font-size", f.toFixed(1) + "px", "important"); }
     const touche = () => { const r = b.getBoundingClientRect(); return r.top < H && r.bottom > H - marge; };
-    while (touche() && n++ < 6) { f *= .94; nom.style.setProperty("font-size", f + "px", "important"); }
-    if (touche()) { const d = Math.ceil(b.getBoundingClientRect().bottom - (H - marge)); bloc.style.setProperty("translate", `0 -${d}px`); } } catch (e) {} };
+    /* 18/11 soir : on ne rétrécit plus le nom pour faire remonter le bouton (le site retenait cette taille et le nom faisait des bonds) : le carré remonte, c'est tout */
+    if (touche()) { const d = Math.ceil(b.getBoundingClientRect().bottom - (H - marge)); bloc.style.setProperty("translate", `0 -${d}px`); }
+    } catch (e) {} };
   let tAj = 0; const ajusteBientot = () => { clearTimeout(tAj); tAj = setTimeout(() => P.ajusteBouton(), 80); };
   P.miniEntete = (hote, k, largeur) => { const W = P.W, D = P.D; try {
     const ec = D.querySelector(".ecran"); if (!ec || !W.entete || !W.__eT) return; const fs = feuilleSite(), root = D.documentElement.style.cssText, sc = largeur / 390;
@@ -225,6 +292,8 @@
     c.querySelectorAll("img[src]").forEach(x => { x.src = new URL(x.getAttribute("src"), D.baseURI).href; x.loading = "eager"; });
     const tmp = document.createElement("div"); tmp.innerHTML = W.entete(k, ...W.__eT); const n = tmp.firstElementChild; if (!n) return; n.style.setProperty("--acc", acc);
     const h = c.querySelector(".defile>.hent,.defile>[data-s='accueil']") || c.querySelector(".hent,[data-s='accueil']"); if (h) { h.replaceWith(n); n.classList.remove("hf-cache"); } else (c.querySelector(".defile") || c).prepend(n); c.classList.add("a-entete");
+    /* 21/11 (Marie : « ça met énormément de temps à charger ») : la vignette ne montre que le 1er écran → on ne garde que le haut du site (avant : le site entier, 740 éléments et 34 photos, recopié 85 fois) */
+    { const df = c.querySelector(".defile"); if (df) { const i = [...df.children].indexOf(n); [...df.children].slice(Math.max(i, 0) + 2).forEach(x => x.remove()); } c.querySelectorAll(":scope>.fab-menu,:scope>.dk-panel,:scope>.menu,:scope>.lm-pan,:scope>.feuille,:scope>.idx,:scope>.dispo2.off").forEach(x => x.remove()); }
     if (SALON.vrai) { const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT); let t; while ((t = w.nextNode())) t.nodeValue = t.nodeValue.replace(SALON.vrai, SALON.nom).replace(SALON.vrai.toUpperCase(), SALON.nom.toUpperCase()); }
     Object.assign(c.style, { position: "absolute", left: "0", top: "0", width: "390px", height: "844px", borderRadius: "0", transform: `scale(${sc})`, transformOrigin: "0 0" });
     const sr = hote.shadowRoot || hote.attachShadow({ mode: "open" }); sr.adoptedStyleSheets = [fs]; sr.innerHTML = ""; hote.setAttribute("style", root); sr.appendChild(c);
@@ -249,7 +318,7 @@
   P.charmsTous = () => Object.keys(P.W.CH_IMG || {});
   P.familles = () => (window.CH_FAMS || []).filter(f => !f[1].startsWith("*")).map(f => f[0]);
   P.charmsDe = fam => fam === "Populaires" ? POP : P.charmsTous().filter(n => (window.CH_CAT || {})[n] === fam);
-  P.imgCharm = n => `../loginail-site/charms/${n}.png`;
+  P.imgCharm = n => `../loginail-site/charms/${n}.webp`;   /* 20/11 : comme la vraie page (des charms récents n'existent qu'en .webp) */
   P.MAX = 21;   /* 17/11 (Marie) : 21 charms maximum, comme l'ancienne page */
   P.poses = () => [...P.D.querySelectorAll(".lgn-sticker:not(.lgn-etoile)")].map(x => x.dataset.n);
   const boite = () => P.D.querySelector(".defile") || P.D.scrollingElement;
@@ -257,7 +326,7 @@
   P.charm = n => { const D = P.D, box = boite();
     const deja = D.querySelector(`.lgn-sticker[data-n="${n}"]`); if (deja) { if (choisi === deja) choisit(null); deja.remove(); signale("charms"); return false; }
     if (P.poses().length >= P.MAX) return false;
-    const im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".png"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
+    const im = D.createElement("img"); im.src = "../loginail-site/charms/" + n + ".webp"; im.className = "lgn-sticker"; im.draggable = false; im.dataset.n = n;
     const i = P.poses().length, places = [[.08, .16], [.7, .12], [.74, .44], [.06, .5], [.4, .06], [.78, .7], [.1, .74], [.5, .52]], pl = places[i % places.length];
     im._s = 74; im._r = Math.round(Math.random() * 30 - 15);
     im.style.cssText = `position:absolute;z-index:9000;left:${box.clientWidth * pl[0]}px;top:${box.scrollTop + box.clientHeight * pl[1]}px;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:pzArrive .5s cubic-bezier(.3,1.5,.5,1) both`;
@@ -368,14 +437,29 @@
   /* sa photo du haut (même méthode que la page actuelle : choisitPhoto / litPhoto) */
   P.photos = () => { try { return P.W.eval("(BR.photos||[]).map(p=>p.url)").map(u => new URL(u, P.D.baseURI).href); } catch (e) { return []; } };
   P.photoUne = () => { try { const u = P.W.eval("(BR.photos||[])[BR.principale||0]?.url||''"); return u ? new URL(u, P.D.baseURI).href : ""; } catch (e) { return ""; } };
-  P.choisitPhoto = u => { P.rideau(650); try { P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0}
+  /* 18/11 soir (Marie : « changer de photo, ça met 3 heures ») : toutes ses photos sont chargées d'avance ;
+     au clic, on attend juste que LA photo soit prête, puis le changement se fait en moins d'une demi-seconde */
+  const photoPrete = {}; P.prechargePhotos = () => { try { P.photos().forEach(u => { if (!photoPrete[u]) { const im = new Image(); im.decoding = "async"; im.src = u; photoPrete[u] = im; } }); } catch (e) {} };
+  /* 19/11 (Marie : « quand je change une photo, ça enlève les charms ») : changer, retirer ou remettre une photo redessine
+     tout l'écran du site, et les charms posés (et les étoiles) partaient avec. On les garde de côté et on les remet à leur place. */
+  const cleCh = x => [x.dataset.n, x.dataset.g || "", x.style.left, x.style.top].join("|");
+  const gardeCharms = fn => { const pris = [], vus = new Set();
+    try { P.D.querySelectorAll(".lgn-sticker").forEach(x => { const k = cleCh(x); if (vus.has(k)) x.remove(); else { vus.add(k); pris.push(x); } }); } catch (e) {}
+    /* le site peut aussi recopier les charms dans son nouvel écran : on garde les nôtres, on enlève les copies (sinon ils se dédoublent) */
+    const remet = () => { try { const box = boite(), k0 = new Set(pris.map(cleCh)); pris.forEach(x => { if (!x.isConnected) box.appendChild(x); });
+      P.D.querySelectorAll(".lgn-sticker").forEach(x => { if (!pris.includes(x) && k0.has(cleCh(x))) x.remove(); }); } catch (e) {} };
+    try { return fn(); } finally { if (pris.length) { remet(); [0, 60, 200, 500, 900].forEach(t => setTimeout(remet, t)); } } };
+  P.choisitPhoto = u => { const im = photoPrete[u] || Object.assign(new Image(), { src: u }); photoPrete[u] = im; let fait = false;
+    const go = () => { if (fait) return; fait = true; gardeCharms(() => P._choisitPhoto(u)); };
+    if (im.complete) go(); else { im.onload = im.onerror = go; setTimeout(go, 1200); } };
+  P._choisitPhoto = u => { P.rideau(600, 900); try {   /* le site remet ses couleurs ~0,5 s après une nouvelle photo : la copie reste jusque-là ; 18/11 : sa 1re photo remplace « Votre photo apparaîtra ici » partout */ P.W.eval(`(()=>{const u=${JSON.stringify(u)};let i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0){BR.photos.unshift({url:u,auteurs:[]});if(BR.salon!=null)BR.salon++;i=0;if(BR.photos.length===1)PH.vide=u}
     BR.principale=i;const o=BR.photos.map((_,k)=>k);if(i>0){o.splice(i,1);o.unshift(i)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) { console.warn(e); }
     setTimeout(() => { if (P.etat.police) clique(`#pzPol [data-p="${P.etat.police}"]`); }, 120); P.calme(); ajusteBientot(); signale("photo"); };
   /* 17/11 (Marie) : elle peut retirer une photo (on en garde toujours au moins une) ; remetPhoto = « Annuler » */
-  P.retirePhoto = u => { try { return P.W.eval(`(()=>{const u=${JSON.stringify(u)};if(BR.photos.length<2)return null;const i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0)return null;
+  P.retirePhoto = u => gardeCharms(() => { try { return P.W.eval(`(()=>{const u=${JSON.stringify(u)};if(BR.photos.length<2)return null;const i=BR.photos.findIndex(p=>new URL(p.url,document.baseURI).href===u);if(i<0)return null;
     const p=BR.photos.splice(i,1)[0];if(BR.salon!=null){if(BR.salon===i)BR.salon=null;else if(BR.salon>i)BR.salon--}const une=(BR.principale||0);if(une===i)BR.principale=0;else if(une>i)BR.principale=une-1;
-    const i0=BR.principale||0,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);delete PH["g"+BR.photos.length];const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1);return {p,i,une}})()`); } catch (e) { console.warn(e); return null; } finally { signale("photo"); } };
-  P.remetPhoto = r => { if (!r) return; try { P.W.eval(`(()=>{const r=${JSON.stringify(r)};BR.photos.splice(r.i,0,r.p);BR.principale=r.une;const i0=r.une,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) {} signale("photo"); };
+    const i0=BR.principale||0,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);delete PH["g"+BR.photos.length];const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1);return {p,i,une}})()`); } catch (e) { console.warn(e); return null; } finally { signale("photo"); } });
+  P.remetPhoto = r => { if (!r) return; gardeCharms(() => { try { P.W.eval(`(()=>{const r=${JSON.stringify(r)};BR.photos.splice(r.i,0,r.p);BR.principale=r.une;const i0=r.une,o=BR.photos.map((_,k)=>k);if(i0>0){o.splice(i0,1);o.unshift(i0)}o.forEach((k,j)=>PH["g"+j]=BR.photos[k].url);const b=document.querySelector("[data-pf]");b&&b._maj&&b._maj(1)})()`); } catch (e) {} signale("photo"); }); };
   P.litPhoto = fi => { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => { const m = 1400, k = Math.min(1, m / Math.max(im.width, im.height)), cv = document.createElement("canvas");
     cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); P.choisitPhoto(cv.toDataURL("image/jpeg", .85)); }; im.src = r.result; }; r.readAsDataURL(fi); };
   P.enHaut = () => { try { const b = P.D.querySelector(".defile") || P.D.scrollingElement; b.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {} };

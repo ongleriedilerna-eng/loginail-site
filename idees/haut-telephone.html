@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accueil téléphone · versions côte à côte</title>
+<!-- Maquette Design : plusieurs versions de l'accueil côte à côte, chacune dans un iPhone (idees/telephone.html?v=…).
+     ?v=S0,S1,S2&go=pile (par défaut : les cartes « l'un sur l'autre »). -->
+<style>
+  html,body{margin:0;height:100%;background:#EFE6DF}
+  .cols{display:flex;height:100%;gap:6px;padding:6px;box-sizing:border-box}
+  iframe{flex:1;border:0;min-width:0}
+</style>
+</head>
+<body>
+<div class="cols" id="cols"></div>
+<script>
+  const q = new URLSearchParams(location.search);
+  const vs = (q.get('v') || 'S0,S1,S2').split(','), go = q.get('go') || 'pile';
+  vs.forEach(v => { const f = document.createElement('iframe'); f.src = 'telephone.html?v=' + v + '&go=' + go; f.title = 'Version ' + v; document.getElementById('cols').appendChild(f); });
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Idée A · Votre espace est prêt</title>
+<link href="../loginail-creer/polices.css" rel="stylesheet">
+<style>
+/* Idée A « Sa vitrine » : on lui MONTRE son site (le nom de son salon en grand), au lieu d'une liste. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#6B625C;--surface:#FBF9F6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--fond);font-family:Jost,sans-serif;color:var(--noir);-webkit-font-smoothing:antialiased;overflow:hidden}
+#tel{max-width:480px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 26px) 24px calc(env(safe-area-inset-bottom) + 22px)}
+.logo{font:300 11px Jost;letter-spacing:.5em;text-align:center;color:var(--muted)}
+.centre{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.vitrine{width:78%;aspect-ratio:4/5;border-radius:26px;position:relative;overflow:hidden;
+  background:radial-gradient(120% 80% at 20% 0%,#F4D9D3 0%,transparent 60%),radial-gradient(100% 70% at 100% 100%,#E9D6EF 0%,transparent 60%),#FBF3EF;
+  box-shadow:0 30px 60px -28px rgba(30,28,27,.45),0 0 0 1px rgba(30,28,27,.06);
+  animation:monte .7s cubic-bezier(.2,.8,.2,1) both}
+.vitrine .nom{position:absolute;left:0;right:0;top:34%;font:400 44px/1 Italiana,serif;letter-spacing:.04em}
+.vitrine .sous{position:absolute;left:0;right:0;top:calc(34% + 56px);font:300 10px Jost;letter-spacing:.35em;color:var(--muted)}
+.vitrine .bouton{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);padding:10px 22px;border-radius:99px;background:var(--noir);color:var(--fond);font:500 9px Jost;letter-spacing:.2em;white-space:nowrap}
+.vitrine .charm{position:absolute;font-size:22px;animation:flotte 3s ease-in-out infinite}
+.enligne{margin-top:-14px;position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:99px;padding:8px 16px;font:400 12px Jost;box-shadow:0 8px 20px -10px rgba(30,28,27,.35);animation:monte .6s .35s cubic-bezier(.2,.8,.2,1) both}
+.enligne i{width:8px;height:8px;border-radius:50%;background:#3BAA6A;box-shadow:0 0 0 0 rgba(59,170,106,.5);animation:pouls 1.6s infinite}
+h1{margin:28px 0 0;font:200 32px/1.15 Jost,sans-serif;animation:monte .6s .5s both}
+p{margin:10px 0 0;font:300 15px/1.55 Jost;color:var(--muted);max-width:300px;animation:monte .6s .6s both}
+.go{display:block;width:100%;border:0;border-radius:999px;padding:18px;background:var(--noir);color:var(--fond);font:500 13px Jost;letter-spacing:.2em;text-align:center;text-decoration:none;animation:monte .6s .75s both}
+@keyframes monte{from{opacity:0;transform:translateY(14px)}}
+@keyframes flotte{50%{transform:translateY(-6px) rotate(6deg)}}
+@keyframes pouls{70%{box-shadow:0 0 0 8px rgba(59,170,106,0)}100%{box-shadow:0 0 0 0 rgba(59,170,106,0)}}
+</style>
+</head>
+<body>
+<div id="tel">
+  <div class="logo">LOGINAIL</div>
+  <div class="centre">
+    <div class="vitrine">
+      <span class="charm" style="left:12%;top:12%">🎀</span>
+      <span class="charm" style="right:14%;top:20%;animation-delay:-1s">✨</span>
+      <span class="charm" style="left:18%;bottom:30%;animation-delay:-2s">💅</span>
+      <div class="nom" id="nom">Dilerna</div>
+      <div class="sous">ONGLERIE</div>
+      <div class="bouton">PRENDRE RENDEZ-VOUS</div>
+    </div>
+    <div class="enligne"><i></i>Votre site est en ligne</div>
+    <h1 id="titre">C’est prêt, Marie.</h1>
+    <p id="phrase">Votre site, vos 3 prestations et vos horaires vous attendent dans votre espace.</p>
+  </div>
+  <a class="go">OUVRIR MON ESPACE</a>
+</div>
+<script>
+let b = null; try { b = JSON.parse(localStorage.getItem("loginail-brouillon")); } catch (e) {}
+if (b?.nom) document.getElementById("nom").textContent = b.nom;
+if (b?.prenom) document.getElementById("titre").textContent = `C’est prêt, ${b.prenom}.`;
+const n = b?.prestations?.length;
+if (n) document.getElementById("phrase").textContent = `Votre site, vos ${n} prestation${n > 1 ? "s" : ""} et vos horaires vous attendent dans votre espace.`;
+</script>
+</body>
+</html>

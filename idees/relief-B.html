@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B · Écrin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--fond:#F3EEE8;--carte:#FFFDFB;--txt:#231A1C;--doux:#7d6f6a;--sombre:#2A1B1E;--or:#D4AE6A;
+--ombre:0 2px 4px rgba(40,22,20,.06),0 16px 34px -10px rgba(40,22,20,.25);
+--ombre-p:0 3px 6px rgba(40,22,20,.08),0 30px 60px -20px rgba(40,22,20,.45)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--fond);color:var(--txt);font:400 15px/1.55 Jost,sans-serif;-webkit-font-smoothing:antialiased}
+.in{max-width:1120px;margin:0 auto;padding:0 16px}
+.ti{margin:0 0 20px}
+.ti small{display:block;font:500 11px Jost;letter-spacing:.28em;text-transform:uppercase;color:var(--doux);margin-bottom:6px}
+.ti h2{font:400 34px/1.05 "Bodoni Moda",serif;letter-spacing:-.015em}
+.ti h2 em{font-style:italic}
+section{padding:46px 0}
+/* PRESTATIONS : menu de luxe, chaque ligne est une carte avec la photo qui déborde */
+.menu{display:grid;gap:16px;padding-top:10px}
+.m{position:relative;display:flex;align-items:center;min-height:84px;padding:14px 18px 14px 104px;border-radius:18px;background:var(--carte);box-shadow:var(--ombre);cursor:pointer;transition:transform .2s cubic-bezier(.3,.7,.4,1),box-shadow .2s}
+.m img{position:absolute;left:12px;top:-12px;width:80px;height:92px;object-fit:cover;border-radius:14px;box-shadow:0 14px 24px -10px rgba(40,22,20,.55);transform:rotate(-4deg);transition:transform .25s}
+.m:nth-child(even) img{transform:rotate(3deg)}
+.m:hover{transform:translateY(-3px);box-shadow:var(--ombre-p)}
+.m:hover img{transform:rotate(0) scale(1.05)}
+.m:active{transform:scale(.98)}
+.m b{font:500 16px/1.2 "Bodoni Moda",serif}
+.m span{display:block;font-size:12px;color:var(--doux)}
+.m .px{margin-left:auto;padding-left:10px;font:500 15px Jost;white-space:nowrap}
+.m .px small{font-size:11px;color:var(--doux);font-weight:400}
+/* AVIS : bloc sombre, étoiles dorées, cartes vitrées */
+.noir{background:radial-gradient(120% 80% at 80% 0%,#4a2f34 0%,var(--sombre) 60%);color:#f6eee8;border-radius:34px 34px 0 0;margin-top:20px;box-shadow:0 -20px 40px -24px rgba(40,22,20,.5)}
+.noir .ti small{color:#c9b6ad}
+.gros{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.gros b{font:400 76px/1 "Bodoni Moda",serif;background:linear-gradient(180deg,#fff1cf,#c99a4c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.et{color:var(--or);letter-spacing:3px;font-size:16px}
+.gros p{font-size:13px;color:#c9b6ad}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 16px 26px;margin:0 -16px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.v{flex:0 0 82%;scroll-snap-align:center;padding:22px;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 40px -18px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.12)}
+.v p{font:italic 400 17px/1.5 "Bodoni Moda",serif;margin:12px 0 16px}
+.v small{font-size:12px;color:#c9b6ad;letter-spacing:.06em}
+.bt{display:flex;justify-content:center;align-items:center;gap:8px;height:54px;border-radius:99px;font:500 13px Jost;letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.bt.or{color:var(--sombre);background:linear-gradient(180deg,#f2d9a6,#c9a15a);box-shadow:0 14px 26px -12px rgba(201,161,90,.8),inset 0 1px 0 rgba(255,255,255,.6)}
+.bt.fonce{color:#fff;background:linear-gradient(#3a2a2d,var(--sombre));box-shadow:0 14px 26px -12px rgba(42,27,30,.85),inset 0 1px 0 rgba(255,255,255,.15)}
+/* À PROPOS : grande photo, carte qui chevauche et remonte sur le bloc sombre */
+.apropos{padding-top:0}
+.ph{position:relative;margin:0 -16px;height:420px;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--sombre) 0,transparent 22%,transparent 60%,var(--fond) 100%)}
+.bio{position:relative;z-index:2;margin:-120px 8px 0;padding:26px 22px;border-radius:24px;background:var(--carte);box-shadow:var(--ombre-p)}
+.bio p{font:400 16px/1.65 Jost}
+.bio .sig{display:block;margin-top:10px;font:italic 400 28px "Bodoni Moda",serif}
+/* HORAIRES : un ticket posé, perforé, avec son ombre */
+.ticket{position:relative;border-radius:22px;background:var(--carte);box-shadow:var(--ombre-p);overflow:hidden}
+.tk-h{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:linear-gradient(#3a2a2d,var(--sombre));color:#fff}
+.tk-h b{font:400 20px "Bodoni Moda",serif}
+.st{display:inline-flex;align-items:center;gap:7px;font-size:12px;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.1)}
+.st i{width:7px;height:7px;border-radius:50%;background:#6fd39a;box-shadow:0 0 8px #6fd39a}
+.perfo{height:0;border-top:2px dashed #e6ddd5;margin:0 22px;position:relative}
+.perfo:before,.perfo:after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--fond);box-shadow:inset 0 2px 4px rgba(40,22,20,.12)}
+.perfo:before{left:-33px}.perfo:after{right:-33px}
+.jours{padding:14px 22px 20px}
+.j{display:flex;justify-content:space-between;padding:7px 0;font-size:14px}
+.j.auj{font-weight:600}
+.j.auj span:first-child:before{content:"● ";color:#3fae6a}
+.j .f{color:var(--doux)}
+.r{}
+.r.vu{opacity:1;animation:monte .55s cubic-bezier(.3,.7,.3,1) backwards}
+@keyframes monte{from{opacity:0;transform:translateY(20px)}}
+@media(min-width:900px){
+ section{padding:80px 0}
+ .ti h2{font-size:46px}
+ .menu{grid-template-columns:1fr 1fr;gap:26px 22px}
+ .avis-g{display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:center}
+ .rail{margin:0;padding:6px 0 26px}
+ .v{flex:0 0 46%}
+ .ph{margin:0;height:560px;border-radius:0 0 34px 34px}
+ .bio{max-width:560px;margin:-200px 0 0 auto}
+ .ho{max-width:520px;margin:0 auto}
+}
+@media(prefers-reduced-motion:reduce){.r{opacity:1;transform:none}}
+</style></head><body>
+<section><div class="in">
+ <div class="ti r"><small>Le menu</small><h2>Mes <em>prestations</em></h2></div>
+ <div class="menu">
+  <div class="m r"><img src="../exemple-dilerna/r1.jpg" alt=""><div><b>Pose américaine</b><span>2 choix · 1 h 30</span></div><div class="px"><small>dès </small>20 €</div></div>
+  <div class="m r"><img src="../exemple-dilerna/r3.jpg" alt=""><div><b>Gainage</b><span>3 choix · 1 h</span></div><div class="px"><small>dès </small>20 €</div></div>
+  <div class="m r"><img src="../exemple-dilerna/r4.jpg" alt=""><div><b>Semi renforcé</b><span>2 choix · 45 min</span></div><div class="px"><small>dès </small>15 €</div></div>
+  <div class="m r"><img src="../exemple-dilerna/r6.jpg" alt=""><div><b>Et aussi</b><span>1 choix</span></div><div class="px"><small>dès </small>120 €</div></div>
+ </div>
+</div></section>
+
+<section class="noir"><div class="in avis-g">
+ <div>
+  <div class="ti r"><small>Elles en parlent</small><h2>Avis <em>Google</em></h2></div>
+  <div class="gros r"><b>5,0</b><div><span class="et">★★★★★</span><p>67 avis vérifiés</p></div></div>
+ </div>
+ <div>
+  <div class="rail">
+   <div class="v"><span class="et">★★★★★</span><p>« Marie est géniale ! De son accueil à sa prestation tout est parfait. Le lieu est propre. »</p><small>PAOLA G. · GOOGLE</small></div>
+   <div class="v"><span class="et">★★★★★</span><p>« Un travail soigné, elle est aux petits soins. Ce ne sera pas la dernière fois. »</p><small>CATHERINE L. · GOOGLE</small></div>
+   <div class="v"><span class="et">★★★★★</span><p>« Très bon moment dans son petit cocon, on se sent tout de suite à l'aise. »</p><small>MÉLINDA N. · GOOGLE</small></div>
+  </div>
+  <a class="bt or r" href="#">★ Laisser mon avis</a>
+ </div>
+</div><div style="height:60px"></div></section>
+
+<section class="apropos"><div class="in">
+ <div class="ph"><img src="../exemple-dilerna/photo2.jpg" alt=""></div>
+ <div class="bio r"><div class="ti" style="margin-bottom:12px"><small>À propos</small><h2>Moi, c'est <em>Marie</em></h2></div><p>J'ai 28 ans, je suis nail artist indépendante à Porto-Vecchio, et un peu baddie sur les bords. Chez moi, on prend le temps.</p><span class="sig">Marie ✦</span></div>
+</div></section>
+
+<section><div class="in ho">
+ <div class="ti r"><small>Quand venir</small><h2>Mes <em>horaires</em></h2></div>
+ <div class="ticket r">
+  <div class="tk-h"><b>Dilerna</b><span class="st"><i></i>Ouvert jusqu'à 19 h</span></div>
+  <div class="jours">
+   <div class="j"><span>Lundi</span><span>9 h – 19 h</span></div>
+   <div class="j"><span>Mardi</span><span>9 h – 19 h</span></div>
+   <div class="j auj"><span>Jeudi</span><span>9 h – 19 h</span></div>
+   <div class="j"><span>Vendredi</span><span>9 h – 19 h</span></div>
+   <div class="j"><span>Samedi</span><span>9 h – 13 h</span></div>
+   <div class="j"><span>Dimanche</span><span class="f">Fermé</span></div>
+  </div>
+  <div class="perfo"></div>
+  <div style="padding:20px 22px 22px"><a class="bt fonce" href="#">Réserver un créneau</a></div>
+ </div>
+</div></section>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vu');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.r').forEach((el,i)=>{el.style.animationDelay=(i%4)*70+'ms';io.observe(el)});
+</script>
+</body></html>

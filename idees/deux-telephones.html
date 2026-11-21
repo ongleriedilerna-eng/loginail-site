@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deux téléphones côte à côte</title>
+<!-- Maquette Design : 2 pages côte à côte, chacune dans un iPhone (idees/telephone.html).
+     ?a=page1.html&b=page2.html (chemins depuis idees/), &na=nom1&nb=nom2 pour les légendes. -->
+<style>
+  html,body{margin:0;height:100%;background:#EFE6DF;font-family:Jost,system-ui,sans-serif}
+  .cols{display:flex;height:100%;gap:8px;padding:8px;box-sizing:border-box}
+  .col{flex:1;display:flex;flex-direction:column;min-width:0}
+  .col b{font-weight:500;font-size:15px;text-align:center;padding:6px 0 0;color:#1E1C1B}
+  iframe{flex:1;border:0;min-width:0}
+</style>
+</head>
+<body>
+<div class="cols" id="cols"></div>
+<script>
+  const q = new URLSearchParams(location.search);
+  [['a','na'],['b','nb']].forEach(([k,n]) => {
+    const c = document.createElement('div'); c.className = 'col';
+    const t = document.createElement('b'); t.textContent = q.get(n) || q.get(k);
+    const f = document.createElement('iframe'); f.src = 'telephone.html?p=' + encodeURIComponent(q.get(k)); f.title = t.textContent;
+    c.append(t, f); document.getElementById('cols').appendChild(c);
+  });
+</script>
+</body>
+</html>

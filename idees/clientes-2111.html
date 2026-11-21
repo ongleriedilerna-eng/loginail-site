@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clientes · maquettes 21/11</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#B5475E;--brun:#2A1B1E;--encre:#1E1C1B;--creme:#FBF7F4;--trait:rgba(30,28,27,.09);--gris:#7A706B}
+*{box-sizing:border-box}body{margin:0;background:#E9E3DE;font-family:Jost,sans-serif;color:var(--encre);padding:24px 16px 60px}
+h1{font:600 30px 'Cormorant Garamond',serif;text-align:center;margin:0 0 6px}.intro{text-align:center;color:var(--gris);font-size:14px;margin:0 0 26px}
+section{margin:0 auto 46px;max-width:1500px}section>h2{font:600 24px 'Cormorant Garamond',serif;margin:0 0 4px;text-align:center}section>p{text-align:center;color:var(--gris);font-size:13.5px;margin:0 0 16px}
+.duo{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}.lab{font-weight:500;font-size:15px}.lab small{display:block;font-weight:400;color:var(--gris);font-size:12.5px;text-align:center;max-width:300px}
+.tel{width:330px;height:690px;border-radius:44px;border:9px solid #1d1a19;background:linear-gradient(180deg,#F6E3E3 0,#FBF7F4 230px);position:relative;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.haut{padding:46px 20px 0}.haut small{color:var(--gris);font-size:12px}.haut h3{font:500 34px/1 'Cormorant Garamond',serif;margin:2px 0 14px}
+.cherche{display:flex;gap:8px}.cherche div{flex:1;height:42px;border-radius:21px;background:#fff;border:1px solid var(--trait);display:flex;align-items:center;padding:0 14px;color:#aaa;font-size:14px}.rond{width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid var(--trait);display:grid;place-items:center;font-size:15px}
+.voile{position:absolute;inset:0;background:rgba(20,18,17,.38);z-index:4}
+.feuille{position:absolute;z-index:5;left:0;right:0;bottom:0;background:var(--creme);border-radius:28px 28px 0 0;padding:10px 20px 22px}
+.poignee{width:40px;height:4px;border-radius:2px;background:#d8d2ce;margin:0 auto 12px}
+.nom{font:500 28px/1.05 'Cormorant Garamond',serif}.sous{color:var(--gris);font-size:13px;margin-top:3px}
+.ronds{display:flex;gap:10px;margin:14px 0}.ronds span{flex:1;height:52px;border-radius:16px;background:#fff;border:1px solid var(--trait);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--gris);gap:2px}.ronds span b{font-size:17px;color:var(--encre);font-weight:400}
+.ligne{background:#fff;border-radius:16px;padding:12px 14px;border:1px solid var(--trait);font-size:13.5px;margin-top:8px}.ligne span{display:block;color:var(--gris);font-size:12px;margin-top:2px}
+.btn{height:46px;border-radius:23px;background:var(--brun);color:#fff;display:grid;place-items:center;font-size:14.5px;margin-top:14px}
+.lien{text-align:center;font-size:13px;color:var(--rose);margin-top:10px;font-weight:500}
+.champ{height:46px;border-radius:14px;background:#fff;border:1px solid var(--trait);display:flex;align-items:center;padding:0 14px;font-size:15px;margin-top:8px;color:var(--encre)}.champ.vide{color:#b5aca7}
+.deux{display:flex;gap:8px}.deux .champ{flex:1}
+.plus{display:flex;align-items:center;justify-content:space-between;font-size:13.5px;color:var(--gris);margin-top:12px;padding:0 4px}
+.x{position:absolute;right:16px;top:14px;width:32px;height:32px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:16px}
+/* listes */
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font:500 16px 'Cormorant Garamond',serif;flex:none}
+.l-a{padding:6px 16px 0}.l-a .lettre{font:600 20px 'Cormorant Garamond',serif;color:var(--rose);margin:14px 4px 6px}
+.l-a .cli{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:10px 12px;margin-bottom:8px;box-shadow:0 6px 18px -14px rgba(90,40,50,.5)}
+.cli .t{flex:1;min-width:0}.cli b{font-weight:500;font-size:15px;display:block}.cli .t span{font-size:12px;color:var(--gris)}
+.pas{display:flex;gap:5px;margin-top:4px}.pas i{font-style:normal;font-size:10.5px;padding:2px 8px;border-radius:99px;background:#F7E8EA;color:var(--rose)}
+.pas i.ok{background:#EEF3EC;color:#5C7A56}
+.l-b{padding:10px 16px 0}.l-b .bloc{background:#fff;border-radius:22px;padding:4px 0;margin-top:8px}
+.l-b .cli{display:flex;align-items:center;gap:12px;padding:11px 14px;position:relative}.l-b .cli+.cli:before{content:"";position:absolute;left:68px;right:14px;top:0;height:1px;background:var(--trait)}
+.l-b .k{font-size:12px;color:var(--gris);margin:14px 6px 0;display:flex;justify-content:space-between}
+.droite{text-align:right;font-size:11.5px;color:var(--gris);line-height:1.35}.droite b{font-size:13px;color:var(--encre);font-weight:500}
+.ong{position:absolute;left:0;right:0;bottom:0;height:62px;background:rgba(251,247,244,.96);border-top:1px solid var(--trait);display:flex;justify-content:space-around;align-items:center;font-size:10.5px;color:var(--gris)}.ong .on{color:var(--encre);font-weight:500}
+/* accueil */
+.acc{padding:46px 18px 0}.acc h3{font:500 30px 'Cormorant Garamond',serif;margin:0 0 12px}.acc h3 em{color:var(--rose)}
+.carte{background:#fff;border-radius:22px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--trait)}
+.carte .kk{font-size:11.5px;color:var(--gris);margin-bottom:6px}
+.rdv{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0}.rdv+.rdv{border-top:1px solid var(--trait)}.rdv span{color:var(--gris)}
+.oubli{background:linear-gradient(135deg,#FCEFF1,#fff);border:1px solid #F0D5DA}
+.oubli .q{font:500 21px/1.15 'Cormorant Garamond',serif;margin:2px 0 8px}
+.mini{display:flex;align-items:center;gap:10px;padding:8px 0}.mini+.mini{border-top:1px solid var(--trait)}.mini .t{flex:1;font-size:13.5px}.mini .t span{display:block;font-size:11.5px;color:var(--gris)}
+.pill{font-size:12px;padding:7px 12px;border-radius:99px;background:var(--brun);color:#fff;white-space:nowrap}.pill.clair{background:#fff;color:var(--encre);border:1px solid var(--trait)}
+.disc{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:12px 14px;font-size:13px;border:1px solid var(--trait)}.disc .t{flex:1}.disc .t span{display:block;color:var(--gris);font-size:11.5px}
+.fond-liste{padding:46px 20px 0;opacity:.9}
+</style></head><body>
+<h1>Clientes · 4 idées, 2 versions chacune</h1>
+<p class="intro">Format téléphone. Dis-moi juste la lettre que tu gardes pour chaque numéro (par exemple : 1A, 2B, 3A, 4A).</p>
+
+<!-- 1 · FICHE CLIENTE -->
+<section><h2>1 · La fiche d'une cliente en demi-écran</h2><p>On touche Léa : on voit l'essentiel en bas, la liste reste visible au-dessus.</p>
+<div class="duo">
+ <div class="col"><div class="lab">1A · L'essentiel, et on tire pour le reste<small>Nom, appeler / écrire / modifier, prochain rendez-vous, notes. « Voir toute sa fiche » ouvre en grand.</small></div>
+  <div class="tel"><div class="fond-liste"><small style="color:#7A706B;font-size:12px">5 clientes</small><div style="font:500 34px 'Cormorant Garamond',serif">Clientes</div></div><div class="voile"></div>
+   <div class="feuille" style="height:54%"><div class="poignee"></div><div class="x">×</div>
+    <div class="nom">Léa Takuka</div><div class="sous">06 12 34 56 78 · 3 visites</div>
+    <div class="ronds"><span><b>✆</b>Appeler</span><span><b>✉</b>Écrire</span><span><b>✎</b>Modifier</span></div>
+    <div class="ligne">Prochain rendez-vous : jeudi 27 à 10 h<span>Remplissage gel · 45 €</span></div>
+    <div class="ligne">Note : aime les formes amande<span>Dernière visite le 6 novembre</span></div>
+    <div class="lien">Voir toute sa fiche ↑</div></div><div class="ong"><span>Accueil</span><span>Agenda</span><span class="on">Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+ <div class="col"><div class="lab">1B · Une carte qui flotte<small>Plus petite encore, comme une carte de visite. Toucher la carte = toute sa fiche.</small></div>
+  <div class="tel"><div class="fond-liste"><small style="color:#7A706B;font-size:12px">5 clientes</small><div style="font:500 34px 'Cormorant Garamond',serif">Clientes</div></div><div class="voile"></div>
+   <div class="feuille" style="left:12px;right:12px;bottom:18px;border-radius:28px;padding:18px"><div class="x">×</div>
+    <div style="display:flex;gap:12px;align-items:center"><div class="av" style="width:54px;height:54px;font-size:21px;background:#F7E1E5;color:#B5475E">LT</div><div><div class="nom" style="font-size:25px">Léa Takuka</div><div class="sous">3 visites · fidèle ✦</div></div></div>
+    <div class="ronds"><span><b>✆</b>Appeler</span><span><b>✉</b>Écrire</span><span><b>＋</b>Rendez-vous</span></div>
+    <div class="ligne">Jeudi 27 à 10 h · Remplissage gel<span>Note : aime les formes amande</span></div>
+    <div class="lien">Toute sa fiche ›</div></div><div class="ong"><span>Accueil</span><span>Agenda</span><span class="on">Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+</div></section>
+
+<!-- 2 · NOUVELLE CLIENTE -->
+<section><h2>2 · « + » Nouvelle cliente en demi-écran</h2><p>Seulement ce qui sert vraiment ; le reste plus tard.</p>
+<div class="duo">
+ <div class="col"><div class="lab">2A · Prénom, nom, numéro<small>Anniversaire, e-mail et notes rangés dans « Ajouter plus d'infos ».</small></div>
+  <div class="tel"><div class="fond-liste"><small style="color:#7A706B;font-size:12px">5 clientes</small><div style="font:500 34px 'Cormorant Garamond',serif">Clientes</div></div><div class="voile"></div>
+   <div class="feuille" style="height:52%"><div class="poignee"></div><div class="x">×</div>
+    <div class="nom" style="font-size:25px">Nouvelle cliente</div>
+    <div class="deux"><div class="champ">Manon</div><div class="champ">Le Goff</div></div>
+    <div class="champ vide">Téléphone</div>
+    <div class="plus"><span>＋ Ajouter son anniversaire, e-mail, notes</span></div>
+    <div class="btn">Ajouter Manon</div></div><div class="ong"><span>Accueil</span><span>Agenda</span><span class="on">Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+ <div class="col"><div class="lab">2B · Une seule case, comme un SMS<small>On écrit « Manon Le Goff 06… » sur une ligne, l'appli range toute seule. Le plus rapide.</small></div>
+  <div class="tel"><div class="fond-liste"><small style="color:#7A706B;font-size:12px">5 clientes</small><div style="font:500 34px 'Cormorant Garamond',serif">Clientes</div></div><div class="voile"></div>
+   <div class="feuille" style="height:40%"><div class="poignee"></div><div class="x">×</div>
+    <div class="nom" style="font-size:25px">Nouvelle cliente</div><div class="sous">Prénom, nom, numéro : sur une ligne</div>
+    <div class="champ">Manon Le Goff 06 22 41 87 10</div>
+    <div class="pas" style="margin:10px 2px 0"><i class="ok">Prénom : Manon</i><i class="ok">Nom : Le Goff</i><i class="ok">Numéro : 06 22…</i></div>
+    <div class="btn">Ajouter Manon</div></div><div class="ong"><span>Accueil</span><span>Agenda</span><span class="on">Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+</div></section>
+
+<!-- 3 · LA LISTE -->
+<section><h2>3 · Une liste de clientes plus jolie</h2><p>Toujours une par ligne (simple), mais avec de la couleur et l'info utile d'un coup d'œil.</p>
+<div class="duo">
+ <div class="col"><div class="lab">3A · Petites cartes + ce qui manque<small>Chaque cliente sur sa carte, une couleur par lettre. Une pastille rose dit ce qui manque (numéro, anniversaire).</small></div>
+  <div class="tel"><div class="haut"><small>5 clientes</small><h3>Clientes</h3><div class="cherche"><div>⌕ Chercher une cliente</div><span class="rond">≡</span></div></div>
+   <div class="l-a"><div class="lettre">L</div>
+    <div class="cli"><div class="av" style="background:#F7E1E5;color:#B5475E">LT</div><div class="t"><b>Léa Takuka</b><span>3 visites · jeudi 27 à 10 h</span></div><span style="color:#ccc">›</span></div>
+    <div class="lettre">M</div>
+    <div class="cli"><div class="av" style="background:#E9E4F5;color:#6E5A9E">ML</div><div class="t"><b>Manon Le Goff</b><div class="pas"><i>Sans numéro</i><i>Sans anniversaire</i></div></div><span style="color:#ccc">›</span></div>
+    <div class="cli"><div class="av" style="background:#E9E4F5;color:#6E5A9E">MA</div><div class="t"><b>Marjolaine</b><div class="pas"><i>Sans numéro</i></div></div><span style="color:#ccc">›</span></div>
+    <div class="lettre">S</div>
+    <div class="cli"><div class="av" style="background:#E3EFE8;color:#4E7A63">SB</div><div class="t"><b>Sarah Benali</b><span>Anniversaire le 28 novembre 🎂</span></div><span style="color:#ccc">›</span></div>
+   </div><div class="ong"><span>Accueil</span><span>Agenda</span><span class="on">Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+ <div class="col"><div class="lab">3B · Façon « Contacts » de l'iPhone, en plus doux<small>Un seul bloc blanc par lettre, traits fins ; à droite, la prochaine date en gras. Plus de clientes à l'écran.</small></div>
+  <div class="tel"><div class="haut"><small>5 clientes</small><h3>Clientes</h3><div class="cherche"><div>⌕ Chercher une cliente</div><span class="rond">≡</span></div></div>
+   <div class="l-b"><div class="k"><span style="font:600 18px 'Cormorant Garamond',serif;color:#B5475E">L</span></div>
+    <div class="bloc"><div class="cli"><div class="av" style="background:linear-gradient(135deg,#F3C9D1,#F9E6E9);color:#9C3A50">LT</div><div class="t"><b>Léa Takuka</b><span>3 visites</span></div><div class="droite"><b>jeu. 27</b><br>10 h</div></div></div>
+    <div class="k"><span style="font:600 18px 'Cormorant Garamond',serif;color:#B5475E">M</span></div>
+    <div class="bloc"><div class="cli"><div class="av" style="background:linear-gradient(135deg,#DCD3F0,#F0ECF9);color:#5E4B8E">ML</div><div class="t"><b>Manon Le Goff</b><span style="color:#B5475E">Il manque son numéro</span></div><div class="droite">—</div></div>
+     <div class="cli"><div class="av" style="background:linear-gradient(135deg,#DCD3F0,#F0ECF9);color:#5E4B8E">MA</div><div class="t"><b>Marjolaine</b><span style="color:#B5475E">Il manque son numéro</span></div><div class="droite">—</div></div></div>
+    <div class="k"><span style="font:600 18px 'Cormorant Garamond',serif;color:#B5475E">S</span></div>
+    <div class="bloc"><div class="cli"><div class="av" style="background:linear-gradient(135deg,#CDE6D8,#EAF4EE);color:#41705A">SB</div><div class="t"><b>Sarah Benali</b><span>1 visite</span></div><div class="droite"><b>🎂 28</b><br>nov.</div></div></div>
+   </div><div class="ong"><span>Accueil</span><span>Agenda</span><span class="on">Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+</div></section>
+
+<!-- 4 · ACCUEIL -->
+<section><h2>4 · À l'Accueil : « pense à lui demander son numéro »</h2><p>Seulement pour les clientes qui viennent AUJOURD'HUI et à qui il manque quelque chose. Tout en bas de l'Accueil.</p>
+<div class="duo">
+ <div class="col"><div class="lab">4A · Un carré rose avec les prénoms<small>« Compléter » ouvre la fiche directement sur la case du numéro.</small></div>
+  <div class="tel"><div class="acc"><small style="color:#7A706B;font-size:12px">Samedi 22 novembre</small><h3>Bonjour <em>Marie</em> ✦</h3>
+    <div class="carte"><div class="kk">Aujourd'hui · 3 rendez-vous</div><div class="rdv">9 h · Léa<span>Remplissage</span></div><div class="rdv">11 h · Manon<span>Pose gel</span></div><div class="rdv">14 h · Marjolaine<span>Semi-permanent</span></div></div>
+    <div class="carte" style="opacity:.55"><div class="kk">Tes heures encore libres</div><div style="font-size:13.5px">16 h – 17 h</div></div>
+    <div class="carte oubli"><div class="kk">Pendant la pose aujourd'hui</div><div class="q">Pense à leur demander leur numéro</div>
+     <div class="mini"><div class="av" style="width:34px;height:34px;font-size:13px;background:#E9E4F5;color:#6E5A9E">ML</div><div class="t">Manon · 11 h<span>numéro et anniversaire</span></div><span class="pill">Compléter</span></div>
+     <div class="mini"><div class="av" style="width:34px;height:34px;font-size:13px;background:#E9E4F5;color:#6E5A9E">MA</div><div class="t">Marjolaine · 14 h<span>numéro</span></div><span class="pill">Compléter</span></div></div>
+   </div><div class="ong"><span class="on">Accueil</span><span>Agenda</span><span>Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+ <div class="col"><div class="lab">4B · Une ligne discrète<small>Plus petit, moins insistant ; on touche → la liste des 2 clientes.</small></div>
+  <div class="tel"><div class="acc"><small style="color:#7A706B;font-size:12px">Samedi 22 novembre</small><h3>Bonjour <em>Marie</em> ✦</h3>
+    <div class="carte"><div class="kk">Aujourd'hui · 3 rendez-vous</div><div class="rdv">9 h · Léa<span>Remplissage</span></div><div class="rdv">11 h · Manon<span>Pose gel</span></div><div class="rdv">14 h · Marjolaine<span>Semi-permanent</span></div></div>
+    <div class="carte" style="opacity:.55"><div class="kk">Tes heures encore libres</div><div style="font-size:13.5px">16 h – 17 h</div></div>
+    <div class="disc"><span style="font-size:18px">☎</span><div class="t">Demande son numéro à Manon et Marjolaine<span>Elles viennent aujourd'hui</span></div><span style="color:#bbb">›</span></div>
+   </div><div class="ong"><span class="on">Accueil</span><span>Agenda</span><span>Clientes</span><span>Mon site</span><span>Réglages</span></div></div></div>
+</div></section>
+</body></html>

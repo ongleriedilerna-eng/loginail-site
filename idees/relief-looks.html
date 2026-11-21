@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Avant / après · bas du site</title>
+<style>
+body{margin:0;background:#e9e3dc;font:500 14px system-ui,sans-serif;color:#2A1B1E}
+h1{text-align:center;font-size:19px;margin:18px 0 2px}
+p.s{text-align:center;color:#7d6f6a;margin:0 0 14px}
+.look{margin:0 auto 34px;text-align:center}
+.look h2{font-size:16px;margin:0 0 12px}
+.duo{display:flex;gap:26px;justify-content:center}
+.t b{display:block;margin-bottom:10px;font-size:15px}
+.t b.ap{color:#9a3d5a}
+/* un vrai téléphone : 390 × 844 (iPhone), réduit pour tenir à l'écran */
+.tel{box-sizing:border-box;overflow:hidden;width:calc(390px*var(--z));height:calc(844px*var(--z));position:relative;border-radius:calc(56px*var(--z));background:#141012;box-shadow:0 0 0 2px #3a3033,0 30px 60px -24px rgba(0,0,0,.55);padding:calc(11px*var(--z))}
+.tel:before{content:"";position:absolute;top:calc(22px*var(--z));left:50%;width:calc(112px*var(--z));height:calc(32px*var(--z));transform:translateX(-50%);border-radius:30px;background:#000;z-index:3;pointer-events:none}
+.ecran{width:390px;height:844px;transform:scale(var(--z2));transform-origin:0 0;border-radius:46px;overflow:hidden;background:#fff}
+.ecran iframe{width:390px;height:844px;border:0;display:block}
+.charge{position:absolute;inset:0;display:grid;place-items:center;color:#9b8c86;font-size:13px;pointer-events:none}
+.aller{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:900px;margin:0 auto 14px}
+.aller button{border:0;border-radius:99px;padding:7px 12px;background:#fff;font:500 12.5px system-ui;color:#2A1B1E;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.aller button:hover{background:#2A1B1E;color:#fff}
+:root{--z:.86;--z2:calc(.86*(390 - 22)/390)}
+</style></head><body>
+<h1 id="titre"></h1>
+<p class="s" id="sous"></p>
+<div class="aller" id="aller"></div><div class="duo" id="looks"></div>
+<script>
+const XV=new URLSearchParams(location.search).get('v')==='edito'?'x-edito':'x-vivant';
+const CHOIX=[3,6,4]; /* Gelée rose, Disco cerisier, Princesse nacrée */
+const NOMS={3:"Gelée rose",6:"Disco cerisier",4:"Princesse nacrée"};
+const ALLER=[["Haut",-1],["Prestations",0],["Réalisations",1],["Avis",2],["À propos",3],["Le salon",4],["1re visite",5],["Avant le RDV",6],["Bon à savoir",7],["Horaires",8],["Instagram",10]];
+const box=document.getElementById('looks');
+document.title=XV==='x-edito'?'Version 2 · Magazine':'Version 1 · Écrin vivant';
+document.getElementById('titre').textContent=XV==='x-edito'?'Version 2 · « Magazine » : une page de magazine de luxe':'Version 1 · « Écrin vivant » : tes cartes, mais c\'est le doigt qui fait bouger';
+document.getElementById('sous').innerHTML=(XV==='x-edito'?'Plus plat et aéré, grands numéros de chapitre qui glissent, photos en très grand. ':'Les titres se « peignent » au fil du doigt, plus rien ne bouge tout seul. ')+'Dans les 2 : pilule « Réserver » qui suit en bas, prestations façon carte de grand restaurant, « Je veux ces ongles » sur les réalisations, photos qui se dévoilent, horaires vivants. <b>Fais défiler doucement</b> et touche tout.';
+document.getElementById('aller').innerHTML=ALLER.map((a,k)=>`<button data-k="${k}">${a[0]}</button>`).join('');
+document.getElementById('aller').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const n=ALLER[+b.dataset.k][1];
+ document.querySelectorAll('iframe').forEach(f=>{if(!f._P)return;const D=f._P.D,df=D.querySelector('.defile'),sec=D.querySelectorAll('.defile>.sec')[n];
+  df.scrollTo({top:n<0?0:sec.offsetTop-14,behavior:'smooth'})})});
+CHOIX.forEach(i=>{
+  const d=document.createElement('div');
+  d.innerHTML=`<div class="t"><b>Look « ${NOMS[i]} »</b><div class="tel"><div class="ecran"><iframe data-look="${i}" data-apres="1" data-v="v-a ${XV}" src="perso-A.html?apercu=look&tel"></iframe></div><div class="charge">Chargement…</div></div></div>`;
+  box.appendChild(d);
+});
+/* les 3 téléphones tiennent toujours côte à côte, en vraie forme d'iPhone */
+function taille(){const n=3,z=Math.max(.4,Math.min(.86,(innerWidth-40-26*(n-1))/(n*390)));document.documentElement.style.setProperty('--z',z);document.documentElement.style.setProperty('--z2',z*(390-22)/390)}
+taille();addEventListener('resize',taille);
+const att=ms=>new Promise(r=>setTimeout(r,ms));
+async function prepare(f){
+  const w=f.contentWindow;
+  const getP=()=>{try{return w.eval('typeof P!=="undefined"?P:null')}catch(e){return null}};let P=null;
+  for(let k=0;k<160;k++){P=getP();if(P&&P.pret&&typeof w.appliqueLook==='function'&&w.LOOKS_MARIE)break;await att(250)}
+  const st=w.document.createElement('style');
+  st.textContent="iframe{position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;z-index:2147483647!important;transform:none!important;border-radius:0!important;margin:0!important} .maquette,.btnLooks{display:none!important}";
+  w.document.head.appendChild(st);
+  await att(500);await w.appliqueLook(w.LOOKS_MARIE[+f.dataset.look]);await att(1200);
+  const D=P.D;D.documentElement.classList.add('public');
+  const s2=D.createElement('style');s2.textContent='.code,.bandeau,.cookies,.indiceD{display:none!important}';D.head.appendChild(s2);
+  if(f.dataset.apres==='1'){const ec=D.querySelector('.ecran');if(ec&&f.dataset.v)ec.classList.add(...f.dataset.v.split(' '));const l=D.createElement('link');l.rel='stylesheet';l.href='../idees/relief-ecrin.css?'+Date.now();D.head.appendChild(l);
+    const sc=D.createElement('script');sc.src='../idees/relief-ecrin.js?'+Date.now();sc.onload=()=>{const m=D.createElement('script');m.src='../idees/relief-x.js?'+Date.now();D.body.appendChild(m)};D.body.appendChild(sc);}
+  /* la réservation de démonstration (la même que sur les sites d'exemple) marche aussi ici */
+  try{let t=await (await fetch('../loginail-creer/resa-simu.js')).text();t=t.replace('simu = localStorage.getItem("loginail-simu") === "1"','simu = true').replace('!location.search.includes("public") ||','');D.defaultView.eval(t)}catch(e){console.warn(e)}
+  f._P=P;const df=D.querySelector('.defile');if(df)df.scrollTop=0;
+  f.closest('.tel').querySelector('.charge').remove();
+}
+document.querySelectorAll('iframe').forEach(f=>f.addEventListener('load',()=>prepare(f),{once:true}));
+</script>
+</body></html>

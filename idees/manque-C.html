@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Il manque · version C « Le mélange »</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 18/11 nuit · MAQUETTE C « Le mélange » (Marie : « la B, avec un peu de la A ») = B + le rond qui avance de la A + ce qui est fait part en petites étiquettes roses (la liste raccourcit).
+   Sert aussi pour « Je n'ai pas de lien, je le remplis moi-même » (alors toutes les lignes sont à remplir).
+   Au départ : MAQUETTE B « Votre site se remplit » de la page « Il manque… » (remplir.html) — même style que la page 1 « Un lien suffit. » et Personnaliser.
+   En haut (à gauche sur ordinateur) : un petit aperçu de SON site qui se remplit à chaque réponse. Dessous : une carte blanche par chose, icône rose ;
+   touchée, elle s'ouvre sur place ; faite, la coche rose s'allume. Le titre compte à rebours. Les prix sont toujours en dernier (D16). */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--ligne:rgba(30,28,27,.12);--rose:#B5475E;--rosé:#F7E9EA;--pop:cubic-bezier(.3,1.5,.5,1);--doux-out:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;min-height:100dvh}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none;padding:0;-webkit-tap-highlight-color:transparent}
+.page{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 110px)}
+.tete{display:flex;justify-content:center}.logo{width:104px}.logo svg{display:block;width:100%}
+.etape{margin:22px 0 4px;text-align:center;font:400 13px Jost;color:var(--doux);letter-spacing:.02em}
+h1{margin:0;text-align:center;font:300 40px/1.05 "Cormorant Garamond",serif;letter-spacing:-.01em;transition:opacity .2s}
+h1 em{font-style:italic;font-weight:400}
+.sous{margin:10px auto 0;max-width:30ch;text-align:center;font:300 15px/1.45 Jost;color:var(--muted)}
+/* l'aperçu de son site */
+.apercu{position:relative;margin:22px auto 0;height:150px;border-radius:24px;overflow:hidden;background:#EFE7DF;box-shadow:0 18px 36px -24px rgba(80,30,50,.45),inset 0 0 0 1px rgba(255,255,255,.6)}
+.apercu .fd{position:absolute;inset:-20px;background:radial-gradient(60% 80% at 20% 30%,#F6D6DE,transparent 70%),radial-gradient(60% 80% at 85% 70%,#F3E2C9,transparent 70%),#F4ECE4;filter:saturate(1.05);transition:opacity .6s}
+.apercu .ph{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(14px) saturate(1.1);opacity:0;transform:scale(1.1);transition:opacity .8s}
+.apercu.photos .ph{opacity:.55}
+.apercu .carteA{position:absolute;left:50%;top:50%;translate:-50% -50%;width:calc(100% - 44px);padding:14px 16px 12px;border-radius:18px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);text-align:center;box-shadow:0 10px 24px -18px rgba(0,0,0,.5)}
+.apercu .kick{font:500 9.5px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--doux);min-height:12px}
+.apercu .nomA{margin:4px 0 2px;font:400 27px/1.05 "Cormorant Garamond",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:28px}
+.apercu .nomA.vide{color:#C9BFB6;font-style:italic}
+.apercu .par{font:300 12px Jost;color:var(--muted);min-height:15px}
+.apercu .puces{display:flex;justify-content:center;gap:6px;margin-top:8px;flex-wrap:wrap;min-height:20px}
+.apercu .puces span{display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 8px;border-radius:999px;background:#fff;font:400 10.5px Jost;color:var(--noir);box-shadow:0 0 0 1px var(--ligne);animation:entre .45s var(--pop) both}
+.apercu .puces span svg{width:11px;height:11px;color:var(--rose)}
+.apercu .vu{position:absolute;z-index:2;right:12px;top:10px;font:400 10px Jost;color:var(--muted);background:rgba(255,255,255,.7);padding:3px 8px;border-radius:999px}
+@keyframes entre{from{opacity:0;transform:scale(.6)}}
+/* les cartes */
+.liste{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+.c{background:#fff;border-radius:18px;box-shadow:0 0 0 1px var(--ligne),0 10px 22px -20px rgba(80,30,50,.5);overflow:hidden;transition:box-shadow .25s}
+.c.ouvert{box-shadow:0 0 0 1.5px var(--noir),0 16px 30px -22px rgba(80,30,50,.55)}
+.c.signal{animation:signal .9s ease}
+@keyframes signal{0%,100%{box-shadow:0 0 0 1px var(--ligne)}30%,70%{box-shadow:0 0 0 3px rgba(181,71,94,.55)}}
+.c .l{display:flex;align-items:center;gap:12px;width:100%;padding:11px 14px 11px 11px;text-align:left}
+.ic{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 10px -4px rgba(176,53,98,.35)}
+.ic svg{width:17px;height:17px}
+.c .tx{flex:1;min-width:0}
+.c .tx b{display:block;font:400 15.5px Jost}
+.c .tx small{display:block;margin-top:1px;font:300 12.5px Jost;color:var(--doux);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c.fait .tx small{color:var(--muted)}
+.c.ouvert:not(.fait) .tx small{display:none}
+.ok{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px #D9D1C9;color:transparent;transition:background .3s,box-shadow .3s,color .3s,transform .4s var(--pop)}
+.ok svg{width:12px;height:12px}
+.c.fait .ok{background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:0 4px 10px -4px rgba(176,53,98,.4);color:#B03562;transform:scale(1.08)}
+.c .corps{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--doux-out)}
+.c.ouvert .corps{grid-template-rows:1fr}
+.c .corps>div{overflow:hidden}
+.c .in{padding:0 14px 14px 59px}
+.q{margin:0 0 10px;font:300 13px/1.4 Jost;color:var(--muted)}
+.champ{display:flex;align-items:center;gap:6px;height:48px;padding:0 6px 0 16px;border-radius:999px;background:var(--fond);box-shadow:inset 0 0 0 1px rgba(30,28,27,.14)}
+.champ:focus-within{box-shadow:inset 0 0 0 1.5px var(--noir);background:#fff}
+.champ input{flex:1;min-width:0;border:0;background:none;outline:none;font:400 16px Jost}
+.champ .at{color:var(--doux)}
+.valider{flex:none;height:36px;padding:0 16px;border-radius:999px;background:var(--rose);color:#fff;font:500 11.5px Jost;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 8px 16px -10px rgba(181,71,94,.8);transition:transform .15s}
+.valider:active{transform:scale(.94)}
+.puceS{display:flex;flex-wrap:wrap;gap:7px}
+.puceS button{height:36px;padding:0 14px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px rgba(30,28,27,.16);font:400 13.5px Jost;transition:background .2s,color .2s,box-shadow .2s,transform .15s}
+.puceS button.on{background:var(--noir);color:#fff;box-shadow:none}
+.puceS button:active{transform:scale(.95)}
+.prixL{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.prixL div{display:flex;align-items:center;gap:10px;font:400 14px Jost}
+.prixL div span{flex:1}
+.prixL input{width:78px;height:36px;border:0;border-radius:999px;background:var(--fond);box-shadow:inset 0 0 0 1px rgba(30,28,27,.14);text-align:center;font:400 15px Jost;outline:none}
+.photosL{display:flex;gap:8px;align-items:center}
+.photosL img{width:58px;height:74px;object-fit:cover;border-radius:12px;animation:entre .45s var(--pop) both}
+.ajoutP{width:58px;height:74px;border-radius:12px;display:grid;place-items:center;background:var(--fond);box-shadow:inset 0 0 0 1px rgba(30,28,27,.16);font:300 24px Jost;color:var(--muted)}
+.rangV{display:flex;justify-content:flex-end;margin-top:12px}
+/* le bouton du bas */
+.bas{position:fixed;left:0;right:0;bottom:0;padding:14px 20px calc(env(safe-area-inset-bottom) + 16px);background:linear-gradient(transparent,var(--fond) 34%);display:flex;justify-content:center;z-index:5}
+.go{width:100%;max-width:480px;height:56px;border-radius:999px;background:var(--noir);color:#fff;font:500 13px Jost;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 14px 26px -14px rgba(0,0,0,.6);transition:transform .15s,background .3s}
+.go:active{transform:scale(.97)}
+.go .nb{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:999px;background:rgba(255,255,255,.16);font-size:12px;letter-spacing:0}
+.go.pret{background:var(--rose)}
+.etoileV{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+/* C : le rond de la A à côté du titre */
+.rangT{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
+.rangT h1{text-align:left;font-size:34px;max-width:9.5em}
+.anneau{position:relative;flex:none;width:64px;aspect-ratio:1}
+.anneau svg{width:100%;height:100%;transform:rotate(-90deg)}
+.a-fond{fill:none;stroke:#E7E0D8;stroke-width:4}
+.a-prog{fill:none;stroke:var(--noir);stroke-width:4.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));transition:stroke-dashoffset .7s var(--doux-out),stroke .4s}
+.pret .a-prog{stroke:#D97A9C}
+.a-c{position:absolute;inset:0;display:grid;place-items:center;font:400 19px "Cormorant Garamond",serif}
+.a-c small{font:400 10px Jost;color:var(--doux)}
+.comete{position:absolute;inset:0;transform:rotate(calc(var(--p,0)*360deg));transition:transform .7s var(--doux-out)}
+.comete i{position:absolute;left:50%;top:5%;transform:translate(-50%,-50%);font-style:normal;font-size:12px;color:#fff;text-shadow:0 0 6px rgba(240,130,175,1),0 0 14px rgba(255,170,205,.9)}
+/* C : ce qui est fait = petites étiquettes roses (touchées : on corrige) */
+.faits{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.faits:empty{display:none}
+.faits button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px 0 5px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 6px 12px -10px rgba(80,30,50,.5);font:400 12px Jost;max-width:180px;animation:entre .45s var(--pop) both}
+.faits button i{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD)}
+.faits button i svg{width:11px;height:11px}
+.faits button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.liste{margin-top:12px}
+/* C : la carte ouverte = la question en grand, comme dans la A */
+.c.ouvert .tx b{font:400 24px/1.1 "Cormorant Garamond",serif}
+.c.ouvert .ic{width:42px;height:42px}
+.c.ouvert .in{padding-left:14px}
+.c.ouvert .champ{height:54px}
+.c.ouvert .ok{display:none}
+.c.part{animation:part .35s ease forwards}
+@keyframes part{to{opacity:0;transform:scale(.9);height:0;margin:-4px 0}}
+@media (min-width:900px){.rangT{justify-content:flex-start}.rangT h1{font-size:50px}.anneau{width:84px}.faits{margin-top:0;margin-bottom:12px}.liste{margin-top:0}}
+.maquette{position:fixed;right:10px;bottom:4px;font:500 9px Jost;letter-spacing:.2em;color:#B7ADA4;z-index:6}
+/* ordinateur : l'aperçu à gauche, les cartes à droite */
+@media (min-width:900px){
+  .page{max-width:1080px;display:grid;grid-template-columns:1fr 1fr;column-gap:64px;padding:34px 48px 120px;align-items:start}
+  .tete{grid-column:1/-1;justify-content:flex-start}
+  .gauche{position:sticky;top:40px;padding-top:40px}
+  .etape,h1,.sous{text-align:left;margin-left:0}
+  h1{font-size:60px}
+  .sous{font-size:17px;max-width:34ch}
+  .apercu{height:300px;margin-top:34px;border-radius:30px}
+  .apercu .carteA{width:calc(100% - 80px);padding:22px}
+  .apercu .nomA{font-size:40px;min-height:42px}
+  .droite{padding-top:40px}.liste{margin-top:0}
+  .bas{left:auto;right:48px;bottom:24px;padding:0;background:none;width:calc(50% - 80px);max-width:480px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="tete"><div class="logo" id="logo"></div></div>
+  <div class="gauche">
+    <p class="etape">Étape 1 sur 4 · Votre salon</p>
+    <div class="rangT"><div class="anneau" id="anneau"><svg viewBox="0 0 120 120"><circle class="a-fond" cx="60" cy="60" r="54"/><circle class="a-prog" cx="60" cy="60" r="54" pathLength="1"/></svg><div class="comete"><i>✦</i></div><div class="a-c" id="compte"></div></div><h1 id="titre"></h1></div>
+    <p class="sous">Répondez ici : votre site se remplit en même temps.</p>
+    <div class="apercu" id="apercu"><div class="fd"></div><div class="ph" id="apPh"></div><span class="vu">Votre site</span>
+      <div class="carteA"><div class="kick" id="apKick">Prothésiste ongulaire</div><div class="nomA vide" id="apNom">Votre salon</div><div class="par" id="apPar"></div><div class="puces" id="apPuces"></div></div></div>
+  </div>
+  <div class="droite"><div class="faits" id="faits"></div><div class="liste" id="liste"></div></div>
+</div>
+<div class="bas"><button class="go" id="go"></button></div>
+<span class="maquette">MAQUETTE C</span>
+<script src="manque-commun.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+$("logo").innerHTML = LOGO;
+const V = { jours: [], presta: {}, photos: [] };
+let ouvert = null;
+const fait = m => m.ok === true;
+const resume = m => { if (!fait(m)) return m.q;
+  if (m.k === "insta") return "@" + V.insta; if (m.k === "hor") return V.jours.map(i => JOURS[i]).join(" · ");
+  if (m.k === "photos") return V.photos.length + " photos"; if (m.k === "presta") { const p = Object.entries(V.presta); return p.length + " prestation" + (p.length > 1 ? "s" : "") + " · " + p.map(([n, x]) => x ? x + " €" : "sur devis").slice(0, 3).join(", "); }
+  return V[m.k]; };
+function corps(m) {
+  if (m.type === "texte" || m.type === "tel" || m.type === "insta") return `<p class="q">${m.q}</p><div class="champ">${m.type === "insta" ? '<span class="at">@</span>' : ""}<input data-c="${m.k}" placeholder="${m.ph}" ${m.type === "tel" ? 'inputmode="tel" autocomplete="tel"' : 'autocomplete="off"'} value="${(V[m.k] || "").replace(/"/g, "&quot;")}"><button class="valider" data-v="${m.k}">OK</button></div>`;
+  if (m.type === "jours") return `<p class="q">${m.q}</p><div class="puceS">${JOURS.map((j, i) => `<button data-j="${i}" class="${V.jours.includes(i) ? "on" : ""}">${j}</button>`).join("")}</div><div class="rangV"><button class="valider" data-v="hor">C’est bon</button></div>`;
+  if (m.type === "photos") return `<p class="q">${m.q}</p><div class="photosL">${V.photos.map(u => `<img src="${u}" alt="">`).join("")}<button class="ajoutP" data-ajout>+</button></div><div class="rangV"><button class="valider" data-v="photos">C’est bon</button></div>`;
+  if (m.type === "presta") return `<p class="q">${m.q}</p><div class="puceS">${SUGG.map(s => `<button data-p="${s}" class="${s in V.presta ? "on" : ""}">${s}</button>`).join("")}</div><div class="prixL">${Object.keys(V.presta).map(s => `<div><span>${s}</span><input data-prix="${s}" inputmode="decimal" placeholder="€" value="${V.presta[s] || ""}"></div>`).join("")}</div><div class="rangV"><button class="valider" data-v="presta">C’est bon pour mes prix</button></div>`;
+}
+function rend() {
+  $("faits").innerHTML = MQ.filter(fait).map(m => `<button data-o="${m.k}" title="Corriger"><i>${svg(m.k)}</i><span>${resume(m)}</span></button>`).join("");
+  $("liste").innerHTML = MQ.filter(m => !fait(m) || ouvert === m.k).map(m => `<div class="c${fait(m) ? " fait" : ""}${ouvert === m.k ? " ouvert" : ""}" data-k="${m.k}"><button class="l" data-o="${m.k}"><span class="ic">${svg(m.k)}</span><span class="tx"><b>${m.t}</b><small>${resume(m)}</small></span><span class="ok"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg></span></button><div class="corps"><div><div class="in">${corps(m)}</div></div></div></div>`).join("");
+  majHaut(); }
+function majHaut() { const n = MQ.filter(m => !fait(m)).length; $("titre").innerHTML = titreReste(n);
+  const f = MQ.length - n; $("anneau").style.setProperty("--p", f / MQ.length); document.body.classList.toggle("pret", n === 0); $("compte").innerHTML = n === 0 ? '<span style="color:#D97A9C">✓</span>' : `<span>${f}<small> / ${MQ.length}</small></span>`;
+  const g = $("go"); g.classList.toggle("pret", n === 0); g.innerHTML = n === 0 ? "Choisir mon style <span>→</span>" : `Encore ${NOMBRES[n]} chose${n > 1 ? "s" : ""}`;
+  /* l'aperçu */
+  $("apNom").textContent = V.nom || "Votre salon"; $("apNom").classList.toggle("vide", !V.nom);
+  $("apPar").textContent = V.prenom ? "par " + V.prenom : ""; $("apKick").textContent = "Prothésiste ongulaire" + (V.adr ? " · " + (V.adr.split(/\d{5}/).pop().trim() || V.adr.split(",").pop().trim()) : "");
+  const pu = []; if (V.insta && fait(MQ[2])) pu.push(["insta", "@" + V.insta]); if (fait(MQ[4])) pu.push(["tel", "Appeler"]); if (fait(MQ[5])) pu.push(["hor", V.jours.length + " jours"]); if (fait(MQ[7])) pu.push(["presta", "Réserver"]);
+  const html = pu.map(([k, t]) => `<span>${svg(k)}${t}</span>`).join(""); if ($("apPuces").dataset.h !== html) { $("apPuces").innerHTML = html; $("apPuces").dataset.h = html; }
+  $("apercu").classList.toggle("photos", V.photos.length > 0); if (V.photos[0]) $("apPh").style.backgroundImage = `url(${V.photos[0]})`; }
+function ouvre(k) { const m = MQ.find(x => x.k === k); if (m && fait(m) && ouvert !== k) { m.ok = false; } ouvert = ouvert === k ? null : k; rend(); if (ouvert) setTimeout(() => { const i = document.querySelector(`.c.ouvert input`); if (i && matchMedia("(min-width:900px)").matches) i.focus(); }, 300); }
+function valide(k) { const m = MQ.find(x => x.k === k); let v = (V[k] || "").trim();
+  if (k === "insta") { v = v.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/^@/, "").replace(/\/.*$/, ""); V.insta = v; }
+  if (k === "prenom" && v) V.prenom = v[0].toUpperCase() + v.slice(1);
+  const ok = k === "hor" ? V.jours.length > 0 : k === "photos" ? V.photos.length > 0 : k === "presta" ? Object.keys(V.presta).length > 0 : !!v;
+  if (!ok) { const c = document.querySelector(`.c[data-k="${k}"]`); c.classList.remove("signal"); void c.offsetWidth; c.classList.add("signal"); return; }
+  m.ok = true; const suiv = MQ.find(x => !fait(x)); ouvert = suiv ? suiv.k : null; rend();
+  const c = document.querySelector(`.c[data-k="${k}"] .ok`); if (c) eclat(c, 8); }
+document.addEventListener("click", e => { const t = e.target;
+  const o = t.closest("[data-o]"); if (o) return ouvre(o.dataset.o);
+  const v = t.closest("[data-v]"); if (v) return valide(v.dataset.v);
+  const j = t.closest("[data-j]"); if (j) { const i = +j.dataset.j; V.jours = V.jours.includes(i) ? V.jours.filter(x => x !== i) : [...V.jours, i].sort(); j.classList.toggle("on"); return; }
+  const p = t.closest("[data-p]"); if (p) { const s = p.dataset.p; if (s in V.presta) delete V.presta[s]; else V.presta[s] = ""; rend(); return; }
+  if (t.closest("[data-ajout]")) { if (V.photos.length < PHOTOS.length) V.photos.push(PHOTOS[V.photos.length]); rend(); return; }
+  if (t.closest("#go")) { const suiv = MQ.find(x => !fait(x)); if (!suiv) { eclat($("go"), 22); return; } ouvert = suiv.k; rend(); const c = document.querySelector(`.c[data-k="${suiv.k}"]`); c.scrollIntoView({ behavior: "smooth", block: "center" }); c.classList.add("signal"); } });
+document.addEventListener("input", e => { const c = e.target.dataset.c; if (c) { V[c] = e.target.value; if (c === "nom" || c === "prenom") { if (c === "prenom") V.prenom = V.prenom ? V.prenom[0].toUpperCase() + V.prenom.slice(1) : ""; majHaut(); } }
+  const pr = e.target.dataset.prix; if (pr) V.presta[pr] = e.target.value.replace(/[^\d,.]/g, ""); });
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.dataset.c) valide(e.target.dataset.c); });
+ouvert = "nom"; rend();
+</script>
+</body>
+</html>

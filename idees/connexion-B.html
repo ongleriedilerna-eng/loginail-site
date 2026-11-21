@@ -1,0 +1,72 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B · Connexion centrée</title><style>@font-face{font-family:Abril;src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:400;src:url(../loginail-site/polices/Jost-400-latin.woff2) format("woff2")}
+@font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format("woff2")}
+:root{--fond:#F6EFEA;--encre:#1E1C1B;--gris:#6b625c;--fram:#B03562;--rose:#E0628C;--pale:#FBE7EE;--ligne:rgba(30,28,27,.09)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--fond);color:var(--encre);font:400 16px/1.55 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.serif{font-family:Abril,serif;font-weight:400;letter-spacing:-.015em;line-height:1.02}
+.serif em{font-style:normal;color:var(--fram);white-space:nowrap}
+.k{font:500 12px Jost;letter-spacing:.22em;text-transform:uppercase;color:var(--fram)}
+.marque{display:inline-flex;align-items:center;gap:10px;font:500 13.5px Jost;letter-spacing:.32em;text-decoration:none}
+.marque img{width:30px;height:30px;border-radius:9px}
+.ch{position:absolute;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
+@keyframes fl{0%,100%{translate:0 0}50%{translate:0 -8px}}
+.champ{width:100%;height:58px;border-radius:16px;border:0;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne);padding:0 20px;font:400 16px Jost;color:var(--encre);outline:0;transition:box-shadow .2s}
+.champ:focus{box-shadow:inset 0 0 0 2px var(--rose)}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:58px;padding:0 28px;border-radius:99px;border:0;background:var(--encre);color:#fff;font:500 15.5px Jost;cursor:pointer;box-shadow:0 18px 34px -16px rgba(30,28,27,.55);transition:transform .15s}
+.cta:active{transform:scale(.97)}
+.petit{font-size:13px;color:var(--gris)}
+.nouveau{display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.7);border-radius:18px;padding:14px 18px;box-shadow:inset 0 0 0 1px var(--ligne)}
+.nouveau b{font-weight:500}
+.nouveau a{color:var(--fram);font-weight:500;text-decoration:none;white-space:nowrap}
+.tel{position:absolute;border-radius:30px;background:#111;padding:6px;box-shadow:0 30px 50px -24px rgba(60,20,40,.45)}
+.tel img{display:block;width:100%;border-radius:25px;aspect-ratio:600/1298;object-fit:cover;object-position:top}
+
+body{background:radial-gradient(45% 40% at 50% 38%,rgba(246,215,225,.95),transparent 72%),radial-gradient(30% 30% at 18% 80%,rgba(236,150,182,.25),transparent 70%),radial-gradient(30% 30% at 85% 75%,rgba(205,150,228,.22),transparent 70%),var(--fond)}
+.barre{display:flex;justify-content:space-between;align-items:center;max-width:1180px;margin:0 auto;height:76px;padding:0 40px}
+.barre a.r{font-size:14px;color:var(--gris);text-decoration:none}
+.scene{position:relative;max-width:1180px;margin:0 auto;min-height:calc(100vh - 76px);display:grid;place-items:center;padding:20px 40px 60px}
+.boite{text-align:center;max-width:560px;width:100%;position:relative;z-index:2}
+.boite h1{font-size:clamp(44px,4.8vw,66px);margin:16px 0 0}
+.boite .l2{display:block;font-size:.46em;margin-top:.45em;color:var(--fram)}
+.boite .intro{color:#4a4440;font-size:17px;margin:20px auto 30px;max-width:440px}
+.f{display:flex;align-items:center;gap:8px;height:68px;padding:6px 6px 6px 24px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne),0 24px 44px -26px rgba(120,40,70,.45);flex-wrap:wrap;position:relative}
+.f .champ{flex:1;min-width:0;height:auto;box-shadow:none;padding:0;background:none}.f .champ:focus{box-shadow:none}
+.f .cta{height:56px}
+.f .ok{display:none;position:absolute;left:0;right:0;top:80px;color:var(--fram);font-size:15px}.f.envoye .ok{display:block}
+.coches{display:flex;justify-content:center;gap:22px;margin-top:22px;font-size:13.5px;color:var(--gris)}.coches span::before{content:"✓ ";color:var(--fram)}
+.boite .nouveau{margin:46px auto 0;text-align:left;max-width:480px}
+.legal{margin-top:18px;font-size:12.5px;color:var(--gris)}
+.bulle{position:absolute;z-index:1;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:16px;background:rgba(255,255,255,.96);box-shadow:0 18px 34px -16px rgba(80,20,40,.4);text-align:left;white-space:nowrap;animation:fl 7s ease-in-out infinite}
+.bulle i{width:36px;height:36px;border-radius:11px;background:var(--pale);display:grid;place-items:center;color:var(--fram);font-style:normal}
+.bulle b{display:block;font-weight:500;font-size:14.5px}.bulle span{font-size:12.5px;color:var(--gris)}
+</style></head><body>
+<div class="barre"><a class="marque" href="../index.html"><img src="../loginail-site/icone-appli.svg" alt="">LOGINAIL</a><a class="r" href="../index.html">← Retour au site</a></div>
+<div class="scene">
+  <img class="ch" src="../loginail-site/charms/cerisedisco.webp" style="width:82px;left:6%;top:6%;rotate:-12deg" alt="">
+  <img class="ch" src="../loginail-site/charms/etoile4.webp" style="width:40px;left:24%;top:12%;animation-delay:-1s" alt="">
+  <img class="ch" src="../loginail-site/charms/papilloncyber.webp" style="width:64px;left:16%;top:44%;animation-delay:-3s" alt="">
+  <img class="ch" src="../loginail-site/charms/collierperles.webp" style="width:58px;left:4%;top:72%;animation-delay:-2s" alt="">
+  <img class="ch" src="../loginail-site/charms/saturne.webp" style="width:64px;right:5%;top:5%;animation-delay:-4s" alt="">
+  <img class="ch" src="../loginail-site/charms/clenoire.webp" style="width:40px;right:6%;top:42%;animation-delay:-1.5s" alt="">
+  <img class="ch" src="../loginail-site/charms/cerisecoeur.webp" style="width:58px;right:20%;top:58%;animation-delay:-3.5s" alt="">
+  <img class="ch" src="../loginail-site/charms/sacmatelasse.webp" style="width:52px;right:4%;top:76%;animation-delay:-2.5s" alt="">
+  <div class="bulle" style="left:3%;top:25%;rotate:-3deg"><i>◷</i><div><b>Léa · demain 10 h</b><span>Pose américaine</span></div></div>
+  <div class="bulle" style="right:3%;top:22%;rotate:3deg;animation-delay:-3s"><i>✉</i><div><b>Rappel SMS envoyé</b><span>Zéro lapin demain</span></div></div>
+  <div class="boite">
+    <div class="k">— Ton espace pro —</div>
+    <h1 class="serif">Contente de <em>te revoir.</em><span class="l2">Ton salon t'attend.</span></h1>
+    <p class="intro">Entre ton adresse mail : on t'envoie un code pour te connecter. Pas de mot de passe à retenir.</p>
+    <form class="f" onsubmit="event.preventDefault();this.classList.add('envoye')">
+      <input class="champ" type="email" placeholder="ton@adresse.fr" autocomplete="email" required>
+      <button class="cta" type="submit">Recevoir mon code <span>→</span></button>
+      <p class="ok">✦ C'est parti : regarde tes mails, ton code t'attend.</p>
+    </form>
+    <div class="coches"><span>Sans mot de passe</span><span>Sur ordinateur et téléphone</span><span>Tes données protégées</span></div>
+    <div class="nouveau"><span style="font-size:20px">✦</span><div><b>Pas encore de compte ?</b><br><span class="petit">Il se crée avec ton site, en 1 minute.</span></div><a href="../loginail-creer/index.html">Créer mon site →</a></div>
+    <p class="legal">En te connectant, tu acceptes les <a href="../conditions-abonnement.html">conditions</a> et la <a href="../confidentialite.html">politique de confidentialité</a>.</p>
+  </div>
+</div></body></html>

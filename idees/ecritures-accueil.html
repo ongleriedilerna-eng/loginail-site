@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Écritures de l'accueil · A / B</title>
+<!-- Maquette Design (19/11) : l'accueil avec les écritures actuelles (A) ou seulement Cormorant + Jost (B).
+     ?v=A ou ?v=B : la page entière, à la vraie taille de l'écran (pour Chrome / le téléphone).
+     sans ?v : les deux côte à côte, téléphone 390 px, ou ordinateur 1440 px avec ?f=ordi. -->
+<style>
+  :root{--fond:#F7F0EA;--encre:#1E1C1B;--rose:#B5475E}
+  html,body{margin:0;background:var(--fond);color:var(--encre);font-family:Jost,system-ui,sans-serif}
+  body.seul iframe{position:fixed;inset:0;width:100vw;height:100vh;border:0}
+  .tete{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;padding:18px 16px 6px}
+  .tete h1{font:500 15px Jost,sans-serif;margin:0 12px 0 0}
+  .tete a{font-size:14px;padding:8px 16px;border-radius:99px;background:#fff;color:var(--encre);text-decoration:none;box-shadow:inset 0 0 0 1px rgba(30,28,27,.12)}
+  .tete a.on{background:var(--encre);color:#fff}
+  .cols{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;padding:14px 16px 40px}
+  .col{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .col b{font:500 16px Jost,sans-serif}
+  .col b span{color:var(--rose)}
+  .cadre{border-radius:44px;background:#111;padding:12px;box-shadow:0 30px 60px -30px rgba(60,20,30,.45)}
+  .cadre iframe{display:block;width:390px;height:844px;border:0;border-radius:32px;background:#fff}
+  .ordi .cadre{border-radius:14px;padding:8px}
+  .ordi .boite{width:calc(1440px * var(--k));height:calc(900px * var(--k));overflow:hidden;border-radius:8px}
+  .ordi iframe{width:1440px;height:900px;transform:scale(var(--k));transform-origin:0 0;border:0;background:#fff}
+</style>
+</head>
+<body>
+<script>
+// Ce que la version B change (seulement l'écriture des TITRES ; les petits sur-titres en majuscules restent)
+const RESTE = `
+#arc h2, #semaine > h2, .carte-ch .ch-petit, .carte-ch h2.t2, #bio h2, .fp-carte h2.t2, #styles-gal .q h2{
+  font-family:'Cormorant Garamond',serif!important; text-transform:none!important; letter-spacing:-.01em!important; font-weight:500!important}
+#arc h2{font-size:30px!important; line-height:1.1!important}
+#semaine > h2{font-size:40px!important; line-height:1.05!important}
+#semaine > h2 em, .carte-ch h2.t2 em, .fp-carte h2.t2 em{font-style:italic!important}
+.carte-ch .ch-petit, .carte-ch h2.t2{font-size:34px!important; line-height:1.08!important}
+#bio h2{font-size:30px!important; line-height:1.15!important}
+#bio h2 .scr b{font-family:'Cormorant Garamond',serif!important; text-transform:none!important; letter-spacing:0!important; font-style:italic; font-weight:600!important; font-size:1em!important}
+.fp-carte h2.t2{font-size:32px!important; line-height:1.1!important}
+#styles-gal .q h2{font-size:44px!important; line-height:1!important}
+#styles-gal .q h2 *{font-family:inherit!important; text-transform:none!important; letter-spacing:inherit!important}
+#styles-gal .q h2 .bd2{margin-left:.22em}
+`;
+// Le gros titre du haut en Cormorant (seulement dans la B)
+const HAUT = `
+.np .serif{font-family:'Cormorant Garamond',serif!important; letter-spacing:-.01em!important; font-weight:500!important}
+.np h1.serif{font-size:clamp(50px,15vw,96px)!important; line-height:.95!important; font-weight:600!important}
+.np h1.serif .np-l2{font-style:italic; font-size:.42em!important; line-height:1.2!important; display:block; margin-top:.45em; font-weight:500}
+`;
+// D : tous les titres de Loginail écrits comme le haut (Abril Fatface noir, mot en avant en rose, sans italique)
+const D = `
+#arc h2, #semaine > h2, .carte-ch .ch-petit, .carte-ch h2.t2, #bio h2, #bio h2 .scr b, .fp-carte h2.t2, #styles-gal .q h2, #styles-gal .q h2 *,
+h2.t2, .st-t h2, #duo .mini b, #jaLg b, .chif .lever b, .legs .leg b{
+  font-family:'Abril Fatface',serif!important; font-weight:400!important; text-transform:none!important; letter-spacing:-.01em!important}
+#semaine > h2 em, .carte-ch h2.t2 em, .fp-carte h2.t2 em, h2.t2 em, .st-t h2 em, #styles-gal .q h2 em, #styles-gal .q h2 em *, #bio h2 em, #bio h2 .scr b{font-style:normal!important; color:#B03562!important}
+#arc h2{font-size:26px!important; line-height:1.15!important}
+#semaine > h2{font-size:36px!important; line-height:1.08!important}
+.carte-ch .ch-petit, .carte-ch h2.t2{font-size:30px!important; line-height:1.1!important}
+#bio h2{font-size:28px!important; line-height:1.2!important}
+.fp-carte h2.t2{font-size:28px!important; line-height:1.15!important}
+#styles-gal .q h2{font-size:38px!important; line-height:1.05!important}
+#styles-gal .q h2 .bd2{margin-left:.22em}
+`;
+const CSS = { A: '', B: HAUT + RESTE, C: RESTE, D };
+const q = new URLSearchParams(location.search), v = q.get('v'), ordi = q.get('f') === 'ordi';
+function cadre(version){
+  const f = document.createElement('iframe');
+  f.src = '../index.html'; f.title = 'Accueil · version ' + version;
+  f.addEventListener('load', () => {
+    if (!CSS[version]) return;
+    const s = f.contentDocument.createElement('style'); s.textContent = CSS[version]; f.contentDocument.head.appendChild(s);
+    // le site recalcule la place de certains éléments au chargement : on le relance
+    f.contentWindow.dispatchEvent(new Event('resize'));
+  });
+  return f;
+}
+if (v in CSS) {
+  document.body.className = 'seul'; document.title = 'Écritures · version ' + v;
+  document.body.appendChild(cadre(v));
+} else {
+  const k = Math.min(0.3, (innerWidth - 160) / 3 / 1440);
+  document.body.innerHTML = `<div class="tete"><h1>Écritures de l'accueil</h1>
+    <a href="?" class="${ordi ? '' : 'on'}">Téléphone</a><a href="?f=ordi" class="${ordi ? 'on' : ''}">Ordinateur</a></div>
+    <div class="cols ${ordi ? 'ordi' : ''}" style="--k:${k}"></div>`;
+  const cols = document.querySelector('.cols');
+  [['A', 'aujourd’hui'], ['C', 'gros titre A + le reste en Cormorant'], ['D', 'tout comme le haut']].forEach(([n, t]) => {
+    const c = document.createElement('div'); c.className = 'col';
+    c.innerHTML = `<b><span>${n}</span> · ${t}</b><div class="cadre"><div class="boite"></div></div>`;
+    (ordi ? c.querySelector('.boite') : c.querySelector('.cadre')).appendChild(cadre(n));
+    if (!ordi) c.querySelector('.boite').remove();
+    cols.appendChild(c);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Aperçu du lien loginail.fr</title>
+<meta name="viewport" content="width=1200">
+<style>
+@font-face{font-family:Jost;font-weight:400;src:url(../loginail-site/polices/Jost-400-latin.woff2) format('woff2')}
+@font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format('woff2')}
+@font-face{font-family:'Abril Fatface';src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;--ink:#1E1C1B;--accent:#B03562;--rose:#E0628C}
+.c{position:relative;width:1200px;height:630px;overflow:hidden}
+/* ---------- commun ---------- */
+.marque{position:absolute;left:0;right:0;top:40px;display:flex;justify-content:center;align-items:center;gap:10px;font:500 15px Jost;letter-spacing:.34em;text-transform:uppercase;z-index:3}
+.marque img{width:30px;height:30px;border-radius:9px;box-shadow:0 6px 14px -8px rgba(30,28,27,.6)}
+h1{position:absolute;left:0;right:0;top:96px;text-align:center;font:400 68px/1 'Abril Fatface',serif;letter-spacing:-.022em;z-index:3}
+h1 .sw{position:relative;white-space:nowrap}
+h1 .sw svg{position:absolute;left:-2%;bottom:-.08em;width:104%;height:.2em;overflow:visible}
+h1 .l2{display:block;margin-top:16px;font-size:30px;letter-spacing:-.01em}
+.tel{position:absolute;width:196px;height:424px;border-radius:30px;border:6px solid var(--ink);background:#fff center top/cover no-repeat;box-shadow:0 30px 46px -24px rgba(60,10,30,.55);transform-origin:50% 100%}
+.tel::before{content:"";position:absolute;left:50%;top:6px;width:48px;height:13px;border-radius:9px;background:var(--ink);transform:translateX(-50%)}
+.ch{position:absolute;filter:drop-shadow(0 10px 12px rgba(80,20,40,.25));z-index:4}
+.pill{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:16px;background:rgba(255,255,255,.95);box-shadow:0 18px 34px -16px rgba(80,20,40,.45);z-index:5;text-align:left}
+.pill b{display:block;font:500 15px/1.2 Jost;color:var(--ink)}.pill span{display:block;font-size:12.5px;color:#6b605a}
+.pill .av{width:38px;height:38px;border-radius:50%;background:center/cover}
+.pill .ic{width:38px;height:38px;border-radius:11px;background:#F6D7E1;display:grid;place-items:center;color:var(--accent)}
+.pill .ic svg{width:20px;height:20px}
+.pill .pt{width:9px;height:9px;border-radius:50%;background:var(--rose);margin-left:6px}
+.url{position:absolute;left:0;right:0;bottom:22px;text-align:center;z-index:5}
+.url span{display:inline-block;padding:8px 18px;border-radius:99px;font:500 14px Jost;letter-spacing:.06em}
+
+/* ---------- A : doux, comme l'accueil ---------- */
+.A{background:#F3ECE4;color:var(--ink)}
+.A::before{content:"";position:absolute;inset:0;background:radial-gradient(52% 60% at 50% 30%,rgba(246,215,225,.95),transparent 72%),radial-gradient(30% 40% at 6% 80%,rgba(201,138,98,.14),transparent 70%),radial-gradient(30% 40% at 94% 76%,rgba(224,98,140,.14),transparent 70%)}
+.A h1 .sw svg{color:var(--rose)}
+.A h1 .l2{color:var(--accent)}
+.A .url span{background:var(--ink);color:#fff}
+
+/* ---------- B : framboise, qui claque ---------- */
+.B{background:#9E2A55;color:#fff}
+.B::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 62% at 50% 28%,rgba(240,120,160,.55),transparent 72%),radial-gradient(40% 50% at 50% 110%,rgba(40,5,20,.45),transparent 70%)}
+.B .marque{color:#fff}
+.B h1 .sw svg{color:#FFC2D6}
+.B h1 .l2{color:#FFD9E5}
+.B .tel{border-color:#140C10;box-shadow:0 34px 50px -22px rgba(20,0,10,.75)}
+.B .tel::before{background:#140C10}
+.B .url span{background:#fff;color:var(--accent)}
+
+/* repère du recadrage Instagram (carré du milieu) : seulement avec ?cadre */
+.cadre::after{content:"";position:absolute;left:285px;top:0;width:630px;height:630px;outline:3px dashed #00b4ff;z-index:99}
+</style></head><body>
+<div class="c" id="c"></div>
+<script>
+const q=new URLSearchParams(location.search), v=(q.get('v')||'A').toUpperCase();
+const P='../loginail-site/', U=P+'apercus-univers/', CM=P+'charms-mini/';
+const c=document.getElementById('c'); c.className='c '+v+(q.has('cadre')?' cadre':'');
+const ech=(q.get('t')||'apercu-looks/look4.jpg,apercu-looks/look5.jpg,apercu-looks/perles.jpg').split(',');
+let h=`<div class="marque"><img src="${P}icone-appli-couleur.svg" alt="">Loginail</div>
+<h1>Un site<br>à <span class="sw">ton image.<svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="l2">L’appli pour tout gérer derrière.</span></h1>`;
+// 3 téléphones en éventail, en bas, tous dans le carré du milieu
+[[-1,-6],[0,0],[1,6]].forEach(([d,r],i)=>{
+  const x=600-98+d*206, y=300+Math.abs(d)*30;
+  h+=`<div class="tel" style="left:${x}px;top:${y}px;transform:rotate(${r}deg);background-image:url(${ech[i].includes('/')?ech[i]:U+ech[i]+'.webp'});z-index:${3-Math.abs(d)}"></div>`;
+});
+// charms : 4 dans le carré (vus sur Instagram) + 8 sur les bords (vus en grand format)
+const CH=[['cerisedisco',300,70,74,-14],['papilloncyber',322,214,56,-10],['saturne',828,74,78,12],['cerisecoeur',846,212,58,10],
+          ['etoile4',220,60,40,10],['coeurepinesmetal',40,300,76,8],['tribal',960,70,46,-8],['clenoire',1090,300,64,-12],['etoile4',1110,120,34,-10],['cerisedisco',60,80,60,-8],
+          // 19/11 (Marie : « mets un peu plus de charms ») : des charms de ses looks, dans le carré et sur les bords
+          ['etoile4',306,30,30,0],['etoile4',876,300,26,0],['coeurpixel',276,300,54,-12],['hibiscusverre',858,286,62,12],
+          ['oursongelee',462,548,64,-12],['patinroseetoile',688,556,64,10],
+          ['papillonroseverre',120,200,74,-8],['coquillenacre',1000,180,72,10],['cassetterose',70,566,66,-10],['noeudrose',1070,574,62,8],
+          ['etoiledemerrose',230,380,50,-6],['coeurgeleerose',950,380,54,10]];
+CH.forEach(([f,x,y,s,r])=>h+=`<img class="ch" src="${CM}${f}.webp" style="left:${x}px;top:${y}px;width:${s}px;transform:rotate(${r}deg)" alt="">`);
+// une notification sur le téléphone du milieu : on montre le geste
+h+=`<div class="pill" style="left:938px;top:470px"><span class="av" style="background-image:url(${U}avatar-lea.webp)"></span><div><b>Léa · nouveau RDV</b><span>Pose américaine · 10 h</span></div><span class="pt"></span></div>`;
+h+=`<div class="pill" style="left:24px;top:470px"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5z"/><path d="M8.5 10l2 2 4-4"/></svg></span><div><b>Rappel SMS envoyé</b><span>Zéro lapin demain</span></div></div>`;
+c.innerHTML=h;
+</script>
+</body></html>

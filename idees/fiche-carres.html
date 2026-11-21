@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fiche cliente · carrés</title>
+<style>
+body{margin:0;background:#E9E3DC;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;color:#1E1C1B;padding:24px 16px}
+h1{font-size:20px;font-weight:500;margin:0 0 4px}.chapo{font-size:13.5px;color:#6B625C;margin:0 0 22px;max-width:760px;line-height:1.45}
+.grille{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.col{width:350px}.col h2{font-size:15px;font-weight:600;margin:0 0 3px}.col p{font-size:12.5px;color:#6B625C;margin:0 0 10px}
+.tel{background:#F6F2EE;border-radius:34px;border:8px solid #1E1C1B;padding:22px 16px 26px;box-shadow:0 18px 40px rgba(30,28,27,.18)}
+.nom{font-size:24px;margin:0}.sous{font-size:12.5px;opacity:.6;margin-top:4px}
+.sw{display:flex;background:#fff;border-radius:999px;padding:4px;margin:14px 0 6px}.sw b{flex:1;text-align:center;border-radius:999px;padding:10px 0;font-size:13.5px;font-weight:500;color:#8A847E}.sw b.on{background:#1E1C1B;color:#fff}
+.k{margin:18px 0 8px;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#8A847E}
+.noire{border-radius:20px;background:#1E1C1B;color:#fff;padding:14px 16px}.noire small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.65;margin-bottom:5px}.noire b{font-size:20px;font-weight:400}.noire span{display:block;font-size:14px;opacity:.75;margin-top:3px}
+.t3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.t3 div{background:#fff;border-radius:16px;padding:11px 12px}.t3 small{display:block;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#8A847E;margin-bottom:4px}.t3 b{font-size:17px;font-weight:500}
+.carte{background:#fff;border-radius:20px;padding:2px 14px}
+.lg{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(30,28,27,.08);font-size:14px}.lg:last-child{border-bottom:0}.lg>.q{flex:1;min-width:0}.lg em{font-style:normal;font-size:13.5px}.lg .q span{display:block;font-size:12px;color:#8A847E;margin-top:2px}
+.ic{flex:none;width:32px;height:32px;border-radius:10px;background:#EDE7E0;display:grid;place-items:center}
+svg{fill:none;stroke:#1E1C1B;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.ic svg{width:18px;height:18px}
+.on2{display:flex;gap:4px;background:#F3EEE9;border-radius:999px;padding:3px}
+.on2 button{border:0;background:none;border-radius:999px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:500;color:#6B625C;cursor:pointer;transition:background .18s,color .18s,transform .12s}
+.on2 button:active{transform:scale(.93)}.on2 button.oui{background:#1E1C1B;color:#fff}.on2 button.non{background:#fff;color:#1E1C1B;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.lien{border:0;background:none;font:inherit;font-size:12.5px;font-weight:500;padding:6px 0 6px 8px;color:#1E1C1B;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.x{border:0;background:none;font-size:16px;color:#8A847E;padding:4px 2px;cursor:pointer}
+.plus{display:block;width:100%;margin-top:10px;border:1px dashed rgba(30,28,27,.25);border-radius:16px;background:none;padding:13px 14px;font:inherit;font-size:13.5px;color:#8A847E;text-align:left;cursor:pointer}
+textarea{width:100%;box-sizing:border-box;border:0;border-radius:16px;background:#fff;padding:12px 14px;font:inherit;font-size:14px;min-height:70px;resize:none}
+/* les carrés */
+.carres{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ca{aspect-ratio:1;background:#fff;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:4px;text-align:center;animation:pop .28s cubic-bezier(.2,.9,.3,1.3) both}
+.ca svg{width:24px;height:24px}.ca b{font-size:10.5px;font-weight:500;line-height:1.15;max-width:100%;overflow-wrap:anywhere}
+.ca.non{background:none;border:1px dashed rgba(30,28,27,.22)}.ca.non svg{opacity:.35}.ca.non b{color:#8A847E;font-weight:400}
+.vide{font-size:12.5px;color:#8A847E;background:#fff;border-radius:16px;padding:13px 14px}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+</style></head><body>
+<h1>Test : une fiche avec les carrés</h1>
+<p class="chapo">À droite (onglet <b>Notes</b>) tu réponds en liste. À gauche (onglet <b>Fiche</b>) ce que tu sais apparaît en <b>carrés, 4 par ligne</b>, sous l’historique. Change un Oui / Non à droite : le carré bouge à gauche en direct. Un « Non » reste visible en carré pâle, pour éviter la gaffe (« et tes enfants ? »).</p>
+<div class="grille"><div class="col"><h2>Onglet Fiche</h2><p>Ce que tu lis d’un coup d’œil avant qu’elle arrive.</p><div id="fiche"></div></div>
+<div class="col"><h2>Onglet Notes</h2><p>Là où tu réponds. Plus de « ? » ni de texte sur la loi.</p><div id="notes"></div></div></div>
+<script>
+const S={
+couple:'<path d="M12 20s-7-4.3-7-9.5A3.8 3.8 0 0 1 12 8a3.8 3.8 0 0 1 7 2.5C19 15.7 12 20 12 20z"/>',
+enfants:'<circle cx="12" cy="7.5" r="3"/><path d="M6.5 20c0-3.6 2.5-6.5 5.5-6.5s5.5 2.9 5.5 6.5"/><path d="M10.6 6.2c.7-.9 2.1-.9 2.8 0"/>',
+animal:'<path d="M8 17.5c0-2.6 1.8-4.8 4-4.8s4 2.2 4 4.8c0 1.5-1.2 2.3-2.4 2-1-.3-2.2-.3-3.2 0-1.2.3-2.4-.5-2.4-2z"/><ellipse cx="5.6" cy="11.2" rx="1.7" ry="2.1"/><ellipse cx="9.4" cy="6.9" rx="1.8" ry="2.3"/><ellipse cx="14.6" cy="6.9" rx="1.8" ry="2.3"/><ellipse cx="18.4" cy="11.2" rx="1.7" ry="2.1"/>',
+travail:'<rect x="4" y="8" width="16" height="11" rx="2.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8M4 13h16"/>',
+vacances:'<circle cx="12" cy="12" r="3.6"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M6 18l1.4-1.4M16.6 7.4 18 6"/>',
+papote:'<path d="M4.5 6.5h10a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-3.5 3v-3h-1a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2z"/><path d="M16.5 10h2a2 2 0 0 1 2 2v4.5a2 2 0 0 1-2 2h-.5v2.5l-3-2.5h-3"/>',
+autre:'<path d="M12 4l1.8 5.2L19 11l-5.2 1.8L12 18l-1.8-5.2L5 11l5.2-1.8z"/>'};
+const sv=k=>`<svg viewBox="0 0 24 24">${S[k]}</svg>`;
+const Q=[["couple","En couple&nbsp;?","En couple","Célibataire"],["enfants","Des enfants&nbsp;?","Enfants","Pas d’enfants"],["animal","Un animal&nbsp;?","Animal","Pas d’animal"],["vacances","Vacances bientôt&nbsp;?","Vacances","Pas de vacances"],["papote","Aime papoter&nbsp;?","Papote","Aime le calme"]];
+const E={couple:"oui",enfants:"oui",animal:"non",vacances:"oui",papote:"oui",travail:"Infirmière",autres:["Forme amande","Adore le rose"]};
+function fiche(){let c="";
+ for(const [k,,o,n] of Q)if(E[k])c+=`<div class="ca ${E[k]==="non"?"non":""}">${sv(k)}<b>${E[k]==="oui"?o:n}</b></div>`;
+ if(E.travail)c+=`<div class="ca">${sv("travail")}<b>${E.travail}</b></div>`;
+ for(const a of E.autres)c+=`<div class="ca">${sv("autre")}<b>${a}</b></div>`;
+ return `<div class="tel"><h3 class="nom">Léa Martin</h3><div class="sous">06 12 34 56 78</div><div class="sw"><b class="on">Fiche</b><b>Notes</b></div>
+ <div class="noire"><small>Prochain rendez-vous</small><b>Jeudi 26 novembre</b><span>à 14h00 · Remplissage gel</span></div>
+ <div class="t3"><div><small>Visites</small><b>7</b></div><div><small>Fidélité</small><b>7/10</b></div><div><small>Dernière</small><b>29 oct.</b></div></div>
+ <div class="k">Historique</div><div class="carte"><div class="lg"><div class="q">29 oct. 2026<span>Remplissage gel</span></div><em>45 €</em></div><div class="lg"><div class="q">1 oct. 2026<span>Pose complète</span></div><em>55 €</em></div></div>
+ <div class="k">Ce que je sais</div>${c?`<div class="carres">${c}</div>`:`<div class="vide">Rien pour l’instant : réponds dans Notes.</div>`}</div>`;}
+function notes(){let h=`<div class="tel"><h3 class="nom">Léa Martin</h3><div class="sous">06 12 34 56 78</div><div class="sw"><b>Fiche</b><b class="on">Notes</b></div><div class="k">Ce que je sais</div><div class="carte">`;
+ for(const [k,t] of Q)h+=`<div class="lg"><span class="ic">${sv(k)}</span><div class="q">${t}</div><span class="on2"><button data-k="${k}" data-r="oui" class="${E[k]==="oui"?"oui":""}">Oui</button><button data-k="${k}" data-r="non" class="${E[k]==="non"?"non":""}">Non</button></span></div>`;
+ h+=`<div class="lg"><span class="ic">${sv("travail")}</span><div class="q">Son métier&nbsp;?${E.travail?`<span>${E.travail}</span>`:""}</div><button class="lien" data-k="travail">${E.travail?"Changer":"Écrire"}</button></div>`;
+ E.autres.forEach((a,i)=>h+=`<div class="lg"><span class="ic">${sv("autre")}</span><div class="q">${a}</div><button class="x" data-x="${i}" aria-label="Enlever">×</button></div>`);
+ return h+`</div><button class="plus" data-k="plus">+ Autre chose que je sais</button><div class="k">Mes notes libres</div><textarea placeholder="Tout ce que tu veux garder en tête"></textarea></div>`;}
+function dessine(){document.getElementById("fiche").innerHTML=fiche();document.getElementById("notes").innerHTML=notes();}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const k=b.dataset.k;
+ if(b.dataset.x!=null)E.autres.splice(+b.dataset.x,1);
+ else if(k==="travail"){const r=prompt("Son métier ?",E.travail||"");if(r!==null)E.travail=r.trim();}
+ else if(k==="plus"){const r=prompt("Autre chose que tu sais (court) :","Aime les paillettes");if(r&&r.trim())E.autres.push(r.trim().slice(0,22));}
+ else if(k){E[k]=E[k]===b.dataset.r?undefined:b.dataset.r;}else return;dessine();});
+dessine();
+</script></body></html>

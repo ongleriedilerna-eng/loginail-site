@@ -1,0 +1,316 @@
+/* Écrin (D63) : maquette qui habille le VRAI site. Couleurs : --e-acc (bouton Réserver du salon), --creme (couleur du site), --e-titre (écriture du nom). */
+.ecran.ecrin{--e-fonce:color-mix(in srgb,var(--e-acc) 26%,#140c0e);--e-fonce2:color-mix(in srgb,var(--e-acc) 42%,#140c0e);--e-carte:color-mix(in srgb,var(--creme) 18%,#fff);
+ --e-ombre:0 2px 4px rgba(40,22,20,.07),0 18px 34px -12px rgba(40,22,20,.32);--e-ombre-p:0 4px 8px rgba(40,22,20,.08),0 32px 60px -20px rgba(40,22,20,.5);
+ --e-dore:color-mix(in srgb,var(--e-acc) 35%,#f3d9a4)}
+/* les blocs : plus de cartes plates collées les unes aux autres, un vrai relief */
+.ecran.ecrin .sec{border-radius:30px!important;box-shadow:var(--e-ombre-p)!important;margin:22px 12px 0!important;padding:46px 20px 30px!important;position:relative}
+.ecran.ecrin .sec.np{padding-top:40px!important}
+/* titres : petit surtitre espacé + grand titre dans l'écriture du nom */
+.ecran.ecrin .sec>.ti{display:block!important;margin:0 0 20px!important;padding:0!important;font-size:0!important;letter-spacing:0!important;text-transform:none!important}
+.ecran.ecrin .sec>.ti:before,.ecran.ecrin .sec>.ti:after{display:none!important}
+.ecran.ecrin .ti small{display:block;font:500 10.5px/1 Jost,sans-serif;letter-spacing:.3em;text-transform:uppercase;opacity:.62;margin-bottom:8px}
+.ecran.ecrin .ti span{display:block;font:400 31px/1.08 var(--e-titre,serif);letter-spacing:-.005em;text-wrap:balance}
+.ecran.ecrin .ti em{font-style:italic}
+
+/* PRESTATIONS : chaque catégorie est une carte en relief, la photo déborde */
+.ecran.ecrin .e-presta .tir{border:0!important;margin:0 0 18px!important;background:var(--e-carte)!important;border-radius:20px!important;box-shadow:var(--e-ombre)!important;overflow:visible!important}
+.ecran.ecrin .e-presta .tir-h{position:relative;min-height:80px;padding:14px 16px 14px 100px!important;background:transparent!important;border:0!important;transition:transform .2s cubic-bezier(.3,.7,.4,1)}
+.ecran.ecrin .e-presta .tir-h:active{transform:scale(.98)}
+.ecran.ecrin .e-presta .tir-h b{font:400 18px/1.15 var(--e-titre,serif)!important;letter-spacing:0!important;text-transform:none!important}
+.ecran.ecrin .e-vi{position:absolute;left:12px;top:-12px;width:76px;height:88px;object-fit:cover;border-radius:14px;box-shadow:0 14px 22px -10px rgba(40,22,20,.6);transform:rotate(-4deg);transition:transform .3s}
+.ecran.ecrin .e-presta .tir:nth-child(even) .e-vi{transform:rotate(3deg)}
+.ecran.ecrin .e-presta .tir.on .e-vi,.ecran.ecrin .e-presta .tir[open] .e-vi{transform:rotate(0) scale(1.04)}
+.ecran.ecrin .e-presta .tir-h i{width:32px!important;height:32px!important;border-radius:50%;background:var(--e-acc);flex:none;box-shadow:0 6px 12px -5px var(--e-acc)}
+.ecran.ecrin .e-presta .tir-h i:before,.ecran.ecrin .e-presta .tir-h i:after{background:#fff!important}
+.ecran.ecrin .e-presta .pk-c{border-radius:16px!important;background:color-mix(in srgb,var(--creme) 40%,#fff)!important;box-shadow:inset 0 0 0 1px rgba(40,22,20,.06)!important}
+.ecran.ecrin .e-presta .verif{border-radius:16px!important}
+
+/* RÉALISATIONS : grandes photos qui défilent, celle du milieu devant */
+.ecran.ecrin .e-real .car{gap:12px!important;padding:8px 6px 26px!important;scroll-snap-type:x mandatory}
+.ecran.ecrin .e-real .car img{border-radius:24px!important;box-shadow:var(--e-ombre-p)!important;scroll-snap-align:center;transition:transform .35s cubic-bezier(.3,.7,.3,1);transform:scale(.9)}
+.ecran.ecrin .e-real .car img.e-on{transform:none}
+
+/* AVIS : le grand bloc sombre aux couleurs du salon */
+.ecran.ecrin .e-avis{background:radial-gradient(120% 80% at 85% 0%,var(--e-fonce2),var(--e-fonce) 62%)!important;color:#f7eee9!important;margin-top:30px!important}
+.ecran.ecrin .e-avis .al-tete{display:flex;align-items:baseline;gap:12px}
+.ecran.ecrin .e-avis .al-tete b{font:400 72px/1 var(--e-titre,serif)!important;background:linear-gradient(180deg,#fff7e6,var(--e-dore));-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.ecran.ecrin .e-avis .et{color:var(--e-dore)!important}
+.ecran.ecrin .e-avis .al-nb{color:rgba(255,255,255,.6)!important}
+.ecran.ecrin .e-avis .al{display:flex!important;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:20px -20px 22px!important;padding:6px 20px 24px;scrollbar-width:none}
+.ecran.ecrin .e-avis .al::-webkit-scrollbar{display:none}
+.ecran.ecrin .e-avis .al-i{flex:0 0 80%;scroll-snap-align:center;flex-direction:column;align-items:flex-start!important;gap:10px;padding:20px!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.04))!important;box-shadow:0 20px 36px -18px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.14)}
+.ecran.ecrin .e-avis .al-i p{font:italic 400 16px/1.5 Georgia,serif!important;color:#f7eee9!important}
+.ecran.ecrin .e-avis .al-i b{color:#fff!important}
+.ecran.ecrin .e-avis .al-r{background:rgba(255,255,255,.14)!important;color:#fff!important}
+.ecran.ecrin .e-avis .bouton{border:0!important;color:#2a1b1e!important;background:linear-gradient(180deg,#fff2d6,var(--e-dore))!important;box-shadow:0 14px 26px -12px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.7)!important}
+
+/* À PROPOS : grande photo, la carte de texte vient se poser dessus */
+.ecran.ecrin .e-moi .moi-q{display:block!important;position:relative;margin:0 -20px!important}
+.ecran.ecrin .e-moi .moi-q img{display:block;width:100%!important;height:340px!important;border-radius:0!important;object-fit:cover}
+.ecran.ecrin .e-moi .moi-q>div{position:absolute;left:20px;bottom:18px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.ecran.ecrin .e-moi .moi-q>div b{display:block;font:400 30px/1 var(--e-titre,serif)!important;color:#fff!important}
+.ecran.ecrin .e-moi .moi-q>div span{color:#fff!important;opacity:.9}
+.ecran.ecrin .e-moi .mots{position:relative;z-index:2;margin:-26px 4px 0!important;padding:22px 20px!important;border-radius:22px;background:var(--e-carte);box-shadow:var(--e-ombre-p)}
+.ecran.ecrin .e-moi{overflow:hidden}
+
+/* LE SALON : la photo en grand, l'adresse sur une étiquette posée dessus */
+.ecran.ecrin .e-salon .cadre{border-radius:24px!important;box-shadow:var(--e-ombre-p)!important;overflow:hidden}
+.ecran.ecrin .e-salon .leg{position:relative;z-index:2;margin:-46px 14px 0!important;padding:14px 18px!important;border-radius:18px;background:var(--e-carte);box-shadow:0 18px 30px -14px rgba(0,0,0,.55);font:400 16px/1.3 var(--e-titre,serif)!important;text-align:left!important}
+
+/* PREMIÈRE VISITE : 3 étapes en escalier, gros numéros aux couleurs du salon */
+.ecran.ecrin .e-visite ol.visite{position:relative;padding:0!important}
+.ecran.ecrin .e-visite ol.visite:before{content:"";position:absolute;left:37px;top:30px;bottom:30px;border-left:2px dashed color-mix(in srgb,var(--e-acc) 40%,transparent)}
+.ecran.ecrin .e-visite li{position:relative;display:flex!important;align-items:center;gap:14px;margin:0 0 14px!important;padding:14px 16px 14px 12px!important;border:0!important;border-radius:20px;background:var(--e-carte);box-shadow:var(--e-ombre)}
+.ecran.ecrin .e-visite li:nth-child(2){margin-left:14px!important}.ecran.ecrin .e-visite li:nth-child(3){margin-left:28px!important}
+.ecran.ecrin .e-visite li b{flex:none;width:48px!important;height:48px!important;border-radius:50%!important;display:grid!important;place-items:center;font:italic 400 22px var(--e-titre,serif)!important;color:#fff!important;background:var(--e-acc)!important;box-shadow:0 8px 14px -6px var(--e-acc),inset 0 1px 0 rgba(255,255,255,.4)!important;border:0!important}
+
+/* AVANT VOTRE RENDEZ-VOUS : un petit mot glissé, tenu par un scotch */
+.ecran.ecrin .e-avant ul.avant{position:relative;margin:8px 2px 0!important;padding:26px 20px 14px!important;border-radius:6px 24px 24px 24px;background:var(--e-carte);box-shadow:var(--e-ombre-p);transform:rotate(-1.2deg)}
+.ecran.ecrin .e-avant ul.avant:before{content:"";position:absolute;top:-10px;left:24px;width:72px;height:22px;background:color-mix(in srgb,var(--e-acc) 35%,rgba(255,255,255,.4));transform:rotate(-4deg);border-radius:2px}
+.ecran.ecrin .e-avant li{border:0!important;padding:10px 0!important}
+.ecran.ecrin .e-avant li+li{border-top:1px dashed rgba(40,22,20,.14)!important}
+.ecran.ecrin .e-avant li i{background:none!important;color:var(--e-acc)!important;font-style:normal!important;font-size:0!important;width:auto!important;border:0!important;box-shadow:none!important}
+.ecran.ecrin .e-avant li i:after{content:"✦";font-size:14px}
+
+/* BON À SAVOIR : petites tuiles en relief, un symbole chacune */
+.ecran.ecrin .e-savoir{display:grid!important;grid-template-columns:1fr 1fr;gap:12px}
+.ecran.ecrin .e-savoir>.ti,.ecran.ecrin .e-savoir>:not(.puce){grid-column:1/-1}
+.ecran.ecrin .e-savoir .puce{margin:0!important;padding:14px 14px 16px!important;border:0!important;border-radius:18px;background:var(--e-carte)!important;box-shadow:var(--e-ombre);font-size:13.5px!important;line-height:1.35!important}
+.ecran.ecrin .e-savoir .puce:before{display:none!important}
+.ecran.ecrin .e-sy{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;margin-bottom:10px;font:600 14px Jost,sans-serif;font-style:normal;color:#fff;background:var(--e-acc);box-shadow:0 6px 12px -6px var(--e-acc)}
+.ecran.ecrin .e-savoir .e-non .e-sy{background:color-mix(in srgb,var(--e-acc) 30%,#9a8f8a)}
+
+/* HORAIRES : un ticket avec son haut sombre, perforé */
+.ecran.ecrin .e-horaires .infos{padding:0 0 20px!important;border-radius:22px!important;background:var(--e-carte)!important;box-shadow:var(--e-ombre-p)!important;overflow:hidden;border:0!important}
+.ecran.ecrin .e-tk{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px;margin-bottom:10px;background:linear-gradient(var(--e-fonce2),var(--e-fonce));color:#fff}
+.ecran.ecrin .e-tk b{font:400 19px/1.1 var(--e-titre,serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ecran.ecrin .e-st{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;padding:6px 11px;border-radius:99px;background:rgba(255,255,255,.12);white-space:nowrap}
+.ecran.ecrin .e-st i{width:7px;height:7px;border-radius:50%;background:#6fd39a;box-shadow:0 0 8px #6fd39a}
+.ecran.ecrin .e-st.e-f i{background:#e58b8b;box-shadow:none}
+.ecran.ecrin .e-horaires .h{padding:7px 20px!important;border:0!important}
+.ecran.ecrin .e-horaires .h.auj{font-weight:600}
+.ecran.ecrin .e-perfo{height:0;border-top:2px dashed rgba(40,22,20,.15);margin:14px 20px 4px;position:relative}
+.ecran.ecrin .e-perfo:before,.ecran.ecrin .e-perfo:after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--creme);box-shadow:inset 0 2px 4px rgba(40,22,20,.15)}
+.ecran.ecrin .e-perfo:before{left:-31px}.ecran.ecrin .e-perfo:after{right:-31px}
+.ecran.ecrin .e-horaires .adr{padding:10px 20px 0!important}
+.ecran.ecrin .e-horaires .btns{padding:14px 20px 0!important;gap:10px}
+.ecran.ecrin .e-horaires .btns a{border-radius:99px!important;box-shadow:var(--e-ombre)!important}
+
+/* COMMENT VENIR : petites cartes */
+.ecran.ecrin .e-acces .ac{margin:0 0 10px!important;padding:14px 16px!important;border:0!important;border-radius:16px;background:var(--e-carte);box-shadow:var(--e-ombre)}
+
+/* INSTAGRAM : la fin en bloc sombre, les photos en relief */
+.ecran.ecrin .e-insta{background:radial-gradient(120% 80% at 15% 0%,var(--e-fonce2),var(--e-fonce) 62%)!important;color:#f7eee9!important}
+.ecran.ecrin .e-insta .insta{border:0!important;background:none!important;padding:0!important;margin-bottom:16px}
+.ecran.ecrin .e-insta .insta span{font:italic 400 20px var(--e-titre,serif);color:#fff}
+.ecran.ecrin .e-insta .insta a{border:0!important;color:#2a1b1e!important;background:linear-gradient(180deg,#fff2d6,var(--e-dore))!important;border-radius:99px!important;box-shadow:0 12px 22px -10px rgba(0,0,0,.6)}
+.ecran.ecrin .e-insta .ig-piste img{border-radius:16px!important;box-shadow:0 18px 28px -14px rgba(0,0,0,.85)!important}
+.ecran.ecrin .e-insta .exemple{color:rgba(255,255,255,.6)!important}
+
+@media(prefers-reduced-motion:reduce){.ecran.ecrin *{transition:none!important}}
+.ecran.ecrin .e-visite li:before,.ecran.ecrin .e-visite li:after,.ecran.ecrin .e-avant li:before{display:none!important}
+.ecran.ecrin .e-presta .tir-h{display:grid!important;grid-template-columns:1fr auto;column-gap:10px;align-items:center;text-align:left}
+.ecran.ecrin .e-presta .tir-h b{grid-column:1;grid-row:1;font-size:17px!important}
+.ecran.ecrin .e-presta .tir-h small{grid-column:1;grid-row:2;margin:3px 0 0!important}
+.ecran.ecrin .e-presta .tir-h i{grid-column:2;grid-row:1/3;position:relative!important;right:auto!important;top:auto!important;transform:none!important;margin:0!important}
+/* les blocs sombres passent devant les réglages « blocs » du site (spécificité forte) */
+.ecran.ecrin:not(#a):not(#b) .defile>.sec.e-avis{background:radial-gradient(120% 80% at 85% 0%,var(--e-fonce2),var(--e-fonce) 62%)!important;color:#f7eee9!important}
+.ecran.ecrin:not(#a):not(#b) .defile>.sec.e-insta{background:radial-gradient(120% 80% at 15% 0%,var(--e-fonce2),var(--e-fonce) 62%)!important;color:#f7eee9!important}
+.ecran.ecrin:not(#a):not(#b) .defile>.sec.e-avis:before,.ecran.ecrin:not(#a):not(#b) .defile>.sec.e-insta:before,.ecran.ecrin:not(#a):not(#b) .defile>.sec.e-avis:after,.ecran.ecrin:not(#a):not(#b) .defile>.sec.e-insta:after{display:none!important}
+.ecran.ecrin .e-avis .ti,.ecran.ecrin .e-insta .ti{color:#fff!important}
+.ecran.ecrin .e-avis .ti *,.ecran.ecrin .e-insta .ti *{color:#fff!important}
+.ecran.ecrin .e-moi .moi-q:after{content:"";position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(transparent,rgba(20,10,12,.6));pointer-events:none}
+.ecran.ecrin .e-moi .moi-q>div{z-index:2}
+.ecran.ecrin .e-moi .mots{font-size:17px!important;line-height:1.55!important}
+.ecran.ecrin .e-tk b,.ecran.ecrin .e-tk span{color:#fff!important}
+.ecran.ecrin .e-insta .insta span{color:#fff!important}
+
+/* ===== 20/11 retours de Marie ===== */
+/* le « + » des prestations : plus de rond rouge, un petit rond clair discret */
+.ecran.ecrin .e-presta .tir-h i{background:color-mix(in srgb,var(--creme) 60%,#fff)!important;box-shadow:inset 0 0 0 1px rgba(40,22,20,.14)!important}
+.ecran.ecrin .e-presta .tir-h i:before,.ecran.ecrin .e-presta .tir-h i:after{background:var(--noir)!important;opacity:1}
+/* les numéros de « Première visite » : foncés, pas rouges */
+.ecran.ecrin .e-visite li b{background:var(--e-fonce)!important;box-shadow:0 8px 14px -6px rgba(40,22,20,.55),inset 0 1px 0 rgba(255,255,255,.2)!important}
+.ecran.ecrin .e-visite ol.visite:before{border-left-color:rgba(40,22,20,.18)}
+
+/* BON À SAVOIR · commun */
+.ecran.ecrin .e-lb b{display:block;font:500 14px/1.25 Jost,sans-serif}
+.ecran.ecrin .e-lb em{display:block;font:400 12.5px/1.3 Jost,sans-serif;font-style:normal;opacity:.62;margin-top:2px}
+.ecran.ecrin .e-savoir .e-sy{background:color-mix(in srgb,var(--creme) 70%,#fff)!important;color:var(--noir)!important;box-shadow:inset 0 0 0 1px rgba(40,22,20,.1)!important}
+.ecran.ecrin .e-savoir .e-non .e-sy{position:relative;opacity:.75}
+.ecran.ecrin .e-savoir .e-non .e-sy:after{content:"";position:absolute;left:8px;right:8px;top:50%;height:1.5px;background:currentColor;transform:rotate(-40deg)}
+/* A « Liste » : une seule carte, une ligne par info */
+.ecran.ecrin.v-a .e-savoir{display:block!important}
+.ecran.ecrin.v-a .e-savoir .puce{display:flex!important;align-items:center;gap:14px;margin:0!important;padding:12px 16px!important;border-radius:0!important;box-shadow:none!important;background:var(--e-carte)!important}
+.ecran.ecrin.v-a .e-savoir .puce .e-sy{margin:0;flex:none;border-radius:50%}
+.ecran.ecrin.v-a .e-savoir .puce.e-prem{border-radius:22px 22px 0 0!important;padding-top:18px!important}
+.ecran.ecrin.v-a .e-savoir .puce.e-der{border-radius:0 0 22px 22px!important;padding-bottom:18px!important}
+.ecran.ecrin.v-a .e-savoir .puce+.puce{border-top:1px solid rgba(40,22,20,.07)!important}
+.ecran.ecrin.v-a .e-savoir{filter:drop-shadow(0 18px 22px rgba(40,22,20,.16))}
+/* B « Étiquettes » : des étiquettes qui se suivent */
+.ecran.ecrin.v-b .e-savoir{display:flex!important;flex-wrap:wrap;gap:10px}
+.ecran.ecrin.v-b .e-savoir>.ti{flex:0 0 100%}
+.ecran.ecrin.v-b .e-savoir .puce{display:inline-flex!important;align-items:center;gap:10px;padding:8px 16px 8px 8px!important;border-radius:99px!important}
+.ecran.ecrin.v-b .e-savoir .puce .e-sy{margin:0;width:34px;height:34px;border-radius:50%;flex:none;font-size:12px}
+.ecran.ecrin.v-b .e-savoir .e-lb b{font-size:13px}.ecran.ecrin.v-b .e-savoir .e-lb em{font-size:11.5px}
+
+/* HORAIRES · commun : plus de ticket */
+.ecran.ecrin.v-a .e-tk,.ecran.ecrin.v-b .e-tk,.ecran.ecrin.v-a .e-perfo,.ecran.ecrin.v-b .e-perfo{display:none!important}
+.ecran.ecrin.v-a .e-jour,.ecran.ecrin.v-b .e-sem,.ecran.ecrin:not(.v-a):not(.v-b) .e-sem,.ecran.ecrin:not(.v-a):not(.v-b) .e-jour{display:none!important}
+.ecran.ecrin.v-a .e-horaires .infos,.ecran.ecrin.v-b .e-horaires .infos{padding:20px 18px 20px!important}
+.ecran.ecrin.v-a .e-horaires .h{display:none!important}
+.ecran.ecrin.v-b .e-horaires .infos:not(.e-ouv) .h{display:none!important}
+.ecran.ecrin .e-horaires .adr{padding:16px 2px 0!important;border-top:1px solid rgba(40,22,20,.08);margin-top:16px}
+.ecran.ecrin .e-horaires .btns{padding:14px 0 0!important}
+.ecran.ecrin .e-etat,.ecran.ecrin .e-etat2{display:flex;align-items:center;gap:12px}
+.ecran.ecrin .e-etat i,.ecran.ecrin .e-etat2 i{flex:none;width:10px;height:10px;border-radius:50%;background:#c98a8a}
+.ecran.ecrin .e-ok i{background:#3fae6a;box-shadow:0 0 0 5px rgba(63,174,106,.16)}
+/* A « La semaine » : l'état en grand + 7 pastilles */
+.ecran.ecrin .e-etat b{display:block;font:400 24px/1.1 var(--e-titre,serif)}
+.ecran.ecrin .e-etat span{display:block;font-size:13px;opacity:.65;margin-top:3px}
+.ecran.ecrin .e-pills{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:18px}
+.ecran.ecrin .e-pi{display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 0 10px;border-radius:16px;background:color-mix(in srgb,var(--creme) 55%,#fff);box-shadow:inset 0 0 0 1px rgba(40,22,20,.06)}
+.ecran.ecrin .e-pi small{font:600 12px Jost,sans-serif}
+.ecran.ecrin .e-pi span{font:400 10px/1.25 Jost,sans-serif;text-align:center;opacity:.7}
+.ecran.ecrin .e-pi.e-fe{background:transparent;box-shadow:inset 0 0 0 1px rgba(40,22,20,.08)}
+.ecran.ecrin .e-pi.e-fe small,.ecran.ecrin .e-pi.e-fe span{opacity:.35}
+.ecran.ecrin .e-pi.e-auj{background:var(--e-fonce);color:#fff;transform:translateY(-4px);box-shadow:0 12px 18px -8px rgba(40,22,20,.6)}
+.ecran.ecrin .e-pi.e-auj span{opacity:.85}
+/* B « Aujourd'hui » : le jour en grand avec la barre de la journée */
+.ecran.ecrin .e-jour small{display:block;font:500 10.5px Jost,sans-serif;letter-spacing:.26em;text-transform:uppercase;opacity:.6}
+.ecran.ecrin .e-jour>b{display:block;font:400 40px/1.1 var(--e-titre,serif);margin:6px 0 14px}
+.ecran.ecrin .e-barre{position:relative;height:8px;border-radius:99px;background:color-mix(in srgb,var(--creme) 70%,#fff);box-shadow:inset 0 1px 2px rgba(40,22,20,.12)}
+.ecran.ecrin .e-barre div{height:100%;border-radius:99px;background:var(--e-fonce)}
+.ecran.ecrin .e-barre i{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(40,22,20,.35),inset 0 0 0 4px var(--e-fonce)}
+.ecran.ecrin .e-bornes{display:flex;justify-content:space-between;font-size:11.5px;opacity:.55;margin-top:6px}
+.ecran.ecrin .e-etat2{margin-top:14px;font-size:14px}
+.ecran.ecrin .e-voir{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:16px;padding:11px;border:0;border-radius:99px;background:color-mix(in srgb,var(--creme) 55%,#fff);box-shadow:inset 0 0 0 1px rgba(40,22,20,.08);font:500 12px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:inherit;cursor:pointer}
+.ecran.ecrin .e-voir span{transition:transform .25s;display:inline-block}
+.ecran.ecrin .infos.e-ouv .e-voir span{transform:rotate(180deg)}
+.ecran.ecrin.v-b .infos.e-ouv .h{animation:eMonte .3s both}
+@keyframes eMonte{from{opacity:0;transform:translateY(-6px)}}
+.ecran.ecrin.v-b .e-horaires .h{padding:8px 4px!important}
+
+/* ===== mouvements (relief-mouvement.js) ===== */
+/* commun : étoiles qui s'allument une à une */
+.ecran.ecrin .et i{font-style:normal;display:inline-block}
+.ecran.ecrin .et.e-allume i{animation:eEt .5s cubic-bezier(.3,1.6,.5,1) backwards;animation-delay:calc(var(--k)*.12s)}
+@keyframes eEt{from{transform:scale(0) rotate(-40deg);opacity:0}}
+/* A : les blocs montent */
+.ecran.ecrin.m-a .sec.e-mt.e-vu{animation:eBloc .8s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes eBloc{from{transform:translateY(46px) scale(.96);opacity:0}}
+/* A : le reflet qui passe (comme sur un vernis gel) */
+.ecran.ecrin .e-reflet{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit;z-index:3}
+.ecran.ecrin .e-reflet:before{content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55) 45%,rgba(255,255,255,.85) 50%,rgba(255,255,255,.55) 55%,transparent);transform:translateX(-160%) skewX(-18deg);animation:eReflet 6s ease-in-out infinite;animation-delay:var(--r,0s)}
+.ecran.ecrin .e-avis .e-reflet:before{background:linear-gradient(100deg,transparent,rgba(255,255,255,.12) 45%,rgba(255,255,255,.25) 50%,rgba(255,255,255,.12) 55%,transparent)}
+@keyframes eReflet{0%,62%{transform:translateX(-160%) skewX(-18deg)}88%,100%{transform:translateX(330%) skewX(-18deg)}}
+.ecran.ecrin.m-a .e-moi .moi-q img,.ecran.ecrin.m-a .e-salon .cadre img{transform:scale(1.12);will-change:transform}
+.ecran.ecrin.m-a .e-salon .cadre{overflow:hidden}
+/* B : les cartes qui s'empilent */
+.ecran.ecrin.e-pile .defile>.sec{position:sticky!important;transform-origin:50% 0;will-change:transform}
+.ecran.ecrin.e-pile .defile>.sec:after{content:""!important;display:block!important;position:absolute;inset:0;border-radius:inherit;background:#120a0c;opacity:var(--voile,0);pointer-events:none;z-index:20}
+.ecran.ecrin.e-pile .defile>.sec{box-shadow:0 -18px 40px -16px rgba(40,22,20,.45),var(--e-ombre-p)!important}
+
+/* ===== A+ (relief-mouvement.js) ===== */
+/* titres : les mots sortent d'une fente */
+.ecran.ecrin.m-a .e-fente{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .04em .12em;margin-bottom:-.12em}
+.ecran.ecrin.m-a .e-mot{display:inline-block;font-style:inherit}
+.ecran.ecrin.m-a .ti.e-att .e-mot{transform:translateY(110%) rotate(6deg)}
+.ecran.ecrin.m-a .ti.e-go .e-mot{animation:eMot .9s cubic-bezier(.2,.9,.2,1) backwards;animation-delay:calc(var(--k)*.09s)}
+@keyframes eMot{from{transform:translateY(110%) rotate(6deg)}}
+.ecran.ecrin.m-a .ti.e-att small{opacity:0}
+.ecran.ecrin.m-a .ti.e-go small{animation:eFond .8s ease backwards}
+@keyframes eFond{from{opacity:0;letter-spacing:.6em}}
+/* cartes en cascade */
+.ecran.ecrin.m-a .e-cas.e-att{opacity:0;transform:translateY(30px) rotate(-2deg) scale(.96)}
+.ecran.ecrin.m-a .e-cas.e-go{animation:eCas .75s cubic-bezier(.2,.9,.25,1.05) backwards;animation-delay:calc(var(--k)*.08s)}
+@keyframes eCas{from{opacity:0;transform:translateY(30px) rotate(-2deg) scale(.96)}}
+.ecran.ecrin.m-a .e-pop.e-att{opacity:0;transform:scale(.92)}
+.ecran.ecrin.m-a .e-pop.e-go{animation:ePop .8s cubic-bezier(.2,.9,.25,1.08) backwards .1s}
+@keyframes ePop{from{opacity:0;transform:scale(.92) translateY(16px)}}
+.ecran.ecrin.m-a .e-avant ul.avant.e-go{animation-name:eMot2}
+@keyframes eMot2{from{opacity:0;transform:translateY(-40px) rotate(-8deg)}60%{transform:translateY(4px) rotate(.5deg)}}
+.ecran.ecrin.m-a .e-avant ul.avant.e-att{transform:translateY(-40px) rotate(-8deg)}
+/* première visite : le pointillé se dessine */
+.ecran.ecrin.m-a .e-visite ol.visite:before{transform-origin:top;transition:transform 1.2s cubic-bezier(.3,.7,.3,1) .3s}
+.ecran.ecrin.m-a .e-visite ol.visite.e-att:before{transform:scaleY(0)}
+/* réalisations en 3D */
+.ecran.ecrin.m-a .e-real .car.e-3d img{transition:none!important;will-change:transform,opacity}
+/* étoiles qui scintillent dans les blocs foncés */
+.ecran.ecrin .e-etin{position:absolute;z-index:1;pointer-events:none;color:var(--e-dore);font-size:var(--t);line-height:1;opacity:0;animation:eEtin var(--v) ease-in-out infinite var(--d)}
+@keyframes eEtin{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:.9;transform:scale(1) rotate(90deg)}}
+.ecran.ecrin .e-avis>*:not(.e-etin),.ecran.ecrin .e-insta>*:not(.e-etin){position:relative;z-index:2}
+/* aujourd'hui qui respire dans la semaine */
+.ecran.ecrin.m-a .e-pi.e-auj:after{content:"";position:absolute;inset:-4px;border-radius:19px;box-shadow:0 0 0 2px var(--e-fonce);opacity:0;animation:eRespire 2.4s ease-in-out infinite}
+.ecran.ecrin .e-pi{position:relative}
+@keyframes eRespire{0%,100%{opacity:0;transform:scale(.96)}50%{opacity:.5;transform:scale(1.04)}}
+
+/* ===== idées de la table ronde (relief-x.js) ===== */
+/* pilule Réserver qui suit */
+.ecran.ecrin .x-pil{position:absolute;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 22px;border:0;border-radius:99px;color:#fff;
+ background:linear-gradient(180deg,color-mix(in srgb,var(--e-fonce2) 92%,#fff),var(--e-fonce));box-shadow:0 18px 34px -12px rgba(20,10,12,.6),inset 0 1px 0 rgba(255,255,255,.16);
+ transform:translateY(140%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.25,1.05),opacity .3s;cursor:pointer;text-align:left;font-family:Jost,sans-serif}
+.ecran.ecrin .x-pil.x-on{transform:none;opacity:1}
+.ecran.ecrin .x-pil b{display:block;font:500 15px/1.1 var(--e-titre,serif);letter-spacing:.02em}
+.ecran.ecrin .x-pil small{display:block;font:400 11.5px/1.3 Jost,sans-serif;opacity:.75;margin-top:2px}
+.ecran.ecrin .x-pil i{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:300 22px/1 Jost;font-style:normal;color:var(--e-fonce);background:linear-gradient(180deg,#fff7e8,var(--e-dore))}
+.ecran.ecrin .x-pil.x-on.x-appui{transform:scale(.96)}
+/* prestations : carte de grand restaurant */
+.ecran.ecrin .e-presta .pk-t{display:flex!important;align-items:baseline;gap:8px;flex-wrap:wrap}
+.ecran.ecrin .e-presta .pk-t b{order:1;font:500 14.5px/1.3 Jost,sans-serif!important;letter-spacing:0!important;text-transform:none!important}
+.ecran.ecrin .e-presta .pk-t .x-trait{order:2;flex:1 1 20px;height:1px;align-self:center;background:currentColor;opacity:.25;transform-origin:left;min-width:20px}
+.ecran.ecrin .e-presta .pk-t .pp{order:3;font:500 15px Jost,sans-serif!important;position:static!important}
+.ecran.ecrin .e-presta .pk-t small{order:4;flex-basis:100%;opacity:.6;font-size:12px!important}
+.ecran.ecrin .e-presta .pk-c{background:transparent!important;box-shadow:none!important;border-bottom:1px solid rgba(40,22,20,.08)!important;border-radius:0!important;transition:transform .15s}
+.ecran.ecrin .e-presta .pk-c.x-tombe{animation:xTombe .55s cubic-bezier(.3,1.5,.5,1) backwards;animation-delay:calc(var(--k)*.04s)}
+.ecran.ecrin .e-presta .pk-c.x-tombe .x-trait{animation:xTrait .5s cubic-bezier(.3,.7,.3,1) backwards;animation-delay:calc(var(--k)*.04s + .15s)}
+@keyframes xTombe{from{opacity:0;transform:translateY(-10px)}}
+@keyframes xTrait{from{transform:scaleX(0)}}
+.ecran.ecrin .x-appui:not(.x-pil){transform:scale(.97)!important}
+/* « Je veux ces ongles » */
+.ecran.ecrin .e-real .x-cadre{position:relative;flex:none;display:block;border-radius:24px;scroll-snap-align:center;transition:transform .35s cubic-bezier(.3,.7,.3,1);transform:scale(.9)}
+.ecran.ecrin .e-real .x-cadre.e-on{transform:none}
+.ecran.ecrin .e-real .x-cadre img{transform:none!important;display:block}
+.ecran.ecrin .x-veux{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap;border:0;border-radius:99px;padding:10px 16px;font:500 12.5px Jost,sans-serif;color:#2a1b1e;background:rgba(255,255,255,.88);box-shadow:0 10px 20px -8px rgba(0,0,0,.45);cursor:pointer;opacity:0;transition:opacity .3s}
+.ecran.ecrin .x-cadre.e-on .x-veux{opacity:1}
+.ecran.ecrin .x-veux.x-appui{transform:translateX(-50%) scale(.95)!important}
+/* photos qui se dévoilent */
+.ecran.ecrin .x-cache{position:relative;overflow:hidden}
+.ecran.ecrin .x-voile{position:absolute;inset:0;z-index:4;background:var(--e-fonce);transform-origin:top;pointer-events:none}
+.ecran.ecrin .x-cache img{transform:scale(1.12)}
+.ecran.ecrin .x-leve .x-voile{transform:translateY(-101%);transition:transform .75s cubic-bezier(.7,0,.2,1)}
+.ecran.ecrin .x-leve img{transform:none;transition:transform 1.3s cubic-bezier(.2,.8,.2,1)}
+.ecran.ecrin .e-moi .x-cache>div{z-index:5}
+/* titres « vernis qui sèche » */
+.ecran.ecrin .x-l{display:inline-block;font-style:inherit;will-change:transform,opacity}
+/* plus rien ne bouge tout seul (retours de la table ronde) */
+.ecran.ecrin.x-vivant .e-etin,.ecran.ecrin.x-edito .e-etin,.ecran.ecrin.x-vivant .e-reflet,.ecran.ecrin.x-edito .e-reflet{display:none!important}
+
+/* ===== ÉDITO : une page de magazine ===== */
+.ecran.ecrin.x-edito .defile>.sec{margin:0!important;border-radius:0!important;box-shadow:none!important;padding:64px 22px 44px!important;background:var(--e-carte)!important;overflow:hidden}
+.ecran.ecrin.x-edito .defile>.sec+.sec{border-top:1px solid rgba(40,22,20,.08)}
+.ecran.ecrin.x-edito:not(#a):not(#b) .defile>.sec.e-avis,.ecran.ecrin.x-edito:not(#a):not(#b) .defile>.sec.e-insta{border-radius:0!important}
+.ecran.ecrin.x-edito .x-num{position:absolute;right:14px;top:18px;z-index:0;font:400 128px/1 var(--e-titre,serif);color:transparent;-webkit-text-stroke:1px currentColor;opacity:.16;pointer-events:none;will-change:transform}
+.ecran.ecrin.x-edito .sec>*:not(.x-num){position:relative;z-index:1}
+.ecran.ecrin.x-edito .ti span{font-size:38px!important}
+/* cartes à plat : plus d'ombres partout, des filets fins */
+.ecran.ecrin.x-edito .e-presta .tir{background:transparent!important;box-shadow:none!important;border-radius:0!important;border-bottom:1px solid rgba(40,22,20,.12)!important;margin:0!important}
+.ecran.ecrin.x-edito .e-presta .tir-h{padding:18px 4px 18px 92px!important;min-height:96px}
+.ecran.ecrin.x-edito .e-vi{top:12px;left:4px;transform:none!important;border-radius:10px;box-shadow:none;width:72px;height:72px}
+.ecran.ecrin.x-edito .e-presta .tir-h b{font-size:21px!important}
+.ecran.ecrin.x-edito .e-visite li,.ecran.ecrin.x-edito .e-acces .ac{background:transparent;box-shadow:none;border-bottom:1px solid rgba(40,22,20,.1)!important;border-radius:0;margin-left:0!important}
+.ecran.ecrin.x-edito .e-avant ul.avant{transform:none;box-shadow:none;border:1px solid rgba(40,22,20,.12);border-radius:4px}
+.ecran.ecrin.x-edito .e-avant ul.avant:before{display:none}
+.ecran.ecrin.x-edito .e-horaires .infos{box-shadow:none!important;border:1px solid rgba(40,22,20,.1)!important}
+.ecran.ecrin.x-edito .e-savoir{filter:none}
+.ecran.ecrin.x-edito .e-savoir .puce{background:transparent!important}
+/* les photos en très grand */
+.ecran.ecrin.x-edito .e-real .car{margin:0 -22px!important;padding:8px 22px 26px!important}
+.ecran.ecrin.x-edito .e-real .x-cadre{width:82%}
+.ecran.ecrin.x-edito .e-real .car img{width:100%!important;height:auto!important;aspect-ratio:4/5;object-fit:cover;border-radius:4px!important;box-shadow:none!important}
+.ecran.ecrin.x-edito .e-real .x-cadre{border-radius:4px}
+.ecran.ecrin.x-edito .e-moi .moi-q img{height:440px!important}
+.ecran.ecrin.x-edito .e-moi .mots{box-shadow:none;border-radius:4px;margin:-40px 18px 0!important}
+.ecran.ecrin.x-edito .e-salon .cadre{border-radius:4px!important;box-shadow:none!important;margin:0 -22px}
+.ecran.ecrin.x-edito .e-salon .leg{border-radius:4px;box-shadow:none;border:1px solid rgba(40,22,20,.1)}
+.ecran.ecrin .e-pi.e-auj *{color:#fff!important;opacity:1!important}

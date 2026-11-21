@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Il manque · version A « Une chose à la fois »</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+/* 18/11 nuit · MAQUETTE A « Une chose à la fois » de la page « Il manque… » (remplir.html) — même style que la page 1 « Un lien suffit. » et le chargement :
+   le même anneau qui avance d'un seul geste, UNE question en grand, une case comme celle du lien, un bouton noir. Ce qui est fait se range en petites cartes roses. */
+:root{--fond:#F6F3EF;--noir:#1E1C1B;--muted:#5F5751;--doux:#8A817A;--ligne:rgba(30,28,27,.12);--rose:#B5475E;--pop:cubic-bezier(.3,1.5,.5,1);--doux-out:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--fond);color:var(--noir);font-family:Jost,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none;padding:0;-webkit-tap-highlight-color:transparent}
+.page{height:100dvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 16px) 22px calc(env(safe-area-inset-bottom) + 18px)}
+.tete{display:flex;justify-content:center}.logo{width:104px}.logo svg{display:block;width:100%}
+.haut{flex:none;display:flex;flex-direction:column;align-items:center;margin-top:18px}
+.etape{margin:0;font:400 13px Jost;color:var(--doux)}
+/* l'anneau : le même que pendant le chargement */
+.anneau{position:relative;width:96px;aspect-ratio:1;margin-top:12px}
+.anneau svg{width:100%;height:100%;transform:rotate(-90deg)}
+.a-fond{fill:none;stroke:#E7E0D8;stroke-width:3}
+.a-prog{fill:none;stroke:var(--noir);stroke-width:3.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p,0));transition:stroke-dashoffset .7s var(--doux-out),stroke .4s}
+.pret .a-prog{stroke:#D97A9C}
+.a-c{position:absolute;inset:0;display:grid;place-items:center;font:400 22px "Cormorant Garamond",serif}
+.a-c small{font:400 11px Jost;color:var(--doux)}
+.comete{position:absolute;inset:0;transform:rotate(calc(var(--p,0)*360deg));transition:transform .7s var(--doux-out)}
+.comete i{position:absolute;left:50%;top:1.5%;transform:translate(-50%,-50%);font-style:normal;font-size:14px;color:#fff;text-shadow:0 0 6px rgba(240,130,175,1),0 0 14px rgba(255,170,205,.9)}
+/* la question */
+.milieu{flex:1;min-height:0;position:relative;margin-top:14px}
+.q{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;transition:opacity .3s,transform .45s var(--doux-out)}
+.q.avant{opacity:0;transform:translateX(40px);pointer-events:none}.q.apres{opacity:0;transform:translateX(-40px);pointer-events:none}
+.q .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 6px 14px -6px rgba(176,53,98,.4)}
+.q .ic svg{width:21px;height:21px}
+.q h1{margin:14px 0 0;font:300 36px/1.05 "Cormorant Garamond",serif}
+.q h1 em{font-style:italic;font-weight:400}
+.q p{margin:8px 0 0;max-width:30ch;font:300 15px/1.45 Jost;color:var(--muted)}
+.champ{width:100%;display:flex;align-items:center;gap:6px;height:58px;margin-top:22px;padding:0 22px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px rgba(30,28,27,.24)}
+.champ:focus-within{box-shadow:inset 0 0 0 1.5px var(--noir),0 0 0 4px rgba(30,28,27,.06)}
+.champ input{flex:1;min-width:0;border:0;background:none;outline:none;font:400 17px Jost;text-align:center}
+.champ .at{color:var(--doux);font-size:17px}
+.puceS{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+.puceS button{height:42px;padding:0 16px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px rgba(30,28,27,.16);font:400 14.5px Jost;transition:background .2s,color .2s,transform .15s}
+.puceS button.on{background:var(--noir);color:#fff;box-shadow:none}
+.puceS button:active{transform:scale(.95)}
+.prixL{width:100%;display:flex;flex-direction:column;gap:7px;margin-top:14px;max-height:150px;overflow:auto}
+.prixL div{display:flex;align-items:center;gap:10px;padding:0 4px;font:400 14.5px Jost;text-align:left}
+.prixL div span{flex:1}
+.prixL input{width:84px;height:38px;border:0;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px rgba(30,28,27,.16);text-align:center;font:400 15px Jost;outline:none}
+.photosL{display:flex;gap:9px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.photosL img{width:70px;height:92px;object-fit:cover;border-radius:14px;animation:entre .45s var(--pop) both}
+.ajoutP{width:70px;height:92px;border-radius:14px;display:grid;place-items:center;background:#fff;box-shadow:inset 0 0 0 1px rgba(30,28,27,.16);font:300 28px Jost;color:var(--muted)}
+@keyframes entre{from{opacity:0;transform:scale(.6)}}
+/* ce qui est fait : de petites cartes roses */
+.faits{flex:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;min-height:30px;margin:10px 0 12px}
+.faits button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px 0 5px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 6px 12px -10px rgba(80,30,50,.5);font:400 12px Jost;max-width:170px;animation:entre .45s var(--pop) both}
+.faits button i{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;color:#B03562;background:linear-gradient(140deg,#FDE8EF,#F6CFDD)}
+.faits button i svg{width:11px;height:11px}
+.faits button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bas{flex:none;display:flex;flex-direction:column;align-items:center;gap:10px}
+.go{width:100%;height:58px;border-radius:999px;background:var(--noir);color:#fff;font:500 13px Jost;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 14px 26px -14px rgba(0,0,0,.6);transition:transform .15s,background .3s}
+.go:active{transform:scale(.97)}
+.go.pret{background:var(--rose)}
+.retour{font:400 13.5px Jost;color:var(--doux);text-decoration:underline;text-underline-offset:3px;min-height:20px}
+.retour[hidden]{visibility:hidden;display:block}
+.secoue{animation:secoue .4s}
+@keyframes secoue{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.etoileV{position:fixed;z-index:50;pointer-events:none;color:#E99AB6;text-shadow:0 0 8px rgba(233,154,182,.8)}
+.maquette{position:fixed;right:10px;bottom:4px;font:500 9px Jost;letter-spacing:.2em;color:#B7ADA4}
+@media (min-width:900px){.page{max-width:620px;padding-top:34px}.anneau{width:120px}.q h1{font-size:54px}.q p{font-size:17px}.milieu{margin-top:28px}}
+@media (max-height:700px){.anneau{width:74px}.q h1{font-size:30px}.champ{margin-top:14px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="tete"><div class="logo" id="logo"></div></div>
+  <div class="haut"><p class="etape">Étape 1 sur 4 · Votre salon</p>
+    <div class="anneau" id="anneau"><svg viewBox="0 0 120 120"><circle class="a-fond" cx="60" cy="60" r="55"/><circle class="a-prog" cx="60" cy="60" r="55" pathLength="1"/></svg><div class="comete"><i>✦</i></div><div class="a-c" id="compte"></div></div></div>
+  <div class="milieu" id="milieu"></div>
+  <div class="faits" id="faits"></div>
+  <div class="bas"><button class="go" id="go">Suivant</button><button class="retour" id="retour" hidden>Revenir à la question d’avant</button></div>
+</div>
+<span class="maquette">MAQUETTE A</span>
+<script src="manque-commun.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+$("logo").innerHTML = LOGO;
+const V = { jours: [], presta: {}, photos: [] };
+const TITRES = { nom: "Le nom de <em>votre salon</em>", prenom: "Votre <em>prénom</em>", insta: "Votre <em>Instagram</em>", adr: "Votre <em>adresse</em>", tel: "Votre <em>téléphone</em>", hor: "Vos <em>horaires</em>", photos: "Vos <em>photos</em>", presta: "Vos <em>prix</em>" };
+let i = 0, fini = false;
+const resume = m => m.k === "insta" ? "@" + V.insta : m.k === "hor" ? V.jours.map(j => JOURS[j]).join(" ") : m.k === "photos" ? V.photos.length + " photos" : m.k === "presta" ? Object.keys(V.presta).length + " prestations" : V[m.k];
+function contenu(m) {
+  let c = "";
+  if (m.type === "texte" || m.type === "tel" || m.type === "insta") c = `<div class="champ">${m.type === "insta" ? '<span class="at">@</span>' : ""}<input data-c="${m.k}" placeholder="${m.ph}" ${m.type === "tel" ? 'inputmode="tel"' : ""} autocomplete="off" value="${(V[m.k] || "").replace(/"/g, "&quot;")}"></div>`;
+  if (m.type === "jours") c = `<div class="puceS">${JOURS.map((j, n) => `<button data-j="${n}" class="${V.jours.includes(n) ? "on" : ""}">${j}</button>`).join("")}</div>`;
+  if (m.type === "photos") c = `<div class="photosL">${V.photos.map(u => `<img src="${u}" alt="">`).join("")}<button class="ajoutP" data-ajout>+</button></div>`;
+  if (m.type === "presta") c = `<div class="puceS">${SUGG.map(s => `<button data-p="${s}" class="${s in V.presta ? "on" : ""}">${s}</button>`).join("")}</div><div class="prixL">${Object.keys(V.presta).map(s => `<div><span>${s}</span><input data-prix="${s}" inputmode="decimal" placeholder="Prix €" value="${V.presta[s] || ""}"></div>`).join("")}</div>`;
+  return `<span class="ic">${svg(m.k)}</span><h1>${TITRES[m.k]}</h1><p>${m.q}</p>${c}`; }
+function montre(sens = 1) { const mil = $("milieu"), vieux = mil.querySelector(".q:not(.apres)");
+  if (vieux) { vieux.classList.add(sens > 0 ? "apres" : "avant"); setTimeout(() => vieux.remove(), 450); }
+  const q = document.createElement("div"); q.className = "q " + (sens > 0 ? "avant" : "apres");
+  if (fini) q.innerHTML = `<span class="ic">${svg("nom")}</span><h1>Tout est <em>prêt</em>.</h1><p>Votre site est rempli. Il ne reste qu’à choisir son style.</p>`; else q.innerHTML = contenu(MQ[i]);
+  mil.appendChild(q); requestAnimationFrame(() => requestAnimationFrame(() => q.classList.remove("avant", "apres")));
+  setTimeout(() => { const inp = q.querySelector("input"); if (inp && matchMedia("(min-width:900px)").matches) inp.focus(); }, 350);
+  majHaut(); }
+function majHaut() { const faits = MQ.filter(m => m.ok).length, n = MQ.length;
+  $("anneau").style.setProperty("--p", faits / n); document.body.classList.toggle("pret", fini);
+  $("compte").innerHTML = fini ? '<span style="color:#D97A9C">✓</span>' : `<span>${i + 1}<small> / ${n}</small></span>`;
+  $("faits").innerHTML = MQ.filter(m => m.ok).map(m => `<button data-va="${MQ.indexOf(m)}" title="Modifier"><i>${svg(m.k)}</i><span>${resume(m)}</span></button>`).join("");
+  $("go").textContent = fini ? "Choisir mon style →" : i === n - 1 ? "C’est bon pour mes prix" : "Suivant"; $("go").classList.toggle("pret", fini);
+  $("retour").hidden = fini || i === 0; }
+function suivant() { if (fini) { eclat($("go"), 24); return; } const m = MQ[i]; let v = (V[m.k] || "").trim();
+  if (m.k === "insta") { v = v.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/^@/, "").replace(/\/.*$/, ""); V.insta = v; }
+  if (m.k === "prenom" && v) V.prenom = v[0].toUpperCase() + v.slice(1);
+  const ok = m.k === "hor" ? V.jours.length > 0 : m.k === "photos" ? V.photos.length > 0 : m.k === "presta" ? Object.keys(V.presta).length > 0 : !!v;
+  if (!ok) { const q = $("milieu").querySelector(".q:last-child"); q.classList.remove("secoue"); void q.offsetWidth; q.classList.add("secoue"); return; }
+  m.ok = true; const reste = MQ.findIndex(x => !x.ok); if (reste < 0) { fini = true; montre(1); eclat($("anneau"), 20); return; } i = reste; montre(1); }
+$("go").onclick = suivant;
+$("retour").onclick = () => { if (i > 0) { i--; montre(-1); } };
+document.addEventListener("click", e => { const t = e.target;
+  const va = t.closest("[data-va]"); if (va) { i = +va.dataset.va; fini = false; montre(-1); return; }
+  const j = t.closest("[data-j]"); if (j) { const n = +j.dataset.j; V.jours = V.jours.includes(n) ? V.jours.filter(x => x !== n) : [...V.jours, n].sort(); j.classList.toggle("on"); return; }
+  const p = t.closest("[data-p]"); if (p) { const s = p.dataset.p; if (s in V.presta) delete V.presta[s]; else V.presta[s] = ""; const q = $("milieu").querySelector(".q:last-child"); q.innerHTML = contenu(MQ[i]); return; }
+  if (t.closest("[data-ajout]")) { if (V.photos.length < PHOTOS.length) V.photos.push(PHOTOS[V.photos.length]); const q = $("milieu").querySelector(".q:last-child"); q.innerHTML = contenu(MQ[i]); } });
+document.addEventListener("input", e => { const c = e.target.dataset.c; if (c) V[c] = e.target.value; const pr = e.target.dataset.prix; if (pr) V.presta[pr] = e.target.value.replace(/[^\d,.]/g, ""); });
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.dataset.c) suivant(); });
+montre(1);
+</script>
+</body>
+</html>

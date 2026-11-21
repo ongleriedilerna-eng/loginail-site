@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fiche cliente · questions</title>
+<style>
+body{margin:0;background:#E9E3DC;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;color:#1E1C1B;padding:24px 16px}
+h1{font-size:20px;font-weight:500;margin:0 0 4px}.chapo{font-size:13.5px;color:#6B625C;margin:0 0 22px;max-width:780px;line-height:1.45}
+.grille{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.col{width:350px}.col h2{font-size:15px;font-weight:600;margin:0 0 3px}.col p{font-size:12.5px;color:#6B625C;margin:0 0 10px}
+.tel{position:relative;overflow:hidden;background:#F6F2EE;border-radius:34px;border:8px solid #1E1C1B;padding:22px 16px 26px;box-shadow:0 18px 40px rgba(30,28,27,.18);height:760px;box-sizing:border-box;overflow-y:auto;scrollbar-width:none;overscroll-behavior:contain}
+.tel::-webkit-scrollbar{display:none}
+.voirplus{display:block;margin:14px auto 0;border:0;border-radius:999px;background:#fff;padding:11px 22px;font:inherit;font-size:13.5px;font-weight:500;color:#1E1C1B;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08)}.voirplus span{margin-left:4px}
+.deplie{animation:deplie .3s cubic-bezier(.2,.8,.2,1) both}@keyframes deplie{from{opacity:0;transform:translateY(-8px)}}
+.nom{font-size:24px;margin:0}.sous{font-size:12.5px;opacity:.6;margin-top:4px}
+.sw{display:flex;background:#fff;border-radius:999px;padding:4px;margin:14px 0 6px}.sw b{flex:1;text-align:center;border-radius:999px;padding:10px 0;font-size:13.5px;font-weight:500;color:#8A847E}.sw b.on{background:#1E1C1B;color:#fff}
+.k{margin:18px 0 8px;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#8A847E}
+.noire{border-radius:20px;background:#1E1C1B;color:#fff;padding:14px 16px}.noire small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.65;margin-bottom:5px}.noire b{font-size:20px;font-weight:400}.noire span{display:block;font-size:14px;opacity:.75;margin-top:3px}
+.t3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.t3 div{background:#fff;border-radius:16px;padding:11px 12px}.t3 small{display:block;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#8A847E;margin-bottom:4px}.t3 b{font-size:17px;font-weight:500}
+.carte{background:#fff;border-radius:20px;padding:2px 14px}
+.lg{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(30,28,27,.08);font-size:14px;flex-wrap:wrap}.lg:last-child{border-bottom:0}.lg>.q{flex:1;min-width:0}.lg em{font-style:normal;font-size:13.5px}.lg .q span{display:block;font-size:12px;color:#8A847E;margin-top:2px}
+.ic{flex:none;width:32px;height:32px;border-radius:10px;background:#EDE7E0;display:grid;place-items:center}
+svg{fill:none;stroke:#1E1C1B;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.ic svg{width:18px;height:18px}
+.on2{display:flex;gap:4px;background:#F3EEE9;border-radius:999px;padding:3px}
+.on2 button,.puces button{border:0;background:none;border-radius:999px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:500;color:#6B625C;cursor:pointer;transition:background .18s,color .18s,transform .12s}
+button:active{transform:scale(.94)}.on2 button.oui,.puces button.oui{background:#1E1C1B;color:#fff}.on2 button.non{background:#fff;color:#1E1C1B;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.puces{flex-basis:100%;display:flex;gap:5px;flex-wrap:wrap;padding-left:42px}.puces button{background:#F3EEE9;padding:7px 10px;font-size:12px}
+.lien{border:0;background:none;font:inherit;font-size:12.5px;font-weight:500;padding:6px 0 6px 8px;color:#1E1C1B;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.x{border:0;background:none;font-size:16px;color:#8A847E;padding:4px 2px;cursor:pointer}
+.plus{display:block;width:100%;margin-top:10px;border:1px dashed rgba(30,28,27,.25);border-radius:16px;background:none;padding:13px 14px;font:inherit;font-size:13.5px;color:#8A847E;text-align:left;cursor:pointer}
+/* les petits carrés : même taille que dans Notes, 5 par ligne, 10 au plus */
+.carte-ca{background:#fff;border-radius:20px;padding:14px 8px 10px}.carres{display:grid;grid-template-columns:repeat(5,1fr);gap:12px 4px}
+#notes .lg{padding:7px 0}#notes .k{margin:14px 0 7px}#notes .sw{margin-bottom:2px}
+.bas{display:flex;justify-content:flex-end;margin-top:6px}.rondplus{width:26px;height:26px;border-radius:50%;border:0;background:#EDE7E0;font:inherit;font-size:16px;line-height:1;color:#1E1C1B;cursor:pointer;padding:0}
+.ca{min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;animation:pop .26s cubic-bezier(.2,.9,.3,1.3) both}
+.ca .ic{width:32px;height:32px}.ca b{font-size:10px;font-weight:500;line-height:1.15;overflow-wrap:anywhere}
+.ca.non .ic{background:none;border:1px dashed rgba(30,28,27,.25)}.ca.non svg{opacity:.35}.ca.non b{color:#8A847E;font-weight:400}
+.ca{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.ranger{border:0;background:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-size:11.5px;font-weight:600;letter-spacing:0;text-transform:none;color:#1E1C1B;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.carres.range .ca{touch-action:none;cursor:grab}.carres.range .ca .ic{box-shadow:0 2px 6px rgba(30,28,27,.12);background:#fff;outline:1px solid rgba(30,28,27,.1)}
+.carres.range .ca.tenu{opacity:.35}.carres.range .ca.tenu .ic{box-shadow:none;background:none;outline:1px dashed rgba(30,28,27,.35)}.carres.range .ca.tenu .ic svg{opacity:0}
+.fantome{position:fixed;z-index:50;pointer-events:none;margin:0;animation:none;transform-origin:50% 40%;cursor:grabbing}.fantome .ic{background:#fff;box-shadow:0 12px 26px rgba(30,28,27,.28)}.fantome b{background:rgba(246,242,238,.9);border-radius:6px;padding:0 3px}
+.astuce{font-size:11.5px;color:#8A847E;margin:8px 2px 0;line-height:1.4}
+#bulle{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:#1E1C1B;color:#fff;border-radius:999px;padding:10px 18px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s,transform .25s cubic-bezier(.2,.8,.2,1)}#bulle.vu{opacity:1;transform:translate(-50%,0)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+/* la feuille « + autre chose » */
+.voile{position:absolute;inset:0;background:rgba(30,28,27,.35);animation:fond .2s both}
+.feuille{position:absolute;left:0;right:0;bottom:0;max-height:82%;overflow:auto;background:#F6F2EE;border-radius:26px 26px 0 0;padding:10px 16px 22px;scrollbar-width:none;animation:monte .28s cubic-bezier(.2,.8,.2,1) both}
+.poignee{width:38px;height:5px;border-radius:3px;background:rgba(30,28,27,.2);margin:0 auto 12px}
+.feuille h4{margin:0;font-size:17px;font-weight:600}.feuille .k{margin-top:14px}
+.feuille .lg{cursor:pointer}.ajout{font-size:20px;color:#1E1C1B;padding:0 4px}
+@keyframes monte{from{transform:translateY(100%)}}@keyframes fond{from{opacity:0}}
+</style></head><body>
+<h1>Fiche cliente : version 1, le plus important en premier</h1>
+<p class="chapo">Fais défiler <b>dans</b> chaque téléphone, comme sur ton iPhone. Réponds dans un des deux onglets Notes : les carrés apparaissent dans la Fiche, à gauche.</p>
+<div class="grille"><div class="col"><h2>Onglet Fiche</h2><p>« Ce que je sais » en petits carrés.</p><div id="fiche"></div></div>
+<div class="col"><h2>Onglet Notes</h2><p>Métier, couple, enfants, animal, sport, boisson, retard, paiement… puis le reste.</p><div id="notes"></div></div>
+<div class="col"><h2>Notes · version 2</h2><p>Tous les Oui / Non en haut, puis « Voir plus » pour le reste.</p><div id="notes2"></div></div></div>
+<script>
+const S={
+couple:'<path d="M12 20s-7-4.3-7-9.5A3.8 3.8 0 0 1 12 8a3.8 3.8 0 0 1 7 2.5C19 15.7 12 20 12 20z"/>',
+enfants:'<circle cx="12" cy="7.5" r="3"/><path d="M6.5 20c0-3.6 2.5-6.5 5.5-6.5s5.5 2.9 5.5 6.5"/><path d="M10.6 6.2c.7-.9 2.1-.9 2.8 0"/>',
+animal:'<path d="M8 17.5c0-2.6 1.8-4.8 4-4.8s4 2.2 4 4.8c0 1.5-1.2 2.3-2.4 2-1-.3-2.2-.3-3.2 0-1.2.3-2.4-.5-2.4-2z"/><ellipse cx="5.6" cy="11.2" rx="1.7" ry="2.1"/><ellipse cx="9.4" cy="6.9" rx="1.8" ry="2.3"/><ellipse cx="14.6" cy="6.9" rx="1.8" ry="2.3"/><ellipse cx="18.4" cy="11.2" rx="1.7" ry="2.1"/>',
+travail:'<rect x="4" y="8" width="16" height="11" rx="2.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8M4 13h16"/>',
+vacances:'<circle cx="12" cy="12" r="3.6"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M6 18l1.4-1.4M16.6 7.4 18 6"/>',
+papote:'<path d="M4.5 6.5h10a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-3.5 3v-3h-1a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2z"/><path d="M16.5 10h2a2 2 0 0 1 2 2v4.5a2 2 0 0 1-2 2h-.5v2.5l-3-2.5h-3"/>',
+autre:'<path d="M12 4l1.8 5.2L19 11l-5.2 1.8L12 18l-1.8-5.2L5 11l5.2-1.8z"/>',
+forme:'<path d="M8 20V10.5C8 6.5 10 3.5 12 3.5s4 3 4 7V20z"/><path d="M10.5 9.5c.3-1.8 1-3 1.5-3"/>',
+longueur:'<path d="M12 3v18M8.5 6.5 12 3l3.5 3.5M8.5 17.5 12 21l3.5-3.5"/>',
+couleur:'<path d="M12 3.5s6 6.4 6 10.5a6 6 0 0 1-12 0c0-4.1 6-10.5 6-10.5z"/>',
+nailart:'<path d="M16.5 4.5l3 3L9 18l-4 1 1-4z"/><path d="M14.5 6.5l3 3"/>',
+paillettes:'<path d="M9 4l1.2 3.6L14 9l-3.8 1.4L9 14l-1.2-3.6L4 9l3.8-1.4z"/><path d="M17 13l.7 2.1 2.3.9-2.3.8L17 19l-.7-2.2-2.3-.8 2.3-.9z"/>',
+retard:'<circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/>',
+photo:'<rect x="3.5" y="7" width="17" height="12" rx="3"/><circle cx="12" cy="13" r="3.2"/><path d="M9 7l1.2-2h3.6L15 7"/>',
+boisson:'<path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M9 3.5c-.6 1 .6 1.8 0 3M12.5 3.5c-.6 1 .6 1.8 0 3"/>',
+creneau:'<path d="M18.5 14.5A7 7 0 0 1 9.5 5.5a7 7 0 1 0 9 9z"/>',
+fete:'<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M12 10v10M3.5 10h17M12 10c-1.5-3.5-5.5-4-5.5-1.8S10 10 12 10c1.5-3.5 5.5-4 5.5-1.8S14 10 12 10"/>',
+sport:'<path d="M6.5 8v8M17.5 8v8M4 10v4M20 10v4M6.5 12h11"/>',
+connue:'<circle cx="11" cy="11" r="6"/><path d="M15.5 15.5 20 20"/>',
+passion:'<path d="M12 20.5c-3.6 0-6.2-2.4-6.2-5.7 0-3.6 3-5.3 3.6-8.6 2 1.3 3.1 3.1 3.1 4.7 1-.6 1.7-1.7 1.9-2.9 2.1 1.7 3.8 4.1 3.8 6.8 0 3.3-2.6 5.7-6.2 5.7z"/>',
+signe:'<path d="M12 3.5l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.9l-5 2.8 1.2-5.6L4 9.3l5.6-.6z"/>',
+paiement:'<rect x="3.5" y="6" width="17" height="12" rx="2.5"/><path d="M3.5 10h17M7 14.5h3"/>'};
+const sv=k=>`<svg viewBox="0 0 24 24">${S[k]}</svg>`;
+/* [clé, question, picto, type, réponses (oui, non) ou choix] */
+const BASE=[["couple","En couple&nbsp;?","couple","on",["En couple","Célibataire"]],["enfants","Des enfants&nbsp;?","enfants","on",["Enfants","Pas d’enfants"]],["animal","Un animal&nbsp;?","animal","on",["Animal","Pas d’animal"]],["vacances","Vacances bientôt&nbsp;?","vacances","on",["Vacances","Pas de vacances"]],["papote","Aime papoter&nbsp;?","papote","on",["Papote","Aime le calme"]],["travail","Son métier&nbsp;?","travail","txt"]];
+const CAT=[
+ ["Ses ongles",[["forme","Sa forme préférée","forme","ch",["Amande","Carrée","Ronde","Ballerine","Stiletto"]],["longueur","Sa longueur","longueur","ch",["Courts","Moyens","Longs"]],["couleur","Ses couleurs","couleur","ch",["Nude","Rouge","Pastel","Foncé","Flashy"]],["nailart","Aime le nail art&nbsp;?","nailart","on",["Nail art","Sobre"]],["paillettes","Aime les paillettes&nbsp;?","paillettes","on",["Paillettes","Sans paillettes"]],["sport","Fait du sport&nbsp;?","sport","on",["Sportive","Pas sportive"]]]],
+ ["Son rendez-vous",[["boisson","Elle boit quoi&nbsp;?","boisson","ch",["Café","Thé","Eau","Rien"]],["creneau","Son moment préféré","creneau","ch",["Matin","Midi","Soir","Samedi"]],["retard","Souvent en retard&nbsp;?","retard","on",["En retard","À l’heure"]],["paiement","Elle paie comment&nbsp;?","paiement","ch",["Carte","Espèces","Virement"]],["photo","D’accord pour les photos&nbsp;?","photo","on",["Photos OK","Pas de photos"]]]],
+ ["Sa vie",[["fete","Un grand jour bientôt&nbsp;?","fete","ch",["Mariage","Anniversaire","Soirée","Voyage"]],["connue","Elle t’a connue comment&nbsp;?","connue","ch",["Instagram","TikTok","Google","Une amie"]]]]];
+const EXTRA=[["passion","Sa passion&nbsp;?","passion","ch",["Voyage","Mode","Cuisine","Musique","Séries","Lecture"]],["signe","Son signe&nbsp;?","signe","ch",["Bélier","Taureau","Gémeaux","Cancer","Lion","Vierge","Balance","Scorpion","Sagittaire","Capricorne","Verseau","Poissons"]]];
+const TOUT=[...BASE,...CAT.flatMap(c=>c[1]),...EXTRA],Q=k=>TOUT.find(q=>q[0]===k);
+const E={couple:"oui",enfants:"oui",travail:"Infirmière",animal:"oui",sport:"non",vacances:"oui",papote:"oui",boisson:"Café",retard:"non",paiement:"Carte",forme:"Amande",couleur:"Nude"};let OUV=null,TOUS=false;let AJ=[],LIBRES=[],OUVERT=false,EDIT=null;
+const lab=(q,v)=>q[3]==="on"?q[4][v==="oui"?0:1]:v;
+let VUS=new Set();
+const ORDRE=[["Sa vie",["travail","couple","enfants","animal","sport","vacances","fete","papote","passion","signe"]],["Son rendez-vous",["boisson","retard","paiement","photo","creneau","connue"]],["Ses ongles",["forme","longueur","couleur","nailart","paillettes"]]].map(([t,ks])=>[t,ks.map(Q)]);
+let ORD=null,RANGE=false,DRAG=null,APPUI=null;
+function items(){const a=ORDRE.flatMap(g=>g[1]).filter(q=>E[q[0]]).map(q=>({id:q[0],v:E[q[0]],non:q[3]==="on"&&E[q[0]]==="non",ic:q[2],t:lab(q,E[q[0]])}));
+ LIBRES.forEach(x=>a.push({id:"L:"+x,v:"",ic:"autre",t:x}));
+ if(ORD){const p=id=>{const i=ORD.indexOf(id);return i<0?999:i};a.sort((x,y)=>p(x.id)-p(y.id));}return a;}
+function fiche(){const tout=items(),cache=RANGE||TOUS?0:Math.max(0,tout.length-10);const c=tout.slice(0,tout.length-cache).map(it=>{const neuf=!VUS.has(it.id+it.v);VUS.add(it.id+it.v);return `<div class="ca ${it.non?"non":""} ${DRAG===it.id?"tenu":""}" data-id="${it.id}" style="${neuf&&!RANGE?"":"animation:none"}"><span class="ic">${sv(it.ic)}</span><b>${it.t}</b></div>`}).join("");
+ const titre=`<div class="k" style="display:flex;align-items:center;justify-content:space-between">Ce que je sais${c?`<button class="ranger" data-ranger="1">${RANGE?"OK":"Ranger"}</button>`:""}</div>`;
+ const rond=tout.length>10&&!RANGE?`<div class="bas"><button class="rondplus" data-tous="1" aria-label="${TOUS?"Voir moins":"Voir le reste"}">${TOUS?"−":"+"}</button></div>`:"";
+ const fin=c?`<div class="carte-ca"><div class="carres ${RANGE?"range":""}">${c}</div>${rond}</div>${RANGE?`<div class="astuce">Fais glisser les carrés où tu veux. Ton ordre vaut pour toutes tes clientes.</div>`:""}`:`<div class="carte-ca" style="font-size:12.5px;color:#8A847E;padding:14px">Rien pour l’instant : réponds dans Notes.</div>`;
+ return `<div class="tel" id="t0"><h3 class="nom">Léa Martin</h3><div class="sous">06 12 34 56 78</div><div class="sw"><b class="on">Fiche</b><b>Notes</b></div>
+ <div class="noire"><small>Prochain rendez-vous</small><b>Jeudi 26 novembre</b><span>à 14h00 · Remplissage gel</span></div>
+ <div class="t3"><div><small>Visites</small><b>7</b></div><div><small>Fidélité</small><b>7/10</b></div><div><small>Dernière</small><b>29 oct.</b></div></div>
+ <div class="k">Historique</div><div class="carte"><div class="lg"><div class="q">29 oct. 2026<span>Remplissage gel</span></div><em>45 €</em></div><div class="lg"><div class="q">1 oct. 2026<span>Pose complète</span></div><em>55 €</em></div></div>
+ ${titre}${fin}</div>`;}
+function ligne(q){const [k,t,ic,ty,r]=q,v=E[k];
+ if(ty==="on")return `<div class="lg"><span class="ic">${sv(ic)}</span><div class="q">${t}</div><span class="on2"><button data-k="${k}" data-r="oui" class="${v==="oui"?"oui":""}">Oui</button><button data-k="${k}" data-r="non" class="${v==="non"?"non":""}">Non</button></span></div>`;
+ if(ty==="txt")return `<div class="lg"><span class="ic">${sv(ic)}</span><div class="q">${t}${v?`<span>${v}</span>`:""}</div><button class="lien" data-k="${k}" data-r="txt">${v?"Changer":"Écrire"}</button></div>`;
+ if(OUV!==k)return `<div class="lg"><span class="ic">${sv(ic)}</span><div class="q">${t}${v?`<span>${v}</span>`:""}</div><button class="lien" data-ouv="${k}">${v?"Changer":"Choisir"}</button></div>`;
+ return `<div class="lg"><span class="ic">${sv(ic)}</span><div class="q">${t}</div><div class="puces">${r.map(x=>`<button data-k="${k}" data-r="${x}" class="${v===x?"oui":""}">${x}</button>`).join("")}</div></div>`;}
+const autre=()=>`<div class="k">Autre chose</div>`+(LIBRES.length?`<div class="carte">${LIBRES.map((a,i)=>`<div class="lg"><span class="ic">${sv("autre")}</span><div class="q">${a}</div><button class="x" data-x="${i}" aria-label="Enlever">×</button></div>`).join("")}</div>`:"")+`<button class="plus" data-libre="1">✎ Écrire autre chose à la main</button>`;
+const haut=`<h3 class="nom">Léa Martin</h3><div class="sous">06 12 34 56 78</div><div class="sw"><b>Fiche</b><b class="on">Notes</b></div>`;
+function notes(){let h=`<div class="tel" id="t1">`+haut;
+ const GR=ORDRE;
+ for(const [t,qs] of GR)h+=`<div class="k">${t}</div><div class="carte">${qs.map(ligne).join("")}</div>`;
+ return h+autre()+`</div>`;}
+let PLUS=false,JUSTE=false;
+function notes2(){const ON=TOUT.filter(q=>q[3]==="on"),GR=[["Sa vie",TOUT.filter(q=>["travail","fete","connue"].includes(q[0]))],["Son rendez-vous",CAT[1][1].filter(q=>q[3]!=="on")],["Ses ongles",CAT[0][1].filter(q=>q[3]!=="on")]];
+ let h=`<div class="tel" id="t2">`+haut+`<div class="k">Oui ou non</div><div class="carte">${ON.map(ligne).join("")}</div>`;
+ if(!PLUS)return h+`<button class="voirplus" data-plus="1">Voir plus <span>⌄</span></button></div>`;
+ h+=`<div class="deplie" style="${JUSTE?"":"animation:none"}">`;for(const [t,qs] of GR)h+=`<div class="k">${t}</div><div class="carte">${qs.map(ligne).join("")}</div>`;
+ return h+autre()+`</div><button class="voirplus" data-plus="1">Voir moins <span style="display:inline-block;transform:rotate(180deg)">⌄</span></button></div>`;}
+const V=new URLSearchParams(location.search).get("v")||"1";
+function dessine(){const y={};document.querySelectorAll(".tel[id]").forEach(t=>y[t.id]=t.scrollTop);
+ document.getElementById("fiche").innerHTML=fiche();
+ if(V!=="2")document.getElementById("notes").innerHTML=notes();else document.getElementById("notes").parentElement.remove();
+ if(V!=="1")document.getElementById("notes2").innerHTML=notes2();else{const n=document.getElementById("notes2");if(n)n.parentElement.remove();}
+ document.querySelectorAll(".tel[id]").forEach(t=>{if(y[t.id])t.scrollTop=y[t.id];});}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-k],[data-x],[data-ouvre],[data-ferme],[data-aj],[data-libre],[data-ed],[data-plus],[data-ouv],[data-tous]");if(!t)return;const d=t.dataset,f=document.querySelector(".feuille"),y=f?f.scrollTop:0;
+ if(d.ed)EDIT=d.ed;else if(d.k)EDIT=null;
+ if(d.ouv){OUV=OUV===d.ouv?null:d.ouv;}else if(d.tous){TOUS=!TOUS;}else if(d.ed);else if(d.x!=null&&!confirm("Enlever « "+LIBRES[+d.x]+" » ?"))return;else if(d.plus){PLUS=!PLUS;JUSTE=true;}else if(d.ouvre)OUVERT=true;else if(d.ferme)OUVERT=false;
+ else if(d.aj){AJ.push(d.aj);OUVERT=false;}
+ else if(d.libre){const r=prompt("Ce que tu sais (court) :","Aime les paillettes dorées");if(r&&r.trim())LIBRES.push(r.trim().slice(0,22));OUVERT=false;}
+ else if(d.x!=null)LIBRES.splice(+d.x,1);
+ else if(d.r==="txt"){const r=prompt("Son métier ?",E[d.k]||"");if(r!==null)E[d.k]=r.trim();}
+ else if(d.k){if(Q(d.k)[3]==="ch")OUV=null;if(E[d.k]===d.r){E[d.k]=undefined;bulle("Réponse effacée : tu ne sais pas");}else E[d.k]=d.r;}
+ dessine();JUSTE=false;const g=document.querySelector(".feuille");if(g)g.scrollTop=y;});
+function bulle(t){let b=document.getElementById("bulle");if(!b){b=document.createElement("div");b.id="bulle";document.body.appendChild(b);}b.textContent=t;b.classList.remove("vu");void b.offsetWidth;b.classList.add("vu");clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove("vu"),1800);}
+/* ranger les carrés : bouton « Ranger » ou appui long sur un carré, puis glisser */
+document.addEventListener("click",e=>{if(!e.target.closest("[data-ranger]"))return;RANGE=!RANGE;if(!RANGE)bulle("C’est rangé ✓");dessine();});
+/* le carré se soulève, suit le doigt, les autres glissent pour lui faire de la place, puis il se pose */
+let FANT=null,PX=0,PY=0,OX=0,OY=0,R0=null,TX=0,TY=0;
+const caDe=id=>document.querySelector(`#fiche .ca[data-id="${CSS.escape(id)}"]`);
+function flip(fn){const a={};document.querySelectorAll("#fiche .ca").forEach(e=>a[e.dataset.id]=e.getBoundingClientRect());fn();
+ document.querySelectorAll("#fiche .ca").forEach(e=>{const o=a[e.dataset.id];if(!o||e.dataset.id===DRAG)return;const n=e.getBoundingClientRect(),dx=o.left-n.left,dy=o.top-n.top;if(!dx&&!dy)return;
+  e.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:"none"}],{duration:240,easing:"cubic-bezier(.2,.8,.2,1)"});});}
+function prend(id,x,y){const ca=caDe(id);if(!ca)return;R0=ca.getBoundingClientRect();TX=0;TY=0;OX=x-R0.left;OY=y-R0.top;DRAG=id;
+ FANT=ca.cloneNode(true);FANT.className="ca fantome";FANT.style.cssText=`left:${R0.left}px;top:${R0.top}px;width:${R0.width}px`;document.body.appendChild(FANT);
+ FANT.animate([{transform:"scale(1)"},{transform:"scale(1.18) rotate(-3deg)"}],{duration:160,easing:"cubic-bezier(.2,.8,.2,1.3)",fill:"forwards"});
+ if(navigator.vibrate)navigator.vibrate(12);dessine();}
+function bouge(x,y){if(!FANT)return;FANT.getAnimations().forEach(a=>a.cancel());TX=x-OX-R0.left;TY=y-OY-R0.top;FANT.style.transform=`translate(${TX}px,${TY}px) scale(1.18) rotate(-3deg)`;
+ const el=document.elementFromPoint(x,y),ca=el&&el.closest("#fiche .ca");if(!ca||ca.dataset.id===DRAG)return;
+ flip(()=>{const ids=items().map(i=>i.id),i=ids.indexOf(ca.dataset.id);ORD=ids.filter(k=>k!==DRAG);ORD.splice(i,0,DRAG);dessine();});}
+function pose(){const f=FANT,id=DRAG;FANT=null;if(!f){DRAG=null;return;}const cible=caDe(id),r=cible?cible.getBoundingClientRect():R0;
+ f.getAnimations().forEach(x=>x.cancel());f.style.transform="none";f.style.left=r.left+"px";f.style.top=r.top+"px";const dx=R0.left+TX-r.left,dy=R0.top+TY-r.top;
+ f.animate([{transform:`translate(${dx}px,${dy}px) scale(1.18) rotate(-3deg)`},{transform:"none"}],{duration:220,easing:"cubic-bezier(.2,.8,.2,1)"});let fini=false;const fin=()=>{if(fini)return;fini=true;f.remove();if(!FANT){DRAG=null;dessine();}};setTimeout(fin,240);}
+document.addEventListener("pointerdown",e=>{const ca=e.target.closest("#fiche .ca");if(!ca)return;PX=e.clientX;PY=e.clientY;
+ if(!RANGE){const id=ca.dataset.id;APPUI=setTimeout(()=>{APPUI=null;RANGE=true;dessine();prend(id,PX,PY);},450);return;}
+ e.preventDefault();prend(ca.dataset.id,e.clientX,e.clientY);});
+document.addEventListener("pointermove",e=>{PX=e.clientX;PY=e.clientY;if(APPUI&&Math.hypot(e.movementX,e.movementY)>6){clearTimeout(APPUI);APPUI=null;}if(FANT){e.preventDefault();bouge(e.clientX,e.clientY);}},{passive:false});
+document.addEventListener("pointerup",()=>{clearTimeout(APPUI);APPUI=null;pose();});
+document.addEventListener("pointercancel",()=>{clearTimeout(APPUI);APPUI=null;pose();});
+dessine();
+</script></body></html>

@@ -1,0 +1,10 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mail en mode sombre</title>
+<style>body{margin:0;background:#111;font:14px system-ui;color:#eee}.g{display:flex;gap:14px;padding:12px;overflow-x:auto}.c{flex:0 0 390px}h2{font-size:15px;margin:4px 0 8px}iframe{width:390px;height:1000px;border:0;border-radius:18px;background:#fff}</style></head><body>
+<div class="g">
+<div class="c"><h2>Aujourd'hui · Gmail sombre</h2><iframe data-sombre src="mail-B-avant-sombre.html"></iframe></div>
+<div class="c"><h2>Corrigé · Gmail sombre</h2><iframe data-sombre src="mail-B.html"></iframe></div>
+<div class="c"><h2>Corrigé · normal (clair)</h2><iframe src="mail-B.html"></iframe></div>
+</div>
+<script>/* imite Gmail iPhone en sombre : fonds et textes inversés, images intactes */
+document.querySelectorAll("iframe[data-sombre]").forEach(f=>f.onload=()=>{const s=f.contentDocument.createElement("style");s.textContent="html{filter:invert(1) hue-rotate(180deg)}img{filter:invert(1) hue-rotate(180deg)}";f.contentDocument.head.appendChild(s)});</script>
+</body></html>
