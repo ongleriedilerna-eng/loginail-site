@@ -2325,60 +2325,62 @@ try{dessineFE()}catch(e){}
   /* 1. la poignée */
   const t = document.createElement("div"); t.className = "tireT"; t.setAttribute("role", "slider"); t.setAttribute("aria-label", "Agrandir ou réduire mon site"); t.innerHTML = "<b></b>";
   R.insertBefore(t, $("onglets"));
-  let hScene = null; try { hScene = +sessionStorage.getItem("lgnScene21") || null; } catch (e) {}
+  let hScene = null, ouvert = false, hcRepos = 0;
   const hautH = () => (document.querySelector(".haut") || {}).offsetHeight || 52;
   const MIN_SCENE = 230, MIN_CHOIX = 12;
-  const defaut = () => Math.round(innerHeight * .42);
+  const defaut = () => Math.round(innerHeight * .53);   /* 2.2 : au repos, le téléphone est grand */
   const choix = () => document.querySelector(".choix");
   const naturel = () => { const p = document.querySelector(".panneau.on"); if (!p) return 9999;
     if (p.dataset.p === "photo") { const l = $("lPhG"); return l && l.scrollHeight ? l.scrollHeight + 10 : 9999; } return 9999; };
   let raf = 0;
   function applique(h) { const c = choix(); if (!c) return;
     const autre = R.offsetHeight - c.offsetHeight, maxC = innerHeight - hautH() - MIN_SCENE - autre;
-    const nat = naturel(); let hc = innerHeight - hautH() - h - autre; if (nat < 9999 && !B.classList.contains("tireOn")) hc = nat; /* Photo : la feuille s'arrête juste sous les photos */ hc = Math.max(MIN_CHOIX, Math.min(hc, maxC, nat));
+    const nat = naturel(); let hc = innerHeight - hautH() - h - autre; hc = Math.max(MIN_CHOIX, Math.min(hc, maxC, nat));
     B.style.setProperty("--hC", Math.round(hc) + "px"); B.classList.add("feuille21");
     if (!raf) raf = requestAnimationFrame(() => { raf = 0; try { taille(); } catch (e) {} }); }
-  const remet = () => applique(hScene || defaut());
+  const remet = () => { if (B.classList.contains("glisseT")) return; const sc = document.querySelector(".scene"), etait = typeof ouvert !== "undefined" && ouvert;
+    if (etait) { sc.style.flex = ""; sc.style.height = ""; R.style.marginTop = ""; }
+    applique(defaut()); hcRepos = parseFloat(B.style.getPropertyValue("--hC")) || 0; if (etait) requestAnimationFrame(() => pose(true)); };
   /* à chaque onglet, la même taille de téléphone */
   if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function () { const r = o0.apply(this, arguments); remet(); setTimeout(remet, 60); return r; }; }
   addEventListener("resize", () => setTimeout(remet, 30));
   /* on tire : poignée + barre des onglets (si le doigt va plutôt vers le haut ou le bas) */
   /* 2.0 (21/11, Marie : « c'est vraiment pas assez fluide ») : pendant le geste, RIEN n'est recalculé — la feuille glisse et le téléphone
      grandit/rétrécit en image seulement (transform, comme sur Snapchat) ; la vraie mise en page est faite UNE fois, quand on lâche. */
-  const SC = () => document.querySelector(".scene"), TEL = () => $("tel");
-  const bornes = () => { const c = choix(), autre = R.offsetHeight - c.offsetHeight, nat = naturel();
-    const maxS = innerHeight - hautH() - autre - MIN_CHOIX, minS = Math.max(MIN_SCENE, nat < 9999 ? innerHeight - hautH() - autre - nat : MIN_SCENE);
-    return [Math.min(minS, maxS), maxS]; };
+  /* 2.2 (Marie : « comme Snapchat : tu tires en haut, ça te tire tous les trucs ; tu tires en bas, ça revient ») :
+     2 positions seulement. Au repos, le téléphone est GRAND. Tirée vers le haut, la feuille glisse PAR-DESSUS le téléphone (qui ne bouge pas) ;
+     pendant le geste on ne déplace qu'une image (transform), la vraie mise en page est faite une seule fois, quand on lâche. */
+  const SC = () => document.querySelector(".scene");
+  const maxX = () => Math.max(0, SC().offsetHeight - 6);
+  function pose(o) { const sc = SC(); ouvert = o; B.classList.toggle("feuilleHaut", o);
+    if (o) { const hS = sc.offsetHeight, X = Math.max(0, hS - 6); sc.style.flex = "none"; sc.style.height = hS + "px"; R.style.marginTop = -X + "px"; B.style.setProperty("--hC", Math.round(hcRepos + X) + "px"); }
+    else { sc.style.flex = ""; sc.style.height = ""; R.style.marginTop = ""; B.style.setProperty("--hC", Math.round(hcRepos) + "px"); }
+    R.style.transform = ""; B.classList.remove("glisseT"); }
   let S0 = 0, cible = 0;
-  function montre(S) { const dy = S - S0, k = Math.max(.2, (S - 14) / Math.max(1, S0 - 14));
-    R.style.transform = `translate3d(0,${dy}px,0)`; TEL().style.transform = `translate3d(0,${dy / 2}px,0) scale(${k})`; }
-  function pose(S) { /* la vraie mise en page, une seule fois, puis on enlève l'image dans la même image */
-    hScene = S; B.classList.remove("glisseT"); applique(S); try { taille(); } catch (e) {} R.style.transform = ""; TEL().style.transform = "";
-    try { sessionStorage.setItem("lgnScene21", Math.round(S)); } catch (x) {} }
-  function vers(S, duree) { const de = S0 + (parseFloat((R.style.transform.match(/,(-?[\d.]+)px/) || [0, 0])[1]) || 0), t0 = performance.now();
-    const pas = n => { const q = Math.min(1, (n - t0) / duree), e = 1 - Math.pow(1 - q, 4); montre(de + (S - de) * e); if (q < 1) requestAnimationFrame(pas); else pose(S); };
+  function montre(dy) { R.style.transform = `translate3d(0,${dy}px,0)`; }
+  function vers(dyFin, o, duree) { const m = (R.style.transform.match(/,(-?[\d.]+)px/) || [0, 0])[1], de = parseFloat(m) || 0, t0 = performance.now();
+    const pas = n => { const q = Math.min(1, (n - t0) / duree), e = 1 - Math.pow(1 - q, 4); montre(de + (dyFin - de) * e); if (q < 1) requestAnimationFrame(pas); else pose(o); };
     requestAnimationFrame(pas); }
-  function debut() { S0 = SC().offsetHeight; B.classList.add("glisseT"); }
-  function branche(el, toujours) { let y0, x0, actif = false, pid = null, hist = [], lim = [0, 0];
-    const part = e => { actif = true; debut(); cible = S0; lim = bornes(); try { el.setPointerCapture(pid); } catch (x) {} };
+  function branche(el, toujours) { let y0, x0, actif = false, pid = null, hist = [], X = 0;
+    const part = e => { actif = true; B.classList.add("glisseT"); X = maxX() || 300; cible = 0; try { el.setPointerCapture(pid); } catch (x) {} };
     el.addEventListener("pointerdown", e => { if (e.button > 0) return; y0 = e.clientY; x0 = e.clientX; actif = false; pid = e.pointerId; hist = [[e.timeStamp, e.clientY]];
       if (toujours) { e.preventDefault(); part(e); } });
     el.addEventListener("pointermove", e => { if (pid !== e.pointerId || y0 == null) return; const dy = e.clientY - y0, dx = e.clientX - x0;
       if (!actif) { if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx) * 1.3) part(e); else return; }
       e.preventDefault(); hist.push([e.timeStamp, e.clientY]); if (hist.length > 5) hist.shift();
-      let S = S0 + dy; if (S < lim[0]) S = lim[0] - Math.pow(lim[0] - S, .7); if (S > lim[1]) S = lim[1] + Math.pow(S - lim[1], .7);   /* élastique au bout */
-      cible = S; montre(S); });
+      /* fermée : on peut monter jusqu'en haut ; ouverte : on peut redescendre jusqu'au repos ; au-delà, élastique */
+      const lo = ouvert ? 0 : -X, hi = ouvert ? X : 0; let d = dy;
+      if (d < lo) d = lo - Math.pow(lo - d, .65); if (d > hi) d = hi + Math.pow(d - hi, .65);
+      cible = d; montre(d); });
     const fin = e => { if (pid !== e.pointerId) return; try { getSelection().removeAllRanges(); } catch (x) {} const etait = actif; actif = false; y0 = null; pid = null;
       if (!etait) return;
-      const a = hist[0], z = hist[hist.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]), moved = Math.abs(cible - S0);
-      /* 2.1 (vidéos Snapchat de Marie) : la feuille se range toute seule sur 3 CRANS — haut (beaucoup de choix), milieu, bas (téléphone en grand) */
-      const mil = Math.max(lim[0], Math.min(lim[1], defaut())), crans = [...new Set([lim[0], mil, lim[1]])].sort((x, y) => x - y);
-      const proche = x => crans.reduce((m, c) => Math.abs(c - x) < Math.abs(m - x) ? c : m, crans[0]);
-      let S;
-      if (toujours && moved < 6) S = Math.abs(S0 - lim[1]) < 8 ? mil : lim[1];   /* simple toucher sur la poignée : téléphone en grand ↔ milieu */
-      else if (Math.abs(v) > .45) S = v > 0 ? (crans.find(c => c > S0 + 4) || lim[1]) : ([...crans].reverse().find(c => c < S0 - 4) || lim[0]);   /* lancé : le cran suivant */
-      else S = proche(cible);
-      vers(S, Math.abs(S - cible) < 4 ? 1 : 260); };
+      const a = hist[0], z = hist[hist.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]), bouge = Math.abs(cible);
+      let o;
+      if (toujours && bouge < 6) o = !ouvert;                         /* un simple toucher sur la poignée : ouvre ↔ ferme */
+      else if (Math.abs(v) > .4) o = v < 0;                           /* lancé vers le haut = ouvre, vers le bas = ferme */
+      else o = ouvert ? cible < X * .35 : cible < -X * .35;           /* sinon : on regarde où elle a été lâchée */
+      const dyFin = o === ouvert ? 0 : (o ? -X : X);
+      vers(dyFin, o, Math.abs(dyFin - cible) < 4 ? 1 : 300); };
     el.addEventListener("pointerup", fin); el.addEventListener("pointercancel", fin); }
   branche(t, true); branche($("onglets"), false);
   /* 2.0 : les onglets deviennent une rangée d'ICÔNES (comme les catégories du dressing Snapchat) */
@@ -2518,24 +2520,11 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const ic = o => `<span class="icT"><svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" stroke="none">${PLEIN[o]}</svg></span>`;
   O.querySelectorAll("button[data-o]").forEach(bt => { const o = bt.dataset.o; if (!PLEIN[o]) return; bt.innerHTML = ic(o); bt.setAttribute("aria-label", NOM[o]); bt.title = NOM[o]; });
   const lk = () => { const x = O.querySelector(".btnLooks"); if (x && !x.dataset.plein) { x.dataset.plein = 1; x.innerHTML = ic("look"); x.setAttribute("aria-label", NOM.look); x.title = NOM.look; majCat(); } };
-  /* 2. les 3 catégories */
-  const TR = 'fill="none" stroke="currentColor" stroke-width="1.700" stroke-linecap="round" stroke-linejoin="round"';
-  const CATS = [["Mon site", ["photo", "entete", "fond"], `<rect x="6.500" y="2.500" width="11" height="19" rx="2.800"/><path d="M10.500 5.300h3"/><path d="M9.500 13l1.800 1.800 3.400-3.800"/>`],
-    ["Style", ["ecriture", "couleurs"], `<path d="M20 3.500c-3.800 1.400-8 5.500-9.700 8.700l2.500 2.500c3.200-1.700 7.300-5.900 8.700-9.700z"/><path d="M9.200 13.400c-2.100.1-3.500 1.500-3.600 3.500-.1 1.300-.8 2.100-2.100 2.600 1 .8 2.300 1.200 3.700 1.200 2.500 0 4.300-1.700 4.400-4"/>`],
-    ["Charms", ["charms", "look"], `<path d="M12 20.500s-7.500-4.600-7.500-10C4.500 7.700 6.500 5.800 9 5.800c1.300 0 2.400.600 3 1.600.600-1 1.700-1.600 3-1.600 2.500 0 4.500 1.900 4.500 4.700 0 5.400-7.500 10-7.500 10z"/><path d="M19 2v3M17.500 3.500h3"/>`]];
-  const bar = document.createElement("div"); bar.className = "catsT"; bar.setAttribute("role", "tablist");
-  bar.innerHTML = CATS.map((k, i) => `<button type="button" role="tab" data-c="${i}"><svg viewBox="0 0 24 24" ${TR}>${k[2]}</svg>${k[0]}</button>`).join("");
-  R.insertBefore(bar, O);
-  const catDe = o => Math.max(0, CATS.findIndex(k => k[1].includes(o)));
-  let cat = 0; const dern = {};
-  function majCat() { bar.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-selected", i === cat));
-    O.querySelectorAll("button[data-o]").forEach(b => b.classList.toggle("horsCat", !CATS[cat][1].includes(b.dataset.o)));
-    const x = O.querySelector(".btnLooks"); if (x) x.classList.toggle("horsCat", cat !== 2);
-    B.classList.toggle("catStyle", cat === 1); O.scrollLeft = 0; }
-  bar.onclick = e => { const b = e.target.closest("button"); if (!b) return; const i = +b.dataset.c; if (i === cat) return; cat = i; majCat(); ouvre(dern[i] || CATS[i][1][0]); };
-  { const o0 = ouvre; ouvre = function (o) { const r = o0.apply(this, arguments); const i = catDe(o); dern[i] = o; if (i !== cat) { cat = i; } majCat(); return r; }; }
+  /* 2.2 (Marie : « les 3 trucs en haut servent à rien ») : plus de catégories, une seule rangée de 7 dessins sans mots ;
+     les pastilles de couleurs à droite de la scène n'apparaissent que dans l'onglet Couleurs */
+  function majCat() { B.classList.toggle("catStyle", typeof onglet !== "undefined" && onglet === "couleurs"); }
+  { const o0 = ouvre; ouvre = function (o) { const r = o0.apply(this, arguments); majCat(); return r; }; }
   majCat(); lk(); setTimeout(lk, 700); setTimeout(lk, 2700);
-  { const ti = document.querySelector(".tireT"); if (ti) ti.addEventListener("click", () => {}); }
   /* 3. le téléphone : sa pilule, et il réagit (il tourne un peu) à chaque choix */
   const ecr = T.querySelector(".ecr"); if (ecr && !ecr.querySelector(".pilT")) { const pi = document.createElement("i"); pi.className = "pilT"; ecr.appendChild(pi); }
   let touche = false, tR = 0; R.addEventListener("pointerdown", () => { touche = true; }, true);
@@ -2555,5 +2544,44 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     setTimeout(() => { try { if (hg && !hg.children.length && typeof rendCouleursG === "function") rendCouleursG(); } catch (e) {} majDots(); }, 900); }, 150);
 })();
 </script>
+<!-- 2.2 (21/11 soir, retours de Marie) : 7 dessins sans mots sur une seule ligne ; la feuille monte PAR-DESSUS le téléphone ;
+     des CARRÉS partout (photos, en-têtes, fonds) ; thèmes de fonds en ronds en haut ; plus de « Faites défiler » ; un plus beau téléphone. -->
+<style>
+@media (max-width:899px){
+  body.v2 .catsT{display:none!important}
+  body.v2 #onglets{justify-content:space-between!important;padding:2px 8px 0!important;gap:0!important}
+  body.v2 #onglets button{flex:1 1 0!important;min-width:0!important}
+  body.v2 #onglets .horsCat{display:flex!important}
+  /* la feuille au-dessus du téléphone */
+  body.v2 #reglages{z-index:8}
+  body.v2 .scene{z-index:1}
+  body.v2.feuilleHaut .tel,body.v2.glisseT .tel{animation-play-state:paused!important}
+  body.v2.feuilleHaut .undoT,body.v2.feuilleHaut .dotsT{opacity:0;pointer-events:none}
+  body.v2 .undoT,body.v2 .dotsT{transition:opacity .2s}
+  /* plus de « Faites défiler » */
+  body.v2 #defileIndice{display:none!important}
+  /* des carrés */
+  body.v2 #lPhG .ph{aspect-ratio:1/1!important;border-radius:14px}
+  body.v2 #lEnt .ent .mi{aspect-ratio:1/1!important}
+  /* fonds : thèmes en ronds EN HAUT (comme les charms), grands carrés 3 par ligne */
+  body.v2 .fondDeux{flex-direction:column!important;gap:6px!important;padding:0!important}
+  body.v2 .fondDeux .catBoxF{width:auto!important;height:auto!important;background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
+  body.v2 .fondDeux .fdTitre,body.v2 .fdFleche{display:none!important}
+  body.v2 .fondDeux #catF{flex-direction:row!important;overflow-x:auto!important;overflow-y:hidden!important;padding:2px 14px 4px!important;gap:4px!important;-webkit-mask:none!important;mask:none!important;touch-action:pan-x}
+  body.v2 .fondDeux .catFond{flex:none!important;width:66px!important;padding:2px 0 3px!important;font-size:10px!important;color:#7d7177!important}
+  body.v2 .fondDeux .catFond .vgI{width:50px!important;height:50px!important;border-radius:50%!important}
+  body.v2 .fondDeux .catFond.on{color:#1E1C1B!important;font-weight:500}
+  body.v2 .fondDeux #lFond{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important;padding:2px 14px 30px!important}
+  body.v2 .fondDeux #lFond .vg{aspect-ratio:1/1!important;height:auto!important;border-radius:14px}
+  /* un plus beau téléphone : cadre fin noir, liseré métal, boutons sur les côtés, pilule */
+  body.v2 .tel{padding:4px!important;border-radius:40px!important;background:#0D0C0C!important;
+    box-shadow:0 0 0 1.5px #6E6A69,0 0 0 2.5px #2A2827,0 30px 40px -24px rgba(0,0,0,.45),0 6px 14px -6px rgba(0,0,0,.3)!important}
+  body.v2 .tel>.ecr{border-radius:36px!important}
+  body.v2 .tel::before,body.v2 .tel::after{content:"";position:absolute;width:3px;border-radius:2px;background:linear-gradient(90deg,#3a3837,#6E6A69)}
+  body.v2 .tel::before{right:-4.5px;top:24%;height:11%}
+  body.v2 .tel::after{left:-4.5px;top:19%;height:7%;box-shadow:0 calc(var(--tw,200px)*.2) 0 #4d4a49,0 calc(var(--tw,200px)*.34) 0 #4d4a49}
+  body.v2 .tel .pilT{top:1.9%!important;width:28%!important;height:3.4%!important;margin-left:-14%!important}
+}
+</style>
 </body>
 </html>
