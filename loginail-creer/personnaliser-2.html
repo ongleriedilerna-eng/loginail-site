@@ -1836,7 +1836,7 @@ function placeAstuces() { const a = $("astuces"), T = $("tel"); if (!a || !T || 
   pan() && pan().addEventListener("scroll", maj, { passive: true }); setInterval(maj, 500); })();
 setInterval(placeAstuces, 600); addEventListener("resize", () => setTimeout(placeAstuces, 80));
 /* 17/11 (Marie : « des fois, les astuces vont sur le téléphone ») : on surveille la place du téléphone à chaque image ; dès qu'il bouge, on recale */
-(() => { let x0 = null; const veille = () => { const T = $("tel"); if (T && innerWidth >= 900) { const x = Math.round(T.getBoundingClientRect().left); if (x !== x0) { x0 = x; placeAstuces(); const bu = document.querySelector(".bulle"); if (bu && bu.offsetParent) { const r = T.getBoundingClientRect(), o = bu.offsetParent.getBoundingClientRect(); bu.style.setProperty("--bulX", Math.round(r.left + r.width / 2 - o.left) + "px"); } } } requestAnimationFrame(veille); }; requestAnimationFrame(veille); })();
+(() => { let x0 = null; const veille = () => { if (innerWidth < 900) return;   /* 21/11 : sur téléphone, cette surveillance (chaque image) ne sert à rien */ const T = $("tel"); if (T && innerWidth >= 900) { const x = Math.round(T.getBoundingClientRect().left); if (x !== x0) { x0 = x; placeAstuces(); const bu = document.querySelector(".bulle"); if (bu && bu.offsetParent) { const r = T.getBoundingClientRect(), o = bu.offsetParent.getBoundingClientRect(); bu.style.setProperty("--bulX", Math.round(r.left + r.width / 2 - o.left) + "px"); } } } requestAnimationFrame(veille); }; requestAnimationFrame(veille); })();
 
 /* ===== à la 1re arrivée, la poignée est alignée sur l'étape « 3 · Vos couleurs et votre fond » ===== */
 (() => { let deja = null; try { deja = localStorage.getItem("lgnColR"); } catch (e) {} if (deja || innerWidth < 900) return;
@@ -2068,7 +2068,7 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 })();
 </script>
 <script src="perso/perso-vrai.js?v=11191412"></script>
-<script src="perso/pipette.js?v=2111tel"></script>
+<script src="perso/pipette.js?v=2111gl2"></script>
 <!-- 19/11 (D49, Marie + Lilyan) « Coup de baguette » : à la 1re ouverture de la création, une ligne qui brille transforme SON site en
      Néon acidulé, puis Pixel girl, puis Baddie léopard (le fond derrière la page change en même temps) ; la ligne remonte, son site revient,
      et une étiquette arrive : « Voilà ce qu'on peut faire. Maintenant, à toi de jouer ✦ ». Une seule fois (mémoire : lgnBaguetteVue).
@@ -2916,14 +2916,62 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 <script>
 (function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
   const sc = document.querySelector(".scene");
-  /* pipette en bas à droite du téléphone */
-  if (sc && !sc.querySelector(".pipT")) { const b = document.createElement("button"); b.type = "button"; b.className = "pipT"; b.setAttribute("aria-label", "Pipette : prendre une couleur sur mon site");
-    b.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M14.5 4.8l1.9-1.9a2.3 2.3 0 013.3 3.3l-1.9 1.9.9.9-1.5 1.5-4.4-4.4 1.5-1.5.2.2z" fill="currentColor"/><path d="M12.4 7.8l4.4 4.4-7.6 7.6c-.4.4-1 .7-1.6.7H6.3l-2 1.6-.9-.9 1.6-2v-1.3c0-.6.3-1.2.7-1.6l6.7-6.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
-    b.onclick = e => { e.stopPropagation(); if (document.body.classList.contains("pipOn")) { window.lgnPipetteStop && lgnPipetteStop(); return; }
-      if (window.lgnPipette) { lgnPipette(); if (typeof bulle === "function") bulle("Touche une photo de ton site : sa couleur est posée ✦", 3000); } };
-    sc.appendChild(b); }
+  /* pipette en bas à droite du téléphone : on RESTE APPUYÉE dessus et on la glisse sur son site (une loupe montre la couleur), on lâche = posée */
+  if (sc && !sc.querySelector(".pipT")) { const b = document.createElement("button"); b.type = "button"; b.className = "pipT"; b.setAttribute("aria-label", "Pipette : reste appuyée et glisse-la sur ton site");
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M19.7 4.3a2.7 2.7 0 0 0-3.8 0l-2.3 2.3-.7-.7a1 1 0 0 0-1.4 1.4l.7.7-6.8 6.8a2.2 2.2 0 0 0-.6 1.2l-.35 2.4-.95.95a1.2 1.2 0 1 0 1.7 1.7l.95-.95 2.4-.35a2.2 2.2 0 0 0 1.2-.6l6.8-6.8.7.7a1 1 0 0 0 1.4-1.4l-.7-.7 2.3-2.3a2.7 2.7 0 0 0 0-3.8z" fill="currentColor"/><path d="M8.6 13.4l2 2" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".55"/></svg><i class="pipGoutte"></i>';
+    let actif = false, bouge = false, x0 = 0, y0 = 0;
+    const majGoutte = () => { const g = b.querySelector(".pipGoutte"), on = document.querySelector("#partsG button.on i"); if (g && on) g.style.background = getComputedStyle(on).backgroundColor; };
+    b.addEventListener("pointerdown", e => { e.preventDefault(); e.stopPropagation(); actif = true; bouge = false; x0 = e.clientX; y0 = e.clientY; try { b.setPointerCapture(e.pointerId); } catch (x) {} document.body.classList.add("pipGlisse"); });
+    b.addEventListener("pointermove", e => { if (!actif) return; if (!bouge && Math.hypot(e.clientX - x0, e.clientY - y0) < 8) return; bouge = true; window.lgnPipGlisse && lgnPipGlisse.bouge(e.clientX, e.clientY); });
+    const fin = e => { if (!actif) return; actif = false; document.body.classList.remove("pipGlisse");
+      if (!bouge) { if (typeof bulle === "function") bulle("Reste appuyée sur la pipette et glisse-la sur ton site ✦", 3200); return; }
+      if (window.lgnPipGlisse && !lgnPipGlisse.pose(e.clientX, e.clientY)) lgnPipGlisse.annule(); setTimeout(majGoutte, 400); };
+    b.addEventListener("pointerup", fin); b.addEventListener("pointercancel", e => { actif = false; document.body.classList.remove("pipGlisse"); window.lgnPipGlisse && lgnPipGlisse.annule(); });
+    b.addEventListener("click", e => e.stopPropagation());
+    sc.appendChild(b); setInterval(majGoutte, 800); }
   /* bouton Étoiles : étiquette + interrupteur */
   const et = document.querySelector(".etoileH"), zh = document.querySelector(".haut .zeroH"); if (et && zh) zh.after(et); if (et) { const svg = et.querySelector("svg"); et.innerHTML = ""; if (svg) et.appendChild(svg); et.insertAdjacentHTML("beforeend", '<span>Étoiles</span><i class="intT"></i>'); et.setAttribute("aria-label", "Étoiles qui brillent : oui ou non"); }
+})();
+</script>
+<!-- 2.9 (21/11 soir, Marie : « ça lag à mort ») : fonds — au plus 6 vignettes qui bougent à la fois, les ronds des thèmes immobiles ; écritures sans fond, en noir ;
+     favoris = un simple cœur ; familles d'en-têtes en étiquettes (comme fonds et charms) ; pipette jolie (pipette + goutte de la couleur). -->
+<style>
+@media (max-width:899px){
+  /* fonds : seules 6 vignettes visibles bougent ; les ronds des thèmes ne bougent pas */
+  body.v2 #app#app#app #lFond .vg:not(.anim6) *,body.v2 #app#app#app #lFond .vg:not(.anim6) *::before,body.v2 #app#app#app #lFond .vg:not(.anim6) *::after{animation-play-state:paused!important}
+  body.v2 #app#app#app .catFond .vgI *,body.v2 #app#app#app .catFond .vgI *::before,body.v2 #app#app#app .catFond .vgI *::after{animation-play-state:paused!important}
+  /* écritures : sans fond, texte noir */
+  body.v2 #lPol .ecr-c .fd{display:none!important}
+  body.v2 #lPol .ecr-c{background:#fff!important;box-shadow:0 2px 10px -6px rgba(0,0,0,.25)!important}
+  body.v2 #lPol .ecr-c span{color:#1E1C1B!important;text-shadow:none!important}
+  body.v2 #lPol .ecr-c small{color:#9a8d94!important}
+  /* favoris : un cœur */
+  body.v2 .famE .favE{width:34px!important;min-width:34px!important;height:34px!important;padding:0!important;display:grid!important;place-items:center;font-size:0!important;color:#E0245E!important}
+  body.v2 .famE .favE svg{width:17px;height:17px}
+  body.v2 .famE .favE.on{background:#1E1C1B!important;color:#fff!important}
+  /* familles d'en-têtes en étiquettes */
+  body.v2 .famTraits{border-bottom:0!important;gap:6px!important;margin:0 0 8px!important;padding:2px 14px 4px!important}
+  body.v2 .famTraits .tr{height:34px;padding:0 14px!important;border-radius:999px;background:#fff!important;color:#5f545a!important;font:500 12px Jost,sans-serif!important;font-style:normal!important;box-shadow:0 2px 8px -5px rgba(0,0,0,.3)}
+  body.v2 .famTraits .tr::after{display:none!important}
+  body.v2 .famTraits .tr sup{font-size:9.5px!important;color:#b0a3aa!important;vertical-align:baseline!important;margin-left:4px}
+  body.v2 .famTraits .tr.on{background:#1E1C1B!important;color:#fff!important}
+  body.v2 .famTraits .tr.on sup{color:rgba(255,255,255,.6)!important}
+  /* pipette : goutte de la couleur en cours */
+  body.v2 .pipT{position:absolute;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  body.v2 .pipT .pipGoutte{position:absolute;right:5px;bottom:5px;width:11px;height:11px;border-radius:50%;box-shadow:0 0 0 2px #fff;background:#ccc}
+  body.v2.pipGlisse .pipT{background:#1E1C1B;color:#fff;transform:scale(1.08)}
+  body.pipGlisse #site{pointer-events:none}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  /* fonds : parmi les vignettes visibles, seules les 6 premières bougent */
+  const lf = document.getElementById("lFond"); if (lf) { const maj = () => { let n = 0; lf.querySelectorAll(".vg").forEach(v => { const ok = v.classList.contains("vu") && n < 6; if (ok) n++; v.classList.toggle("anim6", ok); }); };
+    let t = 0; const plus = () => { clearTimeout(t); t = setTimeout(maj, 120); };
+    new MutationObserver(plus).observe(lf, { subtree: true, attributes: true, attributeFilter: ["class"], childList: true }); maj(); }
+  /* favoris des écritures : un cœur */
+  const fe = document.getElementById("famE"), coeur = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.6-4.7-9.6-9.3C.9 8.2 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.4 2.5h1.8c.8-1.4 2.3-2.5 4.4-2.5 3.7 0 5.8 3.7 4.3 7.2C19.6 16.3 12 21 12 21z"/></svg>';
+  if (fe) { const m = () => { const f = fe.querySelector(".favE"); if (f && !f.querySelector("svg")) { f.innerHTML = coeur; f.setAttribute("aria-label", "Mes écritures favorites"); } }; m(); new MutationObserver(m).observe(fe, { childList: true, subtree: true }); }
 })();
 </script>
 </body>

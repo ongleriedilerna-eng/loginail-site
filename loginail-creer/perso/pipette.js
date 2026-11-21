@@ -28,6 +28,7 @@ body.pipOn #site{cursor:none}
   box-shadow:0 10px 24px -14px rgba(0,0,0,.6);transition:opacity .18s,translate .25s var(--pop,ease)}
 body.pipOn .pipBandeau{opacity:1;translate:-50% 0}
 .pipBandeau svg{flex:none}.pipBandeau small{display:block;font:400 10.5px/1.3 Jost,sans-serif;opacity:.75}
+.pipLoupe.auDoigt{margin-top:-96px!important;width:76px!important;height:76px!important;margin-left:-38px!important;box-shadow:0 0 0 4px #fff,0 10px 24px -8px rgba(0,0,0,.5)!important}
 .pipLoupe{position:fixed;z-index:60;left:0;top:0;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;pointer-events:none;opacity:0;scale:.6;
   border:4px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.18),0 10px 22px -8px rgba(0,0,0,.55);transition:opacity .12s,scale .18s var(--pop,ease)}
 .pipLoupe:after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
@@ -101,12 +102,20 @@ body.pipOn .pipBandeau{opacity:1;translate:-50% 0}
   function bouge(e) { const [r, k] = ech(); loupe.style.left = r.left + e.clientX * k + "px"; loupe.style.top = r.top + e.clientY * k + "px";
     const c = couleurEn(e.clientX, e.clientY); if (!c) return; dernier = c; loupe.style.background = c; loupe.classList.add("on");
     const it = procheReel(partC, c); loupe.querySelector("em").textContent = nomCoul(it[0]); }
-  function prend(e) { e.preventDefault(); e.stopPropagation(); bouge(e); const c = dernier; if (!c) return;
+  function prend(e) { e.preventDefault(); e.stopPropagation(); bouge(e); poseCouleur(); }
+  function poseCouleur() { const c = dernier; if (!c) return false;
     const q = partC; memo(); specMain = null;
     if (q === "bl" && Pilote.etat.blocs === "blanc") { Pilote.blocs("verre"); bulle("Encadrés passés en couleur ✦"); }
     Pilote._libreEnCours = true; Pilote.couleurLibre(q, c); Pilote._libreEnCours = false;
     loupe.classList.remove("pose"); void loupe.offsetWidth; loupe.classList.add("pose");
-    setTimeout(rendCouleursG, 60); bulle("Couleur posée sur " + NOMP[q] + " ✦"); setTimeout(arrete, 380); }
+    setTimeout(rendCouleursG, 60); bulle("Couleur posée sur " + NOMP[q] + " ✦"); setTimeout(arrete, 380); return true; }
+  /* 21/11 (2.0, téléphone) : on reste appuyée sur la pipette et on la GLISSE sur son site ; la loupe suit le doigt (au-dessus de lui) ; on lâche = la couleur est posée */
+  window.lgnPipGlisse = {
+    bouge(px, py) { const [r, k] = ech(), x = (px - r.left) / k, y = (py - r.top) / k;
+      if (x < 0 || y < 0 || x > (ifr.offsetWidth || 390) || y > (ifr.offsetHeight || 844)) { loupe.classList.remove("on"); dernier = null; return false; }
+      loupe.classList.add("auDoigt"); bouge({ clientX: x, clientY: y }); return !!dernier; },
+    pose(px, py) { const ok = this.bouge(px, py) && poseCouleur(); if (!ok) loupe.classList.remove("on"); setTimeout(() => loupe.classList.remove("on", "auDoigt"), 650); return ok; },
+    annule() { loupe.classList.remove("on", "auDoigt"); dernier = null; } };
   const bloque = e => { e.preventDefault(); e.stopPropagation(); };
   const sort = () => loupe.classList.remove("on");
   const touche = e => { if (e.key === "Escape") arrete(); };
