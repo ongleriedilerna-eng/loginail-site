@@ -4139,20 +4139,29 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
 (function(){
   if(!matchMedia('(min-width:761px) and (hover:hover)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   const els=[...document.querySelectorAll('.v3 section>img.ch,.v3 .marie .b-ch,.pb-ch')];if(!els.length)return;
-  const it=els.map(e=>({e,dx:0,dy:0,vx:0,vy:0,r:0,vr:0,cool:0}));
+  /* 21/11 (Marie) : « ils restent dans un petit rond, ceux du haut sont plus jolis » → même mouvement que les charms du haut :
+     ils flottent tout seuls (vague lente), la souris les lance loin, ils glissent, rebondissent sur les bords de leur partie, et reviennent doucement */
+  const it=els.map((e,i)=>{e.style.animation='none';return{e,dx:0,dy:0,vx:0,vy:0,rot:0,vr:0,cool:0,ph:i*.9}});
   let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3;
   addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){mx=e.clientX;my=e.clientY}});
   document.addEventListener('pointerleave',()=>{mx=my=-9e3});
-  function tick(){
+  function tick(t){
     const mvx=(mx>-9e3&&pmx>-9e3)?mx-pmx:0,mvy=(my>-9e3&&pmy>-9e3)?my-pmy:0;pmx=mx;pmy=my;
     for(const c of it){
-      const b=c.e.getBoundingClientRect();if(b.bottom<-200||b.top>innerHeight+200)continue;
-      const s=b.width,cx=b.left+s/2,cy=b.top+b.height/2,ux=cx-mx,uy=cy-my,d=Math.hypot(ux,uy)||1,hit=s/2+26;
-      if(d<hit&&c.cool<=0){const k=1-d/hit;c.vx+=ux/d*(8+k*10)+mvx*.7;c.vy+=uy/d*(8+k*10)+mvy*.7;c.vr+=(ux>0?1:-1)*(8+Math.min(14,Math.abs(mvx)*.3));c.cool=8}
-      c.cool--;c.vx+=-c.dx*.012;c.vy+=-c.dy*.012;c.vx*=.93;c.vy*=.93;c.vr+=-c.r*.01;c.vr*=.92;
-      c.dx+=c.vx;c.dy+=c.vy;c.r+=c.vr;
-      if(Math.abs(c.dx)+Math.abs(c.dy)+Math.abs(c.r)>.05)c.e.style.transform='translate('+c.dx.toFixed(1)+'px,'+c.dy.toFixed(1)+'px) rotate('+c.r.toFixed(1)+'deg)';
-      else if(c.e.style.transform){c.e.style.transform='';c.dx=c.dy=c.r=0}
+      const e=c.e,b=e.getBoundingClientRect();if(b.bottom<-300||b.top>innerHeight+300)continue;
+      const s=e.offsetWidth||b.width,cx=b.left+b.width/2,cy=b.top+b.height/2,ux=cx-mx,uy=cy-my,d=Math.hypot(ux,uy)||1,hit=s/2+28;
+      if(d<hit&&c.cool<=0){const k=1-d/hit;c.vx+=ux/d*(10+k*12)+mvx*.85;c.vy+=uy/d*(10+k*12)+mvy*.85;c.vr+=(ux>0?1:-1)*(6+Math.min(14,Math.abs(mvx)*.3));c.cool=8}
+      c.cool--;
+      c.vx+=-c.dx*.0011;c.vy+=-c.dy*.0011;c.vx*=.984;c.vy*=.984;c.vr*=.95;
+      const sp=Math.hypot(c.vx,c.vy);if(sp>60){c.vx*=60/sp;c.vy*=60/sp}
+      c.dx+=c.vx;c.dy+=c.vy;c.rot+=c.vr*.35;c.rot*=.982;
+      /* rebond sur les bords de la partie (sans sortir de l'écran à gauche / à droite) */
+      const z=(c.z||(c.z=e.closest('section,footer')||e.offsetParent));if(z){const a=z.getBoundingClientRect(),bx=b.left+b.width/2-s/2-(c.lx||0),by=b.top+b.height/2-s/2-(c.ly||0),px=bx+c.dx,py=by+c.dy;
+        if(px<a.left+4){c.dx=a.left+4-bx;c.vx=Math.abs(c.vx)*.7}else if(px>a.right-s-4){c.dx=a.right-s-4-bx;c.vx=-Math.abs(c.vx)*.7}
+        if(py<a.top-60){c.dy=a.top-60-by;c.vy=Math.abs(c.vy)*.7}else if(py>a.bottom-s+20){c.dy=a.bottom-s+20-by;c.vy=-Math.abs(c.vy)*.7}}
+      const calm=Math.max(0,1-sp/6),fx=Math.sin(t/2300+c.ph)*9*calm,fy=Math.sin(t/1700+c.ph*1.3)*13*calm,wob=Math.sin(t/2600+c.ph*.7)*9*calm;
+      c.lx=c.dx+fx;c.ly=c.dy+fy;
+      e.style.transform='translate('+c.lx.toFixed(1)+'px,'+c.ly.toFixed(1)+'px) rotate('+(c.rot+wob).toFixed(1)+'deg)';
     }
     requestAnimationFrame(tick)}
   requestAnimationFrame(tick);
