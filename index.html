@@ -4158,7 +4158,8 @@ placeBulles();addEventListener('load',placeBulles);addEventListener('resize',pla
       /* rebond sur les bords de la partie (sans sortir de l'écran à gauche / à droite) */
       const z=(c.z||(c.z=e.closest('section,footer')||e.offsetParent));if(z){const a=z.getBoundingClientRect(),bx=b.left+b.width/2-s/2-(c.lx||0),by=b.top+b.height/2-s/2-(c.ly||0),px=bx+c.dx,py=by+c.dy;
         if(px<a.left+4){c.dx=a.left+4-bx;c.vx=Math.abs(c.vx)*.7}else if(px>a.right-s-4){c.dx=a.right-s-4-bx;c.vx=-Math.abs(c.vx)*.7}
-        if(py<a.top-60){c.dy=a.top-60-by;c.vy=Math.abs(c.vy)*.7}else if(py>a.bottom-s+20){c.dy=a.bottom-s+20-by;c.vy=-Math.abs(c.vy)*.7}}
+        /* 21/11 (Marie) : ils ne montent plus au-dessus de leur partie (la partie d'au-dessus les coupait) */
+        const ht=Math.min(a.top+16,by);if(py<ht){c.dy=ht-by;c.vy=Math.abs(c.vy)*.7}else if(py>a.bottom-s+20){c.dy=a.bottom-s+20-by;c.vy=-Math.abs(c.vy)*.7}}
       const calm=Math.max(0,1-sp/6),fx=Math.sin(t/2300+c.ph)*9*calm,fy=Math.sin(t/1700+c.ph*1.3)*13*calm,wob=Math.sin(t/2600+c.ph*.7)*9*calm;
       c.lx=c.dx+fx;c.ly=c.dy+fy;
       e.style.transform='translate('+c.lx.toFixed(1)+'px,'+c.ly.toFixed(1)+'px) rotate('+(c.rot+wob).toFixed(1)+'deg)';
