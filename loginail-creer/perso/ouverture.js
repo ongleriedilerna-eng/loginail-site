@@ -2,7 +2,7 @@
    1. Elle arrive dans Personnaliser : son site apparaît DÉJÀ habillé du look de Marie « Sirène gothique »
       (fond coquillages et perles, en-tête perles, écriture gothique, charms coquillages) avec la photo de la fille aux coquillages.
       À droite : SES photos (la photo de la fille est en plus, en premier).
-   2. Au bout de 5 secondes, sur l'écran du téléphone : « Créer le mien ».
+   2. Au bout de 1,2 seconde (21/11, Marie : « il arrive trop tard »), sur l'écran du téléphone : « Créer le mien ».
    3. Elle touche → la photo de la fille s'en va, SA photo revient, et son site passe en « classique » :
       fond Quadrillage crème, en-tête Bandeau, écriture Meuh, couleur Vanille, bouton Chocolat, nom Chocolat, encadrés en verre, aucun charm.
    Tant qu'elle n'a pas touché « Créer le mien » : rien n'est enregistré dans son brouillon (pas de photo de la fille dans SON site),
@@ -92,7 +92,7 @@
     try { if (typeof rendPhotos === "function") rendPhotos(); } catch (e) {}
     videAnnuler(); enHaut();
     await quand(() => document.getElementById("attente").classList.contains("part"));
-    enHaut(); setTimeout(montreBouton, 5000);
+    enHaut(); setTimeout(montreBouton, 1200);
   }
 
   let bouton = null;
