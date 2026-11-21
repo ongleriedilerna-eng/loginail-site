@@ -256,7 +256,7 @@ const SIMU = (() => { try { return localStorage.getItem("loginail-simu") === "1"
 /* pour l'e-mail « Activez votre site » (D34, version B) : son prénom, son adresse, et 4 de SES charms (sinon des cerises) en petites images */
 function infosMail() { const br = FINI.br || {}, siens = [...new Set([...(br.charms || []), ...((br.stickers || []).map(x => x && x.n))].filter(n => n && n !== "__etoile"))];
   const c = (siens.length ? siens : ["cerisedisco", "cerises", "ceriseruban", "cerisecoeur"]).slice(0, 4); while (c.length < 4) c.push(c[c.length % Math.max(1, c.length)]);
-  const o = { prenom: br.prenom || "", adresse: "loginail.fr/" + FINI.slug }; c.forEach((n, i) => o["c" + (i + 1)] = "https://loginail.fr/mails/charms/" + encodeURIComponent(n) + ".jpg"); return o; }
+  const o = { prenom: br.prenom || "", adresse: "loginail.fr/" + FINI.slug }; c.forEach((n, i) => o["c" + (i + 1)] = "https://loginail.fr/mails/charms/" + encodeURIComponent(n) + ".png"); return o; }
 async function envoie() {
   const adr = $("mail").value.trim(), BR = FINI.br; $("go").disabled = true; $("msgA").textContent = "";
   if (DEMO && !FINI.aDuSite) { montreMails(adr); return; }
