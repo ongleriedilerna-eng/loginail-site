@@ -1133,11 +1133,11 @@ function rend(o) {
         [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "700px 0px" });
       /* 20/11 (Marie : « ça saccade ») : (1) les vignettes se dessinent UNE par image (plus toutes d'un coup = plus de blocage) ;
          (2) pendant qu'on fait défiler, tout est mis en pause (reprend 0,2 s après) */
-      if (!window.fileEnt) { window._qE = []; let on = 0; const go = () => { const t0 = performance.now(); while (window._qE.length && performance.now() - t0 < 12) { const m = window._qE.shift(); if (!window._visE.has(m)) { m.dataset.ok = ""; continue; }
+      if (!window.fileEnt) { window._qE = []; let on = 0; const go = () => { if (window._defE && performance.now() - window._defE < 140) { requestAnimationFrame(go); return; }   /* 21/11 : rien à dessiner PENDANT qu'on fait défiler (sinon ça saccade) */ const t0 = performance.now(); while (window._qE.length && performance.now() - t0 < 9) { const m = window._qE.shift(); if (!window._visE.has(m)) { m.dataset.ok = ""; continue; }
             try { const w = m.clientWidth || $("lEnt")._larg || 76; m.dataset.w = w; P.miniEntete(m, m.parentElement.dataset.k, w); } catch (er) {} }
           if (window._qE.length) requestAnimationFrame(go); else on = 0; };
         window.fileEnt = m => { window._qE.push(m); if (!on) { on = 1; requestAnimationFrame(go); } }; }
-      { const pan = l.closest(".panneau"); if (pan && !pan._sp) { pan._sp = 1; let tp; pan.addEventListener("scroll", () => { window._visE.forEach(v => v.classList.add("pause")); clearTimeout(tp); tp = setTimeout(() => window._visE.forEach(v => v.classList.remove("pause")), 200); }, { passive: true }); } }
+      { const pan = l.closest(".panneau"); if (pan && !pan._sp) { pan._sp = 1; let tp; pan.addEventListener("scroll", () => { window._defE = performance.now(); window._visE.forEach(v => v.classList.add("pause")); clearTimeout(tp); tp = setTimeout(() => window._visE.forEach(v => v.classList.remove("pause")), 200); }, { passive: true }); } }
       if (!l._ro) { l._ro = 1; let tr; try { new ResizeObserver(() => { clearTimeout(tr); tr = setTimeout(() => { l.querySelectorAll(".mi").forEach(m => { if (m.dataset.ok && m.clientWidth && Math.abs(m.clientWidth - (+m.dataset.w || 0)) > 2) { m.dataset.ok = l.dataset.cle; fileEnt(m); } }); }, 120); }).observe(l); } catch (er) {} }   /* 20/11 (Marie : « ça fait ça ») : une vignette dessinée trop petite se redessine à sa vraie taille */
       const nouveau = l.dataset.cle !== cle; if (nouveau) { l.dataset.cle = cle; l._larg = larg; P.nouvelleFeuille(); }
       l.querySelectorAll(".mi").forEach(m => { if (!m._io) { m._io = 1; m.classList.add("off"); window._ioEnt.observe(m); } else if (nouveau) { m.dataset.ok = ""; window._ioEnt.unobserve(m); window._ioEnt.observe(m); } }); } catch (er) { console.warn(er); } }
@@ -3255,7 +3255,11 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const b = document.createElement("button"); b.type = "button"; b.className = "sansT"; b.setAttribute("aria-label", "Sans fond"); b.title = "Sans fond";
   b.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   const maj = () => b.classList.toggle("on", !!(window.Pilote && Pilote.pret && !Pilote.etat.fond));
-  b.onclick = e => { e.stopPropagation(); const v = document.querySelector("#lFond .vg.sans"); if (v) v.click(); if (typeof bulle === "function") bulle("Sans fond"); setTimeout(maj, 120); };
+  let avant = "";
+  b.onclick = e => { e.stopPropagation(); const P = window.Pilote; if (!P) return;
+    if (!P.etat.fond && avant) { /* 21/11 (Marie) : re-toucher = on retrouve le fond d'avant */ const t = document.querySelector(`#lFond .vg[data-f="${avant.replace(/"/g, '\\"')}"]`); if (t) t.click(); else P.fond(avant); if (typeof bulle === "function") bulle("Ton fond est revenu ✦"); }
+    else { if (P.etat.fond) avant = P.etat.fond; const v = document.querySelector("#lFond .vg.sans"); if (v) v.click(); if (typeof bulle === "function") bulle("Sans fond"); }
+    setTimeout(maj, 160); };
   sc.appendChild(b); if (window.Pilote && Pilote.change) Pilote.change(() => setTimeout(maj, 60)); setTimeout(maj, 3000);
 })();
 </script>
@@ -3356,6 +3360,37 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2.4" fill="#F2A7C3"/><rect x="13" y="3" width="8" height="8" rx="2.4" fill="#1E1C1B"/><rect x="3" y="13" width="8" height="8" rx="2.4" fill="#D9B79B"/><rect x="13" y="13" width="8" height="8" rx="2.4" fill="#B5475E"/></svg>Looks';
   b.onclick = e => { e.stopPropagation(); const x = document.querySelector("#onglets .btnLooks"); if (x) x.click(); };
   sc.appendChild(b);
+})();
+</script>
+<!-- 2.18 (21/11 soir, Marie) : en descendant, la pilule (thèmes + ≡) disparaît en douceur ; en remontant, elle revient (fonds, en-têtes, écritures, charms) ;
+     fonds affichés par paquets de 48 (plus fluide). -->
+<style>
+@media (max-width:899px){
+  body.v2 .fondDeux .catBoxF,body.v2 .panneau[data-p=charms] #catBox.catH{transition:max-height .28s cubic-bezier(.2,.9,.25,1),opacity .22s,padding .28s,margin .28s;max-height:80px;overflow:hidden}
+  body.v2 .fondDeux .catBoxF.cacheP,body.v2 .panneau[data-p=charms] #catBox.catH.cacheP{max-height:0!important;opacity:0;padding-top:0!important;padding-bottom:0!important;margin:0!important}
+  body.v2 .famTraits,body.v2 .panneau[data-p=ecriture] .famE{position:sticky!important;top:6px!important;z-index:5;transition:transform .3s cubic-bezier(.2,.9,.25,1),opacity .22s}
+  body.v2 .famTraits.cacheP,body.v2 .panneau[data-p=ecriture] .famE.cacheP{transform:translateY(-130%);opacity:0;pointer-events:none}
+  body.v2 #lFond .vg.plusTard{display:none!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const $ = id => document.getElementById(id);
+  /* qui se cache, quand on fait défiler quoi */
+  const PAIRES = [["#lFond", ".fondDeux .catBoxF"], ["#lCh", "#catBox"], ['.panneau[data-p="entete"]', ".famTraits"], ['.panneau[data-p="ecriture"]', ".panneau[data-p=ecriture] .famE"]];
+  const suit = (selS, selP) => { const sc = document.querySelector(selS); if (!sc) return; let y0 = sc.scrollTop, acc = 0;
+    sc.addEventListener("scroll", () => { const p = document.querySelector(selP); if (!p) return; const y = sc.scrollTop, d = y - y0; y0 = y;
+      if (y < 30) { p.classList.remove("cacheP"); acc = 0; return; }
+      acc = (Math.sign(d) === Math.sign(acc) ? acc : 0) + d;   /* on attend un vrai geste (pas un tremblement) */
+      if (acc > 18) p.classList.add("cacheP"); else if (acc < -14) p.classList.remove("cacheP"); }, { passive: true }); };
+  PAIRES.forEach(([a, b]) => suit(a, b));
+  /* quand on change d'onglet ou de thème, la pilule revient */
+  if (typeof ouvre === "function") { const o0 = ouvre; ouvre = function () { document.querySelectorAll(".cacheP").forEach(x => x.classList.remove("cacheP")); return o0.apply(this, arguments); }; }
+  /* fonds : par paquets de 48 */
+  const lf = $("lFond"); if (lf) { const PAQ = 48; let n = PAQ;
+    const coupe = () => { const vs = [...lf.querySelectorAll(".vg:not(.sans)")]; vs.forEach((v, i) => v.classList.toggle("plusTard", i >= n)); };
+    new MutationObserver(m => { if (m.some(x => x.type === "childList" && x.addedNodes.length > 5)) { n = PAQ; coupe(); } }).observe(lf, { childList: true });
+    lf.addEventListener("scroll", () => { if (lf.scrollTop + lf.clientHeight > lf.scrollHeight - 300 && lf.querySelector(".vg.plusTard")) { n += PAQ; coupe(); } }, { passive: true }); coupe(); }
 })();
 </script>
 </body>
