@@ -3139,7 +3139,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const fi = document.createElement("button"); fi.type = "button"; fi.className = "rondCh filR"; fi.setAttribute("aria-label", "Filtrer les charms");
   fi.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></svg>';
   box.prepend(lo); box.append(fi);
-  lo.onclick = () => { const on = B.classList.toggle("chercheOn"); const i = $("chercheC"); if (on && i) setTimeout(() => i.focus(), 50); };
+  lo.onclick = () => { const on = B.classList.toggle("chercheOn"); const i = $("chercheC"); if (on && i) { i.focus(); i.select && i.select(); } else if (i) { i.blur(); } };   /* focus DANS le geste : l'iPhone ouvre le clavier tout de suite */
   let choixF = null;
   const feuille = (opts, choisi) => { const f = document.createElement("div"); f.className = "feuilleCh";
     f.innerHTML = `<div class="liste" role="listbox" aria-label="Filtrer">${opts.map(([v, n]) => `<button type="button" data-v="${v}" class="${v === choisi ? "on" : ""}">${n}<i></i></button>`).join("")}</div><button type="button" class="annuleF">Annuler</button>`;
@@ -3149,6 +3149,44 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     fi.classList.add("actif"); rend("charms"); const l = $("lCh"); if (l) l.scrollTop = 0; const p = l && l.closest(".panneau"); if (p) p.scrollTop = 0; };
   /* un dessin touché = on quitte le filtre « Tous » */
   cc.addEventListener("click", () => { setTimeout(() => { if (catCharm !== "Tous") { choixF = null; fi.classList.remove("actif"); } }, 30); });
+})();
+</script>
+<!-- 2.12 (21/11 soir, Marie) : la liste des charms DÉFILE (elle était coincée) et ne dessine que ce qu'on voit ; charm choisi en verre dépoli (un seul effet) ;
+     thèmes des charms = émojis de l'iPhone ; plus de titres de « style » (devinés par ordinateur, souvent faux). -->
+<style>
+@media (max-width:899px){
+  body.v2 .panneau[data-p=charms] .chDeux{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+  body.v2 #lCh{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;align-content:start}
+  body.v2 #lCh .ch{content-visibility:auto;contain-intrinsic-size:58px 58px}
+  /* charm choisi : verre dépoli, un seul effet */
+  body.v2 #lCh .ch.on{background:linear-gradient(150deg,rgba(255,255,255,.95),rgba(255,255,255,.55))!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.95),0 8px 18px -8px rgba(181,71,94,.55)!important;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transform:translateY(-1px)}
+  body.v2 #lCh .ch.on::after,body.v2 #lCh .ch.on::before{display:none!important}
+  body.v2 #lCh .ch.on img{filter:drop-shadow(0 3px 5px rgba(181,71,94,.35))}
+  /* émojis */
+  body.v2 #catC .catI .emoT{font:400 23px/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;display:block!important;filter:saturate(1.05)}
+  body.v2 .panneau[data-p=charms] .outilsC .triC{display:none!important}
+  body.v2 #catC .catI:not(.on) .emoT{opacity:.8}
+  /* plus de titres de style */
+  body.v2.triStyle #lCh .titreTh{display:none!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const EMO = { "Onglerie": "💅", "Cœurs": "💖", "Fruits et légumes": "🍓", "Fleurs et nature": "🌸", "Bohème": "🌞", "Jardin": "🌷", "Mer et plage": "🐚", "Tropical": "🌴",
+    "Ciel et étoiles": "🌙", "Espace": "🚀", "Animaux": "🐱", "Animaux marins": "🐠", "Gourmand": "🍩", "Diner américain": "🍔", "Glaces": "🍦", "Cuisine": "🍳", "Bijoux": "💍",
+    "Piercings": "🧷", "Pierres et cristaux": "💎", "Mode et accessoires": "👒", "Sacs": "👜", "Chaussures": "👠", "Lunettes": "🕶️", "Vêtements": "👗", "Jean": "👖",
+    "Léopard et zèbre": "🐆", "Faon": "🦌", "Écaille": "🐢", "Serpent": "🐍", "Beauté": "💄", "Salle de bain": "🛁", "Coiffure": "💇‍♀️", "Nœuds": "🎀", "Gothique": "🦇",
+    "Rock": "🎸", "Y2K et tech": "💿", "Téléphones et bipeurs": "📱", "Jeux vidéo": "🎮", "Musique rétro": "📼", "Pixel": "👾", "Cyber chrome": "🤖", "Cyber rose": "🦋", "Néon": "⚡",
+    "Fête et musique": "🪩", "Cinéma et tapis rouge": "🎬", "Fête foraine": "🎡", "Magie et astro": "🔮", "Jeux et sport": "🎲", "Jouets rétro": "🧸", "Maison et objets": "🕯️",
+    "Papeterie et couture": "✂️", "Voyage": "✈️", "Corse": "🏝️", "Paris": "🗼", "Régions de France": "🥐", "Hiver": "❄️", "Symboles": "🧿", "Fiertés": "🏳️‍🌈", "Drapeaux": "🇫🇷",
+    "Lettres": "🔤", "Chiffres": "🔢", "Poses": "✨" };
+  const cc = document.getElementById("catC"); if (!cc) return;
+  const met = () => { cc.querySelectorAll(".catI[data-c]").forEach(b => { const e = EMO[b.dataset.c]; if (!e || b.querySelector(".emoT")) return;
+      const im = b.querySelector("img,.cfav"); const sp = document.createElement("b"); sp.className = "emoT"; sp.textContent = e; if (im) im.replaceWith(sp); else b.prepend(sp); b.title = b.dataset.c === "Poses" ? "Vos charms" : b.dataset.c; });
+    document.body.classList.toggle("triStyle", typeof triCh !== "undefined" && triCh === "style"); };
+  met(); new MutationObserver(met).observe(cc, { childList: true, subtree: true });
+  const l = document.getElementById("lCh"); if (l) new MutationObserver(() => document.body.classList.toggle("triStyle", typeof triCh !== "undefined" && triCh === "style")).observe(l, { childList: true });
 })();
 </script>
 </body>
