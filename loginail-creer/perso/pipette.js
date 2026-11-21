@@ -111,10 +111,11 @@ body.pipOn .pipBandeau{opacity:1;translate:-50% 0}
     setTimeout(rendCouleursG, 60); bulle("Couleur posée sur " + NOMP[q] + " ✦"); setTimeout(arrete, 380); return true; }
   /* 21/11 (2.0, téléphone) : on reste appuyée sur la pipette et on la GLISSE sur son site ; la loupe suit le doigt (au-dessus de lui) ; on lâche = la couleur est posée */
   window.lgnPipGlisse = {
-    bouge(px, py) { const [r, k] = ech(), x = (px - r.left) / k, y = (py - r.top) / k;
+    bouge(px, py, auDoigt = true) { const [r, k] = ech(), x = (px - r.left) / k, y = (py - r.top) / k;
       if (x < 0 || y < 0 || x > (ifr.offsetWidth || 390) || y > (ifr.offsetHeight || 844)) { loupe.classList.remove("on"); dernier = null; return false; }
-      loupe.classList.add("auDoigt"); bouge({ clientX: x, clientY: y }); return !!dernier; },
-    pose(px, py) { const ok = this.bouge(px, py) && poseCouleur(); if (!ok) loupe.classList.remove("on"); setTimeout(() => loupe.classList.remove("on", "auDoigt"), 650); return ok; },
+      loupe.classList.toggle("auDoigt", auDoigt); bouge({ clientX: x, clientY: y }); return !!dernier; },
+    pose(px, py, garder = false, auDoigt = true) { const ok = this.bouge(px, py, auDoigt) && poseCouleur(); if (!ok && !garder) loupe.classList.remove("on");
+      if (!garder) setTimeout(() => loupe.classList.remove("on", "auDoigt"), 650); else setTimeout(() => loupe.classList.add("on"), 420); return ok; },
     annule() { loupe.classList.remove("on", "auDoigt"); dernier = null; } };
   const bloque = e => { e.preventDefault(); e.stopPropagation(); };
   const sort = () => loupe.classList.remove("on");
