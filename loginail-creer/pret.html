@@ -3065,7 +3065,7 @@ async function envoie(){
   // le brouillon attend dans le coffre : il la suit même si elle ouvre l'e-mail sur un autre téléphone
   const {data:bid}=await coffre.rpc("poser_brouillon",{donnees:garde});
   const q=new URLSearchParams();if(bid)q.set("b",bid);if(location.search.includes("iphone"))q.set("iphone","");
-  const {data:inscr,error}=await coffre.auth.signUp({email:adr,password:mdp.value,options:{emailRedirectTo:new URL("fin.html?"+q.toString().replace(/=$/,"").replace(/=&/g,"&"),location.href).href,data:{brouillon:garde}}});
+  const {data:inscr,error}=await coffre.auth.signUp({email:adr,password:mdp.value,options:{emailRedirectTo:(/(^|\.)loginail\.fr$/.test(location.hostname)?"https://app.loginail.fr/loginail-creer/":new URL(".",location.href).href)+"fin.html?"+q.toString().replace(/=$/,"").replace(/=&/g,"&"),data:{brouillon:garde}}});
   if(!error&&inscr?.user&&!inscr.user.identities?.length){msgA.textContent="Vous avez déjà un compte avec cette adresse : connectez-vous dans l’appli Loginail.";verif();return}
   if(error){msgA.textContent=/rate|limit|seconds/i.test(error.message)?"Trop d’essais d’un coup. Réessayez dans une minute.":/password/i.test(error.message)?"Choisissez un mot de passe plus long (8 caractères ou plus).":"Le compte n’a pas pu être créé. Vérifiez l’adresse et réessayez.";verif();return}
   regardeMails(adr);

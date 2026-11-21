@@ -257,6 +257,9 @@ const SIMU = (() => { try { return localStorage.getItem("loginail-simu") === "1"
 function infosMail() { const br = FINI.br || {}, siens = [...new Set([...(br.charms || []), ...((br.stickers || []).map(x => x && x.n))].filter(n => n && n !== "__etoile"))];
   const c = (siens.length ? siens : ["cerisedisco", "cerises", "ceriseruban", "cerisecoeur"]).slice(0, 4); while (c.length < 4) c.push(c[c.length % Math.max(1, c.length)]);
   const o = { prenom: br.prenom || "", adresse: "loginail.fr/" + FINI.slug }; c.forEach((n, i) => o["c" + (i + 1)] = "https://loginail.fr/mails/charms/" + encodeURIComponent(n) + ".png"); return o; }
+/* 21/11 : Supabase n'accepte le retour du lien de l'e-mail que vers app.loginail.fr (sinon il renvoie sur l'accueil de l'appli
+   et rien n'est rangé : bug du vrai compte de Marie). En ligne, on vise donc toujours app.loginail.fr. */
+const retourMail = chemin => /(^|\.)loginail\.fr$/.test(location.hostname) ? "https://app.loginail.fr/loginail-creer/" + chemin : new URL(chemin, location.href).href;
 async function envoie() {
   const adr = $("mail").value.trim(), BR = FINI.br; $("go").disabled = true; $("msgA").textContent = "";
   if (DEMO && !FINI.aDuSite) { montreMails(adr); return; }
@@ -267,7 +270,7 @@ async function envoie() {
     const { photos, avis, ...garde } = BR || {};   /* les photos et avis Google ne se gardent pas : on les relira sur Google */
     const { data: bid } = await coffre.rpc("poser_brouillon", { donnees: garde });   /* le brouillon la suit même si elle ouvre l'e-mail sur un autre téléphone */
     const q = new URLSearchParams(); if (bid) q.set("b", bid);
-    const { data: inscr, error } = await coffre.auth.signUp({ email: adr, password: $("mdp").value, options: { emailRedirectTo: new URL("fin.html?" + q.toString(), location.href).href, data: { brouillon: garde, ...infosMail() } } });
+    const { data: inscr, error } = await coffre.auth.signUp({ email: adr, password: $("mdp").value, options: { emailRedirectTo: retourMail("fin.html?" + q.toString()), data: { brouillon: garde, ...infosMail() } } });
     $("go").textContent = "Activer mon site ✦";
     if (!error && inscr?.user && !inscr.user.identities?.length) { $("msgA").textContent = "Vous avez déjà un compte avec cette adresse : connectez-vous dans l'appli Loginail."; verif(); return; }
     if (error) { $("msgA").textContent = /rate|limit|seconds/i.test(error.message) ? "Trop d'essais d'un coup. Réessayez dans une minute." : /password/i.test(error.message) ? "Choisissez un mot de passe plus long (8 caractères ou plus)." : "Le compte n'a pas pu être créé. Vérifiez l'adresse et réessayez."; verif(); return; }
