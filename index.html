@@ -1995,6 +1995,9 @@ html body:not(#_) h2.t2 em, html body:not(#_) #semaine > h2 em{padding-right:0!i
 @media (max-width:760px){
   html body:not(#_) .np h1.serif{margin-top:26px;line-height:1.1}
   html body:not(#_) .np h1.serif .np-l2{margin-top:18px}
+  /* 21/11 (Marie) : titre ET phrase rose sur UNE ligne chacun, la phrase rose exactement aussi large que le titre */
+  html body:not(#_) .np h1.serif{--w:min(100vw - 40px,400px);max-width:none;white-space:nowrap;font-size:calc(var(--w) / 8.65)}
+  html body:not(#_) .np h1.serif .np-l2{font-size:calc(var(--w) / 17.15)}
   html body:not(#_) .np .np-lead{margin-top:20px}
   html body:not(#_) .np .np-paste{margin-top:32px}
   html body:not(#_) .np .np-micro{margin-top:16px;flex-wrap:nowrap;gap:0 10px;font-size:12.5px;white-space:nowrap;justify-content:center}
@@ -2272,6 +2275,12 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) #charms .np-charm[src*="saturne"]{width:48px!important;left:calc(100% - 46px)!important;top:128px!important}
   html body:not(#_) #charms .np-charm[src*="collierperles"]{width:46px!important;left:8px!important;top:318px!important}
   html body:not(#_) #charms .np-charm[src*="sacmatelasse"]{width:46px!important;left:calc(100% - 54px)!important;top:322px!important}
+  /* 21/11 : le titre tient sur une ligne et prend toute la largeur → cerise et saturne descendent à « Prêt en 1 minute »,
+     collier et sac à côté de la bulle « Léa » (hauteurs calculées par placeM) (plus rien ne cache le titre) */
+  html body:not(#_) #charms .np-charm[src*="cerisedisco"]{width:46px!important;left:-4px!important;top:var(--cy1,298px)!important}
+  html body:not(#_) #charms .np-charm[src*="saturne"]{width:44px!important;left:calc(100% - 42px)!important;top:var(--cy1,298px)!important}
+  html body:not(#_) #charms .np-charm[src*="collierperles"]{width:36px!important;left:2px!important;top:var(--cy2,226px)!important}
+  html body:not(#_) #charms .np-charm[src*="sacmatelasse"]{width:36px!important;left:calc(100% - 38px)!important;top:var(--cy2,226px)!important}
 }
 </style>
 <style id="bulles-tel">
@@ -3992,6 +4001,12 @@ const host=$('charms'),hero=$('hero');
 const items=CH.map(([f,x,y,sz,r,m],i)=>{const im=new Image();im.src=C+f+'.webp';im.alt='';im.className='np-charm'+(m?' np-m':'');
   im.style.cssText=`width:${sz}px;left:calc(${x}% - ${sz/2}px);top:${y}px`;host.append(im);
   return{el:im,s:sz,r,ph:i*.9,dx:0,dy:0,vx:0,vy:0,rot:0,vr:0,cool:0}});
+/* 21/11 (Marie) : TÉLÉPHONE — les 4 charms se placent d'après le texte (cerise + saturne à côté de « Prêt en 1 minute »,
+   collier + sac à côté de la bulle « Léa · nouveau RDV ») : ils ne cachent jamais le titre, quel que soit le téléphone */
+const placeM=()=>{if(innerWidth>760)return;const hb=host.getBoundingClientRect(),rd=document.querySelector('.np-ready'),tr=document.querySelector('.np-tourne');
+  if(rd){const r=rd.getBoundingClientRect();host.style.setProperty('--cy1',(r.top+r.height/2-hb.top-31)+'px')}
+  if(tr){const r=tr.getBoundingClientRect();host.style.setProperty('--cy2',(r.top+30-hb.top-18)+'px')}};
+placeM();document.fonts&&document.fonts.ready.then(placeM);addEventListener('load',placeM);addEventListener('resize',placeM);
 let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3,mvx=0,mvy=0;
 hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();mx=(e.clientX-b.left)/S;my=(e.clientY-b.top)/S});
 hero.addEventListener('pointerleave',()=>{mx=my=-9e3});
