@@ -33,7 +33,11 @@
   const attends = ms => new Promise(r => setTimeout(r, ms));
 
   /* 18/11 (Produit) : ?src=loginail-creer/pret.html?… → SON site (le parcours de création l'envoie) */
-  P.src = () => { const s = Q.get("src") || ""; if (/^loginail-creer\/pret\.html(\?|$)/.test(s)) return "../" + s; return P.srcExemple(); };
+  /* 21/11 (Marie : « elle revient, son fond a disparu ») : « &essai » fait remplacer par pret.html le fond, l'écriture, les paillettes,
+     la couleur et le style de SON brouillon par ceux de l'adresse (fond vide). Si elle a déjà personnalisé (en-tête dans son brouillon,
+     seul Personnaliser l'écrit), on enlève « essai » : son site revient tel qu'elle l'a laissé. */
+  const dejaPerso = () => { try { const b = JSON.parse(localStorage.getItem("loginail-brouillon") || "null"); return !!(Q.has("vrai") && b && b.entete); } catch (e) { return false; } };
+  P.src = () => { let s = Q.get("src") || ""; if (/^loginail-creer\/pret\.html(\?|$)/.test(s)) { if (dejaPerso()) s = s.replace(/([?&])essai(=[^&]*)?(&|$)/, (m, a, b, c) => c ? a : ""); return "../" + s; } return P.srcExemple(); };
   P.srcExemple = () => `../loginail-creer/pret.html?v=1511m&nouveau&exemple=dilerna&style=1&couleur=noir&mode=jour&police=affiche&paillettes=nacre&${SALON.src}`;
 
   /* le nom du 2e salon : on remplace « Maison Moka » partout où il s'écrit (le site d'exemple ne sait pas encore s'appeler autrement) */
