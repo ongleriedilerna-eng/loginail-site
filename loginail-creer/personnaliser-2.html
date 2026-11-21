@@ -1582,7 +1582,8 @@ P.change(() => {}); const rendAvantCat = rend; rend = o => { rendAvantCat(o); if
 /* ===== Couleurs · version B (17/11, Marie : « B, la bande ») ===== */
 const DUOS = [/* 17/11 (Marie) : chaque ambiance = 3 couleurs de la MÊME famille (encadré clair · nom · bouton) */
   ["Rose vernis", "poudre", "framboiseb", "fuchsia"], ["Graphite", "greige", "anthraciteb", "noir"], ["Nude", "nude", "caramelb", "choco"], ["Sauge", "sauge", "sapinb", "vert"],
-  ["Lavande", "lavande", "pruneb", "violet"], ["Bleu nuit", "bleup", "bleunuitb", "bleunuit"], ["Cerise", "rose", "cerise", "rouge"]];   /* 17/11 (Marie) : Or, Noir, Bordeaux, Lagon et Terracotta enlevés */
+  ["Lavande", "lavande", "pruneb", "violet"], ["Bleu nuit", "bleup", "bleunuitb", "bleunuit"], ["Cerise", "rose", "cerise", "rouge"],
+  /* 21/11 (Marie) : 5 ambiances en plus */ ["Pêche", "pechep", "corailb", "corail"], ["Lagon", "vertdeau", "turquoise", "turquoise"], ["Miel doré", "cremedoree", "moutardeb", "or"], ["Terracotta", "sable", "terracottab", "choco"], ["Bordeaux", "perle", "bordeauxb", "bordeaux"]];   /* 17/11 (Marie) : Or, Noir, Bordeaux, Lagon et Terracotta enlevés */
 /* 17/11 (Marie) : « Sauvegarder mes couleurs » → ses assortiments à elle, en PREMIER sur la ligne des ambiances */
 const MESC = (() => { try { return JSON.parse(localStorage.getItem("lgnMesCouleurs") || "[]"); } catch (e) { return []; } })();
 const sauveMESC = () => { try { localStorage.setItem("lgnMesCouleurs", JSON.stringify(MESC)); } catch (e) {} };
@@ -2765,10 +2766,10 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
     box-shadow:0 0 0 1.2px #8C8884,0 0 0 2.4px #2B2927,0 34px 40px -26px rgba(0,0,0,.42)}
   body.v2 .coucheT{background:linear-gradient(90deg,#2E2C2A,#6F6B67 18%,#45423F 50%,#6F6B67 82%,#2E2C2A)}
   body.v2 .trT{position:absolute;pointer-events:none;background:linear-gradient(90deg,#34322F,#7A7672 45%,#3B3936)}
-  body.v2 .trT.g{left:0;top:calc(var(--rT)*.7);bottom:calc(var(--rT)*.7);width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
-  body.v2 .trT.d{right:0;top:calc(var(--rT)*.7);bottom:calc(var(--rT)*.7);width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
-  body.v2 .trT.h{top:0;left:calc(var(--rT)*.7);right:calc(var(--rT)*.7);height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
-  body.v2 .trT.b{bottom:0;left:calc(var(--rT)*.7);right:calc(var(--rT)*.7);height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.g{left:0;top:calc(var(--rT) - 1px);bottom:calc(var(--rT) - 1px);width:var(--ep);transform-origin:0 50%;transform:rotateY(90deg)}
+  body.v2 .trT.d{right:0;top:calc(var(--rT) - 1px);bottom:calc(var(--rT) - 1px);width:var(--ep);transform-origin:100% 50%;transform:rotateY(-90deg)}
+  body.v2 .trT.h{top:0;left:calc(var(--rT) - 1px);right:calc(var(--rT) - 1px);height:var(--ep);transform-origin:50% 0;transform:rotateX(-90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .trT.b{bottom:0;left:calc(var(--rT) - 1px);right:calc(var(--rT) - 1px);height:var(--ep);transform-origin:50% 100%;transform:rotateX(90deg);background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
   /* les boutons sur les tranches */
   body.v2 .trT i{position:absolute;left:18%;right:18%;border-radius:3px;background:linear-gradient(90deg,#55524E,#9B9792,#55524E);box-shadow:0 0 0 .5px rgba(0,0,0,.4)}
   body.v2 .dosT{transform:translateZ(calc(var(--ep) * -1)) rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
@@ -3256,6 +3257,35 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const maj = () => b.classList.toggle("on", !!(window.Pilote && Pilote.pret && !Pilote.etat.fond));
   b.onclick = e => { e.stopPropagation(); const v = document.querySelector("#lFond .vg.sans"); if (v) v.click(); if (typeof bulle === "function") bulle("Sans fond"); setTimeout(maj, 120); };
   sc.appendChild(b); if (window.Pilote && Pilote.change) Pilote.change(() => setTimeout(maj, 60)); setTimeout(maj, 3000);
+})();
+</script>
+<!-- 2.15 (21/11 soir, Marie : « les 4 coins quand je tourne ») : les coins arrondis ont maintenant leurs propres petits morceaux de tranche (plus de trou),
+     et un anneau noir couvre la jointure écran / cadre ; « Sans fond » = un petit damier (pas une croix qui fait peur). -->
+<style>
+@media (max-width:899px){
+  body.v2 .coinT{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none;background:linear-gradient(#34322F,#7A7672 45%,#3B3936)}
+  body.v2 .tel:not(.d3)>.coinT,body.v2 .tel:not(.d3)>.bordT{display:none!important}
+  body.v2 .bordT{position:absolute;inset:0;border-radius:var(--rT);pointer-events:none;box-shadow:inset 0 0 0 4.5px #0C0B0B;transform:translateZ(1.3px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  body.v2 .sansT{overflow:hidden}
+  body.v2 .sansT .damier{width:22px;height:22px;border-radius:6px;box-shadow:0 0 0 1.5px rgba(0,0,0,.18);
+    background:conic-gradient(#d9d4d7 0 25%,#fff 0 50%,#d9d4d7 0 75%,#fff 0) 0 0/11px 11px}
+  body.v2 .sansT.on{background:#fff!important;box-shadow:0 0 0 3px #1E1C1B,0 6px 14px -8px rgba(0,0,0,.4)!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const T = document.getElementById("tel"); if (!T) return;
+  /* les coins : 6 petits morceaux de tranche par coin, posés le long de l'arrondi */
+  const coins = () => { T.querySelectorAll(".coinT").forEach(x => x.remove()); if (!T.querySelector(".bordT")) { const b = document.createElement("i"); b.className = "bordT"; T.appendChild(b); }
+    const W = T.offsetWidth, H = T.offsetHeight, cs = getComputedStyle(T), R = parseFloat(cs.getPropertyValue("--rT")) || parseFloat(cs.borderTopLeftRadius) || 30, ep = parseFloat(cs.getPropertyValue("--ep")) || W * .085;
+    const N = 6, L = R * Math.PI / 2 / N + .8, C = [[R, R, 180], [W - R, R, 270], [W - R, H - R, 0], [R, H - R, 90]];
+    C.forEach(([cx, cy, a0]) => { for (let k = 0; k < N; k++) { const phi = (a0 + (k + .5) * 90 / N) * Math.PI / 180, px = cx + R * Math.cos(phi), py = cy + R * Math.sin(phi), ta = phi + Math.PI / 2;
+      const e = document.createElement("i"); e.className = "coinT"; e.style.width = L + "px"; e.style.height = ep + "px";
+      e.style.transform = `translate3d(${(px - Math.cos(ta) * L / 2).toFixed(2)}px,${(py - Math.sin(ta) * L / 2).toFixed(2)}px,0) rotateZ(${(ta * 180 / Math.PI).toFixed(2)}deg) rotateX(-90deg)`; T.prepend(e); } }); };
+  new MutationObserver(() => { if (T.classList.contains("d3") && !T._coinsOk) { T._coinsOk = 1; coins(); } if (!T.classList.contains("d3")) T._coinsOk = 0; }).observe(T, { attributes: true, attributeFilter: ["class"] });
+  if (T.classList.contains("d3")) coins();
+  /* « Sans fond » : un damier */
+  const s = document.querySelector(".sansT"); if (s) { s.innerHTML = '<i class="damier"></i>'; s.setAttribute("aria-label", "Sans fond (fond transparent)"); }
 })();
 </script>
 </body>
