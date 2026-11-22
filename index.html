@@ -3975,13 +3975,13 @@ const nav=$('nav');addEventListener('scroll',()=>nav.classList.toggle('np-scroll
 
 /* ---- Vitrine en arc : de vrais sites Loginail sur une roue qui tourne lentement ---- */
 const U='https://loginail.fr/loginail-site/apercus-univers/';
-/* 20/11 : les 11 looks tout prêts de Marie (images faites par outils/capture-looks-roue.py) */
-const SITES=[['Cyber Nails','loginail-site/apercus-univers/look-roue-1.webp'],['Nuage Nails','loginail-site/apercus-univers/look-roue-2.webp'],['L’Atelier Argent','loginail-site/apercus-univers/look-roue-3.webp'],['Jelly Nails','loginail-site/apercus-univers/look-roue-4.webp'],['Studio Nacre','loginail-site/apercus-univers/look-roue-5.webp'],['Rio Nails','loginail-site/apercus-univers/look-roue-6.webp'],['Cherry Disco','loginail-site/apercus-univers/look-roue-7.webp'],['Pink Léo','loginail-site/apercus-univers/look-roue-8.webp'],['Holo Bar','loginail-site/apercus-univers/look-roue-9.webp'],['les Ongles de Cerise','loginail-site/apercus-univers/look-roue-10.webp'],['La Sirène Noire','loginail-site/apercus-univers/look-roue-11.webp']];
+/* 20/11 : les looks de Marie (images faites par outils/capture-looks-roue.py) ; 22/11 (Marie) : 13 = ses deux « look 7 » (12, 13) + son « look 6 » (14) ajoutés, « Tête dans les nuages » (2) retiré de la roue seulement */
+const SITES=[['Cyber Nails','loginail-site/apercus-univers/look-roue-1.webp'],['Gummy','loginail-site/apercus-univers/look-roue-13.webp'],['L’Atelier Argent','loginail-site/apercus-univers/look-roue-3.webp'],['Jelly Nails','loginail-site/apercus-univers/look-roue-4.webp'],['Kromé','loginail-site/apercus-univers/look-roue-12.webp'],['Studio Nacre','loginail-site/apercus-univers/look-roue-5.webp'],['Rio Nails','loginail-site/apercus-univers/look-roue-6.webp'],['Vinyle Nails','loginail-site/apercus-univers/look-roue-14.webp'],['Cherry Disco','loginail-site/apercus-univers/look-roue-7.webp'],['Pink Léo','loginail-site/apercus-univers/look-roue-8.webp'],['Holo Bar','loginail-site/apercus-univers/look-roue-9.webp'],['les Ongles de Cerise','loginail-site/apercus-univers/look-roue-10.webp'],['La Sirène Noire','loginail-site/apercus-univers/look-roue-11.webp']];
 function buildWheel(){
   const m=innerWidth<760, w=m?118:172, h=Math.round(w*19.3/9), R=m?760:1040, gap=m?30:62;
   const step=(w+gap)/R*180/Math.PI, n=Math.floor(360/step), real=360/n;
   const wh=$('wheel');wh.style.setProperty('--R',R+'px');wh.style.setProperty('--w',w+'px');wh.style.setProperty('--h',h+'px');
-  wh.innerHTML=Array.from({length:n},(_,i)=>{const [nm,f]=SITES[i%SITES.length];
+  wh.innerHTML=Array.from({length:n},(_,i)=>{const L=SITES.length,k=i===n-1&&i%L===0?L>>1:i%L/* la roue se referme : jamais deux fois le même côte à côte */,[nm,f]=SITES[k];
     return `<div class="np-slot" style="transform:rotate(${i*real}deg)"><div class="np-card"><div class="np-nt"></div><div class="np-sc" role="img" aria-label="Site ${nm}" style="background-image:url(${f.includes('/')?f:U+f+'.webp'})"></div></div></div>`}).join('');
 }
 /* 20/11 (Marie) : la roue bouge aussi — une fois la page chargée, chaque look passe en image animée */
