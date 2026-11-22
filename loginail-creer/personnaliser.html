@@ -1179,7 +1179,7 @@ function rend(o) {
     const avecTitres = triCh !== "coul" && catCharm !== "Poses" && catCharm !== "Favoris" && (q || triCh === "style" ||catCharm === "Tous" || catCharm === "Couleurs" || catCharm === "Populaires");
     let famAv = null; const titre = n => { if (!avecTitres) return ""; const f = triCh === "style" ? ((window.STYLES_CH || {})[ST[n]] || "Autres") : (CAT[n] || "Autres"); if (f === famAv) return ""; famAv = f; return `<p class="titreTh">${f}</p>`; };
     $("catBox").style.display = q ? "none" : "";
-    $("lCh").innerHTML = (!q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "") + (liste.length ? liste.slice(0, (catCharm === "Tous" || catCharm === "Couleurs") && !q ? 9999 : 120).map(n => titre(n) + `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${imgMini(n)}" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.src.replace('/charms-mini/','/charms/')"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
+    $("lCh").innerHTML = (!q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "") + (liste.length ? liste.slice(0, (catCharm === "Tous" || catCharm === "Couleurs") && !q ? 9999 : 120).map(n => titre(n) + `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img data-mini="${imgMini(n)}" alt="" decoding="async" onerror="this.onerror=null;this.src=this.src.replace('/charms-mini/','/charms/')"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
     majCompte(); }
 }
 const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
@@ -2570,7 +2570,7 @@ const SOUS={
   ["Soins et spa",/cr[èe]me|s[ée]rum|ampoule|huile|gua sha|jade|masque|concombre|pierres|spa|brumisateur|tube|brosse|bougie|serviette|solaire|soin|goutte|flacon/i]]};
 const NOMG={"Fleurs et nature":"Fleurs","Léopard et zèbre":"Léopard et zèbre","Mode et accessoires":"Accessoires","Cinéma et tapis rouge":"Cinéma","Y2K et tech":"Tech"};
 function groupeC(){if(famC===null)return;const f=FC[famC],l=document.getElementById("lCh"),q=document.getElementById("chercheC").value.trim();if(q||!l)return;
- const CC=window.CH_COUL||{},co=n=>n in CC?CC[n]:99999,po=P.poses(),fav=(typeof FAV!=="undefined"?FAV:[]).filter(n=>P.charmsTous().includes(n)),bt=n=>`<button class="ch${po.includes(n)?" on":""}${fav.includes(n)?" fav":""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${imgMini(n)}" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.src.replace('/charms-mini/','/charms/')"></button>`;
+ const CC=window.CH_COUL||{},co=n=>n in CC?CC[n]:99999,po=P.poses(),fav=(typeof FAV!=="undefined"?FAV:[]).filter(n=>P.charmsTous().includes(n)),bt=n=>`<button class="ch${po.includes(n)?" on":""}${fav.includes(n)?" fav":""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img data-mini="${imgMini(n)}" alt="" decoding="async" onerror="this.onerror=null;this.src=this.src.replace('/charms-mini/','/charms/')"></button>`;
  if(famC===0){const r=l.querySelector(".rienC");if(r){r.innerHTML="Touchez un charm pour le poser :<br>il apparaîtra ici.";if(fav.length)r.remove()}
   if(fav.length)l.insertAdjacentHTML("beforeend",`<p class="titreTh">Vos favoris ♥</p>`+fav.map(bt).join(""));return}
  if(famC===1){ /* « Tous les charms » : ceux que Marie met en avant d'abord, puis tous les autres par couleur */
@@ -2742,6 +2742,18 @@ body.grandC #lEnt .ent,#lEnt .ent{width:auto!important;margin:0!important}
   const COURT = { "Tous les fonds": "Tous", "Qui bougent": "Animés" };
   const cf = $("catF"); if (cf) { const court = () => cf.querySelectorAll(".catFond>span").forEach(x => { const t = COURT[x.textContent.trim()]; if (t) x.textContent = t; }); court(); new MutationObserver(court).observe(cf, { childList: true }); }
   const fe = $("famE"); if (fe) new MutationObserver(() => { comptes(); clearTimeout(centre.t); centre.t = setTimeout(centre, 30); }).observe(fe, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+})();
+</script>
+<!-- 22/11 (Marie, « la page se ferme ») : dans la liste des charms, seules les cases visibles (+ une marge) gardent leur image ;
+     avant, chaque charm vu restait en mémoire (277 Mo après 10 défilements sur ordinateur, ~700 Mo pour les 2 724). Téléphone et ordinateur. -->
+<script>
+(function () { const l = document.getElementById("lCh"); if (!l) return;
+  const pose = i => { if (i.getAttribute("src") !== i.dataset.mini) i.src = i.dataset.mini; };
+  if (!window.IntersectionObserver) { const tous = () => l.querySelectorAll("img[data-mini]").forEach(i => { i.loading = "lazy"; pose(i); }); new MutationObserver(tous).observe(l, { childList: true }); return tous(); }
+  const io = new IntersectionObserver(es => es.forEach(e => { const i = e.target.querySelector("img[data-mini]"); if (!i) return;
+    if (e.isIntersecting) pose(i); else if (i.hasAttribute("src")) i.removeAttribute("src"); }), { rootMargin: "200px 0px" });
+  const suis = () => { io.disconnect(); l.querySelectorAll(".ch").forEach(c => io.observe(c)); };
+  new MutationObserver(suis).observe(l, { childList: true }); suis();
 })();
 </script>
 </body>
