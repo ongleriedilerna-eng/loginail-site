@@ -1069,7 +1069,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
-<script src="perso/perso-pilote.js?v=2111ord"></script>
+<script src="perso/perso-pilote.js?v=2211leger"></script>
 <script>
 const $ = id => document.getElementById(id), P = Pilote;
 const ORDRE = ["fond", "entete", "ecriture", "couleurs", "charms"];   /* 17/11 (Marie) : le fond AVANT l'en-tête (les en-têtes montrent alors son vrai site) */
@@ -1130,11 +1130,11 @@ function rend(o) {
         if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { m.dataset.ok = lst.dataset.cle; fileEnt(m); } window._visE.add(m); }
         else { window._visE.delete(m); m.classList.add("off"); /* on garde les vignettes déjà dessinées (en pause), mais au plus 24 : au-delà, les plus anciennes hors écran sont effacées (mémoire du téléphone) */ const g = window._gardeE || (window._gardeE = []); const i = g.indexOf(m); if (i >= 0) g.splice(i, 1); g.push(m); while (g.length > 20) { const v = g.shift(); if (!window._visE.has(v) && v.shadowRoot) { v.shadowRoot.innerHTML = ""; v.dataset.ok = ""; } } }
         /* au plus 6 vignettes bougent en même temps (les premières visibles) : les autres restent sur une image */
-        [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "700px 0px" });
+        [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "240px 0px" });
       /* 20/11 (Marie : « ça saccade ») : (1) les vignettes se dessinent UNE par image (plus toutes d'un coup = plus de blocage) ;
          (2) pendant qu'on fait défiler, tout est mis en pause (reprend 0,2 s après) */
       if (!window.fileEnt) { window._qE = []; let on = 0; const go = () => { if (window._defE && performance.now() - window._defE < 140) { requestAnimationFrame(go); return; }   /* 21/11 : rien à dessiner PENDANT qu'on fait défiler (sinon ça saccade) */ const t0 = performance.now(); while (window._qE.length && performance.now() - t0 < 9) { const m = window._qE.shift(); if (!window._visE.has(m)) { m.dataset.ok = ""; continue; }
-            try { const w = m.clientWidth || $("lEnt")._larg || 76; m.dataset.w = w; P.miniEntete(m, m.parentElement.dataset.k, w); } catch (er) {} }
+            try { const w = m.clientWidth || $("lEnt")._larg || 76; m.dataset.w = w; P.miniEntete(m, m.parentElement.dataset.k, w); } catch (er) {} break; }
           if (window._qE.length) requestAnimationFrame(go); else on = 0; };
         window.fileEnt = m => { window._qE.push(m); if (!on) { on = 1; requestAnimationFrame(go); } }; }
       { const pan = l.closest(".panneau"); if (pan && !pan._sp) { pan._sp = 1; let tp; pan.addEventListener("scroll", () => { window._defE = performance.now(); window._visE.forEach(v => v.classList.add("pause")); clearTimeout(tp); tp = setTimeout(() => window._visE.forEach(v => v.classList.remove("pause")), 200); }, { passive: true }); } }
@@ -1497,6 +1497,8 @@ $("reglages").addEventListener("click", e => { if (e.target.closest(".ent,.vg,.e
 $("annul").onclick = async () => { const s = pile.pop(); if (!s) return; avant.push(etatMaintenant()); $("refaire").disabled = false; $("annul").disabled = !pile.length; await remetEtat(s); bulle("Annulé ↶"); };
 $("refaire").onclick = async () => { const s = avant.pop(); if (!s) return; pile.push(etatMaintenant()); $("annul").disabled = false; $("refaire").disabled = !avant.length; await remetEtat(s); bulle("Refait ↷"); };
 async function remetEtat(s) { const m = P.etat;
+  /* 22/11 : les charms D'ABORD — le changement de photo repose pendant 0,9 s les charms qu'il trouve (↺ et « Annuler » laissaient ceux du look) */
+  const now = P.poses(); now.filter(n => !s.ch.includes(n)).forEach(n => P.charm(n)); s.ch.filter(n => !now.includes(n)).forEach(n => P.charm(n));
   if (s.ph && s.ph !== P.photoUne()) P.choisitPhoto(s.ph);
   if (s.entete !== m.entete) { P.entete(s.entete); await pause(160); }
   if (s.fond !== m.fond) { P.fond(s.fond); await pause(200); }
@@ -1504,7 +1506,6 @@ async function remetEtat(s) { const m = P.etat;
   P.etat.vif = s.vif; P.couleur(s.couleur, true); P.vif(s.vif);
   if (s.nomc && s.nomc !== m.nomc) P.nomc(s.nomc); if (s.blocs && s.blocs !== m.blocs) P.blocs(s.blocs);
   if (s.lib) { Object.entries(s.lib).forEach(([q, v]) => { P._libreEnCours = true; P.couleurLibre(q, v); P._libreEnCours = false; }); }
-  const now = P.poses(); now.filter(n => !s.ch.includes(n)).forEach(n => P.charm(n)); s.ch.filter(n => !now.includes(n)).forEach(n => P.charm(n));
   setTimeout(() => { rend(onglet); ambiance(); }, 350); }
 
 /* Placer mes charms en grand (téléphone) : le site prend tout l'écran, on glisse au doigt, « Terminé » */
@@ -2332,16 +2333,17 @@ try{dessineFE()}catch(e){}
   R.insertBefore(t, $("onglets"));
   let hScene = null, ouvert = false, hcRepos = 0;
   const hautH = () => (document.querySelector(".haut") || {}).offsetHeight || 52;
-  const MIN_SCENE = 230, MIN_CHOIX = 12;
+  const MIN_SCENE = 200, MIN_CHOIX = 12;
   const defaut = () => Math.round(innerHeight * .44);   /* 2.4 : au milieu, 2 rangées et demie de choix (comme Snapchat) */   /* 2.2 : au repos, le téléphone est grand */
   const choix = () => document.querySelector(".choix");
-  /* 21/11 (Marie) : la feuille garde PARTOUT la taille qu'elle a dans Photo (même téléphone dans tous les onglets) */
-  let natPhoto = 0;
-  const naturel = () => { const l = $("lPhG"); if (l && l.offsetParent && l.scrollHeight) natPhoto = l.scrollHeight + 10; return natPhoto || 9999; };
+  /* 22/11 (Marie) : MÊME hauteur dans tous les onglets, FIXE : 3 rangées et demie de charms. Avant, elle était mesurée sur la grille des photos :
+     208 sur un iPhone 393×692 (Couleurs coupé, 2 rangées de charms), et bien moins quand elle a peu de photos. */
+  const H_FEUILLE = 272;
+  const naturel = () => H_FEUILLE;
   let raf = 0;
   function applique(h) { const c = choix(); if (!c) return;
     const autre = R.offsetHeight - c.offsetHeight, maxC = innerHeight - hautH() - MIN_SCENE - autre;
-    const nat = naturel(); let hc = innerHeight - hautH() - h - autre; hc = Math.max(MIN_CHOIX, Math.min(hc, maxC, nat));
+    const nat = naturel(); let hc = h < innerHeight * .6 ? H_FEUILLE : innerHeight - hautH() - h - autre; hc = Math.max(MIN_CHOIX, Math.min(hc, maxC, nat));
     B.style.setProperty("--hC", Math.round(hc) + "px"); B.classList.add("feuille21");
     if (!raf) raf = requestAnimationFrame(() => { raf = 0; try { taille(); } catch (e) {} }); }
   const remet = () => { if (B.classList.contains("glisseT")) return; try { pose(etatF); } catch (e) { applique(defaut()); } };
@@ -2863,13 +2865,21 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const v = (new URLSearchParams(location.search).get("ent") || "A").toUpperCase(); document.body.classList.add("ent" + v);
   /* on zoome sur l'en-tête (la photo et son effet) pour qu'il remplisse le carré */
   const ZOOM = ".defile>*:not(.hent){opacity:0!important}.defile>.hent{transform:translateY(-104px) scale(1.22);transform-origin:50% 0}";
-  window.ENT_VIGNETTE = (c) => {
+  /* 22/11 (Marie) : le cadrage propre à une en-tête (dans la vignette seulement, son site ne change pas) */
+  const CADRE = {
+    xgum: ".defile>.hent{transform:translateY(-184px) scale(1.114)!important}",   /* la bulle en entier, au milieu */
+    hticket: ".defile>.hent{transform:translateY(-338px)!important}.ecran,.defile,.hent,.hent::before,.hent::after{background:#F2BFD3!important}",   /* le ticket entier, un bout de photo au-dessus */
+    viseur: ".defile>.hent{transform:translateY(-94px) scale(1.114)!important}.sx-mire{top:175px!important}.sx-grille{height:350px!important;bottom:auto!important}.sx-co.c,.sx-co.d{top:298px!important;bottom:auto!important}"
+      + ".sx-rec{scale:1.7;transform-origin:0 0;z-index:5;background:rgba(0,0,0,.62)!important;border-radius:99px;padding:1px 6px!important}.sx-rec i{background:#FF2D3F!important;opacity:1!important}",   /* rond au milieu, REC en avant */
+    vinyle: ".defile>.hent{transform:translate(-16px,-47px)!important}.ecran .defile>.hent.he-p-vinyle .px-al,.ecran .defile>.hent.he-p-vinyle .px-al .px-disq{overflow:visible!important}.px-disq{margin-left:70px!important}.px-st,.px-face,.px-al~*,.px-al .he-txt{opacity:0!important}" };   /* le disque sort de la pochette */
+  window.ENT_VIGNETTE = (c, k) => {
     c.querySelectorAll(".f100,.fond-site,.ile,.barre-nav,.fab,.resbar,.dock,.burger,.hpill,.idx,.lgt").forEach(x => x.remove());
     c.style.background = v === "B" ? "#EEECEF" : "#fff";
     const st = document.createElement("style");
     st.textContent = v === "B"
       ? ZOOM + ".ecran,.defile,.hent,.hent::before,.hent::after{background:#EEECEF!important;background-image:none!important}.hent img,.he-ph,.he-ph img,[class*='photo'] img{filter:grayscale(1) brightness(1.35) contrast(.55)!important}"
       : ZOOM + ".ecran,.defile,.hent,.hent::before,.hent::after{background:#fff!important;background-image:none!important}";
+    if (CADRE[k]) st.textContent += CADRE[k];
     c.prepend(st); };
 })();
 </script>
@@ -3476,6 +3486,54 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   /* le fondu sous la pilule n'apparaît qu'une fois qu'on a commencé à descendre */
   [['.panneau[data-p="entete"]', ".bandeP.bE"], ['.panneau[data-p="ecriture"]', ".bandeP.bC"]].forEach(([a, b]) => { const sc = document.querySelector(a); if (!sc) return;
     sc.addEventListener("scroll", () => { const p = document.querySelector(b); if (p) p.classList.toggle("descendu", sc.scrollTop > 6); }, { passive: true }); });
+})();
+</script>
+<!-- 2.22 (22/11, Marie) : feuille un peu plus haute et FIXE ; charms un chouïa plus petits (3 rangées et demie) ; Couleurs : tout tient. -->
+<style>
+@media (max-width:899px){
+  body.v2 #lCh{grid-template-columns:repeat(6,50px)!important;justify-content:space-between!important;column-gap:0!important;row-gap:6px!important}
+  body.v2 #lCh .ch{width:50px!important;height:50px!important}
+}
+@media (max-width:899px) and (max-height:640px){
+  body.v2 .panneau[data-p=couleurs] .gaucheC{gap:3px!important}
+  body.v2 .panneau[data-p=couleurs] .partsV{gap:3px!important}
+  body.v2 .panneau[data-p=couleurs] .assortV,body.v2 .panneau[data-p=couleurs] .partsV button{min-height:30px!important;font-size:12px!important;padding-top:2px!important;padding-bottom:2px!important}
+}
+</style>
+<!-- 2.23 (22/11, « ça bug beaucoup ») : mesuré avec le moteur de Safari — Looks 0,5 image/s, En-tête 1,5, Fond 6,6 (Edge ne le montrait pas).
+     Les MINIATURES sont maintenant des images arrêtées sur un beau moment ; ce qu'elle choisit bouge dans le grand téléphone. -->
+<style>
+@media (max-width:899px){
+  body.v2 #app#app #lEnt .ent .mi{animation:none!important;background:#EDE9EC!important}
+  /* défilement : une ombre calculée par charm coûtait un tiers de la fluidité */
+  body.v2 #app#app #lCh .ch:not(.on),body.v2 #app#app #lCh .ch:not(.on) img{box-shadow:none!important;filter:none!important}
+  /* fenêtre des Looks fermée : vraiment partie (sous Safari ses miniatures invisibles avalaient les touchers sur les onglets et la pipette) */
+  body.v2 .fenLooks{transition:opacity .25s ease,visibility 0s}
+  body.v2 .fenLooks:not(.on){visibility:hidden!important;pointer-events:none!important;transition:opacity .25s ease,visibility 0s linear .25s}
+  body.v2 .fenLooks:not(.on) *{visibility:hidden!important;pointer-events:none!important}
+  body.v2 #app#app #assortG::before{animation:none!important;display:none!important}   /* le reflet sans fin : Couleurs tombait à 32 images/s */
+  body.v2 #app#app#app #lFond .vg,body.v2 #app#app#app #lFond .vg *,body.v2 #app#app#app #lFond .vg *::before,body.v2 #app#app#app #lFond .vg *::after{animation-play-state:paused!important;will-change:auto!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  body.v2 #app#app#app #lFond .vg.anim6,body.v2 #app#app#app #lFond .vg.anim6 *{animation-play-state:paused!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const P = window.Pilote; if (!P) return;
+  window.MINI_LEGER = 1;
+  const leger = "*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;will-change:auto!important}";
+  const habille = h => { if (!h.shadowRoot) return; const t = document.createElement("style"); t.textContent = leger; h.shadowRoot.appendChild(t); };
+  const me = P.miniEntete; P.miniEntete = function (h) { const r = me.apply(this, arguments); habille(h); return r; };
+  const ms = P.montreSite; P.montreSite = function (h) { const r = ms.apply(this, arguments); habille(h);
+    const arrete = () => { if (!h.shadowRoot) return; [...h.shadowRoot.children].forEach(x => { if (!x.getAnimations) return; x.getAnimations({ subtree: true }).forEach(a => { try {
+      const t = a.effect.getComputedTiming(); a.currentTime = t.iterations === Infinity || !isFinite(t.endTime) ? (+t.delay || 0) + (+t.duration || 0) * .45 : Math.max(0, t.endTime - 1); a.pause(); } catch (e) {} }); }); };
+    h._arrete = arrete; requestAnimationFrame(() => { arrete(); setTimeout(arrete, 150); }); return r; };
+  /* les animations d'une miniature naissent parfois plus tard (fenêtre qui s'ouvre, police qui arrive) : on arrête aussi à l'ouverture */
+  const gele = () => document.querySelectorAll("#lLook .miniS").forEach(h => {
+    if (!h.shadowRoot) return; if (h._arrete) h._arrete();
+    else [...h.shadowRoot.children].forEach(x => x.getAnimations && x.getAnimations({ subtree: true }).forEach(a => { try { a.pause(); } catch (e) {} })); });
+  let etait = false;
+  new MutationObserver(() => { const ouverte = !!document.querySelector(".fenLooks.on"); if (ouverte === etait) return; etait = ouverte;
+    if (ouverte) [0, 120, 450, 1100, 2200].forEach(t => setTimeout(gele, t)); }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["class"] });
 })();
 </script>
 </body>

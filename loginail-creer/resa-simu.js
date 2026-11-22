@@ -161,7 +161,7 @@
           : ici ? `<button class="att" data-tout><u>Voir tous les horaires</u></button>`
           : ouvertJ(jourChoisi) ? `<div class="complet"><b>Ce jour est complet</b>Laissez vos coordonnées : si une place se libère, vous êtes prévenue par e-mail.<button class="go" data-att style="margin:14px 0">PRÉVENEZ-MOI</button></div>`
           : `<div class="rien">Pas de créneau ce jour-là.</div>`}`;
-      rf._P = P; }
+      rf._P = P; window.LOGI_MIDI?.pose(rf, { jour: jourChoisi, R, BR, ici }); }
     if (etape === 3) rf.innerHTML = tete + carte(`${R.jourTxt} à ${hm(R.heure)}`) + `<div class="kick">${pas(3)}</div><h2>Vos coordonnées</h2>${avant}
       <div class="deux"><input class="champ" id="rp" placeholder="Prénom" autocomplete="given-name"><input class="champ" id="rn" placeholder="Nom" autocomplete="family-name"></div>
       <input class="champ" id="rt" type="tel" placeholder="Téléphone" autocomplete="tel"><input class="champ" id="re" type="email" placeholder="E-mail" autocomplete="email">
@@ -197,6 +197,14 @@
     try { const b = await rpc("lire_site", { s: window.LOGI_SLUG }); if (b && Array.isArray(b.prestations)) { BR.prestations = b.prestations; aJour = true; } } catch (e) {}
     R = {}; att = 0; jourChoisi = null; etape = 1; dessine();
     rf.querySelector("h2").insertAdjacentHTML("afterend", `<div class="chg" role="alert"><b>« ${esc(nom)} » vient d’être modifiée ou retirée par le salon.</b>Rien n’a été enregistré. ${aJour ? "Choisissez dans la liste à jour." : "Rechargez la page pour voir la liste à jour."}</div>`);
+  }
+  /* 22/11 (sql/32) : le salon a mis sa pause pendant qu'elle réservait : rien n'est enregistré, on lui montre les heures à jour */
+  async function pauseMidi() {
+    let aJour = false;
+    try { const b = await rpc("lire_site", { s: window.LOGI_SLUG }); if (b && Array.isArray(b.horaires)) { BR.horaires = b.horaires; jourChoisi.h = b.horaires[jourChoisi.j] || null; aJour = true; } } catch (e) {}
+    await chargeOcc();
+    etape = 2; att = 0; dessine();
+    window.LOGI_MIDI?.refus(rf, { jour: jourChoisi, heure: R.heure, aJour });
   }
   async function ouvre(ligne) { if (etape >= 5 || att === 2) { R = {}; etape = 1; jourChoisi = null; } att = 0;
     /* 22/11 (Marie) : « tu me remets pas tout ça » — elle a touché sa prestation, on ne lui remontre pas la liste */
@@ -252,6 +260,7 @@
         .catch(async e => { const m = String(e.message || ""); const z = rf.querySelector(".rerr");
           if (m === "prestation_changee") return prestaChangee();
           if (/pris/.test(m)) { await chargeOcc(); etape = 2; dessine(); const k = rf.querySelector(".rien,.h"); if (k) k.insertAdjacentHTML("beforebegin", `<p class="petit" style="color:#A04A4A">Ce créneau vient d’être pris, choisissez-en un autre.</p>`); return; }
+          if (m === "pause") return pauseMidi();
           if (z) z.textContent = "La réservation n’a pas marché. Réessayez, ou appelez le salon."; t.disabled = false; t.textContent = "CONFIRMER MA RÉSERVATION"; }); return; }
     if (t.id === "rsms") { location.href = "sms-simu.html"; }
   });
