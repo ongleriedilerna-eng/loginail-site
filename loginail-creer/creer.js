@@ -87,7 +87,7 @@ async function litTarifs() {
   if (!t) return;
   if (t.instagram) B.insta = t.instagram;
   if (t.presentation) B.presentation = t.presentation;
-  if (t.prestations?.length) { B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60) })); B.prestationsTrouvees = true; }
+  if (t.prestations?.length) { B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", typePrix: p.a_partir_de ? "des" : undefined, duree: Math.round(p.duree_min || 60) })); B.prestationsTrouvees = true; }
 }
 const prechargePhotos = photos => Promise.all(photos.slice(0, 8).map(p => new Promise(ok => { const i = new Image(); i.onload = i.onerror = ok; i.src = p.url; })));
 /* les jours ouverts : « Du mardi au samedi » (dans l'anneau) et « Mar → sam » (sur la carte) */

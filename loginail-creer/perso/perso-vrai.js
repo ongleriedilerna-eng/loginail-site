@@ -37,7 +37,7 @@
     if (r === "plein") { (window.bulle || alert)("Votre téléphone n’a plus de place pour enregistrer. Retirez une photo puis réessayez."); return; }
     if (APPLI) { renvoieAppli(); return; }
     try { localStorage.removeItem("loginail-reprise"); } catch (x) {}
-    location.href = "fini.html"; };   /* 18/11 (D34) : la page « Votre site est prêt » */
+    location.href = "expliquer.html"; };   /* 22/11 (D80) : ses prestations expliquées, puis fini.html */   /* 18/11 (D34) : la page « Votre site est prêt » */
 
   /* elle revient : on reprend SES choix au lieu du départ sobre (en-tête, écriture, fond, couleurs, couleurs exactes, charms) */
   P.reprend = () => { if (!VRAI) return false;

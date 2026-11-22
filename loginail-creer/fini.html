@@ -269,9 +269,18 @@ async function envoie() {
   $("go").textContent = "Un instant…";
   try {
     const { photos, avis, ...garde } = BR || {};   /* les photos et avis Google ne se gardent pas : on les relira sur Google */
-    const { data: bid } = await coffre.rpc("poser_brouillon", { donnees: garde });   /* le brouillon la suit même si elle ouvre l'e-mail sur un autre téléphone */
+    /* 22/11 (D80) : le compte reste léger (il voyage dans chaque connexion, trop lourd = connexion refusée) : ni textes, ni photos dedans.
+       Les textes suivent dans le brouillon du serveur, les photos à côté, une par une (serveur/sql/30). */
+    const liste = garde.prestations || [], sansPhotos = { ...garde, prestations: liste.map(({ photosPresta, ...p }) => p) };
+    const leger = { ...garde, prestations: liste.map(({ photosPresta, detail, ...p }) => p) };
+    let { data: bid, error: lourd } = await coffre.rpc("poser_brouillon", { donnees: sansPhotos });   /* le brouillon la suit même si elle ouvre l'e-mail sur un autre téléphone */
+    if (lourd) ({ data: bid } = await coffre.rpc("poser_brouillon", { donnees: leger }));
+    if (bid) {
+      const envois = liste.map((p, place) => ({ place, nom: String(p.nom || "").slice(0, 120), photo: (p.photosPresta || [])[0] })).filter(x => /^data:image\/jpeg;base64,/.test(x.photo || "")).slice(0, 12);
+      for (const x of envois) { try { await coffre.rpc("poser_photo_brouillon", { p_bid: bid, p_place: x.place, p_nom: x.nom, p_photo: x.photo }); } catch (e) { console.warn(e); } }
+    }
     const q = new URLSearchParams(); if (bid) q.set("b", bid);
-    const { data: inscr, error } = await coffre.auth.signUp({ email: adr, password: $("mdp").value, options: { emailRedirectTo: retourMail("fin.html?" + q.toString()), data: { brouillon: garde, ...infosMail() } } });
+    const { data: inscr, error } = await coffre.auth.signUp({ email: adr, password: $("mdp").value, options: { emailRedirectTo: retourMail("fin.html?" + q.toString()), data: { brouillon: leger, ...infosMail() } } });
     $("go").textContent = "Activer mon site ✦";
     if (!error && inscr?.user && !inscr.user.identities?.length) { $("msgA").textContent = "Tu as déjà un compte avec cette adresse : connecte-toi dans l'appli Loginail."; verif(); return; }
     if (error) { $("msgA").textContent = /rate|limit|seconds/i.test(error.message) ? "Trop d'essais d'un coup. Réessaie dans une minute." : /password/i.test(error.message) ? "Choisis un mot de passe plus long (8 caractères ou plus)." : "Le compte n'a pas pu être créé. Vérifie l'adresse et réessaie."; verif(); return; }

@@ -554,7 +554,7 @@ async function litTarifs() {
   if (t.instagram) B.insta = t.instagram;
   if (t.presentation) B.presentation = t.presentation;   // son « À propos » de sa page de réservation ou de son site
   if (t.prestations?.length) {
-    B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60) }));
+    B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", typePrix: p.a_partir_de ? "des" : undefined, duree: Math.round(p.duree_min || 60) }));
     B.prestationsTrouvees = true;
   }
 }
@@ -647,7 +647,7 @@ function corps(m) {
     <p class="phx-t">Ou touchez vos prestations</p>
     <div class="puces">${SUGG.map(s => `<button type="button" data-sugg="${esc(s)}" class="${brouillonP.some(p => p.nom === s) ? "pris" : ""}">${s}</button>`).join("")}</div>
     ${brouillonP.map((p, i) => p.ferme
-      ? `<button type="button" class="pastille" data-po="${i}"><span>${esc(p.nom)}</span><b>${String(p.prix ?? "").trim() === "" ? "Sur devis" : esc(String(p.prix).replace(".", ",")) + " €"} · ${dureeTxt(p.duree)}</b></button>`
+      ? `<button type="button" class="pastille" data-po="${i}"><span>${esc(p.nom)}</span><b>${String(p.prix ?? "").trim() === "" ? "Sur devis" : (p.typePrix === "des" ? "à partir de " : "") + esc(String(p.prix).replace(".", ",")) + " €"} · ${dureeTxt(p.duree)}</b></button>`
       : `<div class="pr"><input class="champ nomp" data-pn="${i}" value="${esc(p.nom)}" placeholder="Nom de la prestation">
       <div class="prix"><input class="champ" data-pp="${i}" inputmode="decimal" value="${p.prix ?? ""}" placeholder="Prix ou vide"></div>
       <select data-pd="${i}" aria-label="Durée">${[...new Set([...DUREES, p.duree])].sort((a, b) => a - b).map(d => `<option value="${d}" ${d === p.duree ? "selected" : ""}>${dureeTxt(d)}</option>`).join("")}</select>
@@ -739,7 +739,7 @@ $("liste").addEventListener("click", e => {
     const sansPrix = ps.find(p => !prixOk(p.prix));
     if (!ps.length) return dit("Touchez au moins une prestation.");
     if (sansPrix) { dit(`Il manque le prix de « ${sansPrix.nom} ».`); document.querySelector(`[data-pp="${brouillonP.indexOf(sansPrix)}"]`)?.focus(); return; }
-    B.prestations = ps.map(p => ({ nom: p.nom.trim(), prix: String(p.prix ?? "").trim() === "" ? null : +String(p.prix).replace(",", "."), duree: p.duree }));
+    B.prestations = ps.map(({ ferme, ...p }) => ({ ...p, nom: p.nom.trim(), prix: String(p.prix ?? "").trim() === "" ? null : +String(p.prix).replace(",", "."), duree: p.duree }));
   } else if (k === "hor") {
     if (!brouillonH.some(Boolean)) return dit("Touchez au moins un jour.");
     B.horaires = brouillonH.map(x => x && (x.pd && x.pf && x.pd < x.pf && x.pd > x.d && x.pf < x.f ? { d: x.d, f: x.f, pd: x.pd, pf: x.pf } : { d: x.d, f: x.f }));
@@ -782,7 +782,7 @@ async function litPrix(quoi) {
   const t = await fetch(FONCTION, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${ANON}`, apikey: ANON },
     body: JSON.stringify({ quoi: "tarifs", nom: B.nom, ...quoi }) }).then(r => r.json()).catch(() => null);
   const nouvelles = (t?.prestations || []).filter(p => !brouillonP.some(x => x.nom.toLowerCase() === p.nom.toLowerCase()))
-    .map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60), ferme: true }));
+    .map(p => ({ nom: p.nom, prix: p.prix ?? "", typePrix: p.a_partir_de ? "des" : undefined, duree: Math.round(p.duree_min || 60), ferme: true }));
   if (t?.instagram && !B.insta) B.insta = t.instagram;
   if (nouvelles.length) { brouillonP.push(...nouvelles); B.prestationsTrouvees = true; lienOuvert = false;
     etatLecture = `${nouvelles.length} prestation${nouvelles.length > 1 ? "s" : ""} trouvée${nouvelles.length > 1 ? "s" : ""}. Vérifiez qu’elles sont encore valables.`; }
@@ -975,7 +975,7 @@ if (new URLSearchParams(location.search).get("depuis") === "accueil") {
     depuisGoogle(lu.g); B.site = lu.g.site || "";
     const t = lu.t;
     if (t) { if (t.instagram) B.insta = t.instagram; if (t.presentation) B.presentation = t.presentation;
-      if (t.prestations?.length) { B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", duree: Math.round(p.duree_min || 60) })); B.prestationsTrouvees = true; } }
+      if (t.prestations?.length) { B.prestations = t.prestations.map(p => ({ nom: p.nom, prix: p.prix ?? "", typePrix: p.a_partir_de ? "des" : undefined, duree: Math.round(p.duree_min || 60) })); B.prestationsTrouvees = true; } }
     prepareManque();
     document.querySelectorAll(".ecran").forEach(e => e.style.transition = "none"); montre("manque");
     requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".ecran").forEach(e => e.style.transition = "")));

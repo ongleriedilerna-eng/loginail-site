@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<!-- 22/11 (Marie, D80) : « quand elle crée son site, si elle le veut OU NON » : le texte et une photo par prestation.
+     Entre Personnaliser (« J'ai fini mon site ») et fini.html. Tout est déjà écrit ; « Plus tard » ne change rien. -->
+<meta charset="utf-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tes prestations · Loginail</title>
+<meta name="theme-color" content="#F7ECEA">
+<link href="../polices.css" rel="stylesheet">
+<style>@font-face{font-family:"Cormorant Garamond";font-weight:500;src:url(../loginail-site/polices/CormorantGaramond-500-latin.woff2) format("woff2")}</style>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#F7ECEA;color:#2A1B1E;font:400 14px/1.4 Jost,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.page{height:100dvh;max-width:480px;margin:0 auto;display:flex;flex-direction:column}
+.haut{position:relative;flex:none;padding:calc(env(safe-area-inset-top) + 46px) 22px 10px;text-align:center}
+.retour{position:absolute;left:10px;top:calc(env(safe-area-inset-top) + 4px);height:44px;padding:0 10px;border:0;background:none;font-size:13px;color:#6b5a5c}
+h1{margin:0 0 4px;font:500 29px/1.12 "Cormorant Garamond",Georgia,serif;text-wrap:balance}
+.haut p{margin:0;color:#6b5a5c;text-wrap:balance}
+.liste{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 18px 12px;scrollbar-width:none}
+.c{margin-top:10px;padding:12px 13px;background:#fff;border-radius:18px}
+.c>b{display:block;font-weight:500;overflow-wrap:anywhere}
+.c>.m{display:block;margin-top:1px;color:#6b5a5c}
+.t{display:flex;gap:5px;margin-top:8px}
+.t button{flex:1;min-width:0;height:44px;padding:0 4px;border:1px solid #EBDDDA;border-radius:99px;background:#fff;font-size:12.5px;white-space:nowrap;color:#6b5a5c;transition:background .18s,color .18s,transform .12s}
+.t button:active{transform:scale(.97)}
+.t button.on{background:#2A1B1E;color:#fff;border-color:#2A1B1E}
+.px{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;color:#6b5a5c}
+.px[hidden]{display:none}
+.px input{width:92px;height:42px;padding:0 10px;border:1px solid #EBDDDA;border-radius:12px;background:#fff;color:#2A1B1E;font-size:16px;text-align:right;outline:0}
+.d{display:flex;gap:10px;margin-top:7px;align-items:flex-start}
+textarea{display:block;flex:1;min-width:0;min-height:62px;padding:10px 12px;border:1px solid transparent;border-radius:14px;background:#FBF5F4;font-size:16px;line-height:1.35;resize:none;overflow:hidden;outline:0}
+textarea:focus,.px input:focus{border-color:#B5475E}
+.ph{position:relative;flex:none;width:62px;height:62px}
+.ph label{display:grid;place-content:center;justify-items:center;width:100%;height:100%;border:1.5px dashed #D9A9B3;border-radius:13px;color:#B5475E;font-size:20px;line-height:1;cursor:pointer}
+.ph label small{font-size:10.5px;margin-top:3px}
+.ph input{position:absolute;opacity:0;width:1px;height:1px}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;border-radius:13px}
+.ph .x{position:absolute;right:-12px;top:-12px;width:36px;height:36px;padding:0;border:0;background:none;display:grid;place-items:center}
+.ph .x i{width:22px;height:22px;border-radius:50%;background:#2A1B1E;color:#fff;font:normal 400 14px/22px Jost,sans-serif;text-align:center}
+.bas{flex:none;padding:10px 22px calc(env(safe-area-inset-bottom) + 6px)}
+.go{display:block;width:100%;height:50px;border:0;border-radius:14px;background:#2A1B1E;color:#fff;font-size:15px;transition:transform .12s}
+.go:active{transform:scale(.98)}
+.tard{display:block;width:100%;min-height:44px;border:0;background:none;color:#6b5a5c}
+.msg{margin:0 0 6px;text-align:center;color:#A04A4A}
+.msg:empty{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="haut"><button class="retour" id="retour" type="button">← Retoucher</button>
+    <h1>Tes prestations, expliquées</h1><p>C’est déjà écrit. Touche un texte pour le changer, ajoute une photo si tu veux.</p></header>
+  <div class="liste" id="liste"></div>
+  <div class="bas"><p class="msg" id="msg" role="status"></p><button class="go" id="ok" type="button">C’est bon pour moi</button><button class="tard" id="tard" type="button">Plus tard</button></div>
+</main>
+<script src="prestations-detail.js?v=2211d80"></script>
+<script>
+(function () {
+  const K = window.LOGI_PRESTA, CLE = "loginail-brouillon", MAX_PHOTOS = 12, $ = id => document.getElementById(id);
+  const lit = () => { try { return JSON.parse(localStorage.getItem(CLE)) || {}; } catch (e) { return {}; } };
+  const suite = () => location.replace("fini.html");
+  const P = (lit().prestations || []).map((p, i) => ({ i, nom: String(p.nom || ""), duree: p.duree,
+    /* déjà choisi ici ou lu sur sa carte : on garde ; sinon on propose */
+    type: K.type(p) === "devis" ? "devis" : p.typePrix || K.typeConseille(p.nom),
+    prix: p.prix == null ? "" : String(p.prix).replace(".", ","),
+    detail: p.detail == null ? K.propose(p.nom) : String(p.detail), photo: K.photos(p)[0] || "" }));
+  if (!P.length) return suite();
+  const montantDe = v => { const s = String(v || "").replace(/[\s€]/g, "").replace(",", "."); return /^\d+(\.\d{1,2})?$/.test(s) ? +s : null; };
+  const msg = t => { $("msg").textContent = t || ""; };
+  const taille = t => { t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
+
+  P.forEach(p => {
+    const c = document.createElement("div"); c.className = "c"; c.dataset.i = p.i;
+    c.innerHTML = `<b>${K.esc(p.nom)}</b><span class="m"></span>
+      <div class="t"><button type="button" data-t="des">À partir de</button><button type="button" data-t="fixe">Prix fixe</button><button type="button" data-t="devis">Sur devis</button></div>
+      <label class="px"><span>Prix en €</span><input inputmode="decimal" value="${K.esc(p.prix)}" placeholder="55"></label>
+      <div class="d"><textarea maxlength="${K.MAX}" aria-label="C’est quoi ? ${K.esc(p.nom)}" placeholder="En une phrase, ce que ta cliente va avoir.">${K.esc(p.detail)}</textarea><div class="ph"></div></div>`;
+    const maj = () => {
+      const m = montantDe(p.prix);
+      c.querySelector(".m").textContent = p.type !== "devis" && m == null ? "Il manque le prix" : K.meta({ duree: p.duree, prix: p.type === "devis" ? null : m, typePrix: p.type });
+      c.querySelector(".px").hidden = p.type === "devis";
+      c.querySelectorAll(".t button").forEach(b => { b.classList.toggle("on", b.dataset.t === p.type); b.setAttribute("aria-pressed", b.dataset.t === p.type); });
+    };
+    const photo = () => {
+      const z = c.querySelector(".ph");
+      z.innerHTML = p.photo ? `<img src="${K.esc(p.photo)}" alt=""><button class="x" type="button" aria-label="Retirer la photo"><i>×</i></button>`
+        : `<label>+<small>photo</small><input type="file" accept="image/*" aria-label="Ajouter une photo"></label>`;
+      if (p.photo) z.querySelector(".x").onclick = () => { p.photo = ""; photo(); };
+      else z.querySelector("input").onchange = async e => {
+        const f = e.target.files[0]; if (!f) return; msg("");
+        if (P.filter(x => x.photo).length >= MAX_PHOTOS) return msg("12 photos pour commencer : tu ajouteras les autres dans l’appli.");
+        try { p.photo = await K.reduit(f, 520, 48000); photo(); } catch (err) { msg("Cette photo ne s’ouvre pas, essaies-en une autre."); }
+      };
+    };
+    c.querySelectorAll(".t button").forEach(b => { b.onclick = () => { p.type = b.dataset.t; maj(); msg(""); if (p.type !== "devis" && montantDe(p.prix) == null) c.querySelector(".px input").focus(); }; });
+    c.querySelector(".px input").oninput = e => { p.prix = e.target.value; maj(); msg(""); };
+    c.querySelector("textarea").oninput = e => { p.detail = e.target.value; taille(e.target); };
+    maj(); photo(); $("liste").appendChild(c);
+  });
+  const tailles = () => document.querySelectorAll("textarea").forEach(taille);
+  tailles(); if (document.fonts) document.fonts.ready.then(tailles); addEventListener("load", tailles); addEventListener("resize", tailles);
+
+  function garde() {
+    const b = lit(), l = b.prestations || [];
+    for (const p of P) {
+      const x = l[p.i]; if (!x || String(x.nom || "") !== p.nom) continue;
+      const m = montantDe(p.prix);
+      x.prix = p.type === "devis" ? null : m; x.typePrix = x.prix == null ? null : p.type;
+      x.detail = p.detail.trim().slice(0, K.MAX); x.photosPresta = p.photo ? [p.photo] : [];
+    }
+    try { localStorage.setItem(CLE, JSON.stringify(b)); return true; }
+    catch (e) { msg("Ton téléphone n’a plus de place : retire une photo, puis réessaie."); return false; }
+  }
+  $("ok").onclick = () => {
+    const manque = P.find(p => p.type !== "devis" && montantDe(p.prix) == null);
+    if (manque) { const i = document.querySelector(`.c[data-i="${manque.i}"] .px input`); msg(`Écris le prix de « ${manque.nom} », ou touche « Sur devis ».`); i.focus(); return; }
+    if (garde()) location.href = "fini.html";
+  };
+  $("tard").onclick = () => { location.href = "fini.html"; };
+  $("retour").onclick = () => { history.length > 1 ? history.back() : (location.href = "index.html"); };
+})();
+</script>
+</body>
+</html>
