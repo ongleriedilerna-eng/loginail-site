@@ -1180,7 +1180,7 @@ function rend(o) {
     const avecTitres = triCh !== "coul" && catCharm !== "Poses" && catCharm !== "Favoris" && (q || triCh === "style" ||catCharm === "Tous" || catCharm === "Couleurs" || catCharm === "Populaires");
     let famAv = null; const titre = n => { if (!avecTitres) return ""; const f = triCh === "style" ? ((window.STYLES_CH || {})[ST[n]] || "Autres") : (CAT[n] || "Autres"); if (f === famAv) return ""; famAv = f; return `<p class="titreTh">${f}</p>`; };
     $("catBox").style.display = q ? "none" : "";
-    $("lCh").innerHTML = (!q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "") + (liste.length ? liste.slice(0, (catCharm === "Tous" || catCharm === "Couleurs") && !q ? 9999 : 120).map(n => titre(n) + `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img src="${P.imgCharm(n)}" alt="" loading="lazy"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
+    $("lCh").innerHTML = (!q && catCharm === "Couleurs" ? `<div class="coulC">${COULS.map((c, i) => `<button class="cc${i === coulOn ? " on" : ""}" data-g="${i}" aria-label="${c[0]}"><i style="background:${c[1]}"></i><span>${c[0]}</span></button>`).join("")}</div>` : "") + (liste.length ? liste.slice(0, (catCharm === "Tous" || catCharm === "Couleurs") && !q ? 9999 : 120).map(n => titre(n) + `<button class="ch${poses.includes(n) ? " on" : ""}${FAV.includes(n) ? " fav" : ""}" data-n="${n}" aria-label="${P.nomCharm(n)}" title="${P.nomCharm(n)}"><img data-mini="../loginail-site/charms-mini/${n}.webp" alt="" decoding="async"></button>`).join("") : (catCharm === "Poses" && !q ? `<p class="rienC">Touchez un charm pour le poser : il apparaîtra ici.</p>` : `<p class="rienC">Aucun charm « ${$("chercheC").value} ». Essayez « cœur », « fleur », « étoile »…</p>`));
     majCompte(); }
 }
 const marque = (l, sel, v, attr) => l.querySelectorAll(sel).forEach(b => b.classList.toggle("on", b.dataset[attr] === v));
@@ -3536,6 +3536,18 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   let etait = false;
   new MutationObserver(() => { const ouverte = !!document.querySelector(".fenLooks.on"); if (ouverte === etait) return; etait = ouverte;
     if (ouverte) [0, 120, 450, 1100, 2200].forEach(t => setTimeout(gele, t)); }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["class"] });
+})();
+</script>
+<!-- 2.24 (22/11, « la page se ferme ») : la liste des charms gardait des images de 512 px pour des cases de 50 (332 Mo après quelques défilements, 2 800 Mo au bout).
+     Maintenant : miniatures (charms-mini), et seulement celles qu'on voit (+ 2 rangées d'avance) restent en mémoire. -->
+<script>
+(function () { const l = document.getElementById("lCh"); if (!l) return;
+  const pose = i => { if (i.getAttribute("src") !== i.dataset.mini) i.src = i.dataset.mini; };
+  if (!window.IntersectionObserver) { const tous = () => l.querySelectorAll("img[data-mini]").forEach(i => { i.loading = "lazy"; pose(i); }); new MutationObserver(tous).observe(l, { childList: true }); return tous(); }
+  const io = new IntersectionObserver(es => es.forEach(e => { const i = e.target.querySelector("img[data-mini]"); if (!i) return;
+    if (e.isIntersecting) pose(i); else if (i.hasAttribute("src")) i.removeAttribute("src"); }), { root: l, rootMargin: "180px 0px" });
+  const suis = () => { io.disconnect(); l.querySelectorAll(".ch").forEach(c => io.observe(c)); };
+  new MutationObserver(suis).observe(l, { childList: true }); suis();
 })();
 </script>
 </body>
