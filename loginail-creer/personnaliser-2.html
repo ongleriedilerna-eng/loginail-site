@@ -2,7 +2,7 @@
 <html lang="fr">
 <head><meta name="robots" content="noindex">
 <meta charset="utf-8"><!-- COPIE DE PRODUCTION fabriquée par outils/fabrique-personnaliser.js à partir de idees/perso-A.html (maquette D31) — ne pas modifier ici. --><script>/* 18/11 : sortir de la colonne de creer.html (même site) ; jamais dans l'appli */try{if(window.top!==window&&!/[?&]appli/.test(location.search)&&/\/creer\.html$/.test(top.location.pathname))top.location.replace(location.href)}catch(e){}</script>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Personnalisez votre site · Loginail (2.0)</title>
 <link href="../polices.css" rel="stylesheet">
 <!-- 21/11 (Marie : « ça met énormément de temps à charger ») : le gros fichier des fonds (2,7 Mo) part DÈS l'arrivée, en même temps que son site, au lieu d'attendre la fin -->
@@ -2178,14 +2178,11 @@ body.surCharms .etoN.sousAide{margin:8px 0 2px!important}
 <script>
 (function(){
 const FE=[["Toutes","Toutes vos en-têtes, d’un coup d’œil",null],
- ["Brillantes","Ça scintille, ça brille",["zdisco","wenseigne","zetoiles","wfil","wetor","wetoile","zfeu","xguirlande","xlustre","xscint","xbokeh","xstrass","bijou","diamant","disco","etoile","rayons","trace","lueurs","coeurparticules","foil","pendentif"]],
- ["Charms en mouvement","Vos charms qui volent, tombent et tournent",["zbulles","wtele","zpluie","wronde","whuit","wtourb","ztombe","xperlecoeur","xguirch","xsusp","xbracelet","xbulch","xchrome","xgeant","xcollier","xperles","xgum","xbonbons","bulles","papillons","levitation","ballons","confettis"]],
- ["Photo","Votre photo, mise en scène",["cadre","medaillon","bandeau","magazine","couv","story","feed","chromecadre","xloge","viseur","carrousel","feuilleter","swipe","vinyle","coulure"]],
- ["Mon téléphone","Comme sur l’écran de votre téléphone",["wcachet","wcachet2","wnotif","wfeuille","wverrou","xtap","xreac","xmusique","xlecteur","tele","enveloppe","live"]],
- ["Douces et colorées","Des couleurs qui flottent",["zvagues","zpoints","brume","aquarelle","arcenciel","ondes","xsavon","xnuancier","popart","wcachet"]],
- ["Carré","Le bouton « Réserver » change d’habit",["hticket","hflacon","harche","hsans"]]];
+ ["Qui brillent","Ça brille, ça bouge : paillettes et charms",["zdisco","wenseigne","zetoiles","wfil","wetor","wetoile","zfeu","xguirlande","xlustre","xscint","xbokeh","xstrass","bijou","diamant","disco","etoile","rayons","trace","lueurs","coeurparticules","foil","pendentif","zbulles","wtele","zpluie","wronde","whuit","wtourb","ztombe","xperlecoeur","xguirch","xsusp","xbracelet","xbulch","xchrome","xgeant","xcollier","xperles","xgum","xbonbons","bulles","papillons","levitation","ballons","confettis"]],
+ ["Photo","Votre photo mise en scène, comme sur un téléphone",["cadre","medaillon","bandeau","magazine","couv","story","feed","chromecadre","xloge","viseur","carrousel","feuilleter","swipe","vinyle","coulure","wcachet","wcachet2","wnotif","wfeuille","wverrou","xtap","xreac","xmusique","xlecteur","tele","enveloppe","live"]],
+ ["Douces","Des couleurs douces, et le carré Réserver qui change d’habit",["zvagues","zpoints","brume","aquarelle","arcenciel","ondes","xsavon","xnuancier","popart","wcachet","hticket","hflacon","harche","hsans"]]];
 let famEnt=0;
-const fE=k=>{for(let i=1;i<FE.length;i++)if(FE[i][2].includes(k))return i;return FE.length-2};
+const fE=k=>{for(let i=1;i<FE.length;i++)if(FE[i][2].includes(k))return i;return FE.length-1};
 const nbE=i=>{const l=document.getElementById("lEnt");return l?[...l.querySelectorAll(".ent")].filter(x=>i===0||fE(x.dataset.k)===i).length:0};
 function dessineFE(){const l=document.getElementById("lEnt");if(!l||!l.children.length)return;
  let b=document.getElementById("famEnt");
@@ -2624,7 +2621,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   body.v2 .fondDeux #lFond{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important;padding:2px 14px 30px!important}
   body.v2 .fondDeux #lFond .vg{aspect-ratio:1/1!important;height:auto!important;border-radius:14px}
   /* un plus beau téléphone : cadre fin noir, liseré métal, boutons sur les côtés, pilule */
-  body.v2 .tel{padding:4px!important;border-radius:40px!important;background:#0D0C0C!important;
+  body.v2 .tel{padding:5px!important;border-radius:40px!important;background:#0D0C0C!important;
     box-shadow:0 0 0 1.5px #6E6A69,0 0 0 2.5px #2A2827,0 30px 40px -24px rgba(0,0,0,.45),0 6px 14px -6px rgba(0,0,0,.3)!important}
   body.v2 .tel>.ecr{border-radius:36px!important}
   body.v2 .tel::before,body.v2 .tel::after{content:"";position:absolute;width:3px;border-radius:2px;background:linear-gradient(90deg,#3a3837,#6E6A69)}
@@ -2993,7 +2990,7 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
 <script>
 (function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
   /* fonds : parmi les vignettes visibles, seules les 6 premières bougent */
-  const lf = document.getElementById("lFond"); if (lf) { const maj = () => { let n = 0; lf.querySelectorAll(".vg").forEach(v => { const ok = v.classList.contains("vu") && n < 6; if (ok) n++; v.classList.toggle("anim6", ok); }); };
+  const lf = document.getElementById("lFond"); if (lf) { const maj = () => { let n = 0; lf.querySelectorAll(".vg").forEach(v => { const ok = v.classList.contains("vu") && n < 3; if (ok) n++; v.classList.toggle("anim6", ok); }); };
     let t = 0; const plus = () => { clearTimeout(t); t = setTimeout(maj, 120); };
     new MutationObserver(plus).observe(lf, { subtree: true, attributes: true, attributeFilter: ["class"], childList: true }); maj(); }
   /* favoris des écritures : un cœur */
@@ -3563,6 +3560,42 @@ body.glisseT #app#app#app .choix *,body.tireOn #app#app#app .choix *{animation-p
   const io = window.IntersectionObserver ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { dessine(e.target); io.unobserve(e.target); } }), { root: lf, rootMargin: "260px 0px" }) : null;
   window.remplitFonds = () => lf.querySelectorAll(".vg").forEach(v => { if (!v.querySelector(".vgVide")) return; if (io) io.observe(v); else dessine(v); });
   remplitFonds();
+})();
+</script>
+<!-- 2.27 (22/11, Marie) : plus de zoom à deux doigts sur la page (les charms gardent leur geste) ; plus de trait blanc sous le site ;
+     cœurs des favoris = la forme du cœur des écritures, en rose « validé » ; fonds : les thèmes ÉCRITS (les ronds ne se comprenaient pas),
+     les fonds qui bougent BOUGENT dans la liste (ceux qu'on voit, pause pendant le défilement) ; en-têtes : 4 familles, et sa photo au lieu du carré gris. -->
+<style>
+html{touch-action:pan-x pan-y}
+@media (max-width:899px){
+  /* cœurs */
+  body.v2 .vg.fav::after,body.v2 .ent.fav::after,body.v2 #lPol .ecr-c.fav::after,body.v2 .look.fav::after,body.v2 #lCh .ch.fav::before{content:""!important;position:absolute;z-index:5;width:14px;height:14px;top:6px!important;right:7px!important;left:auto!important;
+    background:#B5475E!important;-webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21s-7.6-4.7-9.6-9.3C.9 8.2 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.4 2.5h1.8c.8-1.4 2.3-2.5 4.4-2.5 3.7 0 5.8 3.7 4.3 7.2C19.6 16.3 12 21 12 21z"/></svg>') center/contain no-repeat;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21s-7.6-4.7-9.6-9.3C.9 8.2 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.4 2.5h1.8c.8-1.4 2.3-2.5 4.4-2.5 3.7 0 5.8 3.7 4.3 7.2C19.6 16.3 12 21 12 21z"/></svg>') center/contain no-repeat;text-shadow:none!important;filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1px #fff);pointer-events:none;display:block!important}
+  body.v2 .famE .favE{color:#B5475E!important}
+  body.v2 .famE .favE.on{color:#B5475E!important}
+  body.v2 #catC .catI[data-c="Favoris"] .cfav,body.v2 #catC .catI[data-c="Favoris"] .emoT{color:#B5475E!important}
+  /* fonds : les noms des thèmes */
+  body.v2 .fondDeux .catFond .vgI{display:none!important}
+  body.v2 .fondDeux .catFond{width:auto!important;padding:0 13px!important;font:500 12.5px Jost,sans-serif!important;color:#5f545a!important;white-space:nowrap}
+  body.v2 .fondDeux .catFond span{display:inline!important}
+  body.v2 .fondDeux .catFond.on{background:#F7D3E3!important;color:#1E1C1B!important}
+  /* fonds qui bougent : ceux qu'on voit bougent, sauf pendant qu'on fait défiler */
+  body.v2 #app#app#app#app #lFond:not(.defileF) .vg.vu.anim6,body.v2 #app#app#app#app #lFond:not(.defileF) .vg.vu.anim6 *,body.v2 #app#app#app#app #lFond:not(.defileF) .vg.vu.anim6 *::before,body.v2 #app#app#app#app #lFond:not(.defileF) .vg.vu.anim6 *::after{animation-play-state:running!important}
+  body.v2.feuilleHaut #app#app#app#app #lFond .vg *{animation-play-state:running}
+  /* en-têtes : sa photo en attendant le dessin (plus de carré gris) */
+  body.v2 #app#app #lEnt .ent .mi{background:#EDE9EC var(--phEnt,none) center/cover no-repeat!important}
+}
+</style>
+<script>
+(function () { if (innerWidth >= 900 || !document.body.classList.contains("v2")) return;
+  const sansZoom = d => { if (!d || d._sansZoom) return; d._sansZoom = 1;
+    ["gesturestart", "gesturechange"].forEach(n => d.addEventListener(n, e => e.preventDefault(), { passive: false }));
+    try { const st = d.createElement("style"); st.textContent = "html{touch-action:pan-x pan-y}"; d.head.appendChild(st); } catch (e) {} };
+  sansZoom(document); document.addEventListener("touchmove", e => { if (e.scale && e.scale !== 1 && e.cancelable) e.preventDefault(); }, { passive: false });
+  const att = document.getElementById("attente"), iv = setInterval(() => { if (att && att.classList.contains("part")) { clearInterval(iv); sansZoom(window.Pilote && Pilote.D); } }, 200);
+  /* la photo dans les cases d'en-têtes */
+  const l = document.getElementById("lEnt"), maj = () => { try { const u = Pilote.photoUne(); if (u && l) l.style.setProperty("--phEnt", 'url("' + u.replace(/"/g, '\\"') + '")'); } catch (e) {} };
+  setTimeout(maj, 1500); if (window.Pilote && Pilote.change) Pilote.change(q => { if (q === "photo") setTimeout(maj, 200); });
 })();
 </script>
 </body>
