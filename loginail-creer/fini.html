@@ -32,9 +32,6 @@ button,input{font:inherit;color:inherit}
 .kick{font:500 10.5px Jost,sans-serif;letter-spacing:.22em;color:var(--roseF)}
 h1{margin:4px 0 0;font:400 34px/1 "Cormorant Garamond",serif;letter-spacing:-.01em;white-space:nowrap}
 h1 em{font-style:italic}
-.adr{margin-top:5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 13px Jost,sans-serif;color:var(--muted)}
-.adr b{font-weight:500;color:var(--noir)}
-.adr i{font-style:normal;color:var(--roseF)}
 /* le carré */
 .carte{position:relative;z-index:3;flex:none;width:100%;margin-top:12px;padding:14px 16px 12px;border-radius:24px;background:#fff;box-shadow:0 0 0 1px var(--ligne),0 20px 36px -28px rgba(80,30,50,.45);animation:monte .7s .25s cubic-bezier(.2,.8,.3,1) both}
 .offre{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -127,7 +124,7 @@ body.envoye .fin{display:block}body.envoye .avant{display:none}
   .haut{grid-column:1/-1}.logo{width:96px}.retouche{left:0;font-size:14px}
   .scene{grid-column:1;grid-row:2;height:min(640px,calc(100dvh - 110px));width:auto;margin:0;flex:none}
   .droite{grid-column:2;grid-row:2;display:flex;flex-direction:column;align-items:flex-start}
-  .titres{align-items:flex-start;margin:0}.kick{font-size:12px}h1{font-size:54px;margin-top:8px}.adr{font-size:15px;margin-top:10px}
+  .titres{align-items:flex-start;margin:0}.kick{font-size:12px}h1{font-size:54px;margin-top:8px}
   .carte{margin-top:24px;padding:22px 24px 18px;border-radius:28px}
   .offre b{font-size:30px}.offre span{font-size:14px}.plus4{margin-top:14px;padding-top:14px;gap:12px 16px}.plus4 b{font-size:14px}.plus4 span{font-size:13px}.plus4 i{width:22px;height:22px}
   .champ{height:52px;margin-top:10px}.oeil{top:14px}.cgv{font-size:13.5px;margin-top:12px}.go{height:56px;margin-top:14px}.petit{font-size:12.5px;margin-top:10px}
@@ -149,7 +146,6 @@ body.envoye .fin{display:block}body.envoye .avant{display:none}
     <div class="titres" id="titres">
       <div class="kick" id="kick">✦ C'EST FAIT</div>
       <h1>Ton site est <em>prêt</em>.</h1>
-      <div class="adr"><i>✦</i> loginail.fr/<b id="slug"></b></div>
     </div>
     <div class="carte" id="carte">
       <div class="avant">
@@ -186,7 +182,6 @@ const $ = id => document.getElementById(id);
 const DEMO = /[?&]demo/.test(location.search);   /* ?demo : la page avec le site d'exemple, pour la montrer (aucun compte créé) */
 if (!FINI.aDuSite && !DEMO) location.replace("index.html");
 $("logo").innerHTML = LOGO;
-$("slug").textContent = FINI.slug;
 $("kick").textContent = "✦ C'EST FAIT !";   /* 21/11 (Marie) : juste « C'est fait ! », sans prénom (jamais « Léa ») */
 /* le téléphone prend la hauteur qui reste (rien ne défile) */
 const tb = $("telB"), sc = $("scene");
@@ -254,10 +249,10 @@ const verif = () => { $("go").disabled = !(FINI.mailOk($("mail").value) && $("md
 $("oeil").onclick = e => { const v = $("mdp").type === "password"; $("mdp").type = v ? "text" : "password"; e.target.textContent = v ? "Cacher" : "Voir"; };
 const coffre = window.supabase ? supabase.createClient("https://scfhaombuptmrlkdhcsl.supabase.co", "sb_publishable_lYx1ZH0k3EFrUhZ3v0W8gw_yhGPOhbq") : null;
 const SIMU = (() => { try { return localStorage.getItem("loginail-simu") === "1"; } catch (e) { return false; } })();
-/* pour l'e-mail « Activez votre site » (D34, version B) : son prénom, son adresse, et 4 de SES charms (sinon des cerises) en petites images */
+/* pour l'e-mail « Activez votre site » (D34, version B) : son prénom et 4 de SES charms (sinon des cerises) en petites images */
 function infosMail() { const br = FINI.br || {}, siens = [...new Set([...(br.charms || []), ...((br.stickers || []).map(x => x && x.n))].filter(n => n && n !== "__etoile"))];
   const c = (siens.length ? siens : ["cerisedisco", "cerises", "ceriseruban", "cerisecoeur"]).slice(0, 4); while (c.length < 4) c.push(c[c.length % Math.max(1, c.length)]);
-  const o = { prenom: br.prenom || "", adresse: "loginail.fr/" + FINI.slug }; c.forEach((n, i) => o["c" + (i + 1)] = "https://loginail.fr/mails/charms/" + encodeURIComponent(n) + ".png"); return o; }
+  const o = { prenom: br.prenom || "" };   /* pas d'adresse : elle n'existe qu'après le clic du mail (fin.html) */ c.forEach((n, i) => o["c" + (i + 1)] = "https://loginail.fr/mails/charms/" + encodeURIComponent(n) + ".png"); return o; }
 /* 21/11 : Supabase n'accepte le retour du lien de l'e-mail que vers app.loginail.fr (sinon il renvoie sur l'accueil de l'appli
    et rien n'est rangé : bug du vrai compte de Marie). En ligne, on vise donc toujours app.loginail.fr. */
 const retourMail = chemin => /(^|\.)loginail\.fr$/.test(location.hostname) ? "https://app.loginail.fr/loginail-creer/" + chemin : new URL(chemin, location.href).href;
