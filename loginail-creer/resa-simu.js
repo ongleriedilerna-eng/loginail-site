@@ -15,7 +15,9 @@
   const tel = document.querySelector(".tel"); if (!tel) return;
   const encre = (typeof INKJ !== "undefined" && INKJ[BR.couleur]) || "#1E1C1B";
   const JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
-  const euros = n => `${String(Math.round(n * 100) / 100).replace(".", ",")} €`;
+  /* 22/11 : sans prix = « Sur devis », comme sur le site (avant : « 0 € ») */
+  const euros = n => n == null || n === "" ? "Sur devis" : `${String(Math.round(n * 100) / 100).replace(".", ",")} €`;
+  const prixDe = p => p.prix == null || p.prix === "" ? null : p.prix;
   const duree = m => m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`;
   /* l'acompte choisi par la prothésiste (appli → « Bon à savoir ») */
   const acompteDe = prix => { const g = Object.assign({ acompte: true, montant: "15 €" }, BR.regles || {}); if (!g.acompte || !prix) return 0;
@@ -165,7 +167,7 @@
   async function ouvre() { if (etape >= 5 || att === 2) { R = {}; etape = 1; jourChoisi = null; } att = 0; await chargeOcc();
     /* 19/11 : lien de l'e-mail → sa prestation est déjà choisie, on ouvre sur « Le jour et l'heure » */
     if (prestaVoulue) { const i = BR.prestations.findIndex(p => String(p.nom).trim() === prestaVoulue.trim()); prestaVoulue = "";
-      if (i >= 0) { const p = BR.prestations[i]; R = { i, nom: p.nom, prix: p.prix || 0, duree: p.duree || 60, acompte: acompteDe(p.prix) }; jourChoisi = null; etape = 2; } }
+      if (i >= 0) { const p = BR.prestations[i]; R = { i, nom: p.nom, prix: prixDe(p), duree: p.duree || 60, acompte: acompteDe(p.prix) }; jourChoisi = null; etape = 2; } }
     dessine(); rs.classList.add("on"); }
   /* 18/11 : en arrivant par le lien « Réserver cette place » de l'e-mail, la réservation s'ouvre toute seule */
   if (jourVoulu) setTimeout(ouvre, 600);
@@ -188,7 +190,7 @@
         .catch(e => { const m = String(e.message || ""); t.disabled = false; t.textContent = "ME PRÉVENIR";
           if (z) z.textContent = m === "email" ? "Vérifiez votre e-mail." : m === "coordonnees" ? "Vérifiez votre prénom et votre téléphone." : /^(trop|plein)$/.test(m) ? "La liste d’attente est pleine pour l’instant. Appelez le salon." : "Ça n’a pas marché. Réessayez, ou appelez le salon."; });
       return; }
-    if (t.dataset.p) { const p = BR.prestations[+t.dataset.p]; R = { i: +t.dataset.p, nom: p.nom, prix: p.prix || 0, duree: p.duree || 60, acompte: acompteDe(p.prix) }; jourChoisi = null; etape = 2; return dessine(); }
+    if (t.dataset.p) { const p = BR.prestations[+t.dataset.p]; R = { i: +t.dataset.p, nom: p.nom, prix: prixDe(p), duree: p.duree || 60, acompte: acompteDe(p.prix) }; jourChoisi = null; etape = 2; return dessine(); }
     if (t.dataset.j) { jourChoisi = rf._P[+t.dataset.j]; return dessine(); }
     if (t.dataset.t) { R.heure = +t.dataset.t; R.date = jourChoisi.date.toISOString(); R.jour = cle(jourChoisi.date); R.jourTxt = jourChoisi.date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }); etape = 3; return dessine(); }
     if (t.id === "rgo") { R.prenom = rf.querySelector("#rp").value.trim(); R.nomC = rf.querySelector("#rn").value.trim(); R.tel = rf.querySelector("#rt").value.trim(); R.email = rf.querySelector("#re").value.trim(); R.okAnniv = !!rf.querySelector("#ranniv")?.checked; etape = 4; return dessine(); }
