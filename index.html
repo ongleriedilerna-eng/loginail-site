@@ -1936,8 +1936,8 @@ html.np-stage .np .np-hero .np-top{padding-top:calc(22px + var(--gt,0px))}
 html.np-stage .np .np-arc{margin-top:calc(6px + var(--ga,0px))}
 html.np-stage .np h1{font-size:63px}
 html.np-stage .np h1 .np-l2{font-size:33px}
-/* 21/11 (Marie) : ORDINATEUR — « Une appli pour gérer toute ta journée. » sur UNE ligne, bien centrée */
-@media (min-width:761px){.np h1 .np-l2{white-space:nowrap;width:max-content;margin-left:50%;translate:-50% 0}}
+/* 21/11 (Marie) : ORDINATEUR — « Et gère tout ton salon avec l’appli. » sur UNE ligne, bien centrée */
+@media (min-width:761px){.np h1.serif{max-width:none}.np h1 .np-l2{white-space:nowrap;width:max-content;margin-left:50%;translate:-50% 0}}
 html.np-stage .np .np-lead{font-size:19.5px;white-space:nowrap;max-width:none}
 html.np-stage .np .np-pop .np-shot{height:273px}
 html.np-stage .np .np-inarc h2{font-size:34px}
@@ -1995,8 +1995,8 @@ html body:not(#_) h2.t2 em, html body:not(#_) #semaine > h2 em{padding-right:0!i
 @media (max-width:760px){
   html body:not(#_) .np h1.serif{margin-top:26px;line-height:1.1}
   html body:not(#_) .np h1.serif .np-l2{margin-top:18px}
-  /* 21/11 (Marie) : titre ET phrase rose sur UNE ligne chacun, la phrase rose exactement aussi large que le titre */
-  html body:not(#_) .np h1.serif{--w:min(100vw - 40px,400px);max-width:none;white-space:nowrap;font-size:calc(var(--w) / 8.65)}
+  /* 22/11 (Marie, D74) : titre sur DEUX lignes, phrase rose sur UNE ligne, aussi large que la 1re ligne du titre */
+  html body:not(#_) .np h1.serif{--w:min(100vw - 40px,400px);max-width:none;white-space:nowrap;font-size:calc(var(--w) / 9.9)}
   html body:not(#_) .np h1.serif .np-l2{font-size:calc(var(--w) / 17.15)}
   html body:not(#_) .np .np-lead{margin-top:20px}
   html body:not(#_) .np .np-paste{margin-top:32px}
@@ -2739,7 +2739,7 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="np-pop np-pl"><div class="np-shot"><img src="loginail-site/apercus-univers/site-attente-1911.webp" style="object-position:50% 80%" alt="Sur le site du salon, la cliente demande à être prévenue si une place se libère" loading="lazy"></div><div class="np-pt-w"><span class="np-pk">Ton site · liste d’attente</span><p class="np-pt">Une annulation ? La place se reprend.</p><p class="np-pd">Sur ton site, elle demande à être prévenue. Une cliente annule : elle reçoit un e-mail tout de suite, et ton trou se remplit tout seul.</p></div></div></div>
 
     <p class="np-eyebrow">Le site + l’appli des prothésistes ongulaires</p>
-    <h1 class="serif">Un site à <span class="np-sw">ton image.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="np-l2">Une appli pour gérer toute&nbsp;ta&nbsp;journée.</span></h1>
+    <h1 class="serif">Crée ton site internet <br><span class="np-sw">en&nbsp;1&nbsp;minute.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="np-l2">Et gère tout ton salon avec&nbsp;l’appli.</span></h1>
     <p class="np-lead">Elles réservent sur ton site, sans t’écrire. L’appli gère tout le reste.</p>
     <div class="np-paste" id="paste">
       <div class="np-row"><span class="np-ready"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 3h4M12 3v3"/></svg><span>Prêt en <b>1 minute</b></span></span><a class="np-cta np-main" id="go" href="https://loginail.fr/loginail-creer/index.html"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
