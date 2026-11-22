@@ -297,7 +297,9 @@
     let acc = "#1E1C1B"; try { acc = W.eval('accDuFond()||"#1E1C1B"'); } catch (e) {}
     const nomV = D.querySelector(".ecran .hent h1, .ecran .hf-nom, .ecran h1"), police = nomV ? getComputedStyle(nomV).fontFamily : "";
     if (police && fs._pol !== police) { fs.insertRule(`.hent h1,.hent .pol span{font-family:${police}!important}`, fs.cssRules.length); fs._pol = police; }
-    const c = document.importNode(ec, true); c.querySelectorAll(".lgn-sticker,.indiceD,.cookies,.grand,.defile>.hf,.ile,.lm-btn").forEach(x => x.remove());
+    const leger = !!window.MINI_LEGER;   /* 22/11 (2.0 seulement) : sous Safari, recopier tout le site par vignette = 1,5 image/s → on ne copie que le cadre, l'en-tête y est posée juste après */
+    const c = document.importNode(ec, !leger); if (leger) { const df0 = ec.querySelector(".defile"); if (df0) c.appendChild(document.importNode(df0, false)); }
+    c.querySelectorAll(".lgn-sticker,.indiceD,.cookies,.grand,.defile>.hf,.ile,.lm-btn").forEach(x => x.remove());
     c.querySelectorAll("[style*='url(']").forEach(x => x.setAttribute("style", x.getAttribute("style").replace(/url\((['"]?)(?!data:|https?:|blob:|#)([^'")]+)\1\)/g, (q, z, u) => `url("${new URL(u, D.baseURI).href}")`)));
     c.querySelectorAll("img[src]").forEach(x => { x.src = new URL(x.getAttribute("src"), D.baseURI).href; x.loading = "eager"; });
     const tmp = document.createElement("div"); tmp.innerHTML = W.entete(k, ...W.__eT); const n = tmp.firstElementChild; if (!n) return; n.style.setProperty("--acc", acc);
@@ -311,7 +313,7 @@
     /* 20/11 (Marie : « il y a des bugs partout, la tache d'aquarelle… ») : les vignettes en pause restaient figées sur la TOUTE 1re image de l'animation,
        qui est vide pour les en-têtes dont la photo apparaît (aquarelle, bijou, diamant, étoile…). On avance chaque animation à un moment où tout est visible. */
     const fige = () => { try { c.getAnimations({ subtree: true }).forEach(a => { const t = a.effect.getComputedTiming(), d = +t.delay || 0, dur = +t.duration || 0;
-      a.currentTime = t.iterations === Infinity || !isFinite(t.endTime) ? d + dur * .45 : Math.max(0, t.endTime - 1); }); } catch (e) {} };
+      a.currentTime = t.iterations === Infinity || !isFinite(t.endTime) ? d + dur * .45 : Math.max(0, t.endTime - 1); if (leger) a.pause(); }); } catch (e) {} };
     requestAnimationFrame(() => { fige(); setTimeout(fige, 120); });
   } catch (e) { console.warn("mini en-tête", e); } };
 
