@@ -591,7 +591,7 @@ $("continuer").onclick = () => { if (DEMO) { location.href = (localStorage.getIt
 
 /* ---------- 3 · il manque (une ligne par chose ; touchée, elle s'ouvre ; « Ajouter » allume l'interrupteur) ---------- */
 const SUGG = ["Pose gel", "Remplissage", "Semi-permanent mains", "Semi-permanent pieds", "Manucure", "Beauté des pieds", "Dépose", "Nail art"];
-const DUREES = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 210, 240];
+const DUREES = [15, 30, 45, 60, 90, 120, 150];
 const dureeTxt = m => m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`;
 let MQ = [], ouvert = null, juste = null, brouillonP = [], brouillonH = null, brouillonPh = [], choixPh = { principale: 0, salon: null };
 let plusPh = { g: false, s: false }, lienOuvert = false, etatLecture = "";
