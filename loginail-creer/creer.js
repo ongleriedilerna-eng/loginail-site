@@ -427,11 +427,50 @@ f.querySelectorAll(".srcs button").forEach(b => b.onclick = () => aide(b.dataset
 $$("[data-aide]").forEach(b => b.onclick = () => aide(b.dataset.aide || "google"));
 
 /* =====================================================================
-   7 · DÉMARRAGE
+   7 · « BON RETOUR » (22/11, D73) : elle a fermé en pleine création, on lui montre SON site
+   ===================================================================== */
+const venu = Q.get("lien");   // le lien collé sur l'accueil
+const brTel = $("brTel"), brSite = brTel.querySelector("iframe");
+new ResizeObserver(() => { brSite.style.transform = `scale(${brTel.clientWidth / 390})`; }).observe(brTel);
+function montreRetour(b) {
+  BODY.dataset.e = "retour"; $("s0").inert = false; $("s1").inert = $("s2").inert = true;
+  const prenom = b.prenomDevine ? "" : String(b.prenom || "").trim();   // un prénom deviné dans ses avis n'est pas sûr
+  $("brPrenom").textContent = prenom ? " " + prenom : "";
+  $("brGardes").hidden = !b.entete;   // rien de personnalisé : rien à cocher
+  /* même adresse que Personnaliser (P.src) : sans « essai » dès qu'elle a personnalisé, sinon ses choix seraient remplacés */
+  const src = new URLSearchParams(PERSO.split("?")[1]).get("src").replace("loginail-creer/", "");
+  brTel.classList.remove("pret");
+  brSite.onload = () => {
+    try { const d = brSite.contentDocument, st = d.createElement("style");
+      st.textContent = ".pret,.langues,.indiceD,.cookies{display:none!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}";
+      d.head.appendChild(st); } catch (e) {}
+    setTimeout(() => brTel.classList.add("pret"), 700);   // ses charms se posent 500 ms après le chargement
+  };
+  brSite.src = b.entete ? src.replace("&essai", "") : src;
+}
+function quitteRetour() {
+  BODY.dataset.e = "lien"; $("s0").inert = true; $("s1").inert = $("s2").inert = false;
+  brSite.onload = null; brSite.removeAttribute("src");   // son site ne tourne plus derrière la page 1
+  place();
+}
+/* « Reprendre » = SON site tout de suite : sans ?ouverture=0, Personnaliser montrerait le site d'exemple « Créer le mien » (perso/ouverture.js) */
+$("brReprendre").onclick = () => { const b = window.aReprendre?.(); location.href = PERSO + (b?.entete ? "&ouverture=0" : ""); };
+$("brAutre").onclick = () => {
+  try { localStorage.removeItem("loginail-reprise"); } catch (e) {}
+  quitteRetour();
+  if (venu) $("creer").click();   // le lien collé sur l'accueil repart
+};
+
+/* =====================================================================
+   8 · DÉMARRAGE
    ===================================================================== */
 /* retour arrière (Safari garde la page en mémoire) : on repart de la page 1 */
-addEventListener("pageshow", e => { if (e.persisted && BODY.dataset.e !== "lien" && !BODY.classList.contains("ouvert")) { jeton++; reset(); BODY.dataset.e = "lien"; } });
+addEventListener("pageshow", e => { if (!e.persisted || BODY.classList.contains("ouvert")) return;
+  if (BODY.dataset.e === "charge") { jeton++; reset(); BODY.dataset.e = "lien"; }
+  const b = window.aReprendre?.(); if (b) montreRetour(b); else if (BODY.dataset.e === "retour") quitteRetour(); });
 if (DEMO) { champ.value = "https://maps.app.goo.gl/nailsbydrimf"; verifie(); }
-const venu = Q.get("lien");   // le lien collé sur l'accueil
-if (venu) { champ.value = venu; verifie(); $("creer").click(); }
+if (venu) { champ.value = venu; verifie(); }
+/* elle a un site commencé : on ne l'écrase pas avec le lien de l'accueil, c'est elle qui choisit */
+const aFinir = window.aReprendre?.();
+if (aFinir) montreRetour(aFinir); else { $("s0").inert = true; if (venu) $("creer").click(); }
 })();

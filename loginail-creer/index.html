@@ -9,8 +9,14 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script>/* 18/11 (Produit, D26) : le site créé sur l’accueil (?depuis=accueil) et la vérification des tarifs (?tarifs) restent sur l’ancienne page (remplir.html) */
 if(/[?&](depuis=accueil|tarifs)(&|$)/.test(location.search))location.replace("remplir.html"+location.search)</script>
+<script>/* 22/11 (D73) : son site commencé il y a moins de 30 jours → « Bon retour ». Jamais en démo, dans l’appli, ni avec ?neuf. */
+window.aReprendre=function(){try{if(/[?&](demo|appli|neuf)([=&]|$)/.test(location.search))return null;
+  var r=JSON.parse(localStorage.getItem("loginail-reprise")||"null");if(!r)return null;
+  var age=Date.now()-r.t;if(!(age>=0&&age<30*864e5))return null;
+  var b=JSON.parse(localStorage.getItem("loginail-brouillon")||"null");return b&&b.nom?b:null}catch(e){return null}};</script>
 <link href="../polices.css" rel="stylesheet">
 <link href="creer.css?v=1811b" rel="stylesheet">
+<link href="bon-retour.css?v=2211" rel="stylesheet">
 
 <style id="tu-d46">
 @font-face{font-family:'Abril Fatface';src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format('woff2')}
@@ -26,8 +32,21 @@ html body .go{text-transform:none!important;letter-spacing:0!important;font-size
 <!-- 18/11 (Produit) : la page 1 « Un lien suffit. » et le chargement « Tourbillon » validés par Marie (D26, maquette idees/creer-1-v1f.html), en vrai :
      vraie lecture du lien (Google Maps, Planity, Booksy, son site ; jamais Instagram), puis Personnaliser s’ouvre en cercle depuis l’anneau. -->
 <body class="charge-c" data-e="lien">
+<script>/* avant le premier affichage : la page 1 ne clignote pas derrière « Bon retour » */if(window.aReprendre())document.body.dataset.e="retour"</script>
 <div class="cadre">
   <div class="app">
+
+    <!-- 22/11 (D73) : elle revient, son site l’attend -->
+    <section class="ecran" id="s0" aria-labelledby="brTitre">
+      <div class="logo" data-logo></div>
+      <h2 class="br-titre" id="brTitre">Bon retour<em id="brPrenom"></em><span class="br-etoile" aria-hidden="true">&nbsp;✦</span></h2>
+      <p class="br-phrase">Ton site t’attend, là où tu l’avais laissé.</p>
+      <div class="br-scene" aria-hidden="true"><i>✦</i><i>✦</i><i>✦</i>
+        <div class="br-tel" id="brTel"><span class="br-attend">✦</span><iframe title="Aperçu de ton site" tabindex="-1" inert></iframe></div></div>
+      <ul class="br-gardes" id="brGardes"><li>En-tête</li><li>Fond</li><li>Couleurs</li><li>Charms</li></ul>
+      <div class="br-bas"><button class="br-reprendre" type="button" id="brReprendre">REPRENDRE MON SITE</button>
+        <button class="br-autre" type="button" id="brAutre">Recommencer avec un autre lien</button></div>
+    </section>
 
     <section class="ecran" id="s1">
       <div class="deco" id="deco1" aria-hidden="true"></div>
@@ -92,6 +111,6 @@ html body .go{text-transform:none!important;letter-spacing:0!important;font-size
 
   </div>
 </div>
-<script src="creer.js?v=2211d80"></script>
+<script src="creer.js?v=2211d73"></script>
 </body>
 </html>

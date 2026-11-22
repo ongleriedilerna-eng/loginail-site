@@ -17,9 +17,13 @@
       const o = { n: x.dataset.n, x: +((parseFloat(x.style.left) + s / 2) / w * 100).toFixed(2), y: Math.round(parseFloat(x.style.top) + s / 2), s: Math.round(s), r: Math.round(x._r || 0), w };
       if (x._f === -1) o.f = -1; return o; }); }
 
+  /* 22/11 (D73) : quand elle revient, ses charms sont reposés 0,9 s après le reste. D'ici là la page n'en montre aucun :
+     on garde ceux de son brouillon, sinon l'enregistrement automatique (0,7 s) les effaçait. */
+  let charmsAttente = null;
+
   /* ses choix → son brouillon (même méthode que l'ancienne page : la boîte [data-pf] du site + __pzEtat) */
   function enregistre() { if (!VRAI || !P.W) return false;
-    const plus = { entete: P.etat.entete, nomc: P.etat.nomc || "noir", blocs: P.etat.blocs || "verre", vif: P.etat.vif || "", libre: Object.assign({}, P.libre), stickers: stickers(), charms: [] };
+    const plus = { entete: P.etat.entete, nomc: P.etat.nomc || "noir", blocs: P.etat.blocs || "verre", vif: P.etat.vif || "", libre: Object.assign({}, P.libre), stickers: charmsAttente || stickers(), charms: [] };
     return evalW(`(()=>{if(typeof BR==="undefined"||!BR)return false;const box=document.querySelector("[data-pf]");
       if(box)Object.assign(BR,{style:box._st>3?1:box._st,epure:box._st===4,coffin:box._st===5,arrondi:box._st===6,couleur:box._c,mode:box._m});
       Object.assign(BR,window.__pzEtat?__pzEtat():{},${JSON.stringify(plus)});
@@ -47,7 +51,7 @@
     P.entete(br.entete, true);
     if (br.police) setTimeout(() => { const b = P.D.querySelector(`#pzPol [data-p="${br.police}"]`); if (b) b.click(); }, 200);
     if (br.libre) Object.keys(P.libre).forEach(q => { if (br.libre[q]) P.couleurLibre(q, br.libre[q]); });
-    if (Array.isArray(br.stickers) && br.stickers.length) setTimeout(() => remetCharms(br.stickers), 900);
+    if (Array.isArray(br.stickers) && br.stickers.length) { charmsAttente = br.stickers; setTimeout(() => { try { remetCharms(br.stickers); } finally { charmsAttente = null; } }, 900); }
     return true; };
   function remetCharms(L) { const b = boite(); if (!b) return; P.D.querySelectorAll(".lgn-st").forEach(x => x.remove());
     const k = b.clientWidth / (L[0].w || b.clientWidth || 390);

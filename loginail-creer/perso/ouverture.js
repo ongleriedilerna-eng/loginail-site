@@ -12,11 +12,11 @@
    (rien n'a été enregistré pendant la Sirène : on recharge la page sans l'ouverture, son brouillon est intact) au lieu du classique. */
 (() => {
   const CLE = "lgnOuvertureVue", Q = new URLSearchParams(location.search);
+  window.OUVERTURE_ON = true;   /* le coup de baguette ne se lance pas (22/11 : même avec ?ouverture=0, sinon il cachait SON site quand elle revenait) */
   if (Q.get("ouverture") === "0") return;
   let revient = false;
   try { const br = JSON.parse(localStorage.getItem("loginail-brouillon") || "null");
     revient = !!(localStorage.getItem(CLE) && Q.has("vrai") && br && br.entete); } catch (e) { return; }
-  window.OUVERTURE_ON = true;   /* le coup de baguette ne se lance pas */
 
   const LOOK_DEPART = "Sirène gothique";
   const CLASSIQUE = { e: "bandeau", f: "Quadrillage crème", p: "meuh", co: "vanille", v: "chocob", nc: "choco", bl: "verre", lb: { bl: null, nm: null, bt: null }, c: [], pos: {}, et: [] };

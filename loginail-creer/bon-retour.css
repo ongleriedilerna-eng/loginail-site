@@ -1,0 +1,43 @@
+/* 22/11 (D73) : l'écran « Bon retour », version B « Son site en grand » (maquette idees/bon-retour-2111.html#B) */
+body[data-e="retour"] #s0{opacity:1;visibility:visible;transform:none;transition:opacity .35s .05s}
+body #s0{align-items:center;text-align:center;overflow:hidden;transform:none;background:radial-gradient(120% 70% at 50% 30%,#fff 0%,#F6F3EF 60%);padding:calc(env(safe-area-inset-top,0px) + 30px) 26px calc(env(safe-area-inset-bottom,0px) + 20px)}
+body #s0 .logo{display:block;align-self:center;width:104px;flex:none}
+#s0 .br-titre{flex:none;max-width:100%;margin:18px 0 0;color:#1E1C1B;font:500 38px/1 "Cormorant Garamond","Cormorant",serif;letter-spacing:0;overflow-wrap:anywhere}
+#s0 .br-titre em{font-style:italic;color:#B5475E}
+#s0 .br-titre .br-etoile{white-space:nowrap}
+#s0 .br-phrase{flex:none;margin:8px 0 0;color:#6f6762;font:300 14px/1.5 Jost,sans-serif;text-wrap:balance}
+
+/* son vrai site, dans un téléphone qui prend la place qui reste */
+#s0 .br-scene{flex:1 1 0;min-height:0;width:100%;max-width:420px;margin:14px 0 12px;container-type:size;display:grid;place-items:center;overflow:visible}
+#s0 .br-tel{position:relative;box-sizing:content-box;height:min(100cqh - 32px,460px);aspect-ratio:390/844;border:6px solid #1E1C1B;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 30px 50px -26px rgba(0,0,0,.55);rotate:-2deg;animation:br-flotte 4s ease-in-out infinite}
+#s0 .br-tel iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;pointer-events:none;opacity:0;transition:opacity .4s}
+#s0 .br-tel.pret iframe{opacity:1}
+#s0 .br-attend{position:absolute;inset:0;display:grid;place-items:center;color:#d9a7b4;font-size:20px;animation:br-brille 1.2s ease-in-out infinite}
+#s0 .br-tel.pret .br-attend{display:none}
+#s0 .br-scene>i{position:absolute;color:#d9a7b4;font:normal 16px/1 serif;animation:br-brille 2.4s ease-in-out infinite}
+#s0 .br-scene{position:relative}
+#s0 .br-scene>i:nth-of-type(1){left:10%;top:18%}
+#s0 .br-scene>i:nth-of-type(2){right:9%;top:34%;animation-delay:.8s}
+#s0 .br-scene>i:nth-of-type(3){left:14%;bottom:16%;animation-delay:1.5s}
+
+#s0 .br-gardes{flex:none;list-style:none;margin:0 0 16px;padding:0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+#s0 .br-gardes[hidden]{display:none}
+#s0 .br-gardes li{padding:6px 10px;border-radius:999px;background:#fff;color:#1E1C1B;font:400 12px/1.3 Jost,sans-serif;white-space:nowrap;box-shadow:0 4px 12px -8px rgba(0,0,0,.4)}
+#s0 .br-gardes li::before{content:"✓ ";color:#B5475E}
+#s0 .br-bas{flex:none;width:100%;max-width:370px}
+#s0 .br-reprendre{display:block;width:100%;min-height:52px;padding:17px;border:0;border-radius:999px;background:#1E1C1B;color:#fff;font:500 12.5px Jost,sans-serif;letter-spacing:.16em;cursor:pointer;touch-action:manipulation;transition:transform .15s}
+#s0 .br-reprendre:active{transform:scale(.97)}
+#s0 .br-autre{display:block;min-height:44px;margin:2px auto 0;padding:8px 12px;border:0;background:none;color:#6f6762;font:400 13px Jost,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;touch-action:manipulation}
+
+/* petits iPhone : on resserre, le site reste le plus grand possible */
+@media (max-width:374px){#s0 .br-gardes li{font-size:11px;padding:5px 7px}}
+@media (max-height:700px){
+  body #s0{padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 10px)}
+  #s0 .br-titre{margin-top:12px;font-size:34px}
+  #s0 .br-scene{margin:8px 0}
+  #s0 .br-gardes{margin-bottom:10px}
+}
+
+@keyframes br-flotte{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@keyframes br-brille{0%,100%{opacity:.3;scale:.8}50%{opacity:1;scale:1.1}}
+@media (prefers-reduced-motion:reduce){#s0 .br-tel,#s0 .br-scene>i,#s0 .br-attend{animation:none}}
