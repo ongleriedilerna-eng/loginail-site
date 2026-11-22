@@ -1757,9 +1757,6 @@ html body .hero h1.h-logi .h-sous{display:block;margin-top:12px;font:500 15px/1.
 .np .np-paste{width:auto;margin:24px auto 0}
 .np .np-row{display:flex;align-items:center;justify-content:center;gap:26px}
 .np .np-row .np-cta{height:60px;padding:0 28px}
-.np .np-ready{display:inline-flex;align-items:center;gap:9px;font:400 19px Jost,sans-serif;color:var(--ink-2);white-space:nowrap}
-.np .np-ready b{font-weight:600;color:var(--accent)}
-.np .np-ready svg{width:22px;height:22px;color:var(--accent)}
 .np .np-field{display:flex;align-items:center;gap:8px;height:68px;padding:6px 6px 6px 20px;border-radius:999px;background:#fff;
   box-shadow:inset 0 0 0 1px rgba(30,28,27,.08),0 24px 48px -28px rgba(120,40,70,.45);transition:box-shadow .25s var(--ease)}
 .np .np-field:focus-within{box-shadow:inset 0 0 0 1px rgba(176,53,98,.45),0 0 0 5px rgba(176,53,98,.10),0 24px 48px -28px rgba(120,40,70,.45)}
@@ -1999,7 +1996,7 @@ html body:not(#_) h2.t2 em, html body:not(#_) #semaine > h2 em{padding-right:0!i
   html body:not(#_) .np h1.serif{--w:min(100vw - 40px,400px);max-width:none;white-space:nowrap;font-size:calc(var(--w) / 9.9)}
   html body:not(#_) .np h1.serif .np-l2{font-size:calc(var(--w) / 17.15)}
   html body:not(#_) .np .np-lead{margin-top:20px}
-  html body:not(#_) .np .np-paste{margin-top:32px}
+  html body:not(#_) .np .np-paste{margin-top:56px}
   html body:not(#_) .np .np-micro{margin-top:16px;flex-wrap:nowrap;gap:0 10px;font-size:12.5px;white-space:nowrap;justify-content:center}
   html body:not(#_) .np .np-micro svg{width:13px;height:13px}
 }
@@ -2742,7 +2739,7 @@ document.addEventListener("DOMContentLoaded",function(){
     <h1 class="serif">Crée ton site internet <br><span class="np-sw">en&nbsp;1&nbsp;minute.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span><span class="np-l2">Et gère tout ton salon avec&nbsp;l’appli.</span></h1>
     <p class="np-lead">Elles réservent sur ton site, sans t’écrire. L’appli gère tout le reste.</p>
     <div class="np-paste" id="paste">
-      <div class="np-row"><span class="np-ready"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 3h4M12 3v3"/></svg><span>Prêt en <b>1 minute</b></span></span><a class="np-cta np-main" id="go" href="https://loginail.fr/loginail-creer/index.html"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="np-row"><a class="np-cta np-main" id="go" href="https://loginail.fr/loginail-creer/index.html"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       <p class="np-sub">On récupère tes photos, tes prestations et tes prix.</p>
     </div>
     <div class="np-micro">
@@ -4001,10 +3998,10 @@ const host=$('charms'),hero=$('hero');
 const items=CH.map(([f,x,y,sz,r,m],i)=>{const im=new Image();im.src=C+f+'.webp';im.alt='';im.className='np-charm'+(m?' np-m':'');
   im.style.cssText=`width:${sz}px;left:calc(${x}% - ${sz/2}px);top:${y}px`;host.append(im);
   return{el:im,s:sz,r,ph:i*.9,dx:0,dy:0,vx:0,vy:0,rot:0,vr:0,cool:0}});
-/* 21/11 (Marie) : TÉLÉPHONE — les 4 charms se placent d'après le texte (cerise + saturne à côté de « Prêt en 1 minute »,
+/* 21/11 (Marie) : TÉLÉPHONE — les 4 charms se placent d'après le texte (cerise + saturne juste au-dessus des deux bouts du bouton (22/11 : plus de « Prêt en 1 minute »),
    collier + sac à côté de la bulle « Léa · nouveau RDV ») : ils ne cachent jamais le titre, quel que soit le téléphone */
-const placeM=()=>{if(innerWidth>760)return;const hb=host.getBoundingClientRect(),rd=document.querySelector('.np-ready'),tr=document.querySelector('.np-tourne');
-  if(rd){const r=rd.getBoundingClientRect();host.style.setProperty('--cy1',(r.top+r.height/2-hb.top-31)+'px')}
+const placeM=()=>{if(innerWidth>760)return;const hb=host.getBoundingClientRect(),rd=document.querySelector('#go'),tr=document.querySelector('.np-tourne');
+  if(rd){const r=rd.getBoundingClientRect();host.style.setProperty('--cy1',(r.top-(innerWidth<350?4:24)-hb.top-31)+'px')}
   if(tr){const r=tr.getBoundingClientRect();host.style.setProperty('--cy2',(r.top+30-hb.top-18)+'px')}};
 placeM();document.fonts&&document.fonts.ready.then(placeM);addEventListener('load',placeM);addEventListener('resize',placeM);
 let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3,mvx=0,mvy=0;
@@ -4076,7 +4073,7 @@ document.querySelectorAll('[data-sec]').forEach(a=>a.addEventListener('click',e=
 function placeBulles(){const fl=[...document.querySelectorAll('.np-float')];fl.forEach(f=>f.classList.remove('np-cache'));
   if(innerWidth<=760)return;
   // on mesure le texte lui-même (pas toute la largeur de la ligne)
-  const zs=[...document.querySelectorAll('.np h1,.np-lead,.np-ready,.np-row .np-cta,.np-paste .np-sub,.np-eyebrow,.np-micro span')].map(e=>{const g=document.createRange();g.selectNodeContents(e);return g.getBoundingClientRect()}).filter(r=>r.width);
+  const zs=[...document.querySelectorAll('.np h1,.np-lead,.np-row .np-cta,.np-paste .np-sub,.np-eyebrow,.np-micro span')].map(e=>{const g=document.createRange();g.selectNodeContents(e);return g.getBoundingClientRect()}).filter(r=>r.width);
   fl.forEach(f=>{const r=f.getBoundingClientRect();if(!r.width)return;
     if(zs.some(z=>!(r.right+10<=z.left||z.right+10<=r.left||r.bottom+8<=z.top||z.bottom+8<=r.top)))f.classList.add('np-cache')})}
 placeBulles();addEventListener('load',placeBulles);addEventListener('resize',placeBulles);if(document.fonts)document.fonts.ready.then(placeBulles);
