@@ -63,7 +63,7 @@ function depuisGoogle(g) {
   B = { ...B, source: "google", placeId: g.placeId, lienGoogle: g.lienGoogle, nom: nomCourt(g.nom, g.ville || (m ? m[3] : "")), nomGoogle: g.nom || "",
     rue: m ? m[1] : (g.adresse || "").replace(/,\s*France$/, ""), cp: m ? m[2] : "", ville: g.ville || (m ? m[3] : ""),
     telephone: g.telephone || "", position: g.position, horaires: horairesGoogle(g.horaires),
-    note: g.note, nbAvis: g.nbAvis || 0, avis: (g.avis || []).filter(a => a.texte).map(a => ({ auteur: a.auteur, note: a.note, texte: a.texte })),
+    note: g.note, nbAvis: g.nbAvis || 0, sourceAvis: g.sourceAvis || "Google", avis: (g.avis || []).filter(a => a.texte).map(a => ({ auteur: a.auteur, note: a.note, texte: a.texte })),
     photos: g.photos || [], apropos: g.apropos || null };
 }
 /* son prénom : seulement s'il revient dans au moins 2 avis (« Merci Léa ! ») ; elle le vérifie ensuite */

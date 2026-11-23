@@ -2278,12 +2278,17 @@ else{
     return parts.length < 2 ? s : parts.find(p => !generique(p)) || parts[0];
   };
   const APERCU=!location.search.includes("public");
+  /* 23/11 (Marie) : avis lus sur Booksy ou Planity → on écrit « avis Booksy », jamais « avis Google » (ce serait faux) */
+  if(BR.sourceAvis&&BR.sourceAvis!=="Google"){const s=/^(Booksy|Planity)$/.test(BR.sourceAvis)?BR.sourceAvis:"";   /* son propre site : « avis » tout court */
+    Object.assign(L.fr,{avisG:s?"avis "+s:"avis",avis:s?"Avis "+s:"Avis"});Object.assign(L.en,{avisG:s?s+" reviews":"reviews",avis:s?s+" reviews":"Reviews"});
+    Object.assign(L.it,{avisG:s?"recensioni "+s:"recensioni",avis:s?"Recensioni "+s:"Recensioni"});
+    Object.assign(L.es,{avisG:s?"reseñas de "+s:"reseñas",avis:s?"Reseñas de "+s:"Reseñas"});Object.assign(L.de,{avisG:s?s+"-Bewertungen":"Bewertungen",avis:s?s+"-Bewertungen":"Bewertungen"})}
   Object.assign(DPLEIN,{nom:nomCourt(BR.nom,BR.ville),ville:BR.ville,note:BR.note?BR.note.toFixed(1).replace(".",","):"",nb:BR.nbAvis||0,
     presta:familles(items),avisEx:!BR.avis.length&&APERCU,avis:BR.avis.length||!APERCU?BR.avis.map(a=>({n:a.auteur||"",t:court(a.texte)})):[{n:"Exemple · votre cliente",t:"Pose magnifique, très soignée. Je recommande !"},{n:"Exemple · votre cliente",t:"Accueil adorable et salon très propre."},{n:"Exemple · votre cliente",t:"Mes ongles ont tenu plus de trois semaines."}],
     horaires:(BR.horaires||Array(7).fill(null)).map(h=>h?(h.pd&&h.pf?[heure(h.d),heure(h.f),heure(h.pd),heure(h.pf)]:[heure(h.d),heure(h.f)]):null),   /* 18/11 : pause du midi (pd → pf) si elle en a une */
     rue:BR.rue,cp:`${BR.cp} ${BR.ville}`.trim(),tel:BR.telephone||"",insta:BR.insta||(APERCU?"@votre.instagram":null),instaEx:!BR.insta&&APERCU,
     gps:BR.position?`${BR.position.latitude},${BR.position.longitude}`:"",
-    fiche:BR.placeId?`https://search.google.com/local/writereview?placeid=${BR.placeId}`:(BR.lienGoogle||"#"),
+    fiche:BR.placeId?`https://search.google.com/local/writereview?placeid=${BR.placeId}`:(BR.lienGoogle||(BR.sourceAvis&&/^https:\/\//.test(BR.site||"")?BR.site:"#")),
     nails:BR.exempleFictif?ordre.map((k,i)=>k===BR.salon?null:"g"+i).filter(Boolean).slice(0,11):[...Array(Math.min(n,BR.source==="exemple"?11:6))].map((_,i)=>"g"+i),salon:PH.salonv?"salonv":null,
     hero:g(0),hero2:g(1),hero3:g(2),hero4:g(3),hero_sb:g(0),hero_sc:g(1),grille:!BR.insta&&APERCU?["rose","nude","prune","vanille","chocolat","cacao"]:[0,1,2,3,4,5].map(g),
     offres:[],faq:[],savoirPlus:[],tva:false});
