@@ -21,7 +21,25 @@
   const euros = n => n == null || n === "" ? "Sur devis" : `${String(Math.round(n * 100) / 100).replace(".", ",")} €`;
   const prixDe = p => p.prix == null || p.prix === "" ? null : p.prix;
   const K = window.LOGI_PRESTA;   /* 22/11 (D80) : texte, « à partir de », photos (prestations-detail.js) */
-  const choisir = (p, i) => ({ i, p, nom: p.nom, prix: prixDe(p), duree: +p.duree || 60, acompte: acompteDe(p.prix) });
+  /* 23/11 (D109-D110) : après la prestation, « Et avec ça ? » (les petits plus, même règle que l'appli : LOGI_PRESTA.estPlus).
+     R.plus = { place: nombre d'ongles }, R.ordre = l'ordre où elle les a touchés. Le titre, la durée et le prix s'additionnent :
+     « Pose + Chrome + Strass et bijoux ×3 » ; par ongle : prix × n, durée × arrondi supérieur(n / 2) (comme le serveur, sql/37). */
+  const estPlus = p => !!(K && K.estPlus && K.estPlus(p));
+  const aBase = () => BR.prestations.some(p => !estPlus(p));
+  const parOngle = p => !!(K && K.parOngle && K.parOngle(p));
+  const offre = p => aBase() && !estPlus(p) && !(K.estDepose && K.estDepose(p)) && BR.prestations.some(estPlus);
+  const dureePlus = (p, n) => (+p.duree || 10) * Math.ceil((n || 1) / 2);
+  function calcule() {
+    const b = R.p, l = [[b, 1]].concat((R.ordre || []).map(i => [BR.prestations[i], R.plus[i]]));
+    R.nom = l.map(([p, n]) => p.nom + (n > 1 ? " ×" + n : "")).join(" + ");
+    R.duree = (+b.duree || 60) + l.slice(1).reduce((s, [p, n]) => s + dureePlus(p, n), 0);
+    R.prix = l.every(([p]) => prixDe(p) == null) ? null : l.reduce((s, [p, n]) => s + (+prixDe(p) || 0) * n, 0);
+    R.acompte = acompteDe(R.prix);
+    /* « à partir de » si une partie l'est (ou est sur devis) : le prix final peut monter */
+    R.pv = { prix: R.prix, duree: R.duree, typePrix: l.some(([p]) => K.type(p) !== "fixe") ? "des" : "fixe" };
+    return R;
+  }
+  const choisir = (p, i) => { R = { i, p, plus: {}, ordre: [], offre: offre(p) }; return calcule(); };
   const duree = m => m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`;
   /* l'acompte choisi par la prothésiste (appli → « Bon à savoir ») */
   const acompteDe = prix => { const g = Object.assign({ acompte: true, montant: "15 €" }, BR.regles || {}); if (!g.acompte || !prix) return 0;
@@ -98,12 +116,38 @@
   .rs .place{background:#fff;border-radius:20px;padding:14px 18px;margin:4px 0 6px;text-align:center;font:300 14px/1.45 Jost;color:#5d554e;box-shadow:inset 0 0 0 1.5px var(--rs)}
   .rs .place small{display:block;font:400 10.5px Jost;letter-spacing:.22em;color:var(--rs);margin-bottom:4px}
   .rs .place b{display:block;font:300 20px/1.25 Jost;color:#1E1C1B;margin-bottom:2px}
+  .rs .ac{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  .rs .ac-c{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;min-height:84px;box-sizing:border-box;margin:0;padding:12px;border:1px solid rgba(30,28,27,.12);border-radius:18px;background:#fff;color:#1E1C1B;font:300 14.5px Jost;text-align:left;cursor:pointer;transition:background .18s,color .18s,border-color .18s,transform .12s;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .rs .ac-c:active{transform:scale(.96)}
+  .rs .ac-c .em{font-size:21px;line-height:1}
+  .rs .ac-c b{display:block;font-weight:400;line-height:1.2;overflow-wrap:anywhere}
+  .rs .ac-c small{display:block;margin-top:3px;font:300 12.5px Jost;color:#6B625C}
+  .rs .ac-c.on{background:var(--rs);border-color:var(--rs);color:#F6F3EF}
+  .rs .ac-c.on small{color:rgba(246,243,239,.8)}
+  .rs .ac-n{display:none;position:absolute;right:6px;top:6px;align-items:center;gap:2px}
+  .rs .ac-c.on .ac-n{display:flex}
+  .rs .ac-n u{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;text-decoration:none;font:400 18px/1 Jost}
+  .rs .ac-n em{min-width:16px;font:normal 400 14px Jost;text-align:center}
+  .rs .ac .ac-c.autre{display:none}
+  .rs .ac.tout .ac-c.autre{display:flex;animation:rs-ap .25s ease both}
+  @keyframes rs-ap{from{opacity:0;transform:scale(.92)}}
+  .rs .ac.tout+.att{display:none}
+  .rs .avec{margin:-6px 0 10px;text-align:center;font:300 13.5px/1.45 Jost;color:#5d554e;overflow-wrap:anywhere}
+  .rs .ac-bas{position:sticky;bottom:-28px;z-index:2;margin:16px -22px -28px;padding:12px 22px 28px;background:#F6F3EF;box-shadow:0 -10px 20px -14px rgba(30,28,27,.25)}
+  .rs .ac-bas .go{margin-top:0}
+  .rs .ac-tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px;font:300 13.5px/1.35 Jost;color:#5d554e}
+  .rs .ac-tot span{min-width:0;overflow-wrap:anywhere}
+  .rs .ac-tot b{flex:none;display:inline-block;font:500 17px Jost;color:#1E1C1B;transition:transform .2s}
+  .rs .ac-tot b.saute{transform:scale(1.15)}
+  .rs .recap .rs-l span{min-width:0;overflow-wrap:anywhere}
+  .rs .recap .rs-t{font-weight:400}.rs .recap .rs-t b{font-weight:500}
+  @media (prefers-reduced-motion:reduce){.rs .ac-c,.rs .ac-tot b{transition:none}.rs .ac.tout .ac-c.autre{animation:none}}
   .rs .ok{width:64px;height:64px;border-radius:50%;background:var(--rs);margin:16px auto 0;display:grid;place-items:center}
   .rs .ok::after{content:"";width:22px;height:11px;border-left:2px solid #F6F3EF;border-bottom:2px solid #F6F3EF;transform:rotate(-45deg) translate(2px,-3px)}`;
   document.head.append(css);
   tel.insertAdjacentHTML("beforeend", `<div class="rs" id="rs" style="--rs:${encre}"><div class="rv" data-rx></div><div class="rf" id="rf"></div></div>`);
   const rs = document.getElementById("rs"), rf = document.getElementById("rf");
-  let R = {}, etape = 1, jourChoisi = null, att = 0;   /* att : 0 = non, 1 = formulaire liste d'attente, 2 = « C'est noté » */
+  let R = {}, etape = 1, jourChoisi = null, att = 0, preplus = null;   /* att : 0 = non, 1 = formulaire liste d'attente, 2 = « C'est noté » */
   let jourVoulu = (location.search.match(/[?&]resa=(\d{4}-\d{2}-\d{2})/) || [])[1] || "";
   /* 19/11 (Marie) : depuis l'e-mail « Une place s'est libérée », on arrive DIRECTEMENT sur le jour et la place libérée,
      prestation déjà choisie (&p=nom), seulement les heures de la place (&de=540&a=1020, minutes) + « Voir tous les horaires » */
@@ -130,12 +174,26 @@
     const tete = `<div class="poi"></div><button class="x" data-rx aria-label="Fermer">×</button>${etape > 1 && etape < 5 ? `<button class="ret" data-ret>‹ Retour</button>` : ""}`;
     /* son rendez-vous reste en haut : la prestation, puis le jour, puis l'heure */
     const quand = q => q ? `<span class="rdv-q">${esc(q.charAt(0).toUpperCase() + q.slice(1))}</span>` : "";
-    const carte = q => R.p ? `<div class="rdv"><em>VOTRE PRESTATION</em><b>${esc(R.nom)}</b>${quand(q)}<span>${esc(K.meta({ ...R.p, duree: R.duree }))}</span></div>` : "";
-    const avant = R.p && K.note(R.p) ? `<p class="petit prix-note">${K.note(R.p)}</p>` : "";
+    const carte = q => R.p ? `<div class="rdv"><em>VOTRE PRESTATION</em><b>${esc(R.nom)}</b>${quand(q)}<span>${esc(K.meta(R.pv))}</span></div>` : "";
+    const avant = R.p && K.note(R.pv) ? `<p class="petit prix-note">${K.note(R.pv)}</p>` : "";
+    /* juste avant de réserver : chaque partie et le total (seulement s'il y a des petits plus) */
+    const detail = () => R.ordre && R.ordre.length ? [[R.p, 1]].concat(R.ordre.map(i => [BR.prestations[i], R.plus[i]]))
+      .map(([p, n], k) => `<div class="rs-l"><span>${k ? "+ " : ""}${esc(p.nom)}${n > 1 ? " ×" + n : ""}</span><b>${prixDe(p) == null ? "Sur devis" : (K.type(p) === "des" ? "dès " : "") + euros(+p.prix * n)}</b></div>`).join("")
+      + `<div class="rs-t"><span>Total · ${duree(R.duree)}</span><b>${R.prix == null ? "Sur devis" : esc(K.prix(R.pv))}</b></div>` : "";
     /* venue en touchant sa prestation : il ne lui reste que 3 pas */
     const pas = k => R.direct ? `${k - 1} / 3` : `${k} / 4`;
     if (etape === 1) rf.innerHTML = tete + `<div class="kick">1 / 4</div><h2>Votre prestation</h2>` +
-      BR.prestations.map((p, i) => `<button class="pr prd-r" data-p="${i}"><span class="prd-n">${esc(p.nom)}</span><b>${K.metaHtml(p)}</b>${K.corps(p)}</button>`).join("");
+      (preplus != null && BR.prestations[preplus] ? `<p class="avec">Avec « ${esc(BR.prestations[preplus].nom)} » : choisissez d’abord votre prestation.</p>` : "") +
+      BR.prestations.map((p, i) => aBase() && estPlus(p) ? "" : `<button class="pr prd-r" data-p="${i}"><span class="prd-n">${esc(p.nom)}</span><b>${K.metaHtml(p)}</b>${K.corps(p)}</button>`).join("");
+    /* 23/11 (D109) : « Et avec ça ? » : les 4 premiers petits plus de sa liste, « Voir les X autres », le total collé en bas */
+    if (etape === 1.5) { const I = BR.prestations.map((p, i) => i).filter(i => estPlus(BR.prestations[i])), ouvert = I.slice(4).some(i => i in R.plus);
+      rf.innerHTML = tete + `<div class="kick">FACULTATIF</div><h2>Et avec ça ?</h2><p class="avec">Avec votre ${esc(R.p.nom)}</p>
+        <div class="ac${ouvert ? " tout" : ""}">${I.map((i, k) => { const p = BR.prestations[i];
+          return `<button type="button" class="ac-c${k > 3 ? " autre" : ""}" data-ac="${i}" aria-pressed="false"><span class="em" aria-hidden="true">${esc(K.emo(p))}</span>${parOngle(p) ? `<span class="ac-n"><u data-acm="-1" aria-label="Un ongle de moins">−</u><em>1</em><u data-acm="1" aria-label="Un ongle de plus">+</u></span>` : ""}<span><b>${esc(p.nom)}</b><small></small></span></button>`; }).join("")}</div>
+        ${I.length > 4 ? `<button class="att" data-acv><u>Voir les ${I.length - 4} autre${I.length > 5 ? "s" : ""}</u></button>` : ""}
+        ${I.some(i => parOngle(BR.prestations[i])) ? `<p class="petit">« / ongle » : touchez, puis + ou − pour le nombre d’ongles.</p>` : ""}
+        <div class="ac-bas"><div class="ac-tot" aria-live="polite"></div><button class="go" data-acok>CONTINUER</button></div>`;
+      majPlus(); rf.scrollTop = 0; return; }
     if (etape === 2 && att) { const jt = jourChoisi.date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
       rf.innerHTML = att === 2 ? `<div class="poi"></div><button class="x" data-rx aria-label="Fermer">×</button><div class="ok"></div>
         <h2 style="margin-top:14px">C’est noté !</h2><p class="petit" style="font-size:14px;color:#5d554e">Si une place se libère ${esc(jt)}, vous recevez un e-mail tout de suite.<br>La première qui réserve a la place.</p>
@@ -169,13 +227,13 @@
       <label><input type="checkbox" id="rc"><span>J’accepte les <a href="#" data-legp="cgv">conditions de réservation</a> du salon et sa <a href="#" data-legp="conf">politique de confidentialité</a>.</span></label>
       <button class="go" id="rgo" disabled>CONTINUER</button>`;
     if (etape === 4 && REEL) rf.innerHTML = tete + carte(`${R.jourTxt} à ${hm(R.heure)}`) + `<div class="kick">${pas(4)}</div><h2>On confirme ?</h2>
-      ${R.acompte ? `<div class="recap"><div><span>Acompte</span><b>${euros(R.acompte)}</b></div></div>` : ""}${avant}
+      ${R.acompte || detail() ? `<div class="recap">${detail()}${R.acompte ? `<div><span>Acompte</span><b>${euros(R.acompte)}</b></div>` : ""}</div>` : ""}${avant}
       <button class="go" data-reel>CONFIRMER MA RÉSERVATION</button>
       ${R.acompte ? `<p class="petit">Le salon vous dira comment régler l’acompte.</p>` : ""}<p class="petit rerr" style="color:#A04A4A"></p>`;
-    else if (etape === 4 && !R.acompte) rf.innerHTML = tete + carte(`${R.jourTxt} à ${hm(R.heure)}`) + `<div class="kick">${pas(4)}</div><h2>On confirme ?</h2>${avant}
+    else if (etape === 4 && !R.acompte) rf.innerHTML = tete + carte(`${R.jourTxt} à ${hm(R.heure)}`) + `<div class="kick">${pas(4)}</div><h2>On confirme ?</h2>${detail() ? `<div class="recap">${detail()}</div>` : ""}${avant}
       <button class="go" data-paye>CONFIRMER MA RÉSERVATION</button>`;
     else if (etape === 4) rf.innerHTML = tete + carte(`${R.jourTxt} à ${hm(R.heure)}`) + `<div class="kick">${pas(4)}</div><h2>L’acompte</h2>
-      <div class="recap"><div><span>Acompte à payer maintenant</span><b>${euros(R.acompte)}</b></div><div><span>Le reste, au salon</span><b>${K.type(R.p) === "fixe" ? euros(R.prix - R.acompte) : "selon le prix final"}</b></div></div>${avant}
+      <div class="recap">${detail()}<div><span>Acompte à payer maintenant</span><b>${euros(R.acompte)}</b></div><div><span>Le reste, au salon</span><b>${K.type(R.pv) === "fixe" ? euros(R.prix - R.acompte) : "selon le prix final"}</b></div></div>${avant}
       <button class="apay" data-paye><svg viewBox="0 0 17 20" style="width:17px;height:20px;vertical-align:-3px;margin-right:3px"><path fill="currentColor" d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9C3.6 4.8 2 5.8 1.1 7.4c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.9-1.1-3-4.4zM11.5 2.9c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"/></svg>Pay</button><div class="ou"><span>ou par carte</span></div>
       <input class="champ" placeholder="Numéro de carte" autocomplete="off"><div class="deux"><input class="champ" placeholder="MM / AA" autocomplete="off"><input class="champ" placeholder="CVC" autocomplete="off"></div>
       <button class="go" data-paye>PAYER L’ACOMPTE</button>
@@ -187,6 +245,18 @@
       <button class="go" id="rsms">VOIR MES MESSAGES</button>`}`;
     rf.scrollTop = 0;
   }
+  const montant = n => `${String(Math.round(n * 100) / 100).replace(".", ",")} €`;
+  function majPlus() {
+    rf.querySelectorAll(".ac-c[data-ac]").forEach(b => { const i = +b.dataset.ac, p = BR.prestations[i], on = i in R.plus, n = R.plus[i] || 1;
+      b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+      const em = b.querySelector(".ac-n em"); if (em) em.textContent = n;
+      const t = K.type(p); b.querySelector("small").textContent = t === "devis" ? "sur devis" : (t === "des" ? "dès " : "+") + montant(+p.prix * (on ? n : 1)) + (parOngle(p) && !on ? " / ongle" : ""); });
+    const tot = rf.querySelector(".ac-tot"); if (!tot) return; const b0 = tot.querySelector("b")?.textContent;
+    tot.innerHTML = `<span>${esc(duree(R.duree))} · ${esc(R.nom)}</span><b>${R.prix == null ? "Sur devis" : esc(K.prix(R.pv))}</b>`;
+    const b = tot.querySelector("b"); if (b0 && b0 !== b.textContent) { b.classList.remove("saute"); void b.offsetWidth; b.classList.add("saute"); setTimeout(() => b.classList.remove("saute"), 220); }
+  }
+  /* après le choix de la prestation : « Et avec ça ? » si le salon a des petits plus, sinon le jour */
+  const apresPresta = () => { if (R.offre) { if (preplus != null && BR.prestations[preplus] && estPlus(BR.prestations[preplus])) { R.plus[preplus] = 1; R.ordre.push(preplus); calcule(); } etape = 1.5; } else etape = 2; preplus = null; };
   async function chargeOcc() { if (!REEL) return; const a = new Date(), b = new Date(); b.setDate(b.getDate() + 15);
     try { const l = await rpc("moments_pris", { s: window.LOGI_SLUG, de: cle(a), a: cle(b) }); OCC = {};
       (l || []).forEach(m => { const d = new Date(m.debut), f = new Date(m.fin), k = cle(d); (OCC[k] = OCC[k] || []).push([d.getHours() * 60 + d.getMinutes(), f.getHours() * 60 + f.getMinutes() + (cle(f) !== k ? 1440 : 0)]); }); } catch (e) {} }
@@ -209,12 +279,14 @@
   async function ouvre(ligne) { if (etape >= 5 || att === 2) { R = {}; etape = 1; jourChoisi = null; } att = 0;
     /* 22/11 (Marie) : « tu me remets pas tout ça » — elle a touché sa prestation, on ne lui remontre pas la liste */
     const i = ligne ? indexDe(ligne) : -1;
-    if (i >= 0) { R = choisir(BR.prestations[i], i); R.direct = true; jourChoisi = null; etape = 2; }
-    else if (R.direct && etape === 2) { R = {}; etape = 1; jourChoisi = null; }   /* « Réserver » tout court : elle n'a rien choisi */
+    preplus = null;
+    if (i >= 0 && estPlus(BR.prestations[i]) && aBase()) { R = {}; preplus = i; jourChoisi = null; etape = 1; }   /* un petit plus touché : d'abord la prestation */
+    else if (i >= 0) { choisir(BR.prestations[i], i); R.direct = true; jourChoisi = null; apresPresta(); }
+    else if (R.direct && (etape === 2 || etape === 1.5)) { R = {}; etape = 1; jourChoisi = null; }   /* « Réserver » tout court : elle n'a rien choisi */
     await chargeOcc();
     /* 19/11 : lien de l'e-mail → sa prestation est déjà choisie, on ouvre sur « Le jour et l'heure » */
     if (prestaVoulue) { const i = BR.prestations.findIndex(p => String(p.nom).trim() === prestaVoulue.trim()); prestaVoulue = "";
-      if (i >= 0) { const p = BR.prestations[i]; R = choisir(p, i); jourChoisi = null; etape = 2; } }
+      if (i >= 0) { const p = BR.prestations[i]; choisir(p, i); jourChoisi = null; etape = 2; } }
     dessine(); rs.classList.add("on"); }
   /* la place de la ligne touchée ; le nom fait foi si la liste a été relue entre-temps */
   function indexDe(ligne) {
@@ -231,8 +303,18 @@
     const t = ev.target.closest("button"); if (!t) return;
     if (t.hasAttribute("data-rx")) return ferme();
     if (t.hasAttribute("data-ret")) {
-      if (R.direct && etape === 2) { R = {}; etape = 1; jourChoisi = null; return ferme(); }   /* retour = le site, là où elle a touché */
+      if (etape === 2 && R.offre) { etape = 1.5; return dessine(); }   /* ses petits plus sont gardés */
+      if (R.direct && (etape === 2 || etape === 1.5)) { R = {}; etape = 1; jourChoisi = null; return ferme(); }   /* retour = le site, là où elle a touché */
+      if (etape === 1.5) { etape = 1; return dessine(); }
       etape--; return dessine(); }
+    /* « Et avec ça ? » : toucher ajoute, retoucher enlève ; « / ongle » : − n + */
+    if (t.dataset.ac != null) { const i = +t.dataset.ac, m = ev.target.closest("[data-acm]");
+      if (m && i in R.plus) { R.plus[i] = Math.min(10, Math.max(0, R.plus[i] + +m.dataset.acm)); if (!R.plus[i]) { delete R.plus[i]; R.ordre.splice(R.ordre.indexOf(i), 1); } }
+      else if (i in R.plus) { delete R.plus[i]; R.ordre.splice(R.ordre.indexOf(i), 1); }
+      else if (R.ordre.length < 10) { R.plus[i] = 1; R.ordre.push(i); }
+      calcule(); return majPlus(); }
+    if (t.hasAttribute("data-acv")) { rf.querySelector(".ac").classList.add("tout"); return; }
+    if (t.hasAttribute("data-acok")) { jourChoisi = null; etape = 2; return dessine(); }
     /* 18/11 · liste d'attente */
     if (t.hasAttribute("data-att")) { att = 1; return dessine(); }
     if (t.hasAttribute("data-tout")) { if (place) place.tout = true; return dessine(); }
@@ -247,7 +329,7 @@
           t.disabled = false; t.textContent = "ME PRÉVENIR";
           if (z) z.textContent = m === "email" ? "Vérifiez votre e-mail." : m === "coordonnees" ? "Vérifiez votre prénom et votre téléphone." : /^(trop|plein)$/.test(m) ? "La liste d’attente est pleine pour l’instant. Appelez le salon." : "Ça n’a pas marché. Réessayez, ou appelez le salon."; });
       return; }
-    if (t.dataset.p) { const p = BR.prestations[+t.dataset.p]; R = choisir(p, +t.dataset.p); jourChoisi = null; etape = 2; return dessine(); }
+    if (t.dataset.p) { const p = BR.prestations[+t.dataset.p]; choisir(p, +t.dataset.p); jourChoisi = null; apresPresta(); return dessine(); }
     if (t.dataset.j) { jourChoisi = rf._P[+t.dataset.j]; return dessine(); }
     if (t.dataset.t) { R.heure = +t.dataset.t; R.date = jourChoisi.date.toISOString(); R.jour = cle(jourChoisi.date); R.jourTxt = jourChoisi.date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }); etape = 3; return dessine(); }
     if (t.id === "rgo") { R.prenom = rf.querySelector("#rp").value.trim(); R.nomC = rf.querySelector("#rn").value.trim(); R.tel = rf.querySelector("#rt").value.trim(); R.email = rf.querySelector("#re").value.trim(); R.okAnniv = !!rf.querySelector("#ranniv")?.checked; etape = 4; return dessine(); }
@@ -255,7 +337,9 @@
       setTimeout(() => { etape = 5; try { localStorage.setItem("loginail-resa", JSON.stringify({ ...R, salon: BR.nom, rue: BR.rue, cp: BR.cp, ville: BR.ville, placeId: BR.placeId }));
         const L = lis("loginail-resas") || []; L.push({ id: Date.now(), date: R.jour, heure: R.heure, duree: R.duree, prenom: R.prenom, nom: R.nomC, tel: R.tel, email: R.email, okAnniv: !!R.okAnniv, presta: R.nom, prix: R.prix, acompte: R.acompte, vu: false }); localStorage.setItem("loginail-resas", JSON.stringify(L)); } catch (e) {} dessine(); }, 900); return; }
     if (t.hasAttribute("data-reel")) { t.disabled = true; t.textContent = "UN INSTANT…"; const d = new Date(jourChoisi.date); d.setMinutes(R.heure);
-      rpc("reserver", { s: window.LOGI_SLUG, p_presta: R.i, p_debut: d.toISOString(), p_prenom: R.prenom, p_nom: R.nomC, p_tel: R.tel, p_email: R.email, p_ok_anniv: !!R.okAnniv, p_choisie: vue(R.i) })
+      const corps = { s: window.LOGI_SLUG, p_presta: R.i, p_debut: d.toISOString(), p_prenom: R.prenom, p_nom: R.nomC, p_tel: R.tel, p_email: R.email, p_ok_anniv: !!R.okAnniv, p_choisie: vue(R.i) };
+      /* 23/11 (sql/37) : avec des petits plus, le serveur vérifie chacun et calcule lui-même titre, durée, prix et acompte */
+      (R.ordre && R.ordre.length ? rpc("reserver_avec_plus", { ...corps, p_plus: R.ordre.map(i => ({ ...vue(i), n: R.plus[i] })) }) : rpc("reserver", corps))
         .then(() => { etape = 5; dessine(); })
         .catch(async e => { const m = String(e.message || ""); const z = rf.querySelector(".rerr");
           if (m === "prestation_changee") return prestaChangee();
