@@ -2755,7 +2755,7 @@ function monte(ecran,lang){
   if(ecran.classList.contains("sansres")){ecran.querySelectorAll(".hbtn,.cta,.menu .plein,.dk-r,.fiche [data-res]").forEach(b=>{b.textContent=t.prendre});
     /* 24/11 : les autres boutons « Réserver » (pilule du bas, menu) : seul le mot change, la flèche reste */
     const mots=new Set([t.reserver,"Réserver","Book","Prenota","Reservar","Buchen"]),renomme=z=>z.querySelectorAll("[data-res]:not(.dispo):not(.dispo2):not(.dispo-t):not(.dispo-p)").forEach(x=>{const w=document.createTreeWalker(x,NodeFilter.SHOW_TEXT);for(let n;(n=w.nextNode());)if(mots.has(n.nodeValue.trim()))n.nodeValue=n.nodeValue.replace(n.nodeValue.trim(),t.prendre)});
-    renomme(ecran);setTimeout(()=>renomme(document),0);setTimeout(()=>renomme(document),800);const h3=ecran.querySelector(".feuille h3");if(h3)h3.textContent=t.prendre}
+    renomme(ecran);[0,300,800,1600,3000,6000].forEach(ms=>setTimeout(()=>renomme(document),ms));const h3=ecran.querySelector(".feuille h3");if(h3)h3.textContent=t.prendre}
   /* 24/11 : sur le VRAI site d'une pro (?public&s=…), les liens marchent (Appeler, Message, WhatsApp, Instagram, Itinéraire) ; ailleurs (exemples, aperçus) ils restent des explications */
   const vraiSite=!!window.LOGI_SLUG&&document.documentElement.classList.contains("public")&&!document.documentElement.classList.contains("dansappli")&&!document.documentElement.classList.contains("vuappli")&&!/[?&]apercu/.test(location.search);
   if(!vraiSite)ecran.querySelectorAll("a[href]").forEach(a=>{if(a.dataset.va||a.dataset.leg)return;a.removeAttribute("target");a.href="#";a.addEventListener("click",ev=>{ev.preventDefault();mot.textContent="Ici, le vrai lien de la cliente";dit()})});

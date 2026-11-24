@@ -5,7 +5,8 @@
   if (typeof BR === "undefined" || !BR) return;
   const tel = document.querySelector(".tel"); if (!tel) return;
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const L = BR.legal || {}, R = Object.assign({ acompte: true, montant: "15 €", retard: "10 min", annulation: "48 h avant", autre: "" }, BR.regles || {});
+  const L = BR.legal || {}, R = Object.assign({ acompte: true, montant: "15 €", retard: "10 min", annulation: "48 h avant", frais: "Rien", autre: "" }, BR.regles || {});
+  const frais = /\d/.test(R.frais || "") ? String(R.frais).trim() : "";   /* 24/11 (Marie) : frais si elle annule trop tard ou ne vient pas */
   const vide = t => `<span class="lg-vide">${t} (à compléter)</span>`;
   const nomPro = L.nomComplet ? esc(L.nomComplet) : vide("Prénom et nom");
   const salon = esc(L.entreprise || BR.nom || "");
@@ -36,7 +37,7 @@
       <h4>Les prix</h4><p>Les prix affichés sont en euros, toutes taxes comprises${L.tvaNon === false ? "" : " (TVA non applicable, article 293 B du CGI)"}. Le prix payé est celui affiché au moment de la réservation.</p>
       <h4>La réservation</h4><p>Vous choisissez une prestation, un jour et une heure, puis vous donnez vos coordonnées. Vous recevez une confirmation par e-mail (si vous avez donné votre e-mail), puis un SMS de rappel la veille.</p>
       ${R.acompte ? `<h4>L’acompte</h4><p>Un acompte de <b>${esc(R.montant)}</b> est demandé pour réserver. Le salon vous dit comment le régler. Une fois versé, il est déduit du prix le jour du rendez-vous. Le reste se paie au salon.</p>` : `<h4>Le paiement</h4><p>Tout se paie au salon, le jour du rendez-vous.</p>`}
-      <h4>Annuler ou déplacer</h4><p>Vous pouvez annuler ou déplacer gratuitement jusqu’à <b>${esc(ann)}</b> avant le rendez-vous${R.acompte ? " : un acompte déjà versé vous est alors rendu" : ""}. Après, ou si vous ne venez pas${R.acompte ? ", un acompte déjà versé est gardé" : ", le salon peut refuser une prochaine réservation en ligne"}. Pour annuler : le lien « Annuler mon rendez-vous » en bas de l’e-mail de confirmation, ou un appel au salon.</p>
+      <h4>Annuler ou déplacer</h4><p>Vous pouvez annuler ou déplacer gratuitement jusqu’à <b>${esc(ann)}</b> avant le rendez-vous${R.acompte ? " : un acompte déjà versé vous est alors rendu" : ""}. Après, ou si vous ne venez pas${frais ? ` : <b>${esc(frais)} de frais d’annulation</b>${R.acompte ? " (un acompte déjà versé en fait partie)" : ""}` : R.acompte ? ", un acompte déjà versé est gardé" : ", le salon peut refuser une prochaine réservation en ligne"}. Pour annuler : le lien « Annuler mon rendez-vous » en bas de l’e-mail de confirmation, ou un appel au salon.</p>
       <h4>Les retards</h4><p>Un retard de <b>${esc(R.retard)}</b> est accepté. Au-delà, la prestation peut être raccourcie ou le rendez-vous déplacé.</p>
       ${R.autre ? `<h4>Bon à savoir</h4><p>${esc(R.autre)}</p>` : ""}
       <h4>Le droit de rétractation</h4><p>Quand vous réservez en ligne, la loi vous donne 14 jours pour changer d’avis. Si votre rendez-vous a lieu avant la fin de ces 14 jours, vous demandez que la prestation soit faite avant. Si vous changez d’avis, il faut nous le dire avant le rendez-vous.</p>

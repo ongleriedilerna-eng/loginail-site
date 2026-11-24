@@ -225,6 +225,7 @@
       <div class="deux"><input class="champ" id="rp" placeholder="Prénom" autocomplete="given-name"><input class="champ" id="rn" placeholder="Nom" autocomplete="family-name"></div>
       <input class="champ" id="rt" type="tel" placeholder="Téléphone" autocomplete="tel"><input class="champ" id="re" type="email" placeholder="E-mail" autocomplete="email">
       <label><input type="checkbox" id="ranniv"><span>Je veux bien un petit SMS pour mon anniversaire 🎂 <small style="color:#8a8076">(une fois par an, facultatif)</small></span></label>
+      ${(() => { const g = Object.assign({ annulation: "48 h avant", frais: "" }, BR.regles || {}); return /\d/.test(g.frais || "") ? `<p class="rs-frais" style="margin:10px 0 8px;font-size:13px;line-height:1.4;opacity:.85">Annulation gratuite jusqu’à ${esc(String(g.annulation))}. Après, ou si vous ne venez pas : <b>${esc(String(g.frais))}</b> de frais.</p>` : ""; })()}
       <label><input type="checkbox" id="rc"><span>J’accepte les <a href="#" data-legp="cgv">conditions de réservation</a> du salon et sa <a href="#" data-legp="conf">politique de confidentialité</a>.</span></label>
       <button class="go" id="rgo" disabled>CONTINUER</button>`;
     if (etape === 4 && REEL) rf.innerHTML = tete + carte(`${R.jourTxt} à ${hm(R.heure)}`) + `<div class="kick">${pas(4)}</div><h2>On confirme ?</h2>
