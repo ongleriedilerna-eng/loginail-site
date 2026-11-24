@@ -12,6 +12,7 @@
     .then(async r => { const j = await r.json().catch(() => null); if (!r.ok) throw new Error((j && j.message) || "erreur"); return j; });
   let OCC = {};
   if (!simu || !location.search.includes("public") || typeof BR === "undefined" || !BR) return;
+  if (BR.resaCoupee && BR.resaCoupee.on) return;   /* 24/11 (sql/41) : réservation coupée par la pro : pas de réservation, « Prendre rendez-vous » ouvre ses moyens de contact (pret.html) */
   const tel = document.querySelector(".tel"); if (!tel) return;
   const encre = (typeof INKJ !== "undefined" && INKJ[BR.couleur]) || "#1E1C1B";
   const JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];

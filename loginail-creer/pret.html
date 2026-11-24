@@ -1119,7 +1119,8 @@ html.public .hc-bas{bottom:44px}
 .dk-r:before{content:"";display:inline-block;width:0;height:6px;border-radius:50%;background:#9EA791;margin-right:0;vertical-align:1px;transition:width .3s,margin .3s}
 .dk-r.vert:before{width:6px;margin-right:8px;animation:pouls 3.2s ease-in-out infinite}
 /* sans réservation en ligne : pas de créneau affiché */
-.sansres .dispo,.sansres .dispo2,.sansres .hb-d{display:none!important}
+.sansres .dispo,.sansres .dispo2,.sansres .hb-d,.sansres .dispo-t,.sansres .dispo-p{display:none!important}
+.ecran.sansres:has(.feuille.on) .x-pil{opacity:0;pointer-events:none;transition:opacity .2s}
 /* ===== les 8 couleurs ===== */
 .c-noir{--creme:#F6F3EF;--noir:#1E1C1B;--carte:#FFFFFF;--gris:#6a625b}
 .c-choco{--creme:#F5EFEA;--noir:#4A3226;--carte:#FFFDFB;--gris:#7a6559}
@@ -2725,10 +2726,10 @@ function monte(ecran,lang){
   <div class="voile"></div>
   <div class="fiche"><div class="poignee"></div><img alt=""><div class="fi-t"><b></b><span class="fi-l"></span></div><button data-res>${t.creneau}</button></div>
   <div class="feuille"><div class="poignee"></div><h3>${t.ecrireT}</h3>
-    <a href="tel:${telBrut}">${t.appeler}<span>${D.tel}</span></a>
-    <a href="sms:${telBrut}">${t.sms}<span>${D.tel}</span></a>
-    <a href="https://wa.me/${telIntl}" target="_blank" rel="noopener">${t.wa}<span>${D.tel}</span></a>
-    ${D.insta?`<a href="https://ig.me/m/${D.insta.slice(1)}" target="_blank" rel="noopener">${t.dm}<span>${D.insta}</span></a>`:""}</div>
+    <a href="tel:${telBrut}" data-mo="appel">${t.appeler}<span>${D.tel}</span></a>
+    <a href="sms:${telBrut}" data-mo="sms">${t.sms}<span>${D.tel}</span></a>
+    <a href="https://wa.me/${telIntl}" target="_blank" rel="noopener" data-mo="whatsapp">${t.wa}<span>${D.tel}</span></a>
+    ${D.insta?`<a href="https://ig.me/m/${D.insta.slice(1)}" target="_blank" rel="noopener" data-mo="insta">${t.dm}<span>${D.insta}</span></a>`:""}</div>
   <div class="cookies">${bandeau(t,[...ecran.classList].find(c=>/^b\d$/.test(c)))}</div>
   <div class="grand"><span class="poignee"></span><button class="x" aria-label="Fermer">×</button><img alt="" draggable="false"><div class="aide">${t.aide}</div><div class="cpt"></div></div>`;
   ecran._lang=lang;D=ecran.dataset.d==="peu"?DPEU:DPLEIN;D={...D,presta:D.presta.filter(c=>c.items&&c.items.length)};VAR=[...ecran.classList].find(c=>/^(v\d|n1|s[abc]|s3[abc])$/.test(c))||"v1";ecran.classList.remove("touche");
@@ -2748,9 +2749,16 @@ function monte(ecran,lang){
   if(pl0)ioD.observe(pl0);
   else{const it0=d.querySelector(".liste.on .item");if(it0){const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io2.disconnect();setTimeout(()=>it0.classList.add("ouvert"),900);setTimeout(()=>it0.classList.remove("ouvert"),3200)}}),{root:d,threshold:.6});io2.observe(it0)}}
   const dit=()=>{mot.classList.add("on");clearTimeout(mot._t);mot._t=setTimeout(()=>mot.classList.remove("on"),2200)};
+  /* 24/11 (Marie, sql/41) : réservation en ligne coupée par la pro : le site reste, « Réserver » devient « Prendre rendez-vous » et ouvre seulement ce qu'elle a coché */
+  {const rc=typeof BR!=="undefined"&&BR&&BR.resaCoupee;if(rc&&rc.on){ecran.classList.add("sansres");const m=Array.isArray(rc.m)?rc.m:[];const fa=[...ecran.querySelectorAll(".feuille a[data-mo]")];if(fa.some(a=>m.includes(a.dataset.mo)))fa.forEach(a=>{if(!m.includes(a.dataset.mo))a.remove()})}}
   ecran.onclick=e=>{if(e.target.closest("[data-res]")){e.stopPropagation();if(ecran.classList.contains("sansres")){ouvreF();return}mot.textContent=e.target.closest(".dispo,.dispo2")?t.etape5c:t.etape5;dit()}};
-  if(ecran.classList.contains("sansres")){ecran.querySelectorAll(".hbtn,.cta,.menu .plein,.dk-r").forEach(b=>{b.textContent=t.prendre});const h3=ecran.querySelector(".feuille h3");if(h3)h3.textContent=t.prendre}
-  ecran.querySelectorAll("a[href]").forEach(a=>{if(a.dataset.va||a.dataset.leg)return;a.removeAttribute("target");a.href="#";a.addEventListener("click",ev=>{ev.preventDefault();mot.textContent="Ici, le vrai lien de la cliente";dit()})});
+  if(ecran.classList.contains("sansres")){ecran.querySelectorAll(".hbtn,.cta,.menu .plein,.dk-r,.fiche [data-res]").forEach(b=>{b.textContent=t.prendre});
+    /* 24/11 : les autres boutons « Réserver » (pilule du bas, menu) : seul le mot change, la flèche reste */
+    const mots=new Set([t.reserver,"Réserver","Book","Prenota","Reservar","Buchen"]),renomme=z=>z.querySelectorAll("[data-res]:not(.dispo):not(.dispo2):not(.dispo-t):not(.dispo-p)").forEach(x=>{const w=document.createTreeWalker(x,NodeFilter.SHOW_TEXT);for(let n;(n=w.nextNode());)if(mots.has(n.nodeValue.trim()))n.nodeValue=n.nodeValue.replace(n.nodeValue.trim(),t.prendre)});
+    renomme(ecran);setTimeout(()=>renomme(document),0);setTimeout(()=>renomme(document),800);const h3=ecran.querySelector(".feuille h3");if(h3)h3.textContent=t.prendre}
+  /* 24/11 : sur le VRAI site d'une pro (?public&s=…), les liens marchent (Appeler, Message, WhatsApp, Instagram, Itinéraire) ; ailleurs (exemples, aperçus) ils restent des explications */
+  const vraiSite=!!window.LOGI_SLUG&&document.documentElement.classList.contains("public")&&!document.documentElement.classList.contains("dansappli")&&!document.documentElement.classList.contains("vuappli")&&!/[?&]apercu/.test(location.search);
+  if(!vraiSite)ecran.querySelectorAll("a[href]").forEach(a=>{if(a.dataset.va||a.dataset.leg)return;a.removeAttribute("target");a.href="#";a.addEventListener("click",ev=>{ev.preventDefault();mot.textContent="Ici, le vrai lien de la cliente";dit()})});
 
   /* cookies */
   const bv=[...ecran.classList].find(c=>/^b\d$/.test(c)),ck=$(".cookies");
@@ -3417,7 +3425,7 @@ function apres(ecran){
 document.addEventListener("scroll",e=>{if(e.target.classList?.contains("defile")&&e.target.scrollTop>60)document.querySelectorAll(".pret").forEach(p=>p.classList.add("vu"))},true);
 document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){}});
 </script>
-<script src="../loginail-site/options-site.js?v=1911"></script><script src="resa-simu.js?v=2411t"></script><script src="legal-site.js?v=2411t"></script><script src="menu-coffin.js?v=3"></script><script src="menu-site.js?v=3"></script>
+<script src="../loginail-site/options-site.js?v=1911"></script><script src="resa-simu.js?v=2411rc"></script><script src="legal-site.js?v=2411t"></script><script src="menu-coffin.js?v=3"></script><script src="menu-site.js?v=3"></script>
 <!-- 20/11 (Marie, D63) : « Écrin vivant », le nouvel habit du bas des sites -->
 <link rel="stylesheet" href="ecrin-vivant.css?v=2011b"><script src="ecrin-vivant.js?v=2011b"></script>
 <script src="fonds-couleur.js?v=1511"></script>
