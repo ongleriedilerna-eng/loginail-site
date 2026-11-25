@@ -1069,6 +1069,7 @@ var RONDS = (() => { try { return Object.assign({}, window.RONDS_THEMES || {}, J
   <div class="annuleP" id="annuleP">Photo retirée <button id="annulerP">Annuler</button></div>
   <span class="maquette">MAQUETTE A</span>
 </div>
+<script src="perso/bouge-un.js?v=2511b"></script>
 <script src="perso/perso-pilote.js?v=2111ret"></script>
 <script>/* 21/11 : dans la LISTE, des charms en petite taille (160 px, ~8 Ko au lieu de ~150 Ko) ; sur le site, la grande image */window.imgMini=n=>`../loginail-site/charms-mini/${n}.webp?q=256`;   /* 21/11 : version B choisie par Marie (256 px, qualité 95, ~22 Ko au lieu de ~140) */</script>
 <script>
@@ -1131,7 +1132,7 @@ function rend(o) {
         if (x.isIntersecting) { if (m.dataset.ok !== lst.dataset.cle) { m.dataset.ok = lst.dataset.cle; fileEnt(m); } window._visE.add(m); }
         else { window._visE.delete(m); m.classList.add("off"); /* 21/11 (Marie : « ça met énormément de temps ») : on GARDE la vignette déjà dessinée (en pause) au lieu de l'effacer : plus rien à redessiner quand on revient */ }
         /* au plus 6 vignettes bougent en même temps (les premières visibles) : les autres restent sur une image */
-        [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", i >= 6)); }), { rootMargin: "160px" });
+        [...window._visE].sort((a, b) => a.compareDocumentPosition(b) & 4 ? -1 : 1).forEach((v, i) => v.classList.toggle("off", window.BOUGE_UN ? !v.parentElement.classList.contains("bouge") : i >= 6)); }), { rootMargin: "160px" });   /* 25/11 : « seul le carré touché bouge », choisi par Marie (perso/bouge-un.js) */
       /* 20/11 (Marie : « ça saccade ») : (1) les vignettes se dessinent UNE par image (plus toutes d'un coup = plus de blocage) ;
          (2) pendant qu'on fait défiler, tout est mis en pause (reprend 0,2 s après) */
       if (!window.fileEnt) { window._qE = []; let on = 0; const go = () => { const t0 = performance.now(); while (window._qE.length && performance.now() - t0 < 6) { const m = window._qE.shift(); if (!window._visE.has(m)) { m.dataset.ok = ""; continue; }
