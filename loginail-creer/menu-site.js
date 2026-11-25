@@ -15,10 +15,10 @@
   .ecran .fab,.ecran .fab-menu,.ecran .dock,.ecran .dk-panel,.ecran .idx,.ecran .lgt,.ecran .burger,.ecran .menu,.ecran .voileM,
   .ecran .barre-nav,.ecran .mcb-haut,.ecran .mcb-plein,.ecran .cof-barre{display:none!important}
   .lm-btn{position:absolute;top:var(--lm-h,14px);right:14px;z-index:90;width:46px;height:46px;border-radius:23px;border:0;padding:0;cursor:pointer;
-    background:color-mix(in srgb,var(--lm-c) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    background:var(--lm-b,color-mix(in srgb,var(--lm-c) 86%,transparent));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     box-shadow:0 6px 18px -8px rgba(0,0,0,.35);-webkit-tap-highlight-color:transparent;transition:transform .15s}
   .lm-btn:active{transform:scale(.94)}
-  .lm-btn i{position:absolute;left:14px;width:18px;height:1.8px;border-radius:2px;background:var(--lm-e);transition:transform .28s cubic-bezier(.32,.72,0,1),opacity .2s}
+  .lm-btn i{position:absolute;left:14px;width:18px;height:1.8px;border-radius:2px;background:var(--lm-bi,var(--lm-e));transition:transform .28s cubic-bezier(.32,.72,0,1),opacity .2s}
   .lm-btn i:nth-child(1){top:16.5px}.lm-btn i:nth-child(2){top:22px}.lm-btn i:nth-child(3){top:27.5px}
   .lm-on .lm-btn i:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
   .lm-on .lm-btn i:nth-child(2){opacity:0}
@@ -38,7 +38,7 @@
     opacity:0;transform:translateY(8px);transition:opacity .25s,transform .3s cubic-bezier(.32,.72,0,1)}
   html body .ecran .lm-pan a.lm-l::after{content:"›";font:300 22px Jost,sans-serif;opacity:.45}
   .lm-on .lm-pan a.lm-l{opacity:1!important;transform:none!important}
-  .lm-res{flex:none;border:0;border-radius:30px;height:54px;width:100%;background:var(--lm-e);color:var(--lm-c);
+  .lm-res{flex:none;border:0;border-radius:30px;height:54px;width:100%;background:var(--lm-b,var(--lm-e));color:var(--lm-bi,var(--lm-c));
     font:500 12px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
   .lm-leg{margin-top:auto;padding-top:18px;font:400 11px Jost,sans-serif;opacity:.6;text-align:center;color:var(--lm-e);
     text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:0}
@@ -105,6 +105,10 @@
       const enc = choix.find(c => contraste(c, car) >= 4.5) || choix.sort((a, b) => contraste(b, car) - contraste(a, car))[0];
       e.style.setProperty("--lm-e", enc); e.style.setProperty("--lm-c", car);
       if (ti) e.style.setProperty("--lm-p", getComputedStyle(ti).fontFamily);
+      /* 25/11 (Marie) : le rond du menu et son bouton Réserver prennent la couleur du bouton « Réserver un créneau » choisi par la pro */
+      const cta = [...d.querySelectorAll("[data-res],.cta,.hbtn")].find(b => visible(b) && !b.closest(".lm-pan") && (() => { const c = getComputedStyle(b).backgroundColor; return c && !/rgba\(\d+, \d+, \d+, 0\)|transparent/.test(c); })());
+      if (cta) { const cc = getComputedStyle(cta); e.style.setProperty("--lm-b", cc.backgroundColor); e.style.setProperty("--lm-bi", contraste(cc.color, cc.backgroundColor) >= 3 ? cc.color : (lum(cc.backgroundColor) > .4 ? "#1E1C1B" : "#FFFFFF")); }
+      else { e.style.removeProperty("--lm-b"); e.style.removeProperty("--lm-bi"); }
       /* sous l'encoche (téléphone dessiné) ou sous la zone de l'heure (vrai téléphone) */
       const ile = e.querySelector(":scope > .ile");
       e.style.setProperty("--lm-h", visible(ile) ? (ile.offsetTop + ile.offsetHeight + 8) + "px" : "calc(env(safe-area-inset-top,0px) + 14px)");
