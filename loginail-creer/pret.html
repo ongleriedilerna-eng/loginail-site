@@ -1874,6 +1874,43 @@ html.edition .hent,html.edition .hent *{animation-duration:1ms!important;animati
 </style>
 <script src="prestations-detail.js?v=2411t"></script>
 <script src="midi-resa.js?v=2211midi"></script>
+<style id="retours2511">/* 25/11 (Marie) : retours sur le site des salons */
+/* 1. sur ordinateur, plus de faux téléphone noir ni d'étiquette « C2 Version choisie » : le site prend toute la hauteur */
+@media (min-width:700px){
+  html.public body{background:#EFE9E3}
+  html.public .rangee{display:flex!important;justify-content:center;align-items:stretch;min-height:100dvh;padding:0!important;gap:0}
+  html.public .col{display:none}html.public .col.vis{display:flex;gap:0}
+  html.public .code,html.public .rtitre,html.public .ile{display:none!important}
+  html.public .tel{zoom:1!important;width:min(100vw,460px);height:100dvh;padding:0;border-radius:0;background:none;box-shadow:0 0 70px -24px rgba(30,28,27,.35)}
+  html.public .ecran{width:100%;height:100%;border-radius:0}
+}
+/* 1 bis. le « carré » autour du site : le bord noir du téléphone dessiné (.tel .ecran::after) restait sur le vrai site */
+html.public .tel .ecran::after{display:none}
+@media (max-width:699px){.tel .ecran::after{display:none}}
+/* 2. le trait noir en bas : les fenêtres fermées (dont une noire) attendaient juste sous l'écran ; fermées, elles sont maintenant invisibles */
+.ecran .fiche:not(.on){visibility:hidden;transition:transform .5s cubic-bezier(.2,.7,.2,1),visibility 0s .5s}
+.ecran .feuille:not(.on){visibility:hidden;transition:transform .45s cubic-bezier(.2,.7,.2,1),visibility 0s .45s}
+.act:not(.on) .fe{visibility:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1),visibility 0s .5s}
+.lg:not(.on) .lf{visibility:hidden;transition:transform .45s cubic-bezier(.2,.8,.2,1),visibility 0s .45s}
+/* 3. le « + » des prestations : ses deux traits bien au centre du rond */
+.ecran.ecrin .e-presta .tir-h i:before,.ecran.ecrin .e-presta .tir-h i:after{left:10px!important;right:10px!important;top:calc(50% - .75px)!important;height:1.5px!important;border-radius:1px}
+/* 4. menu ouvert : la barre « Réserver » du bas se cache, on voit les langues */
+.lm-on .x-pil,.lm-on .resbar{opacity:0!important;pointer-events:none!important}
+/* 5. charms : ils arrivent en douceur, et la cliente peut jouer avec (toucher = ils sautent, puis on peut les lancer) */
+.ch-couche{animation:chArrive .35s ease-out both}
+@keyframes chArrive{from{opacity:0;transform:translateY(-6px)}}
+html:not(.ch-placer) .ch-couche .charm.eveille{pointer-events:auto!important}
+.ch-corps.saute{animation:chSaute .62s cubic-bezier(.3,1.5,.5,1)!important}
+@keyframes chSaute{0%{transform:none}28%{transform:translateY(-30px) rotate(-16deg) scale(1.18)}55%{transform:translateY(0) rotate(12deg) scale(.92,1.06)}75%{transform:translateY(-8px) rotate(-5deg)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.ch-corps.saute{animation:none!important}.ch-couche{animation:none}}
+/* 6. Instagram : une carte, sans photos (25/11) */
+.ecran .ig-carte{padding:14px;border-radius:20px;background:color-mix(in srgb,currentColor 7%,transparent)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 14%,transparent)!important;margin-bottom:0}
+.ecran .ig-carte b{color:inherit!important;font-size:15px}.ecran .ig-carte span{opacity:.65}
+.ecran .ig-carte .ig-ic{width:46px;height:46px;border:0!important;box-shadow:none!important;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.ig-carte .ig-ic svg{width:24px;height:24px}
+.ig-carte b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ig-carte>div:nth-child(2){min-width:0}
+</style>
 </head>
 <body>
 <div class="bandeau"><b>Votre site est prêt</b>Essayez tout ce que vous voulez : univers, couleur, fond, détails. Puis « C’est parfait ».</div>
@@ -1954,7 +1991,7 @@ const L={
    pmr:"Parking accessible en fauteuil roulant",tel:"Rendez-vous aussi par téléphone",regles:"Acompte, retard et annulation",paie:"Moyens de paiement",aremplir:"à remplir",
    tarif:"tarif à remplir",guide:"Touche une prestation pour la réserver",ex:"exemple",remP:"Prix et durées d’exemple.",
    reserverP:"Réserver cette prestation",toucher:"Touche une photo pour la voir en grand",aide:"Glisse vers le bas pour fermer",
-   exInsta:"Exemple : ici s’afficheront ses 6 derniers posts Instagram quand elle aura connecté son compte. Pour l’instant, ce sont les photos de sa fiche Google.",
+   exInsta:"Exemple : ici, le lien vers son Instagram.",
    ecrireT:"Lui écrire",sms:"Message",wa:"WhatsApp",dm:"Instagram",etape5:"La réservation en ligne, c’est l’étape 5",langav:"",cree:"Site créé avec Loginail",creneau:"Réserver un créneau",offres:"Offres",faq:"Questions fréquentes",tva:"Prix TTC · TVA non applicable, art. 293 B du CGI",exPlus:"Exemple : cette partie s’affiche seulement si la pro la remplit.",ml:"Mentions légales",conf:"Confidentialité",cgv:"Conditions de réservation",ck:"Cookies",ckT:"Cookies",ckP:"Ce site utilise un cookie de Google pour afficher le plan du salon. Vous pouvez accepter ou refuser.",acc:"Accepter",ref:"Refuser",toutAcc:"Tout accepter",toutRef:"Tout refuser",valider:"Valider",planG:"Plan Google Maps",planM:"Le plan s’affiche si vous acceptez le cookie de Google.",afficher:"Afficher le plan",planSans:"Plan sans cookie : on peut le bouger, et « Itinéraire » ouvre Google Maps.",sansCk:"Ce site n’utilise aucun cookie de pub ni de suivi.",pageType:"page type, remplie toute seule avec ses infos"},
  en:{visite:"First visit?",vis1:"I choose my service and book online, day and night.",vis2:"I get a text reminder the day before.",vis3:"I come to the salon: the address and directions are just below.",type:"Beauty salon",avisG:"Google reviews",presta:"Services",real:"My work",avis:"Google reviews",apropos:"About",salon:"The salon",savoir:"Good to know",horaires:"Opening hours",insta:"Instagram",
    accueil:"Home",reserver:"Book",ecrire:"Message",laisser:"Leave a review",itin:"Directions",appeler:"Call",suivre:"Follow",ferme:"Closed",auj:"today",
@@ -1964,7 +2001,7 @@ const L={
    pmr:"Wheelchair-accessible parking",tel:"Appointments also by phone",regles:"Deposit, lateness and cancellation",paie:"Payment methods",aremplir:"to be filled in",
    tarif:"price to be filled in",guide:"Tap a service to book it",ex:"example",remP:"The first 3 prices and durations are examples.",
    reserverP:"Book this service",toucher:"Tap a photo to see it full screen",aide:"Swipe down to close",
-   exInsta:"Example: her 6 latest Instagram posts will show here once she connects her account.",
+   exInsta:"Example: a link to her Instagram.",
    ecrireT:"Send a message",sms:"Text message",wa:"WhatsApp",dm:"Instagram",etape5:"Online booking is step 5",langav:"Reviews written in French",cree:"Site created with Loginail",creneau:"Book a slot",offres:"Offers",faq:"FAQ",tva:"Prices incl. tax · VAT not applicable, art. 293 B CGI",exPlus:"Example: this part only shows if she fills it in.",ml:"Legal notice",conf:"Privacy",cgv:"Booking terms",ck:"Cookies",ckT:"Cookies",ckP:"This site uses a Google cookie to show the map of the salon. You can accept or refuse.",acc:"Accept",ref:"Refuse",toutAcc:"Accept all",toutRef:"Refuse all",valider:"Confirm",planG:"Google Maps",planM:"The map shows if you accept the Google cookie.",afficher:"Show the map",planSans:"Cookie-free map: you can move it, and “Directions” opens Google Maps.",sansCk:"This site uses no advertising or tracking cookies.",pageType:"template page, filled in automatically"},
  it:{visite:"Prima visita?",vis1:"Scelgo il trattamento e prenoto online, giorno e notte.",vis2:"Ricevo un promemoria via SMS il giorno prima.",vis3:"Vengo al salone: indirizzo e indicazioni sono qui sotto.",type:"Centro estetico",avisG:"recensioni Google",presta:"Trattamenti",real:"I miei lavori",avis:"Recensioni Google",apropos:"Chi sono",salon:"Il salone",savoir:"Da sapere",horaires:"Orari",insta:"Instagram",
    accueil:"Home",reserver:"Prenota",ecrire:"Scrivi",laisser:"Lascia una recensione",itin:"Indicazioni",appeler:"Chiama",suivre:"Segui",ferme:"Chiuso",auj:"oggi",
@@ -2421,9 +2458,8 @@ function site3(t,v,lang){
   /* instagram : A bande, B une grande + deux, C quatre carrés + Suivre au milieu */
   let insta="";
   if(D.insta){const lien=`<a href="https://instagram.com/${D.insta.slice(1)}" target="_blank" rel="noopener">${t.suivre}</a>`;
-    insta=true?`<div class="ig-top r"><span>${D.insta}</span>${lien}</div><div class="igband"><div class="marq">${D.grille.map(n=>`<img src="${P(n)}" alt="">`).join("").repeat(2)}</div></div>`
-      :X==="b"?`<div class="ig3 r"><img class="g" src="${P(D.grille[0])}" alt=""><img src="${P(D.grille[1])}" alt=""><img src="${P(D.grille[2])}" alt=""></div><div class="ig-top r"><span>${D.insta}</span>${lien}</div>`
-      :`<div class="ig4 r">${D.grille.slice(0,4).map(n=>`<img src="${P(n)}" alt="">`).join("")}<a class="ig4-b" href="https://instagram.com/${D.insta.slice(1)}" target="_blank" rel="noopener">${t.suivre} ${D.insta}</a></div>`;
+    /* 25/11 (Marie) : plus de photos qui défilent (ce n'étaient pas ses photos Instagram) : une carte avec son @ et « Suivre » */
+    insta=`<div class="igprof ig-carte r"><div class="rondp ig-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></div><div><b>${D.insta}</b><span>Instagram</span></div>${lien}</div>`;
     insta=`<div class="sec">${T(t.insta)}${insta}<div class="exemple vide">${t.exInsta}</div></div>`}
   return (`${hero}
   <div class="sec">${T(t.presta,"presta")}${presta}<div class="rem vide">${t.remP}</div>${D.tva?`<div class="tva">${t.tva}</div>`:""}</div>
@@ -2544,9 +2580,8 @@ function site2(t,v,lang){
   let insta="";
   if(D.insta){
     const lien=`<a href="https://instagram.com/${D.insta.slice(1)}" target="_blank" rel="noopener">${t.suivre}</a>`;
-    if(X==="a"){const row=D.grille.map(n=>`<img src="${P(n)}" alt="">`).join("");insta=`<div class="ig-top r"><span>${D.insta}</span>${lien}</div><div class="igband"><div class="marq">${row}${row}</div></div>`}
-    else if(X==="b") insta=`<div class="ig3 r"><img class="g" src="${P(D.grille[0])}" alt=""><img src="${P(D.grille[1])}" alt=""><img src="${P(D.grille[2])}" alt=""></div><div class="ig-top r"><span>${D.insta}</span>${lien}</div>`;
-    else insta=`<div class="igprof r"><div class="rondp"><img src="${P(D.hero)}" alt=""></div><div><b>${D.insta}</b><span>Instagram</span></div>${lien}</div><div class="igscroll">${D.grille.map(n=>`<img src="${P(n)}" alt="">`).join("")}</div>`;
+    /* 25/11 (Marie) : plus de photos qui défilent, une carte avec son @ et « Suivre » */
+    insta=`<div class="igprof ig-carte r"><div class="rondp ig-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></div><div><b>${D.insta}</b><span>Instagram</span></div>${lien}</div>`;
     insta=`<div class="sec">${ti(t.insta)}${insta}<div class="exemple vide">${t.exInsta}</div></div>`;
   }
   return `${haut(t,lettres)}
@@ -3368,9 +3403,15 @@ function plume(c,def,S){const W=def.clientWidth,sol=def._ch?.sol||def.scrollHeig
 function apres(ecran){
   /* atelier « Composez votre ongle » mis de côté (Marie, 06/11) : try{monteAtelier(ecran)}catch(e){} */
   try{nouvellesParties(ecran)}catch(e){console.warn(e)}
-  try{const qq=new URLSearchParams(location.search),l=BR.charms||(qq.get("charm")||"").split(",").filter(Boolean);if(l.length)setTimeout(()=>poseCharms(l),450)}catch(e){}
-  /* 06/11 (Marie) : l'écriture du nom et les paillettes au toucher (options-site.js) */
-  try{const qq=new URLSearchParams(location.search),po=BR.police||qq.get("police"),pa=BR.paillettes||qq.get("paillettes");if(po||pa)setTimeout(()=>{if(!window.LOGI_OPT)return;if(po)LOGI_OPT.poseNom(ecran.querySelector("h1"),po);if(pa)LOGI_OPT.paillettes(ecran,pa)},500)}catch(e){console.warn(e)}
+  /* 25/11 (Marie) : les charms arrivaient en retard (on attendait 0,45 s + le chargement des images).
+     Maintenant : les images partent tout de suite, l'écriture du nom est posée dès que possible, puis les charms juste après. */
+  try{const qq=new URLSearchParams(location.search),l=BR.charms||(qq.get("charm")||"").split(",").filter(Boolean),po=BR.police||qq.get("police"),pa=BR.paillettes||qq.get("paillettes");
+    const CI=window.CH_IMG||{};l.forEach(n=>{if(CI[n]){const im=new Image();im.decoding="async";im.src=CI[n]}});
+    let fait=false;const go=()=>{if(fait)return;fait=true;
+      try{if(window.LOGI_OPT){if(po)LOGI_OPT.poseNom(ecran.querySelector("h1"),po);if(pa)LOGI_OPT.paillettes(ecran,pa)}}catch(e){console.warn(e)}
+      if(l.length)requestAnimationFrame(()=>{try{poseCharms(l)}catch(e){console.warn(e)}})};
+    const t0=performance.now();const attend=()=>{if(window.LOGI_OPT||performance.now()-t0>600)go();else setTimeout(attend,30)};
+    if(document.fonts&&document.fonts.ready)Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,250))]).then(attend);else attend()}catch(e){console.warn(e)}
   /* 06/11 (Marie) : le fond du nuancier par son nom (&fond=…) — pour les sites d'exemple « ambiances » */
   try{const fo=BR.fond||new URLSearchParams(location.search).get("fond");if(fo){const pose=()=>{try{const i=F100.idx[fo];if(i!=null)F100.poseFond(document,i,/nuit/.test(location.search))}catch(e){console.warn(e)}};
     if(window.F100)pose();else{addEventListener("f100",pose,{once:true});if(!document.querySelector('script[src*="fonds-100.js"]')){const sc=document.createElement("script");sc.src="../loginail-site/fonds-100.js?v=1511";document.head.appendChild(sc)}}}}catch(e){console.warn(e)}
@@ -3425,7 +3466,7 @@ function apres(ecran){
 document.addEventListener("scroll",e=>{if(e.target.classList?.contains("defile")&&e.target.scrollTop>60)document.querySelectorAll(".pret").forEach(p=>p.classList.add("vu"))},true);
 document.querySelectorAll("[data-pf] .ecran").forEach(e=>{try{apres(e)}catch(x){}});
 </script>
-<script src="../loginail-site/options-site.js?v=1911"></script><script src="resa-simu.js?v=2411rc"></script><script src="legal-site.js?v=2411t"></script><script src="menu-coffin.js?v=3"></script><script src="menu-site.js?v=3"></script>
+<script src="../loginail-site/options-site.js?v=1911"></script><script src="resa-simu.js?v=2411rc"></script><script src="legal-site.js?v=2411t"></script><script src="menu-coffin.js?v=3"></script><script src="retours-2511.js?v=1"></script><script src="menu-site.js?v=2511"></script>
 <!-- 20/11 (Marie, D63) : « Écrin vivant », le nouvel habit du bas des sites -->
 <link rel="stylesheet" href="ecrin-vivant.css?v=2011b"><script src="ecrin-vivant.js?v=2011b"></script>
 <script src="fonds-couleur.js?v=1511"></script>
