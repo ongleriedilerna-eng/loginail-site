@@ -2699,6 +2699,19 @@ document.addEventListener("DOMContentLoaded",function(){
   html body:not(#_) .marie-tel.m5{padding-top:0!important}
 }
 </style>
+<style id="bon-a-savoir-court">
+/* 25/11 (Marie, version A) : TÉLÉPHONE seulement — « Bon à savoir » plus court : lignes plus fines, chaque question sur une ligne.
+   Ordinateur inchangé (questions longues). Maquette : maquettes/bon-a-savoir-2511 */
+.v3faq .q-t{display:none}
+@media (max-width:760px){
+  .v3faq .q-o{display:none}.v3faq .q-t{display:inline}
+  html body:not(#_) .v3 .v3faq .grille{margin-top:12px}
+  html body:not(#_) .v3 .v3faq details{padding:11px 0}
+  html body:not(#_) .v3 .v3faq summary{font-size:15px}
+  html body:not(#_) .v3 .v3faq summary::after{font-size:18px}
+  html body:not(#_) .v3 .v3faq details p{font-size:14px;margin-top:4px}
+}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2938,11 +2951,11 @@ document.addEventListener("DOMContentLoaded",function(){
   <div class="wrap">
     <div class="k" style="color:#F4A9C2">Bon à savoir</div>
     <div class="grille">
-      <details><summary>Je ne suis pas douée en informatique.</summary><p>Tu colles ton lien Google Maps, ton site se fait tout seul. Ensuite tout se change avec le doigt, dans l’appli.</p></details>
-      <details><summary>Mes clientes doivent télécharger quelque&nbsp;chose&nbsp;?</summary><p>Non. Elles ouvrent ton site et réservent. L’appli, c’est pour toi.</p></details>
+      <details><summary><span class="q-o">Je ne suis pas douée en informatique.</span><span class="q-t">Pas douée en informatique&nbsp;?</span></summary><p>Tu colles ton lien Google Maps, ton site se fait tout seul. Ensuite tout se change avec le doigt, dans l’appli.</p></details>
+      <details><summary><span class="q-o">Mes clientes doivent télécharger quelque&nbsp;chose&nbsp;?</span><span class="q-t">Mes clientes doivent télécharger&nbsp;?</span></summary><p>Non. Elles ouvrent ton site et réservent. L’appli, c’est pour toi.</p></details>
       <details><summary>Et si je n’aime pas&nbsp;?</summary><p>Tu ne paies rien pour créer ton site et le voir. Le premier mois est offert. Tu arrêtes en 1 clic, sans engagement.</p></details>
       <details><summary>Les SMS sont payants&nbsp;?</summary><p>Non. Le SMS de rappel, la veille du rendez-vous, est compris dans les 49,99 €, sans limite.</p></details>
-      <details><summary>Je travaille chez moi, sans salon.</summary><p>Justement. Un site à ton nom, oui. Ton adresse exacte est donnée à la cliente une fois le rendez-vous confirmé.</p></details>
+      <details><summary><span class="q-o">Je travaille chez moi, sans salon.</span><span class="q-t">Je travaille chez moi&nbsp;?</span></summary><p>Justement. Un site à ton nom, oui. Ton adresse exacte est donnée à la cliente une fois le rendez-vous confirmé.</p></details>
       <details><summary>J’ai mon adresse en .fr&nbsp;?</summary><p>Oui, dès le 2e mois, incluse : tonsalon.fr. Le premier mois, ton site est sur loginail.fr/tonsalon, puis il passe tout seul sur ton .fr.</p></details>
     </div>
   </div>
