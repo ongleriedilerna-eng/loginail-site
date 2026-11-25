@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Loginail · L’appli des prothésistes ongulaires (version B)</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+:root{--fond:#F6EFEA;--encre:#1E1C1B;--doux:#5E5550;--rose:#B03562;--pale:#FBE7EE;--brun:#2A1B1E}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--fond);color:var(--encre);font:400 16px/1.45 Jost,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.ecran{height:100svh;min-height:min-content;display:flex;flex-direction:column;align-items:center;text-align:center;padding:14px 22px calc(18px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto;position:relative;overflow:hidden}
+.logo{display:flex;align-items:center;gap:8px;font:500 22px/1 'Cormorant Garamond',serif;height:34px}
+.logo img{width:30px;height:30px}
+h1{font:500 clamp(30px,8.9vw,40px)/1.02 'Cormorant Garamond',serif;letter-spacing:-.01em;margin-top:12px}
+.sous{margin-top:8px;font:500 16px/1.35 Jost;color:var(--encre)}
+.sous b{font-weight:500;color:var(--rose)}
+
+/* le téléphone qui montre le geste */
+.scene{position:relative;flex:1 1 0;min-height:190px;max-height:420px;width:100%;display:flex;align-items:center;justify-content:center;margin-top:10px}
+.tel{position:absolute;top:4px;left:50%;translate:-50% 0;container-type:size;height:calc(100% - 8px);aspect-ratio:150/252;border-radius:28px;border:6px solid #1E1C1B;background:#fff;overflow:hidden;box-shadow:0 22px 44px -18px rgba(60,30,40,.5)}
+.vue{position:absolute;inset:0;opacity:0;transition:opacity .45s,transform .45s;transform:scale(1.04)}
+.vue.on{opacity:1;transform:none}
+.vue img{width:100%;display:block}
+/* vue 1 : coller son lien */
+.v1{background:linear-gradient(#FBEFF2,#fff 55%);padding:9cqh 8cqw 0;text-align:left}
+.v1 .t{font:500 7.2cqh/1.05 'Cormorant Garamond',serif}
+.v1 .champ{margin-top:5cqh;border:1.5px solid #E7D3CB;border-radius:11px;background:#fff;padding:3.2cqh 3.2cqh;font:400 3.8cqh/1.25 Jost;color:#9A8F88;min-height:17.5cqh;transition:border-color .3s}
+.v1 .champ.rempli{border-color:var(--rose);color:var(--encre)}
+.v1 .champ b{display:block;font-weight:500;font-size:4.2cqh}
+.v1 .coller{margin-top:3.6cqh;height:12cqh;border-radius:9px;background:var(--brun);color:#fff;font:500 4.2cqh/12cqh Jost;text-align:center;transition:transform .15s}
+.v1 .coller.appui{transform:scale(.92)}
+.v1 .ok{margin-top:4cqh;font:500 4cqh/1.3 Jost;color:var(--rose);opacity:0;transition:opacity .3s}
+.v1 .ok.on{opacity:1}
+.doigt{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(176,53,98,.28);border:2px solid rgba(176,53,98,.55);left:44%;top:56%;opacity:0;transition:opacity .2s,transform .2s}
+.doigt.on{opacity:1;transform:scale(.8)}
+/* vue 3 : la réservation arrive */
+.notif{position:absolute;left:7px;right:7px;top:8px;background:rgba(255,255,255,.97);border-radius:12px;padding:7px 9px;text-align:left;font:400 9.5px/1.3 Jost;box-shadow:0 8px 20px -8px rgba(60,30,40,.5);transform:translateY(-70px);transition:transform .5s cubic-bezier(.2,.9,.3,1.2)}
+.notif strong{display:block;color:var(--rose);font-weight:500;font-size:9.5px}
+.v3.on .notif{transform:none;transition-delay:.5s}
+.etapes{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.etapes span{white-space:nowrap;font:500 12.5px/1 Jost;padding:7px 11px;border-radius:99px;color:var(--doux);background:transparent;border:1px solid #E5D6CE;transition:all .3s}
+.etapes span.on{background:var(--encre);color:#fff;border-color:var(--encre)}
+.charm{position:absolute;width:36px;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.15))}
+.st{position:absolute;color:#E0628C;font-size:15px;animation:brille 2.4s infinite}
+.ia{position:absolute;right:0;bottom:-2px;font-size:9.5px;color:#9A8F88}
+
+.prix{margin-top:14px;font:500 15px/1.3 Jost}
+.prix .p{font:500 26px/1 'Cormorant Garamond',serif;margin-right:4px}
+.prix .cadeau.gris{background:#fff;color:var(--encre);border:1px solid #EADBD3}
+.prix .cadeau{display:inline-block;margin-top:8px;font:500 13px/1 Jost;color:var(--rose);background:var(--pale);border-radius:99px;padding:7px 12px}
+.btn{width:100%;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border-radius:18px;background:var(--brun);color:#fff;text-decoration:none;font:500 17px/1 Jost;box-shadow:0 10px 24px -12px rgba(42,27,30,.7);transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px}
+.sousbtn{font-size:12.5px;color:var(--doux);margin-top:8px}
+
+.suite{max-width:520px;margin:0 auto;padding:34px 22px 30px;text-align:center}
+.marie p{font:500 23px/1.2 'Cormorant Garamond',serif}
+.marie small{display:block;margin-top:10px;font:400 13px Jost;color:var(--doux)}
+.pied{margin-top:28px;font-size:12px;color:var(--doux);line-height:1.9}
+.pied a{color:var(--doux)}
+@media (max-width:359px){.etapes span{font-size:11.5px;padding:6px 8px}}
+@keyframes brille{50%{opacity:.25;scale:.7}}
+@keyframes flotte{50%{translate:0 -7px;rotate:6deg}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="ecran">
+  <div class="logo"><img src="../icone-appli.svg" alt="">Loginail</div>
+
+  <h1>L’appli des prothésistes ongulaires.</h1>
+  <p class="sous">Elle crée ton site <b>et gère ton agenda.</b></p>
+
+  <div class="scene" aria-hidden="true">
+    <div class="tel" id="tel">
+      <div class="vue v1 on" id="v1">
+        <div class="t">Colle ton lien Google Maps ou Planity</div>
+        <div class="champ" id="champ">Ton lien ici</div>
+        <div class="coller" id="coller">Coller mon lien</div>
+        <div class="ok" id="ok">✓ On a trouvé tes photos, tes prestations et tes prix.</div>
+        <div class="doigt" id="doigt"></div>
+      </div>
+      <div class="vue v2" id="v2"><img id="site" src="../loginail-site/apercus-univers/ex-nailsbydrimf.webp" alt=""></div>
+      <div class="vue v3" id="v3"><img src="../loginail-site/apercus-univers/app-agenda-1911.webp" alt="">
+        <div class="notif"><strong>Nouvelle réservation</strong>Léa · pose gel · samedi 10 h</div>
+      </div>
+    </div>
+    <img class="charm" src="../loginail-site/charms-mini/cerisedisco.webp" alt="" style="left:calc(50% - 130px);top:40px;width:40px;animation:flotte 5s infinite ease-in-out">
+    <img class="charm" src="../loginail-site/charms-mini/noeudcerise.webp" alt="" style="left:calc(50% + 94px);top:150px;animation:flotte 6s .8s infinite ease-in-out">
+    <img class="charm" src="../loginail-site/charms-mini/perle.webp" alt="" style="left:calc(50% - 118px);top:190px;width:26px">
+    <span class="st" style="left:calc(50% + 100px);top:46px">✦</span>
+    <span class="st" style="left:calc(50% - 100px);top:118px;animation-delay:.9s">✦</span>
+    <span class="ia">Exemple créé par IA</span>
+  </div>
+  <div class="etapes"><span class="on" data-e="1">1 · Ton lien</span><span data-e="2">2 · Ton site</span><span data-e="3">3 · Ton agenda</span></div>
+
+  <p class="prix"><span class="p">49,99 €</span>/ mois · 0 % de commission<br><span class="cadeau">1er mois offert</span> <span class="cadeau gris">Sans engagement</span></p>
+
+  <a class="btn" href="../loginail-creer/telecharger.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+    Télécharger l’appli
+  </a>
+  <p class="sousbtn">Sur iPhone · App Store</p>
+</main>
+
+<section class="suite">
+  <div class="marie">
+    <p>« Je suis prothésiste, comme toi. Je voulais un site aussi beau que nos ongles, sans commission. Alors j’ai créé l’appli. »</p>
+    <small>Marie · @ongleriedilerna</small>
+  </div>
+  <footer class="pied">
+    Les salons et photos de cette page sont des exemples créés par IA.<br>
+    <a href="../mentions-legales.html">Mentions légales</a> · <a href="../confidentialite.html">Confidentialité</a> · <a href="../conditions-abonnement.html">Conditions d’abonnement</a><br>
+    <a href="https://app.loginail.fr">Déjà inscrite ? Se connecter</a>
+  </footer>
+</section>
+
+<script>
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var $=function(i){return document.getElementById(i)};
+  var sites=[['ex-nailsbydrimf','Nails by Drimf','Marseille'],['look-roue-1','Cyber Nails','Lyon'],['look-roue-3',"L’Atelier Argent",'Bordeaux'],['look-roue-2','Nuage Nails','Nantes']], n=0, s=sites[0];
+  var etapes=document.querySelectorAll('.etapes span');
+  function vue(k){[1,2,3].forEach(function(i){$('v'+i).classList.toggle('on',i===k)});
+    etapes.forEach(function(e){e.classList.toggle('on',+e.dataset.e===k)})}
+  function t(ms,f){return setTimeout(f,ms)}
+  function tour(){
+    var ch=$('champ'); ch.className='champ'; ch.textContent='Ton lien ici'; $('ok').classList.remove('on');
+    vue(1);
+    t(700,function(){$('doigt').classList.add('on');$('coller').classList.add('appui')});
+    t(950,function(){$('doigt').classList.remove('on');$('coller').classList.remove('appui');
+      ch.className='champ rempli'; ch.innerHTML='<b>'+s[1]+'</b>'+s[2]+' · tes photos · tes prix'});
+    t(1350,function(){$('ok').classList.add('on')});
+    t(2500,function(){$('site').src='../loginail-site/apercus-univers/'+s[0]+'.webp';vue(2)});
+    t(4700,function(){vue(3)});
+    t(7600,function(){s=sites[++n%sites.length];new Image().src='../loginail-site/apercus-univers/'+s[0]+'.webp';tour()});
+  }
+  tour();
+})();
+</script>
+</body>
+</html>

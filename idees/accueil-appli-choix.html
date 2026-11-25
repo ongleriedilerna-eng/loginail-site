@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nouvel accueil loginail.fr · choisis ta version</title>
+<link href="../polices.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#EFE6E0;color:#1E1C1B;font:400 15px/1.45 Jost,system-ui,sans-serif;padding:22px 18px 40px}
+h1{font:500 30px/1.1 'Cormorant Garamond',serif;text-align:center}
+.aide{text-align:center;color:#5E5550;margin-top:6px;font-size:14px}
+.rangee{display:flex;gap:26px;justify-content:center;align-items:flex-start;margin-top:22px;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.nom{font:500 15px/1 Jost;letter-spacing:.12em;text-transform:uppercase}
+.nom.auj{color:#9A8F88}
+.cadre{width:calc(393px * var(--k) + 16px);height:calc(692px * var(--k) + 16px);border-radius:46px;background:#1E1C1B;padding:8px;box-shadow:0 24px 50px -24px rgba(40,20,25,.6)}
+.cadre .dedans{width:393px;height:692px;transform:scale(var(--k));transform-origin:0 0;border-radius:38px;overflow:hidden;background:#fff}
+iframe{width:393px;height:692px;border:0;display:block}
+.dit{max-width:calc(393px * var(--k) + 16px);font-size:13.5px;color:#5E5550;text-align:center}
+.ouvrir{font:500 13px Jost;color:#B03562}
+:root{--k:.86}
+@media (max-width:1300px){:root{--k:.74}}
+@media (max-width:1100px){:root{--k:.62}}
+@media (max-width:620px){:root{--k:.8}}
+</style>
+</head>
+<body>
+<h1>Nouvel accueil loginail.fr</h1>
+<p class="aide">Fais défiler dans chaque téléphone. Regarde-les comme une prothésiste qui découvre Loginail.</p>
+<div class="rangee">
+  <div class="col">
+    <div class="nom auj">Aujourd’hui</div>
+    <div class="cadre"><div class="dedans"><iframe src="https://loginail.fr/" loading="lazy" title="Aujourd’hui"></iframe></div></div>
+    <p class="dit">Site + appli, 10 parties, 4 fois le prix.</p>
+  </div>
+  <div class="col">
+    <div class="nom">Version A · Calme</div>
+    <div class="cadre"><div class="dedans"><iframe src="accueil-appli-A.html" title="Version A"></iframe></div></div>
+    <p class="dit">Une phrase, ton site et ton agenda côte à côte, le prix, le bouton.</p>
+    <a class="ouvrir" href="accueil-appli-A.html" target="_blank">Ouvrir en grand</a>
+  </div>
+  <div class="col">
+    <div class="nom">Version B · Le geste</div>
+    <div class="cadre"><div class="dedans"><iframe src="accueil-appli-B.html" title="Version B"></iframe></div></div>
+    <p class="dit">Un téléphone qui montre les 3 gestes : ton lien → ton site → ton agenda.</p>
+    <a class="ouvrir" href="accueil-appli-B.html" target="_blank">Ouvrir en grand</a>
+  </div>
+</div>
+</body>
+</html>
