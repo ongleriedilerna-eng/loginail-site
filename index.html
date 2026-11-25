@@ -2742,6 +2742,11 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
   html body:not(#_) .v3 .v3frise li b{font-size:19px}
   html body:not(#_) .v3 .v3prix .rentab{margin-top:53px}
   html body:not(#_) .bas-go .bg-plus{display:block}
+  /* 25/11 nuit (Marie) : « 1 » sur la même ligne que « cliente de plus par mois » (on lit « 1 cliente… »),
+     et la carte descend jusqu'au bas de « Tout est inclus. » (hauteur recopiée par le petit script dessous) */
+  html body:not(#_) .rentab{box-sizing:border-box;align-items:center}
+  .rentab .rb-in{display:flex;align-items:baseline;gap:20px}
+  html body:not(#_) .rentab .rb-gros{font-size:72px}
 }
 @media (min-width:1000px) and (max-width:1180px){html body:not(#_) .bas-go .bg-plus{scale:.75}}
 </style>
@@ -2954,7 +2959,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
         <li><b>Ensuite</b><span>49,99 € par mois, tout compris. Si tu restes.</span></li>
         <li><b>Quand tu veux</b><span>Tu arrêtes en 1 clic. Sans frais, sans justification.</span></li>
       </ul>
-      <div class="rentab"><img src="loginail-site/charms-mini/cerisedisco.webp" alt=""><div class="rb-gros">1</div><div><b>cliente de plus par mois,<br>et c’est remboursé.</b><p>49,99 €, c’est moins qu’une pose. Une nouvelle cliente, ou un seul lapin évité grâce aux rappels SMS, et Loginail s’est payé tout seul.</p></div></div>
+      <div class="rentab"><img src="loginail-site/charms-mini/cerisedisco.webp" alt=""><div class="rb-in"><div class="rb-gros">1</div><div><b>cliente de plus par mois,<br>et c’est remboursé.</b><p>49,99 €, c’est moins qu’une pose. Une nouvelle cliente, ou un seul lapin évité grâce aux rappels SMS, et Loginail s’est payé tout seul.</p></div></div></div><script>/* 25/11 nuit : ORDINATEUR — la carte « 1 cliente de plus par mois » a la même hauteur que « Tout est inclus. » */(()=>{const go=()=>{const r=document.querySelector(".rentab"),k=document.querySelector(".k2c-ordi");if(!r||!k||!window.ResizeObserver)return;const m=matchMedia("(min-width:1000px)");const cale=()=>{r.style.minHeight=m.matches?k.offsetHeight+"px":""};new ResizeObserver(cale).observe(k);m.addEventListener("change",cale);cale()};document.readyState==="loading"?addEventListener("DOMContentLoaded",go):go()})();</script>
       <div class="k2c"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
       <div class="cq cq-bis cq-fin" aria-label="Le prix"><div class="cq-res">
         <div class="cq-logo">Logi<span>nail</span></div>
