@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Loginail · Page introuvable</title>
+<link rel="icon" href="favicon.svg">
+<style>
+@font-face{font-family:Abril;src:url(loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Jost;font-weight:400;src:url(loginail-site/polices/Jost-400-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Jost;font-weight:500;src:url(loginail-site/polices/Jost-500-latin.woff2) format("woff2");font-display:swap}
+:root{--fond:#F6EFEA;--encre:#1E1C1B;--doux:#5E5550;--fram:#B03562;--rose:#E0628C;--pale:#FBE7EE}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:radial-gradient(120% 70% at 50% 0,#FBE3EA 0,#F6EFEA 70%);color:var(--encre);font:400 16px/1.5 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.barre{display:flex;align-items:center;justify-content:center;height:64px}
+.marque{display:flex;align-items:center;gap:9px;font:500 13px Jost;letter-spacing:.3em;text-decoration:none;color:inherit}
+.marque img{width:30px;height:30px;border-radius:9px}
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 24px 60px;position:relative}
+.k{font:500 12px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--fram)}
+h1{font:400 clamp(30px,8.6vw,46px)/1.06 Abril,serif;letter-spacing:-.015em;margin-top:10px}
+h1 em{font-style:normal;color:var(--fram)}
+p{margin:12px auto 0;max-width:330px;color:var(--doux);font-size:17px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 28px;margin-top:24px;border-radius:99px;background:var(--encre);color:#fff;font:500 16px Jost;text-decoration:none;box-shadow:0 18px 34px -16px rgba(30,28,27,.6);transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.lien{display:inline-block;margin-top:14px;font-size:14.5px;color:var(--fram);text-underline-offset:3px}
+.ch{position:absolute;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
+@keyframes fl{0%,100%{translate:0 0}50%{translate:0 -9px}}
+.v{display:none}
+/* 1 · le 404 avec la cerise */
+body.v1 .v1,body.v2 .v2,body.v3 .v3{display:block}
+.gros{display:flex;align-items:center;justify-content:center;gap:4px;font:400 clamp(110px,34vw,170px)/1 Abril,serif;color:var(--encre);letter-spacing:-.03em}
+.gros img{width:.74em;height:.74em;object-fit:contain;animation:balance 3.2s ease-in-out infinite;transform-origin:50% 8%;filter:drop-shadow(0 14px 14px rgba(80,30,50,.25))}
+@keyframes balance{0%,100%{rotate:-7deg}50%{rotate:7deg}}
+/* 2 · le créneau introuvable */
+.rdv{width:min(320px,100%);margin:0 auto 26px;background:#fff;border-radius:24px;padding:18px;text-align:left;box-shadow:0 26px 50px -30px rgba(120,40,70,.6);rotate:-2deg}
+.rdv small{font:500 11px Jost;letter-spacing:.16em;text-transform:uppercase;color:var(--doux)}
+.rdv .h{display:flex;align-items:baseline;justify-content:space-between;margin-top:4px}
+.rdv .h b{font:400 44px/1 Abril,serif}
+.rdv .h i{font-style:normal;font:500 13px Jost;color:var(--fram);background:var(--pale);border-radius:99px;padding:5px 12px}
+.rdv .l{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed #E6D8D3}
+.rdv .l span{width:38px;height:38px;border-radius:50%;background:var(--pale);display:grid;place-items:center;font:400 18px Abril,serif;color:var(--fram)}
+.rdv .l div{font-size:14.5px;line-height:1.3}.rdv .l div b{display:block;font-weight:500}
+.rdv .l div em{font-style:normal;color:var(--doux)}
+/* 3 · la pluie de charms */
+.pluie{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.pluie img{position:absolute;top:-70px;animation:tombe linear infinite;filter:drop-shadow(0 8px 10px rgba(80,30,50,.2))}
+@keyframes tombe{to{transform:translateY(calc(100dvh + 140px)) rotate(200deg)}}
+body.v3 main>*:not(.pluie){position:relative;z-index:1}
+body.v3 h1{font-size:clamp(40px,12vw,64px)}
+@media (prefers-reduced-motion:reduce){.ch,.gros img,.pluie img{animation:none}.pluie img{top:auto;bottom:10px}}
+</style></head>
+<body>
+<header class="barre"><a class="marque" href="/"><img src="loginail-site/icone-appli.svg" alt="">LOGINAIL</a></header>
+<main>
+  <!-- 1 -->
+  <div class="v v1">
+    <div class="gros" aria-label="404">4<img src="loginail-site/charms-mini/cerisedisco.webp" alt="">4</div>
+    <h1>Oups, cette page s’est <em>cassé un ongle.</em></h1>
+    <p>Elle n’existe pas, ou elle a changé d’adresse. Rien de grave.</p>
+  </div>
+  <!-- 2 -->
+  <div class="v v2">
+    <div class="rdv" aria-hidden="true"><small>Rendez-vous</small><div class="h"><b>4 h 04</b><i>Introuvable</i></div><div class="l"><span>?</span><div><b>Cette page</b><em>Pose inconnue · 0 min</em></div></div></div>
+    <div class="k">Erreur 404</div>
+    <h1>Ce créneau <em>n’existe pas.</em></h1>
+    <p>La page que tu cherches n’est pas dans l’agenda. On te ramène au bon endroit.</p>
+  </div>
+  <!-- 3 -->
+  <div class="pluie v v3" aria-hidden="true"></div>
+  <div class="v v3">
+    <div class="k">Erreur 404</div>
+    <h1>Page <em>introuvable.</em></h1>
+    <p>On a cherché partout, même sous les charms.</p>
+  </div>
+  <a class="btn" href="/">Retour à l’accueil <span aria-hidden="true">→</span></a>
+  <a class="lien" href="https://wa.me/33745266189">Un souci ? Écris-moi sur WhatsApp</a>
+  <img class="ch v v1" src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="width:50px;left:18px;top:8%;rotate:-12deg">
+  <img class="ch v v1" src="loginail-site/charms-mini/perle.webp" alt="" style="width:34px;right:26px;top:16%;animation-delay:-2s">
+  <img class="ch v v2" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:52px;right:16px;top:6%;rotate:12deg">
+  <img class="ch v v2" src="loginail-site/charms-mini/saturne.webp" alt="" style="width:44px;left:14px;bottom:20%;animation-delay:-3s">
+</main>
+<script>
+const v=new URLSearchParams(location.search).get('v')||'1';document.body.classList.add('v'+(['1','2','3'].includes(v)?v:'1'));
+if(document.body.classList.contains('v3')){const P=document.querySelector('.pluie'),N=['cerisedisco','noeudcerise','perle','bouledisco','coeurchrome','etoilecristal','ceriseruban','collierperles','saturne'];
+  for(let i=0;i<14;i++){const im=new Image();im.src='loginail-site/charms-mini/'+N[i%N.length]+'.webp';im.alt='';const w=30+(i*7)%26;im.style.cssText=`width:${w}px;left:${(i*23+7)%92}%;animation-duration:${7+(i*3)%6}s;animation-delay:${-(i*1.3)%9}s;opacity:.9`;P.appendChild(im)}}
+</script>
+</body></html>
