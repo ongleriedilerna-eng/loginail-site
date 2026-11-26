@@ -248,6 +248,19 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .noms i{font:500 12.5px Jost;font-style:normal;padding:4px 10px;border-radius:99px;color:var(--doux);cursor:pointer;transition:background .25s,color .25s}
 .noms i.on{background:var(--fram);color:#fff}
 @media (prefers-reduced-motion:reduce){.piste{animation:none}}
+
+/* 4 · à glisser vers la droite (Marie, 26/11 soir) */
+.choix:has(.sw-liste.c4){overflow:hidden}
+.sw-liste.c4{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:22px -20px 0;padding:6px 20px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.sw-liste.c4::-webkit-scrollbar{display:none}
+.sw-liste.c4 .sw{flex:0 0 64%;scroll-snap-align:center;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;border-radius:24px;padding:20px 18px 18px}
+.sw-liste.c4 .sw b{font:400 21px/1.15 Abril,serif}
+.sw-liste.c4 .sw .d{font-size:14.5px;line-height:1.4;margin-top:6px;min-height:41px}
+.sw-liste.c4 .sw .bas{display:flex;align-items:center;gap:10px;margin-top:16px}
+.sw-liste.c4 .sw .et{width:auto;font-size:14px}
+.sw-liste.c4 .sw[aria-checked=false] b{color:#9A8F88}
+#ptsFx{margin-top:2px}
+@media (min-width:860px){.sw-liste.c4{flex-wrap:wrap;justify-content:center;overflow:visible;margin:26px 0 0;padding:0}.sw-liste.c4 .sw{flex:0 0 23%}#ptsFx{display:none!important}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -297,7 +310,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 <!-- 2 · C'EST QUOI -->
 <section class="quoi centre"><div class="wrap">
   <div class="k vu">Loginail, c’est quoi&nbsp;?</div>
-  <h2 class="serif titre vu" style="margin-top:10px">Une appli. <em>Tout ton salon dedans.</em></h2>
+  <h2 class="serif titre vu" style="margin-top:10px">Une appli <em>tout-en-un</em> pour gérer ton salon.</h2>
   <div class="trois">
     <div class="vu"><img src="loginail-site/charms-mini/cerisedisco.webp" alt=""><p><b>Ton agenda</b><span>Tes rendez-vous, tes créneaux, tes vacances.</span></p></div>
     <div class="vu"><img src="loginail-site/charms-mini/perle.webp" alt=""><p><b>Tes clientes</b><span>Une fiche pour chacune, et un SMS de rappel la veille.</span></p></div>
@@ -386,7 +399,7 @@ document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 /* les pilules oui / non */
 /* « C'est toi qui choisis » : 3 idées (?c=1 pastilles, ?c=2 une à la fois, ?c=3 petite grille). Les pilules font oui / non toutes seules ; un toucher reprend la main. */
 (()=>{const O=[['Réservation en ligne','Tes clientes réservent sur ton site',1],['SMS de rappel','La veille du rendez-vous',1],['Acompte','Tu fixes le montant et tes règles',1],['Paiement par carte','Tes clientes paient l’acompte en réservant',0],['Carte de fidélité','C’est toi qui fixes la récompense',1],['Caisse du jour','Carte ou espèces, ton total du jour',0],['Liste d’attente','Une annulation ? La place est proposée',1]];
-const c=new URLSearchParams(location.search).get('c')||'1',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
+const c=new URLSearchParams(location.search).get('c')||'4',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
 const calme=matchMedia('(prefers-reduced-motion:reduce)').matches;let vu=false,pause=0;new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.3}).observe(sec);
 const met=(b,on)=>{b.setAttribute('aria-checked',on);const e=b.querySelector('.et');if(e)e.textContent=on?'Oui':'Non'};
 if(c==='2'){ /* une à la fois */
@@ -396,7 +409,8 @@ if(c==='2'){ /* une à la fois */
   va(0);b.addEventListener('click',()=>{pause=Date.now()+5000;met(b,b.getAttribute('aria-checked')!=='true')});N.forEach((x,i)=>x.addEventListener('click',()=>{pause=Date.now()+5000;va(i)}));
   if(!calme)setInterval(()=>{if(vu&&Date.now()>pause)va(k+1)},2400);
 }else{ /* pastilles (1) ou petite grille (3) */
-  L.innerHTML=O.map(o=>`<button class="sw" role="switch" aria-checked="${!!o[2]}" title="${o[1]}"><span class="pil"></span><b>${o[0]}</b></button>`).join('');
+  L.innerHTML=O.map(o=>c==='4'?`<button class="sw" role="switch" aria-checked="${!!o[2]}"><b>${o[0]}</b><span class="d">${o[1]}</span><span class="bas"><span class="pil"></span><span class="et">${o[2]?'Oui':'Non'}</span></span></button>`:`<button class="sw" role="switch" aria-checked="${!!o[2]}" title="${o[1]}"><span class="pil"></span><b>${o[0]}</b></button>`).join('');
+  if(c==='4'){const P=document.getElementById('ptsFx');P.style.display='flex';P.innerHTML=O.map(()=>'<i></i>').join('');const pts=[...P.children],C=[...L.children];const maj=()=>{const m=L.getBoundingClientRect().left+L.clientWidth/2;let j=0,d=1e9;C.forEach((x,i)=>{const r=x.getBoundingClientRect(),e=Math.abs(r.left+r.width/2-m);if(e<d){d=e;j=i}});pts.forEach((q,i)=>q.classList.toggle('on',i===j))};L.addEventListener('scroll',maj,{passive:true});maj();pts.forEach((q,i)=>q.addEventListener('click',()=>C[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})))}
   const B=[...L.children];B.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+6000;met(b,b.getAttribute('aria-checked')!=='true')}));
   let k=0;if(!calme)setInterval(()=>{if(!vu||Date.now()<pause)return;const b=B[k%B.length];met(b,b.getAttribute('aria-checked')!=='true');k+=3},1100);
 }})();
