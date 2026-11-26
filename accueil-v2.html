@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- 26/11 nuit (Marie : « Oui, remplace ») : nouvel accueil « l'appli d'abord » (D127). Ancien accueil : historique git (avant ce commit). -->
 <html lang="fr"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>Loginail · L’appli des prothésistes ongulaires</title>
 <link rel="icon" href="favicon.svg">
 <meta name="robots" content="noindex">
@@ -287,7 +287,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .bascule2 button{position:relative;z-index:1;border:0;background:none;cursor:pointer;font:500 14.5px Jost;color:var(--doux);padding:10px 18px;border-radius:99px;transition:color .3s;white-space:nowrap}
 .bascule2 button.on{color:#fff}
 .bascule2 i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:99px;background:var(--encre);transition:translate .4s cubic-bezier(.3,1.3,.5,1),background .4s}
-.bascule2:has(button[data-m="1"].on) i{translate:100% 0;background:var(--rose)}
+.bascule2 i{background:var(--rose)}.bascule2:has(button[data-m="0"].on) i{translate:100% 0;background:var(--encre)}
 .avcarte{position:relative;display:grid;margin-top:16px;border-radius:26px;padding:22px 20px;text-align:left;background:#fff;box-shadow:0 22px 44px -32px rgba(120,40,70,.55);transition:background .4s}
 .avcarte[data-m="1"]{background:var(--pale)}
 .avcarte ul{grid-area:1/1;list-style:none;display:grid;gap:12px;align-content:start;transition:opacity .35s,transform .35s}
@@ -415,6 +415,64 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
 body.ck-ouvert .colle{translate:0 120px!important}
 @media (min-width:860px){.ck{left:auto;right:24px;bottom:24px;max-width:400px}}
 @media (prefers-reduced-motion:reduce){.bulle,.ig-piste,.pb-ch{animation:none}}
+/* ===== 27/11 · V2 (2e retour de Marie) ===== */
+html{touch-action:manipulation}
+.h-charms{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.h-charm{position:absolute;filter:drop-shadow(0 10px 12px rgba(80,20,40,.22));will-change:transform;transition:filter .3s ease}
+.h-charm.chaud{filter:drop-shadow(0 14px 18px rgba(176,53,98,.38))}
+.haut .ch.hm{display:none}
+@media (max-width:859px){.h-charms{display:none}.haut .ch.hm{display:block;z-index:3}}
+.haut .wrap.hero{position:relative;z-index:3}
+/* les 4 cartes : immobiles ; quand on en survole une, le téléphone s'arrête aussi */
+.bulle{animation:none!important}
+.scene.choisi .tel3d,.scene:hover .tel3d{animation-play-state:paused}
+/* la phrase sous le titre */
+.haut .chapo{font-size:17.5px;line-height:1.55;max-width:440px}
+.haut .chapo b{display:block;margin-top:4px;font-weight:500;color:var(--fram)}
+/* téléphone : le titre, puis le téléphone, puis le badge (le téléphone se voit tout de suite) */
+@media (max-width:859px){
+  .haut{padding-top:22px}
+  .hero{display:flex;flex-direction:column;align-items:center}
+  .hero .txt{display:contents}
+  .hero .k{order:1}.hero h1{order:2}.hero .chapo{order:3;font-size:16px;margin-top:10px}
+  .hero .visuel{order:4;width:100%}.hero .as{order:5;margin-top:4px}.hero .prix-l{order:6;margin-bottom:6px}
+  .scene{margin-top:8px;height:420px}
+}
+/* fonctions : cartes plus courtes, téléphones entiers */
+.fx{padding:20px 20px 0}.fx h3{font-size:22px}.fx p{font-size:15px;margin-top:6px}
+.fx .cadre{width:130px}
+@media (min-width:860px){.fx .cadre{width:150px}}
+.cadre.deux{position:relative}.cadre.deux img{transition:opacity .4s}.cadre.deux img+img{position:absolute;left:5px;top:5px;width:calc(100% - 10px);opacity:0}
+.cadre.deux.jour img:first-child{opacity:0}.cadre.deux.jour img+img{opacity:1}
+.vues{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;margin-top:14px;padding:4px;border-radius:99px;background:var(--fond);box-shadow:inset 0 0 0 1px var(--ligne)}
+.vues button{position:relative;z-index:1;border:0;background:none;cursor:pointer;font:500 14px Jost;color:var(--doux);padding:8px 18px;border-radius:99px;transition:color .3s}
+.vues button.on{color:#fff}
+.vues i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:99px;background:var(--fram);transition:translate .4s cubic-bezier(.3,1.3,.5,1)}
+.vues:has(button[data-v="1"].on) i{translate:100% 0}
+.perso{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.perso span{display:inline-flex;align-items:center;gap:7px;background:var(--fond);border-radius:14px;padding:7px 12px 7px 8px;font-size:13.5px;color:var(--doux)}
+.perso b{font:400 17px Abril,serif;color:var(--fram)}
+.perso img{width:26px;height:26px;object-fit:contain}
+.perso i{font:400 16px Abril,serif;font-style:normal;color:var(--fram);width:26px;height:26px;display:grid;place-items:center;background:#fff;border-radius:8px}
+.fx .roue{margin-top:14px!important}
+/* « C'est toi qui choisis » : 6 noms bien alignés */
+.sw-liste.c2 .noms{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:420px;margin-left:auto;margin-right:auto}
+.sw-liste.c2 .noms i{text-align:center;background:rgba(255,255,255,.55);padding:7px 6px}
+.sw-liste.c2 .noms i.on{background:var(--fram);color:#fff}
+@media (min-width:860px){.sw-liste.c2 .noms{grid-template-columns:repeat(3,1fr);max-width:620px}}
+/* Une question + Instagram : côte à côte sur ordinateur */
+.duo{display:grid;gap:18px}
+.duo .ig-boite{margin:0}
+@media (min-width:860px){.duo{grid-template-columns:1fr 1fr;align-items:stretch;max-width:1080px}.duo .boite,.duo .ig-boite{max-width:none;margin:0;height:100%}.duo .boite{display:flex;flex-direction:column;align-items:center;justify-content:center}.duo .ig-boite{display:flex;flex-direction:column;justify-content:center}}
+
+
+/* les cartes ne tournent plus avec le téléphone : elles restent immobiles */
+.bulles{position:absolute;left:50%;top:10px;width:188px;height:400px;margin-left:-94px;z-index:5;pointer-events:none}
+.bulles .bulle{pointer-events:auto;transform:none!important}
+@media (min-width:860px){.bulles{width:230px;height:490px;margin-left:-115px}}
+
+.duo .ig-btn{max-width:none;margin:18px 22px 0;padding:0 18px;white-space:nowrap}
+@media (min-width:860px){.fx.large{grid-template-columns:1fr 1fr;padding:30px 40px}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -427,21 +485,17 @@ body.ck-ouvert .colle{translate:0 120px!important}
 <main>
 <!-- 1 · LE HAUT : on comprend en 5 secondes -->
 <section class="haut" id="haut" style="padding-bottom:0">
+  <div class="h-charms" id="hCharms" aria-hidden="true"></div>
+  <img class="ch hm" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:46px;right:6%;top:330px;rotate:12deg">
   <div class="wrap hero">
     <div class="txt">
       <div class="k">Pensé par une prothésiste</div>
       <h1 class="serif">L’appli pour toutes<br>les <em>prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></em> ongulaires.</h1>
-      <p class="chapo">Ton agenda, tes fiches clientes, tes rappels SMS, ta caisse.<br><b>Et même ton site internet.</b></p>
+      <p class="chapo">Agenda, fiches clientes, rappels SMS et caisse&nbsp;: tout ton salon dans une seule appli. <b>Avec ton site internet en plus.</b></p>
       <a class="as" id="telecharger" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme"><use href="#pomme"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a>
       <p class="prix-l"><b>1er mois offert</b>, puis 49,99&nbsp;€/mois<br>Sans engagement · <i>Sur iPhone</i></p>
     </div>
     <div class="visuel">
-      <img class="ch hc" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:54px;left:4%;top:6%;rotate:-12deg">
-      <img class="ch hc" src="loginail-site/charms-mini/saturne.webp" alt="" style="width:48px;right:4%;top:12%;rotate:10deg;animation-delay:-2s">
-      <img class="ch hc" src="loginail-site/charms-mini/collierperles.webp" alt="" style="width:46px;left:6%;bottom:12%;rotate:6deg;animation-delay:-4s">
-      <img class="ch hc" src="loginail-site/charms-mini/bouledisco.webp" alt="" style="width:42px;right:7%;bottom:16%;rotate:-8deg;animation-delay:-3s">
-      <img class="ch hc ordi" src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="width:50px;left:-6%;top:44%;rotate:-6deg;animation-delay:-1s">
-      <img class="ch hc ordi" src="loginail-site/charms-mini/etoilecristal.webp" alt="" style="width:40px;right:-4%;top:48%;rotate:12deg;animation-delay:-5s">
       <div class="scene" aria-label="L’appli Loginail : agenda, SMS de rappel, fiches clientes, site internet">
         <div class="sol"></div>
         <div class="tel3d">
@@ -453,8 +507,9 @@ body.ck-ouvert .colle{translate:0 120px!important}
             <img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente" loading="lazy">
             <img src="loginail-site/apercus-univers/app-monsite-2511.webp" alt="Mon site, dans l’appli" loading="lazy">
           </div></div>
-          <button type="button" class="bulle g b1" data-i="1" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Nouvelle résa : Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="2" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="3" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="4" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton nom, à ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button>
+          
         </div>
+        <div class="bulles"><button type="button" class="bulle g b1" data-i="1" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Nouvelle résa : Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="2" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="3" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="4" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton nom, à ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button></div>
       </div>
     </div>
   </div>
@@ -483,11 +538,15 @@ body.ck-ouvert .colle{translate:0 120px!important}
   <h2 class="serif titre vu" style="margin-top:10px">L’appli qui <em>gère tout.</em></h2></div>
   <div class="tuiles"><div><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"><b>Agenda</b><span>Tes rendez-vous, tes créneaux, tes vacances.</span></div><div><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><b>SMS de rappel</b><span>Illimités, envoyés la veille. Zéro lapin.</span></div><div><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><b>Fiches clientes</b><span>Tes notes, ses poses, son anniversaire.</span></div><div><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><b>Dispos en story</b><span>Ta semaine partagée sur Instagram en 1 touche.</span></div><div><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><b>Acompte</b><span>Par carte, au montant que tu choisis.</span></div><div><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy"><b>Carte de fidélité</b><span>C’est toi qui fixes la récompense.</span></div><div><img src="loginail-site/charms-mini/collierperles.webp" alt="" loading="lazy"><b>Caisse du jour</b><span>Carte ou espèces, ton total du jour.</span></div><div class="plus"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><b>Ton site internet</b><span>Le plus : à ton nom, à ton image.</span></div></div>
   <div class="fonctions">
-    <article class="fx large vu"><div><div class="k">Agenda</div><h3>Ta journée, d’un coup d’œil.</h3><p>Ta prochaine cliente, ce que tu vas gagner aujourd’hui, l’heure où tu finis.</p><ul><li>Ajoute un créneau en 2 touches</li><li>Pose tes vacances, bloque une heure</li><li>Tes clientes réservent jour et nuit</li></ul></div><div class="cadre"><img src="loginail-site/apercus-univers/app-agenda-2511.webp" alt="L’agenda de l’appli Loginail" loading="lazy"></div></article>
-    <article class="fx vu"><div class="k">SMS de rappel</div><h3>Illimités. Zéro lapin.</h3><p>La veille du rendez-vous, ta cliente reçoit un SMS. Tu n’as rien à faire.</p><div class="cadre"><img src="loginail-site/apercus-univers/sms-rappel-2211.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy"></div></article>
-    <article class="fx vu"><div class="k">Fiches clientes</div><h3>Tu te souviens de tout.</h3><p>Tes notes, ses poses, son anniversaire. Et celles qui devraient bientôt revenir.</p><div class="cadre"><img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente dans l’appli" loading="lazy"></div></article>
-    <article class="fx rose vu"><div class="k">Tes dispos en story</div><h3>Partage ta semaine en 1 touche.</h3><p>L’appli fabrique la story de tes créneaux libres. Tu la postes sur Instagram.</p><div class="story" aria-hidden="true"><small>Cette semaine</small><b>Mes dispos</b><div>Mardi <i>14 h · 16 h 30</i></div><div>Jeudi <i>10 h</i></div><div>Vendredi <i>9 h · 15 h</i></div><div>Samedi <i>11 h</i></div></div></article>
-    <article class="fx vu"><div class="k">Le plus · Ton site internet</div><h3>À ton nom, à ton image.</h3><p>Il se crée tout seul dans l’appli. Tu changes le fond, l’écriture et les charms quand tu veux. Ton adresse en .fr dès le 2e mois.</p><div class="roue" role="img" aria-label="Exemples de sites de prothésistes créés avec Loginail"><div class="piste"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
+    <article class="fx large vu"><div><div class="k">Agenda</div><h3>Ta semaine, d’un coup d’œil.</h3><p>En semaine ou jour par jour, comme tu préfères.</p>
+      <div class="vues" id="vues"><button type="button" class="on" data-v="0">Semaine</button><button type="button" data-v="1">Jour</button><i aria-hidden="true"></i></div></div>
+      <div class="cadre deux" id="cadreAgenda"><img class="on" src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli Loginail, vue semaine" loading="lazy"><img src="loginail-site/apercus-univers/app-agenda-jour-2711.webp" alt="L’agenda de l’appli Loginail, vue jour" loading="lazy"></div></article>
+    <article class="fx vu"><div class="k">SMS de rappel</div><h3>Illimités. Zéro lapin.</h3><p>La veille, ta cliente reçoit un SMS. Tu n’as rien à faire.</p><div class="cadre"><img src="loginail-site/apercus-univers/sms-rappel-2211.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy"></div></article>
+    <article class="fx vu"><div class="k">Fiches clientes</div><h3>Tu te souviens de tout.</h3><p>Tes notes, ses poses, son anniversaire.</p><div class="cadre"><img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente dans l’appli" loading="lazy"></div></article>
+    <article class="fx rose vu"><div class="k">Tes dispos en story</div><h3>Ta semaine en 1 touche.</h3><p>L’appli fabrique la story de tes créneaux libres.</p><div class="story" aria-hidden="true"><small>Cette semaine</small><b>Mes dispos</b><div>Mardi <i>14 h · 16 h 30</i></div><div>Jeudi <i>10 h</i></div><div>Vendredi <i>9 h · 15 h</i></div><div>Samedi <i>11 h</i></div></div></article>
+    <article class="fx vu"><div class="k">Le plus · Ton site internet</div><h3>À ton nom, à ton image.</h3><p>Il se crée tout seul dans l’appli. Tu le changes quand tu veux.</p>
+      <div class="perso"><span><img src="loginail-site/charms-mini/cerisedisco.webp" alt=""><b>5 000+</b> charms à poser</span><span><i>Aa</i><b>500+</b> écritures pour ton nom</span></div>
+      <div class="roue" role="img" aria-label="Exemples de sites de prothésistes créés avec Loginail"><div class="piste"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
   </div>
   <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
 </div></section>
@@ -496,8 +555,8 @@ body.ck-ouvert .colle{translate:0 120px!important}
 <section class="avap centre" id="avap" style="padding-top:10px"><div class="wrap">
   <div class="k vu">Avant, après</div>
   <h2 class="serif titre vu" style="margin-top:10px">Tes journées, <em>en plus léger.</em></h2>
-  <div class="bascule2 vu" id="avBascule"><button type="button" class="on" data-m="0">Aujourd’hui</button><button type="button" data-m="1">Avec Loginail</button><i aria-hidden="true"></i></div>
-  <div class="avcarte vu" id="avCarte" data-m="0">
+  <div class="bascule2 vu" id="avBascule"><button type="button" class="on" data-m="1">Avec Loginail</button><button type="button" data-m="0">Aujourd’hui</button><i aria-hidden="true"></i></div>
+  <div class="avcarte vu" id="avCarte" data-m="1">
     <img class="ch" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:50px;right:-10px;top:-20px;rotate:12deg">
     <ul class="av0"><li>Tu réponds aux messages entre deux poses</li><li>Tu notes tes rendez-vous à la main</li><li>Une cliente oublie, ton créneau est perdu</li><li>Tu refais tes comptes le soir, de tête</li></ul>
     <ul class="av1"><li>Tes clientes réservent toutes seules, jour et nuit</li><li>Ton agenda se remplit tout seul</li><li>Un SMS de rappel part la veille. Zéro lapin.</li><li>Ta caisse du jour se fait toute seule</li></ul>
@@ -527,21 +586,22 @@ body.ck-ouvert .colle{translate:0 120px!important}
 </div></section>
 
 <!-- 6 · MARIE + WHATSAPP -->
-<section class="marie" style="padding-top:10px"><div class="wrap"><div class="boite vu">
+<section class="marie" style="padding-top:10px"><div class="wrap duo"><div class="boite vu">
   <img class="ch" src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="width:52px;left:-8px;top:-20px;rotate:-12deg"><img class="ch" src="loginail-site/charms-mini/perle.webp" alt="" style="width:34px;right:14px;bottom:-12px;animation-delay:-2s">
   <h2 style="margin-top:0">Une question&nbsp;? C’est moi qui te réponds.</h2>
   <p>Je suis Marie, prothésiste ongulaire. Loginail, c’est l’appli que j’aurais aimé avoir. Un bug, une idée, un besoin en plus&nbsp;? Écris-moi.</p>
   <a class="wa" href="https://wa.me/33745266189" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.300-2 1.400-.5.1-1.200.1-1.900-.1-.4-.1-1-.3-1.700-.6-3-1.300-4.900-4.300-5.100-4.500-.1-.2-1.200-1.600-1.200-3s.8-2.200 1-2.500c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .7.500l.9 2.200c.1.2.1.400 0 .600l-.3.5-.5.5c-.2.2-.3.4-.1.700.2.3.8 1.300 1.700 2.100 1.200 1 2.100 1.400 2.400 1.500.3.100.5.100.7-.1l.9-1.100c.2-.3.4-.2.7-.1l2.100 1c.3.1.5.2.6.3.100.2.100.700-.1 1.300z"/></svg>07 45 26 61 89 sur WhatsApp</a>
   <small>Par message, 7 jours sur 7. Je réponds dans la journée.</small>
-</div></div></section>
-
-<!-- 6 bis · INSTAGRAM -->
-<section class="insta-sec" style="padding-top:0"><div class="wrap"><div class="ig-boite vu">
+</div>
+  <div class="ig-boite vu">
   <img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="width:50px;right:-8px;top:-20px;rotate:12deg">
   <div class="ig-tete"><span class="ig-av"><img src="loginail-site/icone-appli.svg" alt=""></span><div class="ig-nom"><b>@loginail.fr</b><span>Les nouveautés de l’appli et les plus beaux sites de nos prothésistes.</span></div></div>
   <div class="ig-rang" aria-hidden="true"><div class="ig-piste"><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-1.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-5.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-7.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-10.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-1.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-5.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-7.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-10.webp" alt="" loading="lazy"></a></div></div>
   <a class="ig-btn" href="https://www.instagram.com/loginail.fr/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Suivre @loginail.fr sur Instagram</a>
-</div></div></section>
+</div>
+</div></section>
+
+
 
 <!-- 7 · QUESTIONS -->
 <section class="faq" style="padding-top:20px"><div class="wrap">
@@ -555,11 +615,7 @@ body.ck-ouvert .colle{translate:0 120px!important}
   </div>
 </div></section>
 
-<section class="fin" style="padding-top:10px"><div class="wrap">
-  <h2 class="serif titre vu">Prête&nbsp;? <em>Télécharge l’appli.</em></h2>
-  <a class="as vu" style="margin-top:20px" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme"><use href="#pomme"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a>
-  <p class="prix-l vu" style="color:var(--encre)"><b style="color:var(--fram)">1er mois offert</b>, puis 49,99&nbsp;€/mois · Sans engagement</p>
-</div></section>
+
 </main>
 
 <footer class="pied">
@@ -581,7 +637,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 /* les pilules oui / non */
 /* « C'est toi qui choisis » : 3 idées (?c=1 pastilles, ?c=2 une à la fois, ?c=3 petite grille). Les pilules font oui / non toutes seules ; un toucher reprend la main. */
-(()=>{const O=[['Réservation en ligne','Tes clientes réservent sur ton site',1],['SMS de rappel','La veille du rendez-vous',1],['Acompte','Tu fixes le montant et tes règles',1],['Paiement par carte','Tes clientes paient l’acompte en réservant',0],['Carte de fidélité','C’est toi qui fixes la récompense',1],['Caisse du jour','Carte ou espèces, ton total du jour',0],['Liste d’attente','Une annulation ? La place est proposée',1]];
+(()=>{const O=[['Réservation en ligne','Tes clientes réservent sur ton site',1],['SMS de rappel','La veille du rendez-vous',1],['Acompte par carte','Tes clientes le paient en réservant, tu fixes le montant',1],['Carte de fidélité','C’est toi qui fixes la récompense',1],['Caisse du jour','Carte ou espèces, ton total du jour',0],['Liste d’attente','Une annulation ? La place est proposée',1]];
 const c=new URLSearchParams(location.search).get('c')||'2',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
 const calme=matchMedia('(prefers-reduced-motion:reduce)').matches;let vu=false,pause=0;new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.3}).observe(sec);
 const met=(b,on)=>{b.setAttribute('aria-checked',on);const e=b.querySelector('.et');if(e)e.textContent=on?'Oui':'Non'};
@@ -598,7 +654,7 @@ if(c==='2'){ /* une à la fois */
   let k=0;if(!calme)setInterval(()=>{if(!vu||Date.now()<pause)return;const b=B[k%B.length];met(b,b.getAttribute('aria-checked')!=='true');k+=3},1100);
 }})();
 /* avant / après : la pilule bascule toute seule ; un toucher reprend la main */
-(()=>{const B=document.getElementById('avBascule'),K=document.getElementById('avCarte'),bt=[...B.querySelectorAll('button')];let m=0,pause=0,vu=false;
+(()=>{const B=document.getElementById('avBascule'),K=document.getElementById('avCarte'),bt=[...B.querySelectorAll('button')];let m=1,pause=0,vu=false;
 const va=n=>{m=n;K.dataset.m=n;bt.forEach(b=>b.classList.toggle('on',+b.dataset.m===n))};
 bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.m)}));
 new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.4}).observe(K);
@@ -615,23 +671,41 @@ new IntersectionObserver(es=>es.forEach(e=>colle.classList.toggle('on',!e.isInte
 (()=>{const E=[...document.querySelectorAll('#ecran img')],B=[...document.querySelectorAll('.bulle')],S=document.querySelector('.scene');let k=0,pause=0;
 const montre=n=>{k=n;E.forEach((im,i)=>im.classList.toggle('on',i===n))};
 const choisit=b=>{B.forEach(x=>x.classList.toggle('on',x===b));S.classList.toggle('choisi',!!b);if(b)montre(+b.dataset.i)};
-B.forEach(b=>{b.addEventListener('mouseenter',()=>{pause=Date.now()+6000;choisit(b)});b.addEventListener('mouseleave',()=>{choisit(null);pause=Date.now()+1500});
+B.forEach(b=>{b.addEventListener('pointerenter',e=>{if(e.pointerType!=='mouse')return;pause=Date.now()+6000;choisit(b)});b.addEventListener('pointerleave',e=>{if(e.pointerType!=='mouse')return;choisit(null);pause=Date.now()+1500});
   b.addEventListener('click',()=>{pause=Date.now()+8000;choisit(b.classList.contains('on')?null:b)})});
 document.addEventListener('click',e=>{if(!e.target.closest('.bulle')&&S.classList.contains('choisi'))choisit(null)});
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(Date.now()>pause&&!S.classList.contains('choisi'))montre((k+1)%E.length)},3000)})();
-/* le haut : les charms s'écartent quand la souris (ou le doigt) passe, puis reviennent */
-(()=>{const H=document.getElementById('haut'),Cs=[...H.querySelectorAll('.ch.hc')].map(el=>({el,x:0,y:0,vx:0,vy:0,r:0,vr:0}));if(!Cs.length||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-let px=-9e3,py=-9e3,lx=-9e3,ly=-9e3,raf=0;
-const pas=()=>{let bouge=false;const dx=px-lx,dy=py-ly;lx=px;ly=py;
-  Cs.forEach(c=>{const r=c.el.getBoundingClientRect(),cx=r.left+r.width/2-c.x,cy=r.top+r.height/2-c.y,ux=cx+c.x-px,uy=cy+c.y-py,d=Math.hypot(ux,uy)||1,R=90+r.width;
-    if(d<R){const f=(1-d/R)*2.4;c.vx+=ux/d*f+dx*.06;c.vy+=uy/d*f+dy*.06;c.vr+=(ux>0?1:-1)*f*1.6}
-    c.vx+=-c.x*.045;c.vy+=-c.y*.045;c.vr+=-c.r*.05;c.vx*=.86;c.vy*=.86;c.vr*=.86;c.x+=c.vx;c.y+=c.vy;c.r+=c.vr;
-    c.el.style.transform=`translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px) rotate(${c.r.toFixed(1)}deg)`;
-    if(Math.abs(c.x)+Math.abs(c.y)+Math.abs(c.vx)+Math.abs(c.vy)+Math.abs(c.r)>.2)bouge=true});
-  raf=bouge||px>-9e3?requestAnimationFrame(pas):0};
-const go=e=>{px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(pas)};
-H.addEventListener('pointermove',go,{passive:true});H.addEventListener('pointerdown',go,{passive:true});
-H.addEventListener('pointerleave',()=>{px=py=-9e3})})();
+/* le haut : les charms de la première landing — une pichenette quand la souris les touche, ils se baladent puis reviennent tout seuls */
+(()=>{const hero=document.getElementById('haut'),host=document.getElementById('hCharms');const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const CH=[['cerisedisco',3,120,78,-14],['etoile4',20,150,38,10],['coeurepinesmetal',2,400,64,8],['papilloncyber',18,470,56,-10],['collierperles',5,600,58,6],
+  ['saturne',96,110,70,12],['tribal',76,96,42,-8],['clenoire',96,390,56,-12],['cerisecoeur',80,470,54,10],['sacmatelasse',94,600,60,-6]];
+const items=CH.map(([f,x,y,sz,r],i)=>{const im=new Image();im.src='loginail-site/charms-mini/'+f+'.webp';im.alt='';im.className='h-charm';
+  im.style.cssText=`width:${sz}px;left:calc(${x}% - ${sz/2}px);top:${y}px`;host.append(im);return{el:im,s:sz,r,ph:i*.9,dx:0,dy:0,vx:0,vy:0,rot:0,vr:0,cool:0}});
+if(RM){items.forEach(it=>it.el.style.transform=`rotate(${it.r}deg)`);return}
+let mx=-9e3,my=-9e3,pmx=-9e3,pmy=-9e3,mvx=0,mvy=0,on=true;
+hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();mx=e.clientX-b.left;my=e.clientY-b.top});
+hero.addEventListener('pointerleave',()=>{mx=my=-9e3});
+new IntersectionObserver(([e])=>on=e.isIntersecting).observe(hero);
+function tick(t){if(mx>-9e3&&pmx>-9e3){mvx=mx-pmx;mvy=my-pmy}else{mvx=mvy=0}pmx=mx;pmy=my;
+  const W=hero.clientWidth,H=hero.clientHeight;
+  for(const it of items){const e=it.el,bx=e.offsetLeft,by=e.offsetTop,cx=bx+it.dx+it.s/2,cy=by+it.dy+it.s/2,ux=cx-mx,uy=cy-my,d=Math.hypot(ux,uy)||1,hit=it.s/2+28;
+    if(d<hit&&it.cool<=0){const k=1-d/hit;it.vx+=ux/d*(10+k*12)+mvx*.85;it.vy+=uy/d*(10+k*12)+mvy*.85;it.vr+=(ux>0?1:-1)*(6+Math.min(14,Math.abs(mvx)*.3));it.cool=8}
+    it.cool--;it.vx+=-it.dx*.0011;it.vy+=-it.dy*.0011;it.vx*=.984;it.vy*=.984;it.vr*=.95;
+    const sp=Math.hypot(it.vx,it.vy);if(sp>60){it.vx*=60/sp;it.vy*=60/sp}
+    it.dx+=it.vx;it.dy+=it.vy;it.rot+=it.vr*.35;it.rot*=.982;
+    const px=bx+it.dx,py=by+it.dy;
+    if(px<4){it.dx=4-bx;it.vx=Math.abs(it.vx)*.7}else if(px>W-it.s-4){it.dx=W-it.s-4-bx;it.vx=-Math.abs(it.vx)*.7}
+    if(py<4){it.dy=4-by;it.vy=Math.abs(it.vy)*.7}else if(py>H-it.s-4){it.dy=H-it.s-4-by;it.vy=-Math.abs(it.vy)*.7}
+    e.classList.toggle('chaud',sp>1.2);
+    const calm=Math.max(0,1-sp/6),fx=Math.sin(t/2300+it.ph)*9*calm,fy=Math.sin(t/1700+it.ph*1.3)*13*calm,wob=Math.sin(t/2600+it.ph*.7)*9*calm;
+    e.style.transform=`translate(${it.dx+fx}px,${it.dy+fy}px) rotate(${it.r+it.rot+wob}deg)`}
+  on?requestAnimationFrame(tick):setTimeout(()=>requestAnimationFrame(tick),300)}
+requestAnimationFrame(tick)})();
+/* agenda : semaine / jour, bascule toute seule ; un toucher reprend la main */
+(()=>{const V=document.getElementById('vues'),K=document.getElementById('cadreAgenda');if(!V)return;const bt=[...V.querySelectorAll('button')];let v=0,pause=0;
+const va=n=>{v=n;K.classList.toggle('jour',n===1);bt.forEach(b=>b.classList.toggle('on',+b.dataset.v===n))};
+bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.v)}));
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(Date.now()>pause)va(v?0:1)},3500)})();
 /* cookies : on demande une fois ; « Refuser » et « Accepter » se valent ; rien n'est mesuré sans « Accepter » */
 (()=>{const K=document.getElementById('ck'),cle='loginail-cookies';let v=null;try{v=localStorage.getItem(cle)}catch(e){}
 window.loginailMesure=window.loginailMesure||function(){/* la mesure d'audience se branchera ici, seulement après « Accepter » */};

@@ -2,22 +2,50 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="robots" content="noindex">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>Loginail · Télécharger mon appli</title>
-<meta name="theme-color" content="#F6F3EF">
+<meta name="theme-color" content="#F6EFEA">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link href="polices.css" rel="stylesheet">
 <style>
-@font-face{font-family:'Abril Fatface';src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format('woff2')}
-body{margin:0;height:100vh;height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F6F3EF;color:#1E1C1B;font-family:Jost,sans-serif}
-h1{margin:0;font:400 clamp(30px,11vw,48px)/1.05 'Abril Fatface',serif}
+/* 27/11 (Marie : « je préfère que ce soit plus joli, avec des charms ») : même lien qu'avant, plus joli */
+@font-face{font-family:Abril;src:url(../loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Jost;font-weight:400;src:url(../loginail-site/polices/Jost-400-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Jost;font-weight:500;src:url(../loginail-site/polices/Jost-500-latin.woff2) format("woff2");font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:hidden;
+  background:radial-gradient(120% 70% at 50% 0,#FBE3EA 0,#F6EFEA 70%);color:#1E1C1B;font:400 16px/1.5 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;touch-action:manipulation}
+.icone{position:relative;width:104px;height:104px;border-radius:26px;background:#1E1C1B;display:grid;place-items:center;box-shadow:0 26px 44px -18px rgba(60,20,40,.6);animation:arrive .7s cubic-bezier(.2,.8,.2,1) both}
+.icone img{width:64px;height:64px}
+.icone::before,.icone::after{content:"";position:absolute;inset:-10px;border-radius:34px;border:2px solid #E0628C;opacity:0;animation:onde 2s ease-out infinite}
+.icone::after{animation-delay:1s}
+@keyframes onde{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+@keyframes arrive{from{opacity:0;transform:translateY(16px) scale(.9)}}
+h1{margin-top:26px;font:400 clamp(30px,9vw,44px)/1.08 Abril,serif;letter-spacing:-.01em;animation:arrive .7s .1s cubic-bezier(.2,.8,.2,1) both}
 h1 em{font-style:normal;color:#B03562}
-a{margin-top:18px;padding:10px;color:inherit;font-size:15px;text-underline-offset:3px}
+p{margin-top:10px;color:#5E5550;font-size:16.5px;animation:arrive .7s .2s cubic-bezier(.2,.8,.2,1) both}
+.points{display:inline-flex;gap:5px;margin-left:2px}
+.points i{width:6px;height:6px;border-radius:50%;background:#E0628C;animation:pt 1.2s infinite}
+.points i:nth-child(2){animation-delay:.2s}.points i:nth-child(3){animation-delay:.4s}
+@keyframes pt{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+a#lien{display:inline-flex;align-items:center;gap:10px;margin-top:28px;height:58px;padding:0 24px 0 18px;border-radius:14px;background:#000;color:#fff;text-decoration:none;box-shadow:0 18px 34px -16px rgba(30,28,27,.6);animation:arrive .7s .3s cubic-bezier(.2,.8,.2,1) both}
+a#lien svg{width:28px;height:28px}
+a#lien span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;text-align:left}
+a#lien small{font-size:12px}a#lien strong{font-size:22px;font-weight:600}
+.ch{position:fixed;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
+@keyframes fl{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@media (prefers-reduced-motion:reduce){.icone,.icone::before,.icone::after,h1,p,a#lien,.ch,.points i{animation:none}}
 </style>
 </head>
 <body>
-<h1>Ton <em>appli</em>…</h1>
-<a id="lien" href="https://apps.apple.com/fr/iphone/search?term=Loginail">Ouvrir l’App Store</a>
+<img class="ch" src="../loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:64px;left:8%;top:12%;rotate:-12deg">
+<img class="ch" src="../loginail-site/charms-mini/saturne.webp" alt="" style="width:58px;right:8%;top:18%;rotate:10deg;animation-delay:-2s">
+<img class="ch" src="../loginail-site/charms-mini/noeudcerise.webp" alt="" style="width:56px;left:10%;bottom:14%;rotate:6deg;animation-delay:-4s">
+<img class="ch" src="../loginail-site/charms-mini/perle.webp" alt="" style="width:40px;right:12%;bottom:20%;animation-delay:-3s">
+<div class="icone"><img src="../loginail-site/icone-appli.svg" alt="Loginail"></div>
+<h1>Ton <em>appli</em> arrive</h1>
+<p>On t’emmène sur l’App Store<span class="points" aria-hidden="true"><i></i><i></i><i></i></span></p>
+<a id="lien" href="https://apps.apple.com/fr/iphone/search?term=Loginail"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg><span><small>Ouvrir dans</small><strong>l’App Store</strong></span></a>
 <script>
 /* D85 (Marie : « j'ai pas à le recoder ») : ce lien se règle TOUT SEUL.
    On demande à Apple si fr.loginail.app est publiée : oui → sa fiche ; pas encore, ou Apple muet → recherche « Loginail ».
