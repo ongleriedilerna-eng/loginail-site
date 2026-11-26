@@ -5,7 +5,22 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="favicon.svg">
 <meta name="theme-color" content="#F6EFEA">
-<meta name="description" content="Loginail, l’appli des prothésistes ongulaires : agenda, fiches clientes, SMS de rappel illimités et ton site internet. 1er mois offert, puis 49,99 €/mois, sans engagement.">
+<link rel="canonical" href="https://loginail.fr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Loginail">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://loginail.fr/">
+<meta property="og:title" content="Loginail · L’appli des prothésistes ongulaires">
+<meta property="og:description" content="Agenda, fiches clientes, SMS de rappel illimités et ton site internet, dans une seule appli. 1er mois offert.">
+<meta property="og:image" content="https://loginail.fr/apercu-appli-2611.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="L’appli Loginail sur un iPhone : l’agenda du jour d’une prothésiste ongulaire">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="loginail-site/icone-appli.svg">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Loginail", "operatingSystem": "iOS", "applicationCategory": "BusinessApplication", "description": "Loginail, l’appli tout-en-un des prothésistes ongulaires : agenda, fiches clientes, SMS de rappel illimités et ton site internet à ton image. 1er mois offert, puis 49,99 €/mois, sans engagement.", "url": "https://loginail.fr/", "image": "https://loginail.fr/apercu-appli-2611.jpg", "offers": {"@type": "Offer", "price": "49.99", "priceCurrency": "EUR", "description": "1er mois offert, sans engagement"}, "publisher": {"@type": "Organization", "name": "Loginail", "url": "https://loginail.fr/", "logo": "https://loginail.fr/loginail-site/icone-appli.svg", "sameAs": ["https://www.instagram.com/loginail.fr/"]}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Pas douée en informatique ?", "acceptedAnswer": {"@type": "Answer", "text": "Tu colles ton lien Google Maps ou Planity dans l’appli. Elle récupère tes photos, tes prestations et tes prix. Ensuite, tout se change avec le doigt."}}, {"@type": "Question", "name": "Mes clientes doivent télécharger l’appli ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Elles réservent sur ton site, depuis ton lien Instagram. L’appli, c’est pour toi."}}, {"@type": "Question", "name": "Et si je n’aime pas ?", "acceptedAnswer": {"@type": "Answer", "text": "Le premier mois est offert. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone, sans frais."}}, {"@type": "Question", "name": "Les SMS sont payants ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Les SMS de rappel sont compris dans les 49,99 €, sans limite."}}, {"@type": "Question", "name": "Ça marche sur Android ?", "acceptedAnswer": {"@type": "Answer", "text": "Pour l’instant, l’appli est sur iPhone. Tes clientes, elles, réservent depuis n’importe quel téléphone."}}]}]</script>
+
+<meta name="description" content="Loginail, l’appli tout-en-un des prothésistes ongulaires : agenda, fiches clientes, SMS de rappel illimités et ton site internet à ton image. 1er mois offert, puis 49,99 €/mois, sans engagement.">
 <style>
 @font-face{font-family:Abril;src:url(loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2");font-display:swap}
 @font-face{font-family:Jost;font-weight:400;src:url(loginail-site/polices/Jost-400-latin.woff2) format("woff2");font-display:swap}
@@ -281,13 +296,23 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .avcarte[data-m="0"] .av1,.avcarte[data-m="1"] .av0{opacity:0;transform:translateY(8px);pointer-events:none}
 .avcarte .ch{transition:opacity .4s,scale .4s}.avcarte[data-m="0"] .ch{opacity:0;scale:.6}
 @media (min-width:860px){.chiffres{grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}.chiffres b{font-size:36px}.avcarte{max-width:560px;margin-left:auto;margin-right:auto;padding:30px}}
+
+/* 26/11 nuit · finitions : contraste suffisant (texte blanc sur rose ≥ 4,5), gris plus lisibles, lien « Se connecter » */
+.wa{background:#C8416F;box-shadow:0 16px 30px -16px rgba(176,53,98,.65)}
+.sw .et,.une .et{color:#786E68}.avcarte .av0 li{color:#786E68}.avcarte .av0 li::before{color:#9A8F88}
+.sw-liste.c1 .sw[aria-checked=false] b,.sw-liste.c3 .sw[aria-checked=false] b,.sw-liste.c4 .sw[aria-checked=false] b{color:#786E68}
+.barre .droite{display:flex;align-items:center;gap:8px}
+.barre .compte{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne);color:var(--encre)}
+.barre .compte svg{width:19px;height:19px}
+.barre .compte span{display:none}
+@media (min-width:860px){.barre .compte{width:auto;height:40px;padding:0 16px;border-radius:99px;gap:8px;display:flex;font:500 14px Jost;text-decoration:none}.barre .compte span{display:inline}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
 
 <header class="barre"><div class="wrap">
   <a class="marque" href="#haut"><img src="loginail-site/icone-appli.svg" alt="">LOGINAIL</a>
-  <a class="dl" href="loginail-creer/telecharger.html">Télécharger</a>
+  <div class="droite"><a class="compte" href="https://app.loginail.fr/" aria-label="Se connecter à mon espace pro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>Se connecter</span></a><a class="dl" href="loginail-creer/telecharger.html">Télécharger</a></div>
 </div></header>
 
 <main>

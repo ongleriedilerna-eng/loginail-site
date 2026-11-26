@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /idees/
+Disallow: /essai-
+
+Sitemap: https://loginail.fr/sitemap.xml
