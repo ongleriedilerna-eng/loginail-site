@@ -2740,7 +2740,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
   html body:not(#_) .v3 .v3prix .wrap>.vu>.titre{font-size:40px}
   html body:not(#_) .v3 .v3frise{margin-top:16px;gap:10px}
   html body:not(#_) .v3 .v3frise li b{font-size:19px}
-  html body:not(#_) .v3 .v3prix .rentab{margin-top:53px}
+  html body:not(#_) .v3 .v3prix .rentab{margin-top:100px}
   html body:not(#_) .bas-go .bg-plus{display:block}
   /* 25/11 nuit (Marie) : « 1 » sur la même ligne que « cliente de plus par mois » (on lit « 1 cliente… »),
      et la carte descend jusqu'au bas de « Tout est inclus. » (hauteur recopiée par le petit script dessous) */
@@ -2760,6 +2760,30 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
 @media (max-width:760px){html body:not(#_) .np h1.serif{font-size:31px;white-space:normal}}
 @media (min-width:761px){.np-pastilles{font-size:15.5px;max-width:none}.np-pastilles i{padding:8px 16px}}
 </style>
+<style id="appli-abonnement-2611">
+/* 26/11 (Marie, version « A · Badge ») : on comprend « une appli avec un abonnement ».
+   Badge App Store à la place de « Créer mon site gratuitement » (lien : loginail-creer/telecharger.html, qui trouve la fiche App Store toute seule),
+   prix sous le bouton, « Sur iPhone », écran de l'appli devant la roue des sites, « Ton abonnement ». Téléphone ET ordinateur.
+   Maquette : maquettes/appli-abonnement-2611 */
+.pomme{width:22px;height:22px;flex:none}
+.np .np-as{display:inline-flex;align-items:center;gap:10px;height:62px;padding:0 26px 0 20px;border-radius:14px;background:#000;color:#fff;text-decoration:none;box-shadow:0 18px 34px -16px rgba(30,28,27,.55);transition:transform .15s}
+.np .np-as:active{transform:scale(.97)}
+.np .np-as .pomme{width:30px;height:30px}
+.np .np-as span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;text-align:left}
+.np .np-as small{font-size:12px;font-weight:400;letter-spacing:.01em}
+.np .np-as strong{font-size:24px;font-weight:600;letter-spacing:-.01em}
+html body:not(#_) .np .np-micro.ab-prix{display:flex;flex-direction:column;align-items:center;gap:2px;white-space:normal;flex-wrap:nowrap;font:500 14.5px/1.45 Jost,sans-serif;color:#1E1C1B;text-align:center}
+html body:not(#_) .np .np-micro.ab-prix>span{display:block}
+.np .ab-prix b{color:#B03562;font-weight:500}
+.np .ab-prix .ip{display:inline-flex;align-items:center;gap:4px;font-style:normal;color:#6b625c}
+html body:not(#_) .np .ab-prix .ip .pomme{width:13px;height:13px;margin-top:-2px;color:#6b625c}
+.app-devant{position:absolute;left:50%;top:60px;z-index:20;width:210px;translate:-50% 0;border-radius:26px;background:#111;padding:5px;box-shadow:0 30px 50px -20px rgba(60,20,40,.6);pointer-events:none}
+.app-devant img{display:block;width:100%;border-radius:21px}
+.app-devant::before{content:"";position:absolute;top:10px;left:50%;translate:-50% 0;width:30%;height:10px;border-radius:9px;background:#111;z-index:2}
+.app-devant em{position:absolute;left:50%;top:-14px;translate:-50% 0;white-space:nowrap;font:500 12px Jost,sans-serif;font-style:normal;background:#1E1C1B;color:#fff;border-radius:99px;padding:5px 12px;z-index:3}
+.ab-apple{margin:10px auto 0;font-size:12.5px;line-height:1.45;color:#6b625c;max-width:300px;text-align:center}
+@media (max-width:760px){.app-devant{width:150px;top:40px}}
+</style>
 </head><body>
 <div class="np" style="display:contents"><header class="np-nav" id="nav">
   <div class="np-bar">
@@ -2770,7 +2794,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
       <a href="#v3-prix" data-sec="#v3-prix">Tarif</a>
       <a href="#v3-questions" data-sec="#v3-questions">FAQ</a>
     </nav>
-    <div class="np-droite"><a class="np-login" href="https://app.loginail.fr/" aria-label="Se connecter à mon espace pro">Se connecter</a><a class="np-cta np-go" href="https://loginail.fr/loginail-creer/index.html">Créer mon site</a></div>
+    <div class="np-droite"><a class="np-login" href="https://app.loginail.fr/" aria-label="Se connecter à mon espace pro">Se connecter</a><a class="np-cta np-go" href="loginail-creer/telecharger.html">Télécharger</a></div>
   </div>
 </header></div>
 <div class="np" style="display:contents"><section class="np-hero" id="hero">
@@ -2800,18 +2824,14 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
     <h1 class="serif">L’appli pour toutes<br>les <span class="np-sw">prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span> ongulaires.<span class="np-pastilles"><i>Site internet</i><i>Agenda</i><i>SMS de rappel illimités</i><i>Fiches clientes</i><i>Caisse</i></span></h1>
     <p class="np-lead">Tes clientes réservent sur ton site, l’appli gère tout le reste.</p>
     <div class="np-paste" id="paste">
-      <div class="np-row"><a class="np-cta np-main" id="go" href="https://loginail.fr/loginail-creer/index.html"><span class="np-t">Créer mon site gratuitement</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="np-row"><a class="np-as" id="go" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.570-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.630-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a></div>
       <p class="np-sub">On récupère tes photos, tes prestations et tes prix.</p>
     </div>
-    <div class="np-micro">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>1 mois offert</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sans engagement</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>0 % de commission</span>
-    </div>
+    <div class="np-micro ab-prix"><span><b>1er mois offert</b>, puis 49,99&nbsp;€/mois</span><span>Sans engagement · <i class="ip"><svg class="pomme" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.570-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.630-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg>Sur iPhone</i></span></div>
   </div>
 
   <div class="np-arc" id="arc" aria-label="Exemples de sites Loginail">
-    <div class="np-wheel-mask"><div class="np-wheel" id="wheel"></div></div>
+    <div class="np-wheel-mask"><div class="np-wheel" id="wheel"></div><div class="app-devant" aria-hidden="true"><em>L’appli</em><img src="loginail-site/apercus-univers/app-accueil-2511.webp" alt=""></div></div>
     <div class="np-inarc">
       <p class="np-k">Plus de 30 univers</p>
       <h2>Choisis ton style. On s’occupe du reste.</h2>
@@ -2820,11 +2840,11 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Réservation 24 h/24</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>SMS inclus</li>
       </ul>
-      <a class="np-cta np-ghost" href="https://loginail.fr/loginail-creer/index.html">Créer le mien <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="np-cta np-ghost" href="loginail-creer/telecharger.html">Télécharger l’appli <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section></div>
-<header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/index.html">Créer mon site</a></header>
+<header class="top" id="top"><b>Loginail</b><a class="btn" href="loginail-creer/telecharger.html">Télécharger</a></header>
 
 <section class="hero">
   <div class="k">Pour les prothésistes ongulaires</div>
@@ -2869,7 +2889,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
       <div class="cq-offert">1er mois offert</div>
       <div class="cq-pt">Sans engagement</div>
       <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
-      <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
+      <a class="cq-go" href="loginail-creer/telecharger.html">Télécharger l’appli <span aria-hidden="true">→</span></a><p class="ab-apple">Payé avec ton compte Apple. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone.</p>
     </div>
     <div class="cq-dessous"><span><i>✓</i>Rappels SMS inclus, sans limite</span><span><i>✓</i>Tu arrêtes en 1 clic, sans frais</span><span><i>✓</i>Fait par une prothésiste</span></div>
     </div>
@@ -2901,7 +2921,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
       <div class="cq-offert">1er mois offert</div>
       <div class="cq-pt">Sans engagement</div>
       <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
-      <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
+      <a class="cq-go" href="loginail-creer/telecharger.html">Télécharger l’appli <span aria-hidden="true">→</span></a><p class="ab-apple">Payé avec ton compte Apple. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone.</p>
     </div>
     </div>
     <div class="bento">
@@ -2961,7 +2981,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
   <img class="ch" src="loginail-site/charms/ceriseruban.webp" style="width:70px;right:6%;top:-30px;rotate:10deg" alt="">
   <div class="wrap">
     <div class="vu">
-      <div class="k">Combien ça coûte</div>
+      <div class="k">Ton abonnement</div>
       <h2 class="serif titre" style="margin-top:12px">Le premier mois,<br><em>c’est cadeau.</em></h2>
       <ul class="v3frise">
         <li><b>Aujourd’hui</b><span>Tu crées ton site et ton appli. 0 €.</span></li>
@@ -2978,7 +2998,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
         <div class="cq-pt">Sans engagement</div>
         <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
       </div></div>
-      <div class="fin-go"><a href="loginail-creer/index.html">Créer mon site gratuitement →</a><small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small></div>
+      <div class="fin-go"><a href="loginail-creer/telecharger.html">Télécharger l’appli →</a><small>1er mois offert, puis 49,99&nbsp;€/mois · sans engagement · sur iPhone</small></div>
     </div>
     <div class="col-prix"><!-- 20/11 (Marie) : ordinateur — 49,99 € en haut, « Tout est inclus. » dessous, même largeur -->
     <div class="v3carte vu"><!-- 20/11 (Marie) : ordinateur — même contenu que le carré du téléphone -->
@@ -2987,7 +3007,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
       <div class="cq-offert">1er mois offert</div>
       <div class="cq-pt">Sans engagement</div>
       <div class="cq-zero"><b>0 %</b> de commission sur tes réservations</div>
-      <a class="cq-go" href="loginail-creer/index.html">Créer mon site <span aria-hidden="true">→</span></a>
+      <a class="cq-go" href="loginail-creer/telecharger.html">Télécharger l’appli <span aria-hidden="true">→</span></a><p class="ab-apple">Payé avec ton compte Apple. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone.</p>
     </div>
     <div class="k2c k2c-ordi vu"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><h3>Tout est <em>inclus.</em></h3><ul><li><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy">Ton site à ton nom</li><li><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy">Réservation jour et nuit</li><li><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy">Rappels SMS sans limite</li><li><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy">Agenda et fiches clientes</li><li><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy">Ta caisse du jour</li><li><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy">Ton adresse en .fr dès le 2e mois</li></ul></div>
     </div>
@@ -3006,7 +3026,7 @@ html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px
   <img class="ch bg-plus" src="loginail-site/charms-mini/noeudcerise.webp" style="width:72px;right:-205px;bottom:0;rotate:-10deg;animation-delay:-5s" alt="" loading="lazy">
   <h2>Ton site est prêt <em>en 1 minute.</em></h2>
   <p>Tu colles ton lien Google Maps ou Planity. Le reste se fait tout seul.</p>
-  <a href="loginail-creer/index.html">Créer mon site gratuitement <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  <a href="loginail-creer/telecharger.html">Télécharger l’appli <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   <small>1er mois offert · sans engagement · tu arrêtes en 1 clic</small>
 </div></div>
 <!-- 8 · QUESTIONS -->
@@ -3061,7 +3081,7 @@ document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 @media (prefers-reduced-motion:reduce){.bas-go a{animation:none}}
 </style>
 <footer class="pied"><div class="pied-ch" aria-hidden="true"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"></div><div class="pied-bocaux" id="piedBocaux"><img class="pb-ch" src="loginail-site/charms-mini/cerisedisco.webp" style="width:70px;left:-150px;top:10px;rotate:-14deg" alt=""><img class="pb-ch" src="loginail-site/charms-mini/etoile4.webp" style="width:36px;left:-60px;top:120px;rotate:8deg;animation-delay:-2s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/collierperles.webp" style="width:58px;left:-200px;top:120px;rotate:6deg;animation-delay:-4s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/ceriseruban.webp" style="width:66px;right:-150px;top:0;rotate:12deg;animation-delay:-1s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/papilloncyber.webp" style="width:56px;right:-60px;top:110px;rotate:-10deg;animation-delay:-3s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/bouledisco.webp" style="width:50px;right:-210px;top:115px;animation-delay:-5s" alt=""><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide"><span class="et" aria-hidden="true">✦</span><span class="pb-onde" aria-hidden="true"><i></i></span><span class="pb-txt">Touche un bocal, puis tourne ton téléphone</span><span class="et et2" aria-hidden="true">✦</span></div></div>Loginail · pensé par une prothésiste, pour les prothésistes<br>Les salons, personnes, photos et avis de cette page sont des exemples créés par IA.<nav class="pied-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a></nav></footer>
-<div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/index.html">Créer mon site · 1 mois offert</a><div class="k">Sans engagement</div></div>
+<div class="colle-bas" id="colleBas"><a class="btn" href="loginail-creer/telecharger.html">Télécharger l’appli · 1 mois offert</a><div class="k">Sans engagement</div></div>
 
 <script>
 /* iPhone dans Safari : la bulle de l’adresse flotte en bas de l’écran, on remonte les boutons du bas */
