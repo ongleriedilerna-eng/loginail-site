@@ -399,7 +399,7 @@ document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 /* les pilules oui / non */
 /* « C'est toi qui choisis » : 3 idées (?c=1 pastilles, ?c=2 une à la fois, ?c=3 petite grille). Les pilules font oui / non toutes seules ; un toucher reprend la main. */
 (()=>{const O=[['Réservation en ligne','Tes clientes réservent sur ton site',1],['SMS de rappel','La veille du rendez-vous',1],['Acompte','Tu fixes le montant et tes règles',1],['Paiement par carte','Tes clientes paient l’acompte en réservant',0],['Carte de fidélité','C’est toi qui fixes la récompense',1],['Caisse du jour','Carte ou espèces, ton total du jour',0],['Liste d’attente','Une annulation ? La place est proposée',1]];
-const c=new URLSearchParams(location.search).get('c')||'4',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
+const c=new URLSearchParams(location.search).get('c')||'2',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
 const calme=matchMedia('(prefers-reduced-motion:reduce)').matches;let vu=false,pause=0;new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.3}).observe(sec);
 const met=(b,on)=>{b.setAttribute('aria-checked',on);const e=b.querySelector('.et');if(e)e.textContent=on?'Oui':'Non'};
 if(c==='2'){ /* une à la fois */
