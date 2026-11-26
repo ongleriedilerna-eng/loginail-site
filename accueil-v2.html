@@ -1,0 +1,747 @@
+<!doctype html>
+<!-- 26/11 nuit (Marie : « Oui, remplace ») : nouvel accueil « l'appli d'abord » (D127). Ancien accueil : historique git (avant ce commit). -->
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Loginail · L’appli des prothésistes ongulaires</title>
+<link rel="icon" href="favicon.svg">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6EFEA">
+<link rel="canonical" href="https://loginail.fr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Loginail">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://loginail.fr/">
+<meta property="og:title" content="Loginail · L’appli des prothésistes ongulaires">
+<meta property="og:description" content="Agenda, fiches clientes, SMS de rappel illimités et ton site internet, dans une seule appli. 1er mois offert.">
+<meta property="og:image" content="https://loginail.fr/apercu-appli-2611.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="L’appli Loginail sur un iPhone : l’agenda du jour d’une prothésiste ongulaire">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="loginail-site/icone-appli.svg">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Loginail", "operatingSystem": "iOS", "applicationCategory": "BusinessApplication", "description": "Loginail, l’appli tout-en-un des prothésistes ongulaires : agenda, fiches clientes, SMS de rappel illimités et ton site internet à ton image. 1er mois offert, puis 49,99 €/mois, sans engagement.", "url": "https://loginail.fr/", "image": "https://loginail.fr/apercu-appli-2611.jpg", "offers": {"@type": "Offer", "price": "49.99", "priceCurrency": "EUR", "description": "1er mois offert, sans engagement"}, "publisher": {"@type": "Organization", "name": "Loginail", "url": "https://loginail.fr/", "logo": "https://loginail.fr/loginail-site/icone-appli.svg", "sameAs": ["https://www.instagram.com/loginail.fr/"]}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Pas douée en informatique ?", "acceptedAnswer": {"@type": "Answer", "text": "Tu colles ton lien Google Maps ou Planity dans l’appli. Elle récupère tes photos, tes prestations et tes prix. Ensuite, tout se change avec le doigt."}}, {"@type": "Question", "name": "Mes clientes doivent télécharger l’appli ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Elles réservent sur ton site, depuis ton lien Instagram. L’appli, c’est pour toi."}}, {"@type": "Question", "name": "Et si je n’aime pas ?", "acceptedAnswer": {"@type": "Answer", "text": "Le premier mois est offert. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone, sans frais."}}, {"@type": "Question", "name": "Les SMS sont payants ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Les SMS de rappel sont compris dans les 49,99 €, sans limite."}}, {"@type": "Question", "name": "Ça marche sur Android ?", "acceptedAnswer": {"@type": "Answer", "text": "Pour l’instant, l’appli est sur iPhone. Tes clientes, elles, réservent depuis n’importe quel téléphone."}}]}]</script>
+
+<meta name="description" content="Loginail, l’appli tout-en-un des prothésistes ongulaires : agenda, fiches clientes, SMS de rappel illimités et ton site internet à ton image. 1er mois offert, puis 49,99 €/mois, sans engagement.">
+<style>
+@font-face{font-family:Abril;src:url(loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Jost;font-weight:400;src:url(loginail-site/polices/Jost-400-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Jost;font-weight:500;src:url(loginail-site/polices/Jost-500-latin.woff2) format("woff2");font-display:swap}
+:root{--fond:#F6EFEA;--carte:#fff;--encre:#1E1C1B;--doux:#5E5550;--fram:#B03562;--rose:#E0628C;--pale:#FBE7EE;--ligne:rgba(30,28,27,.09);
+  /* le haut (direction A : clair) */
+  --h-fond:radial-gradient(120% 70% at 50% 0,#FBE3EA 0,#F6EFEA 70%);--h-encre:#1E1C1B;--h-doux:#5E5550;--h-accent:#B03562;--h-bulle:#fff;--h-bulle-t:#1E1C1B;--h-sol:rgba(176,53,98,.18)}
+body.B{--h-fond:linear-gradient(170deg,#C24A72 0,#A93660 60%,#96305A 100%);--h-encre:#fff;--h-doux:rgba(255,255,255,.86);--h-accent:#FFD9E5;--h-bulle:#FFF6F1;--h-bulle-t:#1E1C1B;--h-sol:rgba(60,10,30,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--fond);color:var(--encre);font:400 16px/1.5 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;-webkit-tap-highlight-color:transparent}
+img{display:block;max-width:100%}
+a{color:inherit}
+.serif{font-family:Abril,serif;font-weight:400;letter-spacing:-.015em;line-height:1.04}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.k{font:500 12px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--fram)}
+.pomme{width:22px;height:22px;flex:none}
+/* ---------- barre ---------- */
+.barre{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--fond) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne)}
+.barre .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.marque{display:flex;align-items:center;gap:9px;font:500 13px Jost;letter-spacing:.3em;text-decoration:none}
+.marque img{width:30px;height:30px;border-radius:9px}
+.barre .dl{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:99px;background:var(--encre);color:#fff;font:500 14px Jost;text-decoration:none}
+/* ---------- haut ---------- */
+.haut{background:var(--h-fond);color:var(--h-encre);text-align:center;padding:30px 0 0;position:relative;overflow:hidden}
+.haut .k{color:var(--h-accent)}
+.haut h1{font-size:clamp(33px,9.2vw,68px);margin-top:12px}
+.haut h1 em{font-style:normal;position:relative;white-space:nowrap}
+.haut h1 em svg{position:absolute;left:-2%;bottom:-.06em;width:104%;height:.2em;color:var(--rose);overflow:visible}
+body.B .haut h1 em svg{color:#FFD9E5}
+.haut h1 em path{stroke-dasharray:1;stroke-dashoffset:1;animation:trait 1s .5s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes trait{to{stroke-dashoffset:0}}
+.haut .chapo{margin:14px auto 0;max-width:430px;font-size:17px;color:var(--h-doux)}
+.haut .chapo b{font-weight:500;color:var(--h-encre)}
+.as{display:inline-flex;align-items:center;gap:10px;height:60px;padding:0 24px 0 18px;border-radius:14px;background:#000;color:#fff;text-decoration:none;box-shadow:0 18px 34px -16px rgba(30,28,27,.6);transition:transform .15s}
+.as:active{transform:scale(.97)}
+.as .pomme{width:30px;height:30px}
+.as span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;text-align:left}
+.as small{font-size:12px}.as strong{font-size:23px;font-weight:600;letter-spacing:-.01em}
+.haut .as{margin-top:20px}
+.prix-l{margin-top:12px;font:500 14.5px/1.45 Jost;color:var(--h-encre)}
+.prix-l b{font-weight:500;color:var(--h-accent)}
+.prix-l i{font-style:normal;color:var(--h-doux)}
+/* ---------- la scène : le téléphone en relief et ses bulles ---------- */
+.scene{position:relative;height:430px;margin-top:22px;perspective:1100px}
+.sol{position:absolute;left:50%;bottom:6px;width:230px;height:34px;translate:-50% 0;border-radius:50%;background:var(--h-sol);filter:blur(16px)}
+.tel3d{position:absolute;left:50%;top:10px;width:188px;height:400px;margin-left:-94px;transform-style:preserve-3d;animation:tourne 12s ease-in-out infinite}
+@keyframes tourne{0%,100%{transform:rotateY(-16deg) rotateX(7deg)}50%{transform:rotateY(16deg) rotateX(4deg)}}
+.tel3d .dos,.tel3d .face{position:absolute;inset:0;border-radius:34px}
+.tel3d .dos{background:#3a2b30;transform:translateZ(-14px);box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.tel3d .tranche{position:absolute;inset:0;border-radius:34px;background:#2a1f22;transform:translateZ(-7px)}
+.tel3d .face{background:#111;padding:7px;box-shadow:0 30px 50px -22px rgba(60,10,30,.6)}
+.tel3d .ecran{position:relative;width:100%;height:100%;border-radius:28px;overflow:hidden;background:#F6F3EF}
+.tel3d .ecran::after{content:"";position:absolute;top:7px;left:50%;translate:-50% 0;width:30%;height:11px;border-radius:9px;background:#111;z-index:3}
+.tel3d .ecran img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;animation:vue 12s infinite}
+.tel3d .ecran img:nth-child(2){animation-delay:3s}.tel3d .ecran img:nth-child(3){animation-delay:6s}.tel3d .ecran img:nth-child(4){animation-delay:9s}
+@keyframes vue{0%{opacity:0;transform:scale(1.04)}3%,25%{opacity:1;transform:none}29%,100%{opacity:0}}
+.bulle{position:absolute;z-index:4;display:flex;align-items:center;gap:9px;max-width:176px;padding:9px 13px 9px 9px;border-radius:16px;background:var(--h-bulle);color:var(--h-bulle-t);text-align:left;box-shadow:0 16px 30px -14px rgba(60,10,30,.5);opacity:0;animation:bulle 12s infinite}
+.bulle .ic{width:34px;height:34px;flex:none;border-radius:11px;background:var(--pale);display:grid;place-items:center;color:var(--fram)}
+.bulle .ic svg{width:18px;height:18px}
+.bulle b{display:block;font-weight:500;font-size:13.5px;line-height:1.2}
+.bulle span{display:block;font-size:12px;line-height:1.25;color:var(--doux)}
+.bulle.g{left:-96px;--dx:-14px}.bulle.d{right:-96px;--dx:14px}
+.bulle.b1{top:44px;transform:translateZ(60px)}.bulle.b2{top:150px;transform:translateZ(80px);animation-delay:3s}
+.bulle.b3{top:232px;transform:translateZ(60px);animation-delay:6s}.bulle.b4{top:318px;transform:translateZ(80px);animation-delay:9s}
+@keyframes bulle{0%{opacity:0;scale:.7;translate:calc(var(--dx)*-1) 8px}4%{opacity:1;scale:1.04;translate:0 0}6%,24%{opacity:1;scale:1}28%,100%{opacity:0;scale:.9}}
+.etapes{position:absolute;left:0;right:0;bottom:-2px;display:flex;justify-content:center;gap:6px}
+.etapes i{width:6px;height:6px;border-radius:50%;background:var(--h-encre);opacity:.22;animation:pt 12s infinite}
+.etapes i:nth-child(2){animation-delay:3s}.etapes i:nth-child(3){animation-delay:6s}.etapes i:nth-child(4){animation-delay:9s}
+@keyframes pt{0%,25%{opacity:.9;width:18px;border-radius:9px}26%,100%{opacity:.22;width:6px}}
+.ch{position:absolute;pointer-events:none;z-index:1;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
+@keyframes fl{0%,100%{translate:0 0}50%{translate:0 -8px}}
+section,.boite,.carte{position:relative}
+@media (prefers-reduced-motion:reduce){.ch{animation:none}}
+@media (min-width:860px){.ch{scale:1.5}.haut .ch.c1{left:12%!important}.haut .ch.c2{right:12%!important}.haut .ch.c3{left:18%!important}.haut .ch.c4{right:18%!important}}
+.vague{display:block;width:100%;height:44px;margin-top:6px;color:var(--fond)}
+/* ---------- parties ---------- */
+section{padding:56px 0}
+.titre{font-size:clamp(30px,8vw,48px)}
+.titre em{font-style:normal;color:var(--fram)}
+.sous{margin-top:10px;font-size:17px;color:var(--doux);max-width:520px}
+.centre{text-align:center}.centre .sous{margin-left:auto;margin-right:auto}
+.vu{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.vu.on{opacity:1;transform:none}
+/* c'est quoi */
+.quoi{padding-top:34px}
+.trois{display:grid;gap:10px;margin-top:22px}
+.trois div{display:flex;align-items:center;gap:14px;background:var(--carte);border-radius:18px;padding:14px 16px;box-shadow:0 14px 30px -24px rgba(120,40,70,.5);text-align:left}
+.trois img{width:38px;height:38px;object-fit:contain;flex:none}
+.trois b{display:block;font-weight:500}.trois span{font-size:14.5px;color:var(--doux)}
+.trois .plus{background:var(--pale)}
+.trois .plus i{font-style:normal;font:500 11px Jost;letter-spacing:.14em;text-transform:uppercase;color:var(--fram)}
+/* les fonctions, une par une, en grand */
+.fonctions{display:grid;gap:18px;margin-top:26px}
+.fx{background:var(--carte);border-radius:26px;padding:24px 22px 0;overflow:hidden;box-shadow:0 22px 44px -32px rgba(120,40,70,.55)}
+.fx h3{font:400 25px/1.1 Abril,serif;margin-top:6px}
+.fx p{margin-top:8px;color:var(--doux);font-size:15.5px}
+.fx ul{list-style:none;margin-top:12px;display:grid;gap:7px}
+.fx li{display:flex;gap:9px;font-size:15px}.fx li::before{content:"✦";color:var(--rose);flex:none}
+.fx .cadre{width:210px;margin:20px auto 0;border-radius:30px 30px 0 0;background:#111;padding:6px 6px 0;height:290px;overflow:hidden}
+.fx .cadre img{width:100%;border-radius:25px 25px 0 0}
+.fx.rose{background:var(--pale)}
+.story{width:190px;margin:20px auto 0;height:270px;border-radius:24px 24px 0 0;background:linear-gradient(160deg,#F7B7CB,#E0628C);padding:18px 16px;color:#fff}
+.story small{font:500 10px Jost;letter-spacing:.18em;text-transform:uppercase;opacity:.9}
+.story b{display:block;font:400 22px/1.05 Abril,serif;margin:4px 0 12px}
+.story div{display:flex;justify-content:space-between;background:rgba(255,255,255,.92);color:#1E1C1B;border-radius:10px;padding:6px 10px;font-size:12.5px;margin-top:6px}
+.story div i{font-style:normal;color:var(--fram);font-weight:500}
+/* c'est toi qui choisis */
+.choix{background:var(--encre);color:#fff;border-radius:34px;margin:0 10px;padding:46px 0}
+.choix .k{color:#F4A9C2}.choix .titre em{color:#F4A9C2}.choix .sous{color:rgba(255,255,255,.72)}
+.sw-liste{display:grid;gap:10px;margin-top:24px}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;border:0;cursor:pointer;background:rgba(255,255,255,.07);color:#fff;border-radius:18px;padding:14px 16px;text-align:left;font:inherit}
+.sw b{display:block;font-weight:500;font-size:16px}.sw span{display:block;font-size:13.5px;color:rgba(255,255,255,.62)}
+.sw .pil{flex:none;width:52px;height:30px;border-radius:99px;background:rgba(255,255,255,.2);position:relative;transition:background .25s}
+.sw .pil::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:translate .28s cubic-bezier(.3,1.4,.5,1)}
+.sw[aria-checked=true] .pil{background:var(--rose)}.sw[aria-checked=true] .pil::after{translate:22px 0}
+.sw .et{flex:none;width:32px;font:500 12px Jost;color:rgba(255,255,255,.6);text-align:right}
+.sw[aria-checked=true] .et{color:#F4A9C2}
+/* abonnement */
+.abo .carte{background:var(--carte);border-radius:30px;padding:30px 24px;margin-top:24px;text-align:center;box-shadow:8px 8px 0 var(--rose),0 0 0 2px var(--encre)}
+.abo .p{font:400 54px/1 Abril,serif}.abo .p small{font:400 17px Jost;color:var(--doux)}
+.abo .of{display:inline-block;margin:12px 0 4px;background:var(--pale);color:var(--fram);border-radius:99px;padding:8px 16px;font-weight:500}
+.abo ul{list-style:none;margin:14px auto 20px;display:grid;gap:8px;font-size:15.5px;max-width:300px;text-align:left}
+.abo li{display:flex;gap:9px}.abo li::before{content:"✓";color:var(--fram);font-weight:500}
+.abo .ap{margin:12px auto 0;font-size:12.5px;line-height:1.45;color:var(--doux);max-width:300px}
+/* Marie + WhatsApp */
+.marie .boite{background:var(--pale);border-radius:30px;padding:28px 22px;text-align:center}
+.marie .ph{width:92px;height:92px;border-radius:50%;margin:0 auto;background:url(loginail-site/marie-illustration-rond.jpg) center/cover;box-shadow:0 0 0 4px #fff,0 0 0 6px var(--rose)}
+.marie h2{font:400 28px/1.1 Abril,serif;margin-top:16px}
+.marie p{margin-top:10px;color:#4a4440}
+.wa{display:inline-flex;align-items:center;gap:10px;margin-top:18px;height:54px;padding:0 22px;border-radius:99px;background:#1FAF5A;color:#fff;font:500 16px Jost;text-decoration:none;box-shadow:0 16px 30px -16px rgba(20,120,60,.7)}
+.wa svg{width:22px;height:22px}
+.marie small{display:block;margin-top:10px;font-size:13px;color:var(--doux)}
+/* questions */
+details{border-top:1px solid var(--ligne);padding:13px 0}
+summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:18px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--fram);font-size:19px;line-height:1.2}
+details[open] summary::after{content:"–"}
+details p{margin-top:6px;color:var(--doux);font-size:15px}
+/* fin + pied */
+.fin{text-align:center;padding-bottom:40px}
+.pied{text-align:center;font-size:13px;color:var(--doux);padding:0 20px 110px}
+.pied a{text-underline-offset:3px}
+.pied .ig{display:inline-flex;align-items:center;gap:7px;font-weight:500;color:var(--encre);text-decoration:none;margin-bottom:12px}
+.pied .ig svg{width:18px;height:18px}
+/* bouton collé en bas (téléphone) */
+.colle{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;justify-content:center;gap:9px;height:54px;border-radius:99px;background:var(--encre);color:#fff;font:500 16px Jost;text-decoration:none;box-shadow:0 18px 34px -14px rgba(30,28,27,.7);translate:0 90px;transition:translate .35s cubic-bezier(.2,.8,.2,1)}
+.colle.on{translate:0 0}
+.colle .pomme{width:19px;height:19px;margin-top:-3px}
+@media (min-width:860px){
+  .wrap{padding:0 40px}.colle{display:none}.pied{padding-bottom:50px}
+  .haut{padding-top:54px}.scene{height:520px}.tel3d{width:230px;height:490px;margin-left:-115px}
+  .bulle{max-width:230px;padding:12px 18px 12px 12px}.bulle b{font-size:15.5px}.bulle span{font-size:13.5px}.bulle.g{left:-250px}.bulle.d{right:-250px}
+  .trois{grid-template-columns:repeat(3,1fr)}.trois div{flex-direction:column;text-align:center;padding:24px 18px}
+  .fonctions{grid-template-columns:1fr 1fr;gap:22px}.fx.large{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:30px}
+  .sw-liste{grid-template-columns:1fr 1fr}.choix{margin:0 30px;padding:70px 0}
+  .abo .carte{max-width:460px;margin-left:auto;margin-right:auto}.marie .boite{max-width:640px;margin:0 auto;padding:44px}
+  .faq .wrap{max-width:760px}section{padding:84px 0}
+}
+@media (max-width:359px){.bulle.g{left:-84px}.bulle.d{right:-84px}.bulle{max-width:150px}}
+@media (prefers-reduced-motion:reduce){.tel3d,.tel3d .ecran img,.bulle,.etapes i,.haut h1 em path{animation:none}.tel3d .ecran img:first-child,.bulle{opacity:1}.haut h1 em path{stroke-dashoffset:0}.vu{opacity:1;transform:none;transition:none}}
+
+/* ===== 26/11 (Marie) : tout dans la même palette rose — WhatsApp rose (plus de vert), « C'est toi qui choisis » en rose poudré (plus de bloc noir) ===== */
+.wa{background:var(--rose);box-shadow:0 16px 30px -16px rgba(176,53,98,.65)}
+.choix{background:#F4E1EA;color:var(--encre)}
+.choix .k,.choix .titre em{color:var(--fram)}.choix .sous{color:var(--doux)}
+.sw{background:#fff;color:var(--encre);box-shadow:0 12px 26px -22px rgba(120,40,70,.55)}
+.sw span{color:var(--doux)}.sw b{color:var(--encre)}
+.sw>span:first-child{flex:1}.sw .pil{background:#E6D8D3}.sw .et{color:#9A8F88}.sw[aria-checked=true] .et{color:var(--fram)}
+/* ===== les 3 maquettes : ?v=1 (le film), ?v=2 (tout d'un coup d'œil), ?v=3 (la plus courte) ===== */
+.past{display:none}
+.tuiles{display:none;margin-top:24px;gap:12px}
+.tuiles div{background:#fff;border-radius:20px;padding:16px 14px;text-align:left;box-shadow:0 16px 32px -26px rgba(120,40,70,.55)}
+.tuiles img{width:40px;height:40px;object-fit:contain}
+.tuiles b{display:block;font:400 18px/1.15 Abril,serif;margin-top:8px}
+.tuiles span{display:block;font-size:14px;line-height:1.4;color:var(--doux);margin-top:4px}
+.tuiles .plus{background:var(--pale)}
+body.v2 .fonctions,body.v3 .fonctions{display:none}
+body.v2 .tuiles{display:grid;grid-template-columns:1fr 1fr}
+body.v2 .tel3d{animation:fl 6s ease-in-out infinite;transform:rotateY(-8deg) rotateX(4deg)}
+body.v2 .tel3d .ecran img,body.v3 .tel3d .ecran img{animation:none}
+body.v2 .tel3d .ecran img:first-child,body.v3 .tel3d .ecran img:first-child{opacity:1}
+body.v2 .bulle{opacity:1;animation:fl 5s ease-in-out infinite}
+body.v2 .etapes,body.v3 .etapes,body.v3 .bulle,body.v3 .quoi,body.v3 .choix,body.v3 .sol,body.v3 .ch.c3,body.v3 .ch.c4{display:none}
+body.v3 .past{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:16px auto 0;max-width:560px}
+body.v3 .past i{font:500 13.5px/1.4 Jost;font-style:normal;white-space:nowrap;background:#fff;border-radius:99px;padding:6px 13px;box-shadow:0 8px 18px -12px rgba(120,40,70,.45)}
+body.v3 .past i::before{content:"✦ ";color:var(--rose)}
+body.v3 .chapo{display:none}
+body.v3 .scene{height:300px;overflow:hidden;margin-top:26px}
+body.v3 .tel3d{animation:none;transform:rotateY(-14deg) rotateX(6deg) rotateZ(2deg)}
+body.v3 .ch.c1{top:auto!important;bottom:150px}body.v3 .ch.c2{top:auto!important;bottom:190px}
+body.v3 .tuiles{display:grid;grid-template-columns:1fr;gap:10px}
+body.v3 .tuiles div{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center;padding:12px 16px}
+body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuiles span{margin-top:0}
+@media (min-width:860px){body.v2 .tuiles{grid-template-columns:repeat(4,1fr)}body.v3 .tuiles{grid-template-columns:1fr 1fr}body.v3 .scene{height:380px}}
+
+/* ===== 26/11 soir (Marie) : moins long — fonctions à glisser, site = téléphones qui défilent, « C'est toi qui choisis » tassé (3 idées) ===== */
+.pts-fx{display:none;justify-content:center;gap:7px;margin-top:4px}
+.pts-fx i{width:7px;height:7px;border-radius:99px;background:var(--encre);opacity:.2;transition:width .25s,opacity .25s;cursor:pointer}
+.pts-fx i.on{width:20px;opacity:.85;background:var(--fram)}
+.roue{height:262px;overflow:hidden;margin:20px -22px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.piste{display:flex;gap:12px;width:max-content;padding-right:12px;animation:defile 26s linear infinite}
+.piste img{width:126px;height:272px;max-width:none;object-fit:cover;object-position:top;border:5px solid #111;border-bottom:0;border-radius:22px 22px 0 0;background:#111}
+@keyframes defile{to{transform:translateX(-50%)}}
+@media (max-width:859px){
+  .fonctions{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:22px -20px 0;padding:6px 20px 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .fonctions::-webkit-scrollbar{display:none}
+  .fonctions .fx{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;opacity:1;transform:none}
+  .fonctions .fx>:nth-last-child(2){margin-bottom:20px}
+  .fonctions .fx .cadre,.fonctions .fx .story,.fonctions .fx .roue{margin-top:auto;flex:none}
+  .fonctions .fx .cadre{height:262px}
+  #ptsFonctions{display:flex}
+}
+/* 1 · les pastilles */
+.sw-liste.c1{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.sw-liste.c1 .sw,.sw-liste.c3 .sw{width:auto;gap:9px;padding:8px 15px 8px 9px;border-radius:99px;justify-content:flex-start;transition:background .3s}
+.sw-liste.c1 .sw b,.sw-liste.c3 .sw b{font-size:14.5px;white-space:nowrap}
+.sw-liste.c1 .sw .pil,.sw-liste.c3 .sw .pil{width:38px;height:22px}
+.sw-liste.c1 .sw .pil::after,.sw-liste.c3 .sw .pil::after{width:16px;height:16px}
+.sw-liste.c1 .sw[aria-checked=true] .pil::after,.sw-liste.c3 .sw[aria-checked=true] .pil::after{translate:16px 0}
+.sw-liste.c1 .sw[aria-checked=false] b,.sw-liste.c3 .sw[aria-checked=false] b{color:#9A8F88}
+.sw-liste.c1 .sw>span:first-child,.sw-liste.c3 .sw>span:first-child{flex:none}
+#choix,#avap{scroll-margin-top:70px}#chiffres{scroll-margin-top:330px}
+/* 3 · la petite grille */
+.sw-liste.c3{grid-template-columns:1fr 1fr;gap:9px}
+.sw-liste.c3 .sw{border-radius:16px;padding:11px 10px;flex-direction:row-reverse;justify-content:space-between}
+.sw-liste.c3 .sw b{white-space:normal;font-size:14px;line-height:1.2}
+.sw-liste.c3 .sw:last-child{grid-column:span 2}
+/* 2 · une à la fois */
+.sw-liste.c2{display:block}
+.une{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;border:0;cursor:pointer;background:#fff;color:var(--encre);border-radius:22px;padding:20px 18px;text-align:left;font:inherit;box-shadow:0 16px 32px -24px rgba(120,40,70,.6);transition:opacity .2s,transform .2s}
+.une.sort{opacity:0;transform:translateY(8px)}
+.une>span:first-child{flex:1}.une b{display:block;font:400 22px/1.15 Abril,serif}.une span span{display:block;font-size:14.5px;color:var(--doux);margin-top:3px}
+.une .et{flex:none;font:500 13px Jost;color:#9A8F88}.une[aria-checked=true] .et{color:var(--fram)}
+.une .pil{flex:none;width:58px;height:34px;border-radius:99px;background:#E6D8D3;position:relative;transition:background .3s}
+.une .pil::after{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;transition:translate .32s cubic-bezier(.3,1.4,.5,1)}
+.une[aria-checked=true] .pil{background:var(--rose)}.une[aria-checked=true] .pil::after{translate:24px 0}
+.noms{display:flex;flex-wrap:wrap;justify-content:center;gap:5px 6px;margin-top:14px}
+.noms i{font:500 12.5px Jost;font-style:normal;padding:4px 10px;border-radius:99px;color:var(--doux);cursor:pointer;transition:background .25s,color .25s}
+.noms i.on{background:var(--fram);color:#fff}
+@media (prefers-reduced-motion:reduce){.piste{animation:none}}
+
+/* 4 · à glisser vers la droite (Marie, 26/11 soir) */
+.choix:has(.sw-liste.c4){overflow:hidden}
+.sw-liste.c4{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:22px -20px 0;padding:6px 20px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.sw-liste.c4::-webkit-scrollbar{display:none}
+.sw-liste.c4 .sw{flex:0 0 64%;scroll-snap-align:center;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;border-radius:24px;padding:20px 18px 18px}
+.sw-liste.c4 .sw b{font:400 21px/1.15 Abril,serif}
+.sw-liste.c4 .sw .d{font-size:14.5px;line-height:1.4;margin-top:6px;min-height:41px}
+.sw-liste.c4 .sw .bas{display:flex;align-items:center;gap:10px;margin-top:16px}
+.sw-liste.c4 .sw .et{width:auto;font-size:14px}
+.sw-liste.c4 .sw[aria-checked=false] b{color:#9A8F88}
+#ptsFx{margin-top:2px}
+@media (min-width:860px){.sw-liste.c4{flex-wrap:wrap;justify-content:center;overflow:visible;margin:26px 0 0;padding:0}.sw-liste.c4 .sw{flex:0 0 23%}#ptsFx{display:none!important}}
+
+/* ===== 26/11 soir (Marie : « inspire-toi en gardant mon univers ») : gros chiffres + avant/après à bascule ===== */
+.chiffres{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.chiffres div{background:#fff;border-radius:20px;padding:16px 14px;text-align:left;box-shadow:0 14px 30px -24px rgba(120,40,70,.5)}
+.chiffres b{display:block;font:400 28px/1 Abril,serif;color:var(--fram);white-space:nowrap}
+.chiffres span{display:block;font-size:13.5px;line-height:1.35;color:var(--doux);margin-top:6px}
+.bascule2{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;margin-top:20px;padding:4px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne)}
+.bascule2 button{position:relative;z-index:1;border:0;background:none;cursor:pointer;font:500 14.5px Jost;color:var(--doux);padding:10px 18px;border-radius:99px;transition:color .3s;white-space:nowrap}
+.bascule2 button.on{color:#fff}
+.bascule2 i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:99px;background:var(--encre);transition:translate .4s cubic-bezier(.3,1.3,.5,1),background .4s}
+.bascule2:has(button[data-m="1"].on) i{translate:100% 0;background:var(--rose)}
+.avcarte{position:relative;display:grid;margin-top:16px;border-radius:26px;padding:22px 20px;text-align:left;background:#fff;box-shadow:0 22px 44px -32px rgba(120,40,70,.55);transition:background .4s}
+.avcarte[data-m="1"]{background:var(--pale)}
+.avcarte ul{grid-area:1/1;list-style:none;display:grid;gap:12px;align-content:start;transition:opacity .35s,transform .35s}
+.avcarte li{display:flex;gap:10px;font-size:16px;line-height:1.35}
+.avcarte .av0 li{color:#8a7f79}.avcarte .av0 li::before{content:"–";color:#b9aea8;flex:none}
+.avcarte .av1 li::before{content:"✦";color:var(--rose);flex:none}
+.avcarte[data-m="0"] .av1,.avcarte[data-m="1"] .av0{opacity:0;transform:translateY(8px);pointer-events:none}
+.avcarte .ch{transition:opacity .4s,scale .4s}.avcarte[data-m="0"] .ch{opacity:0;scale:.6}
+@media (min-width:860px){.chiffres{grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}.chiffres b{font-size:36px}.avcarte{max-width:560px;margin-left:auto;margin-right:auto;padding:30px}}
+
+/* 26/11 nuit · finitions : contraste suffisant (texte blanc sur rose ≥ 4,5), gris plus lisibles, lien « Se connecter » */
+.wa{background:#C8416F;box-shadow:0 16px 30px -16px rgba(176,53,98,.65)}
+.sw .et,.une .et{color:#786E68}.avcarte .av0 li{color:#786E68}.avcarte .av0 li::before{color:#9A8F88}
+.sw-liste.c1 .sw[aria-checked=false] b,.sw-liste.c3 .sw[aria-checked=false] b,.sw-liste.c4 .sw[aria-checked=false] b{color:#786E68}
+.barre .droite{display:flex;align-items:center;gap:8px}
+.barre .compte{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne);color:var(--encre)}
+.barre .compte svg{width:19px;height:19px}
+.barre .compte span{display:none}
+@media (min-width:860px){.barre .compte{width:auto;height:40px;padding:0 16px;border-radius:99px;gap:8px;display:flex;font:500 14px Jost;text-decoration:none}.barre .compte span{display:inline}}
+
+/* ===== 27/11 (Marie, retours sur le nouvel accueil) : V2 ===== */
+@font-face{font-family:BagelBocal;src:url(loginail-site/polices/BagelFatOne-400-latin.woff2) format("woff2");font-display:block}
+/* le haut : texte à gauche, téléphone à droite (ordinateur) ; cartes qui changent l'écran du téléphone */
+.hero{position:relative}
+.visuel{position:relative}
+.haut .ch.ordi{display:none}
+.etapes{display:none}
+.tel3d .ecran img{animation:none;opacity:0;transform:scale(1.03);transition:opacity .45s ease,transform .45s ease}
+.tel3d .ecran img.on{opacity:1;transform:none}
+.bulle{opacity:1;animation:fl 6s ease-in-out infinite;border:0;font:inherit;cursor:pointer;transition:box-shadow .25s,scale .25s,max-width .35s cubic-bezier(.2,.8,.2,1),background .25s}
+.bulle.b2{animation-delay:-1.5s}.bulle.b3{animation-delay:-3s}.bulle.b4{animation-delay:-4.5s}
+.bulle .tx{display:block}
+.bulle .det{display:block;font-style:normal;font-size:12.5px;line-height:1.4;color:var(--doux);max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s ease,margin .3s}
+.bulle.on{z-index:12;animation-play-state:paused;box-shadow:0 0 0 2px var(--rose),0 22px 40px -16px rgba(120,30,60,.55);max-width:230px}
+.bulle.on .det{max-height:90px;opacity:1;margin-top:6px}
+.scene.choisi .bulle:not(.on){opacity:.55}
+.ch.hc{will-change:transform}
+@media (min-width:860px){
+  .wrap{max-width:1180px}
+  .haut{text-align:left;padding-top:20px}
+  .hero{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:10px;min-height:620px}
+  .haut h1{font-size:clamp(46px,5vw,68px);margin-top:14px}
+  .haut .chapo{margin-left:0;max-width:470px}
+  .haut .ch.ordi{display:block}
+  .scene{height:590px;margin-top:0}
+  .bulle.g{left:-150px}.bulle.d{right:-150px}
+  .bulle.on{max-width:260px}
+  .haut h1{font-size:clamp(44px,4.5vw,62px)}
+  /* charms du haut : autour du téléphone, jamais sur le titre ni sur les cartes */
+  .visuel .hc:nth-of-type(1){left:58%!important;top:-3%!important}
+  .visuel .hc:nth-of-type(2){right:0!important;top:4%!important}
+  .visuel .hc:nth-of-type(3){left:8%!important;bottom:2%!important}
+  .visuel .hc:nth-of-type(4){right:6%!important;bottom:6%!important}
+  .visuel .hc:nth-of-type(5){left:6%!important;top:56%!important}
+  .visuel .hc:nth-of-type(6){right:2%!important;top:40%!important}
+}
+@media (max-width:859px){
+  /* téléphone : 2 charms seulement, là où il n'y a pas de carte */
+  .visuel .hc:nth-of-type(1),.visuel .hc:nth-of-type(4){display:none}
+  .visuel .hc:nth-of-type(2){right:2%!important;top:-2%!important}
+  .visuel .hc:nth-of-type(3){left:3%!important;bottom:4%!important}
+}
+/* c'est quoi : titre à gauche, texte normal à droite */
+.quoi{text-align:left}
+.quoi-grille{display:grid;gap:14px}
+.quoi-txt p{font-size:17px;line-height:1.6;color:#4a4440}.quoi-txt p+p{margin-top:10px}
+.quoi-txt b{font-weight:500;color:var(--fram)}
+@media (min-width:860px){.quoi-grille{grid-template-columns:1fr 1fr;gap:60px;align-items:center}.quoi .titre{font-size:44px}}
+/* l'appli qui gère tout : des téléphones entiers, pas coupés ; le site plus haut */
+.fx .cadre{width:150px;height:auto!important;border-radius:28px;padding:5px;margin:18px auto 22px!important;overflow:hidden;box-shadow:0 18px 34px -18px rgba(60,20,40,.55)}
+.fx .cadre img{border-radius:23px}
+.fx .story{height:auto;border-radius:24px;margin:18px auto 22px!important;padding-bottom:20px}
+.fx .roue{height:auto;margin:18px -22px 22px!important;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.fx .piste img{width:112px;height:242px;border:5px solid #111;border-radius:22px}
+@media (min-width:860px){.fx .cadre{width:170px}.fx.large .cadre{margin:10px auto!important}}
+/* le prix : beaucoup moins gros */
+.abo .p{font-size:38px}.abo .p small{font-size:15px}
+/* Instagram */
+.ig-boite{position:relative;background:#fff;border-radius:30px;padding:22px 0 24px;overflow:hidden;box-shadow:0 22px 44px -32px rgba(120,40,70,.55)}
+.ig-boite .ch{z-index:3}
+.ig-tete{display:flex;align-items:center;gap:12px;padding:0 22px;text-align:left}
+.ig-av{flex:none;width:58px;height:58px;border-radius:50%;padding:3px;background:conic-gradient(from 200deg,#E0628C,#F4A9C2,#B03562,#E0628C)}
+.ig-av img{width:100%;height:100%;border-radius:50%;border:3px solid #fff;background:#fff}
+.ig-nom b{display:block;font-weight:500;font-size:17px}.ig-nom span{display:block;font-size:14px;line-height:1.35;color:var(--doux);margin-top:2px}
+.ig-rang{overflow:hidden;margin-top:18px}
+.ig-piste{display:flex;gap:8px;width:max-content;animation:defile 40s linear infinite}
+.ig-piste a{display:block;width:132px;height:132px;border-radius:14px;overflow:hidden;flex:none}
+.ig-piste img{width:100%;height:100%;object-fit:cover;object-position:50% 14%}
+.ig-btn{display:flex;align-items:center;justify-content:center;gap:9px;margin:18px 22px 0;height:52px;border-radius:99px;background:#C8416F;color:#fff;font:500 15.5px Jost;text-decoration:none;box-shadow:0 16px 30px -16px rgba(176,53,98,.65)}
+.ig-btn svg{width:20px;height:20px}
+@media (min-width:860px){.ig-boite{max-width:640px;margin:0 auto}.ig-piste a{width:160px;height:160px}.ig-btn{max-width:360px;margin:20px auto 0}}
+/* bas de page : les bocaux */
+.pied-bocaux{display:flex;flex-direction:column;align-items:center;margin:0 auto 14px;width:100%;max-width:420px;position:relative}
+.pied-bocaux canvas{display:block;touch-action:pan-y;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pied-bocaux .pb-bt{display:none;margin-top:8px;height:36px;padding:0 16px;border-radius:99px;border:0;background:#1E1C1B;color:#fff;font:500 13px Jost,sans-serif}
+.pied-bocaux .pb-bt.on{display:inline-block}
+.pb-ch{display:none}
+@media (min-width:860px){.pied-bocaux{max-width:640px}.pb-ch{display:block;position:absolute;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}}
+
+/* 25/11 (Marie, « B2 · Rond qui pulse ») : la phrase des bocaux LOGINAIL se voit plus, TÉLÉPHONE ET ORDINATEUR (25/11 soir) :
+   au-dessus des bocaux, en rose, un reflet qui passe, un point rose qui fait une onde, 2 étoiles qui scintillent.
+   Maquette : maquettes/bocaux-phrase-2511 */
+html body:not(#_) .pied-bocaux .pb-aide{order:-1;margin:0 0 12px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font:500 14.5px Jost,sans-serif;color:#B03562}
+html body:not(#_) .pied-bocaux .pb-aide .et{display:inline-block;margin:0;color:#E0628C;font-size:13px;animation:pb-scint 1.8s ease-in-out infinite}
+html body:not(#_) .pied-bocaux .pb-aide .et2{animation-delay:-.9s}
+.pied-bocaux .pb-txt{background:linear-gradient(100deg,#B03562 0%,#B03562 38%,#F4A9C2 50%,#B03562 62%,#B03562 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:pb-brille 3.2s ease-in-out infinite}
+html body:not(#_) .pied-bocaux .pb-onde{position:relative;width:16px;height:16px;flex:none;display:inline-grid;place-items:center}
+.pied-bocaux .pb-onde i{width:7px;height:7px;border-radius:50%;background:#B03562}
+.pied-bocaux .pb-onde::before,.pied-bocaux .pb-onde::after{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid #E0628C;animation:pb-onde 1.8s ease-out infinite}
+.pied-bocaux .pb-onde::after{animation-delay:.9s}
+@media (min-width:761px){html body:not(#_) .pied-bocaux .pb-aide{font-size:18px;gap:9px;margin-bottom:16px}html body:not(#_) .pied-bocaux .pb-aide .et{font-size:15px}html body:not(#_) .pied-bocaux .pb-onde{width:18px;height:18px}}
+@keyframes pb-brille{0%{background-position:100% 0}60%,100%{background-position:0 0}}
+@keyframes pb-scint{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes pb-onde{0%{transform:scale(.4);opacity:1}100%{transform:scale(1.5);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pied-bocaux .pb-txt,.pied-bocaux .pb-aide .et,.pied-bocaux .pb-onde::before,.pied-bocaux .pb-onde::after{animation:none!important}}
+
+/* cookies : deux boutons de même taille, rien n'est mesuré sans « Accepter » */
+.ck{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:80;background:#fff;border-radius:22px;padding:16px 16px 14px;box-shadow:0 24px 50px -18px rgba(60,20,40,.5),0 0 0 1px var(--ligne);font-size:14px;line-height:1.45;color:#4a4440;animation:ckIn .4s cubic-bezier(.2,.8,.2,1)}
+.ck[hidden]{display:none}
+@keyframes ckIn{from{opacity:0;transform:translateY(20px)}}
+.ck b{color:var(--encre);font-weight:500}.ck a{color:var(--fram)}
+.ck-bt{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.ck-bt button{height:44px;border-radius:99px;border:0;cursor:pointer;font:500 15px Jost}
+.ck-bt [data-c=non]{background:#F4E1EA;color:var(--encre)}.ck-bt [data-c=oui]{background:var(--encre);color:#fff}
+body.ck-ouvert .colle{translate:0 120px!important}
+@media (min-width:860px){.ck{left:auto;right:24px;bottom:24px;max-width:400px}}
+@media (prefers-reduced-motion:reduce){.bulle,.ig-piste,.pb-ch{animation:none}}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
+
+<header class="barre"><div class="wrap">
+  <a class="marque" href="#haut"><img src="loginail-site/icone-appli.svg" alt="">LOGINAIL</a>
+  <div class="droite"><a class="compte" href="https://app.loginail.fr/" aria-label="Se connecter à mon espace pro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>Se connecter</span></a><a class="dl" href="loginail-creer/telecharger.html">Télécharger</a></div>
+</div></header>
+
+<main>
+<!-- 1 · LE HAUT : on comprend en 5 secondes -->
+<section class="haut" id="haut" style="padding-bottom:0">
+  <div class="wrap hero">
+    <div class="txt">
+      <div class="k">Pensé par une prothésiste</div>
+      <h1 class="serif">L’appli pour toutes<br>les <em>prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></em> ongulaires.</h1>
+      <p class="chapo">Ton agenda, tes fiches clientes, tes rappels SMS, ta caisse.<br><b>Et même ton site internet.</b></p>
+      <a class="as" id="telecharger" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme"><use href="#pomme"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a>
+      <p class="prix-l"><b>1er mois offert</b>, puis 49,99&nbsp;€/mois<br>Sans engagement · <i>Sur iPhone</i></p>
+    </div>
+    <div class="visuel">
+      <img class="ch hc" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:54px;left:4%;top:6%;rotate:-12deg">
+      <img class="ch hc" src="loginail-site/charms-mini/saturne.webp" alt="" style="width:48px;right:4%;top:12%;rotate:10deg;animation-delay:-2s">
+      <img class="ch hc" src="loginail-site/charms-mini/collierperles.webp" alt="" style="width:46px;left:6%;bottom:12%;rotate:6deg;animation-delay:-4s">
+      <img class="ch hc" src="loginail-site/charms-mini/bouledisco.webp" alt="" style="width:42px;right:7%;bottom:16%;rotate:-8deg;animation-delay:-3s">
+      <img class="ch hc ordi" src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="width:50px;left:-6%;top:44%;rotate:-6deg;animation-delay:-1s">
+      <img class="ch hc ordi" src="loginail-site/charms-mini/etoilecristal.webp" alt="" style="width:40px;right:-4%;top:48%;rotate:12deg;animation-delay:-5s">
+      <div class="scene" aria-label="L’appli Loginail : agenda, SMS de rappel, fiches clientes, site internet">
+        <div class="sol"></div>
+        <div class="tel3d">
+          <div class="dos"></div><div class="tranche"></div>
+          <div class="face"><div class="ecran" id="ecran">
+            <img class="on" src="loginail-site/apercus-univers/app-accueil-2511.webp" alt="L’accueil de l’appli : la prochaine cliente du jour">
+            <img src="loginail-site/apercus-univers/app-agenda-2511.webp" alt="L’agenda de l’appli" loading="lazy">
+            <img src="loginail-site/apercus-univers/sms-rappel-2211.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy">
+            <img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente" loading="lazy">
+            <img src="loginail-site/apercus-univers/app-monsite-2511.webp" alt="Mon site, dans l’appli" loading="lazy">
+          </div></div>
+          <button type="button" class="bulle g b1" data-i="1" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Nouvelle résa : Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="2" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="3" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="4" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton nom, à ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="vague" viewBox="0 0 1440 44" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 44V22C240 0 480 0 720 16s480 22 720 4v24z"/></svg>
+</section>
+
+<!-- 2 · C'EST QUOI -->
+<section class="quoi"><div class="wrap">
+  <div class="quoi-grille">
+    <div><div class="k vu">Loginail, c’est quoi&nbsp;?</div>
+    <h2 class="serif titre vu" style="margin-top:10px">Une appli <em>tout-en-un</em> pour gérer ton salon.</h2></div>
+    <div class="quoi-txt vu"><p>C’est l’appli des prothésistes ongulaires, pensée par une prothésiste.</p>
+    <p>Dedans, tu as ton agenda, tes fiches clientes, tes rappels SMS et ta caisse du jour. Et en plus, <b>ton site internet</b>, à ton nom, où tes clientes réservent toutes seules.</p></div>
+  </div>
+  <div class="chiffres" id="chiffres">
+    <div class="vu"><b>0&nbsp;%</b><span>de commission sur tes réservations</span></div>
+    <div class="vu"><b>24&nbsp;h/24</b><span>tes clientes réservent toutes seules</span></div>
+    <div class="vu"><b>Illimités</b><span>les SMS de rappel, tous compris</span></div>
+    <div class="vu"><b>1&nbsp;min</b><span>pour créer ton site dans l’appli</span></div>
+  </div>
+</div></section>
+
+<!-- 3 · CE QU'IL Y A DEDANS : une chose à la fois, en grand -->
+<section style="padding-top:20px"><div class="wrap">
+  <div class="centre"><div class="k vu">Dans l’appli</div>
+  <h2 class="serif titre vu" style="margin-top:10px">L’appli qui <em>gère tout.</em></h2></div>
+  <div class="tuiles"><div><img src="loginail-site/charms-mini/cerisedisco.webp" alt="" loading="lazy"><b>Agenda</b><span>Tes rendez-vous, tes créneaux, tes vacances.</span></div><div><img src="loginail-site/charms-mini/coeurchrome.webp" alt="" loading="lazy"><b>SMS de rappel</b><span>Illimités, envoyés la veille. Zéro lapin.</span></div><div><img src="loginail-site/charms-mini/perle.webp" alt="" loading="lazy"><b>Fiches clientes</b><span>Tes notes, ses poses, son anniversaire.</span></div><div><img src="loginail-site/charms-mini/bouledisco.webp" alt="" loading="lazy"><b>Dispos en story</b><span>Ta semaine partagée sur Instagram en 1 touche.</span></div><div><img src="loginail-site/charms-mini/ceriseruban.webp" alt="" loading="lazy"><b>Acompte</b><span>Par carte, au montant que tu choisis.</span></div><div><img src="loginail-site/charms-mini/etoilecristal.webp" alt="" loading="lazy"><b>Carte de fidélité</b><span>C’est toi qui fixes la récompense.</span></div><div><img src="loginail-site/charms-mini/collierperles.webp" alt="" loading="lazy"><b>Caisse du jour</b><span>Carte ou espèces, ton total du jour.</span></div><div class="plus"><img src="loginail-site/charms-mini/noeudcerise.webp" alt="" loading="lazy"><b>Ton site internet</b><span>Le plus : à ton nom, à ton image.</span></div></div>
+  <div class="fonctions">
+    <article class="fx large vu"><div><div class="k">Agenda</div><h3>Ta journée, d’un coup d’œil.</h3><p>Ta prochaine cliente, ce que tu vas gagner aujourd’hui, l’heure où tu finis.</p><ul><li>Ajoute un créneau en 2 touches</li><li>Pose tes vacances, bloque une heure</li><li>Tes clientes réservent jour et nuit</li></ul></div><div class="cadre"><img src="loginail-site/apercus-univers/app-agenda-2511.webp" alt="L’agenda de l’appli Loginail" loading="lazy"></div></article>
+    <article class="fx vu"><div class="k">SMS de rappel</div><h3>Illimités. Zéro lapin.</h3><p>La veille du rendez-vous, ta cliente reçoit un SMS. Tu n’as rien à faire.</p><div class="cadre"><img src="loginail-site/apercus-univers/sms-rappel-2211.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy"></div></article>
+    <article class="fx vu"><div class="k">Fiches clientes</div><h3>Tu te souviens de tout.</h3><p>Tes notes, ses poses, son anniversaire. Et celles qui devraient bientôt revenir.</p><div class="cadre"><img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente dans l’appli" loading="lazy"></div></article>
+    <article class="fx rose vu"><div class="k">Tes dispos en story</div><h3>Partage ta semaine en 1 touche.</h3><p>L’appli fabrique la story de tes créneaux libres. Tu la postes sur Instagram.</p><div class="story" aria-hidden="true"><small>Cette semaine</small><b>Mes dispos</b><div>Mardi <i>14 h · 16 h 30</i></div><div>Jeudi <i>10 h</i></div><div>Vendredi <i>9 h · 15 h</i></div><div>Samedi <i>11 h</i></div></div></article>
+    <article class="fx vu"><div class="k">Le plus · Ton site internet</div><h3>À ton nom, à ton image.</h3><p>Il se crée tout seul dans l’appli. Tu changes le fond, l’écriture et les charms quand tu veux. Ton adresse en .fr dès le 2e mois.</p><div class="roue" role="img" aria-label="Exemples de sites de prothésistes créés avec Loginail"><div class="piste"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
+  </div>
+  <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
+</div></section>
+
+<!-- 3 bis · AVANT / APRÈS (une pilule qui bascule toute seule) -->
+<section class="avap centre" id="avap" style="padding-top:10px"><div class="wrap">
+  <div class="k vu">Avant, après</div>
+  <h2 class="serif titre vu" style="margin-top:10px">Tes journées, <em>en plus léger.</em></h2>
+  <div class="bascule2 vu" id="avBascule"><button type="button" class="on" data-m="0">Aujourd’hui</button><button type="button" data-m="1">Avec Loginail</button><i aria-hidden="true"></i></div>
+  <div class="avcarte vu" id="avCarte" data-m="0">
+    <img class="ch" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:50px;right:-10px;top:-20px;rotate:12deg">
+    <ul class="av0"><li>Tu réponds aux messages entre deux poses</li><li>Tu notes tes rendez-vous à la main</li><li>Une cliente oublie, ton créneau est perdu</li><li>Tu refais tes comptes le soir, de tête</li></ul>
+    <ul class="av1"><li>Tes clientes réservent toutes seules, jour et nuit</li><li>Ton agenda se remplit tout seul</li><li>Un SMS de rappel part la veille. Zéro lapin.</li><li>Ta caisse du jour se fait toute seule</li></ul>
+  </div>
+</div></section>
+
+<!-- 4 · C'EST TOI QUI CHOISIS -->
+<section class="choix" id="choix"><div class="wrap">
+  <div class="centre"><div class="k vu">Rien d’imposé</div>
+  <h2 class="serif titre vu" style="margin-top:10px">C’est toi qui <em>choisis.</em></h2>
+  <p class="sous vu">Tu actives ce qui te sert. Le reste, tu le laisses éteint.</p></div>
+  <div class="sw-liste" id="swListe"></div>
+  <div class="pts-fx" id="ptsFx" aria-hidden="true" style="display:none"></div>
+</div></section>
+
+<!-- 5 · L'ABONNEMENT -->
+<section class="abo centre"><div class="wrap">
+  <div class="k vu">Ton abonnement</div>
+  <h2 class="serif titre vu" style="margin-top:10px">Le premier mois, <em>c’est cadeau.</em></h2>
+  <div class="carte vu"><img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="width:54px;right:-12px;top:-22px;rotate:12deg"><img class="ch" src="loginail-site/charms-mini/etoilecristal.webp" alt="" style="width:40px;left:-10px;bottom:-14px;rotate:-10deg;animation-delay:-3s">
+    <div class="p">49,99&nbsp;€ <small>/ mois</small></div>
+    <div class="of">1er mois offert</div>
+    <ul><li>Tout est inclus, SMS illimités compris</li><li>0&nbsp;% de commission sur tes réservations</li><li>Sans engagement, tu arrêtes quand tu veux</li></ul>
+    <a class="as" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme"><use href="#pomme"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a>
+    <p class="ap">Payé avec ton compte Apple. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone.</p>
+  </div>
+</div></section>
+
+<!-- 6 · MARIE + WHATSAPP -->
+<section class="marie" style="padding-top:10px"><div class="wrap"><div class="boite vu">
+  <img class="ch" src="loginail-site/charms-mini/noeudcerise.webp" alt="" style="width:52px;left:-8px;top:-20px;rotate:-12deg"><img class="ch" src="loginail-site/charms-mini/perle.webp" alt="" style="width:34px;right:14px;bottom:-12px;animation-delay:-2s">
+  <h2 style="margin-top:0">Une question&nbsp;? C’est moi qui te réponds.</h2>
+  <p>Je suis Marie, prothésiste ongulaire. Loginail, c’est l’appli que j’aurais aimé avoir. Un bug, une idée, un besoin en plus&nbsp;? Écris-moi.</p>
+  <a class="wa" href="https://wa.me/33745266189" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.300-2 1.400-.5.1-1.200.1-1.900-.1-.4-.1-1-.3-1.700-.6-3-1.300-4.900-4.300-5.100-4.500-.1-.2-1.200-1.600-1.200-3s.8-2.200 1-2.500c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .7.500l.9 2.200c.1.2.1.400 0 .600l-.3.5-.5.5c-.2.2-.3.4-.1.700.2.3.8 1.300 1.700 2.100 1.200 1 2.100 1.400 2.400 1.500.3.100.5.100.7-.1l.9-1.100c.2-.3.4-.2.7-.1l2.100 1c.3.1.5.2.6.3.100.2.100.700-.1 1.300z"/></svg>07 45 26 61 89 sur WhatsApp</a>
+  <small>Par message, 7 jours sur 7. Je réponds dans la journée.</small>
+</div></div></section>
+
+<!-- 6 bis · INSTAGRAM -->
+<section class="insta-sec" style="padding-top:0"><div class="wrap"><div class="ig-boite vu">
+  <img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="width:50px;right:-8px;top:-20px;rotate:12deg">
+  <div class="ig-tete"><span class="ig-av"><img src="loginail-site/icone-appli.svg" alt=""></span><div class="ig-nom"><b>@loginail.fr</b><span>Les nouveautés de l’appli et les plus beaux sites de nos prothésistes.</span></div></div>
+  <div class="ig-rang" aria-hidden="true"><div class="ig-piste"><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-1.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-5.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-7.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-10.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-1.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-5.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-7.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/apercus-univers/look-roue-10.webp" alt="" loading="lazy"></a></div></div>
+  <a class="ig-btn" href="https://www.instagram.com/loginail.fr/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Suivre @loginail.fr sur Instagram</a>
+</div></div></section>
+
+<!-- 7 · QUESTIONS -->
+<section class="faq" style="padding-top:20px"><div class="wrap">
+  <div class="k">Bon à savoir</div>
+  <div style="margin-top:14px">
+    <details><summary>Pas douée en informatique&nbsp;?</summary><p>Tu colles ton lien Google Maps ou Planity dans l’appli. Elle récupère tes photos, tes prestations et tes prix. Ensuite, tout se change avec le doigt.</p></details>
+    <details><summary>Mes clientes doivent télécharger l’appli&nbsp;?</summary><p>Non. Elles réservent sur ton site, depuis ton lien Instagram. L’appli, c’est pour toi.</p></details>
+    <details><summary>Et si je n’aime pas&nbsp;?</summary><p>Le premier mois est offert. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone, sans frais.</p></details>
+    <details><summary>Les SMS sont payants&nbsp;?</summary><p>Non. Les SMS de rappel sont compris dans les 49,99&nbsp;€, sans limite.</p></details>
+    <details><summary>Ça marche sur Android&nbsp;?</summary><p>Pour l’instant, l’appli est sur iPhone. Tes clientes, elles, réservent depuis n’importe quel téléphone.</p></details>
+  </div>
+</div></section>
+
+<section class="fin" style="padding-top:10px"><div class="wrap">
+  <h2 class="serif titre vu">Prête&nbsp;? <em>Télécharge l’appli.</em></h2>
+  <a class="as vu" style="margin-top:20px" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme"><use href="#pomme"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a>
+  <p class="prix-l vu" style="color:var(--encre)"><b style="color:var(--fram)">1er mois offert</b>, puis 49,99&nbsp;€/mois · Sans engagement</p>
+</div></section>
+</main>
+
+<footer class="pied">
+  <div class="pied-bocaux" id="piedBocaux"><img class="pb-ch" src="loginail-site/charms-mini/cerisedisco.webp" style="width:70px;left:-150px;top:10px;rotate:-14deg" alt=""><img class="pb-ch" src="loginail-site/charms-mini/etoile4.webp" style="width:36px;left:-60px;top:120px;rotate:8deg;animation-delay:-2s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/collierperles.webp" style="width:58px;left:-200px;top:120px;rotate:6deg;animation-delay:-4s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/ceriseruban.webp" style="width:66px;right:-150px;top:0;rotate:12deg;animation-delay:-1s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/papilloncyber.webp" style="width:56px;right:-60px;top:110px;rotate:-10deg;animation-delay:-3s" alt=""><img class="pb-ch" src="loginail-site/charms-mini/bouledisco.webp" style="width:50px;right:-210px;top:115px;animation-delay:-5s" alt=""><canvas aria-label="Les lettres de Loginail en bocaux remplis de charms"></canvas><div class="pb-aide"><span class="et" aria-hidden="true">✦</span><span class="pb-onde" aria-hidden="true"><i></i></span><span class="pb-txt">Touche un bocal, puis tourne ton téléphone</span><span class="et et2" aria-hidden="true">✦</span></div></div>
+  Loginail · pensé par une prothésiste, pour les prothésistes<br>
+  <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="conditions-abonnement.html">Conditions d’abonnement</a> · <a href="#" id="ckGerer">Cookies</a>
+</footer>
+
+<div class="ck" id="ck" role="dialog" aria-live="polite" aria-label="Cookies" hidden>
+  <p><b>Les cookies, c’est toi qui choisis.</b> Avec ton accord, on mesure les visites du site, de façon anonyme, pour l’améliorer. Rien n’est vendu. <a href="confidentialite.html">En savoir plus</a></p>
+  <div class="ck-bt"><button type="button" data-c="non">Refuser</button><button type="button" data-c="oui">Accepter</button></div>
+</div>
+<a class="colle" id="colle" href="loginail-creer/telecharger.html"><svg class="pomme"><use href="#pomme"/></svg>Télécharger l’appli · 1er mois offert</a>
+
+<script>
+{const q=new URLSearchParams(location.search),v=q.get('v');if(q.get('da')==='B')document.body.classList.add('B');if(v==='2'||v==='3')document.body.classList.add('v'+v)}
+/* les parties apparaissent en douceur */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.vu').forEach(e=>io.observe(e));
+/* les pilules oui / non */
+/* « C'est toi qui choisis » : 3 idées (?c=1 pastilles, ?c=2 une à la fois, ?c=3 petite grille). Les pilules font oui / non toutes seules ; un toucher reprend la main. */
+(()=>{const O=[['Réservation en ligne','Tes clientes réservent sur ton site',1],['SMS de rappel','La veille du rendez-vous',1],['Acompte','Tu fixes le montant et tes règles',1],['Paiement par carte','Tes clientes paient l’acompte en réservant',0],['Carte de fidélité','C’est toi qui fixes la récompense',1],['Caisse du jour','Carte ou espèces, ton total du jour',0],['Liste d’attente','Une annulation ? La place est proposée',1]];
+const c=new URLSearchParams(location.search).get('c')||'2',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
+const calme=matchMedia('(prefers-reduced-motion:reduce)').matches;let vu=false,pause=0;new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.3}).observe(sec);
+const met=(b,on)=>{b.setAttribute('aria-checked',on);const e=b.querySelector('.et');if(e)e.textContent=on?'Oui':'Non'};
+if(c==='2'){ /* une à la fois */
+  L.innerHTML='<button class="une" role="switch" aria-checked="false"><span><b></b><span></span></span><span class="et">Non</span><span class="pil"></span></button><div class="noms">'+O.map(o=>'<i>'+o[0]+'</i>').join('')+'</div>';
+  const b=L.querySelector('.une'),N=[...L.querySelectorAll('.noms i')];let k=-1,t1=0;
+  const va=n=>{k=(n+O.length)%O.length;b.classList.add('sort');setTimeout(()=>{b.querySelector('b').textContent=O[k][0];b.querySelector('span span').textContent=O[k][1];met(b,false);N.forEach((x,i)=>x.classList.toggle('on',i===k));b.classList.remove('sort');clearTimeout(t1);t1=setTimeout(()=>met(b,true),650)},220)};
+  va(0);b.addEventListener('click',()=>{pause=Date.now()+5000;met(b,b.getAttribute('aria-checked')!=='true')});N.forEach((x,i)=>x.addEventListener('click',()=>{pause=Date.now()+5000;va(i)}));
+  if(!calme)setInterval(()=>{if(vu&&Date.now()>pause)va(k+1)},2400);
+}else{ /* pastilles (1) ou petite grille (3) */
+  L.innerHTML=O.map(o=>c==='4'?`<button class="sw" role="switch" aria-checked="${!!o[2]}"><b>${o[0]}</b><span class="d">${o[1]}</span><span class="bas"><span class="pil"></span><span class="et">${o[2]?'Oui':'Non'}</span></span></button>`:`<button class="sw" role="switch" aria-checked="${!!o[2]}" title="${o[1]}"><span class="pil"></span><b>${o[0]}</b></button>`).join('');
+  if(c==='4'){const P=document.getElementById('ptsFx');P.style.display='flex';P.innerHTML=O.map(()=>'<i></i>').join('');const pts=[...P.children],C=[...L.children];const maj=()=>{const m=L.getBoundingClientRect().left+L.clientWidth/2;let j=0,d=1e9;C.forEach((x,i)=>{const r=x.getBoundingClientRect(),e=Math.abs(r.left+r.width/2-m);if(e<d){d=e;j=i}});pts.forEach((q,i)=>q.classList.toggle('on',i===j))};L.addEventListener('scroll',maj,{passive:true});maj();pts.forEach((q,i)=>q.addEventListener('click',()=>C[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})))}
+  const B=[...L.children];B.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+6000;met(b,b.getAttribute('aria-checked')!=='true')}));
+  let k=0;if(!calme)setInterval(()=>{if(!vu||Date.now()<pause)return;const b=B[k%B.length];met(b,b.getAttribute('aria-checked')!=='true');k+=3},1100);
+}})();
+/* avant / après : la pilule bascule toute seule ; un toucher reprend la main */
+(()=>{const B=document.getElementById('avBascule'),K=document.getElementById('avCarte'),bt=[...B.querySelectorAll('button')];let m=0,pause=0,vu=false;
+const va=n=>{m=n;K.dataset.m=n;bt.forEach(b=>b.classList.toggle('on',+b.dataset.m===n))};
+bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.m)}));
+new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.4}).observe(K);
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(vu&&Date.now()>pause)va(m?0:1)},3600)})();
+/* les fonctions : on glisse à droite et à gauche (téléphone), les points suivent */
+(()=>{const F=document.querySelector('.fonctions'),P=document.getElementById('ptsFonctions'),C=[...F.children];P.innerHTML=C.map(()=>'<i></i>').join('');const pts=[...P.children];
+const maj=()=>{const m=F.getBoundingClientRect().left+F.clientWidth/2;let j=0,d=1e9;C.forEach((c,i)=>{const r=c.getBoundingClientRect(),x=Math.abs(r.left+r.width/2-m);if(x<d){d=x;j=i}});pts.forEach((p,i)=>p.classList.toggle('on',i===j))};
+F.addEventListener('scroll',maj,{passive:true});maj();pts.forEach((p,i)=>p.addEventListener('click',()=>C[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})))})();
+/* le bouton collé en bas : seulement quand le badge du haut n'est plus à l'écran */
+const colle=document.getElementById('colle'),badge=document.getElementById('telecharger');
+new IntersectionObserver(es=>es.forEach(e=>colle.classList.toggle('on',!e.isIntersecting&&e.boundingClientRect.top<0)),{threshold:0}).observe(badge);
+
+/* le haut : l'écran du téléphone change tout seul ; une carte touchée (ou survolée) montre son écran et s'ouvre */
+(()=>{const E=[...document.querySelectorAll('#ecran img')],B=[...document.querySelectorAll('.bulle')],S=document.querySelector('.scene');let k=0,pause=0;
+const montre=n=>{k=n;E.forEach((im,i)=>im.classList.toggle('on',i===n))};
+const choisit=b=>{B.forEach(x=>x.classList.toggle('on',x===b));S.classList.toggle('choisi',!!b);if(b)montre(+b.dataset.i)};
+B.forEach(b=>{b.addEventListener('mouseenter',()=>{pause=Date.now()+6000;choisit(b)});b.addEventListener('mouseleave',()=>{choisit(null);pause=Date.now()+1500});
+  b.addEventListener('click',()=>{pause=Date.now()+8000;choisit(b.classList.contains('on')?null:b)})});
+document.addEventListener('click',e=>{if(!e.target.closest('.bulle')&&S.classList.contains('choisi'))choisit(null)});
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(Date.now()>pause&&!S.classList.contains('choisi'))montre((k+1)%E.length)},3000)})();
+/* le haut : les charms s'écartent quand la souris (ou le doigt) passe, puis reviennent */
+(()=>{const H=document.getElementById('haut'),Cs=[...H.querySelectorAll('.ch.hc')].map(el=>({el,x:0,y:0,vx:0,vy:0,r:0,vr:0}));if(!Cs.length||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+let px=-9e3,py=-9e3,lx=-9e3,ly=-9e3,raf=0;
+const pas=()=>{let bouge=false;const dx=px-lx,dy=py-ly;lx=px;ly=py;
+  Cs.forEach(c=>{const r=c.el.getBoundingClientRect(),cx=r.left+r.width/2-c.x,cy=r.top+r.height/2-c.y,ux=cx+c.x-px,uy=cy+c.y-py,d=Math.hypot(ux,uy)||1,R=90+r.width;
+    if(d<R){const f=(1-d/R)*2.4;c.vx+=ux/d*f+dx*.06;c.vy+=uy/d*f+dy*.06;c.vr+=(ux>0?1:-1)*f*1.6}
+    c.vx+=-c.x*.045;c.vy+=-c.y*.045;c.vr+=-c.r*.05;c.vx*=.86;c.vy*=.86;c.vr*=.86;c.x+=c.vx;c.y+=c.vy;c.r+=c.vr;
+    c.el.style.transform=`translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px) rotate(${c.r.toFixed(1)}deg)`;
+    if(Math.abs(c.x)+Math.abs(c.y)+Math.abs(c.vx)+Math.abs(c.vy)+Math.abs(c.r)>.2)bouge=true});
+  raf=bouge||px>-9e3?requestAnimationFrame(pas):0};
+const go=e=>{px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(pas)};
+H.addEventListener('pointermove',go,{passive:true});H.addEventListener('pointerdown',go,{passive:true});
+H.addEventListener('pointerleave',()=>{px=py=-9e3})})();
+/* cookies : on demande une fois ; « Refuser » et « Accepter » se valent ; rien n'est mesuré sans « Accepter » */
+(()=>{const K=document.getElementById('ck'),cle='loginail-cookies';let v=null;try{v=localStorage.getItem(cle)}catch(e){}
+window.loginailMesure=window.loginailMesure||function(){/* la mesure d'audience se branchera ici, seulement après « Accepter » */};
+const ouvre=()=>{K.hidden=false;document.body.classList.add('ck-ouvert')},ferme=()=>{K.hidden=true;document.body.classList.remove('ck-ouvert')};
+K.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{try{localStorage.setItem(cle,b.dataset.c)}catch(e){}ferme();if(b.dataset.c==='oui')window.loginailMesure()}));
+document.getElementById('ckGerer').addEventListener('click',e=>{e.preventDefault();ouvre()});
+if(v==='oui')window.loginailMesure();else if(!v)setTimeout(ouvre,1200)})();
+</script>
+<script>/* 19/11 (Marie) : les lettres-bocaux du bas de l'accueil, téléphone seulement — démarre seulement quand on approche du bas */
+(function(){
+  const Z=document.getElementById('piedBocaux');if(!Z||!('IntersectionObserver' in window))return;const SOURIS=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  let parti=false;const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!parti){parti=true;io.disconnect();lance()}}),{rootMargin:'400px 0px'});io.observe(Z);
+  async function lance(){
+const V=1;let raf=0,vu=true;
+  const NOMS=['cerisedisco','ceriseruban','cerisecoeur','cerisesrouges','cerisesor','ceriseslanternes','cerisesverre','noeudcerise','perle','bouledisco','boulefacettes','boule8','boule8or','boulecristallune',
+    'coeurchrome','coeurajoure','coeurrubis','coeurperles','coeurroseclair','coeurcristal','coeurcousurose','coeurpixel','coeurleopard','coeurchoco','etoilecristal','etoilebleuciel','etoile4','etoilelumineuse',
+    'etoilecerise','diamant','cristal','sucettecoeur','bonbon','bonbonvert','bagueastres','saturne','papilloncyber','arcenciel','arcencielperles','chatlune','fleurivoire','coquillagefrangipanier','baguettemagique'];
+  const cv=Z.querySelector('canvas'),ctx=cv.getContext('2d'),DPR=Math.min(2,window.devicePixelRatio||1);
+  await document.fonts.load('100px BagelBocal');
+  // ---- LOGINAIL sur UNE ligne, lettres séparées par un petit espace
+  const T='LOGINAIL',W=Math.min(Z.clientWidth||innerWidth-32,SOURIS?620:420),GAP=Math.max(3,W*.012);
+  const mes=fs=>{ctx.font=fs+'px BagelBocal';return [...T].reduce((s,ch)=>s+ctx.measureText(ch).width,0)+GAP*(T.length-1)};
+  let FS=260;while(mes(FS)>W-4&&FS>30)FS-=1;
+  const SY=1.32;ctx.font=FS+'px BagelBocal';const asc=Math.max(...[...T].map(ch=>ctx.measureText(ch).actualBoundingBoxAscent))*SY+Math.max(6,FS*.12);
+  const COUV=V>=2?FS*.17:0,BASE=Math.round(COUV+asc+FS*.06),H=Math.round(BASE+FS*.24);
+  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
+  const lettres=[];{let x=(W-mes(FS))/2;for(const ch of T){const m=ctx.measureText(ch);lettres.push({ch,x,y:BASE,w:m.width,top:BASE-m.actualBoundingBoxAscent*SY});x+=m.width+GAP}}
+  const calque=()=>{const c=document.createElement('canvas');c.width=W*DPR;c.height=H*DPR;const g=c.getContext('2d');g.setTransform(DPR,0,0,DPR,0,0);g.font=FS+'px BagelBocal';return [c,g]};
+  const lettresEn=(g,how)=>lettres.forEach(l=>{g.save();g.translate(l.x,l.y);g.scale(1,SY);g.lineWidth=g.lineWidth/Math.sqrt(SY);g[how](l.ch,0,0);g.restore()});
+  // ---- le masque : l'intérieur du verre (paroi épaisse) = là où les charms ont le droit d'être
+  const PAROI=Math.max(4,FS*.075),PM=Math.max(2,FS*.034);
+  const M=document.createElement('canvas');M.width=W;M.height=H;const m=M.getContext('2d');m.font=FS+'px BagelBocal';m.fillStyle='#000';lettresEn(m,'fillText');
+  m.globalCompositeOperation='destination-out';m.lineWidth=PM*2;m.lineJoin='round';m.strokeStyle='#000';lettresEn(m,'strokeText');
+  const A=m.getImageData(0,0,W,H).data;const dedans=(x,y)=>{x|=0;y|=0;return x>=0&&y>=0&&x<W&&y<H&&A[(y*W+x)*4+3]>128};
+  const libre=(x,y,r)=>{if(!dedans(x,y))return false;for(let k=0;k<8;k++){const a=k*Math.PI/4;if(!dedans(x+Math.cos(a)*r,y+Math.sin(a)*r))return false}return true};
+  // ---- calque du FOND (derrière les charms) : ombre au sol + verre teinté
+  const [FOND,f]=calque();
+  if(V!==2||true){f.save();lettres.forEach(l=>{const cx=l.x+l.w/2,gr=f.createRadialGradient(cx,BASE+FS*.08,1,cx,BASE+FS*.08,l.w*.62);gr.addColorStop(0,'rgba(120,40,70,.22)');gr.addColorStop(1,'rgba(120,40,70,0)');
+    f.fillStyle=gr;f.beginPath();f.ellipse(cx,BASE+FS*.08,l.w*.62,FS*.07,0,0,Math.PI*2);f.fill()});f.restore()}
+  const teinte=V===3?['rgba(255,214,230,.75)','rgba(244,170,200,.55)']:['rgba(255,255,255,.62)','rgba(255,240,246,.4)'];
+  {const gr=f.createLinearGradient(0,BASE-asc,0,BASE);gr.addColorStop(0,teinte[0]);gr.addColorStop(1,teinte[1]);f.fillStyle=gr;lettresEn(f,'fillText');}
+  // ---- calque du DESSUS (devant les charms) : paroi épaisse, reflets, fond du bocal, couvercles
+  const [HAUT,h]=calque();
+  // paroi : un verre épais = bord blanc large et semi-transparent, puis un fil plus net
+  h.lineJoin='round';h.lineWidth=PAROI*1.6;h.strokeStyle=V===3?'rgba(255,236,244,.7)':'rgba(255,255,255,.62)';lettresEn(h,'strokeText');
+  h.lineWidth=1.6;h.strokeStyle='rgba(255,255,255,.98)';lettresEn(h,'strokeText');
+  h.lineWidth=1;h.strokeStyle=V===3?'rgba(176,53,98,.45)':'rgba(150,90,110,.35)';lettresEn(h,'strokeText');
+  // reflets : une grande traînée claire à gauche de chaque lettre + un petit point brillant, gardés DANS la lettre
+  {const [R,r]=calque();lettres.forEach(l=>{const top=l.top;r.save();r.translate(l.x+l.w*.24,top+FS*.18);r.rotate(-.12);
+      const gr=r.createLinearGradient(-6,0,8,0);gr.addColorStop(0,'rgba(255,255,255,0)');gr.addColorStop(.5,'rgba(255,255,255,.85)');gr.addColorStop(1,'rgba(255,255,255,0)');
+      r.fillStyle=gr;r.beginPath();r.roundRect(-FS*.035,0,FS*.07,(BASE-top)*.55,FS*.035);r.fill();r.restore();
+      r.fillStyle='rgba(255,255,255,.95)';r.beginPath();r.arc(l.x+l.w*.72,top+FS*.14,FS*.025,0,Math.PI*2);r.fill();
+      // fond du bocal : une ombre douce en bas de la lettre
+      const gb=r.createLinearGradient(0,BASE-FS*.16,0,BASE);gb.addColorStop(0,'rgba(120,40,70,0)');gb.addColorStop(1,'rgba(120,40,70,.18)');r.fillStyle=gb;r.fillRect(l.x,BASE-FS*.16,l.w,FS*.16)});
+    r.setTransform(1,0,0,1,0,0);r.globalCompositeOperation='destination-in';r.drawImage(M,0,0,W*DPR,H*DPR);h.drawImage(R,0,0,W,H)}
+  // couvercles vissés sur le haut de chaque lettre (versions 2 et 3)
+  if(V>=2){lettres.forEach(l=>{const lw=Math.min(l.w*.62,FS*.5),x=l.x+(l.w-lw)/2,y=l.top-COUV*.62,hh=COUV*.78,gr=h.createLinearGradient(0,y,0,y+hh);
+      if(V===2){gr.addColorStop(0,'#F6DFA4');gr.addColorStop(.45,'#D9A94F');gr.addColorStop(1,'#A9772C')}else{gr.addColorStop(0,'#F9C9DA');gr.addColorStop(.5,'#E58BAE');gr.addColorStop(1,'#B9577E')}
+      h.fillStyle=gr;h.beginPath();h.roundRect(x,y,lw,hh,hh*.35);h.fill();
+      h.strokeStyle='rgba(255,255,255,.45)';h.lineWidth=1;for(let k=1;k<6;k++){const xx=x+lw*k/6;h.beginPath();h.moveTo(xx,y+2);h.lineTo(xx,y+hh-2);h.stroke()} // les stries du couvercle
+      h.fillStyle='rgba(255,255,255,.55)';h.beginPath();h.roundRect(x+3,y+2,lw-6,hh*.25,hh*.12);h.fill()})}
+  // ---- les charms
+  const imgs={};await Promise.all(NOMS.map(n=>new Promise(ok=>{const i=new Image();i.onload=i.onerror=ok;i.src='loginail-site/charms-mini/'+n+'.webp';imgs[n]=i})));
+  const R0=Math.max(4.2,FS*.064),B=[];let essais=0;
+  while(B.length<(SOURIS?46:34)&&essais<90000){essais++;const x=Math.random()*W,y=Math.random()*H,r=R0*(.78+Math.random()*.5);
+    if(!libre(x,y,r))continue;if(B.some(b=>Math.hypot(b.x-x,b.y-y)<(b.r+r)*.95))continue;
+    B.push({x,y,r,vx:0,vy:0,a:Math.random()*6.28,va:0,im:imgs[NOMS[B.length%NOMS.length]]})}
+  // ---- le mouvement (le même que la 1re version : rien ne sort jamais)
+  let gx=0,gy=SOURIS?0:.3,secousse=0;const FREIN=SOURIS?.86:.985; // ordinateur : pas de gravité, ça s'arrête vite, ça ne roule pas (Marie 20/11)
+  function pas(){
+    for(const b of B){b.vx+=gx;b.vy+=gy;if(secousse>0){b.vx+=(Math.random()-.5)*secousse;b.vy+=(Math.random()-.5)*secousse-secousse*.25}
+      b.vx*=FREIN;b.vy*=FREIN;
+      const nx=b.x+b.vx;if(libre(nx,b.y,b.r))b.x=nx;else{b.vx*=-.35;b.va+=b.vy*.02}
+      const ny=b.y+b.vy;if(libre(b.x,ny,b.r))b.y=ny;else{b.vy*=-.35;b.vx*=.9;b.va=b.vx/b.r}
+      if(SOURIS)b.va=0;else b.va=b.va*.9+(b.vx/b.r)*.1; // 20/11 (Marie) : téléphone — quand il glisse, il tourne sur lui-même
+      b.a+=b.va;b.va*=.96}
+    for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const p=B[i],q=B[j],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||1,mn=(p.r+q.r)*.92;
+      if(d<mn){const k=(mn-d)/d/2,ux=dx*k,uy=dy*k;if(libre(p.x-ux,p.y-uy,p.r)){p.x-=ux;p.y-=uy}if(libre(q.x+ux,q.y+uy,q.r)){q.x+=ux;q.y+=uy}
+        const rv=(q.vx-p.vx)*dx/d+(q.vy-p.vy)*dy/d;if(rv<0){const im=-rv*.5;p.vx-=im*dx/d;p.vy-=im*dy/d;q.vx+=im*dx/d;q.vy+=im*dy/d}}}
+    secousse*=.85;if(secousse<.05)secousse=0;dessine();raf=vu?requestAnimationFrame(pas):0}
+  function dessine(){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(FOND,0,0);ctx.setTransform(DPR,0,0,DPR,0,0);
+    for(const b of B){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.a);const s=b.r*2.5;if(b.im.naturalWidth)ctx.drawImage(b.im,-s/2,-s/2,s,s);ctx.restore()}
+    ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(HAUT,0,0)}
+  // ---- toucher / secouer / pencher
+  const aide=Z.querySelector('.pb-aide'),bt=Z.querySelector('.pb-bt'),aideT=t=>{aide.querySelector('.pb-txt').textContent=t};let capteurs=false;
+  function ecoute(){if(capteurs)return;capteurs=true;
+    addEventListener('devicemotion',e=>{const a=e.acceleration||{};const fo=Math.hypot(a.x||0,a.y||0,a.z||0);if(fo>9)secousse=Math.min(9,fo*.45)});
+    const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),sg=ios?1:-1;
+    addEventListener('devicemotion',e=>{const g=e.accelerationIncludingGravity;if(!g||g.x==null)return; // gravité réelle, dans le repère de l'écran
+      const ax=sg*g.x/9.81,ay=sg*g.y/9.81;gx=gx*.8+(ax*.95)*.2;gy=gy*.8+(-ay*.95)*.2});aideT('Tourne ou secoue ton téléphone')} /* 20/11 (Marie) : plus de réaction quand on penche */
+  async function demande(){try{if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
+      const r=await DeviceMotionEvent.requestPermission();if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission)await DeviceOrientationEvent.requestPermission().catch(()=>{});
+      if(r==='granted'){ecoute()}else aideT('Touche les bocaux pour les secouer')}else ecoute()}catch(e){aideT('Touche les bocaux pour les secouer')}}
+  // toucher : seuls les charms autour du doigt bougent (ils s'écartent et sautent), le reste ne bouge pas ; glisser le doigt les remue au passage
+  const pousse=(e,fort)=>{const R=cv.getBoundingClientRect(),x=e.clientX-R.left,y=e.clientY-R.top,RAY=FS*.55;
+    for(const b of B){const dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d>RAY)continue;const k=(1-d/RAY)*fort,u=d||1;
+      b.vx+=dx/u*k*5+(Math.random()-.5)*k*2;b.vy+=dy/u*k*4-(SOURIS?0:k*5);b.va+=(Math.random()-.5)*k*.4}};
+  let appui=false;
+  cv.addEventListener('pointerdown',e=>{appui=true;pousse(e,1.6)});
+  /* 20/11 (Marie) : sur iPhone, l'autorisation « mouvement » n'est acceptée qu'au moment où le doigt se lève (pas quand il se pose) :
+     on la demande là, sur les bocaux OU sur la petite phrase dessous */
+  const autorise=()=>{if(!capteurs&&!SOURIS)demande()};
+  cv.addEventListener('touchend',autorise);cv.addEventListener('click',autorise);aide.addEventListener('click',autorise);aide.style.cursor='pointer';
+  cv.addEventListener('pointermove',e=>{if(appui)pousse(e,.35);else if(e.pointerType==='mouse')pousse(e,.5)}); // ordinateur : la souris qui passe remue les charms
+  if(SOURIS){aideT('Passe ta souris sur les bocaux');cv.style.cursor='pointer'}
+  addEventListener('pointerup',()=>{appui=false});addEventListener('pointercancel',()=>{appui=false});
+  if(!SOURIS&&!(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'))ecoute(); // Android : tout de suite
+  new IntersectionObserver(es=>es.forEach(e=>{vu=e.isIntersecting;if(vu&&!raf)raf=requestAnimationFrame(pas)}),{threshold:0}).observe(Z);
+  raf=requestAnimationFrame(pas);
+  }
+})();
+</script>
+</body></html>
