@@ -229,7 +229,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .sw-liste.c1 .sw[aria-checked=true] .pil::after,.sw-liste.c3 .sw[aria-checked=true] .pil::after{translate:16px 0}
 .sw-liste.c1 .sw[aria-checked=false] b,.sw-liste.c3 .sw[aria-checked=false] b{color:#9A8F88}
 .sw-liste.c1 .sw>span:first-child,.sw-liste.c3 .sw>span:first-child{flex:none}
-#choix{scroll-margin-top:70px}
+#choix,#avap{scroll-margin-top:70px}#chiffres{scroll-margin-top:330px}
 /* 3 · la petite grille */
 .sw-liste.c3{grid-template-columns:1fr 1fr;gap:9px}
 .sw-liste.c3 .sw{border-radius:16px;padding:11px 10px;flex-direction:row-reverse;justify-content:space-between}
@@ -261,6 +261,26 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .sw-liste.c4 .sw[aria-checked=false] b{color:#9A8F88}
 #ptsFx{margin-top:2px}
 @media (min-width:860px){.sw-liste.c4{flex-wrap:wrap;justify-content:center;overflow:visible;margin:26px 0 0;padding:0}.sw-liste.c4 .sw{flex:0 0 23%}#ptsFx{display:none!important}}
+
+/* ===== 26/11 soir (Marie : « inspire-toi en gardant mon univers ») : gros chiffres + avant/après à bascule ===== */
+.chiffres{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.chiffres div{background:#fff;border-radius:20px;padding:16px 14px;text-align:left;box-shadow:0 14px 30px -24px rgba(120,40,70,.5)}
+.chiffres b{display:block;font:400 28px/1 Abril,serif;color:var(--fram);white-space:nowrap}
+.chiffres span{display:block;font-size:13.5px;line-height:1.35;color:var(--doux);margin-top:6px}
+.bascule2{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;margin-top:20px;padding:4px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne)}
+.bascule2 button{position:relative;z-index:1;border:0;background:none;cursor:pointer;font:500 14.5px Jost;color:var(--doux);padding:10px 18px;border-radius:99px;transition:color .3s;white-space:nowrap}
+.bascule2 button.on{color:#fff}
+.bascule2 i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:99px;background:var(--encre);transition:translate .4s cubic-bezier(.3,1.3,.5,1),background .4s}
+.bascule2:has(button[data-m="1"].on) i{translate:100% 0;background:var(--rose)}
+.avcarte{position:relative;display:grid;margin-top:16px;border-radius:26px;padding:22px 20px;text-align:left;background:#fff;box-shadow:0 22px 44px -32px rgba(120,40,70,.55);transition:background .4s}
+.avcarte[data-m="1"]{background:var(--pale)}
+.avcarte ul{grid-area:1/1;list-style:none;display:grid;gap:12px;align-content:start;transition:opacity .35s,transform .35s}
+.avcarte li{display:flex;gap:10px;font-size:16px;line-height:1.35}
+.avcarte .av0 li{color:#8a7f79}.avcarte .av0 li::before{content:"–";color:#b9aea8;flex:none}
+.avcarte .av1 li::before{content:"✦";color:var(--rose);flex:none}
+.avcarte[data-m="0"] .av1,.avcarte[data-m="1"] .av0{opacity:0;transform:translateY(8px);pointer-events:none}
+.avcarte .ch{transition:opacity .4s,scale .4s}.avcarte[data-m="0"] .ch{opacity:0;scale:.6}
+@media (min-width:860px){.chiffres{grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}.chiffres b{font-size:36px}.avcarte{max-width:560px;margin-left:auto;margin-right:auto;padding:30px}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -316,6 +336,12 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
     <div class="vu"><img src="loginail-site/charms-mini/perle.webp" alt=""><p><b>Tes clientes</b><span>Une fiche pour chacune, et un SMS de rappel la veille.</span></p></div>
     <div class="vu plus"><img src="loginail-site/charms-mini/noeudcerise.webp" alt=""><p><i>Le plus</i><b>Ton site internet</b><span>Tes clientes réservent dessus, toutes seules.</span></p></div>
   </div>
+  <div class="chiffres" id="chiffres">
+    <div class="vu"><b>0&nbsp;%</b><span>de commission sur tes réservations</span></div>
+    <div class="vu"><b>24&nbsp;h/24</b><span>tes clientes réservent toutes seules</span></div>
+    <div class="vu"><b>Illimités</b><span>les SMS de rappel, tous compris</span></div>
+    <div class="vu"><b>1&nbsp;min</b><span>pour créer ton site dans l’appli</span></div>
+  </div>
 </div></section>
 
 <!-- 3 · CE QU'IL Y A DEDANS : une chose à la fois, en grand -->
@@ -331,6 +357,18 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
     <article class="fx vu"><div class="k">Le plus · Ton site internet</div><h3>À ton nom, à ton image.</h3><p>Il se crée tout seul dans l’appli. Tu changes le fond, l’écriture et les charms quand tu veux. Ton adresse en .fr dès le 2e mois.</p><div class="roue" role="img" aria-label="Exemples de sites de prothésistes créés avec Loginail"><div class="piste"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
   </div>
   <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
+</div></section>
+
+<!-- 3 bis · AVANT / APRÈS (une pilule qui bascule toute seule) -->
+<section class="avap centre" id="avap" style="padding-top:10px"><div class="wrap">
+  <div class="k vu">Avant, après</div>
+  <h2 class="serif titre vu" style="margin-top:10px">Tes journées, <em>en plus léger.</em></h2>
+  <div class="bascule2 vu" id="avBascule"><button type="button" class="on" data-m="0">Aujourd’hui</button><button type="button" data-m="1">Avec Loginail</button><i aria-hidden="true"></i></div>
+  <div class="avcarte vu" id="avCarte" data-m="0">
+    <img class="ch" src="loginail-site/charms-mini/cerisedisco.webp" alt="" style="width:50px;right:-10px;top:-20px;rotate:12deg">
+    <ul class="av0"><li>Tu réponds aux messages entre deux poses</li><li>Tu notes tes rendez-vous à la main</li><li>Une cliente oublie, ton créneau est perdu</li><li>Tu refais tes comptes le soir, de tête</li></ul>
+    <ul class="av1"><li>Tes clientes réservent toutes seules, jour et nuit</li><li>Ton agenda se remplit tout seul</li><li>Un SMS de rappel part la veille. Zéro lapin.</li><li>Ta caisse du jour se fait toute seule</li></ul>
+  </div>
 </div></section>
 
 <!-- 4 · C'EST TOI QUI CHOISIS -->
@@ -414,6 +452,12 @@ if(c==='2'){ /* une à la fois */
   const B=[...L.children];B.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+6000;met(b,b.getAttribute('aria-checked')!=='true')}));
   let k=0;if(!calme)setInterval(()=>{if(!vu||Date.now()<pause)return;const b=B[k%B.length];met(b,b.getAttribute('aria-checked')!=='true');k+=3},1100);
 }})();
+/* avant / après : la pilule bascule toute seule ; un toucher reprend la main */
+(()=>{const B=document.getElementById('avBascule'),K=document.getElementById('avCarte'),bt=[...B.querySelectorAll('button')];let m=0,pause=0,vu=false;
+const va=n=>{m=n;K.dataset.m=n;bt.forEach(b=>b.classList.toggle('on',+b.dataset.m===n))};
+bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.m)}));
+new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.4}).observe(K);
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(vu&&Date.now()>pause)va(m?0:1)},3600)})();
 /* les fonctions : on glisse à droite et à gauche (téléphone), les points suivent */
 (()=>{const F=document.querySelector('.fonctions'),P=document.getElementById('ptsFonctions'),C=[...F.children];P.innerHTML=C.map(()=>'<i></i>').join('');const pts=[...P.children];
 const maj=()=>{const m=F.getBoundingClientRect().left+F.clientWidth/2;let j=0,d=1e9;C.forEach((c,i)=>{const r=c.getBoundingClientRect(),x=Math.abs(r.left+r.width/2-m);if(x<d){d=x;j=i}});pts.forEach((p,i)=>p.classList.toggle('on',i===j))};
