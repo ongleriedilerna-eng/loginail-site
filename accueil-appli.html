@@ -202,6 +202,52 @@ body.v3 .tuiles{display:grid;grid-template-columns:1fr;gap:10px}
 body.v3 .tuiles div{display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:center;padding:12px 16px}
 body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuiles span{margin-top:0}
 @media (min-width:860px){body.v2 .tuiles{grid-template-columns:repeat(4,1fr)}body.v3 .tuiles{grid-template-columns:1fr 1fr}body.v3 .scene{height:380px}}
+
+/* ===== 26/11 soir (Marie) : moins long — fonctions à glisser, site = téléphones qui défilent, « C'est toi qui choisis » tassé (3 idées) ===== */
+.pts-fx{display:none;justify-content:center;gap:7px;margin-top:4px}
+.pts-fx i{width:7px;height:7px;border-radius:99px;background:var(--encre);opacity:.2;transition:width .25s,opacity .25s;cursor:pointer}
+.pts-fx i.on{width:20px;opacity:.85;background:var(--fram)}
+.roue{height:262px;overflow:hidden;margin:20px -22px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.piste{display:flex;gap:12px;width:max-content;padding-right:12px;animation:defile 26s linear infinite}
+.piste img{width:126px;height:272px;max-width:none;object-fit:cover;object-position:top;border:5px solid #111;border-bottom:0;border-radius:22px 22px 0 0;background:#111}
+@keyframes defile{to{transform:translateX(-50%)}}
+@media (max-width:859px){
+  .fonctions{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:22px -20px 0;padding:6px 20px 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .fonctions::-webkit-scrollbar{display:none}
+  .fonctions .fx{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;opacity:1;transform:none}
+  .fonctions .fx>:nth-last-child(2){margin-bottom:20px}
+  .fonctions .fx .cadre,.fonctions .fx .story,.fonctions .fx .roue{margin-top:auto;flex:none}
+  .fonctions .fx .cadre{height:262px}
+  #ptsFonctions{display:flex}
+}
+/* 1 · les pastilles */
+.sw-liste.c1{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.sw-liste.c1 .sw,.sw-liste.c3 .sw{width:auto;gap:9px;padding:8px 15px 8px 9px;border-radius:99px;justify-content:flex-start;transition:background .3s}
+.sw-liste.c1 .sw b,.sw-liste.c3 .sw b{font-size:14.5px;white-space:nowrap}
+.sw-liste.c1 .sw .pil,.sw-liste.c3 .sw .pil{width:38px;height:22px}
+.sw-liste.c1 .sw .pil::after,.sw-liste.c3 .sw .pil::after{width:16px;height:16px}
+.sw-liste.c1 .sw[aria-checked=true] .pil::after,.sw-liste.c3 .sw[aria-checked=true] .pil::after{translate:16px 0}
+.sw-liste.c1 .sw[aria-checked=false] b,.sw-liste.c3 .sw[aria-checked=false] b{color:#9A8F88}
+.sw-liste.c1 .sw>span:first-child,.sw-liste.c3 .sw>span:first-child{flex:none}
+#choix{scroll-margin-top:70px}
+/* 3 · la petite grille */
+.sw-liste.c3{grid-template-columns:1fr 1fr;gap:9px}
+.sw-liste.c3 .sw{border-radius:16px;padding:11px 10px;flex-direction:row-reverse;justify-content:space-between}
+.sw-liste.c3 .sw b{white-space:normal;font-size:14px;line-height:1.2}
+.sw-liste.c3 .sw:last-child{grid-column:span 2}
+/* 2 · une à la fois */
+.sw-liste.c2{display:block}
+.une{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;border:0;cursor:pointer;background:#fff;color:var(--encre);border-radius:22px;padding:20px 18px;text-align:left;font:inherit;box-shadow:0 16px 32px -24px rgba(120,40,70,.6);transition:opacity .2s,transform .2s}
+.une.sort{opacity:0;transform:translateY(8px)}
+.une>span:first-child{flex:1}.une b{display:block;font:400 22px/1.15 Abril,serif}.une span span{display:block;font-size:14.5px;color:var(--doux);margin-top:3px}
+.une .et{flex:none;font:500 13px Jost;color:#9A8F88}.une[aria-checked=true] .et{color:var(--fram)}
+.une .pil{flex:none;width:58px;height:34px;border-radius:99px;background:#E6D8D3;position:relative;transition:background .3s}
+.une .pil::after{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;transition:translate .32s cubic-bezier(.3,1.4,.5,1)}
+.une[aria-checked=true] .pil{background:var(--rose)}.une[aria-checked=true] .pil::after{translate:24px 0}
+.noms{display:flex;flex-wrap:wrap;justify-content:center;gap:5px 6px;margin-top:14px}
+.noms i{font:500 12.5px Jost;font-style:normal;padding:4px 10px;border-radius:99px;color:var(--doux);cursor:pointer;transition:background .25s,color .25s}
+.noms i.on{background:var(--fram);color:#fff}
+@media (prefers-reduced-motion:reduce){.piste{animation:none}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -255,7 +301,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
   <div class="trois">
     <div class="vu"><img src="loginail-site/charms-mini/cerisedisco.webp" alt=""><p><b>Ton agenda</b><span>Tes rendez-vous, tes créneaux, tes vacances.</span></p></div>
     <div class="vu"><img src="loginail-site/charms-mini/perle.webp" alt=""><p><b>Tes clientes</b><span>Une fiche pour chacune, et un SMS de rappel la veille.</span></p></div>
-    <div class="vu plus"><img src="loginail-site/charms-mini/noeudcerise.webp" alt=""><p><i>Le plus</i><b>Ton site internet</b><span>Tes clientes réservent dessus, toute seules.</span></p></div>
+    <div class="vu plus"><img src="loginail-site/charms-mini/noeudcerise.webp" alt=""><p><i>Le plus</i><b>Ton site internet</b><span>Tes clientes réservent dessus, toutes seules.</span></p></div>
   </div>
 </div></section>
 
@@ -269,24 +315,18 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
     <article class="fx vu"><div class="k">SMS de rappel</div><h3>Illimités. Zéro lapin.</h3><p>La veille du rendez-vous, ta cliente reçoit un SMS. Tu n’as rien à faire.</p><div class="cadre"><img src="loginail-site/apercus-univers/sms-rappel-2211.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy"></div></article>
     <article class="fx vu"><div class="k">Fiches clientes</div><h3>Tu te souviens de tout.</h3><p>Tes notes, ses poses, son anniversaire. Et celles qui devraient bientôt revenir.</p><div class="cadre"><img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente dans l’appli" loading="lazy"></div></article>
     <article class="fx rose vu"><div class="k">Tes dispos en story</div><h3>Partage ta semaine en 1 touche.</h3><p>L’appli fabrique la story de tes créneaux libres. Tu la postes sur Instagram.</p><div class="story" aria-hidden="true"><small>Cette semaine</small><b>Mes dispos</b><div>Mardi <i>14 h · 16 h 30</i></div><div>Jeudi <i>10 h</i></div><div>Vendredi <i>9 h · 15 h</i></div><div>Samedi <i>11 h</i></div></div></article>
-    <article class="fx vu"><div class="k">Le plus · Ton site internet</div><h3>À ton nom, à ton image.</h3><p>Il se crée tout seul dans l’appli. Tu changes le fond, l’écriture et les charms quand tu veux. Ton adresse en .fr dès le 2e mois.</p><div class="cadre"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="Exemple de site d’une prothésiste créé avec Loginail" loading="lazy"></div></article>
+    <article class="fx vu"><div class="k">Le plus · Ton site internet</div><h3>À ton nom, à ton image.</h3><p>Il se crée tout seul dans l’appli. Tu changes le fond, l’écriture et les charms quand tu veux. Ton adresse en .fr dès le 2e mois.</p><div class="roue" role="img" aria-label="Exemples de sites de prothésistes créés avec Loginail"><div class="piste"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
   </div>
+  <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
 </div></section>
 
 <!-- 4 · C'EST TOI QUI CHOISIS -->
-<section class="choix"><div class="wrap">
+<section class="choix" id="choix"><div class="wrap">
   <div class="centre"><div class="k vu">Rien d’imposé</div>
   <h2 class="serif titre vu" style="margin-top:10px">C’est toi qui <em>choisis.</em></h2>
-  <p class="sous vu">Tu actives ce qui te sert. Le reste, tu le laisses éteint. Essaie&nbsp;:</p></div>
-  <div class="sw-liste">
-    <button class="sw vu" role="switch" aria-checked="true"><span><b>Réservation en ligne</b><span>Tes clientes réservent sur ton site</span></span><span class="et">Oui</span><span class="pil"></span></button>
-    <button class="sw vu" role="switch" aria-checked="true"><span><b>SMS de rappel</b><span>La veille du rendez-vous</span></span><span class="et">Oui</span><span class="pil"></span></button>
-    <button class="sw vu" role="switch" aria-checked="true"><span><b>Acompte</b><span>Tu fixes le montant et tes règles</span></span><span class="et">Oui</span><span class="pil"></span></button>
-    <button class="sw vu" role="switch" aria-checked="false"><span><b>Paiement par carte</b><span>Tes clientes paient l’acompte en réservant</span></span><span class="et">Non</span><span class="pil"></span></button>
-    <button class="sw vu" role="switch" aria-checked="true"><span><b>Carte de fidélité</b><span>La 10e pose, c’est toi qui décides</span></span><span class="et">Oui</span><span class="pil"></span></button>
-    <button class="sw vu" role="switch" aria-checked="true"><span><b>Caisse du jour</b><span>Carte ou espèces, ton total du jour</span></span><span class="et">Oui</span><span class="pil"></span></button>
-    <button class="sw vu" role="switch" aria-checked="false"><span><b>Liste d’attente</b><span>Une annulation ? La place est proposée</span></span><span class="et">Non</span><span class="pil"></span></button>
-  </div>
+  <p class="sous vu">Tu actives ce qui te sert. Le reste, tu le laisses éteint.</p></div>
+  <div class="sw-liste" id="swListe"></div>
+  <div class="pts-fx" id="ptsFx" aria-hidden="true" style="display:none"></div>
 </div></section>
 
 <!-- 5 · L'ABONNEMENT -->
@@ -344,7 +384,26 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.vu').forEach(e=>io.observe(e));
 /* les pilules oui / non */
-document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-checked')!=='true';b.setAttribute('aria-checked',on);b.querySelector('.et').textContent=on?'Oui':'Non'}));
+/* « C'est toi qui choisis » : 3 idées (?c=1 pastilles, ?c=2 une à la fois, ?c=3 petite grille). Les pilules font oui / non toutes seules ; un toucher reprend la main. */
+(()=>{const O=[['Réservation en ligne','Tes clientes réservent sur ton site',1],['SMS de rappel','La veille du rendez-vous',1],['Acompte','Tu fixes le montant et tes règles',1],['Paiement par carte','Tes clientes paient l’acompte en réservant',0],['Carte de fidélité','C’est toi qui fixes la récompense',1],['Caisse du jour','Carte ou espèces, ton total du jour',0],['Liste d’attente','Une annulation ? La place est proposée',1]];
+const c=new URLSearchParams(location.search).get('c')||'1',L=document.getElementById('swListe'),sec=document.getElementById('choix');L.classList.add('c'+c);
+const calme=matchMedia('(prefers-reduced-motion:reduce)').matches;let vu=false,pause=0;new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.3}).observe(sec);
+const met=(b,on)=>{b.setAttribute('aria-checked',on);const e=b.querySelector('.et');if(e)e.textContent=on?'Oui':'Non'};
+if(c==='2'){ /* une à la fois */
+  L.innerHTML='<button class="une" role="switch" aria-checked="false"><span><b></b><span></span></span><span class="et">Non</span><span class="pil"></span></button><div class="noms">'+O.map(o=>'<i>'+o[0]+'</i>').join('')+'</div>';
+  const b=L.querySelector('.une'),N=[...L.querySelectorAll('.noms i')];let k=-1,t1=0;
+  const va=n=>{k=(n+O.length)%O.length;b.classList.add('sort');setTimeout(()=>{b.querySelector('b').textContent=O[k][0];b.querySelector('span span').textContent=O[k][1];met(b,false);N.forEach((x,i)=>x.classList.toggle('on',i===k));b.classList.remove('sort');clearTimeout(t1);t1=setTimeout(()=>met(b,true),650)},220)};
+  va(0);b.addEventListener('click',()=>{pause=Date.now()+5000;met(b,b.getAttribute('aria-checked')!=='true')});N.forEach((x,i)=>x.addEventListener('click',()=>{pause=Date.now()+5000;va(i)}));
+  if(!calme)setInterval(()=>{if(vu&&Date.now()>pause)va(k+1)},2400);
+}else{ /* pastilles (1) ou petite grille (3) */
+  L.innerHTML=O.map(o=>`<button class="sw" role="switch" aria-checked="${!!o[2]}" title="${o[1]}"><span class="pil"></span><b>${o[0]}</b></button>`).join('');
+  const B=[...L.children];B.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+6000;met(b,b.getAttribute('aria-checked')!=='true')}));
+  let k=0;if(!calme)setInterval(()=>{if(!vu||Date.now()<pause)return;const b=B[k%B.length];met(b,b.getAttribute('aria-checked')!=='true');k+=3},1100);
+}})();
+/* les fonctions : on glisse à droite et à gauche (téléphone), les points suivent */
+(()=>{const F=document.querySelector('.fonctions'),P=document.getElementById('ptsFonctions'),C=[...F.children];P.innerHTML=C.map(()=>'<i></i>').join('');const pts=[...P.children];
+const maj=()=>{const m=F.getBoundingClientRect().left+F.clientWidth/2;let j=0,d=1e9;C.forEach((c,i)=>{const r=c.getBoundingClientRect(),x=Math.abs(r.left+r.width/2-m);if(x<d){d=x;j=i}});pts.forEach((p,i)=>p.classList.toggle('on',i===j))};
+F.addEventListener('scroll',maj,{passive:true});maj();pts.forEach((p,i)=>p.addEventListener('click',()=>C[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})))})();
 /* le bouton collé en bas : seulement quand le badge du haut n'est plus à l'écran */
 const colle=document.getElementById('colle'),badge=document.getElementById('telecharger');
 new IntersectionObserver(es=>es.forEach(e=>colle.classList.toggle('on',!e.isIntersecting&&e.boundingClientRect.top<0)),{threshold:0}).observe(badge);
