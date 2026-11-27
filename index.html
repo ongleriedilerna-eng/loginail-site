@@ -488,6 +488,16 @@ html{touch-action:manipulation}
 
 @media (max-width:1099px){.pb-ch{display:none!important}}
 @media (max-width:389px){.bulle.g{left:-82px}.bulle.d{right:-82px}.bulle{max-width:158px;padding:8px 11px 8px 8px}.bulle .ic{width:30px;height:30px}.bulle b{font-size:13px}.bulle span{font-size:11.5px}}
+
+/* 27/11 (Marie : « faut que ça tienne sur 2 lignes », « sous ça : agenda · fiches clientes · caisse · rappels SMS · site internet ») */
+.haut .chapo.liste{font:500 16px/1.6 Jost,sans-serif;color:var(--encre);letter-spacing:.01em}
+.haut .chapo.liste i{font-style:normal;color:var(--rose);margin:0 5px}
+@media (max-width:1099px){
+  .haut h1{font-size:min(calc((100vw - 44px) / 12.4),58px)!important;line-height:1.08}
+  .haut h1 .l2n{white-space:nowrap}
+  .hero .chapo.liste{margin-top:12px}
+}
+@media (max-width:359px){html body:not(#_) .pied-bocaux .pb-aide{font-size:13px;gap:4px}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -505,8 +515,8 @@ html{touch-action:manipulation}
   <div class="wrap hero">
     <div class="txt">
       <div class="k">Pensé par une prothésiste</div>
-      <h1 class="serif">L’appli pour toutes<br>les <em>prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></em> ongulaires.</h1>
-      <p class="chapo">Agenda, fiches clientes, rappels SMS et caisse&nbsp;: tout ton salon dans une seule appli. <b>Avec ton site internet en plus.</b></p>
+      <h1 class="serif">L’appli pour toutes<br><span class="l2n">les <em>prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></em> ongulaires.</span></h1>
+      <p class="chapo liste">Agenda <i>·</i> Fiches clientes <i>·</i> Caisse<br>Rappels SMS <i>·</i> Site internet</p>
       <a class="as" id="telecharger" href="loginail-creer/telecharger.html" aria-label="Télécharger dans l’App Store"><svg class="pomme"><use href="#pomme"/></svg><span><small>Télécharger dans</small><strong>l’App Store</strong></span></a>
       <p class="prix-l"><b>1er mois offert</b>, puis 49,99&nbsp;€/mois<br>Sans engagement · <i>Sur iPhone</i></p>
     </div>
@@ -524,7 +534,7 @@ html{touch-action:manipulation}
           </div></div>
           
         </div>
-        <div class="bulles"><button type="button" class="bulle g b1" data-i="1" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Nouvelle résa : Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="2" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="3" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="4" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton nom, à ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button></div>
+        <div class="bulles"><button type="button" class="bulle g b1" data-i="1" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Résa de Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="2" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="3" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="4" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button></div>
       </div>
     </div>
   </div>
@@ -536,7 +546,7 @@ html{touch-action:manipulation}
   <div class="quoi-grille">
     <div><div class="k vu">Loginail, c’est quoi&nbsp;?</div>
     <h2 class="serif titre vu" style="margin-top:10px">Une appli <em>tout-en-un</em> pour gérer ton salon.</h2></div>
-    <div class="quoi-txt vu"><p>C’est l’appli des prothésistes ongulaires, pensée par une prothésiste.</p>
+    <div class="quoi-txt vu"><p><b>Tout ton salon dans une seule appli</b>, pensée par une prothésiste.</p>
     <p>Dedans, tu as ton agenda, tes fiches clientes, tes rappels SMS et ta caisse du jour. Et en plus, <b>ton site internet</b>, à ton nom, où tes clientes réservent toutes seules.</p></div>
   </div>
   <div class="chiffres" id="chiffres">
