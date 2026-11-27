@@ -28,13 +28,11 @@ p{margin-top:10px;color:#5E5550;font-size:16.5px;animation:arrive .7s .2s cubic-
 .points i{width:6px;height:6px;border-radius:50%;background:#E0628C;animation:pt 1.2s infinite}
 .points i:nth-child(2){animation-delay:.2s}.points i:nth-child(3){animation-delay:.4s}
 @keyframes pt{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
-a#lien{display:inline-flex;align-items:center;gap:10px;margin-top:28px;height:58px;padding:0 24px 0 18px;border-radius:14px;background:#000;color:#fff;text-decoration:none;box-shadow:0 18px 34px -16px rgba(30,28,27,.6);animation:arrive .7s .3s cubic-bezier(.2,.8,.2,1) both}
-a#lien svg{width:28px;height:28px}
-a#lien span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;text-align:left}
-a#lien small{font-size:12px}a#lien strong{font-size:22px;font-weight:600}
+a#lien{display:inline-block;margin-top:28px;line-height:0;border-radius:12px;text-decoration:none;box-shadow:0 18px 34px -16px rgba(30,28,27,.6);animation:arrive .7s .3s cubic-bezier(.2,.8,.2,1) both}
 .ch{position:fixed;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(80,30,50,.22));animation:fl 6s ease-in-out infinite}
 @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -10px}}
 @media (prefers-reduced-motion:reduce){.icone,.icone::before,.icone::after,h1,p,a#lien,.ch,.points i{animation:none}}
+a#lien img{display:block;height:57px;width:auto}
 </style>
 </head>
 <body>
@@ -45,7 +43,7 @@ a#lien small{font-size:12px}a#lien strong{font-size:22px;font-weight:600}
 <div class="icone"><img src="../loginail-site/icone-appli.svg" alt="Loginail"></div>
 <h1>Ton <em>appli</em> arrive</h1>
 <p>On t’emmène sur l’App Store<span class="points" aria-hidden="true"><i></i><i></i><i></i></span></p>
-<a id="lien" href="https://apps.apple.com/fr/iphone/search?term=Loginail"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></svg><span><small>Ouvrir dans</small><strong>l’App Store</strong></span></a>
+<a id="lien" href="https://apps.apple.com/fr/iphone/search?term=Loginail"><img src="../loginail-site/badge-app-store-fr.svg" alt="Télécharger dans l’App Store" width="180" height="57"></a>
 <script>
 /* D85 (Marie : « j'ai pas à le recoder ») : ce lien se règle TOUT SEUL.
    On demande à Apple si fr.loginail.app est publiée : oui → sa fiche ; pas encore, ou Apple muet → recherche « Loginail ».
