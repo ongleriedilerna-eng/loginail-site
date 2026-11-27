@@ -834,6 +834,33 @@ html{touch-action:manipulation}
 .ch7 i{white-space:nowrap;font-style:normal;font:500 12.5px Jost;padding:6px 11px;border-radius:99px;background:#fff;color:var(--doux);box-shadow:inset 0 0 0 1px var(--ligne);transition:background .3s,color .3s,transform .3s}
 .ch7 i.on{background:var(--fram);color:#fff;box-shadow:none;transform:scale(1.06)}
 @media (prefers-reduced-motion:reduce){.sms7 .s7-bul,.sms7 .s7-ok{opacity:1;transform:none}.s7-tape i{animation:none}}
+/* V9 · 27/11 (Marie) : agenda bouton en dessous ; fiche Notes → Fiche ; autocollant lien Insta / DM ; plusieurs téléphones pour le site */
+#vues{margin:12px auto 18px;align-self:center}
+.car .fx.v6 .tl:has(#cadreAgenda){padding-bottom:0}
+.f7-ong{display:grid;grid-template-columns:1fr 1fr;background:#F3ECEE;border-radius:99px;padding:3px;margin:10px 0 4px}
+.f7-ong i{font-style:normal;text-align:center;font:500 12.5px Jost;padding:5px 0;border-radius:99px;color:#9A8F88;transition:background .35s,color .35s}
+.f7-ong i.on{background:#1E1C1B;color:#fff}
+.fi7{display:flex;flex-direction:column}
+.f7-p{transition:opacity .4s}.f7-wrap .f7-p{grid-area:1/1}
+.f7-wrap{display:grid}
+.f7-fiche{opacity:0;pointer-events:none;display:grid;gap:8px;align-content:start;padding-top:6px}
+.fi7.fiche .f7-notes{opacity:0}.fi7.fiche .f7-fiche{opacity:1}
+.f7-rdv{background:#FBF4F6;border-radius:14px;padding:10px 12px}.f7-rdv small,.f7-ch small,.f7-fid small{display:block;font-size:10.5px;color:#9A8F88}
+.f7-rdv b{display:block;font:500 14px Jost;color:var(--fram)}.f7-rdv span{font-size:11.5px;color:var(--doux)}
+.f7-ch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.f7-ch div{background:#FBF4F6;border-radius:12px;padding:8px 9px}.f7-ch b{font:400 15px Abril,serif;white-space:nowrap}
+.f7-fid{background:#FBF4F6;border-radius:14px;padding:10px 12px}.f7-fid div{display:flex;justify-content:space-between;align-items:baseline}.f7-fid b{font:500 12px Jost}
+.f7-fid i{display:block;height:7px;border-radius:9px;background:#EDE1E5;margin-top:7px;overflow:hidden}.f7-fid u{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#F2A1BA,var(--fram));transition:width 1s .3s cubic-bezier(.3,1,.4,1)}
+.fi7.fiche .f7-fid u{width:40%}
+.stk{position:absolute;z-index:2;left:50%;top:79%;translate:-50% 0;white-space:nowrap;display:flex;align-items:center;gap:5px;border-radius:10px;padding:7px 10px;font:600 11.5px/1 Jost,sans-serif;box-shadow:0 8px 18px -8px rgba(60,20,40,.5);transition:opacity .45s,transform .45s cubic-bezier(.2,1.3,.4,1)}
+.stk.lien{background:#fff;color:#3D7BE0;letter-spacing:.02em}.stk.lien svg{width:14px;height:14px}
+.stk.dm{background:var(--fram);color:#fff;font-size:13px;border-radius:99px;padding:8px 13px}
+#cadreSt .stk.dm,#cadreSt.b .stk.lien{opacity:0;transform:scale(.8)}#cadreSt.b .stk.dm{opacity:1;transform:none}
+.pile7{position:relative;width:100%;height:290px}
+.pile7 .ph{position:absolute;left:50%;top:0;width:124px;margin:0;translate:-50% 0;transition:transform .7s cubic-bezier(.3,1.1,.4,1),opacity .5s,filter .5s;opacity:0;transform:scale(.7)}
+.pile7 .ph img{opacity:1!important;transform:none!important}
+.pile7 .ph.p0{opacity:1;transform:none;z-index:3}
+.pile7 .ph.p1{opacity:1;transform:translateX(78px) translateY(18px) rotate(9deg) scale(.82);z-index:2;filter:saturate(.85)}
+.pile7 .ph.p2{opacity:1;transform:translateX(-78px) translateY(18px) rotate(-9deg) scale(.82);z-index:2;filter:saturate(.85)}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -890,8 +917,8 @@ html{touch-action:manipulation}
     <button type="button" class="car-fl g" aria-label="Carte précédente">‹</button><button type="button" class="car-fl d" aria-label="Carte suivante">›</button>
     <div class="fonctions" id="fonctions">
       <article class="fx v6"><div class="k">Agenda</div><h3>Ta semaine,<br><em>d’un coup d’œil.</em></h3>
-        <div class="vues" id="vues"><button type="button" class="on" data-v="0">Semaine</button><button type="button" data-v="1">Jour</button><i aria-hidden="true"></i></div>
-        <div class="tl"><div class="t6" id="cadreAgenda"><img class="z-sem" src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli, vue semaine" loading="lazy"><img class="z-jour" src="loginail-site/apercus-univers/app-agenda-jour-plein-2711.webp" alt="L’agenda de l’appli, vue jour" loading="lazy"></div></div></article>
+        <div class="tl"><div class="t6" id="cadreAgenda"><img class="z-sem" src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli, vue semaine" loading="lazy"><img class="z-jour" src="loginail-site/apercus-univers/app-agenda-jour-plein-2711.webp" alt="L’agenda de l’appli, vue jour" loading="lazy"></div></div>
+        <div class="vues" id="vues"><button type="button" class="on" data-v="0">Semaine</button><button type="button" data-v="1">Jour</button><i aria-hidden="true"></i></div></article>
       <article class="fx v6"><div class="k">SMS</div><h3>Rappel automatique,<br><em>illimité.</em></h3>
         <div class="tl"><div class="sms7" id="sms7" aria-label="La veille à 18 h, ta cliente reçoit un SMS de rappel, envoyé tout seul">
           <div class="s7-h"><span class="s7-av">N</span><b>Nails by Drimf</b></div>
@@ -903,17 +930,26 @@ html{touch-action:manipulation}
       <article class="fx v6"><div class="k">Fiches clientes</div><h3>Tu te souviens<br><em>de tout.</em></h3>
         <div class="tl"><div class="fi7" id="fi7" aria-label="La fiche d’une cliente : son métier, en couple, des enfants, un animal, ce qu’elle boit">
           <div class="f7-t"><span class="f7-av">C</span><div><b>Camille Leroy</b><small>4 visites · fidèle ✦</small></div></div>
+          <div class="f7-ong"><i data-o="fiche">Fiche</i><i data-o="notes" class="on">Notes</i></div>
+          <div class="f7-wrap">
+          <div class="f7-p f7-notes">
           <div class="f7-l"><span class="f7-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2"/></svg></span><span class="f7-q">Son métier&nbsp;?</span><em class="f7-ecrit" data-txt="Infirmière"></em></div>
           <div class="f7-l"><span class="f7-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span><span class="f7-q">En couple&nbsp;?</span><span class="f7-on" data-r="o"><i>Oui</i><i>Non</i></span></div>
           <div class="f7-l"><span class="f7-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M6 21c0-4 2.7-6 6-6s6 2 6 6"/></svg></span><span class="f7-q">Des enfants&nbsp;?</span><span class="f7-on" data-r="o"><i>Oui</i><i>Non</i></span></div>
           <div class="f7-l"><span class="f7-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="10" r="2"/><circle cx="17" cy="10" r="2"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="6" r="2"/><path d="M8 17c0-2.5 1.8-4 4-4s4 1.5 4 4-1.8 3-4 3-4-.5-4-3z"/></svg></span><span class="f7-q">Un animal&nbsp;?</span><span class="f7-on" data-r="n"><i>Oui</i><i>Non</i></span></div>
           <div class="f7-l"><span class="f7-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h12v5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/></svg></span><span class="f7-q">Elle boit quoi&nbsp;?</span><em class="f7-ecrit" data-txt="Thé vanille"></em></div>
+        </div>
+          <div class="f7-p f7-fiche">
+            <div class="f7-rdv"><small>Prochain rendez-vous</small><b>Mardi 2 déc. · 10h00</b><span>Pose gel · Remplissage</span></div>
+            <div class="f7-ch"><div><small>Visites</small><b>4</b></div><div><small>Dernière</small><b>25 nov.</b></div><div><small>Dépensé</small><b>180&nbsp;€</b></div></div>
+            <div class="f7-fid"><div><small>Carte de fidélité</small><b>4 sur 10</b></div><i><u></u></i></div>
+          </div></div>
         </div></div></article>
       <article class="fx v6"><div class="k">Partager mes dispos</div><h3>Ta story,<br><em>toute prête.</em></h3>
         <div class="vues" id="vuesSt"><button type="button" class="on" data-v="0">Sur ton site</button><button type="button" data-v="1">En DM</button><i aria-hidden="true"></i></div>
-        <div class="tl"><div class="grand st" id="cadreSt"><img class="z-a" src="loginail-site/apercus-univers/story-sem-ligne-2711.webp" alt="La story « Mes dispos » de la semaine : elles réservent sur ton site" loading="lazy"><img class="z-b" src="loginail-site/apercus-univers/story-sem-dm-2711.webp" alt="La même story : elles réservent en DM" loading="lazy"></div></div></article>
+        <div class="tl"><div class="grand st" id="cadreSt"><span class="stk lien"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>NAILS-BY-DRIMF</span><span class="stk dm">Réserve en DM ♡</span><img class="z-a" src="loginail-site/apercus-univers/story-sem-ligne-2711.webp" alt="La story « Mes dispos » de la semaine : elles réservent sur ton site" loading="lazy"><img class="z-b" src="loginail-site/apercus-univers/story-sem-dm-2711.webp" alt="La même story : elles réservent en DM" loading="lazy"></div></div></article>
       <article class="fx v6"><div class="k">Le plus</div><h3>Ton site inclus,<br><em>à ton nom.</em></h3>
-        <div class="tl site7"><div class="t6 rose" id="eventail"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div><div class="ch7" id="ch7" aria-hidden="true"><i class="on">Fond</i><i>Écriture</i><i>Charms</i></div></div></article>
+        <div class="tl site7"><div class="pile7" id="pile7"><div class="t6 ph"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"></div><div class="t6 ph"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"></div><div class="t6 ph"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"></div><div class="t6 ph"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"></div><div class="t6 ph"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"></div><div class="t6 ph"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div><div class="ch7" id="ch7" aria-hidden="true"><i class="on">Fond</i><i>Écriture</i><i>Charms</i></div></div></article>
     </div>
     <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
   </div>
@@ -1084,15 +1120,18 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(Da
 /* V8 : SMS qui arrive tout seul ; fiche qui se remplit ; story sur ton site / en DM ; le site change de look */
 (()=>{const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const S=document.getElementById('sms7');if(S&&!RM){const pas=[['e1',900],['e2',1400],['e3',3800],['',700]];let i=0;const go=()=>{const[c,d]=pas[i];S.className='sms7'+(c?' '+c:'');i=(i+1)%pas.length;setTimeout(go,d)};go()}else if(S)S.className='sms7 e3';
-const F=document.getElementById('fi7');if(F){const L=[...F.querySelectorAll('.f7-ecrit,.f7-on')];
+const F=document.getElementById('fi7');if(F){const L=[...F.querySelectorAll('.f7-ecrit,.f7-on')],O=[...F.querySelectorAll('.f7-ong i')];
+ const onglet=n=>{F.classList.toggle('fiche',n==='fiche');O.forEach(o=>o.classList.toggle('on',o.dataset.o===n))};
  const vide=()=>L.forEach(x=>{if(x.classList.contains('f7-ecrit'))x.textContent='';else x.classList.remove('oui','non')});
  const remplit=(x,fin)=>{if(x.classList.contains('f7-ecrit')){const t=x.dataset.txt;let k=0;x.classList.add('tape');const ty=()=>{x.textContent=t.slice(0,++k);if(k<t.length)setTimeout(ty,70);else{x.classList.remove('tape');fin()}};ty()}else{x.classList.add(x.dataset.r==='o'?'oui':'non');setTimeout(fin,350)}};
  if(RM){L.forEach(x=>{if(x.classList.contains('f7-ecrit'))x.textContent=x.dataset.txt;else x.classList.add(x.dataset.r==='o'?'oui':'non')})}
- else{const tour=()=>{vide();let j=0;const suite=()=>{if(j<L.length)setTimeout(()=>remplit(L[j++],suite),450);else setTimeout(tour,3200)};setTimeout(suite,500)};tour()}}
+ else{const tour=()=>{onglet('notes');vide();let j=0;const suite=()=>{if(j<L.length)setTimeout(()=>remplit(L[j++],suite),450);else setTimeout(()=>{onglet('fiche');setTimeout(tour,3800)},1300)};setTimeout(suite,600)};tour()}}
 const V=document.getElementById('vuesSt'),K=document.getElementById('cadreSt');if(V&&K){const bt=[...V.querySelectorAll('button')];let v=0,pause=0;
  const va=n=>{v=n;K.classList.toggle('b',n===1);bt.forEach(b=>b.classList.toggle('on',+b.dataset.v===n))};
  bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.v)}));if(!RM)setInterval(()=>{if(Date.now()>pause)va(v?0:1)},3500)}
-const C=document.getElementById('ch7'),E=document.getElementById('eventail');if(C&&E){const ch=[...C.children];let n=-1;const im=[...E.querySelectorAll('img')];new MutationObserver(()=>{const k=im.findIndex(x=>x.classList.contains('on'));if(k<0||k===n)return;n=k;ch.forEach((x,i)=>x.classList.toggle('on',i===k%ch.length))}).observe(E,{subtree:true,attributes:true,attributeFilter:['class']})}
+const C=document.getElementById('ch7'),P=document.getElementById('pile7');if(P){const ph=[...P.children],ch=C?[...C.children]:[];let n=0;
+ const place=()=>{ph.forEach((x,i)=>{const d=(i-n+ph.length)%ph.length;x.className='t6 ph'+(d===0?' p0':d===1?' p1':d===ph.length-1?' p2':'')});ch.forEach((x,i)=>x.classList.toggle('on',i===n%ch.length))};
+ place();if(!RM)setInterval(()=>{n=(n+1)%ph.length;place()},2400)}
 })();
 /* avant / après : la pilule bascule toute seule ; un toucher reprend la main */
 (()=>{const B=document.getElementById('avBascule'),K=document.getElementById('avCarte');if(!B||!K)return;const bt=[...B.querySelectorAll('button')];let m=1,pause=0,vu=false;
