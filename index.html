@@ -715,6 +715,62 @@ html{touch-action:manipulation}
 .tel-z{height:328px}.tel-z .ecr{height:321px}
 .f-note em{white-space:nowrap}.f-rev{white-space:nowrap}
 .car .fx h3{font-size:23px}
+/* ===== 27/11 · V5 ===== */
+/* « Une appli tout-en-un » plus petit : on voit le titre et « Loginail, c'est quoi ? » ensemble */
+@media (max-width:859px){.quoi{padding-top:26px}.quoi .titre{font-size:27px;line-height:1.1}.quoi-grille{gap:0}}
+/* téléphones ENTIERS (SMS, fiche, story, site) ; l'agenda reste « de près » */
+.tel-z.entier{width:168px;height:350px;border-radius:30px;padding:6px}
+.tel-z.entier .ecr{height:338px;border-radius:24px}
+.tel-z.entier::before{top:12px;width:32%;height:11px}
+.car .sous-fx{font-size:13.5px!important;line-height:1.4;color:var(--doux);margin-top:4px!important}
+/* SMS dans un téléphone entier : plus serré */
+.tel-z.entier .ecr.sms{padding:26px 9px 0}
+.tel-z.entier .bul{font-size:11.5px;padding:8px 9px;max-width:94%}
+.tel-z.entier .ecr.sms .pop-anniv{width:150px;left:50%;bottom:10px;padding:8px 9px}
+.tel-z.entier .ecr.sms .pop-anniv b{font-size:12px}.tel-z.entier .ecr.sms .pop-anniv small{font-size:8.5px}
+.tel-z.entier .ecr.sms .pop-anniv div i{font-size:11px;padding:5px 0}.tel-z.entier .ecr.sms .pop-anniv em{font-size:10px}
+/* fiche dans un téléphone entier */
+.tel-z.entier .fiche{padding:24px 8px 0}.tel-z.entier .f-tete b{font-size:13.5px}.tel-z.entier .f-tete small{font-size:10px}.tel-z.entier .f-av{width:30px;height:30px;font-size:14px}
+.tel-z.entier .f-ong i{font-size:11px;padding:5px 0}.tel-z.entier .f-l{font-size:10.5px;padding:6px 7px;margin-top:5px}.tel-z.entier .f-l em{font-size:10px}
+.tel-z.entier .f-rev{font-size:10.5px;padding:7px 8px}
+/* la vraie story */
+.story-vraie .ecr{background:#F6E5E0;display:flex;align-items:center}
+.story-vraie .ecr img{width:100%;display:block}
+.car .partager{bottom:14px}
+/* le site : un téléphone, les looks en fondu */
+.site-tel .ecr{position:relative;background:#111}
+.site-tel .ecr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .7s}
+.site-tel .ecr img.on{opacity:1}
+.dotfr{font:400 24px/1 Abril,serif;color:var(--encre);margin:8px 0 14px}.dotfr b{font-weight:400;color:var(--fram)}
+/* agenda : l'écran de près, bien cadré sur le calendrier */
+.tel-z .z-sem{background-size:112% auto;background-position:30% 23%}
+.tel-z .z-jour{background-size:112% auto;background-position:30% 34%}
+/* C'est toi qui choisis : plus de liste */
+.choix .noms[hidden]{display:none!important}
+/* le prix : 9 bulles, rangées en quinconce, pas au milieu */
+.bulles9{display:grid;grid-template-columns:1fr 1fr;gap:8px 8px;margin:4px 0 18px;text-align:left}
+.bulles9 .b9{display:flex;align-items:center;gap:8px;background:#fff;border-radius:16px;padding:8px 10px 8px 8px;font:500 13.5px/1.25 Jost;color:var(--encre);box-shadow:0 10px 22px -16px rgba(120,40,70,.6),0 0 0 1px var(--ligne)}
+.bulles9 .b9:nth-child(even){transform:translateY(10px)}
+.bulles9 .b9 i{flex:none;width:28px;height:28px;border-radius:9px;background:var(--pale);color:var(--fram);display:grid;place-items:center}
+.bulles9 .b9 i svg{width:15px;height:15px}
+.bulles9 .b9.fort{grid-column:1/-1;justify-content:center;background:var(--fram);color:#fff;font-size:15px;transform:none}
+.bulles9 .b9.fort i{background:rgba(255,255,255,.2);color:#fff}
+.prix2{padding-top:18px}
+@media (min-width:860px){.bulles9{grid-template-columns:repeat(3,1fr)}.bulles9 .b9:nth-child(even){transform:none}.bulles9 .b9:nth-child(3n+1){transform:translateY(8px)}.bulles9 .b9.fort{transform:none}}
+/* Instagram : bouton avec un petit plus */
+.ig-btn{position:relative;height:auto!important;padding:10px 18px 10px 10px!important;gap:12px!important;justify-content:flex-start!important;background:linear-gradient(110deg,#C8416F,#E0628C 55%,#F08AB0)!important;overflow:visible}
+.ig-btn-ic{flex:none;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.22);display:grid;place-items:center}
+.ig-btn-ic svg{width:22px;height:22px}
+.ig-btn-t{display:flex;flex-direction:column;text-align:left;line-height:1.2}.ig-btn-t b{font:500 15.5px Jost}.ig-btn-t small{font:400 12px Jost;opacity:.9}
+.ig-btn-ch{position:absolute;right:-10px;top:-16px;width:40px;rotate:14deg;filter:drop-shadow(0 6px 8px rgba(80,30,50,.3));animation:fl 5s ease-in-out infinite}
+.ig-btn::after{content:"";position:absolute;inset:0;border-radius:99px;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);background-size:250% 100%;animation:ig-br 3.4s ease-in-out infinite;pointer-events:none}
+@keyframes ig-br{0%{background-position:120% 0}60%,100%{background-position:-20% 0}}
+.ig-av .ig-photo{box-shadow:0 0 0 2px #fff,0 0 0 4px #E0628C!important}
+@media (prefers-reduced-motion:reduce){.ig-btn::after,.ig-btn-ch{animation:none}}
+
+
+.tel-z.entier{width:156px;height:326px}.tel-z.entier .ecr{height:314px}
+.car .fx .sous-fx{margin-top:2px!important}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -772,15 +828,15 @@ html{touch-action:manipulation}
       <article class="fx"><div class="k">Agenda</div><h3>Ta semaine,<br><em>d’un coup d’œil.</em></h3>
         <div class="vues" id="vues"><button type="button" class="on" data-v="0">Semaine</button><button type="button" data-v="1">Jour</button><i aria-hidden="true"></i></div>
         <div class="tl"><div class="tel-z" id="cadreAgenda"><div class="z z-sem" role="img" aria-label="L’agenda de l’appli, vue semaine"></div><div class="z z-jour" role="img" aria-label="L’agenda de l’appli, vue jour"></div></div></div></article>
-      <article class="fx"><div class="k">SMS</div><h3>Rappel la veille.<br><em>Et rappel d’anniversaire.</em></h3>
-        <div class="tl"><div class="tel-z" aria-hidden="true"><div class="ecr sms">
+      <article class="fx"><div class="k">SMS</div><h3>Rappel la veille,<br><em>illimité.</em></h3><p class="sous-fx">+ un rappel d’anniversaire, que tu envoies toi-même.</p>
+        <div class="tl"><div class="tel-z entier" aria-hidden="true"><div class="ecr sms">
           <div class="sms-t"><span class="sms-av">L</span><b>Loginail</b><small>18:00</small></div>
-          <div class="bul">Bonjour Inès&nbsp;! <strong>RDV demain à 9&nbsp;h</strong> chez Nails by Drimf, 12 rue Paradis, Marseille. À demain&nbsp;!</div>
+          <div class="bul">Bonjour Inès&nbsp;! <strong>RDV demain à 9&nbsp;h</strong> chez Nails by Drimf. À demain&nbsp;!</div>
           <div class="sms-ok">✓ Envoyé tout seul · illimité</div>
           <div class="pop-anniv"><small>LOGINAIL · 09:30</small><b>🎂 Anniversaire d’Inès</b><div><i>Plus tard</i><i class="ok">Envoyer</i></div><em>Pas automatique · c’est toi qui choisis</em></div>
         </div></div></div></article>
       <article class="fx"><div class="k">Fiches clientes</div><h3>Tu te souviens<br><em>de tout.</em></h3>
-        <div class="tl"><div class="tel-z" aria-hidden="true"><div class="ecr fiche">
+        <div class="tl"><div class="tel-z entier" aria-hidden="true"><div class="ecr fiche">
           <div class="f-tete"><span class="f-av">C</span><div><b>Camille Leroy</b><small>4 visites · fidèle ✦</small></div></div>
           <div class="f-ong"><i>Fiche</i><i class="on">Notes</i></div>
           <div class="f-l"><span>💍 En couple&nbsp;?</span><em class="oui">Oui</em></div>
@@ -789,17 +845,11 @@ html{touch-action:manipulation}
           <div class="f-l f-note"><span>✈️ Part à Rome le 12</span><em>À demander</em></div>
           <div class="f-rev">🔔 Elle revient <b>dans 5 jours</b></div>
         </div></div></div></article>
-      <article class="fx rose"><div class="k">Partager mes dispos</div><h3>Tes dispos<br><em>en story.</em></h3>
-        <div class="tl"><div class="tel-z" aria-hidden="true"><div class="ecr story3">
-          <div class="st-bar"><i></i></div>
-          <div class="st-pro"><span class="st-av">D</span><b>nailsbydrimf</b><small>2 min</small></div>
-          <div class="st-carte"><small>Cette semaine</small><b>Mes dispos ✦</b>
-            <div class="j"><i>Mardi</i><em>14 h</em><em>16 h 30</em></div><div class="j"><i>Jeudi</i><em>10 h</em></div><div class="j"><i>Vendredi</i><em>9 h</em><em>15 h</em></div><div class="j"><i>Samedi</i><em>11 h</em></div></div>
-                    <img class="s-ch" src="loginail-site/charms-mini/cerisedisco.webp" alt="">
-        </div></div>
-        <div class="partager"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Partager</div></div></article>
+      <article class="fx rose"><div class="k">Partager mes dispos</div><h3>Ta story,<br><em>toute prête.</em></h3><p class="sous-fx">Tes créneaux libres, sur le fond de ton site.</p>
+        <div class="tl"><div class="tel-z entier story-vraie" aria-hidden="true"><div class="ecr"><img src="loginail-site/apercus-univers/story-dispos-2711.webp" alt="" loading="lazy"></div></div>
+        <div class="partager"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Partager en story</div></div></article>
       <article class="fx"><div class="k">Le plus</div><h3>Ton site inclus,<br><em>à ton nom.</em></h3>
-        <div class="tl site"><div class="eventail" id="eventail"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div><div class="dotfr">tonsalon<b>.fr</b></div></div></article>
+        <div class="tl site"><div class="tel-z entier site-tel" id="eventail" aria-hidden="true"><div class="ecr"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div><div class="dotfr">tonsalon<b>.fr</b></div></div></article>
     </div>
     <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
   </div>
@@ -835,7 +885,7 @@ html{touch-action:manipulation}
     <div class="ch-l oui" id="chOui"><i>Oui</i><span></span></div>
     <div class="ch-l non" id="chNon"><i>Non</i><span></span></div>
   </div>
-  <div class="noms" id="chNoms"></div>
+  <div class="noms" id="chNoms" hidden></div>
 </div></section>
 
 <!-- 5 · L'ABONNEMENT -->
@@ -844,9 +894,7 @@ html{touch-action:manipulation}
   <h2 class="serif titre vu" style="margin-top:10px">Tout ça pour <em>49,99&nbsp;€</em>&nbsp;/&nbsp;mois.</h2>
   <div class="prix2 vu">
     <img class="ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="width:52px;right:-10px;top:-22px;rotate:12deg">
-    <div class="p2-of">1er mois offert</div>
-    <div class="p2-pills"><span>Tout inclus</span><span>Sans engagement</span><span>0&nbsp;% de commission</span></div>
-    <ul class="p2-l"><li>Agenda</li><li>Fiches clientes</li><li>Rappels SMS illimités</li><li>Caisse du jour</li><li>Partage de tes dispos</li><li>Ton site en .fr</li></ul>
+    <div class="bulles9"><span class="b9 fort"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1s4 1 6 1c2 0 6 1 6-1s-4-3-6 1"/></svg></i>1er mois offert</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></svg></i>Tout inclus</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg></i>Sans engagement</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg></i>0 %&nbsp;de commission</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i>Agenda</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></i>Fiches clientes</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></i>Rappels SMS illimités</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg></i>Caisse du jour</span><span class="b9"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></i>Ton site en .fr</span></div>
     <a class="as officiel" href="loginail-creer/telecharger.html"><img src="loginail-site/badge-app-store-fr.svg" alt="Télécharger dans l’App Store" width="190" height="60"></a>
     <p class="ap">Payé avec ton compte Apple. Tu arrêtes quand tu veux, dans les Réglages de ton iPhone.</p>
   </div>
@@ -861,10 +909,10 @@ html{touch-action:manipulation}
   <small>Par message, 7 jours sur 7. Je réponds dans la journée.</small>
 </div>
   <div class="ig-boite vu">
-  <img class="ch ig-ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="width:50px;right:-8px;top:-20px;rotate:12deg">
+  <img class="ch ig-ch" src="loginail-site/charms-mini/ceriseruban.webp" alt="" style="width:50px;right:6px;top:-22px;rotate:12deg">
   <div class="ig-tete"><span class="ig-av" aria-hidden="true"><img class="ig-photo" src="loginail-site/insta-loginail/profil.png" alt=""></span><div class="ig-nom"><b>@loginail.fr</b><span>Nos derniers posts : astuces, nouveautés de l’appli et coulisses.</span></div></div>
   <div class="ig-rang" aria-hidden="true"><div class="ig-piste"><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-1.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-2.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-3.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-4.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-5.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-6.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-7.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-8.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-1.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-2.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-3.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-4.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-5.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-6.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-7.webp" alt="" loading="lazy"></a><a href="https://www.instagram.com/loginail.fr/" rel="noopener" tabindex="-1"><img src="loginail-site/insta-loginail/post-8.webp" alt="" loading="lazy"></a></div></div>
-  <a class="ig-btn" href="https://www.instagram.com/loginail.fr/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Suivre @loginail.fr sur Instagram</a>
+  <a class="ig-btn" href="https://www.instagram.com/loginail.fr/" rel="noopener"><span class="ig-btn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span><span class="ig-btn-t"><b>Suivre @loginail.fr</b><small>Astuces et nouveautés chaque semaine</small></span><img class="ig-btn-ch" src="loginail-site/charms-mini/coeurchrome.webp" alt=""></a>
 </div>
 </div></section>
 
@@ -921,7 +969,7 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(vu
 (()=>{const F=document.getElementById('fonctions');if(!F)return;const pas=()=>F.querySelector('.fx').getBoundingClientRect().width+14;
 document.querySelector('.car-fl.g').addEventListener('click',()=>F.scrollBy({left:-pas(),behavior:'smooth'}));
 document.querySelector('.car-fl.d').addEventListener('click',()=>F.scrollBy({left:pas(),behavior:'smooth'}));
-const E=document.getElementById('eventail');if(E&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const im=[...E.children];let d=0;const place=()=>im.forEach((x,i)=>{const p=(i-d+im.length)%im.length;x.dataset.p=p<3?p:'x'});place();setInterval(()=>{d=(d+1)%im.length;place()},2600)}})();
+const E=document.getElementById('eventail');if(E){const im=[...E.querySelectorAll('img')];let d=0;const place=()=>im.forEach((x,i)=>x.classList.toggle('on',i===d));place();if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{d=(d+1)%im.length;place()},2600)}})();
 /* les fonctions : on glisse à droite et à gauche (téléphone), les points suivent */
 (()=>{const F=document.querySelector('.fonctions'),P=document.getElementById('ptsFonctions'),C=[...F.children];P.innerHTML=C.map(()=>'<i></i>').join('');const pts=[...P.children];
 const maj=()=>{const m=F.getBoundingClientRect().left+F.clientWidth/2;let j=0,d=1e9;C.forEach((c,i)=>{const r=c.getBoundingClientRect(),x=Math.abs(r.left+r.width/2-m);if(x<d){d=x;j=i}});pts.forEach((p,i)=>p.classList.toggle('on',i===j))};
@@ -969,6 +1017,12 @@ requestAnimationFrame(tick)})();
 const va=n=>{v=n;K.classList.toggle('jour',n===1);bt.forEach(b=>b.classList.toggle('on',+b.dataset.v===n))};
 bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.v)}));
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(Date.now()>pause)va(v?0:1)},3500)})();
+/* avant / après : la pilule bascule toute seule ; un toucher reprend la main */
+(()=>{const B=document.getElementById('avBascule'),K=document.getElementById('avCarte');if(!B||!K)return;const bt=[...B.querySelectorAll('button')];let m=1,pause=0,vu=false;
+const va=n=>{m=n;K.dataset.m=n;bt.forEach(b=>b.classList.toggle('on',+b.dataset.m===n))};
+bt.forEach(b=>b.addEventListener('click',()=>{pause=Date.now()+9000;va(+b.dataset.m)}));
+new IntersectionObserver(e=>vu=e[0].isIntersecting,{threshold:.4}).observe(K);
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(()=>{if(vu&&Date.now()>pause)va(m?0:1)},3600)})();
 /* cookies : on demande une fois ; « Refuser » et « Accepter » se valent ; rien n'est mesuré sans « Accepter » */
 (()=>{const K=document.getElementById('ck'),cle='loginail-cookies';let v=null;try{v=localStorage.getItem(cle)}catch(e){}
 window.loginailMesure=window.loginailMesure||function(){/* la mesure d'audience se branchera ici, seulement après « Accepter » */};
