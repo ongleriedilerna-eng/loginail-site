@@ -771,6 +771,21 @@ html{touch-action:manipulation}
 
 .tel-z.entier{width:156px;height:326px}.tel-z.entier .ecr{height:314px}
 .car .fx .sous-fx{margin-top:2px!important}
+/* V6 · 27/11 (Marie) : la liste sur UNE ligne ; les 5 cartes = les VRAIS écrans de l'appli, en entier, plus courtes */
+.haut .chapo.liste.une .ln{white-space:nowrap}
+.haut .chapo.liste.une i{margin:0 .4em}
+@media (max-width:1099px){.haut .chapo.liste.une{font-size:min(16px,2.96vw);letter-spacing:0}}
+.car .fx.v6{padding:18px 16px 0}
+.car .fx.v6 h3{font-size:22px}
+.car .fx.v6 .tl{margin-top:14px;padding:0 0 18px}
+.t6{position:relative;width:138px;aspect-ratio:600/1301;margin:0 auto;border-radius:24px;background:#111;padding:5px;box-shadow:0 18px 34px -18px rgba(60,20,40,.55);overflow:hidden}
+.t6 img{position:absolute;inset:5px;width:calc(100% - 10px);height:calc(100% - 10px);object-fit:cover;object-position:top;border-radius:19px;display:block;transition:opacity .45s}
+.t6.coupe{width:212px;aspect-ratio:auto;height:268px;border-radius:28px 28px 0 0;padding:6px 6px 0}
+.t6.coupe img{inset:6px 6px 0;width:calc(100% - 12px);height:auto;border-radius:22px 22px 0 0}
+.car .fx.v6 .tl:has(.coupe){padding-bottom:0}
+#cadreAgenda .z-jour{opacity:0}#cadreAgenda.jour .z-sem{opacity:0}#cadreAgenda.jour .z-jour{opacity:1}
+#eventail img{opacity:0}#eventail img.on{opacity:1}
+@media (min-width:860px){.t6{width:150px}.t6.coupe{width:230px;height:290px}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -788,7 +803,7 @@ html{touch-action:manipulation}
     <div class="txt">
       <div class="k">Pensé par une prothésiste</div>
       <h1 class="serif">L’appli pour toutes<br><span class="l2n">les <em>prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></em> ongulaires.</span></h1>
-      <p class="chapo liste"><span class="ln">Agenda <i>·</i> Fiches clientes <i>·</i> Caisse</span><br><span class="ln">Rappels SMS <i>·</i> Site internet</span></p>
+      <p class="chapo liste une"><span class="ln">Agenda<i>·</i>Fiches clientes<i>·</i>Caisse<i>·</i>Rappels SMS<i>·</i>Site internet</span></p>
       <a class="as officiel" id="telecharger" href="loginail-creer/telecharger.html"><img src="loginail-site/badge-app-store-fr.svg" alt="Télécharger dans l’App Store" width="190" height="60"></a>
       <p class="prix-l"><b>1er mois offert</b>, puis 49,99&nbsp;€/mois<br>Sans engagement · <i>Sur iPhone</i></p>
     </div>
@@ -800,14 +815,15 @@ html{touch-action:manipulation}
           <div class="dos"></div><div class="tranche"></div>
           <div class="face"><div class="ecran" id="ecran">
             <img class="on" src="loginail-site/apercus-univers/app-accueil-2511.webp" alt="L’accueil de l’appli : la prochaine cliente du jour">
-            <img src="loginail-site/apercus-univers/app-agenda-2511.webp" alt="L’agenda de l’appli" loading="lazy">
-            <img src="loginail-site/apercus-univers/sms-rappel-2211.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy">
-            <img src="loginail-site/apercus-univers/app-fiche-2511.webp" alt="La fiche d’une cliente" loading="lazy">
-            <img src="loginail-site/apercus-univers/app-monsite-2511.webp" alt="Mon site, dans l’appli" loading="lazy">
+            <img src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli, vue semaine" loading="lazy">
+            <img src="loginail-site/apercus-univers/app-agenda-jour-2711.webp" alt="L’agenda de l’appli, vue jour" loading="lazy">
+            <img src="loginail-site/apercus-univers/sms-rappel-2711.webp" alt="Le SMS de rappel reçu par la cliente" loading="lazy">
+            <img src="loginail-site/apercus-univers/app-fiche-2711.webp" alt="La fiche d’une cliente" loading="lazy">
+            <img src="loginail-site/apercus-univers/app-monsite-2711.webp" alt="Mon site, dans l’appli" loading="lazy">
           </div></div>
           
         </div>
-        <div class="bulles"><button type="button" class="bulle g b1" data-i="1" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Résa de Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="2" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="3" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="4" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button></div>
+        <div class="bulles"><button type="button" class="bulle g b1" data-i="1" data-i2="2" aria-label="Ton agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="tx"><b>Ton agenda</b><span>Résa de Léa, 10&nbsp;h</span><em class="det">Tes clientes réservent toutes seules, ton agenda se remplit. Tu poses tes vacances en 2 touches.</em></span></button><button type="button" class="bulle d b2" data-i="3" aria-label="SMS de rappel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><span class="tx"><b>SMS de rappel</b><span>Illimités. Zéro lapin.</span><em class="det">La veille, ta cliente reçoit un SMS. Compris dans l’abonnement, sans limite.</em></span></button><button type="button" class="bulle g b3" data-i="4" aria-label="Fiches clientes"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span><span class="tx"><b>Fiches clientes</b><span>Notes, anniversaire</span><em class="det">Ses poses, tes notes, son anniversaire. Tu sais qui doit bientôt revenir.</em></span></button><button type="button" class="bulle d b4" data-i="5" aria-label="Ton site internet"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="tx"><b>Ton site internet</b><span>À ton image</span><em class="det">Il se crée tout seul dans l’appli, avec ton fond, ton écriture et tes charms.</em></span></button></div>
       </div>
       
     </div>
@@ -825,31 +841,17 @@ html{touch-action:manipulation}
   <div class="car" id="car">
     <button type="button" class="car-fl g" aria-label="Carte précédente">‹</button><button type="button" class="car-fl d" aria-label="Carte suivante">›</button>
     <div class="fonctions" id="fonctions">
-      <article class="fx"><div class="k">Agenda</div><h3>Ta semaine,<br><em>d’un coup d’œil.</em></h3>
+      <article class="fx v6"><div class="k">Agenda</div><h3>Ta semaine,<br><em>d’un coup d’œil.</em></h3>
         <div class="vues" id="vues"><button type="button" class="on" data-v="0">Semaine</button><button type="button" data-v="1">Jour</button><i aria-hidden="true"></i></div>
-        <div class="tl"><div class="tel-z" id="cadreAgenda"><div class="z z-sem" role="img" aria-label="L’agenda de l’appli, vue semaine"></div><div class="z z-jour" role="img" aria-label="L’agenda de l’appli, vue jour"></div></div></div></article>
-      <article class="fx"><div class="k">SMS</div><h3>Rappel la veille,<br><em>illimité.</em></h3><p class="sous-fx">+ un rappel d’anniversaire, que tu envoies toi-même.</p>
-        <div class="tl"><div class="tel-z entier" aria-hidden="true"><div class="ecr sms">
-          <div class="sms-t"><span class="sms-av">L</span><b>Loginail</b><small>18:00</small></div>
-          <div class="bul">Bonjour Inès&nbsp;! <strong>RDV demain à 9&nbsp;h</strong> chez Nails by Drimf. À demain&nbsp;!</div>
-          <div class="sms-ok">✓ Envoyé tout seul · illimité</div>
-          <div class="pop-anniv"><small>LOGINAIL · 09:30</small><b>🎂 Anniversaire d’Inès</b><div><i>Plus tard</i><i class="ok">Envoyer</i></div><em>Pas automatique · c’est toi qui choisis</em></div>
-        </div></div></div></article>
-      <article class="fx"><div class="k">Fiches clientes</div><h3>Tu te souviens<br><em>de tout.</em></h3>
-        <div class="tl"><div class="tel-z entier" aria-hidden="true"><div class="ecr fiche">
-          <div class="f-tete"><span class="f-av">C</span><div><b>Camille Leroy</b><small>4 visites · fidèle ✦</small></div></div>
-          <div class="f-ong"><i>Fiche</i><i class="on">Notes</i></div>
-          <div class="f-l"><span>💍 En couple&nbsp;?</span><em class="oui">Oui</em></div>
-                    <div class="f-l"><span>💬 Aime papoter&nbsp;?</span><em class="oui">Oui</em></div>
-          <div class="f-l"><span>🎂 Anniversaire</span><em>12 mars</em></div>
-          <div class="f-l f-note"><span>✈️ Part à Rome le 12</span><em>À demander</em></div>
-          <div class="f-rev">🔔 Elle revient <b>dans 5 jours</b></div>
-        </div></div></div></article>
-      <article class="fx rose"><div class="k">Partager mes dispos</div><h3>Ta story,<br><em>toute prête.</em></h3><p class="sous-fx">Tes créneaux libres, sur le fond de ton site.</p>
-        <div class="tl"><div class="tel-z entier story-vraie" aria-hidden="true"><div class="ecr"><img src="loginail-site/apercus-univers/story-dispos-2711.webp" alt="" loading="lazy"></div></div>
-        <div class="partager"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Partager en story</div></div></article>
-      <article class="fx"><div class="k">Le plus</div><h3>Ton site inclus,<br><em>à ton nom.</em></h3>
-        <div class="tl site"><div class="tel-z entier site-tel" id="eventail" aria-hidden="true"><div class="ecr"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div><div class="dotfr">tonsalon<b>.fr</b></div></div></article>
+        <div class="tl"><div class="t6 coupe" id="cadreAgenda"><img class="z-sem" src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli, vue semaine" loading="lazy"><img class="z-jour" src="loginail-site/apercus-univers/app-agenda-jour-2711.webp" alt="L’agenda de l’appli, vue jour" loading="lazy"></div></div></article>
+      <article class="fx v6"><div class="k">SMS</div><h3>Rappel la veille,<br><em>illimité.</em></h3><p class="sous-fx">+ l’anniversaire, quand tu veux.</p>
+        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/sms-rappel-2711.webp" alt="Le SMS de rappel reçu par la cliente la veille, et le SMS d’anniversaire" loading="lazy"></div></div></article>
+      <article class="fx v6"><div class="k">Fiches clientes</div><h3>Tu te souviens<br><em>de tout.</em></h3>
+        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/app-fiche-2711.webp" alt="La fiche d’une cliente dans l’appli" loading="lazy"></div></div></article>
+      <article class="fx v6"><div class="k">Partager mes dispos</div><h3>Ta story,<br><em>toute prête.</em></h3>
+        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/story-satin-2711.webp" alt="La story « Mes dispos » faite par l’appli" loading="lazy"></div></div></article>
+      <article class="fx v6"><div class="k">Le plus</div><h3>Ton site inclus,<br><em>à ton nom.</em></h3>
+        <div class="tl"><div class="t6" id="eventail"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
     </div>
     <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
   </div>
@@ -981,7 +983,7 @@ new IntersectionObserver(es=>es.forEach(e=>colle.classList.toggle('on',!e.isInte
 /* le haut : l'écran du téléphone change tout seul ; une carte touchée (ou survolée) montre son écran et s'ouvre */
 (()=>{const E=[...document.querySelectorAll('#ecran img')],B=[...document.querySelectorAll('.bulle')],S=document.querySelector('.scene');let k=0,pause=0;
 const montre=n=>{k=n;E.forEach((im,i)=>im.classList.toggle('on',i===n))};
-const choisit=b=>{B.forEach(x=>x.classList.toggle('on',x===b));S.classList.toggle('choisi',!!b);if(b)montre(+b.dataset.i)};
+let alt=0;const choisit=b=>{B.forEach(x=>x.classList.toggle('on',x===b));S.classList.toggle('choisi',!!b);clearInterval(alt);if(b){montre(+b.dataset.i);if(b.dataset.i2){const v=[+b.dataset.i,+b.dataset.i2];let j=0;alt=setInterval(()=>montre(v[j=1-j]),1700)}}};
 B.forEach(b=>{b.addEventListener('pointerenter',e=>{if(e.pointerType!=='mouse')return;pause=Date.now()+6000;choisit(b)});b.addEventListener('pointerleave',e=>{if(e.pointerType!=='mouse')return;choisit(null);pause=Date.now()+1500});
   b.addEventListener('click',()=>{pause=Date.now()+8000;choisit(b.classList.contains('on')?null:b)})});
 document.addEventListener('click',e=>{if(!e.target.closest('.bulle')&&S.classList.contains('choisi'))choisit(null)});
