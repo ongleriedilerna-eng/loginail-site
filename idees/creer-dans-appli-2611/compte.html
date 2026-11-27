@@ -1,0 +1,183 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>27/11 · Créer son compte pro (compte d'abord)</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+/* 27/11 · Marie : « d'abord il faut qu'elle crée son compte […] on fait comme sur toutes les applications de création de compte […] après elle va mettre son prénom » + « c'est pas assez notre DA ».
+   ?v=a : Nacré épuré · ?v=b : Photo en haut. Écrans : 1 compte (Apple ou e-mail) · 2 code · 3 prénom · 4 enchantée → Colle ton lien. */
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;font-family:Jost,sans-serif;color:#2B1D20;background:#FBF6F3}
+.ec{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 26px 34px;opacity:0;visibility:hidden;transform:translateX(26px);transition:opacity .3s,transform .45s cubic-bezier(.2,.9,.25,1),visibility 0s .45s}
+.ec.on{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .45s cubic-bezier(.2,.9,.25,1)}
+.ec.sort{transform:translateX(-26px)}
+.logo{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.32em;color:#2B1D20}.logo i{width:30px;height:16px;border-radius:99px;background:#1E1C1B;position:relative}.logo i:after{content:"";position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff}
+.retour{position:absolute;left:16px;top:52px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.8);font-size:20px;color:#2B1D20;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer}
+.prog{display:flex;gap:5px;margin:2px 0 26px 50px}.prog i{flex:1;height:4px;border-radius:9px;background:#EADFD9}.prog i.on{background:linear-gradient(90deg,#E79BB8,#C7A2E3)}
+.k{display:block;font:500 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B5475E}
+h2{font:500 36px/1.02 'Cormorant Garamond',Georgia,serif;margin:8px 0 0;letter-spacing:-.01em;background:linear-gradient(100deg,#C9A3B8 0%,#B5475E 30%,#D9A9C6 48%,#9C7BB0 66%,#C97A97 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nacre 6s ease-in-out infinite alternate}
+h2 em{font-style:italic}
+@keyframes nacre{to{background-position:100% 0}}
+p.s{font-size:14px;line-height:1.45;color:#5F5751;margin:10px 0 0}
+.champ{width:100%;height:56px;border:0;border-radius:18px;background:#fff;box-shadow:0 0 0 1.5px #EADFD9,0 8px 20px -16px rgba(120,60,90,.5);padding:0 18px;font:400 16px Jost,sans-serif;color:#2B1D20;outline:none;margin-top:22px;transition:box-shadow .2s}
+.champ:focus{box-shadow:0 0 0 2px #D9A9C6,0 8px 20px -14px rgba(190,80,140,.5)}
+.champ::placeholder{color:#B4A8A1}
+.btn{width:100%;height:56px;border:0;border-radius:99px;font:500 16px Jost,sans-serif;cursor:pointer;margin-top:12px;transition:transform .12s,opacity .2s}
+.btn:active{transform:scale(.97)}.btn:disabled{opacity:.38}
+.nacre{position:relative;overflow:hidden;background:linear-gradient(110deg,#E79BB8,#C7A2E3 30%,#F6C6D6 55%,#EDB59F 78%,#D894C4);background-size:260% 100%;animation:nacre 4.5s ease-in-out infinite alternate;color:#fff;text-shadow:0 1px 3px rgba(120,40,80,.35);box-shadow:0 12px 26px -12px rgba(190,80,140,.8),inset 0 1px 0 rgba(255,255,255,.5)}
+.nacre::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);animation:brille 3.2s ease-in-out infinite}
+@keyframes brille{0%,55%{left:-50%}100%{left:120%}}
+.apple{background:#1E1C1B;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:26px}
+.apple svg{width:17px;height:17px;margin-top:-3px}
+.ou{display:flex;align-items:center;gap:10px;font-size:12px;color:#A49890;margin:18px 0 0}.ou:before,.ou:after{content:"";flex:1;height:1px;background:#EADFD9}
+.ou + .champ{margin-top:14px}
+.petit{font-size:11.5px;color:#8A817A;line-height:1.45;margin-top:auto;text-align:center}
+.petit u{text-underline-offset:2px}
+.lien{background:none;border:0;font:inherit;font-size:13.5px;color:#6B625C;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-top:16px;align-self:center}
+/* le code */
+.code{display:flex;gap:8px;margin-top:26px}
+.code input{flex:1;min-width:0;height:62px;border:0;border-radius:16px;background:#fff;box-shadow:0 0 0 1.5px #EADFD9;text-align:center;font:500 26px 'Cormorant Garamond',serif;color:#2B1D20;outline:none;transition:box-shadow .2s,transform .2s}
+.code input:focus{box-shadow:0 0 0 2px #D9A9C6}
+.code input.plein{box-shadow:0 0 0 2px #E79BB8;background:#FFF8FA}
+.code.ok input{animation:okC .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes okC{40%{transform:translateY(-6px) scale(1.06)}}
+.mail{font-weight:500;color:#2B1D20}
+.spam{margin-top:16px;font-size:12.5px;color:#8A817A;text-align:center}
+/* enchantée */
+.fin{justify-content:center;align-items:center;text-align:center}
+.fin h2{font-size:44px}
+.fin .eto{font-size:30px;color:#D9A9C6;animation:tourne 6s linear infinite;display:inline-block}
+@keyframes tourne{to{rotate:360deg}}
+.fin .btn{margin-top:30px}
+.fin .petitL{font-size:12px;color:#8A817A;margin-top:12px}
+/* paillettes */
+.pai{position:fixed;pointer-events:none;font-size:22px;z-index:9}
+
+/* ===== B · Photo en haut : une photo de pose + charms en haut, le formulaire sur une feuille blanche ===== */
+body.v-b .ec{padding:0}
+body.v-b .haut{position:relative;height:300px;flex:none;background:url(../../loginail-site/looks-photos/a2cd96acc6.webp) center 28%/cover;overflow:hidden}
+body.v-b .haut::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,20,25,.15),rgba(30,20,25,0) 40%,rgba(251,246,243,.0) 70%,rgba(251,246,243,.9))}
+body.v-b .haut img{position:absolute;width:54px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:flotte 5s ease-in-out infinite;z-index:1}
+@keyframes flotte{0%,100%{translate:0 0;rotate:-8deg}50%{translate:0 -8px;rotate:7deg}}
+body.v-b .haut .logo{position:absolute;left:22px;top:60px;color:#fff;z-index:2}body.v-b .haut .logo i{background:#fff}body.v-b .haut .logo i:after{background:#1E1C1B}
+body.v-b .feuille{flex:1;margin-top:-34px;position:relative;z-index:3;background:#FBF6F3;border-radius:30px 30px 0 0;padding:26px 26px 34px;display:flex;flex-direction:column;box-shadow:0 -10px 30px -18px rgba(60,30,45,.4)}
+body.v-b .haut-p{height:150px}
+body.v-b .haut-g{height:430px}
+.blanc{background:#fff;color:#2B1D20;box-shadow:0 0 0 1.5px #EADFD9}
+.ec[data-i="1"] .apple{margin-top:22px}
+body.v-b .retour{z-index:4;top:-64px;left:-10px}
+body.v-b .prog{margin:0 0 20px}
+body.v-b .apple{margin-top:20px}
+body.v-b .fin{padding:0 26px}
+body:not(.v-b) .haut,body:not(.v-b) .haut-p,body:not(.v-b) .haut-g{display:none}
+body.v-a .feuille{flex:1;display:flex;flex-direction:column}
+.deja{font-size:12.5px;color:#8A817A;text-align:center;margin-top:14px}
+body.v-a .ec::before{content:"";position:absolute;left:-30%;right:-30%;top:-120px;height:320px;background:radial-gradient(closest-side,rgba(231,155,184,.28),rgba(199,162,227,.18) 55%,transparent);pointer-events:none;z-index:-1}
+</style></head><body>
+
+<!-- 0 · le choix (27/11, Marie : « Créer un compte ou J'ai déjà un compte […] même moi j'aurais pas compris s'il y a juste l'adresse ») -->
+<section class="ec on" data-i="0">
+  <div class="haut haut-g"><span class="logo"><i></i>LOGINAIL</span>
+    <img src="../../loginail-site/charms-mini/coquillenacre.webp?q=256" style="right:22px;top:58px" alt=""><img src="../../loginail-site/charms-mini/cerisespixel.webp?q=256" style="left:30px;bottom:86px;width:46px;animation-delay:-1.8s" alt=""><img src="../../loginail-site/charms-mini/bouledisco.webp?q=256" style="right:46px;bottom:78px;width:42px;animation-delay:-3s" alt=""></div>
+  <div class="feuille">
+    <span class="logo sansB"><i></i>LOGINAIL</span>
+    <span class="k" style="margin-top:4px">L'appli des prothésistes</span>
+    <h2>Ton salon,<br><em>dans ta poche.</em></h2>
+    <p class="s">Ton site, ton agenda, tes clientes et tes rappels SMS. 1er mois offert.</p>
+    <button class="btn nacre" data-mode="cree" style="margin-top:26px">Créer mon compte ✦</button>
+    <button class="btn blanc" data-mode="deja">J'ai déjà un compte</button>
+    <p class="petit">En continuant, tu acceptes nos <u>conditions</u> et notre <u>politique de confidentialité</u>.</p>
+  </div>
+</section>
+
+<!-- 1 · le compte -->
+<section class="ec" data-i="1">
+  <div class="haut haut-p"></div>
+  <div class="feuille">
+    <button class="retour" data-va="0" aria-label="Retour">‹</button>
+    <div class="prog" id="prog1"><i class="on"></i><i></i><i></i></div>
+    <span class="k" id="k1">Crée ton compte pro</span>
+    <h2 id="h1">Ton <em>e-mail</em></h2>
+    <p class="s" id="s1">On t'envoie un code pour créer ton compte. Pas de mot de passe à retenir.</p>
+    <button class="btn apple" data-va="3"><svg viewBox="0 0 17 20" fill="#fff"><path d="M14.1 10.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8C4.2 5.1 2.6 6.1 1.7 7.6c-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.2-1.2 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM11.6 3.4c.7-.8 1.2-2 1-3.2-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3.1 1.1.1 2.2-.6 2.9-1.4z"/></svg>Continuer avec Apple</button>
+    <div class="ou">ou</div>
+    <input class="champ" id="mail" type="email" inputmode="email" autocomplete="email" placeholder="ton@adresse.fr">
+    <button class="btn nacre" id="go1" disabled>Recevoir mon code ✦</button>
+    <p class="petit">En continuant, tu acceptes nos <u>conditions</u> et notre <u>politique de confidentialité</u>.</p>
+  </div>
+</section>
+
+<!-- 2 · le code -->
+<section class="ec" data-i="2">
+  <div class="haut haut-p"></div>
+  <div class="feuille">
+    <button class="retour" data-va="1" aria-label="Retour">‹</button>
+    <div class="prog"><i class="on"></i><i></i><i></i></div>
+    <span class="k">Vérifie ta boîte mail</span>
+    <h2>Ton <em>code</em></h2>
+    <p class="s">On vient de l'envoyer à <span class="mail" id="mailVu">ton@adresse.fr</span>. Pas de mot de passe à retenir.</p>
+    <div class="code" id="code"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"></div>
+    <p class="spam">Rien reçu ? Regarde dans tes spams · <u style="cursor:pointer">Renvoyer le code</u></p>
+  </div>
+</section>
+
+<!-- 3 · le prénom -->
+<section class="ec" data-i="3">
+  <div class="haut haut-p"></div>
+  <div class="feuille">
+    <button class="retour" data-va="1" aria-label="Retour">‹</button>
+    <div class="prog"><i class="on"></i><i class="on"></i><i></i></div>
+    <span class="k">Faisons connaissance</span>
+    <h2>Comment tu<br><em>t'appelles ?</em></h2>
+    <p class="s">Ton prénom, pour que ton appli te dise bonjour.</p>
+    <input class="champ" id="prenom" autocomplete="given-name" autocapitalize="words" placeholder="Ton prénom">
+    <button class="btn nacre" id="go3" disabled>Continuer</button>
+  </div>
+</section>
+
+<!-- 4 · enchantée -->
+<section class="ec fin" data-i="4">
+  <span class="eto">✦</span>
+  <span class="k" style="margin-top:14px">Ton compte est créé</span>
+  <h2>Enchantée,<br><em id="prenomVu">Marie</em></h2>
+  <p class="s">Maintenant, on crée ton site. Il te faut juste ton lien Google Maps ou Planity.</p>
+  <button class="btn nacre" id="go4">Créer mon site ✦</button>
+  <p class="petitL">→ « Colle ton lien », puis la création en colonne</p>
+</section>
+
+<!-- 5 · connexion réussie (J'ai déjà un compte) -->
+<section class="ec fin" data-i="5">
+  <span class="eto">✦</span>
+  <span class="k" style="margin-top:14px">Te revoilà</span>
+  <h2>Ton salon<br><em>t'attend.</em></h2>
+  <p class="petitL">→ son Accueil, avec ses rendez-vous du jour</p>
+</section>
+
+<script>
+const $ = s => document.querySelector(s), Q = new URLSearchParams(location.search);
+document.body.classList.add("v-" + (Q.get("v") === "b" ? "b" : "a"));
+if (Q.get("v") === "b") document.querySelectorAll(".sansB").forEach(x => x.remove());
+function va(i) { const a = $(".ec.on"), b = $(`.ec[data-i="${i}"]`); if (!b || a === b) return; a.classList.remove("on"); b.classList.add("on");
+  if (i === 2) setTimeout(() => $("#code input").focus(), 350); if (i === 3) setTimeout(() => $("#prenom").focus(), 350);
+  if (i === 4) { $("#prenomVu").textContent = ($("#prenom").value.trim() || "Marie").replace(/^./, c => c.toUpperCase()) + " ✦"; paillettes(); } }
+let MODE = "cree";
+document.addEventListener("click", e => { const c = e.target.closest("[data-mode]"); if (!c) return; MODE = c.dataset.mode; const cree = MODE === "cree";
+  $("#k1").textContent = cree ? "Crée ton compte pro" : "Contente de te revoir";
+  $("#h1").innerHTML = cree ? "Ton <em>e-mail</em>" : "Ton <em>e-mail</em>";
+  $("#s1").textContent = cree ? "On t'envoie un code pour créer ton compte. Pas de mot de passe à retenir." : "Le même que d'habitude : on t'envoie un code pour te connecter.";
+  $("#prog1").style.visibility = cree ? "" : "hidden"; setTimeout(() => $("#mail").focus(), 350); va(1); });
+document.addEventListener("click", e => { const b = e.target.closest("[data-va]"); if (!b) return; if (b.classList.contains("apple")) { b.textContent = "…"; setTimeout(() => va(MODE === "deja" ? 5 : 3), 600); return; } va(+b.dataset.va); });
+const m = $("#mail"); m.addEventListener("input", () => $("#go1").disabled = !/.+@.+\..+/.test(m.value));
+$("#go1").onclick = () => { $("#mailVu").textContent = m.value.trim(); va(2); };
+m.addEventListener("keydown", e => { if (e.key === "Enter" && !$("#go1").disabled) $("#go1").click(); });
+const cs = [...document.querySelectorAll("#code input")];
+cs.forEach((c, k) => { c.addEventListener("input", () => { c.value = c.value.replace(/\D/g, "").slice(-1); c.classList.toggle("plein", !!c.value); if (c.value && cs[k + 1]) cs[k + 1].focus();
+    if (cs.every(x => x.value)) { $("#code").classList.add("ok"); setTimeout(() => va(MODE === "deja" ? 5 : 3), 650); } });
+  c.addEventListener("keydown", e => { if (e.key === "Backspace" && !c.value && cs[k - 1]) cs[k - 1].focus(); }); });
+const p = $("#prenom"); p.addEventListener("input", () => $("#go3").disabled = !p.value.trim());
+$("#go3").onclick = () => va(4); p.addEventListener("keydown", e => { if (e.key === "Enter" && p.value.trim()) va(4); });
+$("#go4").onclick = () => { $("#go4").textContent = "→ Colle ton lien"; };
+function paillettes() { const C = ["#E0507F", "#A77BD6", "#D9A15E", "#F06A9B", "#C98BD9"], cx = innerWidth / 2, cy = innerHeight * .42;
+  for (let k = 0; k < 20; k++) { const s = document.createElement("span"); s.className = "pai"; s.textContent = k % 3 ? "✦" : "•"; s.style.color = C[k % 5]; s.style.left = cx + "px"; s.style.top = cy + "px"; document.body.appendChild(s);
+    const a = Math.random() * Math.PI * 2, d = 90 + Math.random() * 110;
+    s.animate([{ transform: "translate(-50%,-50%) scale(.3)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px),calc(-50% + ${Math.sin(a) * d}px)) scale(1.1) rotate(160deg)`, opacity: 0 }], { duration: 1200 + Math.random() * 400, easing: "cubic-bezier(.15,.8,.3,1)" }).onfinish = () => s.remove(); } }
+</script>
+</body></html>

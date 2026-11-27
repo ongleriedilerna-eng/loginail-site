@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>27/11 · 5 idées pour l'« avant » du Bienvenue</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Italiana&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E3DD;font-family:Jost,sans-serif;color:#1E1C1B;padding:18px 10px 40px}
+h1{font:400 26px Italiana,serif;text-align:center;margin:0 0 4px}.st{text-align:center;color:#6B625C;font-size:13px;margin:0 0 18px}
+.r{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.col{width:178px;text-align:center}
+.col h2{font:500 14px Jost;margin:0 0 2px}.col p{font-size:11.5px;color:#6B625C;margin:0 0 10px;min-height:46px;line-height:1.35}
+.mt{position:relative;width:168px;height:364px;border-radius:32px;background:#111;padding:5px;margin:0 auto;box-shadow:0 24px 40px -20px rgba(70,40,60,.5)}
+.mt .di{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:50px;height:15px;border-radius:10px;background:#111;z-index:9}
+.mt .e{position:relative;width:100%;height:100%;border-radius:27px;overflow:hidden;background:#fff}
+.go{margin-top:12px;border:0;border-radius:99px;background:#2B1D20;color:#fff;font:500 13px Jost;padding:9px 14px;cursor:pointer}
+</style></head><body>
+<h1>5 idées pour l'« avant »</h1>
+<p class="st">Le même salon, « pas encore Loginail ». Touche « Essayer dans l'animation » pour le voir se transformer en site Sirène.</p>
+<div class="r" id="r"></div>
+<script src="avants.js?v=3"></script>
+<script>
+const EXP = { bio: "La page « lien en bio » que beaucoup ont : des boutons gris, rien de beau.", fiche: "Juste une fiche sur une carte : un nom, des étoiles, des boutons.", resa: "Une page de réservation grise, comme toutes les plateformes.", note: "Ses tarifs dans une note de téléphone, et « RDV en DM ».", simple: "Un site propre mais sans âme : une photo, un nom, un bouton noir." };
+const r = document.getElementById("r");
+r.innerHTML = AVANTS.cles.map((k, i) => `<div class="col"><h2>${i + 1} · ${AVANTS.noms[k]}</h2><p>${EXP[k]}</p><div class="mt"><div class="di"></div><div class="e" data-k="${k}"></div></div><button class="go" data-k="${k}">Essayer dans l'animation</button></div>`).join("");
+r.querySelectorAll(".e").forEach(e => AVANTS.pose(e, e.dataset.k));
+r.addEventListener("click", e => { const b = e.target.closest(".go"); if (b) location.href = "premiere-ouverture.html?avant=" + b.dataset.k; });
+</script>
+</body></html>

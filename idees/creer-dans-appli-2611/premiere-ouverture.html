@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>27/11 · La toute 1re ouverture de l'appli : le lien AVANT le compte</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Italiana&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#E9E3DD;font-family:Jost,sans-serif;color:#1E1C1B;padding:18px 10px 40px}
+h1{font:400 26px Italiana,serif;text-align:center;margin:0 0 4px}
+.st{text-align:center;color:#6B625C;font-size:13px;margin:0 0 16px}
+.zone{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+.tel{position:relative;flex:none;width:330px;height:715px;border-radius:50px;background:#FBF6F3;box-shadow:0 0 0 9px #1E1C1B,0 30px 60px -20px rgba(0,0,0,.45);overflow:hidden}
+.ile{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:100px;height:29px;border-radius:20px;background:#1E1C1B;z-index:40}
+.ec{position:absolute;inset:0;padding:60px 22px 28px;display:flex;flex-direction:column;opacity:0;transform:translateX(40px);pointer-events:none;transition:opacity .35s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.ec.on{opacity:1;transform:none;pointer-events:auto}
+.ec.avant{transform:translateX(-40px)}
+.prog{display:flex;gap:5px;margin-bottom:22px}.prog i{flex:1;height:4px;border-radius:9px;background:#E6DDD6;transition:background .3s}.prog i.on{background:#B5475E}
+.retour{position:absolute;top:52px;left:16px;width:34px;height:34px;border-radius:50%;border:0;background:#EFE7E2;font-size:17px;cursor:pointer;z-index:3}
+.ec h2{font:400 31px/1.08 Italiana,serif;margin:0}
+.ec h2 em{font-style:italic;font-family:'Cormorant Garamond',serif;color:#B5475E}
+.ec p{font-size:13.5px;color:#6B625C;line-height:1.45;margin:10px 0 0}
+.btn{flex:none;width:100%;height:54px;border:0;border-radius:99px;background:#2B1D20;color:#fff;font:500 16px Jost;cursor:pointer;transition:opacity .2s,transform .12s}
+.btn:active{transform:scale(.97)}.btn:disabled{opacity:.3}
+.btn.clair{background:#fff;color:#1E1C1B;box-shadow:0 0 0 1px #E6DDD6}
+.lien{background:none;border:0;font:inherit;font-size:13px;color:#6B625C;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-top:12px}
+.bas{margin-top:auto;display:flex;flex-direction:column;align-items:center}
+/* le mini iPhone */
+.mt{position:relative;width:150px;height:325px;border-radius:30px;background:#111;padding:5px;box-shadow:0 26px 40px -18px rgba(60,20,30,.55)}
+.mt .e{position:relative;width:100%;height:100%;border-radius:25px;overflow:hidden;background:#fff}
+.mt .di{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:44px;height:13px;border-radius:9px;background:#111;z-index:9}
+.mt .photo{position:absolute;left:0;right:0;top:0;height:57%;background:url(https://loginail.fr/loginail-site/univers-photos/cerise/1.webp) center 30%/cover}
+.mt .bas2{position:absolute;left:0;right:0;bottom:0;height:26%;background:radial-gradient(circle at 25% 35%,#fff 0 2.4px,transparent 3px) 0 0/14px 14px,#F7C9D5}
+.mt .carte{position:absolute;left:9px;right:9px;top:50%;border-radius:12px;padding:9px 6px 8px;text-align:center;background:#FFF4F6;color:#7A1F33;box-shadow:0 8px 16px -8px rgba(0,0,0,.4)}
+.mt .pro{font-size:5.3px;letter-spacing:.18em;opacity:.7}.mt .nom{font:400 18px 'Cherry Bomb One';color:#B5475E;margin-top:3px;white-space:nowrap}.mt .av{font-size:5.5px;opacity:.7;margin-top:4px}
+.mt .res{margin:6px auto 0;width:84%;border-radius:99px;padding:5px 0;font-size:5.4px;letter-spacing:.16em;color:#fff;background:#B5475E}
+.mt .ch{position:absolute;width:34px;filter:drop-shadow(0 4px 5px rgba(0,0,0,.3));transform-origin:50% 0;animation:bal 3s ease-in-out infinite}
+@keyframes bal{0%,100%{rotate:-7deg}50%{rotate:7deg}}
+.centre{display:flex;justify-content:center;margin:22px 0 0}
+/* 0 · bienvenue */
+.bienv{background:radial-gradient(130% 60% at 50% 4%,#F3C9D4 0%,#F8E3E8 38%,#FBF6F3 70%);text-align:center;align-items:center}
+.logo{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.32em;color:#2B1D20}.logo i{width:30px;height:16px;border-radius:99px;background:#1E1C1B;position:relative}.logo i:after{content:"";position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff}
+
+/* 0 · BIENVENUE (27/11, Marie) : AVANT / APRÈS qui glisse. Après = le VRAI site Sirène (ouverture « Créer le mien » de Personnaliser), vivant ;
+   avant = la même photo, une écriture banale, pas de fond, pas de charms */
+.bienv{background:radial-gradient(120% 55% at 50% 0%,#EFE4EC 0%,#F6EEF1 40%,#FBF6F3 72%);align-items:stretch;text-align:left}
+.bienv .logo{align-self:flex-start}
+.titreB{margin-top:16px}
+.kB{display:block;font:500 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B5475E}
+.titreB h2{font:500 37px/1 'Cormorant Garamond',Georgia,serif;letter-spacing:-.01em;color:#2B1D20;margin:6px 0 0;white-space:nowrap}
+.sousB{font:500 12.5px/1.45 Jost,sans-serif!important;color:#4F4643!important;margin:10px 0 0!important;white-space:nowrap;letter-spacing:.01em}
+.sousB span,.sousB i{display:inline-block;opacity:0;transform:translateY(6px);animation:unParUn .5s cubic-bezier(.2,.8,.2,1) forwards}
+.sousB i{font-style:normal;color:#C9A3B8;margin:0 6px}
+.sousB>:nth-child(1){animation-delay:.3s}.sousB>:nth-child(2){animation-delay:.75s}.sousB>:nth-child(3){animation-delay:.9s}.sousB>:nth-child(4){animation-delay:1.35s}.sousB>:nth-child(5){animation-delay:1.5s}
+@keyframes unParUn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sousB span,.sousB i{animation:none;opacity:1;transform:none}}
+.titreB h2 em{font-style:italic;font-weight:500;color:#B5475E}
+/* 27/11 (Marie : « l'écriture noire comme ça fait un effort ») : 2 titres plus doux */
+.t-doux .titreB h2{font-weight:400;color:#8A6A78}.t-doux .titreB h2 em{color:#B5475E;font-weight:500}
+.t-nacre .titreB h2,.t-nacre .titreB h2 em{font-weight:500;background:linear-gradient(100deg,#C9A3B8 0%,#B5475E 30%,#D9A9C6 48%,#9C7BB0 66%,#C97A97 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nacre 6s ease-in-out infinite alternate}
+.t-nacre .titreB h2 em{font-style:italic}
+@keyframes nacre{to{background-position:100% 0}}
+.choixT{display:flex;gap:6px;justify-content:center;align-items:center;font-size:13px;color:#6B625C;margin:0 0 8px}
+.choixT button{border:0;border-radius:99px;padding:6px 12px;background:#fff;font:inherit;font-size:13px;cursor:pointer;box-shadow:0 0 0 1px #E6DDD6}
+.choixT button.on{background:#2B1D20;color:#fff;box-shadow:none}
+.bienv .aa{align-self:center}
+.aa{position:relative;margin:14px auto 0}
+.mtA{position:relative;width:168px;height:364px;border-radius:32px;background:#111;padding:5px;box-shadow:0 30px 46px -20px rgba(70,40,60,.55),0 0 0 1px rgba(255,255,255,.06) inset}
+.diA{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:50px;height:15px;border-radius:10px;background:#111;z-index:9}
+.ecA{position:relative;width:100%;height:100%;border-radius:27px;overflow:hidden;background:#EDE3E8;--x:50%}
+.ecA iframe{position:absolute;left:0;top:0;width:390px;height:874px;border:0;transform-origin:0 0;transform:scale(.4051);pointer-events:none;opacity:0;transition:opacity .6s}
+.ecA iframe.pret{opacity:1}
+.avant{position:absolute;inset:0;background:#fff;z-index:3;--r:0px;--cx:62%;--cy:30%;-webkit-mask:radial-gradient(circle at var(--cx) var(--cy),transparent var(--r),#000 calc(var(--r) + 1px));mask:radial-gradient(circle at var(--cx) var(--cy),transparent var(--r),#000 calc(var(--r) + 1px));transition:opacity .5s}
+.anneauM{position:absolute;z-index:4;left:var(--cx,62%);top:var(--cy,30%);width:0;height:0;border-radius:50%;pointer-events:none;opacity:0;transform:translate(-50%,-50%);box-shadow:0 0 0 2px rgba(255,255,255,.95),0 0 18px 6px rgba(244,198,220,.85),inset 0 0 14px 4px rgba(255,236,246,.9)}
+.reflet{position:absolute;inset:-20%;z-index:6;pointer-events:none;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.0) 44%,rgba(255,255,255,.75) 50%,rgba(255,240,248,.0) 56%,transparent 60%);transform:translateX(-120%)}
+.reflet.on{animation:reflet 1.1s cubic-bezier(.3,.6,.3,1) 1}
+@keyframes reflet{to{transform:translateX(120%)}}
+.etin{position:absolute;z-index:7;left:62%;top:30%;transform:translate(-50%,-50%) scale(0);font-size:26px;color:#fff;text-shadow:0 0 10px #F7B6D2,0 0 20px #F7B6D2;pointer-events:none}
+.etin.on{animation:etin .9s cubic-bezier(.2,.9,.3,1.4) 1 both}
+@keyframes etin{0%{transform:translate(-50%,-50%) scale(0) rotate(-90deg);opacity:0}45%{transform:translate(-50%,-50%) scale(1.4) rotate(20deg);opacity:1}100%{transform:translate(-50%,-50%) scale(.2) rotate(90deg);opacity:0}}
+/* 27/11 (Marie : « ça fait codé ») : l'avant = un site banal mais propre (comme un modèle tout prêt) : blanc, écriture simple, pas de fond, pas de charms */
+.avBar{position:absolute;left:0;right:0;top:0;height:30px;display:flex;align-items:center;justify-content:space-between;padding:12px 12px 0;z-index:2;background:#fff;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif}
+.avBar b{font-size:8px;font-weight:600;color:#333;letter-spacing:.02em}.avBar i{width:12px;height:8px;border-top:1.5px solid #555;border-bottom:1.5px solid #555;position:relative}.avBar i::after{content:"";position:absolute;left:0;right:0;top:2px;border-top:1.5px solid #555}
+.avPh{position:absolute;left:10px;right:10px;top:36px;height:47%;border-radius:4px;background:url(../../loginail-site/looks-photos/a2cd96acc6.webp) center 25%/cover}
+.avTx{position:absolute;left:12px;right:12px;top:calc(36px + 47% + 12px);text-align:left;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;color:#2a2a2a}
+.avTx b{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.avTx small{display:block;font-size:7.5px;color:#777;margin-top:3px}
+.avTx span{display:block;font-size:7.5px;color:#777;margin-top:4px}.avTx span em{font-style:normal;color:#BBB;letter-spacing:.05em}
+.avTx i{display:block;margin-top:12px;font-style:normal;font-size:8.5px;font-weight:600;text-align:center;color:#fff;background:#8E8E93;border-radius:6px;padding:7px 0}
+.poignee-x{position:absolute;top:0;bottom:0;left:var(--x);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 8px rgba(0,0,0,.35);z-index:5;touch-action:none;cursor:ew-resize}
+.poignee span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.3);display:grid;place-items:center;font:500 11px Jost;color:#2B1D20;letter-spacing:-1px}
+.tag{position:absolute;bottom:12px;z-index:8;opacity:0;font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:99px;transition:opacity .3s}
+.tAv{left:10px;background:rgba(255,255,255,.92);color:#555}.tAp{right:10px;background:rgba(43,29,32,.85);color:#fff}.tag.on{opacity:1}
+.flt{position:absolute;z-index:2;filter:drop-shadow(0 8px 10px rgba(60,30,50,.28));animation:flotte 4.2s ease-in-out infinite}
+@keyframes flotte{0%,100%{translate:0 0;rotate:-8deg}50%{translate:0 -10px;rotate:7deg}}
+.btn.brille{position:relative;overflow:hidden}
+.btn.brille::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);animation:brille 3.2s ease-in-out infinite}
+@keyframes brille{0%,55%{left:-50%}100%{left:120%}}
+.aa{perspective:900px}
+.mtA{transform-style:preserve-3d;transition:none}
+.avant{--p:0%}
+.avant.balai{-webkit-mask:linear-gradient(90deg,transparent var(--p),#000 calc(var(--p) + .5%));mask:linear-gradient(90deg,transparent var(--p),#000 calc(var(--p) + .5%))}
+.avant.plein{-webkit-mask:none;mask:none}
+.baguette{position:absolute;top:-4%;bottom:-4%;left:var(--bx,-10%);width:3px;margin-left:-1.5px;z-index:7;opacity:0;pointer-events:none;background:linear-gradient(#fff0,#fff 18%,#fff 82%,#fff0);box-shadow:0 0 10px 3px rgba(255,255,255,.9),0 0 26px 10px rgba(247,182,210,.75)}
+.baguette::after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:22px;color:#fff;text-shadow:0 0 10px #F7B6D2,0 0 22px #F7B6D2}
+.paillette{position:absolute;z-index:6;pointer-events:none;color:#fff;font-size:10px;text-shadow:0 0 8px #F7B6D2;animation:paillette 1s ease-out forwards}
+@keyframes paillette{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
+.legende{position:relative;height:26px;margin-top:14px;text-align:center;font:500 14px Jost,sans-serif}
+.legende span{position:absolute;left:0;right:0;transition:opacity .45s,transform .45s}
+.legende .l1{color:#8A817A}.legende .l2{color:#B5475E;opacity:0;transform:translateY(8px)}
+.legende.apres .l1{opacity:0;transform:translateY(-8px)}.legende.apres .l2{opacity:1;transform:none}
+/* C · le coup de vernis : il coule du haut avec ses gouttes, recouvre la page, sèche avec un reflet, et laisse son site */
+.vernis{position:absolute;left:-2%;right:-2%;top:0;height:112%;z-index:6;pointer-events:none;transform:translateY(-105%);background:linear-gradient(90deg,#D63A73,#F06A9B 45%,#FF9CC0 55%,#C92463);opacity:0}
+.vernis svg{position:absolute;left:0;right:0;top:100%;width:100%;height:46px;margin-top:-1px}
+.vernis .brillant{position:absolute;left:18%;top:6%;width:9%;height:70%;border-radius:99px;background:linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.1));filter:blur(1px)}
+/* D · côte à côte : sa page d'aujourd'hui en petit et en gris, son site en grand */
+.mtB{position:absolute;left:50%;top:0;width:168px;height:364px;border-radius:32px;background:#111;padding:5px;z-index:1;opacity:0;transform:translateX(-50%);box-shadow:0 18px 30px -18px rgba(0,0,0,.4)}
+.ecB{position:relative;width:100%;height:100%;border-radius:27px;overflow:hidden;background:#fff}
+.lgB{position:absolute;left:0;right:0;top:calc(100% + 10px);text-align:center;font:500 13px Jost,sans-serif;color:#8A817A}
+.mtA{position:relative;z-index:2}
+.aa.cote .legende{transform:translateX(46px)}.aa.cote .legende .l1{opacity:0!important}
+.aa .flt{transition:opacity .4s}.aa.cote .flt:nth-of-type(3){opacity:0}
+.lgB{font-size:17px!important;top:calc(100% + 12px)!important}
+/* 27/11 · E · LE SITE SE CONSTRUIT (Marie : « aucun » des 4 transitions) : on part du site tout simple et on ajoute, étape par étape, comme dans Personnaliser */
+.aa.construit .legende{display:none}
+.etapeC{display:none;margin-top:14px;text-align:center}
+.aa.construit .etapeC{display:none}   /* 27/11 (Marie : « j'aime pas du tout » les étapes sous le téléphone) */
+.etapeC b{display:inline-block;font:500 15px Jost,sans-serif;color:#2B1D20;background:#fff;border-radius:99px;padding:7px 16px;box-shadow:0 8px 18px -12px rgba(60,30,50,.5);transition:opacity .25s,transform .25s}
+.etapeC b.sort{opacity:0;transform:translateY(6px)}
+.etapeC .pts{display:flex;gap:6px;justify-content:center;margin-top:9px}.etapeC .pts i{width:6px;height:6px;border-radius:9px;background:#E6D8DE;transition:width .3s,background .3s}
+.etapeC .pts i.on{width:16px;background:#B5475E}.etapeC .pts i.ok{background:#D9A9BB}
+.aujT{position:absolute;left:50%;top:30px;z-index:8;transform:translateX(-50%) translateY(-4px);white-space:nowrap;font:italic 500 13px 'Cormorant Garamond',Georgia,serif;letter-spacing:.01em;color:#6B4E5A;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(8px) saturate(1.3);backdrop-filter:blur(8px) saturate(1.3);border:1px solid rgba(255,255,255,.9);border-radius:99px;padding:3px 12px 4px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;box-shadow:0 4px 12px -6px rgba(60,30,50,.3)}
+.aujT{display:none!important}   /* 27/11 : Marie, « sans étiquette » */
+/* 3 · les coquillages autour du téléphone n'arrivent qu'avec la création du site */
+.aa .flt{opacity:0;transition:opacity .5s ease,scale .5s cubic-bezier(.2,1.4,.4,1);scale:.4}
+.aa.crea .flt{opacity:1;scale:1}
+/* 27/11 · DÉBUT B : le lien s'écrit tout seul, puis le site apparaît et s'habille ; à la fin « En ligne » */
+.lienE{position:absolute;inset:0;z-index:6;background:radial-gradient(120% 60% at 50% 0%,#F3E4EC,#FBF6F3 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 12px;opacity:0;pointer-events:none;transition:opacity .4s}
+.lienE.on{opacity:1}
+.lgo{display:flex;align-items:center;gap:5px;font:500 7px Jost;letter-spacing:.3em;color:#2B1D20;margin-bottom:14px}.lgo i{width:14px;height:8px;border-radius:9px;background:#1E1C1B;position:relative}.lgo i::after{content:"";position:absolute;right:1px;top:1px;width:6px;height:6px;border-radius:50%;background:#fff}
+.lq{font:italic 500 17px 'Cormorant Garamond',serif;color:#B5475E;margin-bottom:10px}
+.lch{display:flex;align-items:center;gap:5px;width:100%;height:30px;border-radius:10px;background:#fff;box-shadow:0 0 0 1px #EADDE3,0 8px 16px -10px rgba(80,30,50,.35);padding:0 8px;font:400 8.5px Jost;color:#2B1D20;overflow:hidden;white-space:nowrap}
+.lch span{font-size:9px}.lch b{font-weight:400}
+.curs{width:1px;height:11px;background:#B5475E;animation:clig .8s steps(1) infinite}@keyframes clig{50%{opacity:0}}
+.lok{margin-top:10px;font:500 8.5px Jost;color:#2E6B4F;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}.lok.on{opacity:1;transform:none}
+.enLigne{position:absolute;left:50%;top:30px;z-index:8;transform:translate(-50%,-8px);display:flex;align-items:center;gap:6px;padding:4px 10px 4px 5px;border-radius:99px;background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 6px 14px -8px rgba(60,30,50,.45);font:500 10px Jost;color:#2B1D20;opacity:0;transition:opacity .3s,transform .4s cubic-bezier(.2,1.4,.4,1)}
+.enLigne{display:none!important}
+.btn.brille.boom{animation:boomB .6s cubic-bezier(.2,1.5,.4,1),boomR .8s ease-out}
+@keyframes boomB{0%{transform:scale(1)}30%{transform:scale(1.14)}60%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes boomR{0%{box-shadow:0 0 0 0 rgba(229,120,160,.75)}100%{box-shadow:0 0 0 18px rgba(229,120,160,0)}}
+.enLigne i{position:relative;width:24px;height:14px;border-radius:99px;background:#D9D2CF;transition:background .3s}.enLigne b{position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .3s cubic-bezier(.2,1.4,.4,1)}
+.enLigne.actif i{background:#3D8B66}.enLigne.actif b{left:12px}
+.enLigne span::after{content:"";}.enLigne.actif span::after{content:" ✓";color:#3D8B66}
+/* 27/11 · DÉBUT C « ça vibre et BAM » (Marie) : sa page d'aujourd'hui tremble de plus en plus fort, flash, et son nouveau site d'un coup */
+.flashB{position:absolute;inset:0;z-index:9;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 45%,#fff 0,#fff 35%,rgba(255,232,242,.9) 60%,rgba(247,182,210,0) 85%)}
+.flashB.on{animation:flashB .55s ease-out 1}
+@keyframes flashB{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+.mtA.bam{animation:bamP .5s cubic-bezier(.2,1.6,.4,1) 1}
+@keyframes bamP{0%{transform:scale(.92)}45%{transform:scale(1.07)}100%{transform:scale(1)}}
+.onde{position:absolute;left:50%;top:50%;z-index:1;width:168px;height:364px;margin:-182px 0 0 -84px;border-radius:32px;pointer-events:none;border:2px solid rgba(247,182,210,.9);opacity:0}
+.onde.on{animation:onde .7s ease-out 1}
+@keyframes onde{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}
+/* 1 · lien */
+.champ{display:flex;align-items:center;gap:8px;height:54px;border-radius:16px;background:#fff;box-shadow:0 0 0 1.5px #E6DDD6;padding:0 14px;font-size:14px;color:#A49890;margin-top:20px;transition:box-shadow .2s,color .2s}
+.champ.plein{color:#1E1C1B;box-shadow:0 0 0 2px #B5475E}
+.coller{display:block;width:100%;height:46px;margin-top:10px;border:0;border-radius:14px;background:#F5E6E4;color:#7A1F33;font:500 14px Jost;cursor:pointer}
+.ou5{font-size:12px;color:#8A817A;margin-top:16px}
+.logos5{display:flex;flex-wrap:nowrap;gap:7px;margin:8px -22px 0;padding:2px 22px 4px;overflow-x:auto;scrollbar-width:none}.logos5::-webkit-scrollbar{display:none}.logos5 button{flex:none;white-space:nowrap}
+.logos5 button{border:0;background:#fff;border-radius:99px;padding:8px 12px;font:inherit;font-size:13px;color:#1E1C1B;box-shadow:0 0 0 1px #E6DDD6;cursor:pointer;transition:background .15s,color .15s}
+.logos5 button.on{background:#2B1D20;color:#fff;box-shadow:none}
+.aideL{margin-top:10px;font-size:12.5px;color:#4F4643;line-height:1.45;background:#fff;border-radius:14px;padding:0 12px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s}
+.aideL.on{max-height:120px;padding:10px 12px}
+/* 2 · on prépare */
+.prep{align-items:center;text-align:center;justify-content:center}
+.rond{width:70px;height:70px;border-radius:50%;border:3px solid #F1DCE2;border-top-color:#B5475E;animation:tourne .9s linear infinite;margin-bottom:22px}
+@keyframes tourne{to{transform:rotate(360deg)}}
+.liste{margin-top:22px;text-align:left;width:100%}
+.liste div{display:flex;align-items:center;gap:10px;padding:11px 14px;margin-bottom:8px;border-radius:14px;background:#fff;font-size:14px;opacity:.35;transition:opacity .3s}
+.liste div.ok{opacity:1}.liste b{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#EFE7E2;color:#fff;font-size:12px;transition:background .3s}
+.liste div.ok b{background:#3D8B66}.liste small{margin-left:auto;color:#8A817A;font-size:12px}
+.ec.vrai{padding:0}.ec.vrai{background:#F6F3EF}.ec.vrai iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#F6F3EF;opacity:0;transition:opacity .45s ease}
+.passe{position:absolute;right:14px;bottom:18px;z-index:5;border:0;border-radius:99px;background:rgba(30,28,27,.78);color:#fff;font:500 12.5px Jost;padding:8px 13px;cursor:pointer}
+/* 4-5 · compte */
+.saisie{height:54px;border-radius:16px;background:#fff;box-shadow:0 0 0 1.5px #E6DDD6;padding:0 16px;display:flex;align-items:center;font-size:15px;margin-top:20px;color:#1E1C1B}
+.code{display:flex;gap:8px;justify-content:center;margin-top:22px}.code span{width:42px;height:54px;border-radius:12px;background:#fff;box-shadow:0 0 0 1.5px #E6DDD6;display:grid;place-items:center;font:500 22px Jost}
+.petit{font-size:11.5px;color:#8A817A;text-align:center;margin-top:10px;line-height:1.4}
+/* 6 · en ligne (abonnement Apple) */
+.prix{margin-top:18px;background:#fff;border-radius:20px;padding:16px;text-align:center}
+.prix b{display:block;font:500 34px 'Cormorant Garamond',serif;color:#B5475E}.prix span{font-size:13px;color:#4F4643}
+.inclus{margin-top:12px;font-size:13px;color:#4F4643;line-height:1.8}
+.legal{font-size:10px;color:#A49890;text-align:center;line-height:1.45;margin-top:8px}.legal u{cursor:pointer}
+.feuilleApple{position:absolute;left:0;right:0;bottom:0;background:#F2F2F7;border-radius:16px 16px 0 0;padding:16px 18px 30px;transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);z-index:30;font-family:-apple-system,Helvetica,sans-serif}
+.feuilleApple.on{transform:none}
+.feuilleApple .t{font-weight:600;font-size:15px}.feuilleApple .l{display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid #DDD}
+.feuilleApple button{width:100%;height:48px;margin-top:14px;border:0;border-radius:12px;background:#0A84FF;color:#fff;font-size:15px;font-weight:600}
+/* 7 · accueil */
+.acc .date{font:400 28px Italiana,serif}.acc .date em{font-style:normal;color:#B5475E}
+.toast{margin-top:16px;border-radius:20px;padding:16px;background:linear-gradient(155deg,#2B1D20,#5A2A36 60%,#8E3A52);color:#fff}
+.toast b{font:400 24px Italiana,serif;display:block}.toast small{font-size:12.5px;opacity:.85}
+.toast button{margin-top:12px;border:0;border-radius:99px;background:#fff;color:#2B1D20;font:500 13px Jost;padding:9px 14px}
+/* le déroulé à droite */
+.deroule{width:300px;background:#fff;border-radius:20px;padding:14px}
+.deroule h3{font:500 15px Jost;margin:0 0 8px}
+.deroule button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:0;background:none;padding:8px;border-radius:12px;font:inherit;font-size:13px;color:#4F4643;cursor:pointer}
+.deroule button b{flex:none;width:22px;height:22px;border-radius:50%;background:#F5E6E4;color:#B5475E;display:grid;place-items:center;font-size:12px;font-weight:500}
+.deroule button.on{background:#F8EEF1;color:#1E1C1B}.deroule button.on b{background:#B5475E;color:#fff}
+.deroule small{display:block;color:#8A817A;font-size:11.5px}
+.deroule .note{font-size:12px;color:#6B625C;border-top:1px solid #F1ECE7;margin-top:8px;padding-top:10px;line-height:1.45}
+
+/* 27/11 · 4 styles de bouton « Créer mon site » + leur boom (Marie : « nan pas ce style de bouton ») — ?bouton=a|b|c|d ; ?seul=1 = juste le téléphone */
+body.seul{margin:0;padding:0;background:transparent;min-height:0}
+body.seul>h1,body.seul>.choixT,body.seul>.st,body.seul>a,body.seul .deroule{display:none!important}
+body.seul{overflow:hidden}
+body.seul .zone{margin:0;padding:9px;gap:0;justify-content:flex-start}
+.bas{position:relative}
+body.b-a .btn.brille,body.b-b .btn.brille,body.b-c .btn.brille,body.b-d .btn.brille{font-weight:500;letter-spacing:.01em}
+body.b-a .btn.brille{background:linear-gradient(110deg,#E79BB8,#C7A2E3 30%,#F6C6D6 55%,#EDB59F 78%,#D894C4);background-size:260% 100%;animation:nacre 4.5s ease-in-out infinite alternate;color:#fff;text-shadow:0 1px 3px rgba(120,40,80,.35);box-shadow:0 12px 26px -12px rgba(190,80,140,.8),inset 0 1px 0 rgba(255,255,255,.5)}
+body.b-b .btn.brille{background:linear-gradient(180deg,#EE7AA0,#D2456F);color:#fff;box-shadow:0 12px 26px -10px rgba(210,69,111,.75),inset 0 1px 0 rgba(255,255,255,.35)}
+body.b-c .btn.brille{color:#2B1D20;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(110deg,#F0A9C2,#CBB0EE,#F7D3BF,#F0A9C2,#CBB0EE) border-box;background-size:100% 100%,260% 100%;animation:nacreBord 4s linear infinite;box-shadow:0 10px 24px -14px rgba(160,90,130,.6)}
+@keyframes nacreBord{to{background-position:0 0,100% 0}}
+body.b-d .btn.brille{background:linear-gradient(115deg,#E8BE9E,#F8E6D6 45%,#E2B091 70%,#F3D3BE);color:#5A3324;box-shadow:0 12px 26px -12px rgba(170,110,70,.75),inset 0 1px 0 rgba(255,255,255,.6)}
+.pai{position:absolute;left:50%;top:27px;pointer-events:none;z-index:5;font-size:24px;line-height:1;translate:-50% -50%}
+.chB{position:absolute;left:50%;top:27px;width:30px;height:30px;object-fit:contain;pointer-events:none;z-index:5;translate:-50% -50%}
+
+/* 27/11 · « Où trouver ton lien ? » sans la ligne qui glisse (Marie : « j'aime pas que ce soit comme ça en ligne ») — ?ou=grille | liste */
+.logos5 button i{display:none}
+body.ou-grille .logos5,body.ou-liste .logos5{overflow:visible;margin:8px 0 0;padding:0}
+body.ou-grille .logos5{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+/* 27/11 · Marie : « tu mets comme avant, juste en carré, pas en ligne » → les boutons d'AVANT (blancs, fin contour, noir quand on touche), rangés en 2 rangées de 3 */
+body.ou-grille .logos5 button{flex-direction:row!important;justify-content:center;gap:4px!important;padding:9px 4px!important;border-radius:99px!important;font-size:13px!important;white-space:nowrap!important}
+body.ou-grille .logos5 button i{display:none!important}
+body.ou-grille .logos5 button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px 9px;border-radius:16px;font-size:12.5px;white-space:normal}
+body.ou-grille .logos5 button i,body.ou-liste .logos5 button i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-style:normal;font-weight:500;font-size:14px;color:#fff;background:var(--c)}
+body.ou-grille .logos5 button.on i,body.ou-liste .logos5 button.on i{box-shadow:0 0 0 2px #fff}
+body.ou-liste .logos5{display:flex;flex-direction:column;gap:0;background:#fff;border-radius:16px;box-shadow:0 0 0 1px #E6DDD6;overflow:hidden}
+body.ou-liste .logos5 button{display:flex;align-items:center;gap:11px;width:100%;padding:8px 12px;border-radius:0;box-shadow:none;background:#fff;font-size:14px;text-align:left;border-top:1px solid #F1ECE7}
+body.ou-liste .logos5 button:first-child{border-top:0}
+body.ou-liste .logos5 button::after{content:"›";margin-left:auto;color:#B9AFA8;font-size:18px;transition:transform .2s}
+body.ou-liste .logos5 button.on{background:#F8EEF1;color:#1E1C1B}
+body.ou-liste .logos5 button.on::after{transform:rotate(90deg)}
+body.ou-liste .logos5 .aideL{margin:0;border-radius:0;background:#F8EEF1}
+body.ou-liste .ou5{font-size:13px;color:#4F4643;font-weight:500}
+body.ou-grille .ec[data-i="1"],body.ou-liste .ec[data-i="1"]{overflow-y:auto;scrollbar-width:none}
+body.ou-grille .ec[data-i="1"]::-webkit-scrollbar,body.ou-liste .ec[data-i="1"]::-webkit-scrollbar{display:none}
+body.ou-grille .ec[data-i="1"]>*,body.ou-liste .ec[data-i="1"]>*{flex-shrink:0}
+body.ou-grille .ec[data-i="1"] .bas,body.ou-liste .ec[data-i="1"] .bas{padding-top:14px}
+body.ou-liste .logos5 button{padding:6px 12px;font-size:13.5px}
+body.ou-liste .logos5 button i{width:26px;height:26px;font-size:12.5px}
+</style></head><body>
+<h1>La toute 1re ouverture de l'appli</h1>
+<div class="choixT">Le début : <button data-deb="bam" class="on">C · Ça vibre et BAM 💥</button><button data-deb="lien">B · Le lien</button><button data-deb="simple">A · Tout simple</button></div>
+<p class="st">Elle colle son lien et voit son site AVANT de créer son compte. Touche les boutons dans le téléphone, ou une étape à droite.</p>
+<div class="zone">
+<div class="tel" id="tel"><div class="ile"></div>
+  <!-- 0 -->
+  <div class="ec bienv on" data-i="0">
+    <div class="logo"><i></i>LOGINAIL</div>
+    <div class="titreB"><span class="kB">Ton site de prothésiste</span><h2>Prêt en <em>1 minute.</em></h2><p class="sousB"><span>Colle ton lien</span><i>·</i><span>Choisis ton style</span><i>·</i><span>Active ton site</span></p></div>
+    <div class="aa" id="aa">
+      <img class="flt" src="../../loginail-site/charms-mini/coquillenacre.webp?q=256" style="left:-58px;top:46px;width:56px" alt="">
+      <img class="flt" src="../../loginail-site/charms-mini/conque.webp?q=256" style="right:-54px;top:150px;width:48px;animation-delay:-1.6s" alt="">
+      <img class="flt" src="../../loginail-site/charms-mini/huitreperle.webp?q=256" style="left:-46px;bottom:40px;width:44px;animation-delay:-2.8s" alt="">
+      <div class="mtB" id="mtB"><div class="diA"></div><div class="ecB" id="ecB"></div><span class="lgB">Aujourd'hui</span></div>
+      <div class="onde" id="onde"></div>
+      <div class="mtA" id="mtA"><div class="diA"></div>
+        <div class="ecA">
+          <iframe id="apres" title="Après" src="about:blank" tabindex="-1"></iframe>
+          <div class="avant" id="avant"><div class="avBar"><b>Nails by Drimf</b><i></i></div><div class="avPh"></div><div class="avTx"><b>Nails by Drimf</b><small>Prothésiste ongulaire · Porto-Vecchio</small><span><em>★★★★★</em> 5,0 · 67 avis</span><i>Prendre rendez-vous</i></div></div>
+          <div class="anneauM" id="anneauM"></div><div class="reflet" id="reflet"></div><span class="etin" id="etin">✦</span>
+          <span class="aujT" id="aujT"></span>
+          <div class="lienE" id="lienE"><div class="lgo"><i></i>LOGINAIL</div><div class="lq">Colle ton lien</div><div class="lch"><span>🔗</span><b id="lienTxt"></b><em class="curs"></em></div><div class="lok" id="lienOk">✓ Trouvé : Nails by Drimf</div></div>
+          <div class="flashB" id="flashB"></div>
+          <div class="enLigne" id="enLigne"><i><b></b></i><span>En ligne</span></div>
+          <div class="baguette" id="baguette"></div>
+          <div class="vernis" id="vernis"><svg viewBox="0 0 160 40" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D63A73"/><stop offset=".45" stop-color="#F06A9B"/><stop offset=".55" stop-color="#FF9CC0"/><stop offset="1" stop-color="#C92463"/></linearGradient></defs><path fill="url(#gv)" d="M0 0H160V10C154 10 153 28 148 28S142 12 136 12 131 36 124 36 118 14 110 14 104 22 98 22 92 9 86 9 80 32 73 32 67 13 60 13 55 24 48 24 42 11 36 11 31 30 24 30 19 15 13 15 7 26 0 20Z"/></svg><i class="brillant"></i></div>
+        </div></div>
+      <div class="legende" id="legende"><span class="l1">Ta page aujourd'hui</span><span class="l2">Ton site avec Loginail ✦</span></div>
+      <div class="etapeC" id="etapeC"><b id="etapeT">Ta page aujourd'hui</b><span class="pts" id="etapeP"><i></i><i></i><i></i><i></i><i></i></span></div>
+    </div>
+    <div class="bas"><button class="btn brille" data-va="1">Créer mon site ✦</button><button class="lien" data-va="6">J'ai déjà un compte · me connecter</button></div>
+  </div>
+  <!-- 1 -->
+  <div class="ec" data-i="1"><div class="prog" data-p="1"></div>
+    <h2>Colle ton lien</h2><p>Ta fiche Google Maps, ta page sur une plateforme (Planity, Booksy…) ou ton site. On récupère ton nom, tes photos, tes prestations et tes horaires.</p>
+    <div class="champ" id="champ">🔗 Colle ton lien ici</div><button class="coller" id="coller">Coller depuis le presse-papier</button>
+    <div class="ou5">Où trouver ton lien ? Touche :</div><div class="logos5"><button data-aide="g"><i style="--c:#34A853">📍</i><span>Google Maps</span></button><button data-aide="p"><i style="--c:#2B1D20">P</i><span>Planity</span></button><button data-aide="b"><i style="--c:#1F2E5C">B</i><span>Booksy</span></button><button data-aide="f"><i style="--c:#4A4AE0">F</i><span>Fresha</span></button><button data-aide="i"><i style="--c:#E0368C">i</i><span>iara</span></button><button data-aide="n"><i style="--c:#C98BD9">N</i><span>Nailsy</span></button></div><div class="aideL" id="aideL"></div>
+    <div class="bas"><button class="btn" id="cont1" data-va="2" disabled>Continuer</button><button class="lien">Je n'ai pas de lien : je commence de zéro</button></div>
+  </div>
+  <!-- 2 -->
+  <div class="ec vrai" data-i="2"><iframe id="vraie" title="On prépare ton site" src="about:blank" onload="window.cache && cache(this)"></iframe></div>
+  <!-- 4 -->
+  <div class="ec" data-i="3"><div class="prog" data-p="3"></div>
+    <h2>Garde ton site</h2><p>Ton adresse e-mail, pour retrouver ton site sur n'importe quel téléphone. Pas de mot de passe : on t'envoie un code.</p>
+    <div class="saisie">lou.nails@gmail.com</div>
+    <div class="bas"><button class="btn" data-va="4">Recevoir mon code</button></div>
+  </div>
+  <!-- 5 -->
+  <div class="ec" data-i="4"><div class="prog" data-p="4"></div>
+    <h2>Ton code</h2><p>On vient de l'envoyer à lou.nails@gmail.com.</p>
+    <div class="code"><span>4</span><span>8</span><span>2</span><span>1</span><span>7</span><span>3</span></div>
+    <div class="petit">Pas reçu ? Regarde dans tes spams · Renvoyer</div>
+    <div class="bas"><button class="btn" data-va="5">Valider</button></div>
+  </div>
+  <!-- 6 -->
+  <div class="ec" data-i="5"><div class="prog" data-p="5"></div>
+    <h2>Mets ton site<br><em>en ligne</em></h2>
+    <div class="prix"><b>1er mois offert</b><span>puis 49,99 € par mois · sans engagement</span></div>
+    <div class="inclus">✦ Ton site, à ton nom<br>✦ L'agenda et tes réservations en ligne<br>✦ Les rappels SMS, tes fiches clientes, ta caisse</div>
+    <div class="bas"><button class="btn" id="essai">Essayer 1 mois gratuit</button>
+      <div class="legal">Renouvelé tous les mois sauf résiliation 24 h avant, dans les réglages de ton compte Apple.<br><u>Conditions</u> · <u>Confidentialité</u></div>
+      <button class="lien" data-va="6">Plus tard (ton site reste un brouillon)</button></div>
+    <div class="feuilleApple" id="apple"><div class="t">App Store</div><div class="l"><span>Loginail · Abonnement</span><span>1 mois gratuit</span></div><div class="l"><span>Ensuite</span><span>49,99 €/mois</span></div><button data-va="6">S'abonner (Face ID)</button></div>
+  </div>
+  <!-- 7 -->
+  <div class="ec acc" data-i="6">
+    <div class="date" id="dateJ">Jeudi <em>26 novembre</em></div><script>{ const n = new Date(), j = n.toLocaleDateString("fr-FR", { weekday: "long" }), m = n.toLocaleDateString("fr-FR", { day: "numeric", month: "long" }); document.getElementById("dateJ").innerHTML = j[0].toUpperCase() + j.slice(1) + " <em>" + m + "</em>"; }</script>
+    <div class="toast"><b>Ton site est en ligne ✦</b><small>loginail.fr/nails-by-lou · tes clientes peuvent réserver.</small><br><button>Partager mon lien</button></div>
+    <p style="margin-top:18px">Ici : ton agenda du jour, tes clientes, ta caisse… (l'Accueil habituel).</p>
+  </div>
+</div>
+<div class="deroule"><h3>Le déroulé</h3><div id="etapes"></div>
+  <div class="note"><b>Pourquoi le compte après :</b> elle voit d'abord son site (le « waouh »), puis on lui demande son e-mail pour le garder. Apple recommande aussi de ne pas forcer la création d'un compte avant de montrer l'appli.<br><b>La carte « Étape 1 · Ton site t'attend »</b> de l'Accueil reste pour celles qui s'arrêtent en chemin.</div></div>
+</div>
+<script src="avants.js?v=3"></script>
+<script src="colonne.js?v=2711g"></script>
+<script>/* 27/11 · Marie : « Oui, la B » : Personnaliser en « écran + colonne à droite » dans la création */ window.addEventListener("load", () => COLONNE.suit(document.getElementById("vraie").contentWindow, { sat: 38 }));</script>
+<script>
+const ET = [["Bienvenue", "Ça vibre et BAM : son nouveau site, puis « Créer mon site » fait boom"], ["Colle ton lien", "Google Maps, Planity, Booksy, son site…"], ["On prépare ton site… puis Personnaliser", "La vraie animation, puis En-tête · Fond · Écriture · Charms ; « J'ai fini mon site » → suite"], ["Garde ton site", "Son e-mail (le compte, maintenant)"], ["Ton code", "Pas de mot de passe"], ["Mets ton site en ligne", "Apple : 1er mois offert"], ["L'Accueil", "Son site est en ligne"]];
+const ecs = [...document.querySelectorAll(".ec")], et = document.getElementById("etapes");
+et.innerHTML = ET.map(([t, s], i) => `<button data-va="${i}"><b>${i}</b><span>${t}<small>${s}</small></span></button>`).join("");
+document.querySelectorAll(".prog").forEach(p => { const n = +p.dataset.p; p.innerHTML = Array.from({ length: 5 }, (_, k) => `<i class="${k < n ? "on" : ""}"></i>`).join(""); });
+let cur = 0, prep = null;
+/* la vraie page de création, sans son 1er écran web ni le logo : on ne garde que le chargement (anneau, cartes, charms) */
+window.cache = cache;
+function cache(f) { try { const d = f.contentDocument; if (!d || !d.head) return; const st = d.createElement("style");
+  st.textContent = "#s1,.tete,.logo,.logo-page,.pas-h,.etape{visibility:hidden!important}body{background:#FBF6F3!important}"; d.head.appendChild(st); } catch (e) {} if (cur === 2 && /lien=/.test(f.src)) requestAnimationFrame(() => requestAnimationFrame(() => { f.style.opacity = 1; })); }
+function va(i) {
+  ecs.forEach((e, k) => { e.classList.toggle("on", k === i); e.classList.toggle("avant", k < i); });
+  et.querySelectorAll("button").forEach((b, k) => b.classList.toggle("on", k === i));
+  document.getElementById("apple").classList.remove("on"); cur = i;
+  if (i === 2) { const f = document.getElementById("vraie"); f.src = "../../loginail-creer/index.html?demo&lien=" + encodeURIComponent("https://maps.app.goo.gl/nailsbydrimf") + "&t=" + Date.now(); f.style.opacity = 0;
+    clearInterval(va.t); va.t = setInterval(() => { if (cur !== 2) return clearInterval(va.t);
+      try { const p = f.contentDocument.querySelector(".portail iframe"), pd = p && p.contentDocument; if (pd && pd.body && !pd.body._d128) { pd.body._d128 = 1;
+        pd.addEventListener("click", e => { if (e.target.closest && e.target.closest(".publier,.finiP")) { e.preventDefault(); e.stopPropagation(); va(3); } }, true); } } catch (e) {} }, 300); }
+  else if (i === 1) { const f = document.getElementById("vraie"); if (!/demo&prechauffe/.test(f.src)) { f.style.opacity = 0; f.src = "../../loginail-creer/index.html?demo&prechauffe=1"; } }
+  else { const f = document.getElementById("vraie"); if (f && f.src !== "about:blank") f.src = "about:blank"; }
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-va]"); if (b) va(+b.dataset.va); });
+document.getElementById("coller").onclick = () => { const c = document.getElementById("champ"); c.textContent = "🔗 maps.app.goo.gl/Nails-by-Lou"; c.classList.add("plein"); document.getElementById("cont1").disabled = false; };
+const AIDE = { g: "Dans Google Maps, ouvre ta fiche → « Partager » → « Copier le lien ».", p: "Sur Planity, ouvre la page de ton salon → « Partager » (ou copie l'adresse en haut).", b: "Dans Booksy, ouvre ton profil → « Partager » → « Copier le lien ».", f: "Sur Fresha, ouvre la page de ton salon → « Partager » → « Copier le lien ».", i: "Sur iara, ouvre la page de ton salon et copie son adresse en haut.", n: "Sur Nailsy, ouvre ta page et copie son adresse (ou « Partager »)." };
+document.querySelector(".logos5").addEventListener("click", e => { const b = e.target.closest("[data-aide]"); if (!b) return; const z = document.getElementById("aideL"), on = !b.classList.contains("on");
+  document.querySelectorAll(".logos5 button").forEach(x => x.classList.toggle("on", on && x === b)); z.textContent = AIDE[b.dataset.aide]; if (document.body.classList.contains("ou-liste")) b.after(z); z.classList.toggle("on", on); if (on && (document.body.classList.contains("ou-liste") || document.body.classList.contains("ou-grille"))) setTimeout(() => z.scrollIntoView({ behavior: "smooth", block: "nearest" }), 320); });
+document.getElementById("essai").onclick = () => document.getElementById("apple").classList.add("on");
+
+/* ---------- BIENVENUE : l'après = le vrai site Sirène (on charge Personnaliser, qui ouvre toujours sur ce look, et on ne garde que son site) ---------- */
+(() => { const f = document.getElementById("apres"), ec = f.parentElement;
+  f.src = "../../loginail-creer/personnaliser.html?v=1511s&vrai=1&appli=1&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&exemple=dilerna");
+  const garde = () => { try { const d = f.contentDocument, s = d && d.getElementById("site"); if (!s || !d.querySelector(".ouvB")) return false;
+      if (!d.getElementById("seulSite")) { const st = d.createElement("style"); st.id = "seulSite";
+        st.textContent = "html,body{background:transparent!important;overflow:hidden!important}body *{visibility:hidden!important}#tel,#tel .ecr,#site{visibility:visible!important}#tel{position:fixed!important;left:0!important;top:0!important;width:390px!important;height:874px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;transform:none!important;z-index:999}#tel .ecr{position:absolute!important;inset:0!important;border-radius:0!important}#site{transform:none!important;width:390px!important;height:874px!important}";
+        d.head.appendChild(st); }
+      return true; } catch (e) { return false; } };
+  /* le même salon des deux côtés : « Nails by Drimf » (le salon fictif de la création) */
+  const nom = () => { try { const d = f.contentDocument.getElementById("site").contentDocument; d.querySelectorAll("h1,.lm-nom").forEach(e => { if (e.textContent.trim() !== "Nails by Drimf" && !e.children.length) e.textContent = "Nails by Drimf"; }); } catch (e) {} };
+  const t0 = Date.now(), att = setInterval(() => { if (garde() || Date.now() - t0 > 15000) { clearInterval(att); setTimeout(() => { nom(); f.classList.add("pret"); }, 1200); setInterval(nom, 1500); } }, 250);
+  /* 27/11 (Marie : « une animation, des charms qui se rajoutent seuls, qu'elles en prennent plein les yeux ») :
+     1 · le site tout nu ; 2 · une étincelle touche la photo ; 3 · la magie se répand en cercle (fond, perles, écriture) ;
+     4 · les VRAIS charms du site arrivent un par un en volant et se posent avec un rebond et une étincelle ; 5 · un reflet nacré ; puis ça recommence */
+  const av = document.getElementById("avant"), rf = document.getElementById("reflet"), RM = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const dort = ms => new Promise(r => setTimeout(r, ms));
+  const tween = (ms, f, ease = k => 1 - Math.pow(1 - k, 3)) => new Promise(r => { const t = performance.now(); const p = n => { const k = Math.min(1, (n - t) / ms); f(ease(k)); k < 1 ? requestAnimationFrame(p) : r(); }; requestAnimationFrame(p); });
+  const sd = () => { try { return f.contentDocument.getElementById("site").contentDocument; } catch (e) { return null; } };
+  const charms = () => { const d = sd(); if (!d) return []; return [...d.querySelectorAll("img.lgn-sticker")].filter(e => { const t = parseFloat(e.style.top) || 0; return t < 860 && e.offsetWidth; }); };
+  const cacheCharms = L => L.forEach(e => { e.style.transition = "none"; e.style.opacity = "0"; e.style.scale = ".2"; });
+  const etincelle = (d, e) => { const b = d.createElement("span"), x = parseFloat(e.style.left) + e.offsetWidth / 2, y = parseFloat(e.style.top) + e.offsetHeight / 2;
+    b.style.cssText = `position:absolute;left:${x}px;top:${y}px;z-index:9100;pointer-events:none;width:0;height:0`;
+    b.innerHTML = Array.from({ length: 6 }, (_, k) => `<i style="position:absolute;left:0;top:0;font:normal 16px serif;color:#fff;text-shadow:0 0 8px #F7B6D2;--a:${k * 60}deg;animation:eclat .6s ease-out forwards">✦</i>`).join("");
+    if (!d.getElementById("eclatCss")) { const c = d.createElement("style"); c.id = "eclatCss"; c.textContent = "@keyframes eclat{0%{transform:rotate(var(--a)) translate(0) scale(.4);opacity:1}100%{transform:rotate(var(--a)) translate(46px) scale(1);opacity:0}}"; d.head.appendChild(c); }
+    (e.offsetParent || d.body).appendChild(b); setTimeout(() => b.remove(), 700); };
+  const vole = (d, e, k) => { const gauche = (parseFloat(e.style.left) || 0) < 180, dx = gauche ? -260 : 260, dy = -160 - (k % 3) * 60;
+    e.style.transition = "none"; e.style.translate = `${dx}px ${dy}px`; e.style.rotate = (gauche ? -60 : 60) + "deg"; e.style.scale = ".6"; e.style.opacity = "1"; e.getBoundingClientRect();
+    e.style.transition = "translate .75s cubic-bezier(.2,1.3,.4,1),rotate .75s cubic-bezier(.2,1.3,.4,1),scale .75s cubic-bezier(.2,1.6,.4,1)";
+    e.style.translate = "0 0"; e.style.rotate = "0deg"; e.style.scale = "1"; setTimeout(() => etincelle(d, e), 640); };
+  let tour = 0; const lg = document.getElementById("legende"), mt = document.getElementById("mtA"), bg = document.getElementById("baguette");
+  window.TRANSFO = window.TRANSFO || "construit";
+  const paillettes = x => { for (let k = 0; k < 3; k++) { const p = document.createElement("span"); p.className = "paillette"; p.textContent = "✦";
+      p.style.left = x + "%"; p.style.top = (10 + Math.random() * 80) + "%"; p.style.setProperty("--dx", (Math.random() * 30 - 34) + "px"); p.style.setProperty("--dy", (Math.random() * 30 - 15) + "px"); ec.appendChild(p); setTimeout(() => p.remove(), 1000); } };
+  const spectacle = async () => { const n = ++tour;
+    /* 1 · sa page d'aujourd'hui */
+    { const mb0 = document.getElementById("mtB"); if (window.TRANSFO !== "cote") { mb0.style.opacity = 0; } mt.style.opacity = window.TRANSFO === "cote" ? 0 : 1; mt.style.transform = ""; }
+    av.style.transition = "none"; av.className = "avant plein"; av.style.opacity = "1"; av.getBoundingClientRect(); av.style.transition = ""; av.style.setProperty("--p", "0%"); bg.style.opacity = 0; mt.style.transform = ""; lg.classList.remove("apres");
+    const L = charms(); cacheCharms(L);
+    await dort(RM ? 300 : (window.TRANSFO === "construit" ? 300 : 2000)); if (n !== tour) return;
+    const aa = document.getElementById("aa"), mb = document.getElementById("mtB"), vn = document.getElementById("vernis");
+    aa.classList.toggle("cote", window.TRANSFO === "cote"); aa.classList.toggle("construit", window.TRANSFO === "construit");
+    if (window.TRANSFO === "construit") {
+      await construit(n, L); return;
+    } else if (window.TRANSFO === "cote" && !RM) {
+      /* D · sa page d'aujourd'hui est là, grande ; puis elle recule à gauche, grisée, et son site arrive en grand à droite */
+      if (!mb.dataset.ok && window.AVANTS) { AVANTS.pose(document.getElementById("ecB"), "resa"); mb.dataset.ok = 1; }
+      mt.style.opacity = 0; mb.style.opacity = 1; mb.style.transform = "translateX(-50%)"; mb.style.filter = "none";
+      av.style.opacity = "0";
+      await dort(300); if (n !== tour) return;
+      await tween(700, k => { mb.style.transform = `translateX(calc(-50% - ${k * 92}px)) scale(${1 - k * .28}) rotate(${-k * 6}deg)`; mb.style.filter = `grayscale(${k}) brightness(${1 - k * .08})`; }); if (n !== tour) return;
+      mt.style.transition = "none"; mt.style.opacity = 1;
+      await tween(650, k => { mt.style.transform = `translateX(${(1 - k) * 160 + k * 46}px) scale(${.9 + k * .02})`; }, k => 1 - Math.pow(1 - k, 3) * (1 - 1.4 * k * (1 - k))); if (n !== tour) return;
+      lg.classList.add("apres");
+    } else if (!RM) {
+      /* C · le vernis coule du haut, recouvre sa page, puis sèche et laisse son site */
+      mt.style.opacity = 1; mt.style.transform = ""; mb.style.opacity = 0;
+      vn.style.transition = "none"; vn.style.opacity = 1; vn.style.transform = "translateY(-105%)"; vn.getBoundingClientRect();
+      await tween(1150, k => { vn.style.transform = `translateY(${-105 + k * 105}%)`; }, k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2);   /* il coule : lent au début, puis il recouvre */ if (n !== tour) return;
+      av.style.transition = "none"; av.style.opacity = "0"; lg.classList.add("apres");
+      await dort(250); if (n !== tour) return;
+      vn.style.transition = "opacity .7s ease"; vn.style.opacity = 0; rf.classList.remove("on"); void rf.offsetWidth; rf.classList.add("on");
+      await dort(500); if (n !== tour) return;
+    } else { av.style.opacity = "0"; lg.classList.add("apres"); }
+    if (n !== tour) return;
+    /* les charms arrivent un par un, en volant */
+    const tri = L.slice().sort((a, b) => (parseFloat(a.style.top) || 0) - (parseFloat(b.style.top) || 0)), d = sd();
+    for (let k = 0; k < tri.length; k++) { if (n !== tour) return; if (RM) { tri[k].style.opacity = 1; tri[k].style.scale = 1; continue; } vole(d, tri[k], k); await dort(170); }
+    await dort(650);
+    rf.classList.remove("on"); void rf.offsetWidth; rf.classList.add("on");
+    await dort(3800); if (n !== tour) return;
+    spectacle(); };
+  /* E · LA CONSTRUCTION : la page grise → son site tout simple (on a tout récupéré) → le fond → l'écriture → l'en-tête → les charms → prêt ✦ */
+  const ecrT = document.getElementById("etapeT"), ecrP = [...document.querySelectorAll("#etapeP i")];
+  const dit = async (txt, k) => { ecrT.classList.add("sort"); await dort(20); ecrT.textContent = txt; ecrT.classList.remove("sort"); ecrP.forEach((p, i) => { p.classList.toggle("on", i === k); p.classList.toggle("ok", i < k); }); };
+  const nu = (d, on) => { const h = d.documentElement; if (!d.getElementById("nuCss")) { const c = d.createElement("style"); c.id = "nuCss";
+      c.textContent = ".fond-site{transition:opacity .55s ease,transform .8s ease}.nu-fond .fond-site{opacity:0!important;transform:scale(1.08)}"
+        + ".x-fx{transition:opacity .35s ease,transform .6s cubic-bezier(.2,1.2,.4,1)}.nu-ent .x-fx{opacity:0!important;transform:translateY(-60%)}"
+        + "h1,.lm-nom{transition:filter .28s ease,opacity .28s ease}.nu-ecr h1,.nu-ecr .lm-nom{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif!important;font-weight:600!important;letter-spacing:0!important}.flou h1,.flou .lm-nom{filter:blur(6px);opacity:.2}"
+        + ".ecran{transition:background-color 1s}.nu-fond .ecran,.nu-fond body{background:#fff!important}"; d.head.appendChild(c); }
+    ["nu-fond", "nu-ent", "nu-ecr"].forEach(c => h.classList.toggle(c, on)); ecriture(d, !on); };
+  /* l'écriture du site (nom + titres) est posée directement sur chaque élément : on la mémorise, on met une écriture banale, puis on la rend */
+  const BANAL = "-apple-system,'Helvetica Neue',Arial,sans-serif";
+  function ecriture(d, belle) {
+    if (!d._ecr) { const W = d.defaultView; d._ecr = [...d.querySelectorAll("h1, .e-tt, .x-w, .x-l, .lm-nom")].filter(e => e.offsetWidth || e.getClientRects().length)
+        .map(e => ({ e, v: e.style.getPropertyValue("font-family"), p: e.style.getPropertyPriority("font-family"), f: W.getComputedStyle(e).fontFamily })); }
+    d._ecr.forEach(({ e, v, p, f }) => { if (belle) { if (v) e.style.setProperty("font-family", v, p); else e.style.removeProperty("font-family"); }
+      else e.style.setProperty("font-family", BANAL, "important"); }); }
+  async function construit(n, L) {
+    const d = sd(); if (!d) return; const stop = () => n !== tour;
+    ecrP.forEach(p => p.classList.remove("on", "ok"));
+    /* 0 · sa page d'aujourd'hui */
+    const aj = document.getElementById("aujT"), aa0 = document.getElementById("aa"), le = document.getElementById("lienE"), lt = document.getElementById("lienTxt"), lo = document.getElementById("lienOk"), el = document.getElementById("enLigne");
+    aa0.classList.remove("crea"); el.classList.remove("on", "actif"); lo.classList.remove("on"); lt.textContent = "";
+    const DEB = window.DEBUT || "bam";
+    nu(d, true); mt.style.opacity = 1; ecrT.textContent = "Ta page aujourd'hui"; const vn0 = document.getElementById("vernis"); vn0.style.transition = "none"; vn0.style.opacity = 0;
+    if (DEB === "bam") {
+      /* C · sa page d'aujourd'hui… qui tremble de plus en plus fort… et BAM : son nouveau site, tout habillé d'un coup */
+      le.classList.remove("on"); av.style.transition = "none"; av.style.opacity = "1"; mt.style.transform = "";
+      await dort(RM ? 300 : 500); if (stop()) return;
+      if (!RM) await tween(700, k => { const a = 0.4 + k * k * 3.6, x = (Math.random() * 2 - 1) * a, y = (Math.random() * 2 - 1) * a * .6, r = (Math.random() * 2 - 1) * a * .35;
+        mt.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${1 - k * .05})`; }, k => k); if (stop()) return;
+      mt.style.transform = "";
+      const fl = document.getElementById("flashB"), od = document.getElementById("onde");
+      fl.classList.remove("on"); od.classList.remove("on"); mt.classList.remove("bam"); void fl.offsetWidth; fl.classList.add("on"); od.classList.add("on"); mt.classList.add("bam");
+      av.style.opacity = "0"; ["nu-fond", "nu-ent", "nu-ecr"].forEach(c => d.documentElement.classList.remove(c)); ecriture(d, true); aa0.classList.add("crea");
+      await dort(220); if (stop()) return;
+      /* puis les charms arrivent en volant */
+      const triB = L.slice().sort((a, b) => (parseFloat(a.style.top) || 0) - (parseFloat(b.style.top) || 0));
+      for (let k = 0; k < triB.length; k++) { if (stop()) return; if (RM) { triB[k].style.opacity = 1; triB[k].style.scale = 1; continue; } vole(d, triB[k], k); await dort(Math.min(80, 900 / triB.length)); }
+      await dort(200); if (stop()) return;
+      rf.classList.remove("on"); void rf.offsetWidth; rf.classList.add("on");
+      /* 27/11 Marie : plus de « En ligne » ; à la fin, « Créer mon site » fait un petit boom (« elle l'a vu, maintenant crée ton site ») */
+      await dort(100); if (stop()) return; boom();
+      await dort(2600); if (stop()) return;
+      return spectacle(); }
+    /* plus de page grise au début (27/11, Marie : « j'aime tout sauf le début ») */
+    av.style.transition = "none"; av.style.opacity = "0";
+    if (DEB === "lien" && !RM) {
+      /* B · son lien s'écrit tout seul, « Trouvé ✓ », puis son site apparaît */
+      le.classList.add("on"); await dort(350); if (stop()) return;
+      const L0 = "maps.app.goo.gl/nails-by-drimf"; for (let k = 1; k <= L0.length; k++) { lt.textContent = L0.slice(0, k); await dort(28); if (stop()) return; }
+      await dort(200); lo.classList.add("on"); await dort(650); if (stop()) return;
+      le.classList.remove("on");
+    } else { le.classList.remove("on"); await dort(RM ? 300 : 900); if (stop()) return; }
+    /* son site tout simple apparaît ; les coquillages arrivent autour */
+    aa0.classList.add("crea");
+    await dit("① On récupère ta photo, ton nom, tes avis", 0);
+    await dort(650); if (stop()) return;
+    /* 2 · le fond */
+    await dit("② Ton fond", 1); d.documentElement.classList.remove("nu-fond");
+    await dort(700); if (stop()) return;
+    /* 3 · l'écriture du nom */
+    await dit("③ Ton écriture", 2); d.documentElement.classList.add("flou"); await dort(280); d.documentElement.classList.remove("nu-ecr"); ecriture(d, true); d.documentElement.classList.remove("flou");
+    await dort(650); if (stop()) return;
+    /* 4 · l'en-tête : le rideau de perles tombe */
+    await dit("④ Ton en-tête", 3); d.documentElement.classList.remove("nu-ent");
+    await dort(650); if (stop()) return;
+    /* 5 · les charms arrivent en volant */
+    await dit("⑤ Tes charms", 4);
+    const tri = L.slice().sort((a, b) => (parseFloat(a.style.top) || 0) - (parseFloat(b.style.top) || 0));
+    for (let k = 0; k < tri.length; k++) { if (stop()) return; if (RM) { tri[k].style.opacity = 1; tri[k].style.scale = 1; continue; } vole(d, tri[k], k); await dort(85); }
+    await dort(550); if (stop()) return;
+    await dit("✦ Ton site est prêt", 5); rf.classList.remove("on"); void rf.offsetWidth; rf.classList.add("on");
+    /* « Active ton site » : l'interrupteur passe sur En ligne */
+    await dort(300); if (stop()) return; boom();
+    await dort(2600); if (stop()) return;
+    spectacle(); }
+  /* le bouton « Créer mon site » fait boom */
+  function boom() { const b = document.querySelector(".bas .btn.brille"); if (!b || RM) return;
+    const V = window.BOUTON, bas = b.parentElement, E = { duration: 600, easing: "cubic-bezier(.2,1.5,.4,1)" };
+    if (!V) { b.classList.remove("boom"); void b.offsetWidth; b.classList.add("boom"); return; }
+    if (V === "a") { /* nacré : il grossit et lâche des paillettes */
+      b.animate([{ scale: 1 }, { scale: 1.12 }, { scale: .97 }, { scale: 1 }], E);
+      const C = ["#E0507F", "#A77BD6", "#D9A15E", "#F06A9B", "#C98BD9"];
+      for (let k = 0; k < 16; k++) { const p = document.createElement("span"); p.className = "pai"; p.textContent = k % 3 ? "✦" : "•"; p.style.color = C[k % C.length]; p.style.textShadow = "0 0 8px rgba(255,255,255,.9), 0 0 3px rgba(224,80,127,.5)"; bas.appendChild(p);
+        const a = (k / 16) * Math.PI * 2 + Math.random() * .3, dx = Math.cos(a) * (120 + Math.random() * 40), dy = Math.sin(a) * (44 + Math.random() * 22);
+        p.animate([{ transform: "translate(0,0) scale(.3) rotate(0)", opacity: 1 }, { transform: `translate(${dx * .7}px,${dy * .7}px) scale(1.2) rotate(90deg)`, opacity: 1, offset: .7 }, { transform: `translate(${dx}px,${dy}px) scale(.5) rotate(180deg)`, opacity: 0 }], { duration: 1100, easing: "ease-out" }).onfinish = () => p.remove(); } }
+    if (V === "b") { /* framboise : boum-boum comme un cœur */
+      b.animate([{ scale: 1 }, { scale: 1.12 }, { scale: 1 }, { scale: 1.17 }, { scale: 1 }], { duration: 900, easing: "ease-in-out" });
+      b.animate([{ boxShadow: "0 0 0 0 rgba(229,90,135,.7)" }, { boxShadow: "0 0 0 22px rgba(229,90,135,0)" }], { duration: 900, easing: "ease-out" }); }
+    if (V === "c") { /* blanc perle : des petits charms sautent du bouton et retombent */
+      b.animate([{ scale: 1 }, { scale: 1.08 }, { scale: 1 }], { duration: 450, easing: "ease-out" });
+      const I = ["coquillenacre", "conque", "huitreperle", "bohoetoiledemer", "cadenascoeurrose"];
+      I.forEach((n, k) => { const im = document.createElement("img"); im.className = "chB"; im.src = `../../loginail-site/charms-mini/${n}.webp?q=256`; bas.appendChild(im);
+        const dx = (k - 2) * 52 + (Math.random() * 14 - 7), up = 70 + Math.random() * 30, r = (Math.random() * 2 - 1) * 40;
+        im.animate([{ transform: "translate(0,0) scale(.2)", opacity: 0 }, { transform: `translate(${dx * .6}px,${-up}px) scale(1) rotate(${r / 2}deg)`, opacity: 1, offset: .4 }, { transform: `translate(${dx}px,${-up * .55}px) scale(1) rotate(${r}deg)`, opacity: 1, offset: .75 }, { transform: `translate(${dx * 1.1}px,0px) scale(.85) rotate(${r}deg)`, opacity: 0 }], { duration: 1300, delay: k * 50, easing: "cubic-bezier(.3,.7,.4,1)", fill: "backwards" }).onfinish = () => im.remove(); }); }
+    if (V === "d") { /* champagne : il saute, s'écrase un peu, et un éclat de lumière passe */
+      b.animate([{ transform: "translateY(0) scale(1,1)" }, { transform: "translateY(2px) scale(1.06,.9)", offset: .15 }, { transform: "translateY(-16px) scale(.97,1.05)", offset: .45 }, { transform: "translateY(0) scale(1.04,.94)", offset: .75 }, { transform: "translateY(0) scale(1,1)" }], { duration: 750, easing: "ease-in-out" });
+      b.animate([{ filter: "brightness(1)" }, { filter: "brightness(1.25)", offset: .5 }, { filter: "brightness(1)" }], { duration: 750 }); }
+  }
+  window.relance = () => { if (f.classList.contains("pret")) spectacle(); };
+  /* on attend que le vrai site soit prêt, puis le spectacle tourne ; toucher le téléphone le relance */
+  const go = setInterval(() => { if (f.classList.contains("pret") && charms().length) { clearInterval(go); spectacle(); } }, 300);
+  ec.addEventListener("click", () => { if (f.classList.contains("pret")) spectacle(); });
+})();
+document.body.classList.add("t-nacre");   /* 27/11 : Marie choisit B · Nacré */
+document.querySelector(".choixT").addEventListener("click", e => { const c = e.target.closest("[data-deb]"); if (c) { window.DEBUT = c.dataset.deb; document.querySelectorAll(".choixT button").forEach(x => x.classList.toggle("on", x === c)); window.relance && window.relance(); return; } const b = e.target.closest("[data-tr]"); if (!b) return; window.TRANSFO = b.dataset.tr; document.querySelectorAll(".choixT button").forEach(x => x.classList.toggle("on", x === b)); va(0); window.relance && window.relance(); });
+/* 27/11 : ?avant=bio|fiche|resa|note|simple → l'« avant » choisi parmi les 5 idées (avants-5.html) */
+{ const q = new URLSearchParams(location.search), bt = q.get("bouton") || "a"; /* 27/11 : Marie choisit « A · Nacré » */ if (/^[abcd]$/.test(bt || "")) { window.BOUTON = bt; document.body.classList.add("b-" + bt); } if (q.get("seul")) document.body.classList.add("seul"); const ou = q.get("ou") || "grille"; /* 27/11 : Marie choisit la grille */ if (/^(grille|liste)$/.test(ou || "")) document.body.classList.add("ou-" + ou); const et = +q.get("etape"); if (et) addEventListener("load", () => setTimeout(() => va(et), 50)); }
+{ const k = new URLSearchParams(location.search).get("avant") || "resa";   /* 27/11 : Marie choisit la 3 « Page de réservation » */ if (k && window.AVANTS && AVANTS.cles.includes(k)) { const a = document.getElementById("avant"); AVANTS.pose(a, k); }
+  const lien = document.createElement("a"); lien.href = "avants-5.html"; lien.textContent = "← les 5 idées d'avant"; lien.style.cssText = "display:block;text-align:center;font-size:13px;color:#6B625C;margin:0 0 6px"; document.querySelector(".choixT").after(lien); }
+va(0);
+</script>
+</body></html>

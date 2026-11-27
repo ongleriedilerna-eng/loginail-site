@@ -1,0 +1,28 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>27/11 · La création de site : colonne à droite (B)</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Italiana&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E3DD;font-family:Jost,sans-serif;color:#1E1C1B;padding:14px 8px 30px}
+h1{font:400 24px Italiana,serif;text-align:center;margin:0 0 4px}
+p.st{text-align:center;font-size:13px;color:#6B625C;margin:0 0 14px}
+.grille{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;align-items:flex-start}
+.v{display:flex;flex-direction:column;align-items:center;gap:8px}
+.v b{font-weight:500;font-size:15px}.v small{font-size:12.5px;color:#6B625C;text-align:center;max-width:300px;line-height:1.35}
+.tel{width:calc(393px * var(--k));height:calc(800px * var(--k));border-radius:calc(46px * var(--k));box-shadow:0 0 0 calc(9px * var(--k)) #1E1C1B,0 24px 50px -20px rgba(0,0,0,.45);overflow:hidden;position:relative;background:#fff}
+.tel iframe{position:absolute;left:0;top:0;width:393px;height:800px;border:0;transform:scale(var(--k));transform-origin:0 0}
+:root{--k:.86}
+</style>
+<script src="colonne.js?v=2711g"></script>
+</head><body>
+<h1>La création de site : colonne à droite</h1>
+<p class="st">Touche les onglets en bas, puis un choix dans la colonne : ton site change tout de suite.</p>
+<div class="grille">
+  <div class="v"><div class="tel"><iframe id="auj" title="Aujourd'hui"></iframe></div><b>Aujourd'hui</b><small>Le site en petit en haut, les choix en bas</small></div>
+  <div class="v"><div class="tel"><iframe id="col" title="B · colonne"></iframe></div><b>B · Écran + colonne ✦</b><small>Ton site en grand à gauche, les choix qui défilent à droite, les onglets en bas</small></div>
+</div>
+<script>
+const SRC = "../../loginail-creer/personnaliser.html?v=1511s&vrai=1&appli=1&ouverture=0&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&exemple=dilerna");
+document.getElementById("auj").src = SRC; document.getElementById("col").src = SRC;
+COLONNE.suit(document.getElementById("col").contentWindow);
+</script>
+</body></html>

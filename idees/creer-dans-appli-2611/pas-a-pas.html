@@ -1,0 +1,51 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>27/11 · Créer son site : libre ou pas à pas ?</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Italiana&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E3DD;font-family:Jost,sans-serif;color:#1E1C1B;padding:14px 8px 30px}
+h1{font:400 24px Italiana,serif;text-align:center;margin:0 0 4px}
+p.st{text-align:center;font-size:13px;color:#6B625C;margin:0 0 14px}
+.grille{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;align-items:flex-start}
+.v{display:flex;flex-direction:column;align-items:center;gap:8px}
+.v b{font-weight:500;font-size:15px}.v small{font-size:12.5px;color:#6B625C;text-align:center;max-width:300px;line-height:1.35}
+.tel{width:calc(393px * var(--k));height:calc(800px * var(--k));border-radius:calc(46px * var(--k));box-shadow:0 0 0 calc(9px * var(--k)) #1E1C1B,0 24px 50px -20px rgba(0,0,0,.45);overflow:hidden;position:relative;background:#fff}
+.tel iframe{position:absolute;left:0;top:0;width:393px;height:800px;border:0;transform:scale(var(--k));transform-origin:0 0}
+:root{--k:.86}
+#choixTel{display:none}
+/* sur un vrai téléphone : une version à la fois, en plein écran, et 2 boutons en haut pour passer de l'une à l'autre */
+@media (max-width:700px){
+ body{padding:0;overflow:hidden;height:100dvh}
+ h1,p.st,.v>b,.v>small{display:none}
+ #choixTel{display:flex;gap:6px;padding:calc(env(safe-area-inset-top) + 6px) 8px 6px;background:#1E1C1B;height:46px;box-sizing:content-box}
+ #choixTel button{flex:1;border:0;border-radius:99px;background:#3A3230;color:#D8CFCB;font:500 14px Jost,sans-serif}
+ #choixTel button.on{background:#fff;color:#1E1C1B}
+ .grille{display:block}
+ .v{display:none}.v.on{display:block}
+ .tel{width:100vw;height:calc(100dvh - 58px - env(safe-area-inset-top));border-radius:0;box-shadow:none}
+ .tel iframe{width:100%;height:100%;transform:none}
+}
+</style>
+<script src="colonne.js?v=2711g"></script>
+<script src="guide.js?v=2711a"></script>
+</head><body>
+<h1>Créer son site : libre ou pas à pas ?</h1>
+<p class="st">Les deux sont la vraie page Personnaliser. Touche, essaie, compare.</p>
+<div id="choixTel"><button type="button" data-v="libre">A · Libre</button><button type="button" data-v="guide" class="on">B · Pas à pas ✦</button></div>
+<div class="grille">
+  <div class="v" data-v="libre"><div class="tel"><iframe id="libre" title="A · Libre"></iframe></div><b>A · Libre (les onglets)</b><small>Ce qu'on a choisi hier : 4 onglets en bas, elle va où elle veut</small></div>
+  <div class="v on" data-v="guide"><div class="tel"><iframe id="guide" title="B · Pas à pas"></iframe></div><b>B · Pas à pas ✦</b><small>En-tête → Fond → Écriture → Charms, un gros bouton « Suivant », tout est déjà choisi</small></div>
+</div>
+<script>
+/* les 2 téléphones tiennent en entier dans l'écran */
+const ajuste = () => document.documentElement.style.setProperty("--k", Math.max(.55, Math.min(.86, (innerHeight - 120) / 800)));
+ajuste(); addEventListener("resize", ajuste);
+/* en local : le nouveau Personnaliser de la copie ; en ligne : sa copie posée à côté (perso-d127/), le vrai site ne change pas */
+const SRC = (/^(localhost|127\.)/.test(location.hostname) ? "../../loginail-creer/" : "perso-d127/") + "personnaliser.html?v=1511s&vrai=1&appli=1&ouverture=0&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&exemple=dilerna");
+document.getElementById("libre").src = SRC; document.getElementById("guide").src = SRC;
+COLONNE.suit(document.getElementById("libre").contentWindow);
+COLONNE.suit(document.getElementById("guide").contentWindow);
+GUIDE.suit(document.getElementById("guide").contentWindow);
+document.getElementById("choixTel").onclick = e => { const b = e.target.closest("button"); if (!b) return;
+  document.querySelectorAll("#choixTel button, .v").forEach(x => x.classList.toggle("on", x.dataset.v === b.dataset.v)); };
+</script>
+</body></html>
