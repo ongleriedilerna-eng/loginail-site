@@ -772,9 +772,9 @@ html{touch-action:manipulation}
 .tel-z.entier{width:156px;height:326px}.tel-z.entier .ecr{height:314px}
 .car .fx .sous-fx{margin-top:2px!important}
 /* V6 · 27/11 (Marie) : la liste sur UNE ligne ; les 5 cartes = les VRAIS écrans de l'appli, en entier, plus courtes */
-.haut .chapo.liste.une .ln{white-space:nowrap}
-.haut .chapo.liste.une i{margin:0 .4em}
-@media (max-width:1099px){.haut .chapo.liste.une{font-size:min(16px,2.96vw);letter-spacing:0}}
+.haut .chapo.liste.uneligne .ln{white-space:nowrap}
+.haut .chapo.liste.uneligne i{margin:0 .4em}
+@media (max-width:1099px){.haut .chapo.liste.uneligne{font-size:min(16px,3.12vw);letter-spacing:0}}
 .car .fx.v6{padding:18px 16px 0}
 .car .fx.v6 h3{font-size:22px}
 .car .fx.v6 .tl{margin-top:14px;padding:0 0 18px}
@@ -786,6 +786,11 @@ html{touch-action:manipulation}
 #cadreAgenda .z-jour{opacity:0}#cadreAgenda.jour .z-sem{opacity:0}#cadreAgenda.jour .z-jour{opacity:1}
 #eventail img{opacity:0}#eventail img.on{opacity:1}
 @media (min-width:860px){.t6{width:150px}.t6.coupe{width:230px;height:290px}}
+/* V7 · 27/11 (Marie : « B · Écran en grand ») : fiche, story, site sans téléphone, l'écran en grand et lisible */
+.grand{position:relative;width:100%;max-width:258px;margin:0 auto;border-radius:22px;overflow:hidden;box-shadow:0 18px 34px -18px rgba(60,20,40,.45);background:#fff}
+.grand img{display:block;width:100%}
+.grand.st{width:168px;aspect-ratio:9/16}.grand.st img{height:100%;object-fit:cover}
+.grand.si{height:290px;width:222px}.grand.si img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:50% 80%;transition:opacity .45s}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -803,7 +808,7 @@ html{touch-action:manipulation}
     <div class="txt">
       <div class="k">Pensé par une prothésiste</div>
       <h1 class="serif">L’appli pour toutes<br><span class="l2n">les <em>prothésistes<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 11" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></em> ongulaires.</span></h1>
-      <p class="chapo liste une"><span class="ln">Agenda<i>·</i>Fiches clientes<i>·</i>Caisse<i>·</i>Rappels SMS<i>·</i>Site internet</span></p>
+      <p class="chapo liste uneligne"><span class="ln">Agenda<i>·</i>Fiches clientes<i>·</i>Caisse<i>·</i>Rappels SMS<i>·</i>Site internet</span></p>
       <a class="as officiel" id="telecharger" href="loginail-creer/telecharger.html"><img src="loginail-site/badge-app-store-fr.svg" alt="Télécharger dans l’App Store" width="190" height="60"></a>
       <p class="prix-l"><b>1er mois offert</b>, puis 49,99&nbsp;€/mois<br>Sans engagement · <i>Sur iPhone</i></p>
     </div>
@@ -843,15 +848,15 @@ html{touch-action:manipulation}
     <div class="fonctions" id="fonctions">
       <article class="fx v6"><div class="k">Agenda</div><h3>Ta semaine,<br><em>d’un coup d’œil.</em></h3>
         <div class="vues" id="vues"><button type="button" class="on" data-v="0">Semaine</button><button type="button" data-v="1">Jour</button><i aria-hidden="true"></i></div>
-        <div class="tl"><div class="t6 coupe" id="cadreAgenda"><img class="z-sem" src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli, vue semaine" loading="lazy"><img class="z-jour" src="loginail-site/apercus-univers/app-agenda-jour-2711.webp" alt="L’agenda de l’appli, vue jour" loading="lazy"></div></div></article>
-      <article class="fx v6"><div class="k">SMS</div><h3>Rappel la veille,<br><em>illimité.</em></h3><p class="sous-fx">+ l’anniversaire, quand tu veux.</p>
-        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/sms-rappel-2711.webp" alt="Le SMS de rappel reçu par la cliente la veille, et le SMS d’anniversaire" loading="lazy"></div></div></article>
+        <div class="tl"><div class="t6" id="cadreAgenda"><img class="z-sem" src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="L’agenda de l’appli, vue semaine" loading="lazy"><img class="z-jour" src="loginail-site/apercus-univers/app-agenda-jour-2711.webp" alt="L’agenda de l’appli, vue jour" loading="lazy"></div></div></article>
+      <article class="fx v6"><div class="k">SMS</div><h3>Le rappel part tout seul,<br><em>en illimité.</em></h3>
+        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/sms-rappel-2711.webp" alt="Le SMS de rappel reçu par la cliente la veille" loading="lazy"></div></div></article>
       <article class="fx v6"><div class="k">Fiches clientes</div><h3>Tu te souviens<br><em>de tout.</em></h3>
-        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/app-fiche-2711.webp" alt="La fiche d’une cliente dans l’appli" loading="lazy"></div></div></article>
+        <div class="tl"><div class="grand"><img src="loginail-site/apercus-univers/app-notes-haut-2711.webp" alt="Les notes d’une cliente dans l’appli : en couple, des enfants, un animal…" loading="lazy"></div></div></article>
       <article class="fx v6"><div class="k">Partager mes dispos</div><h3>Ta story,<br><em>toute prête.</em></h3>
-        <div class="tl"><div class="t6"><img src="loginail-site/apercus-univers/story-satin-2711.webp" alt="La story « Mes dispos » faite par l’appli" loading="lazy"></div></div></article>
+        <div class="tl"><div class="grand st"><img src="loginail-site/apercus-univers/story-satin-2711.webp" alt="La story « Mes dispos » faite par l’appli" loading="lazy"></div></div></article>
       <article class="fx v6"><div class="k">Le plus</div><h3>Ton site inclus,<br><em>à ton nom.</em></h3>
-        <div class="tl"><div class="t6" id="eventail"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
+        <div class="tl"><div class="grand si" id="eventail"><img src="loginail-site/apercus-univers/look-roue-15.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-13.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-3.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-4.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-12.webp" alt="" loading="lazy"><img src="loginail-site/apercus-univers/look-roue-14.webp" alt="" loading="lazy"></div></div></article>
     </div>
     <div class="pts-fx" id="ptsFonctions" aria-hidden="true"></div>
   </div>
