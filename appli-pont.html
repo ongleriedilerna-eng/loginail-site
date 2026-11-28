@@ -23,7 +23,10 @@ addEventListener("message", m => {
     const f = b.arrondi ? "&arrondi=1" : b.coffin ? "&coffin=1" : b.epure ? "&epure=1" : "";
     const q = new URLSearchParams({ style: b.style || 1, couleur: b.couleur || "noir", mode: "jour", police: b.police || "elegante", paillettes: b.paillettes || "non" });
     if (b.fond) q.set("fond", b.fond);
-    location.replace("maquette-perso.html?v=1511s&vrai=1&appli=1" + (etape ? "&onglet=" + etape : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&" + q.toString() + f));
+    /* 28/11 (Marie : « je clique sur un truc, ça bug, je mets valider ça valide pas, j'ai fini mon site ça finit pas ») : depuis l'appli, son site EXISTE déjà →
+       jamais la démo « Créer le mien » (look Sirène) : elle remplaçait son site par le « classique » au 1er toucher, rechargeait la page (son choix perdu)
+       et « J'ai fini mon site » ne renvoyait rien à l'appli. ?ouverture=0 = Personnaliser s'ouvre directement sur SON site. */
+    location.replace("maquette-perso.html?v=1511s&vrai=1&appli=1&ouverture=0" + (etape ? "&onglet=" + etape : "") + "&src=" + encodeURIComponent("loginail-creer/pret.html?v=1511m&nouveau&essai&" + q.toString() + f));
   } else location.replace(PAGES[ou] || PAGES.perso);
 });
 /* on dit à l'appli qu'on est prêt à recevoir son site */
