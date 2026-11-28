@@ -22,6 +22,8 @@
 
 <meta name="description" content="Loginail, l’appli tout-en-un des prothésistes ongulaires : agenda, fiches clientes, SMS de rappel illimités et ton site internet à ton image. 1er mois offert, puis 49,99 €/mois, sans engagement.">
 <style>
+@font-face{font-family:Literata;font-style:italic;font-weight:800;src:url(loginail-site/polices/Literata-800-italique-latin.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Literata;font-style:normal;font-weight:600;src:url(loginail-site/polices/Literata-600-latin.woff2) format("woff2");font-display:swap}
 @font-face{font-family:Abril;src:url(loginail-site/polices/AbrilFatface-400-latin.woff2) format("woff2");font-display:swap}
 @font-face{font-family:Jost;font-weight:400;src:url(loginail-site/polices/Jost-400-latin.woff2) format("woff2");font-display:swap}
 @font-face{font-family:Jost;font-weight:500;src:url(loginail-site/polices/Jost-500-latin.woff2) format("woff2");font-display:swap}
@@ -34,7 +36,7 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{background:var(--fond);color:var(--encre);font:400 16px/1.5 Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;-webkit-tap-highlight-color:transparent}
 img{display:block;max-width:100%}
 a{color:inherit}
-.serif{font-family:Abril,serif;font-weight:400;letter-spacing:-.015em;line-height:1.04}
+.serif{font-family:Literata,serif;font-style:italic;font-weight:800;letter-spacing:-.015em;line-height:1.04}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 .k{font:500 12px Jost;letter-spacing:.2em;text-transform:uppercase;color:var(--fram)}
 .pomme{width:22px;height:22px;flex:none}
@@ -48,7 +50,7 @@ a{color:inherit}
 .haut{background:var(--h-fond);color:var(--h-encre);text-align:center;padding:30px 0 0;position:relative;overflow:hidden}
 .haut .k{color:var(--h-accent)}
 .haut h1{font-size:clamp(33px,9.2vw,68px);margin-top:12px}
-.haut h1 em{font-style:normal;position:relative;white-space:nowrap}
+.haut h1 em{font-style:inherit;position:relative;white-space:nowrap}
 .haut h1 em svg{position:absolute;left:-2%;bottom:-.06em;width:104%;height:.2em;color:var(--rose);overflow:visible}
 body.B .haut h1 em svg{color:#FFD9E5}
 .haut h1 em path{stroke-dasharray:1;stroke-dashoffset:1;animation:trait 1s .5s cubic-bezier(.6,0,.2,1) forwards}
@@ -100,7 +102,7 @@ section,.boite,.carte{position:relative}
 /* ---------- parties ---------- */
 section{padding:56px 0}
 .titre{font-size:clamp(30px,8vw,48px)}
-.titre em{font-style:normal;color:var(--fram)}
+.titre em{font-style:inherit;color:var(--fram)}
 .sous{margin-top:10px;font-size:17px;color:var(--doux);max-width:520px}
 .centre{text-align:center}.centre .sous{margin-left:auto;margin-right:auto}
 .vu{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
@@ -116,7 +118,7 @@ section{padding:56px 0}
 /* les fonctions, une par une, en grand */
 .fonctions{display:grid;gap:18px;margin-top:26px}
 .fx{background:var(--carte);border-radius:26px;padding:24px 22px 0;overflow:hidden;box-shadow:0 22px 44px -32px rgba(120,40,70,.55)}
-.fx h3{font:400 25px/1.1 Abril,serif;margin-top:6px}
+.fx h3{font:italic 800 25px/1.1 Literata,serif;margin-top:6px}
 .fx p{margin-top:8px;color:var(--doux);font-size:15.5px}
 .fx ul{list-style:none;margin-top:12px;display:grid;gap:7px}
 .fx li{display:flex;gap:9px;font-size:15px}.fx li::before{content:"✦";color:var(--rose);flex:none}
@@ -125,7 +127,7 @@ section{padding:56px 0}
 .fx.rose{background:var(--pale)}
 .story{width:190px;margin:20px auto 0;height:270px;border-radius:24px 24px 0 0;background:linear-gradient(160deg,#F7B7CB,#E0628C);padding:18px 16px;color:#fff}
 .story small{font:500 10px Jost;letter-spacing:.18em;text-transform:uppercase;opacity:.9}
-.story b{display:block;font:400 22px/1.05 Abril,serif;margin:4px 0 12px}
+.story b{display:block;font:italic 800 22px/1.05 Literata,serif;margin:4px 0 12px}
 .story div{display:flex;justify-content:space-between;background:rgba(255,255,255,.92);color:#1E1C1B;border-radius:10px;padding:6px 10px;font-size:12.5px;margin-top:6px}
 .story div i{font-style:normal;color:var(--fram);font-weight:500}
 /* c'est toi qui choisis */
@@ -141,7 +143,7 @@ section{padding:56px 0}
 .sw[aria-checked=true] .et{color:#F4A9C2}
 /* abonnement */
 .abo .carte{background:var(--carte);border-radius:30px;padding:30px 24px;margin-top:24px;text-align:center;box-shadow:8px 8px 0 var(--rose),0 0 0 2px var(--encre)}
-.abo .p{font:400 54px/1 Abril,serif}.abo .p small{font:400 17px Jost;color:var(--doux)}
+.abo .p{font:italic 800 54px/1 Literata,serif}.abo .p small{font:400 17px Jost;color:var(--doux)}
 .abo .of{display:inline-block;margin:12px 0 4px;background:var(--pale);color:var(--fram);border-radius:99px;padding:8px 16px;font-weight:500}
 .abo ul{list-style:none;margin:14px auto 20px;display:grid;gap:8px;font-size:15.5px;max-width:300px;text-align:left}
 .abo li{display:flex;gap:9px}.abo li::before{content:"✓";color:var(--fram);font-weight:500}
@@ -149,7 +151,7 @@ section{padding:56px 0}
 /* Marie + WhatsApp */
 .marie .boite{background:var(--pale);border-radius:30px;padding:28px 22px;text-align:center}
 .marie .ph{width:92px;height:92px;border-radius:50%;margin:0 auto;background:url(loginail-site/marie-illustration-rond.jpg) center/cover;box-shadow:0 0 0 4px #fff,0 0 0 6px var(--rose)}
-.marie h2{font:400 28px/1.1 Abril,serif;margin-top:16px}
+.marie h2{font:italic 800 28px/1.1 Literata,serif;margin-top:16px}
 .marie p{margin-top:10px;color:#4a4440}
 .wa{display:inline-flex;align-items:center;gap:10px;margin-top:18px;height:54px;padding:0 22px;border-radius:99px;background:#1FAF5A;color:#fff;font:500 16px Jost;text-decoration:none;box-shadow:0 16px 30px -16px rgba(20,120,60,.7)}
 .wa svg{width:22px;height:22px}
@@ -196,7 +198,7 @@ details p{margin-top:6px;color:var(--doux);font-size:15px}
 .tuiles{display:none;margin-top:24px;gap:12px}
 .tuiles div{background:#fff;border-radius:20px;padding:16px 14px;text-align:left;box-shadow:0 16px 32px -26px rgba(120,40,70,.55)}
 .tuiles img{width:40px;height:40px;object-fit:contain}
-.tuiles b{display:block;font:400 18px/1.15 Abril,serif;margin-top:8px}
+.tuiles b{display:block;font:italic 800 18px/1.15 Literata,serif;margin-top:8px}
 .tuiles span{display:block;font-size:14px;line-height:1.4;color:var(--doux);margin-top:4px}
 .tuiles .plus{background:var(--pale)}
 body.v2 .fonctions,body.v3 .fonctions{display:none}
@@ -254,7 +256,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .sw-liste.c2{display:block}
 .une{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;border:0;cursor:pointer;background:#fff;color:var(--encre);border-radius:22px;padding:20px 18px;text-align:left;font:inherit;box-shadow:0 16px 32px -24px rgba(120,40,70,.6);transition:opacity .2s,transform .2s}
 .une.sort{opacity:0;transform:translateY(8px)}
-.une>span:first-child{flex:1}.une b{display:block;font:400 22px/1.15 Abril,serif}.une span span{display:block;font-size:14.5px;color:var(--doux);margin-top:3px}
+.une>span:first-child{flex:1}.une b{display:block;font:italic 800 22px/1.15 Literata,serif}.une span span{display:block;font-size:14.5px;color:var(--doux);margin-top:3px}
 .une .et{flex:none;font:500 13px Jost;color:#9A8F88}.une[aria-checked=true] .et{color:var(--fram)}
 .une .pil{flex:none;width:58px;height:34px;border-radius:99px;background:#E6D8D3;position:relative;transition:background .3s}
 .une .pil::after{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;transition:translate .32s cubic-bezier(.3,1.4,.5,1)}
@@ -269,7 +271,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 .sw-liste.c4{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:22px -20px 0;padding:6px 20px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .sw-liste.c4::-webkit-scrollbar{display:none}
 .sw-liste.c4 .sw{flex:0 0 64%;scroll-snap-align:center;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;border-radius:24px;padding:20px 18px 18px}
-.sw-liste.c4 .sw b{font:400 21px/1.15 Abril,serif}
+.sw-liste.c4 .sw b{font:italic 800 21px/1.15 Literata,serif}
 .sw-liste.c4 .sw .d{font-size:14.5px;line-height:1.4;margin-top:6px;min-height:41px}
 .sw-liste.c4 .sw .bas{display:flex;align-items:center;gap:10px;margin-top:16px}
 .sw-liste.c4 .sw .et{width:auto;font-size:14px}
@@ -280,7 +282,7 @@ body.v3 .tuiles img{grid-row:span 2}body.v3 .tuiles b{margin-top:0}body.v3 .tuil
 /* ===== 26/11 soir (Marie : « inspire-toi en gardant mon univers ») : gros chiffres + avant/après à bascule ===== */
 .chiffres{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .chiffres div{background:#fff;border-radius:20px;padding:16px 14px;text-align:left;box-shadow:0 14px 30px -24px rgba(120,40,70,.5)}
-.chiffres b{display:block;font:400 28px/1 Abril,serif;color:var(--fram);white-space:nowrap}
+.chiffres b{display:block;font:italic 800 28px/1 Literata,serif;color:var(--fram);white-space:nowrap}
 .chiffres span{display:block;font-size:13.5px;line-height:1.35;color:var(--doux);margin-top:6px}
 .bascule2{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;margin-top:20px;padding:4px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px var(--ligne)}
 .bascule2 button{position:relative;z-index:1;border:0;background:none;cursor:pointer;font:500 14.5px Jost;color:var(--doux);padding:10px 18px;border-radius:99px;transition:color .3s;white-space:nowrap}
@@ -450,9 +452,9 @@ html{touch-action:manipulation}
 .vues:has(button[data-v="1"].on) i{translate:100% 0}
 .perso{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .perso span{display:inline-flex;align-items:center;gap:7px;background:var(--fond);border-radius:14px;padding:7px 12px 7px 8px;font-size:13.5px;color:var(--doux)}
-.perso b{font:400 17px Abril,serif;color:var(--fram)}
+.perso b{font:italic 800 17px Literata,serif;color:var(--fram)}
 .perso img{width:26px;height:26px;object-fit:contain}
-.perso i{font:400 16px Abril,serif;font-style:normal;color:var(--fram);width:26px;height:26px;display:grid;place-items:center;background:#fff;border-radius:8px}
+.perso i{font:italic 800 16px Literata,serif;font-style:normal;color:var(--fram);width:26px;height:26px;display:grid;place-items:center;background:#fff;border-radius:8px}
 .fx .roue{margin-top:14px!important}
 /* « C'est toi qui choisis » : 6 noms bien alignés */
 .sw-liste.c2 .noms{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:420px;margin-left:auto;margin-right:auto}
@@ -528,7 +530,7 @@ html{touch-action:manipulation}
 .car .fonctions{display:flex!important;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:6px 20px 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;grid-template-columns:none}
 .car .fonctions::-webkit-scrollbar{display:none}
 .car .fx{flex:0 0 82%;max-width:360px;scroll-snap-align:center;display:flex;flex-direction:column;padding:20px 18px 0;border-radius:26px;opacity:1;transform:none;overflow:hidden}
-.car .fx h3{font:400 23px/1.12 Abril,serif;margin-top:6px}.car .fx h3 em{font-style:normal;color:var(--fram)}
+.car .fx h3{font:italic 800 23px/1.12 Literata,serif;margin-top:6px}.car .fx h3 em{font-style:inherit;color:var(--fram)}
 .car .fx p{font-size:14.5px;line-height:1.45;margin-top:6px;color:var(--doux)}.car .fx p b{font-weight:500;color:var(--encre)}
 .car .tl{position:relative;margin-top:auto;padding-top:14px;display:flex;justify-content:center}
 .car .cadre{width:200px!important;margin:0 auto -60px!important;border-radius:30px;padding:6px;box-shadow:0 22px 40px -20px rgba(60,20,40,.55)}
@@ -558,23 +560,23 @@ html{touch-action:manipulation}
 .cadre.mock{background:#111}
 .ecr{border-radius:24px;overflow:hidden;background:#FBF6F3;height:410px;text-align:left;position:relative}
 .fiche{padding:26px 14px 0}
-.f-tete{display:flex;align-items:center;gap:10px}.f-av{width:38px;height:38px;border-radius:50%;background:var(--pale);display:grid;place-items:center;font:400 18px Abril,serif;color:var(--fram)}
-.f-tete b{display:block;font:400 17px/1.1 Abril,serif}.f-tete small{font-size:11px;color:#9A8F88}
+.f-tete{display:flex;align-items:center;gap:10px}.f-av{width:38px;height:38px;border-radius:50%;background:var(--pale);display:grid;place-items:center;font:italic 800 18px Literata,serif;color:var(--fram)}
+.f-tete b{display:block;font:italic 800 17px/1.1 Literata,serif}.f-tete small{font-size:11px;color:#9A8F88}
 .f-ong{display:grid;grid-template-columns:1fr 1fr;margin:14px 0 10px;padding:3px;border-radius:99px;background:#F4E1EA}
 .f-ong i{font-style:normal;text-align:center;font:500 12px Jost;padding:6px 0;border-radius:99px;color:var(--doux)}.f-ong i.on{background:var(--fram);color:#fff}
 .f-l{display:flex;justify-content:space-between;align-items:center;gap:6px;background:#fff;border-radius:12px;padding:8px 10px;margin-top:6px;font-size:12.5px;box-shadow:0 4px 10px -8px rgba(60,20,40,.4);opacity:0;animation:fL 7s ease infinite}
-.f-l em{font-style:normal;font:500 11.5px Jost;color:var(--fram)}.f-l em.oui{background:var(--fram);color:#fff;border-radius:99px;padding:2px 9px}
+.f-l em{font-style:inherit;font:500 11.5px Jost;color:var(--fram)}.f-l em.oui{background:var(--fram);color:#fff;border-radius:99px;padding:2px 9px}
 .f-l:nth-of-type(4){animation-delay:.4s}.f-l:nth-of-type(5){animation-delay:.8s}.f-l:nth-of-type(6){animation-delay:1.2s}.f-l:nth-of-type(7){animation-delay:1.6s}.f-l:nth-of-type(8){animation-delay:2s}
 @keyframes fL{0%{opacity:0;transform:translateX(-10px)}8%,90%{opacity:1;transform:none}100%{opacity:0}}
 .f-post{position:absolute;right:-4px;bottom:74px;background:#fff;border-radius:14px;padding:8px 11px;font:500 11.5px Jost;color:var(--encre);box-shadow:0 14px 26px -12px rgba(60,20,40,.55),0 0 0 1px var(--pale);rotate:-3deg;opacity:0;animation:fP 7s ease infinite 2.6s}
 @keyframes fP{0%{opacity:0;transform:scale(.85)}10%,85%{opacity:1;transform:none}100%{opacity:0}}
 .story2{padding:30px 16px 0;background:repeating-conic-gradient(#F8DCE6 0 25%,#FCEEF3 0 50%) 0 0/26px 26px;text-align:center}
 .story2 small{font:500 10px Jost;letter-spacing:.16em;text-transform:uppercase;color:var(--fram)}
-.story2>b{display:block;font:400 30px/1 Abril,serif;color:var(--encre);margin-top:4px}
+.story2>b{display:block;font:italic 800 30px/1 Literata,serif;color:var(--encre);margin-top:4px}
 .story2 .sem{display:block;font-size:12px;color:var(--doux);margin-bottom:10px}
 .story2 .j{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);border-radius:12px;padding:7px 10px;margin-top:6px;opacity:0;animation:fL 7s ease infinite}
 .story2 .j:nth-of-type(2){animation-delay:.4s}.story2 .j:nth-of-type(3){animation-delay:.8s}.story2 .j:nth-of-type(4){animation-delay:1.2s}
-.story2 .j i{font-style:normal;font:500 12px Jost;width:34px;text-align:left}.story2 .j em{font-style:normal;font:500 11.5px Jost;background:var(--fram);color:#fff;border-radius:99px;padding:3px 9px}
+.story2 .j i{font-style:normal;font:500 12px Jost;width:34px;text-align:left}.story2 .j em{font-style:inherit;font:500 11.5px Jost;background:var(--fram);color:#fff;border-radius:99px;padding:3px 9px}
 .story2 .res{display:inline-block;margin-top:14px;font:500 11px Jost;background:var(--encre);color:#fff;border-radius:99px;padding:6px 12px}
 .story2 .s-ch{position:absolute;width:44px;right:8px;top:16px;rotate:12deg}.story2 .s-ch2{position:absolute;width:40px;left:8px;bottom:60px;rotate:-10deg}
 .partager{position:absolute;left:50%;bottom:78px;translate:-50% 0;display:flex;align-items:center;gap:8px;white-space:nowrap;background:var(--encre);color:#fff;font:500 13.5px Jost;border-radius:99px;padding:10px 16px;box-shadow:0 16px 30px -12px rgba(30,28,27,.6);animation:tap 3.5s ease-in-out infinite}
@@ -592,7 +594,7 @@ html{touch-action:manipulation}
 .ch-carte{max-width:460px;margin:22px auto 0;background:#fff;border-radius:24px;padding:18px;box-shadow:0 18px 36px -26px rgba(120,40,70,.6);transition:opacity .2s,transform .2s;text-align:left}
 .ch-carte.sort{opacity:0;transform:translateY(8px)}
 .ch-tete{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ch-tete b{font:400 22px/1.15 Abril,serif}
+.ch-tete b{font:italic 800 22px/1.15 Literata,serif}
 .ch-carte .pil{flex:none;width:58px;height:34px;border-radius:99px;border:0;cursor:pointer;background:#E6D8D3;position:relative;transition:background .3s}
 .ch-carte .pil span{position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;transition:translate .32s cubic-bezier(.3,1.4,.5,1)}
 .ch-carte.actif .pil{background:var(--rose)}.ch-carte.actif .pil span{translate:24px 0}
@@ -681,10 +683,10 @@ html{touch-action:manipulation}
 .st-pro b{font:500 11.5px Jost}.st-pro small{font-size:10.5px;opacity:.8}
 .st-carte{margin-top:14px;background:rgba(255,255,255,.95);border-radius:18px;padding:12px 12px 10px;box-shadow:0 14px 30px -14px rgba(80,20,40,.5)}
 .st-carte small{font:500 9.5px Jost;letter-spacing:.16em;text-transform:uppercase;color:var(--fram)}
-.st-carte>b{display:block;font:400 22px/1.05 Abril,serif;margin:2px 0 8px;color:var(--encre)}
+.st-carte>b{display:block;font:italic 800 22px/1.05 Literata,serif;margin:2px 0 8px;color:var(--encre)}
 .st-carte .j{display:flex;align-items:center;gap:5px;padding:5px 0;border-top:1px solid #F4E1EA;opacity:0;animation:fL 7s ease infinite}
 .st-carte .j:nth-of-type(2){animation-delay:.4s}.st-carte .j:nth-of-type(3){animation-delay:.8s}.st-carte .j:nth-of-type(4){animation-delay:1.2s}
-.st-carte .j i{font-style:normal;font:500 12px Jost;flex:1}.st-carte .j em{font-style:normal;font:500 11px Jost;background:var(--pale);color:var(--fram);border-radius:99px;padding:3px 8px;white-space:nowrap}
+.st-carte .j i{font-style:normal;font:500 12px Jost;flex:1}.st-carte .j em{font-style:inherit;font:500 11px Jost;background:var(--pale);color:var(--fram);border-radius:99px;padding:3px 8px;white-space:nowrap}
 .st-lien{margin:10px auto 0;width:max-content;background:#fff;color:var(--fram);font:500 12px Jost;border-radius:99px;padding:6px 14px}
 .story3 img.s-ch{position:absolute;width:42px!important;right:6px;top:74px;rotate:12deg;border:0!important;box-shadow:none!important;border-radius:0!important;filter:drop-shadow(0 6px 8px rgba(80,30,50,.3))}
 .story3 img.s-ch2{position:absolute;width:38px!important;left:4px;bottom:10px;rotate:-10deg;border:0!important;box-shadow:none!important;border-radius:0!important;filter:drop-shadow(0 6px 8px rgba(80,30,50,.3))}
@@ -693,7 +695,7 @@ html{touch-action:manipulation}
 .tl.site{display:flex;flex-direction:column;align-items:center}
 .car .eventail{height:280px;margin-bottom:0}
 .car .eventail img{width:132px;top:4px}
-.dotfr{margin:6px 0 16px;font:400 26px/1 Abril,serif;color:var(--doux)}.dotfr b{font-weight:400;color:var(--fram)}
+.dotfr{margin:6px 0 16px;font:italic 800 26px/1 Literata,serif;color:var(--doux)}.dotfr b{font-weight:400;color:var(--fram)}
 @media (prefers-reduced-motion:reduce){.st-bar i,.f-rev,.st-carte .j{animation:none;opacity:1}}
 
 
@@ -741,7 +743,7 @@ html{touch-action:manipulation}
 .site-tel .ecr{position:relative;background:#111}
 .site-tel .ecr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .7s}
 .site-tel .ecr img.on{opacity:1}
-.dotfr{font:400 24px/1 Abril,serif;color:var(--encre);margin:8px 0 14px}.dotfr b{font-weight:400;color:var(--fram)}
+.dotfr{font:italic 800 24px/1 Literata,serif;color:var(--encre);margin:8px 0 14px}.dotfr b{font-weight:400;color:var(--fram)}
 /* agenda : l'écran de près, bien cadré sur le calendrier */
 .tel-z .z-sem{background-size:112% auto;background-position:30% 23%}
 .tel-z .z-jour{background-size:112% auto;background-position:30% 34%}
@@ -813,8 +815,8 @@ html{touch-action:manipulation}
 @keyframes pt{0%,60%,100%{opacity:.35;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 .fi7{padding:16px 14px 10px}
 .f7-t{display:flex;align-items:center;gap:10px;padding-bottom:10px;margin-bottom:4px;border-bottom:1px solid #F2E4E8}
-.f7-av{width:40px;height:40px;border-radius:50%;background:var(--pale);color:var(--fram);display:grid;place-items:center;font:400 19px Abril,serif}
-.f7-t b{display:block;font:400 18px/1.1 Abril,serif}.f7-t small{font-size:11.5px;color:#9A8F88}
+.f7-av{width:40px;height:40px;border-radius:50%;background:var(--pale);color:var(--fram);display:grid;place-items:center;font:italic 800 19px Literata,serif}
+.f7-t b{display:block;font:italic 800 18px/1.1 Literata,serif}.f7-t small{font-size:11.5px;color:#9A8F88}
 .f7-l{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid #F6EEF0;font:400 13.5px Jost}.f7-l:last-child{border:0}
 .f7-i{width:28px;height:28px;border-radius:9px;background:var(--pale);color:var(--fram);display:grid;place-items:center;flex:none}.f7-i svg{width:16px;height:16px}
 .f7-q{flex:1;white-space:nowrap}
@@ -847,7 +849,7 @@ html{touch-action:manipulation}
 .fi7.fiche .f7-notes{opacity:0}.fi7.fiche .f7-fiche{opacity:1}
 .f7-rdv{background:#FBF4F6;border-radius:14px;padding:10px 12px}.f7-rdv small,.f7-ch small,.f7-fid small{display:block;font-size:10.5px;color:#9A8F88}
 .f7-rdv b{display:block;font:500 14px Jost;color:var(--fram)}.f7-rdv span{font-size:11.5px;color:var(--doux)}
-.f7-ch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.f7-ch div{background:#FBF4F6;border-radius:12px;padding:8px 9px}.f7-ch b{font:400 15px Abril,serif;white-space:nowrap}
+.f7-ch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.f7-ch div{background:#FBF4F6;border-radius:12px;padding:8px 9px}.f7-ch b{font:italic 800 15px Literata,serif;white-space:nowrap}
 .f7-fid{background:#FBF4F6;border-radius:14px;padding:10px 12px}.f7-fid div{display:flex;justify-content:space-between;align-items:baseline}.f7-fid b{font:500 12px Jost}
 .f7-fid i{display:block;height:7px;border-radius:9px;background:#EDE1E5;margin-top:7px;overflow:hidden}.f7-fid u{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#F2A1BA,var(--fram));transition:width 1s .3s cubic-bezier(.3,1,.4,1)}
 .fi7.fiche .f7-fid u{width:40%}
@@ -893,7 +895,7 @@ html{touch-action:manipulation}
 @media(min-width:600px){.n-conf{margin:6px auto 0}}
 .n-conf div{flex:1;text-align:center;font-size:13px;color:#6A605B;line-height:1.3}
 .n-conf div+div{border-left:1px solid rgba(30,28,27,.08)}
-.n-conf b{display:block;font:400 23px Abril,serif;color:var(--fram);margin-bottom:3px}
+.n-conf b{display:block;font:italic 800 23px Literata,serif;color:var(--fram);margin-bottom:3px}
 /* Le haut (Marie 27/11) : titre plus grand et plus bas, moitié du téléphone, rangée, PUIS le badge */
 @media (max-width:1099px){
   .haut{padding-top:44px!important}
@@ -939,13 +941,13 @@ html{touch-action:manipulation}
 .n-rail .n-ip:after{display:none}
 .n-rail .n-ec img{top:0;height:100%;object-fit:cover;object-position:top}
 @keyframes ndefile{to{transform:translateX(calc(-50% - 8px))}}
-.n-sites h2 em,.n-prixs h2 em{font-style:normal;color:var(--fram)}
+.n-sites h2 em,.n-prixs h2 em{font-style:inherit;color:var(--fram)}
 /* prix */
 .n-prixs{padding:56px 20px 10px;text-align:center}
 .n-prixs h2{font-size:34px;margin:10px 0 34px}
 .n-prix{max-width:440px;margin:0 auto;background:#fff;border-radius:30px;padding:30px 22px 26px;text-align:center;box-shadow:0 1px 2px rgba(30,28,27,.04),0 30px 60px -30px rgba(140,40,80,.45);position:relative;border:1.5px solid #F3C9D8}
 .n-prix .offert{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--fram);color:#fff;font:500 13.5px Jost;border-radius:99px;padding:6px 15px;white-space:nowrap}
-.n-prix .montant{font-family:Abril,serif;font-size:60px;line-height:1;margin-top:10px}
+.n-prix .montant{font-family:Literata,serif;font-style:italic;font-weight:800;font-size:60px;line-height:1;margin-top:10px}
 .n-prix .montant small{font:400 18px Jost;color:#6A605B}
 .n-prix .rent{font-size:15.5px;color:var(--fram);margin:8px 0 22px}
 .n-prix ul{list-style:none;text-align:left;display:grid;gap:12px;margin:0 4px 24px;padding:20px 0 0;border-top:1px solid rgba(30,28,27,.08)}
@@ -963,13 +965,13 @@ html{touch-action:manipulation}
 @font-face{font-family:FrauncesI;src:url(loginail-site/polices/FrauncesItalique-latin.woff2) format("woff2");font-display:swap}
 .haut h1.n-t1{font-size:inherit!important;margin-top:14px!important;line-height:1!important}
 .n-t1 span{display:block}
-.n-t1 .a{font:500 min(7.6vw,34px)/1.1 BodoniM,serif;letter-spacing:-.01em;color:var(--encre);white-space:nowrap}
-.n-t1 .b{font:400 min(13.5vw,58px)/1.05 FrauncesI,serif;font-style:italic;color:var(--fram);margin-top:2px}
+.n-t1 .a{font:600 min(7.6vw,34px)/1.1 Literata,serif;letter-spacing:-.01em;color:var(--encre);white-space:nowrap}
+.n-t1 .b{font:italic 800 min(13.5vw,58px)/1.05 Literata,serif;font-style:italic;color:var(--fram);margin-top:2px}
 .n-t1 .b i{font-style:normal;font-size:.36em;vertical-align:.95em;margin-left:.12em;color:var(--rose)}
 
 .hero .n-tu{order:3;display:flex;flex-direction:column;align-items:center;margin-top:18px;line-height:1.1}
 .n-tu .l1{font:400 17px Jost,sans-serif;color:var(--doux,#5E5550)}
-.n-tu .mots{display:grid;place-items:center;height:1.35em;font:400 min(7.2vw,30px)/1.2 FrauncesI,serif;font-style:italic;color:var(--fram);margin:2px 0 4px;overflow:hidden;width:100%}
+.n-tu .mots{display:grid;place-items:center;height:1.35em;font:italic 800 min(7.2vw,30px)/1.2 Literata,serif;font-style:italic;color:var(--fram);margin:2px 0 4px;overflow:hidden;width:100%}
 .n-tu .mots b{grid-area:1/1;font-weight:400;white-space:nowrap;opacity:0;transform:translateY(70%);filter:blur(4px);transition:opacity .35s,transform .45s cubic-bezier(.2,.9,.3,1.05),filter .35s}
 .n-tu .mots b.on{opacity:1;transform:none;filter:none}
 .n-tu .mots b.part{opacity:0;transform:translateY(-70%);filter:blur(4px)}
@@ -987,7 +989,7 @@ html{touch-action:manipulation}
 .hero .n-q{order:3;margin:14px 0 0;display:flex;flex-direction:column;align-items:center;width:100%}
 .n-q .l1{font:400 17px/1.2 Jost,sans-serif;color:var(--doux,#5E5550)}
 .n-q .n-mots{display:grid;width:100%;overflow:hidden;height:min(9vw,38px);margin-top:2px}
-.n-q .n-mots b{grid-area:1/1;font:400 min(7vw,28px)/1.25 FrauncesI,serif;font-style:italic;color:var(--fram);white-space:nowrap;opacity:0;transform:translateY(80%);transition:opacity .3s,transform .45s cubic-bezier(.2,.9,.3,1.05);text-align:center}
+.n-q .n-mots b{grid-area:1/1;font:italic 800 min(7vw,28px)/1.25 Literata,serif;font-style:italic;color:var(--fram);white-space:nowrap;opacity:0;transform:translateY(80%);transition:opacity .3s,transform .45s cubic-bezier(.2,.9,.3,1.05);text-align:center}
 .n-q .n-mots b.on{opacity:1;transform:none}
 .n-q .n-mots b.part{opacity:0;transform:translateY(-80%)}
 .n-sc2{height:330px!important;margin-top:22px!important}
@@ -1017,6 +1019,99 @@ html{touch-action:manipulation}
   .n-t1 .a{font-size:46px}
   .n-t1 .b{font-size:86px}
 }
+/* ===== 28/11 · GREFFE « Tu n'as pas… ? Ici, tu l'as. » (D137, Marie : « F + mes morceaux ») ===== */
+.tl-ici{padding:46px 0 10px}
+.tl-rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px 20px 16px;margin:0 -20px;scrollbar-width:none;overscroll-behavior-x:contain;scroll-padding:0 20px}
+.tl-rail::-webkit-scrollbar{display:none}
+.tl-c{flex:none;scroll-snap-align:start;width:min(84vw,340px);min-height:610px;border-radius:28px;padding:22px 20px 24px;background:#fff;border:1px solid #F0E3DD;box-shadow:0 18px 34px -24px rgba(80,20,40,.4);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.tl-c.pale{background:var(--pale);border-color:#F3D6E0}
+.tl-c.nuit{background:#2A1B1E;color:#fff;border-color:#2A1B1E}
+.tl-no{font:500 11.5px Jost;letter-spacing:.18em;text-transform:uppercase;color:var(--fram)}
+.tl-c.nuit .tl-no{color:#F7A9C1}
+.tl-q{font:400 17px/1.35 Jost;margin-top:10px;color:var(--doux)}
+.tl-c.nuit .tl-q{color:rgba(255,255,255,.75)}
+.tl-r{font-size:31px;margin-top:6px}
+.tl-r em{font-style:inherit;color:var(--fram)}
+.tl-c.nuit .tl-r em{color:#F7A9C1}
+.tl-d{font-size:15px;line-height:1.45;color:var(--doux);margin-top:10px}
+.tl-c.nuit .tl-d{color:rgba(255,255,255,.75)}
+.tl-d b{font-weight:500;color:var(--encre)}
+.tl-c.nuit .tl-d b{color:#fff}
+.tl-vis{margin-top:auto;padding-top:18px;display:flex;justify-content:center;position:relative;align-items:flex-end}
+.tl-pts{display:flex;justify-content:center;gap:7px}
+.tl-pts i{width:7px;height:7px;border-radius:99px;background:#E3CFD5;transition:width .25s,background .25s}
+.tl-pts i.on{width:22px;background:var(--fram)}
+.tl-mini{width:170px;height:368px;position:relative}
+.tl-mini > *{position:absolute;left:0;top:0;transform:scale(.7083);transform-origin:top left}
+.tl-ecr{width:240px;aspect-ratio:600/1298;border-radius:40px;border:9px solid #000;overflow:hidden;background:radial-gradient(120% 80% at 50% 0,#4A2A3C,#1A1018 70%);color:#fff}
+.tl-ecr .lune{text-align:center;font-size:13px;opacity:.75;margin-top:22px}
+.tl-ecr .h{text-align:center;font:500 64px/1 -apple-system,"SF Pro Display",Jost,sans-serif;margin-top:28px;letter-spacing:-.02em}
+.tl-ecr .j{text-align:center;font-size:13px;opacity:.75;margin-top:4px}
+.tl-n{margin:10px 10px 0;background:rgba(255,255,255,.16);border-radius:16px;padding:10px 12px;font-size:12.5px;line-height:1.35;opacity:0;transform:translateY(-14px)}
+.tl-n .t{display:flex;justify-content:space-between;font-size:11px;opacity:.8;margin-bottom:2px}
+.tl-n b{font-weight:500}
+.tl-n.n1{margin-top:28px;animation:tln1 8s infinite}.tl-n.n2{animation:tln2 8s infinite}.tl-n.n3{animation:tln3 8s infinite}
+@keyframes tln1{0%,8%{opacity:0;transform:translateY(-14px)}13%,92%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes tln2{0%,33%{opacity:0;transform:translateY(-14px)}38%,92%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes tln3{0%,58%{opacity:0;transform:translateY(-14px)}63%,92%{opacity:1;transform:none}100%{opacity:0}}
+.tl-zz{position:absolute;left:14px;bottom:250px;font:italic 800 34px Literata,serif;color:#F7A9C1;transform:rotate(-12deg)}
+.tl-zz span{display:inline-block;animation:tlz 2.4s ease-in-out infinite}
+.tl-zz span:nth-child(2){font-size:.8em;animation-delay:.3s}.tl-zz span:nth-child(3){font-size:.62em;animation-delay:.6s}
+@keyframes tlz{50%{transform:translateY(-6px);opacity:.6}}
+.tl-tel{width:240px;aspect-ratio:600/1298;border-radius:40px;border:9px solid var(--encre);overflow:hidden;background:#fff}
+.tl-tel img{width:100%;height:100%;object-fit:cover;display:block}
+.tl-tampon{position:absolute;right:4px;bottom:70px;z-index:5;font:500 13px/1.2 Jost;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border-radius:12px;background:var(--fram);color:#fff;transform:rotate(-6deg);box-shadow:0 10px 18px -10px rgba(80,20,40,.6)}
+.tl-ch{display:flex;flex-direction:column;gap:6px;width:100%;align-self:center}
+.tl-l{background:#fff;color:var(--encre);border-radius:18px;padding:12px 14px;box-shadow:0 12px 22px -16px rgba(80,20,40,.5);display:flex;gap:12px;align-items:center;text-align:left}
+.tl-l .ic{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:var(--pale)}
+.tl-l small{display:block;font-size:12.5px;color:var(--doux)}
+.tl-l b{font-weight:500;font-size:15px}
+.tl-l.barree b{text-decoration:line-through;text-decoration-color:var(--fram)}
+.tl-l.ok{animation:tlok 5s infinite;border:1.5px solid var(--fram)}
+@keyframes tlok{0%,20%{transform:scale(.96);opacity:.4}28%,100%{transform:none;opacity:1}}
+.tl-fl{text-align:center;font:italic 800 22px Literata,serif;color:var(--fram);animation:tlfl 1.4s ease-in-out infinite}
+@keyframes tlfl{50%{transform:translateY(4px)}}
+.tl-zero{font:italic 800 150px/.85 Literata,serif;color:var(--fram);text-align:center;letter-spacing:-.03em;align-self:center;margin:auto 0}
+.tl-zero small{display:block;font:500 13px Jost;letter-spacing:.18em;text-transform:uppercase;color:var(--doux);margin-top:18px}
+.tl-plus{padding:40px 0 10px}
+.tl-st{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.tl-st div{background:#fff;border-radius:20px;padding:14px;border:1px solid #F0E3DD}
+.tl-st i{font-style:normal;font-size:24px;display:block}
+.tl-st b{display:block;font:italic 800 17px/1.1 Literata,serif;margin-top:6px}
+.tl-st span{display:block;font-size:13.5px;line-height:1.35;color:var(--doux);margin-top:4px}
+.tl-zero{white-space:nowrap}
+@media (min-width:900px){.tl-zero{font-size:min(150px,7.6vw)}}
+@media (min-width:900px){.tl-rail{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible;margin:0;padding:22px 0 0}.tl-c{width:auto}.tl-pts{display:none}.tl-st{grid-template-columns:repeat(4,1fr)}}
+@media (prefers-reduced-motion:reduce){.tl-n{opacity:1;transform:none}}
+
+/* 28/11 · G : une seule écriture de titres (Literata, D137) + jamais un mot seul en bout de ligne */
+h1,h2,h3,h4,.titre,.serif,.tl-r,.tl-st b,figcaption,summary{text-wrap:balance}
+p,li,small,.tl-d,.tl-st span,.tl-l small{text-wrap:pretty}
+/* « Et dans ta poche, ton salon. » */
+.tl-poche{padding:40px 0 10px}
+.tl-poche .sous{margin-top:10px;color:var(--doux);font-size:17px;max-width:520px}
+.tl-prail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:24px 20px 14px;margin:0 -20px;scrollbar-width:none;overscroll-behavior-x:contain}
+.tl-prail::-webkit-scrollbar{display:none}
+.tl-prail figure{flex:none;scroll-snap-align:center;width:206px;text-align:center;margin:0}
+.tl-ptel{width:206px;aspect-ratio:600/1298;border-radius:34px;border:8px solid var(--encre);overflow:hidden;background:#fff;box-shadow:0 26px 40px -24px rgba(80,20,40,.45)}
+.tl-ptel img{width:100%;height:100%;object-fit:cover;display:block}
+.tl-prail figcaption{margin-top:14px;font:italic 800 20px/1.12 Literata,serif}
+.tl-prail figcaption small{display:block;font:400 14px/1.35 Jost,sans-serif;color:var(--doux);margin-top:6px}
+.tl-glisse{text-align:center;font-size:13px;color:var(--doux)}
+@media (min-width:900px){.tl-prail{justify-content:center;overflow:visible}.tl-glisse{display:none}}
+
+/* « Et en plus » en liste : titre sur une ligne, jamais un mot seul */
+.tl-st{grid-template-columns:1fr;gap:0;background:#fff;border:1px solid #F0E3DD;border-radius:22px;padding:4px 16px}
+.tl-st div{display:grid;grid-template-columns:40px 1fr;column-gap:12px;align-items:start;background:none;border:0;border-radius:0;padding:13px 0;border-bottom:1px solid #F3E8E3}
+.tl-st div:last-child{border-bottom:0}
+.tl-st i{grid-row:1/3;width:40px;height:40px;border-radius:12px;background:var(--pale);display:grid;place-items:center;font-size:20px}
+.tl-st b{margin-top:0;font-size:18px;white-space:nowrap}
+.tl-st span{margin-top:2px}
+@media (min-width:900px){.tl-st{grid-template-columns:1fr 1fr;column-gap:30px}.tl-st div:nth-last-child(2){border-bottom:0}}
+.ch-tete b,.ch-carte b{text-wrap:balance}
+/* petits téléphones : titres d’« Et en plus » et prix sur une ligne */
+.tl-st b{font-size:min(18px,4.75vw)}
+@media (max-width:374px){.n-prix .montant{font-size:13.5vw}}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pomme" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 1.43c0 1.14-.5 2.27-1.18 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.81-.94 2.15-1.64 3.25-1.68.03.13.06.28.06.43zm4.56 15.71c-.03.07-.46 1.58-1.52 3.12-.94 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C4.04 18.38 3 15.57 3 12.92c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.62 0 2.89.06 4.38 2.19-.13.09-2.39 1.37-2.39 4.19 0 3.26 2.86 4.42 2.96 4.45z"/></symbol></svg>
@@ -1075,8 +1170,8 @@ html{touch-action:manipulation}
   <svg class="vague" viewBox="0 0 1440 44" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 44V22C240 0 480 0 720 16s480 22 720 4v24z"/></svg>
 </section>
 
-<!-- 2 · C'EST QUOI -->
-<section class="quoi"><div class="wrap">
+<!-- 2 · C'EST QUOI : remplacé par « Ici, tu l'as » + « Dans ta poche » (D137) -->
+<section class="quoi" hidden><div class="wrap">
   <div class="quoi-grille">
     <div><div class="k vu">Loginail, c’est quoi&nbsp;?</div>
     <h2 class="serif titre vu" style="margin-top:10px">Une appli <em>tout-en-un</em> pour gérer ton salon.</h2></div>
@@ -1124,6 +1219,73 @@ html{touch-action:manipulation}
 
 
 
+<!-- 28/11 · GREFFE (D137) : « Tu n'as pas… ? Ici, tu l'as. » -->
+<section class="tl-ici"><div class="wrap">
+  <p class="k">Ce que les autres n’ont pas</p>
+  <h2 class="serif titre" style="margin-top:10px">Tu n’as pas…&nbsp;? <em>Ici, tu l’as.</em></h2>
+  <div class="tl-rail" id="tlRail">
+    <article class="tl-c nuit">
+      <span class="tl-no">Les réservations</span>
+      <p class="tl-q">Tu réponds encore aux DM à minuit ?</p>
+      <h3 class="tl-r serif">Ici, elles réservent <em>pendant que tu&nbsp;dors.</em></h3>
+      <p class="tl-d">Ton site prend les rendez-vous jour et&nbsp;nuit. Le matin, <b>tout est rangé dans ton&nbsp;agenda.</b></p>
+      <div class="tl-vis">
+        <div class="tl-zz" aria-hidden="true"><span>z</span><span>Z</span><span>z</span></div>
+        <div class="tl-mini"><div class="tl-ecr" aria-label="Écran verrouillé avec des réservations reçues la nuit">
+          <div class="lune">☾ Ne pas déranger</div><div class="h">02:14</div><div class="j">samedi 29 novembre</div>
+          <div class="tl-n n1"><div class="t"><span>LOGINAIL</span><span>00:47</span></div><b>Nouvelle réservation ✦</b><br>Léa · Pose gel · sam. 10 h</div>
+          <div class="tl-n n2"><div class="t"><span>LOGINAIL</span><span>01:32</span></div><b>Nouvelle réservation ✦</b><br>Inès · Remplissage · lun. 9 h</div>
+          <div class="tl-n n3"><div class="t"><span>LOGINAIL</span><span>02:14</span></div><b>Nouvelle réservation ✦</b><br>Sarah · Semi-permanent · mar. 14 h</div>
+        </div></div>
+      </div>
+    </article>
+    <article class="tl-c">
+      <span class="tl-no">Les lapins</span>
+      <p class="tl-q">Marre des clientes qui oublient ?</p>
+      <h3 class="tl-r serif">Ici, le SMS part <em>tout seul.</em></h3>
+      <p class="tl-d">La veille, elle reçoit l’heure, l’adresse et ton numéro. <b>Inclus, sans limite.</b></p>
+      <div class="tl-vis">
+        <div class="tl-mini"><div class="tl-tel"><img src="loginail-site/apercus-univers/sms-rappel-2711.webp" alt="SMS de rappel envoyé la veille à une cliente" loading="lazy"></div></div>
+        <div class="tl-tampon">Inclus<br>sans limite</div>
+      </div>
+    </article>
+    <article class="tl-c pale">
+      <span class="tl-no">Les annulations</span>
+      <p class="tl-q">Une cliente annule au dernier moment ?</p>
+      <h3 class="tl-r serif">Ici, la place <em>se reprend.</em></h3>
+      <p class="tl-d">Jour complet ? Elle demande à être prévenue. Une place se libère : <b>elle reçoit un e-mail tout de&nbsp;suite.</b></p>
+      <div class="tl-vis"><div class="tl-ch">
+        <div class="tl-l barree"><div class="ic">🗓️</div><div><b>Clara · sam. 14 h</b><small>a annulé son rendez-vous</small></div></div>
+        <div class="tl-fl">↓</div>
+        <div class="tl-l"><div class="ic">✉️</div><div><b>Sarah est prévenue</b><small>elle attendait une place samedi</small></div></div>
+        <div class="tl-fl">↓</div>
+        <div class="tl-l ok"><div class="ic">✓</div><div><b>Sarah · sam. 14 h</b><small>réservé. Ta journée est pleine.</small></div></div>
+      </div></div>
+    </article>
+    <article class="tl-c">
+      <span class="tl-no">Ton argent</span>
+      <p class="tl-q">Tu laisses un pourcentage sur chaque réservation ?</p>
+      <h3 class="tl-r serif">Ici, <em>tout est à toi.</em></h3>
+      <p class="tl-d">Tes réservations, ton argent. <b>Point.</b></p>
+      <div class="tl-zero">0 %<small>de commission</small></div>
+    </article>
+  </div>
+  <div class="tl-pts" id="tlPts" aria-hidden="true"></div>
+</div></section>
+<!-- 28/11 · G : « Et dans ta poche, ton salon. » (Marie : « j'aimais bien comment on avait fait ») -->
+<section class="tl-poche"><div class="wrap">
+  <p class="k">Loginail, c’est quoi&nbsp;?</p>
+  <h2 class="serif titre" style="margin-top:10px">Et dans ta poche, <em>ton salon.</em></h2>
+  <p class="sous">Tout ce que tes clientes réservent arrive dans l’appli. Une seule appli, tout&nbsp;dedans.</p>
+  <div class="tl-prail">
+    <figure><div class="tl-ptel"><img src="loginail-site/apercus-univers/app-accueil-2511.webp" alt="Accueil de l’appli" loading="lazy"></div><figcaption>Ta journée, d’un coup&nbsp;d’œil.<small>Ta prochaine cliente en grand, et celles qui devraient&nbsp;revenir.</small></figcaption></figure>
+    <figure><div class="tl-ptel"><img src="loginail-site/apercus-univers/app-agenda-semaine-2711.webp" alt="Agenda de la semaine" loading="lazy"></div><figcaption>Ton agenda se remplit&nbsp;seul.<small>Jour, semaine, mois. Tu déplaces un rendez-vous du bout du&nbsp;doigt.</small></figcaption></figure>
+    <figure><div class="tl-ptel"><img src="loginail-site/apercus-univers/app-fiche-2711.webp" alt="Fiche d’une cliente" loading="lazy"></div><figcaption>Chaque cliente, sa&nbsp;fiche.<small>Visites, fidélité, notes, photos. Tu te souviens de&nbsp;tout.</small></figcaption></figure>
+    <figure><div class="tl-ptel"><img src="loginail-site/apercus-univers/story-sem-dm-2711.webp" alt="Image de dispos à partager en story" loading="lazy" style="object-position:top"></div><figcaption>Tes dispos, prêtes pour ta&nbsp;story.<small>Un geste, l’image est faite. Tu la&nbsp;postes.</small></figcaption></figure>
+    <figure><div class="tl-ptel"><img src="loginail-site/apercus-univers/app-monsite-2711.webp" alt="Mon site dans l’appli" loading="lazy"></div><figcaption>Ton site, tu le changes au&nbsp;doigt.<small>Et tu vois combien de filles l’ont&nbsp;regardé.</small></figcaption></figure>
+  </div>
+  <p class="tl-glisse">← fais glisser →</p>
+</div></section>
 <!-- SITE WAOUH (maquette D) -->
 <section class="n-sites">
   <div class="k">Inclus</div>
@@ -1145,10 +1307,26 @@ html{touch-action:manipulation}
   <div class="noms" id="chNoms" hidden></div>
 </div></section>
 
+<!-- 28/11 · GREFFE (D137) : « Et en plus, tu l'as. » -->
+<section class="tl-plus"><div class="wrap">
+  <h2 class="serif titre">Et en plus, <em>tu l’as.</em></h2>
+  <div class="tl-st">
+    <div><i>💶</i><b>Ta caisse du&nbsp;jour</b><span>Ce que tu as encaissé aujourd’hui, d’un coup&nbsp;d’œil.</span></div>
+    <div><i>💌</i><b>Elles devraient revenir</b><span>L’appli te montre les clientes qui n’ont pas repris&nbsp;rendez-vous.</span></div>
+    <div><i>🎂</i><b>Les anniversaires</b><span>Le matin, l’appli te le dit. Le SMS peut partir tout seul.</span></div>
+    <div><i>💸</i><b>« Elle me doit »</b><span>Une cliente te doit 10 € ? L’appli s’en souvient.</span></div>
+    <div><i>🔔</i><b>Une notif à chaque résa</b><span>Même appli fermée, tu le sais tout de suite.</span></div>
+    <div><i>🔒</i><b>Fermer ta journée</b><span>Un geste, plus personne ne réserve ce jour-là.</span></div>
+    <div><i>☕</i><b>Ta pause du midi</b><span>Ton site affiche tes vrais horaires.</span></div>
+    <div><i>📇</i><b>Tes clientes importées</b><span>Elles sont dans ton téléphone ? Elles arrivent dans l’appli.</span></div>
+    <div><i>👀</i><b>Tes vues</b><span>Tu sais combien de&nbsp;personnes ont vu ton&nbsp;site.</span></div>
+    <div><i>🌐</i><b>Ton .fr à toi</b><span>tonsalon.fr, inclus dès le 2e mois.</span></div>
+  </div>
+</div></section>
 <!-- 5 · L'ABONNEMENT (maquette D) -->
 <section class="n-prixs" id="abonnement">
   <div class="k">Ton abonnement</div>
-  <h2 class="serif">Un prix, <em>tout compris.</em></h2>
+  <h2 class="serif">Un prix. <em>Tout dedans.</em></h2>
   <div class="n-prix">
     <span class="offert">1er mois offert</span>
     <div class="montant">49,99 €<small> /mois</small></div>
@@ -1423,5 +1601,10 @@ setInterval(()=>{const a=B[k];a.classList.remove('on');a.classList.add('part');s
 (()=>{const M=[...document.querySelectorAll('.n-q .n-mots b')],E=[...document.querySelectorAll('.n-ec .n-e')],C=[...document.querySelectorAll('.n-e2')];if(!M.length||matchMedia('(prefers-reduced-motion:reduce)').matches)return;let k=0;
 setInterval(()=>{const a=M[k];a.classList.remove('on');a.classList.add('part');setTimeout(()=>a.classList.remove('part'),450);E[k].classList.remove('on');C[k].classList.remove('on');
 k=(k+1)%M.length;M[k].classList.add('on');E[k].classList.add('on');E[k].parentNode.classList.toggle('sms',!!E[k].dataset.sms);setTimeout(()=>C[k].classList.add('on'),180)},2600)})();
+</script>
+<script>
+// 28/11 · GREFFE (D137) : points sous les cartes « Ici, tu l'as »
+(function(){const r=document.getElementById('tlRail'),p=document.getElementById('tlPts');if(!r)return;const c=[...r.children];c.forEach(()=>p.appendChild(document.createElement('i')));
+const m=()=>{const pas=c[1].offsetLeft-c[0].offsetLeft;const n=Math.min(c.length-1,Math.round(r.scrollLeft/pas));[...p.children].forEach((x,k)=>x.classList.toggle('on',k===n))};r.addEventListener('scroll',()=>requestAnimationFrame(m),{passive:true});m();})();
 </script>
 </body></html>
